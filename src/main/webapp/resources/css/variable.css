@@ -1,0 +1,14 @@
+:root {
+    --input-border: rgb(221, 221, 221);
+    --input-placeholder: rgb(117, 117, 117);
+
+    --btn-primary: #0c8050;
+    --primary-color: #f58412;
+
+    --btn-disabled: rgb(221, 221, 221);
+    --btn-border-radius: 4px;
+
+    /* rgb(51,51,51)과 동일*/
+    --text-dark: #333333;
+    --text-danger: rgb(240, 63, 64);
+}

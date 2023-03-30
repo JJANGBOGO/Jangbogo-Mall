@@ -1,0 +1,377 @@
+/*슬라이드쇼*/
+img.mySlides {
+    display: inline-block;
+    width: 100%;
+    height: 370px;
+}
+.mySlides_container {
+    width: 100%;
+}
+
+/*카테고리 탭*/
+.category-header {
+    position: relative;
+    width: 1280px;
+    margin: 102px auto 26px;
+    font-family: "Spoqa-Regular", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", Arial, sans-serif;
+    text-align: center;
+    word-break: break-all;
+}
+
+.category-header h2 {
+    display: inline-block;
+    padding: 0 40px 0;
+    font-family: "Spoqa-Bold", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", Arial, sans-serif;
+    -webkit-transform: rotate(-0.028deg);
+    transform: rotate(-0.028deg);
+    font-size: 27px;
+    font-weight: normal;
+    line-height: 28px;
+    color: #000;
+    letter-spacing: -0.3px;
+    vertical-align: top;
+}
+
+.category-section {
+    width: 1280px;
+
+    margin: 0 auto;
+}
+
+.category-section .tab-list{
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    height: 50px;
+    border: 1px solid #e7e7e7;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+.category-section .tab-list li {
+    position: relative;
+    top: -1px;
+    display: table-cell;
+    width: auto;
+    height: 100%;
+    text-align: center;
+}
+
+.category-section .tab-list li button {
+    display: block;
+    width: 100%;
+    height: 100%;
+    font-family: "Spoqa-Regular", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", Arial, sans-serif;
+    letter-spacing: -0.3px;
+    text-align: center;
+    font-size: 15px;
+    color: inherit;
+    font-weight: inherit;
+    background-color: transparent;
+}
+
+/* tab active */
+.category-section .tab-list li .tab-button.on {
+    background-color: #000;
+    color: #fff;
+}
+
+.category-section .tab-content {
+    margin-top: 10px;
+}
+
+.thum-list {
+    display: none;
+}
+
+.thum-list.show {
+    display: block;
+}
+
+.category-section .tab-content .thum-list li {
+    margin-right: 40px;
+    width: 290px;
+    /* border: 1px solid  gray; */
+
+    display: inline-block;
+    vertical-align: top;
+    padding-top: 30px;
+    margin-right: 30px;
+    padding-bottom: 24px;
+}
+
+.category-section .tab-content .thum-list li:last-child {
+    margin-right: 0;
+}
+
+.thum-list li .img-box {
+    position: relative;
+}
+
+
+.thum-list li .thum-desc {
+    padding: 14px 10px 0px 0px;
+}
+
+.thum-list li .thum-desc .price {
+    font-size: 18px;
+    font-weight: 800;
+    white-space: nowrap;
+
+    padding: 10px 0 5px 0;
+}
+
+.thum-list li .thum-desc .review-cnt {
+    font-family: "Spoqa-Regular", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", Arial, sans-serif;
+
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+
+    display: flex;
+    color: rgb(153, 153, 153);
+}
+
+.thum-list li .thum-desc .point {
+    padding-top: 10px;
+    color: #725151;
+    font-family: "Spoqa-Regular", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", Arial, sans-serif;
+
+    font-size: 12px;
+
+}
+
+/* 추천 매거진 */
+.magazine{
+    width: 1280px;
+
+    margin: 0px auto;
+    padding: 40px 0px;
+}
+
+.magazine .collection-link {
+    display: flex;
+    padding-top: 40px;
+}
+
+.magazine .col-products .products-box {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 12px;
+}
+
+.magazine .col-products .products-box li {
+    width: 507px;
+}
+
+.magazine .col-products .products-box li:nth-child(2n) {
+    margin-left: auto;
+}
+
+.magazine .col-products .products-box li a {
+    display: flex;
+    flex: 0 0 507px;
+    padding-top: 24px;
+}
+
+.col-products .products-box li a .pd-img {
+    overflow: hidden;
+    flex: 0 0 72px;
+    height: 72px;
+    margin-right: 20px;
+}
+
+.col-products .products-box li a .pd-img img{
+    width: 100%;
+    height: 100%;
+    background-color: rgb(238, 238, 238);
+    object-fit: cover;
+    transition: all 0.5s ease-in-out 0s;
+}
+
+.col-products .products-box li a .pd-desc {
+    flex: 0 0 311px;
+}
+
+.pd-desc p {
+    width: 295px;
+    padding-top: 9px;
+    font-size: 16px;
+    line-height: 23px;
+    cursor: pointer;
+    display: -webkit-box;
+    overflow: hidden;
+    word-break: break-all;
+    white-space: normal;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.pd-desc .pd-price {
+    padding-top: 7px;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.col-products .products-box li a .cart-btn-box button {
+    width: 104px;
+    height: 36px;
+    margin-top: 18px;
+    /* padding: 0px 0px 1px 49px; */
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 4px;
+    text-align: center;
+    position: static;
+    background-color: transparent;
+
+    color: #333;
+}
+
+.cart-btn-box i {
+    color: #333;
+    padding-right: 2px;
+}
+
+.cart-btn-box .button i::after {
+    content: "담기";
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.products-box .see-pd-all,
+.see-pd-all  {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    width: 516px;
+    height: 56px;
+    margin: 52px auto 0px;
+    padding-top: 17px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 3px;
+    font-size: 16px;
+    color: #333;
+    line-height: 20px;
+    letter-spacing: -0.25px;
+    cursor: pointer;
+}
+
+.magazine .collection-link .img-box {
+    overflow: hidden;
+    flex: 0 0 615px;
+    height: 308px;
+    margin-right: 36px;
+}
+
+.magazine .collection-link .img-box img {
+    width: 100%;
+    height: 100%;
+    /* object-fit: cover; */
+    transition: all 0.5s ease-in-out 0s;
+    background-color: rgb(238, 238, 238);
+}
+
+.magazine .collection-link .mg-content strong {
+    display: block;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 40px;
+}
+
+.magazine .collection-link .mg-content p {
+    padding-top: 23px;
+    font-size: 16px;
+    color: rgb(76, 76, 76);
+    line-height: 26px;
+    display: -webkit-box;
+    overflow: hidden;
+    word-break: break-all;
+    white-space: normal;
+    -webkit-line-clamp: 7;
+    -webkit-box-orient: vertical;
+}
+
+
+/* add hover effect */
+.magazine .collection-link .img-box img:hover,
+.products-box li a .pd-img img:hover {
+    transform: scale(1.03);
+}
+
+
+/* test banner */
+.banner {
+    margin-top: 30px;
+    background-color: olive;
+    width: 100%;
+    height: 150px;
+}
+
+@media screen and (max-width: 650px) {
+
+    .magazine {
+        width: 100%;
+        border: 1px solid red;
+        padding: 0 20px;
+    }
+
+    .magazine .collection-link {
+        width: 100%;
+        display: block;
+        margin: 0;
+    }
+
+    .magazine .collection-link .img-box {
+        overflow: hidden;
+        /* flex: 0 0 615px; */
+        width: 100%;
+        height: 308px;
+        margin: 0;
+    }
+
+    .magazine .collection-link .img-box img {
+        width: 100%;
+    }
+
+    .collection-link .mg-content strong {
+        padding-top: 20px;
+    }
+
+    .magazine .col-products .products-box {
+        display: block;
+        /* flex-wrap: wrap; */
+        padding-top: 12px;
+    }
+
+    .magazine .col-products .products-box li:nth-child(2n),
+    .magazine .col-products .products-box li{
+        margin: 0;
+        width: 100%;
+    }
+
+    .magazine .col-products .products-box li a {
+        /* flex: 0 0 507px; */
+        padding-top: 24px;
+    }
+
+    .col-products .products-box li a .pd-img {
+        overflow: hidden;
+        flex: 0.8 0 72px;
+        height: 120px;
+        margin-right: 20px;
+    }
+
+    .col-products .products-box li a .pd-desc,
+    .col-products .products-box .cart-btn-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .products-box .see-pd-all  {
+        width: 100%;
+    }
+
+}

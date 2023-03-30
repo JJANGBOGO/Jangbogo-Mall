@@ -1,0 +1,120 @@
+.check-pwd-content h4 {
+    padding-bottom: 8px;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.check-pwd-content p {
+    padding-bottom: 20px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgb(102, 102, 102);
+}
+
+.check-pwd-content .check-pwd-form .center-padding {
+    padding: 7px 60px 7px 120px;
+    border-top: 2px solid rgb(51, 51, 51);
+}
+
+.check-pwd-form .center-padding .input-line {
+    display: inline-flex;
+    width: 100%;
+    padding: 10px 20px;
+}
+
+.check-pwd-form .center-padding .input-label {
+    width: 139px;
+    padding-top: 12px;
+}
+
+.check-pwd-form .input-box {
+    flex: 1 1 0%;
+    width: 100%;
+}
+
+.check-pwd-form .input-box .input {
+    width: 100%;
+    height: 46px;
+    padding: 0px 11px 1px 15px;
+    border-radius: 4px;
+    border: 1px solid rgb(221, 221, 221);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+
+    display: flex;
+    color: #333333;
+}
+.check-pwd-form .input-box .input input {
+    width: 100%;
+}
+
+.check-pwd-form .input-box .error-msg {
+    padding: 6px 0 10px 0;
+    font-size: 13px;
+    color: rgb(240, 63, 64);
+}
+
+.check-pwd-form .input-line .btn-space {
+    width: 120px;
+    margin-left: 8px;
+}
+.check-pwd-form .input-line .btn-space button {
+    display: block;
+    padding: 0px 10px;
+    text-align: center;
+    overflow: hidden;
+    width: 100%;
+    border-radius: 3px;
+    color: var(--primary-color);
+    background-color: rgb(255, 255, 255);
+    border: 1px solid var(--primary-color);
+
+    height: 44px;
+}
+
+.check-pwd-form .input-line .btn-space button span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.check-pwd-form .btn-container {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin-top: 20px;
+    padding-top: 40px;
+}
+
+.check-pwd-form .btn-container button{
+    display: block;
+    width: 200px;
+    height: 56px;
+    margin: 0px 3px;
+    border: 1px solid var(--primary-color);
+    border-radius: 3px;
+    overflow: hidden;
+    color: var(--primary-color);
+    background-color: rgb(255, 255, 255);
+
+    font-size: 16px;
+    text-align: center;
+}
+
+.check-pwd-form .btn-container button:last-child {
+    color: rgb(255, 255, 255);
+    background-color: var(--primary-color);
+    margin-left: 20px;
+}
+
+.check-pwd-form .center-padding .input-line.agree-form {
+    padding: 0;
+}
+
+.check-pwd-form .center-padding .input-line.agree-form img {
+    margin-right: 10px;
+}
+
+.check-pwd-form .center-padding .input-line i {
+    color: var(--primary-color);
+}

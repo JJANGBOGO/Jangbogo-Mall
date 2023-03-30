@@ -1,0 +1,81 @@
+/* 회원 아이디 찾기, 비밀번호 찾기 css*/
+
+.member-wrap .tab-box {
+    display: flex;
+    flex-wrap: nowrap;
+    margin: 0px;
+
+    background-color: white;
+    text-align: center;
+}
+
+.member-wrap .tab-box button {
+    display: block;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    position: relative;
+    height: 48px;
+    font-weight: 500;
+    font-size: 16px;
+    color: #333;
+    line-height: 18px;
+    background-color: white;
+}
+
+.member-wrap .tab-box .tab-button.on {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.member-wrap .member-form {
+    padding: 24px 20px;
+    display: none;
+}
+
+.member-wrap .member-form.show {
+    display: block;
+}
+
+.member-wrap .member-form .input-control {
+    width: 100%;
+    height: 48px;
+    line-height: 48px;
+    border: 1px solid#ccc;
+    font-size: 15px;
+    color: #000000;
+    padding: 0 15px 1px;
+    border-radius: 4px;
+}
+
+.input-control::placeholder {
+    color: #ccc;
+}
+
+.member-form .find-form .find-input-box {
+    padding-bottom: 12px;
+}
+
+.member-form .find-form .find-input-box label{
+    display: block;
+    padding: 8px 0 11px;
+}
+
+.find-other-link {
+    float: right;
+    margin: 8px 0 20px 0;
+    color: #333;
+}
+
+.member-form .find-confirm-button {
+    width: 100%;
+    height: 53px;
+    display: block;
+    margin-top: 65px;
+    border: 1px solid var(--primary-color);
+    font-size: 18px;
+    color: white;
+    background-color: var(--primary-color);
+    line-height: 51px;
+
+    border-radius: 4px;
+}

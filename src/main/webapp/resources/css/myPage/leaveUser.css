@@ -1,0 +1,167 @@
+.leave-user-layout {
+    width: 640px;
+    margin: 0px auto;
+}
+
+.leave-user-layout .header {
+    padding: 50px 0px 51px;
+    border-bottom: 2px solid rgb(51, 51, 51);
+    font-weight: 500;
+    font-size: 28px;
+    letter-spacing: -1px;
+    text-align: center;
+}
+
+.leave-user-layout .info {
+    display: inline-flex;
+    width: 100%;
+    padding: 10px 0px 10px 20px;
+}
+
+.leave-user-layout .info .label,
+.leave-user-form .input-line .label {
+    width: 139px;
+    padding-top: 12px;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: rgb(51, 51, 51);
+    line-height: 20px;
+}
+
+.leave-user-layout .info .desc {
+    flex: 1 1 0%;
+    padding-top: 10px;
+
+    color: rgb(102, 102, 102);
+    /* 줄 조정 */
+    line-height: 22px;
+}
+
+.leave-user-layout .leave-user-form {
+    display: block;
+}
+
+.leave-user-form .input-line {
+    display: inline-flex;
+    width: 100%;
+    padding: 10px 20px;
+}
+.leave-user-form .input-line .label {
+    width: 139px;
+    padding-top: 12px;
+}
+
+.leave-user-form .input-line .input-box {
+    position: relative;
+    height: 48px;
+    flex: 1 1 0%;
+}
+
+.leave-user-form .input-line .input-box input {
+    width: 100%;
+    height: 46px;
+    padding: 0px 11px 1px 15px;
+    border-radius: 4px;
+    border: 1px solid rgb(221, 221, 221);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgb(51, 51, 51);
+    outline: none;
+    box-sizing: border-box;
+}
+
+.leave-user-layout .leave-user-form .info.complain .label {
+    width: 139px;
+    padding-top: 12px;
+    font-size: 14px;
+}
+
+.leave-user-layout .leave-user-form .info.complain .desc{
+    flex: 1 1 0%;
+}
+
+.leave-user-layout .leave-user-form .info.complain .desc .complain-check {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.leave-user-layout .leave-user-form .info.complain .desc .complain-check .container {
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-top: -3px;
+}
+
+.info.complain .desc .complain-check .container label {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    vertical-align: top;
+    line-height: normal;
+    color: rgb(51, 51, 51);
+    width: 50%;
+    padding: 13px 0px;
+    font-size: 14px;
+}
+
+/* textarea */
+.info.complain .desc .comment-textarea {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 175px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 4px;
+}
+
+.info.complain .desc .comment-textarea textarea {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 15px 16px;
+    font-size: 14px;
+    line-height: 21px;
+    word-break: break-all;
+    z-index: 1;
+    background: none;
+    border-radius: 4px;
+    color: rgb(51, 51, 51);
+    resize: none;
+}
+
+.info.complain .desc .comment-textarea textarea::placeholder {
+    color: rgb(204, 204, 204)
+}
+
+
+.leave-user-form .leave-user-btn {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    padding: 40px 0px 60px;
+}
+
+.leave-user-form .leave-user-btn button {
+    display: block;
+    padding: 0px 10px;
+    text-align: center;
+    overflow: hidden;
+    height: 44px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(95, 0, 128);
+    width: 120px;
+    margin: 0px 4px;
+    border-radius: 3px;
+}
+
+.leave-user-form .leave-user-btn button span {
+    color: rgb(95, 0, 128);
+}

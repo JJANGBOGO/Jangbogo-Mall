@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:task="http://www.springframework.org/schema/task" xmlns:bean="http://www.springframework.org/schema/cache"
+	   xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<!--property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property-->
+		<!--property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/springbasic?useUnicode=true&amp;characterEncoding=utf8"></property-->
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://localhost:3306/market?useUnicode=true&amp;characterEncoding=utf8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="1234"></property>
+	</bean>
+
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation"  value="classpath:mybatis-config.xml"/>
+		<property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>
+	</bean>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory"/>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<tx:annotation-driven/>
+	<context:component-scan base-package="com.jangbogo.mall"/>
+
+
+<!--	task-->
+	<context:component-scan base-package="com.jangbogo.mall"></context:component-scan>
+<!--	<task:annotation-driven/>-->
+
+	<bean id="mailSender" class ="org.springframework.mail.javamail.JavaMailSenderImpl" >
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="jinvicky17@gmail.com" />
+		<property name="password" value="omsxbvjfblybfyxf" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+
+
+</beans>

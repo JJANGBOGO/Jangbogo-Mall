@@ -1,0 +1,55 @@
+.find-success-content {
+    min-width: 1050px;
+    padding: 50px 0px;
+    background-color: white;
+}
+
+.find-success-content .center {
+    max-width: 400px;
+    padding: 60px 30px;
+    margin: auto;
+    position: relative;
+    background-color: white;
+    text-align: center;
+}
+
+.find-success-content .center p {
+    margin: 17px 0;
+}
+.find-success-content .center .email-icon {
+    width: 25px;
+    height: 25px;
+    position: relative;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    padding: 29px;
+    align-items: center;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+}
+
+.find-success-content .center .email-icon i {
+    font-size: 33px;
+    color: white;
+}
+
+.find-success-content .center .result {
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 24px;
+}
+
+.find-success-content .center .result .recipient {
+    font-weight: 700;
+    color: var(--primary-color);
+    word-break: break-all;
+    font-size: 17px;
+    line-height: 24px;
+}
+
+.find-success-content .center .warn-desc{
+    font-size: 14px;
+    color: rgb(153, 153, 153);
+    line-height: 19px;
+}
