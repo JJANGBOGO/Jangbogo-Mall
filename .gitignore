@@ -22,4 +22,4 @@ buildNumber.properties
 /.classpath
 /.project
 /.springBeans
-/src/main/webapp/WEB-INF/spring/appServlet/root-context.xml
+/src/main/webapp/WEB-INF/spring/root-context.xml
