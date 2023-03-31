@@ -214,4 +214,9 @@ public class UserController {
         model.addAttribute("verifyType", verifyType);
         return "/user/findSuccess";
     }
+
+    @GetMapping("/user/test")
+    public String userTest() {
+        return "";
+    }
 }
