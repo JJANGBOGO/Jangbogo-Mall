@@ -21,6 +21,12 @@ public class MyPageController {
         return "/mypage/validateUser";
     }
 
+    @GetMapping("/wishlist") //개인 정보 인증.
+    public String wishlist (Model model ) {
+        model.addAttribute("userDto", new User());
+        return "/mypage/validateUser";
+    }
+
     @PostMapping("/info")
     public String verifyPwd (@Valid @ModelAttribute("userDto") User user, BindingResult bindingResult) {
 
