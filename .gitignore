@@ -12,14 +12,14 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 
-/.project
+#/.project
 /target
-/.classpath
-/bin
+#/.classpath
+#/bin
+#/.settings
 /.idea
-/.settings
 *.iml
-/.classpath
-/.project
-/.springBeans
+#/.classpath
+#/.project
+#/.springBeans
 /src/main/webapp/WEB-INF/spring/root-context.xml
