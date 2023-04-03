@@ -3,6 +3,7 @@ package com.jangbogo.mall.security;
 
 import com.jangbogo.mall.domain.UserDetailsDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -16,8 +17,13 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     UserDetailsService loginService;
 
-//    @Autowired
-//    BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
+
+    @Bean
+    public static BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     public Authentication authenticate (Authentication authentication) throws AuthenticationException {
@@ -30,7 +36,7 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
 
         //loginFailureHandler 오류 던질 때
         if(userDetailsDto == null || !userId.equals(userDetailsDto.getUsername())
-//              ||  !passwordEncoder.matches(userPw, userDetailsDto.getPassword())
+              ||  !passwordEncoder.matches(userPw, userDetailsDto.getPassword())
         ) {
             throw new BadCredentialsException(userId); // 아이디랑 비번이 불일치.
         } else if (!userDetailsDto.isEnabled()) {

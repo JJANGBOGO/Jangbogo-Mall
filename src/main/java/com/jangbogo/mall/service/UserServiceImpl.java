@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUserPresent (String nick_nm, String email) throws Exception {
-        return dao.selUserEmail(nick_nm, email) != null;
+        return dao.selUserByEmail(nick_nm, email) != null;
     }
 
     @Override
