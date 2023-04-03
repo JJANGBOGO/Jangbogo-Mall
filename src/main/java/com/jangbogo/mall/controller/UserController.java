@@ -4,17 +4,16 @@ package com.jangbogo.mall.controller;
 import com.jangbogo.mall.domain.KakaoLoginBo;
 import com.jangbogo.mall.domain.NaverLoginBo;
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.jangbogo.mall.domain.User;
 import com.jangbogo.mall.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject; //json.simple이어야 한다.
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -34,20 +33,15 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/test")
-    public String test (HttpSession session) {
-        User user = User.builder().idx(1).email("jinvicky@naver.com").nick_nm("진진자라").build();
-        session.setAttribute("user", user);
-        return "";
-    }
-    //회원탈퇴 화면
+    //회원탈퇴뷰
     @GetMapping("/withdraw/user")
-    public String withdrawUserView(HttpSession session, Model m) {
-//      TODO:: 세션 없을 경우 접근 불가 조치
+    public String withdrawUserView(HttpSession session, Model m, Authentication auth) {
+        if (auth == null) return "redirect:/login/user";
         m.addAttribute("user", session.getAttribute("user") );
         return "/user/withdraw";
     }
 
+    //회원탈퇴
     @PostMapping("/withdraw/user")
     @ResponseBody
     public String withdrawUser(int idx, String email) {
@@ -63,6 +57,57 @@ public class UserController {
         return msg;
     }
 
+    //이메일찾기
+    @PostMapping("/find/user/email")
+    public String findUserEmail (String nick_nm, String pwd, Model m, RedirectAttributes rattr) {
+        log.info("result=" + nick_nm + pwd);
+        try {
+            String result = userService.findUserEmail(nick_nm, pwd);
+            if (result == "") {
+                rattr.addFlashAttribute("USER_ERR", "회원을 찾을 수 없습니다");
+                return "member/findEmail";
+            } else {
+//                TODO:: 완료페이지에 이메일을 보여줄 것이다. 변수명 짓기.
+                m.addAttribute("result", result);
+            }
+        }catch(Exception e) {
+                rattr.addFlashAttribute("MSG", "요청 중 문제가 발생했습니다. 다시 시도해 주세요");
+                return "member/findEmail";
+        }
+        return "redirect:/find/member/success";
+    }
+
+    //비번찾기
+    @PostMapping("/find/user/pwd")
+    public String findUserPwd (String nick_nm, String email, Model m, RedirectAttributes rattr) {
+        log.info("result=" + nick_nm + email);
+        try {
+            boolean result = userService.isUserPresent(nick_nm, email);
+            if (!result) {
+                rattr.addFlashAttribute("USER_ERR", "회원정보를 찾을 수 없습니다");
+                return "member/findEmail";
+            } else {
+//               임시 비번을 담은 메일을 전송하고 완료페이지로 이동한다.
+            }
+        }catch(Exception e) {
+            rattr.addFlashAttribute("MSG", "요청 중 문제가 발생했습니다. 다시 시도해 주세요");
+            return "member/findEmail";
+        }
+        return "redirect:/find/member/success";
+    }
+
+    //로그인뷰
+    @GetMapping("/login/user")
+    public String loginUserView () {
+        return "/user/login";
+    }
+
+    //로그인
+    @PostMapping("/login/user")
+    public String loginUser () {
+//        TODO:: 세션에 유저 정보 저장 필수
+        return "redirect:/";
+    }
 //    @RequestMapping("/user/login")
 //    public String login(Model model, HttpSession session, HttpServletRequest request, Authentication authentication) {
 //
@@ -180,56 +225,5 @@ public class UserController {
 //        boolean isInserted = true;
 //        if (isInserted) return "user/login";
 //        else return "signUpView";
-//    }
-//
-//    // 아이디 찾기
-//    @GetMapping("/user/find/id")
-//    public String findIdView() {
-//        return "/user/findId";
-//    }
-//
-//    @PostMapping("/user/find/id/{verityType}")
-//    public String findId(@PathVariable String verityType, User user, RedirectAttributes rattr) {
-//
-//        try {
-////        if(certificate == "email") {
-////                mailService.sendEmail(user.getEmail());
-////        } else {
-////                smsService.sendSms(user.getPhone());
-////        }
-//        } catch(Exception e) {
-//            rattr.addFlashAttribute("msg", "SEND_ERR");
-//            return "/user/findId";
-//        }
-//        return "redirect:/find/id/success/" + verityType;
-//    }
-//
-//    @PostMapping("/user/find/pwd/{verityType}")
-//    public String findPwd(@PathVariable String verityType, User user, RedirectAttributes rattr) {
-//        try {
-////        if(certificate == "email") {
-////                mailService.sendEmail(user.getEmail());
-////        } else {
-////                smsService.sendSms(user.getPhone());
-////        }
-//        } catch(Exception e) {
-//            rattr.addFlashAttribute("msg", "SEND_ERR");
-//            return "/user/findId";
-//        }
-//        return "redirect:/find/id/success/" + verityType;
-//    }
-//
-//    //    비번 찾기
-//    @GetMapping("/user/find/pwd")
-//    public String findPwdView() {
-//        return "/user/findPwd";
-//    }
-//
-//    // 아이디/비번 찾기 인증 성공
-//    @GetMapping("/user/find/{findType}/success/{verifyType}")
-//    public String findUserSuccessView(@PathVariable String findType, @PathVariable String verifyType, Model model) {
-//        model.addAttribute("findType", findType);
-//        model.addAttribute("verifyType", verifyType);
-//        return "/user/findSuccess";
 //    }
 }

@@ -11,58 +11,58 @@
 <div class="member-container">
     <div class="contents">
         <div class="member-wrap">
-            <h2 class="page-title">아이디 찾기</h2>
+            <h2 class="page-title">이메일 찾기</h2>
             <div class="tab-box">
-                <button class="tab-button" data-a="0">휴대전화 인증</button>
-                <button class="tab-button" data-a="1">이메일 인증</button>
+                <button class="tab-button" data-a="0">회원</button>
+                <button class="tab-button" data-a="1">판매자</button>
             </div>
             <div class="member-form">
-                <form class="find-form" action="" method="post">
+                <form id="user_form" class="find-form" action="/find/user/email" method="post">
                     <div class="find-input-box">
-                        <label>이름</label>
+                        <label>닉네임</label>
                         <input
                                 class="input-control"
-                                name="name"
+                                name="nick_nm"
                                 type="text"
-                                placeholder="이름을 입력해주세요."
+                                placeholder="닉네임을 입력해주세요."
                         />
                     </div>
                     <div class="find-input-box">
-                        <label>휴대전화</label>
+                        <label>비밀번호</label>
                         <input
                                 class="input-control"
-                                name="phone"
+                                name="pwd"
                                 type="text"
-                                placeholder="휴대전화를 입력해주세요."
+                                placeholder="비밀번호를 입력해주세요."
                         />
                     </div>
-                    <a class="find-other-link" href="/user/find/pwd">비밀번호 찾기</a>
+                    <a class="find-other-link" href="/find/member/pwd">비밀번호 찾기</a>
                     <button class="find-confirm-button" type="submit">
                         확인
                     </button>
                 </form>
             </div>
             <div class="member-form">
-                <form class="find-form" action="" method="post">
+                <form id="seller_form" class="find-form" action="/find/seller/email" method="post">
                     <div class="find-input-box">
-                        <label>이름</label>
+                        <label>닉네임</label>
                         <input
                                 class="input-control"
-                                name="name"
+                                name="nick_nm"
                                 type="text"
-                                placeholder="이름을 입력해주세요."
+                                placeholder="닉네임을 입력해주세요"
                         />
                     </div>
                     <div class="find-input-box">
-                        <label>이메일</label>
+                        <label>비밀번호</label>
                         <input
                                 class="input-control"
-                                name="email"
+                                name="pwd"
                                 type="text"
-                                placeholder="이메일을 입력해주세요."
+                                placeholder="비밀번호를 입력해주세요"
                         />
                     </div>
-                    <a class="find-other-link" href="/user/find/pwd">비밀번호 찾기</a>
+                    <a class="find-other-link" href="/find/member/pwd">비밀번호 찾기</a>
                     <button class="find-confirm-button" type="submit">
                         확인
                     </button>
