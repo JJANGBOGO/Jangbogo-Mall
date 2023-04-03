@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jangbogo.mall.dao.SellerMapper">
+
+    <insert id="insertSeller" parameterType="Seller">
+        INSERT INTO SELER (AUTH_IDX, EMAIL, CPNM, REPR_NM, PWD, MPNO, REPR_TELNO, BIZ_TYPE, BRNO, SLE_BIZ_NO, BSPLC_ZPCD, BSPLC_BASE, BSPLC_DTL, ACC_BANK, ACC_NO, ACC_NM, SELER_AGRE_YN, BRND_BNR_UPLOAD_PATH, BRND_UPLOAD_PATH, BRND_CN)
+        VALUES (1, 'jinvicky1008', '진이회사3', '진이', '1234', '26558945', '4444', 1, '20000', '10000', '16836', '기본', '어딘가', '하나은행', '10', '남궁진', 'Y', 'banner.png', 'default.png', '브랜드내용' );
+    </insert>
+
+    <update id="deleteSeller" parameterType="map">
+        UPDATE SELER SET STATE_CD = 3 WHERE IDX = #{idx} AND EMAIL = #{email};
+    </update>
+
+</mapper>
