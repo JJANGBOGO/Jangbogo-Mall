@@ -1,6 +1,6 @@
 package com.jangbogo.mall.service;
 
-import com.jangbogo.mall.domain.MessageDto;
+import com.jangbogo.mall.domain.Message;
 import com.jangbogo.mall.domain.SmsRequest;
 import com.jangbogo.mall.domain.SmsResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -47,10 +47,10 @@ public class SmsService {
     public SmsResponse sendSms(String recipientPhoneNumber, String content) throws JsonProcessingException, UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException, URISyntaxException {
 
         Long time = System.currentTimeMillis();
-        List<MessageDto> messages = new ArrayList<>();
+        List<Message> messages = new ArrayList<>();
 
         String msg = "[" + content + "]";
-        messages.add(new MessageDto(recipientPhoneNumber, msg));
+        messages.add(new Message(recipientPhoneNumber, msg));
 
         SmsRequest smsRequest = new SmsRequest("SMS", "COMM", "82", "01026558945", "진이", messages);
 //        jackson databind maven 주입 필요

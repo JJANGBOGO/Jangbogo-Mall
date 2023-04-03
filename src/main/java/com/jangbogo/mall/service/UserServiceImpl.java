@@ -1,12 +1,7 @@
 package com.jangbogo.mall.service;
 
-import com.jangbogo.mall.dao.FindUserDao;
 import com.jangbogo.mall.dao.UserDao;
-import com.jangbogo.mall.domain.User;
-import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
