@@ -16,7 +16,6 @@ public class EmailController {
 
     @GetMapping("/send/email")
     public ResponseEntity<HttpStatus> getEmail(String toEmail) {
-
         try {
             Email email = Email.builder()
                     .fromEmail("jinvicky17@gmail.com")
