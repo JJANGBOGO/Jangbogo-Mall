@@ -5,6 +5,8 @@
 <configuration>
     <typeAliases>
         <typeAlias alias="User" type="com.jangbogo.mall.domain.User"/>
-<!--        <typeAlias alias="Attach" type="com.jangbogo.mall.domain.User"/>-->
+        <typeAlias alias="User" type="com.jangbogo.mall.domain.ProdInqryDto"/>
+
+        <!--        <typeAlias alias="Attach" type="com.jangbogo.mall.domain.User"/>-->
     </typeAliases>
 </configuration>
