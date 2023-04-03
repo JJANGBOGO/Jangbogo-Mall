@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jangbogo.mall.dao.UserMapper">
+
+    <update id="deleteUser" parameterType="map">
+        UPDATE USER SET STATE_CD = 3 WHERE IDX = #{idx} AND EMAIL = #{email};
+    </update>
+
+    <select id="selUserEmail" parameterType="map" resultType="String">
+        SELECT EMAIL FROM USER WHERE NICK_NM = #{nick_nm} AND PWD = #{pwd};
+    </select>
+
+    <select id="selUserByEmail" parameterType="map" resultType="User">
+        SELECT * FROM USER WHERE NICK_NM = #{nick_nm} AND EMAIL = #{email};
+    </select>
+
+</mapper>
+
