@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.jangbogo.mall.dao.CartMapper">
+
+    <!--
+        태   그 : select
+        기   능 : 장바구니를 통해 상품 정보 가져오기
+        아이디명 : selectAll
+        반환타입 : List<CartDto>
+    -->
+    <select id="selectAll" resultType="CartDto">
+        SELECT CART.PROD_IDX, CART.USER_IDX, PRODUCT.NAME as prod_name , PRODUCT.PRC as prod_price, PRODUCT.RESV_PHOTO_UPLOAD_PATH as prod_rpath,CART.REG_TM, CART.PROD_CNT as prod_cnt, CART.REG_TM, CART.CRT_TM, CART.UPT_TM
+        FROM CART, PRODUCT, USER
+        WHERE CART.PROD_IDX = PRODUCT.IDX AND CART.USER_IDX = USER.IDX;
+    </select>
+</mapper>
