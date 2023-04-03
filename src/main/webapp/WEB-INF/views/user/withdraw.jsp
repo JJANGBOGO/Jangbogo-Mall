@@ -31,10 +31,24 @@
 
     <div class="user-info">
         <h4>가입 정보</h4>
-        <p>이메일: <span>jinvicky@naver.com</span></p>
-        <p>닉네임: <span>진진자라</span></p>
-        <p>가입날짜: <span>23/01/02</span></p>
-        <p>로그인타입: <span>네이버</span></p>
+        <p>이메일: <span>${user.email}</span></p>
+        <p>닉네임: <span>${user.nick_nm}</span></p>
+        <p>가입날짜: <span>${user.reg_tm}</span></p>
+        <p>로그인타입: <span>
+            <c:choose>
+                <c:when test="${user.login_tp_cd == 2}">
+                    카카오
+                </c:when>
+                <c:when test="${user.login_tp_cd == 3}">
+                    네이버
+                </c:when>
+                <c:otherwise>
+                    일반
+                </c:otherwise>
+            </c:choose>
+        </span>
+        </p>
+        <%--        1,2,3에 따라서 분기처리할 것--%>
     </div>
 
     <div class="confirm-input">
@@ -57,6 +71,9 @@
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script>
     $(document).ready(function (e) {
+        $(".cancel").click(function () {
+            window.location.href = "/";
+        });
         $(".confirm").attr("disabled", true); //ok
 
         let withdraw_msg = "탈퇴처리에 동의합니다";
@@ -69,13 +86,17 @@
             //send ajax
             $.ajax({
                 url: "/withdraw/user",
-                contentType: "application/json",
                 data: {idx: 1, email: "jinvicky@naver.com"},
                 type: "POST",
-                dataType: "json",
                 success: function (result) {
-                    alert("result: ", result);
+                    if (result === "SUCCESS") {
+                        alert("탈퇴에 성공했습니다.");
+                        window.location.href = "/";
+                    }
                 },
+                error: function (error) {
+                    alert("요청 도중 문제가 발생하였습니다. 다시 시도해주세요");
+                }
             });
         });
     });

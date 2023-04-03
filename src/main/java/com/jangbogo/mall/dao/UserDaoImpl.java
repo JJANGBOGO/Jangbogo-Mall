@@ -39,5 +39,10 @@ public class UserDaoImpl implements UserDao{
         map.put("email", email);
         return session.selectOne(nameSpace + "selUserByEmail", map);
     }
+
+    @Override
+    public User selectUser (int idx) throws Exception {
+        return session.selectOne(nameSpace + "selectUser", idx);
+    }
 }
 

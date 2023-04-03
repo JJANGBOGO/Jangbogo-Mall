@@ -16,8 +16,8 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     UserDetailsService loginService;
 
-    @Autowired
-    BCryptPasswordEncoder passwordEncoder;
+//    @Autowired
+//    BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate (Authentication authentication) throws AuthenticationException {
@@ -29,7 +29,9 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
 
 
         //loginFailureHandler 오류 던질 때
-        if(userDetailsDto == null || !userId.equals(userDetailsDto.getUsername())|| !passwordEncoder.matches(userPw, userDetailsDto.getPassword())) {
+        if(userDetailsDto == null || !userId.equals(userDetailsDto.getUsername())
+//              ||  !passwordEncoder.matches(userPw, userDetailsDto.getPassword())
+        ) {
             throw new BadCredentialsException(userId); // 아이디랑 비번이 불일치.
         } else if (!userDetailsDto.isEnabled()) {
             throw new DisabledException(userId); //계정 비활성화

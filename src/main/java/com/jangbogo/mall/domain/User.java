@@ -2,17 +2,17 @@ package com.jangbogo.mall.domain;
 
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.stereotype.Component;
-
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @Builder
-@Component //validator를 적용할 대상에 필수이다.
+//@Component  => validator용
 public class User {
 
-    public User() {}
+    public User() {
+
+    }
 
     private int idx; // 번호
     private int auth_idx; //권한번호

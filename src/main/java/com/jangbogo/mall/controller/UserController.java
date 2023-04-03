@@ -1,25 +1,17 @@
 package com.jangbogo.mall.controller;
 
 
-import com.jangbogo.mall.domain.User;
-import com.jangbogo.mall.security.LoginService;
-import com.jangbogo.mall.service.SignUpService;
 import com.jangbogo.mall.domain.KakaoLoginBo;
 import com.jangbogo.mall.domain.NaverLoginBo;
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.jangbogo.mall.domain.User;
+import com.jangbogo.mall.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject; //json.simple이어야 한다.
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,12 +20,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 @Slf4j
 public class UserController {
-
-//    @Autowired
-//    private SignUpService signUpService;
-//
-//    @Autowired
-//    private LoginService loginService;
 
     @Autowired
     NaverLoginBo naverLoginBO;
@@ -45,21 +31,36 @@ public class UserController {
     JSONObject jsonObj;
     private final String apiResult = null;
 
+    @Autowired
+    UserService userService;
+
+    @GetMapping("/test")
+    public String test (HttpSession session) {
+        User user = User.builder().idx(1).email("jinvicky@naver.com").nick_nm("진진자라").build();
+        session.setAttribute("user", user);
+        return "";
+    }
     //회원탈퇴 화면
     @GetMapping("/withdraw/user")
-    public String withdrawUserView() {
+    public String withdrawUserView(HttpSession session, Model m) {
+//      TODO:: 세션 없을 경우 접근 불가 조치
+        m.addAttribute("user", session.getAttribute("user") );
         return "/user/withdraw";
     }
 
     @PostMapping("/withdraw/user")
     @ResponseBody
     public String withdrawUser(int idx, String email) {
+        String msg = "";
         try {
             log.info("result= " + idx + email);
-            return "Success";
+            if (userService.withdrawUser(idx, email) != 0) {
+                msg = "SUCCESS";
+            }
         } catch (Exception e) {
-            return "Failed";
+            msg = "FAILED";
         }
+        return msg;
     }
 
 //    @RequestMapping("/user/login")

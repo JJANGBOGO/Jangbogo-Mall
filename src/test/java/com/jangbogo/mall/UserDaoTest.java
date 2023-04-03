@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import static org.junit.Assert.*;
+
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/**/root-context.xml"})
@@ -33,5 +35,12 @@ public class UserDaoTest {
     public void findByEmailTest () throws Exception {
         User result = dao.selUserByEmail("진진자라", "jinvicky@naver.com");
         log.info("result="+ result);
+    }
+
+    @Test //OK
+    public void selectUserTest () throws Exception {
+        User result = dao.selectUser(1);
+        log.info("result="+ result);
+        assertTrue(result != null);
     }
 }
