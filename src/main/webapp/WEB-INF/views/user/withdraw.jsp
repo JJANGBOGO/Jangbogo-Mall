@@ -63,6 +63,19 @@
                 placeholder="탈퇴처리에 동의합니다"
         />
     </div>
+
+    <label for="withdraw_agre" class="input-line" id="chk_label">
+        <input type="checkbox" id="withdraw_agre" class="normal" hidden/>
+        <img
+                class="agree-checkbox"
+                src="/img/unchecked.png"
+                width="20"
+                height="20"
+        />
+        <span
+        >위 사항을 모두 숙지하였으며 동의합니다.</span>
+    </label>
+
     <div class="btn-container">
         <button class="cancel">취소하기</button>
         <button class="confirm">탈퇴하기</button>
@@ -77,9 +90,28 @@
         $(".confirm").attr("disabled", true); //ok
 
         let withdraw_msg = "탈퇴처리에 동의합니다";
+        let input_failed = true; //인풋 불일치
+        let chked = false; //동의 체크여부
+
+        let validate = function (failed, checked) {
+            $(".confirm").attr("disabled", (failed || !checked) ? true : false);
+        }
+
         $("#withdraw").keyup(function (e) {
-            let failed = e.target.value != withdraw_msg;
-            $(".confirm").attr("disabled", failed ? true : false);
+            input_failed = e.target.value != withdraw_msg;
+            validate (input_failed, chked);
+        });
+
+        $("#chk_label").click(function () {
+            chked = $("#withdraw_agre").is(":checked");
+
+            $("#chk_label")
+                .children("img")
+                .attr(
+                    "src",
+                    chked ? "/img/checked.png" : "/img/unchecked.png"
+                );
+            validate (input_failed, chked);
         });
 
         $(".confirm").click(function () {

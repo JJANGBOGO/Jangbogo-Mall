@@ -13,19 +13,19 @@
     margin-top: 9px;
 }
 
-.warn-list {
+.withdraw-content .warn-list {
     margin: 40px 0;
 }
 
-.warn-list p {
+.withdraw-content .warn-list p {
     color: var(--text-danger);
 }
 
-.user-info {
+.withdraw-content .user-info {
     margin: 50px auto;
 }
 
-.confirm-input .input-control {
+.withdraw-content .confirm-input .input-control {
     width: 100%;
     height: 48px;
     line-height: 48px;
@@ -37,13 +37,22 @@
     border-radius: 4px;
 }
 
-.btn-container {
+.withdraw-content .input-line#chk_label {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+
+.withdraw-content .btn-container {
     display: flex;
     justify-content: center;
     gap: 50px;
 }
 
-.btn-container button {
+.withdraw-content .btn-container button {
     border: none;
     outline: none;
     font-size: 18px;
@@ -53,15 +62,15 @@
     cursor: pointer;
 }
 
-.btn-container button:disabled {
+.withdraw-content .btn-container button:disabled {
     opacity: 0.4;
 }
 
-.btn-container button.cancel {
+.withdraw-content .btn-container button.cancel {
     background-color: rgb(213, 213, 213);
 }
 
-.btn-container button.confirm {
+.withdraw-content .btn-container button.confirm {
     background-color: var(--text-danger);
     color: white;
 }

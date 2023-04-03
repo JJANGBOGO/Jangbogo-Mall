@@ -1,6 +1,7 @@
 package com.jangbogo.mall.service;
 
 import com.jangbogo.mall.dao.UserDao;
+import com.jangbogo.mall.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUserPresent (String nick_nm, String email) throws Exception {
         return dao.selUserEmail(nick_nm, email) != null;
+    }
+
+    @Override
+    public User selectUser (int idx) throws Exception {
+        return dao.selectUser(idx);
     }
 
 }

@@ -39,5 +39,12 @@ public class UserServiceTest {
         log.info("result= "+ result);
         assertTrue(result); //테스트 실패시 빨간 줄 추가됨. 무시
     }
+
+    @Test //OK
+    public void  selectUser () throws Exception {
+        User result = service.selectUser(1);
+        log.info("result= "+ result);
+        assertTrue(result != null); //테스트 실패시 빨간 줄 추가됨. 무시
+    }
 }
 

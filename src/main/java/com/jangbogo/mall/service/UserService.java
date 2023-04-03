@@ -1,5 +1,7 @@
 package com.jangbogo.mall.service;
 
+import com.jangbogo.mall.domain.User;
+
 public interface UserService {
 
     int withdrawUser (int idx, String email) throws Exception;
@@ -7,4 +9,6 @@ public interface UserService {
     String findUserEmail (String nick_nm, String pwd) throws Exception;
 
     boolean isUserPresent (String nick_nm, String email) throws Exception;
+
+    User selectUser (int idx) throws Exception;
 }
