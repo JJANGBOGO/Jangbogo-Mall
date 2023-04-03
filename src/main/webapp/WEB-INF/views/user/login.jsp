@@ -52,14 +52,14 @@
                         </label>
                         <ul>
                             <li>
-                                <a href="/user/find/id">아이디 찾기</a>
+                                <a href="/find/member/email">이메일 찾기</a>
                             </li>
                             <li class="pw-find">
-                                <a href="/user/find/pwd"> 비밀번호 찾기 </a>
+                                <a href="/fine/member/pwd"> 비밀번호 찾기 </a>
                             </li>
                         </ul>
                     </div>
-                    <button class="login-button" type="submit">
+                    <button class="login-button" type="submit">일
                         로그인
                     </button>
                     <a href="/user/signup"
