@@ -76,6 +76,11 @@
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
+    let msg = "${msg}";
+    if(msg == "USER_NOT_FOUND_ERR") alert("회원 정보를 찾을 수 없습니다"); //OK
+    if(msg == "EXCEPT_ERROR") alert("오류가 발생했습니다. 다시 시도해 주세요");
+</script>
+<script>
     $(document).ready(function () {
         $(".tab-button").eq(0).addClass("on");
         $(".member-form").eq(0).addClass("show");
