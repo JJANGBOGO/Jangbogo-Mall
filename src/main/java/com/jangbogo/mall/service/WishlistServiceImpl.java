@@ -18,10 +18,23 @@ public class WishlistServiceImpl implements WishlistService {
         return wishlistDao.getlist(idx);
     }
 
-
-
     @Override
     public int delete(Integer prod_idx, Integer user_idx) throws Exception {
         return wishlistDao.delete(prod_idx, user_idx);
     }
+    @Override
+    public int insertCart(Integer prod_idx, Integer user_idx, Integer prod_cnt) throws Exception{
+        return wishlistDao.insertCart(prod_idx,user_idx,prod_cnt);
+    }
+
+    @Override
+    public int updateCartCnt(Integer prod_idx, Integer user_idx, Integer cnt) throws Exception{
+        return wishlistDao.updateCartCnt(prod_idx,user_idx,cnt);
+    }
+
+    @Override
+    public int checkCart(Integer prod_idx, Integer user_idx) throws Exception{
+        return wishlistDao.checkCart(prod_idx,user_idx);
+    }
+
 }

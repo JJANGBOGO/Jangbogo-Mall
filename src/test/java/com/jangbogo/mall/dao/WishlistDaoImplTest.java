@@ -35,5 +35,46 @@ public class WishlistDaoImplTest {
         System.out.println("cnt = " + cnt);
 
     }
+    @Test
+    public void insertCart() throws Exception{
+        assertTrue(wishlistDao != null);
+        System.out.println("wishlistDao = " + wishlistDao);
+        int cnt = wishlistDao.insertCart(2,3,1);
+        assertTrue(cnt==1);
+//        System.out.println("cnt = " + cnt);
+
+    }
+    @Test
+    public void updateCartCnt() throws Exception{
+        assertTrue(wishlistDao != null);
+        System.out.println("wishlistDao = " + wishlistDao);
+        int cnt = wishlistDao.updateCartCnt(2,3,2);
+        assertTrue(cnt==1);
+        System.out.println("cnt = " + cnt);
+
+    }
+
+    @Test
+    public void checkCart() throws Exception{
+        assertTrue(wishlistDao != null);
+        System.out.println("wishlistDao = " + wishlistDao);
+        int cnt = wishlistDao.checkCart(2,3);
+        assertTrue(cnt==1);
+        System.out.println("cnt = " + cnt);
+
+    }
+
+    @Test
+    public void selectUser() throws Exception{
+        assertTrue(wishlistDao != null);
+        System.out.println("wishlistDao = " + wishlistDao);
+//        String email = "carabut@naver.com";
+        int cnt = wishlistDao.selectUser("carabut@naver.com");
+        assertTrue(cnt==2);
+        System.out.println("cnt = " + cnt);
+
+    }
+
+
 
 }

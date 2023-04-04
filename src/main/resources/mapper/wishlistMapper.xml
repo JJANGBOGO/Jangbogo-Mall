@@ -15,7 +15,30 @@
         DELETE FROM WISHLIST
         WHERE PROD_IDX = ${prod_idx} and USER_IDX = ${user_idx}
     </delete>
+
+    <insert id="insertCart" parameterType="map">
+        insert into CART (PROD_IDX, USER_IDX, PROD_CNT)
+        values (${prod_idx},${user_idx},${prod_cnt})
+
+    </insert>
+    <update id="updateCartCnt" parameterType="map">
+        UPDATE CART
+        SET   PROD_CNT = PROD_CNT + #{cnt}
+        WHERE  PROD_IDX = ${prod_idx} and USER_IDX = ${user_idx}
+    </update>
+
+    <select id="checkCart" parameterType="map" resultType="int">
+        select count(*)
+        from CART
+        where PROD_IDX = ${prod_idx} and USER_IDX = ${user_idx}
+    </select>
     
-    <insert id=""
+    <select id="selectUser" parameterType="map" resultType="int">
+        select IDX
+        from USER
+        where EMAIL = #{email}
+    </select>
+
+
 
 </mapper>

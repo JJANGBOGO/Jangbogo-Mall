@@ -39,4 +39,34 @@ public class WishlistServiceImplTest {
         System.out.println("list = " + list);
     }
 
+    @Test
+    public void insertCart() throws Exception{
+        assertTrue(wishlistService != null);
+        System.out.println("wishlistDao = " + wishlistService);
+        int cnt = wishlistService.insertCart(2,3,1);
+        assertTrue(cnt==1);
+//        System.out.println("cnt = " + cnt);
+
+    }
+
+    @Test
+    public void updateCartCnt() throws Exception{
+        assertTrue(wishlistService != null);
+        System.out.println("wishlistDao = " + wishlistService);
+        int cnt = wishlistService.updateCartCnt(2,3,2);
+        assertTrue(cnt==1);
+        System.out.println("cnt = " + cnt);
+
+    }
+
+    @Test
+    public void checkCart() throws Exception{
+        assertTrue(wishlistService != null);
+        System.out.println("wishlistDao = " + wishlistService);
+        int cnt = wishlistService.checkCart(2,3);
+        assertTrue(cnt==1);
+        System.out.println("cnt = " + cnt);
+
+    }
+
 }
