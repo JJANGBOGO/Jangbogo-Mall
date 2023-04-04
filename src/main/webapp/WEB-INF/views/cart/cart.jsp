@@ -97,6 +97,15 @@
             display: flex;
             align-items: center;
             margin: 0 20px;
+            cursor: pointer;
+        }
+
+        .cart_item__close > a {
+            text-decoration: none;
+            color: black;
+        }
+        .cart_item > input {
+            margin-right: 15px;
         }
         .summary {
             width: 400px;
@@ -112,6 +121,7 @@
     </style>
 </head>
 <body>
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <div class="container">
         <div class="header"></div>
         <div class="title">
@@ -120,12 +130,13 @@
         <div class="cart">
             <div class="content">
                 <div class="selection">
-                    <input type="checkbox" /> 전체선택(${list.size()}/1) |  선택삭제
+                    <input type="checkbox" name="chk-all" class="input-all" /> 전체선택(<span id="checked">0</span>/${list.size()}) |  선택삭제
                 </div>
                 <div class="cart_items">
                     <ul>
                         <c:forEach var="cartDto" items="${list}">  <!-- 반복문 입력 -->
                             <li class="cart_item">
+                                <input type="checkbox" name="chk"  />
                                 <img src="${cartDto.prod_rpath}" alt="" />
                                 <div class="cart_item__title">${cartDto.prod_name}</div>
                                 <div class="cart_item__contents">
@@ -135,15 +146,17 @@
                                         <div>+</div>
                                     </div>
                                     <div class="cart_item__price">${cartDto.prod_price}원</div>
-                                    <div class="cart_item__close">&times;</div>
+                                    <div class="cart_item__close" id="removeBtn">
+                                        <a href="<c:url value="/cart/remove?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}"/>">&times;</a>
+                                    </div>
                                 </div>
                             </li>
                         </c:forEach>
                     </ul>
                 </div>
-                <div class="selection">
-                    <input type="checkbox" /> 전체선택(1/1)   |   선택삭제
-                </div>
+<%--                <div class="selection">--%>
+<%--                    <input type="checkbox" name="chk-all" class="input-all" /> 전체선택(1/${list.size()}) |  선택삭제--%>
+<%--                </div>--%>
             </div>
             <div class="summary">
 
@@ -151,5 +164,40 @@
         </div>
         <div class="footer"></div>
     </div>
+    <script>
+        $(document).ready(function() {
+            // 선택된 상품 개수를 의미하는 변수 count
+            let checked = $("input[name=chk]:checked").length;
+            $(".selection > span ").prop("innerHTML", checked);
+
+
+            // 이벤트 대상 : .input-all
+            // 이벤트 : click
+            // 이벤트 핸들러 기능 : 전체 선택 시, 모든 상품의 체크박스 체크드 처리
+            // 1. 체크
+                // 1.1 '전체'
+                // 1.2 '특정 종목'
+            // 2. 언체크
+                // 2.1 '전체'
+                // 2.2 '특정 종목'
+            $(".input-all").click(function() {
+                if($(".input-all").is(":checked")) $("input[name=chk]").prop("checked", true);
+                else $("input[name=chk]").prop("checked", false);
+
+                let checked = $("input[name=chk]:checked").length;
+                $(".selection > span ").prop("innerHTML", checked);
+            });
+
+            $("input[name=chk]").click(function() {
+                let total = $("input[name=chk]").length;
+                let checked = $("input[name=chk]:checked").length;
+
+                $(".selection > span ").prop("innerHTML", checked);
+
+                if(total != checked) $(".input-all").prop("checked", false);
+                else $(".input-all").prop("checked", true);
+            });
+        })
+    </script>
 </body>
 </html>
