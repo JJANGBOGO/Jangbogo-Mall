@@ -7,10 +7,10 @@
                 <ul>
                     <s:authorize access="isAnonymous()">
                         <li>
-                            <a href="/user/login">로그인</a>
+                            <a href="/login">로그인</a>
                         </li>
                         <li>
-                            <a href="/user/signup">회원가입</a>
+                            <a href="/register">회원가입</a>
                         </li>
                     </s:authorize>
                     <s:authorize access="isAuthenticated()">

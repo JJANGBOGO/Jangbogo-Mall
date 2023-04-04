@@ -103,7 +103,7 @@ public class UserController {
     //로그인뷰
     @GetMapping("/login/user")
     public String loginUserView() {
-        return "/user/login";
+        return "login";
     }
 
     //로그인
@@ -112,24 +112,7 @@ public class UserController {
 //        TODO:: 세션에 유저 정보 저장 필수
         return "redirect:/";
     }
-//    @RequestMapping("/user/login")
-//    public String login(Model model, HttpSession session, HttpServletRequest request, Authentication authentication) {
 //
-//        String uri = request.getHeader("Referer");
-//
-//        if (authentication != null) return "redirect:/"; //중복 로그인 방지
-//
-//        if (uri != null && !(uri.contains("/login") || uri.contains("/login_check")))
-//            request.getSession().setAttribute("prevPage", uri);
-//
-//        String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
-//        model.addAttribute("urlNaver", naverAuthUrl);
-//
-//        String kakaoAuthUrl = kakaoLoginBO.getAuthorizationUrl(session);
-//        model.addAttribute("urlKakao", kakaoAuthUrl);
-//
-//        return "user/login";
-//    }
 //
 //    @GetMapping("/social/kakao") //경로 나중에 수정
 //    public String buildKaKao(HttpSession session, String code, String state) throws Exception {

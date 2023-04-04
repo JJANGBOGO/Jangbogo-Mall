@@ -83,6 +83,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
+    font-size: 14px;
 }
 
 .login-form form .user-info-link ul {
@@ -167,3 +168,5 @@
     color: white;
     background-color: #00c73c;
 }
+
+

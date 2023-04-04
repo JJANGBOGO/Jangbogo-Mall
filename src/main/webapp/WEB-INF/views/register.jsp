@@ -144,8 +144,8 @@
                         </div>
                         <div class="btn-space">
                             <button id="addr-search">
-                                  <i class="fa-solid fa-magnifying-glass"></i>
-                                  검색
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                검색
                             </button>
                         </div>
                     </div>

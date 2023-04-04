@@ -5,13 +5,14 @@
 <html>
 <head>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
-    <link rel="stylesheet" href="/css/user/loginForm.css"/>
+    <link rel="stylesheet" href="/css/loginForm.css"/>
+    <link rel="stylesheet" href="/css/radioBtn.css"/>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
-    <c:if test="${param.ng!=null}">
-        <p> error : <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/> </p>
-    </c:if>
+<c:if test="${param.ng!=null}">
+    <p> error : <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/></p>
+</c:if>
 <div class="login-container">
     <c:if test="${LoginFailMessage!=null}">
         <p> Error : <c:out value="${LoginFailMessage}"/></p>
@@ -21,6 +22,17 @@
             <h2 class="page-title">로그인</h2>
             <div class="login-form">
                 <form action="/user/login" method="post">
+                    <fieldset>
+                        <label>
+                            <input type="radio" name="type" value="user" checked/>
+                            <span>회원</span>
+                        </label>
+
+                        <label>
+                            <input type="radio" name="type" value="seller"/>
+                            <span>판매자</span>
+                        </label>
+                    </fieldset>
                     <input
                             name="id"
                             type="text"
@@ -34,7 +46,7 @@
                                 type="password"
                                 placeholder="비밀번호를 입력해주세요."
                         />
-                        <input type="checkbox" name="" id="showPwd" hidden checked />
+                        <input type="checkbox" name="" id="showPwd" hidden checked/>
                         <label id="showPwdToggle" class="showPwd" for="showPwd">
                             <i id="eye" class="fa-regular fa-eye-slash"></i>
                         </label>
@@ -59,32 +71,34 @@
                             </li>
                         </ul>
                     </div>
-                    <button class="login-button" type="submit">일
+                    <button class="login-button" type="submit">
                         로그인
                     </button>
                     <a href="/user/signup"
                        class="register-button">회원가입</a>
                 </form>
-                <div class="warning-text">
-                    *소셜 로그인의 경우 판매자 등록, 개인정보 수정, 탈퇴가 불가능합니다.
-                </div>
-                <div class="join-buttons">
-                    <a
-                        href="${urlKakao}"
-                        class="login-social kakao"
-                    >
+                <div class="social-box">
+                    <div class="warning-text">
+                        *소셜 로그인의 경우 판매자 등록, 개인정보 수정, 탈퇴가 불가능합니다.
+                    </div>
+                    <div class="join-buttons">
+                        <a
+                            href="${urlKakao}"
+                            class="login-social kakao"
+                        >
                         <span>
                           <strong>카카오</strong>
                         </span>로 로그인
-                    </a>
-                    <a
-                        href="${urlNaver}"
-                        class="login-social naver"
-                    >
+                        </a>
+                        <a
+                            href="${urlNaver}"
+                            class="login-social naver"
+                        >
                         <span>
                           <strong>네이버</strong>
                         </span>로 로그인
-                    </a>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -122,6 +136,12 @@
                     checked ? "/img/checked.png" : "/img/unchecked.png"
                 );
         });
+
+        $("input[type=radio]").click(function () {
+            if ($("input[type=radio]:checked").val() == "seller") {
+                $(".social-box").css("display", "none");
+            } else $(".social-box").css("display", "block");
+        })
     });
 </script>
 </body>
