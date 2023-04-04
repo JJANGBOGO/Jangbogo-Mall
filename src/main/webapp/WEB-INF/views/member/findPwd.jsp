@@ -114,7 +114,8 @@
             let user_email = $("#user_email").val();
 
             e.preventDefault();
-            if (findEmailChk(user_nick, user_email)) $("#user_find_email").submit();
+            if (findEmailChk(user_nick, user_email))
+                $("#user_find_email").submit();
         });
     });
 </script>

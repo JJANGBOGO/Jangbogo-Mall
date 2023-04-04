@@ -32,4 +32,18 @@ public class UserServiceImpl implements UserService {
         return dao.selectUser(idx);
     }
 
+    @Override
+    public int updatePwd (String pwd, int idx, String email) throws Exception {
+        return dao.updatePwd(pwd, idx, email);
+    }
+
+    //임시 비번 생성
+    public String createTmpPwd () {
+        String pwd = "";
+        for (int i = 0; i < 12; i++) {
+            pwd += (char) ((Math.random() * 26) + 97);
+        };
+        return pwd;
+    }
+
 }

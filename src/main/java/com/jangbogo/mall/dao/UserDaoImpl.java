@@ -44,5 +44,14 @@ public class UserDaoImpl implements UserDao{
     public User selectUser (int idx) throws Exception {
         return session.selectOne(nameSpace + "selectUser", idx);
     }
+
+    @Override
+    public int updatePwd (String pwd, int idx, String email) throws Exception {
+        Map map = new HashMap();
+        map.put("pwd", pwd);
+        map.put("idx", idx);
+        map.put("email", email);
+        return session.update(nameSpace + "updatePwd", map);
+    }
 }
 

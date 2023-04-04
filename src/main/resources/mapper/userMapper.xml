@@ -20,5 +20,9 @@
         SELECT * FROM USER WHERE IDX = #{idx};
     </select>
 
+    <update id="updatePwd" parameterType="map">
+        UPDATE USER SET PWD = #{pwd} WHERE IDX = #{idx} AND EMAIL = #{email};
+    </update>
+
 </mapper>
 

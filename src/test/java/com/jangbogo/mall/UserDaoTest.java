@@ -3,6 +3,7 @@ package com.jangbogo.mall;
 
 import com.jangbogo.mall.dao.UserDao;
 import com.jangbogo.mall.domain.User;
+import com.jangbogo.mall.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,6 +20,7 @@ public class UserDaoTest {
 
     @Autowired
     UserDao dao;
+
 
     @Test //OK
     public void withdrawTest () throws Exception {
@@ -42,5 +44,12 @@ public class UserDaoTest {
         User result = dao.selectUser(1);
         log.info("result="+ result);
         assertTrue(result != null);
+    }
+
+    @Test //OK
+    public void updatePwdTest () throws Exception {
+        int result = dao.updatePwd("randomPwd", 1, "jinvicky@naver.com");
+        log.info("result="+ result);
+        assertTrue(result != 0);
     }
 }
