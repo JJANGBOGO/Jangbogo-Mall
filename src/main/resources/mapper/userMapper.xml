@@ -21,7 +21,7 @@
     </select>
 
     <update id="updatePwd" parameterType="map">
-        UPDATE USER SET PWD = #{pwd} WHERE IDX = #{idx} AND EMAIL = #{email};
+        UPDATE USER SET PWD = #{pwd} WHERE NICK_NM = #{nick_nm} AND EMAIL = #{email};
     </update>
 
 </mapper>

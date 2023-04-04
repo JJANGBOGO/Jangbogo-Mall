@@ -12,6 +12,6 @@ public interface UserDao {
 
     User selectUser (int idx) throws Exception; //회원상세조회
 
-    int updatePwd (String pwd, int idx, String email) throws Exception; //비밀번호 수정
+    int updatePwd (String pwd, String nick_nm, String email) throws Exception; //비밀번호 수정
 
 }

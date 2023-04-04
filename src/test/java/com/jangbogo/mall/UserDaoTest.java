@@ -48,7 +48,7 @@ public class UserDaoTest {
 
     @Test //OK
     public void updatePwdTest () throws Exception {
-        int result = dao.updatePwd("randomPwd", 1, "jinvicky@naver.com");
+        int result = dao.updatePwd("randomPwd", "진진자라", "jinvicky@naver.com");
         log.info("result="+ result);
         assertTrue(result != 0);
     }

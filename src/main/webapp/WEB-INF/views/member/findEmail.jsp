@@ -21,6 +21,7 @@
                     <div class="find-input-box">
                         <label>닉네임</label>
                         <input
+                                id="user_nick_nm"
                                 class="input-control"
                                 name="nick_nm"
                                 type="text"
@@ -30,6 +31,7 @@
                     <div class="find-input-box">
                         <label>비밀번호</label>
                         <input
+                                id="user_pwd"
                                 class="input-control"
                                 name="pwd"
                                 type="text"
@@ -37,7 +39,7 @@
                         />
                     </div>
                     <a class="find-other-link" href="/find/member/pwd">비밀번호 찾기</a>
-                    <button class="find-confirm-button" type="submit">
+                    <button class="find-confirm-button" id="user_form_btn">
                         확인
                     </button>
                 </form>
@@ -88,8 +90,27 @@
             $(".member-form").eq(data_id).addClass("show");
         });
 
+        let findEmailChk = function (nickname, pwd) {
+            if ($.trim(nickname) == "") {
+                alert("닉네임을 입력해주세요");
+                return false;
+            }
+            if ($.trim(pwd) == "") {
+                alert("비밀번호를 입력해 주세요");
+                return false;
+            }
+            return true;
+        };
 
+        //회원의 이메일 폼 전송
+        $("#user_form_btn").click(function (e) {
+            let user_nick = $("#user_nick_nm").val();
+            let user_pwd = $("#user_pwd").val();
 
+            e.preventDefault();
+            if (findEmailChk(user_nick, user_pwd))
+                $("#user_find_email").submit();
+        });
     });
 </script>
 </body>

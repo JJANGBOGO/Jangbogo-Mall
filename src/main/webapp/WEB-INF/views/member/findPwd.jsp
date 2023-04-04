@@ -17,7 +17,7 @@
                 <button class="tab-button" data-a="1">판매자</button>
             </div>
             <div class="member-form">
-                <form id="user_find_email" class="find-form" action="/find/user/pwd" method="post">
+                <form id="user_find_pwd" class="find-form" action="/find/user/pwd" method="post">
                     <div class="find-input-box">
                         <label>닉네임</label>
                         <input
@@ -96,7 +96,7 @@
         });
 
 
-        let findEmailChk = function (nickname, email) {
+        let findPwdChk = function (nickname, email) {
             if ($.trim(nickname) == "") {
                 alert("닉네임을 입력해주세요");
                 return false;
@@ -114,8 +114,8 @@
             let user_email = $("#user_email").val();
 
             e.preventDefault();
-            if (findEmailChk(user_nick, user_email))
-                $("#user_find_email").submit();
+            if (findPwdChk(user_nick, user_email))
+                $("#user_find_pwd").submit();
         });
     });
 </script>

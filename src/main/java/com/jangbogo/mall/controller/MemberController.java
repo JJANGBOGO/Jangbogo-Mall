@@ -21,6 +21,6 @@ public class MemberController {
 
     @GetMapping("/find/member/success")
     public String findMemberSuccessView () {
-        return "/user/findSuccess";
+        return "member/findSuccess";
     }
 }

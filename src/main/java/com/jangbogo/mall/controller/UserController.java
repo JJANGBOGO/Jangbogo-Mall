@@ -37,7 +37,7 @@ public class UserController {
     @GetMapping("/withdraw/user")
     public String withdrawUserView(HttpSession session, Model m, Authentication auth) {
         if (auth == null) return "redirect:/login/user";
-        m.addAttribute("user", session.getAttribute("user") );
+        m.addAttribute("user", session.getAttribute("user"));
         return "/user/withdraw";
     }
 
@@ -59,27 +59,27 @@ public class UserController {
 
     //이메일찾기
     @PostMapping("/find/user/email")
-    public String findUserEmail (String nick_nm, String pwd, Model m, RedirectAttributes rattr) {
+    public String findUserEmail(String nick_nm, String pwd, Model m, RedirectAttributes rattr) {
         log.info("result=" + nick_nm + pwd);
         try {
-            String result = userService.findUserEmail(nick_nm, pwd);
-            if (result == "") {
+            String email = userService.findUserEmail(nick_nm, pwd);
+            if (email == "") {
                 rattr.addFlashAttribute("USER_ERR", "회원을 찾을 수 없습니다");
-                return "member/findEmail";
+                return "redirect:/find/member/email";
             } else {
-//                TODO:: 완료페이지에 이메일을 보여줄 것이다. 변수명 짓기.
-                m.addAttribute("result", result);
+//                TODO:: 완료페이지에 이메일을 보여줄 것이다. 변수명 짓기. 경로 이슈
+                m.addAttribute("result", email);
             }
-        }catch(Exception e) {
-                rattr.addFlashAttribute("MSG", "요청 중 문제가 발생했습니다. 다시 시도해 주세요");
-                return "member/findEmail";
+        } catch (Exception e) {
+            rattr.addFlashAttribute("MSG", "요청 중 문제가 발생했습니다. 다시 시도해 주세요");
+            return "redirect:/find/member/email";
         }
         return "redirect:/find/member/success";
     }
 
     //비번찾기
     @PostMapping("/find/user/pwd")
-    public String findUserPwd (String nick_nm, String email, Model m, RedirectAttributes rattr) {
+    public String findUserPwd(String nick_nm, String email, Model m, RedirectAttributes rattr) {
         log.info("result=" + nick_nm + email);
         try {
             boolean result = userService.isUserPresent(nick_nm, email);
@@ -87,26 +87,28 @@ public class UserController {
                 rattr.addFlashAttribute("msg", "USER_NOT_FOUND_ERR");
                 return "redirect:/find/member/pwd";
             } else {
-
-                userService.sendPwdEmail(email);
-//               임시 비번을 담은 메일을 전송하고 완료페이지로 이동한다.
+                final int SUCCESS = 1;
+                if (userService.sendPwdEmail(nick_nm, email) == SUCCESS) { //전송 성공
+//                   TODO:: 경로 이슈 해결하셉...
+//                    return "member/findSuccess";
+                }
             }
-        }catch(Exception e) {
+        } catch (Exception e) {
             rattr.addFlashAttribute("msg", "EXCEPT_ERROR");
             return "redirect:/find/member/pwd";
         }
-        return "redirect:/find/member/success";
+        return "redirect:/find/member/success"; //TODO:: 경로 이슈 해결
     }
 
     //로그인뷰
     @GetMapping("/login/user")
-    public String loginUserView () {
+    public String loginUserView() {
         return "/user/login";
     }
 
     //로그인
     @PostMapping("/login/user")
-    public String loginUser () {
+    public String loginUser() {
 //        TODO:: 세션에 유저 정보 저장 필수
         return "redirect:/";
     }

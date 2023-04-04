@@ -46,10 +46,10 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public int updatePwd (String pwd, int idx, String email) throws Exception {
+    public int updatePwd (String pwd, String nick_nm, String email) throws Exception {
         Map map = new HashMap();
         map.put("pwd", pwd);
-        map.put("idx", idx);
+        map.put("nick_nm", nick_nm);
         map.put("email", email);
         return session.update(nameSpace + "updatePwd", map);
     }
