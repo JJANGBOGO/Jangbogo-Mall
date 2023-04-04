@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-
 <mapper namespace="com.jangbogo.mall.dao.CartMapper">
-
     <!--
         태   그 : select
         기   능 : 장바구니를 통해 상품 정보 가져오기
@@ -16,4 +13,16 @@
         FROM CART, PRODUCT, USER
         WHERE CART.PROD_IDX = PRODUCT.IDX AND CART.USER_IDX = USER.IDX;
     </select>
+
+
+    <!--
+        태   그 : delete
+        기   능 : 선택한 장바구니 물품을 삭제한다.
+        아이디명 : delete
+        매개변수타입 : map(Integer, Integer)
+    -->
+    <delete id="delete" parameterType="map">
+        DELETE FROM CART
+        WHERE prod_idx = #{prod_idx} AND user_idx = #{user_idx};
+    </delete>
 </mapper>
