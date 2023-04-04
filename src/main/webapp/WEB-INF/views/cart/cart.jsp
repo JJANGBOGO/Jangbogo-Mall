@@ -88,7 +88,9 @@
         .cart_item__cnt > div {
             padding: 5px 10px;
         }
-
+        #subtract-btn, #add-btn {
+            cursor: pointer;
+        }
         .cart_item__price {
             font-weight: 700;
         }
@@ -100,7 +102,7 @@
             cursor: pointer;
         }
 
-        .cart_item__close > a {
+        .cart_item__close > a, #subtract-btn > a, #add-btn > a {
             text-decoration: none;
             color: black;
         }
@@ -141,11 +143,15 @@
                                 <div class="cart_item__title">${cartDto.prod_name}</div>
                                 <div class="cart_item__contents">
                                     <div class="cart_item__cnt">
-                                        <div>-</div>
+                                        <div id="subtract-btn">
+                                            <a href="<c:url value="/cart/subtractCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}"/>">-</a>
+                                        </div>
                                         <div>${cartDto.prod_cnt}</div>
-                                        <div>+</div>
+                                        <div id="add-btn">
+                                            <a href="<c:url value="/cart/addCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}"/>">+</a>
+                                        </div>
                                     </div>
-                                    <div class="cart_item__price">${cartDto.prod_price}원</div>
+                                    <div class="cart_item__price">${cartDto.prod_price * cartDto.prod_cnt}원</div>
                                     <div class="cart_item__close" id="removeBtn">
                                         <a href="<c:url value="/cart/remove?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}"/>">&times;</a>
                                     </div>
@@ -169,7 +175,6 @@
             // 선택된 상품 개수를 의미하는 변수 count
             let checked = $("input[name=chk]:checked").length;
             $(".selection > span ").prop("innerHTML", checked);
-
 
             // 이벤트 대상 : .input-all
             // 이벤트 : click
@@ -197,6 +202,24 @@
                 if(total != checked) $(".input-all").prop("checked", false);
                 else $(".input-all").prop("checked", true);
             });
+            // cartDto.prod_idx를 js에서 사용할수 없어서 무용지물
+            // 이벤트 대상 : #add-btn
+            // 이벤트 : click
+            // 이벤트 핸들러 기능 : 클릭 시, 장바구니 상품 개수 1 증가
+            <%--$("#add-btn").click(() => {--%>
+            <%--    // CartController의 addProductCnt메서드 실행--%>
+            <%--    alert("add-btn 동작")--%>
+            <%--    location.href="<c:url value="/cart/addCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}"/>";--%>
+            <%--})--%>
+
+            // 이벤트 대상 : #subtract-btn
+            // 이벤트 : click
+            // 이벤트 핸들러 기능 : 클릭 시, 장바구니 상품 개수 1 감소
+            <%--$("#subtract-btn").click(() => {--%>
+            <%--    // CartController의 subtractProductCnt메서드 실행--%>
+            <%--    alert("subtract-btn 동작")--%>
+            <%--    location.href="<c:url value="/cart/subtractCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}"/>";--%>
+            <%--})--%>
         })
     </script>
 </body>

@@ -26,4 +26,17 @@ public class CartService {
     public int remove(Integer prod_idx, Integer user_idx) throws Exception {
         return cartDao.delete(prod_idx, user_idx);
     }
+
+    // 메서드명 : addCount
+    // 기   능 : cartDao의 addCount메서드 호출
+    // 반환타입 : Integer prod_idx, Integer user_idx
+    public int addCount(Integer prod_idx, Integer user_idx) throws Exception {
+        return cartDao.addCount(prod_idx, user_idx);
+    }
+    // 메서드명 : subtractCount
+    // 기   능 : cartDao의 subtractCount메서드 호출
+    // 반환타입 : Integer prod_idx, Integer user_idx
+    public int subtractCount(Integer prod_idx, Integer user_idx) throws Exception {
+        return cartDao.subtractCount(prod_idx, user_idx);
+    }
 }

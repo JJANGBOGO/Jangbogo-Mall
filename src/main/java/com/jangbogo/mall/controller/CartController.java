@@ -41,7 +41,7 @@ public class CartController {
     // 기   능 : 장바구니에서 선택된 상품을 삭제한다.
     // 반환타입 : String
     // 매개변수 : Integer prod_idx, Integer user_idx
-    // 요청URL : /cart/remove GET
+    // 요청URL : /cart/remove?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx} GET
     @GetMapping("/remove")
     public String deleteBoard(Integer prod_idx, Integer user_idx) {
         try {
@@ -57,5 +57,41 @@ public class CartController {
         }
         // 4. 장바구니 페이지로 리다이렉트 이동
         return  "redirect:/cart/cart";
+    }
+
+    // 메서드명 : addProductCnt
+    // 기   능 : 장바구니 상품 개수를 1 증가시킨다.
+    // 반환타입 : String
+    // 요청URL : /cart/addCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx} GET
+    @GetMapping("/addCnt")
+    public String addProductCnt(Integer prod_idx, Integer user_idx) {
+
+        try {
+            int rowCnt = cartService.addCount(prod_idx, user_idx);
+            if(rowCnt != 1) {
+                throw new Exception("addCount failed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/cart/cart";
+    }
+
+    // 메서드명 : subtractProductCnt
+    // 기   능 : 장바구니 상품 개수를 1 감소시킨다.
+    // 반환타입 : String
+    // 요청URL : /cart/subtractCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx} GET
+    @GetMapping("/subtractCnt")
+    public String subtractProductCnt(Integer prod_idx, Integer user_idx) {
+
+        try {
+            int rowCnt = cartService.subtractCount(prod_idx, user_idx);
+            if(rowCnt != 1) {
+                throw new Exception("addCount failed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/cart/cart";
     }
 }
