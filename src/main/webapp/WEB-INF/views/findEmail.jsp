@@ -34,7 +34,7 @@
                                 id="user_pwd"
                                 class="input-control"
                                 name="pwd"
-                                type="text"
+                                type="password"
                                 placeholder="비밀번호를 입력해주세요."
                         />
                     </div>
@@ -86,6 +86,12 @@
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
+    let msg = "${msg}";
+    if(msg == "EMPTY_ERR") alert("정보를 모두 입력해 주세요");
+    if(msg == "NOT_FOUND_ERR") alert("정보를 찾을 수 없습니다");
+    if(msg == "EXCEPTION_ERR") alert("오류가 발생했습니다. 다시 시도해 주세요");
+</script>
+<script>
     $(document).ready(function () {
         $(".tab-button").eq(0).addClass("on");
         $(".member-form").eq(0).addClass("show");
@@ -121,6 +127,8 @@
             if (findEmailChk(user_nick, user_pwd))
                 $("#user_find_email").submit();
         });
+
+        //판매자 이메일 폼 전송
     });
 </script>
 </body>

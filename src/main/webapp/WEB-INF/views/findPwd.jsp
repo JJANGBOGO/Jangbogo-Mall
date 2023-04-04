@@ -17,7 +17,7 @@
                 <button class="tab-button" data-a="1">판매자</button>
             </div>
             <div class="member-form">
-                <form id="user_find_pwd" class="find-form" action="/find/user/pwd" method="post">
+                <form id="user_find_pwd" class="find-form" action="/find/pwd" method="post">
                     <div class="find-input-box">
                         <label>닉네임</label>
                         <input
@@ -87,8 +87,9 @@
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
     let msg = "${msg}";
-    if(msg == "USER_NOT_FOUND_ERR") alert("정보를 찾을 수 없습니다");
-    if(msg == "EXCEPT_ERROR") alert("오류가 발생했습니다. 다시 시도해 주세요");
+    if(msg == "EMPTY_ERR") alert("정보를 모두 입력해 주세요");
+    if(msg == "NOT_FOUND_ERR") alert("정보를 찾을 수 없습니다");
+    if(msg == "EXCEPTION_ERR") alert("오류가 발생했습니다. 다시 시도해 주세요");
 </script>
 <script>
     $(document).ready(function () {

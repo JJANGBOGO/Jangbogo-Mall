@@ -3,7 +3,7 @@
 <html>
 <head>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
-    <link rel="stylesheet" href="/css/user/findUserSuccess.css"/>
+    <link rel="stylesheet" href="/css/findSuccess.css"/>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
@@ -35,6 +35,25 @@
                     <c:otherwise>5분 후에도 메세지가 도착하지 않는다면<br/> 재시도해주세요.</c:otherwise>
                 </c:choose>
             </p>
+        </div>
+    </div>
+    <div class="find-success-content">
+        <div class="center">
+            <div class="email-icon">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <p class="result">
+                <span class="receipient">jinvicky@naver.com</span>으로 <br />
+                임시 비밀번호가 전송되었어요.
+            </p>
+            <p class="warn-desc">
+                5분 후에도 메일이 오지 않는다면<br />스팸함을 확인해 주세요.
+            </p>
+
+            <div class="btn-box">
+                <button class="login">로그인하기</button>
+                <button class="find-pwd">비밀번호 찾기</button>
+            </div>
         </div>
     </div>
     <%@ include file="/WEB-INF/views/include/footer.jsp" %>
