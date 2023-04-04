@@ -10,9 +10,11 @@ public class ProdInqryDto {
     private Integer user_idx;
     private String title;
     private String ctent;
-    private String writer;
+    private String writer = getNick_nm();
     private Date wrt_tm;
     private Integer res_state_cd;
+
+    private String nick_nm;
 
     public ProdInqryDto() {}
 
@@ -112,5 +114,13 @@ public class ProdInqryDto {
 
     public void setRes_state_cd(Integer res_state_cd) {
         this.res_state_cd = res_state_cd;
+    }
+
+    public String getNick_nm() {
+        return nick_nm;
+    }
+
+    public void setNick_nm(String nick_nm) {
+        this.nick_nm = nick_nm;
     }
 }

@@ -15,8 +15,25 @@
     <title>Title</title>
 </head>
 <body>
+  <button>문의하기</button>
+  <div>
+    <h2></h2>
+    <div>
+      <img url=""/>
+      <div>[델리치오]목초육 안심 구이용 250g</div>
+    </div>
+  </div>
+  <form action="">
+    <div>제목</div>
+    <input type="text"/>
+    <div>내용</div>
+    <input type="text"/>
+    <button>취소</button>
+    <button>등록</button>
+  </form>
   <table board="1">
     <tr>
+      <th>번호</th>
       <th>제목</th>
       <th>작성자</th>
       <th>작성날짜</th>
@@ -24,6 +41,7 @@
     </tr>
     <c:forEach var="prodInqryDtoEl" items="${prodInqryDto}">
       <tr>
+        <td>${prodInqryDtoEl.idx}</td>
         <td>${prodInqryDtoEl.title}</td>
         <td>${prodInqryDtoEl.writer}</td>
         <td><fmt:formatDate value="${prodInqryDtoEl.wrt_tm}" pattern="yyyy.MM.dd" type="date"/></td>

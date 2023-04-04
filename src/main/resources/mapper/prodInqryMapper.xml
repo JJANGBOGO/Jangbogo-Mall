@@ -5,8 +5,57 @@
 
 <mapper namespace="com.jangbogo.mall.dao.ProdInqryMapper">
     <select id="selectAll" resultType="ProdInqryDto">
-        SELECT title, ctent, writer, res_state_cd, wrt_tm
+        SELECT idx, title, ctent, writer, res_state_cd, wrt_tm
         FROM prod_inqry
         ORDER BY res_state_cd
     </select>
+
+    <select id="count" resultType="int">
+        SELECT count(*)
+        FROM prod_inqry
+    </select>
+
+    <select id="select" parameterType="int" resultType="ProdInqryDto">
+        SELECT idx, title, ctent, writer, res_state_cd, wrt_tm
+        FROM prod_inqry
+        WHERE idx = #{idx}
+    </select>
+
+    <select id="selectPage" parameterType="map" resultType="ProdInqryDto">
+        SELECT idx, title, ctent, writer, res_state_cd, wrt_tm
+        FROM prod_inqry
+        ORDER BY wrt_tm
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <insert id="insert" parameterType="ProdInqryDto">
+        INSERT INTO prod_inqry
+            (idx, prod_idx, user_idx, title, ctent, writer)
+        VALUES
+            (#{idx}, #{prod_idx}, #{user_idx}, #{title}, #{ctent})
+    </insert>
+
+    <delete id="delete" parameterType="map">
+        DELETE FROM prod_inqry
+        WHERE idx = #{idx} AND user_idx = #{user_idx}
+    </delete>
+
+    <delete id="deleteAll">
+        DELETE FROM prod_inqry
+    </delete>
+
+    <update id="update" parameterType="ProdInqryDto">
+        UPDATE prod_inqry
+        SET title = #{title},
+            ctent = #{ctent},
+            wrt_tm = now()
+        WHERE idx = #{idx} AND user_idx = #{user_idx}
+    </update>
+
+    <select id="updateNickName" parameterType="int" resultType="ProdInqryDto">
+        SELECT nick_nm
+        FROM user
+        WHERE idx = #{user_idx}
+    </select>
+
 </mapper>
