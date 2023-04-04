@@ -84,14 +84,15 @@ public class UserController {
         try {
             boolean result = userService.isUserPresent(nick_nm, email);
             if (!result) {
-                rattr.addFlashAttribute("USER_ERR", "회원정보를 찾을 수 없습니다");
-                return "member/findEmail";
+                rattr.addFlashAttribute("ERR", "회원정보를 찾을 수 없습니다");
+                return "redirect:/find/member/pwd";
             } else {
+
 //               임시 비번을 담은 메일을 전송하고 완료페이지로 이동한다.
             }
         }catch(Exception e) {
             rattr.addFlashAttribute("MSG", "요청 중 문제가 발생했습니다. 다시 시도해 주세요");
-            return "member/findEmail";
+            return "redirect:/find/member/pwd";
         }
         return "redirect:/find/member/success";
     }

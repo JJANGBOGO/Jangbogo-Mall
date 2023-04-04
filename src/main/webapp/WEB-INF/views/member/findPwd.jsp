@@ -17,10 +17,11 @@
                 <button class="tab-button" data-a="1">판매자</button>
             </div>
             <div class="member-form">
-                <form class="find-form" action="" method="post">
+                <form id="user_find_email" class="find-form" action="/find/user/pwd" method="post">
                     <div class="find-input-box">
                         <label>닉네임</label>
                         <input
+                                id="user_nick_nm"
                                 class="input-control"
                                 name="nick_nm"
                                 type="text"
@@ -30,6 +31,7 @@
                     <div class="find-input-box">
                         <label>이메일</label>
                         <input
+                                id="user_email"
                                 class="input-control"
                                 name="email"
                                 type="text"
@@ -37,7 +39,7 @@
                         />
                     </div>
                     <a class="find-other-link" href="/find/member/email">이메일 찾기</a>
-                    <button class="find-confirm-button" type="submit">
+                    <button class="find-confirm-button" id="user_form_btn">
                         확인
                     </button>
                 </form>
@@ -86,6 +88,28 @@
 
             $(".tab-button").eq(data_id).addClass("on");
             $(".member-form").eq(data_id).addClass("show");
+        });
+
+
+        let findEmailChk = function (nickname, email) {
+            if ($.trim(nickname) == "") {
+                alert("닉네임을 입력해주세요");
+                return false;
+            }
+            if ($.trim(email) == "") {
+                alert("이메일을 입력해 주세요");
+                return false;
+            }
+            return true;
+        };
+
+        //회원의 비번찾기 폼 전송
+        $("#user_form_btn").click(function (e) {
+            let user_nick = $("#user_nick_nm").val();
+            let user_email = $("#user_email").val();
+
+            e.preventDefault();
+            if (findEmailChk(user_nick, user_email)) $("#user_find_email").submit();
         });
     });
 </script>

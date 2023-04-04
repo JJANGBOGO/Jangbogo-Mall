@@ -20,11 +20,6 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
-    @Bean
-    public static BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     @Override
     public Authentication authenticate (Authentication authentication) throws AuthenticationException {
 

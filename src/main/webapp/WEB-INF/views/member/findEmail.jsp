@@ -17,7 +17,7 @@
                 <button class="tab-button" data-a="1">판매자</button>
             </div>
             <div class="member-form">
-                <form id="user_form" class="find-form" action="/find/user/email" method="post">
+                <form id="user_find_email" class="find-form" action="/find/user/email" method="post">
                     <div class="find-input-box">
                         <label>닉네임</label>
                         <input
@@ -87,6 +87,9 @@
             $(".tab-button").eq(data_id).addClass("on");
             $(".member-form").eq(data_id).addClass("show");
         });
+
+
+
     });
 </script>
 </body>

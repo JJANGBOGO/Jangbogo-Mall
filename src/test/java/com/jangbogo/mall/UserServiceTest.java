@@ -21,27 +21,27 @@ public class UserServiceTest {
     UserService service;
 
     @Test //OK
-    public void  withdrawUser () throws Exception {
+    public void withdrawUser () throws Exception {
         int result = service.withdrawUser(1, "jinvicky@naver.com");
         log.info("result= "+ result);
     }
 
     @Test //OK
-    public void  test () throws Exception {
+    public void findUserEmail () throws Exception {
         String result = service.findUserEmail("진진자라", "1234");
         log.info("result= "+ result);
 //        assertTrue(result != null);
     }
 
     @Test //OK
-    public void  isUserPresent () throws Exception {
+    public void isUserPresent () throws Exception {
         boolean result = service.isUserPresent("진진자라", "jinvicky@naver.com");
         log.info("result= "+ result);
         assertTrue(result); //테스트 실패시 빨간 줄 추가됨. 무시
     }
 
     @Test //OK
-    public void  selectUser () throws Exception {
+    public void selectUser () throws Exception {
         User result = service.selectUser(1);
         log.info("result= "+ result);
         assertTrue(result != null); //테스트 실패시 빨간 줄 추가됨. 무시
