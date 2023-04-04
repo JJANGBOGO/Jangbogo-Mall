@@ -21,7 +21,7 @@
         <div class="login-wrap">
             <h2 class="page-title">로그인</h2>
             <div class="login-form">
-                <form action="/user/login" method="post">
+                <form action="/login" method="post">
                     <fieldset>
                         <label>
                             <input type="radio" name="type" value="user" checked/>
@@ -34,10 +34,10 @@
                         </label>
                     </fieldset>
                     <input
-                            name="id"
+                            name="email"
                             type="text"
                             class="input-control"
-                            placeholder="아이디를 입력해주세요."
+                            placeholder="이메일을 입력해주세요."
                     />
                     <div class="input-control">
                         <input
@@ -64,17 +64,17 @@
                         </label>
                         <ul>
                             <li>
-                                <a href="/find/member/email">이메일 찾기</a>
+                                <a href="/find/email">이메일 찾기</a>
                             </li>
                             <li class="pw-find">
-                                <a href="/fine/member/pwd"> 비밀번호 찾기 </a>
+                                <a href="/find/pwd"> 비밀번호 찾기 </a>
                             </li>
                         </ul>
                     </div>
                     <button class="login-button" type="submit">
                         로그인
                     </button>
-                    <a href="/user/signup"
+                    <a href="/register"
                        class="register-button">회원가입</a>
                 </form>
                 <div class="social-box">

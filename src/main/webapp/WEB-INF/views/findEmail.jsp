@@ -17,7 +17,7 @@
                 <button class="tab-button" data-a="1">판매자</button>
             </div>
             <div class="member-form">
-                <form id="user_find_email" class="find-form" action="/find/user/email" method="post">
+                <form id="user_find_email" class="find-form" action="/find/email" method="post">
                     <div class="find-input-box">
                         <label>닉네임</label>
                         <input
@@ -38,14 +38,19 @@
                                 placeholder="비밀번호를 입력해주세요."
                         />
                     </div>
-                    <a class="find-other-link" href="/find/member/pwd">비밀번호 찾기</a>
+                    <input
+                            name="type"
+                            type="hidden"
+                            value="user"
+                    />
+                    <a class="find-other-link" href="/find/pwd">비밀번호 찾기</a>
                     <button class="find-confirm-button" id="user_form_btn">
                         확인
                     </button>
                 </form>
             </div>
             <div class="member-form">
-                <form id="seller_form" class="find-form" action="/find/seller/email" method="post">
+                <form id="seller_form" class="find-form" action="/find/email" method="post">
                     <div class="find-input-box">
                         <label>닉네임</label>
                         <input
@@ -64,7 +69,12 @@
                                 placeholder="비밀번호를 입력해주세요"
                         />
                     </div>
-                    <a class="find-other-link" href="/find/member/pwd">비밀번호 찾기</a>
+                    <input
+                            name="type"
+                            type="hidden"
+                            value="seller"
+                    />
+                    <a class="find-other-link" href="/find/pwd">비밀번호 찾기</a>
                     <button class="find-confirm-button" type="submit">
                         확인
                     </button>
@@ -102,7 +112,7 @@
             return true;
         };
 
-        //회원의 이메일 폼 전송
+        //회원 이메일 폼 전송
         $("#user_form_btn").click(function (e) {
             let user_nick = $("#user_nick_nm").val();
             let user_pwd = $("#user_pwd").val();

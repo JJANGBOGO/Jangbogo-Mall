@@ -38,7 +38,12 @@
                                 placeholder="이메일 입력해주세요."
                         />
                     </div>
-                    <a class="find-other-link" href="/find/member/email">이메일 찾기</a>
+                    <input
+                            name="type"
+                            type="hidden"
+                            value="user"
+                    />
+                    <a class="find-other-link" href="/find/email">이메일 찾기</a>
                     <button class="find-confirm-button" id="user_form_btn">
                         확인
                     </button>
@@ -64,7 +69,12 @@
                                 placeholder="이메일을 입력해주세요."
                         />
                     </div>
-                    <a class="find-other-link" href="/find/member/email">이메일 찾기</a>
+                    <input
+                            name="type"
+                            type="hidden"
+                            value="seller"
+                    />
+                    <a class="find-other-link" href="/find/email">이메일 찾기</a>
                     <button class="find-confirm-button" type="submit">
                         확인
                     </button>
@@ -77,7 +87,7 @@
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
     let msg = "${msg}";
-    if(msg == "USER_NOT_FOUND_ERR") alert("회원 정보를 찾을 수 없습니다"); //OK
+    if(msg == "USER_NOT_FOUND_ERR") alert("정보를 찾을 수 없습니다");
     if(msg == "EXCEPT_ERROR") alert("오류가 발생했습니다. 다시 시도해 주세요");
 </script>
 <script>
@@ -94,7 +104,6 @@
             $(".tab-button").eq(data_id).addClass("on");
             $(".member-form").eq(data_id).addClass("show");
         });
-
 
         let findPwdChk = function (nickname, email) {
             if ($.trim(nickname) == "") {
