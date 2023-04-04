@@ -14,5 +14,6 @@ public interface UserService {
 
     int updatePwd (String pwd, int idx, String email) throws Exception; //비번을 임시 비번으로 변경.
 
+    int sendPwdEmail (String toEmail) throws Exception; //임시비번을 이메일로 전송
 
 }

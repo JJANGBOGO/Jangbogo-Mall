@@ -88,6 +88,7 @@ public class UserController {
                 return "redirect:/find/member/pwd";
             } else {
 
+                userService.sendPwdEmail(email);
 //               임시 비번을 담은 메일을 전송하고 완료페이지로 이동한다.
             }
         }catch(Exception e) {
