@@ -118,6 +118,7 @@
                             <button>인증</button>
                         </div>
                     </div>
+                    <h3 class="section-header">사업자 기본 정보</h3>
                     <div class="input-line">
                         <div class="input-label">
                             <label>사업유형<span>*</span></label>
@@ -143,6 +144,24 @@
                                 <input
                                         name=""
                                         id=""
+                                        type="text"
+                                        placeholder=""
+                                />
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                            <button>인증</button>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label for="mobl_no">통신판매업신고번호<span>*</span></label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name=""
+                                        id="sle"
                                         type="text"
                                         placeholder=""
                                 />
@@ -183,6 +202,7 @@
                             </button>
                         </div>
                     </div>
+                    <h3 class="section-header">브랜드 기본 정보</h3>
                     <div class="input-line">
                         <div class="input-label">
                             <label for="mobl_no">브랜드 공식 이름<span>*</span></label>
@@ -228,6 +248,89 @@
                                         id="brnd_cn"
                                         type="text"
                                         placeholder="수정 시 섬머노트 적용"
+                                />
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label>브랜드 배너이미지</label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name="brnd_bnr"
+                                        id="brnd_bnr"
+                                        type="file"
+                                />
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label>브랜드 프로필</label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name="brnd_profile"
+                                        id="brnd_profile"
+                                        type="file"
+                                />
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                        </div>
+                    </div>
+                    <h3 class="section-header">정산 정보</h3>
+
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label>은행 이름<span>*</span></label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <select>>
+                                    <option>하나은행</option>
+                                    <option>카카오뱅크</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label>계좌번호<span>*</span></label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name="acc_no"
+                                        id="acc_no"
+                                        type="text"
+                                        placeholder="29807"
+                                />
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label>소유자명<span>*</span></label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name="acc_nm"
+                                        id="acc_nm"
+                                        type="text"
+                                        placeholder="남궁진"
                                 />
                             </div>
                         </div>

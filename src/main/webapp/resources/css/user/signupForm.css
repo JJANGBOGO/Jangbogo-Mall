@@ -32,6 +32,10 @@
     padding: 10px 20px;
 }
 
+.reg-form .center-padding .section-header {
+    margin: 40px 0 10px 0;
+}
+
 .reg-form .center-padding .input-label {
     width: 139px;
     padding-top: 12px;
@@ -91,12 +95,12 @@
     height: 44px;
     display: block;
     padding: 0px 10px;
-    border: 1px solid green;
+    border: 1px solid var(--primary-color);
     border-radius: 3px;
 
     font-size: 14px;
     font-weight: 500;
-    color:green;
+    color: var(--primary-color);
 
     background-color: rgb(255, 255, 255);
     overflow: hidden;
@@ -104,16 +108,16 @@
 }
 
 .reg-form .input-line .btn-space button  * {
-    color: green;
+    color: var(--primary-color);
 }
 
 .reg-form .input-line .input-box .addr-btn {
-    border: 1px solid green;
+    border: 1px solid var(--primary-color);
     background-color: white;
     width: 100%;
     border-radius: 4px;
     height: 46px;
-    color: green;
+    color: var(--primary-color);
 }
 
 .checkbox-group .input-line span {
@@ -140,7 +144,7 @@
 
     font-size: 16px;
     color: rgb(255, 255, 255);
-    background-color: green;
+    background-color: var(--primary-color);
     text-align: center;
     overflow: hidden;
 }
