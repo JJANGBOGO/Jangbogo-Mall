@@ -20,10 +20,10 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
             Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
         }
-        ul {
+        .item-list {
             padding: 0;
         }
-        li {
+        .cart_item {
             display: flex;
             align-items: center;
             list-style: none;
@@ -80,13 +80,14 @@
             width: 50%;
             text-align: left;
             font-weight: 600;
-            margin-left: 10px;
+            margin-left: 20px;
         }
         .cart_item__contents {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-left: 20px;
+            cursor:
         }
         .cart_item__cnt {
             display: flex;
@@ -94,7 +95,7 @@
             align-items: center;
             border: 1px solid rgb(221, 223, 225);
             border-radius: 4px;
-            margin-right: 40px;
+            margin-right: 15px;
             width: 90px;
         }
         .item__count {
@@ -103,14 +104,14 @@
         .cart_item__cnt > div {
             /*padding: 5px 10px;*/
         }
-        #subtract-btn, #add-btn {
+        #subtractBtn, #addBtn {
             cursor: pointer;
         }
-        #subtract-btn > a {
+        #subtractBtn > a {
             display:  block;
             padding: 5px 10px;
         }
-        #add-btn > a {
+        #addBtn > a {
             display:  block;
             padding: 5px 10px;
         }
@@ -127,7 +128,7 @@
             cursor: pointer;
         }
 
-        .cart_item__close > a, #subtract-btn > a, #add-btn > a {
+        .cart_item__close > a, #subtractBtn > a, #addBtn > a {
             text-decoration: none;
             color: black;
         }
@@ -211,7 +212,7 @@
                     <input type="checkbox" name="chk-all" class="input-all" /> 전체선택(<span id="checked">0</span>/${list.size()}) |  선택삭제
                 </div>
                 <div class="cart_items">
-                    <ul>
+                    <ul id="item-list">
                         <c:forEach var="cartDto" items="${list}">  <!-- 반복문 입력 -->
                             <li class="cart_item">
                                 <input type="checkbox" name="chk"  />
@@ -219,15 +220,15 @@
                                 <div class="cart_item__title">${cartDto.prod_name}</div>
                                 <div class="cart_item__contents">
                                     <div class="cart_item__cnt">
-                                        <div id="subtract-btn">
+                                        <div class="subtract-btn" id="subtractBtn">
                                             <a href="<c:url value="/cart/subtractCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}&prod_cnt=${cartDto.prod_cnt}"/>">-</a>
                                         </div>
                                         <div class="item__count">${cartDto.prod_cnt}</div>
-                                        <div id="add-btn">
+                                        <div id="addBtn">
                                             <a href="<c:url value="/cart/addCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}"/>">+</a>
                                         </div>
                                     </div>
-                                    <div class="cart_item__price">${cartDto.prod_price * cartDto.prod_cnt}</div>
+                                    <div class="cart_item__price">${cartDto.prod_price * cartDto.prod_cnt}</div><span>원</span>
                                     <div class="cart_item__close" id="removeBtn">
                                         <a href="<c:url value="/cart/remove?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}"/>">&times;</a>
                                     </div>
@@ -277,17 +278,26 @@
             })
 
             // 상품금액이 총 얼마인지 계산
+            // 상품개수가 1 이하인 경우, - 버튼 비활성화, 그렇지 않은 경우 활성화
             for(let i = 1; i <= cnt; i++) {
                 price += parseInt($('li:nth-child(' + i + ') > .cart_item__contents > .cart_item__price').text());
+                let a = parseInt($('li:nth-child(' + i + ') > .cart_item__contents > .cart_item__cnt > .item__count').text());
+                let b = $('li:nth-child(' + i + ') > .cart_item__contents > .cart_item__cnt > .subtract-btn > a');
+                if(a <= 1) {
+                    b.css("color", "rgb(244, 244, 244)");
+                    b.css("cursor", "default");
+                    b.attr("disabled", true);
+                } else {
+                    b.css("color", "black");
+                    b.css("cursor", "pointer");
+                    b.attr("disabled", false);
+                }
             }
-
-            // alert(parseInt($('.cart_item__price').text())) -> 2900990031500 실패
-
 
             $('#prodPrice').text(price + "원");  // 상품금액 태그에 내용으로 price 추가
             price += 2500;                      // 상품금액에 배송비를 추가한다.
             $('#totalPrice').text(price + "원")  // 결제예정금액에 price값을 추가한다.
-
+            // $('.cart_item__price').text($(this).text() + "원");
             // 이벤트 대상 : .input-all
             // 이벤트 : click
             // 이벤트 핸들러 기능 : 전체 선택 시, 모든 상품의 체크박스 체크드 처리
@@ -314,23 +324,6 @@
                 if(total != checked) $(".input-all").prop("checked", false);
                 else $(".input-all").prop("checked", true);
             });
-
-            // 이벤트 대상 : #add-btn
-            // 이벤트 : click
-            // 이벤트 핸들러 기능 : 클릭 시, 장바구니 상품 개수 1 증가
-            <%--$("#add-btn").click(() => {--%>
-            <%--    // CartController의 addProductCnt메서드 실행--%>
-            <%--    alert("add-btn 동작")--%>
-            <%--    location.href="<c:url value="/cart/addCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}"/>";--%>
-            <%--})--%>
-
-            // 이벤트 대상 : #subtract-btn
-            // 이벤트 : click
-            // 이벤트 핸들러 기능 : 클릭 시, 장바구니 상품 개수 1 감소
-            $("#subtract-btn > a").click(() => {
-                // 장바구니 물품 개수가 1일 때, 버튼을 클릭하면, 함수 호출을 못 하게 해야 한다.
-            })
-            // cartDto.prod_idx를 js에서 사용할수 없어서 무용지물
 
         })
     </script>
