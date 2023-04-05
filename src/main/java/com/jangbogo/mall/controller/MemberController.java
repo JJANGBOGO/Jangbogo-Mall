@@ -118,4 +118,10 @@ public class MemberController {
         //TODO:: 새로 고침시 성공 페이지 진입 불가
         return "findSuccess";
     }
+
+    //회원가입안내
+    @GetMapping("/register/intro")
+    public String regIntroView () {
+        return "registerIntro";
+    }
 }
