@@ -21,15 +21,35 @@
                 <div class="center-padding">
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="id">아이디<span>*</span></label>
+                            <label for="email">이메일<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="id"
-                                        id="id"
+                                        id="email"
+                                        name="email"
                                         type="text"
-                                        placeholder="아이디를 입력해주세요"
+                                        placeholder="jungsukmarket@naver.com"
+                                />
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                            <button>
+                                중복확인
+                            </button>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label for="nick_nm">닉네임<span>*</span></label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name="nick_nm"
+                                        id="nick_nm"
+                                        type="text"
+                                        placeholder="닉네임을 입력해주세요"
                                 />
                             </div>
                         </div>
@@ -84,38 +104,20 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="name">이름<span>*</span></label>
+                            <label for="mobl_no">휴대전화<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="name"
-                                        id="name"
+                                        name="mobl_no"
+                                        id="mobl_no"
                                         type="text"
-                                        placeholder="이름을 입력해주세요"
-                                />
-                            </div>
-                        </div>
-                        <div class="btn-space"></div>
-                    </div>
-                    <div class="input-line">
-                        <div class="input-label">
-                            <label for="email">이메일<span>*</span></label>
-                        </div>
-                        <div class="input-box">
-                            <div class="input">
-                                <input
-                                        id="email"
-                                        name="email"
-                                        type="text"
-                                        placeholder="jungsukmarket@naver.com"
+                                        placeholder="01026558945"
                                 />
                             </div>
                         </div>
                         <div class="btn-space">
-                            <button>
-                                중복확인
-                            </button>
+                            <button>인증</button>
                         </div>
                     </div>
                     <div class="input-line">
@@ -158,7 +160,7 @@
                                 <input
                                         name="birth"
                                         id="birth"
-                                        type="text"
+                                        type="date"
                                         placeholder="yyyy / mm / dd"
                                 />
                             </div>
