@@ -14,12 +14,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
-public class MemberController {
+public class MemberController { //회원, 판매자 공통작업 수행
 
     @Autowired
     UserService userService;
-
-    //회원, 판매자 공통작업 수행
 
     @GetMapping("/find/email") //이메일찾기화면
     public String findEmailView() {
@@ -35,38 +33,28 @@ public class MemberController {
         }
 
         String email = null;
-        if (type == "user") {
-            try {
-                email = userService.findUserEmail(nick_nm, pwd);
-                if (email == null) {
-                    rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
-                    return "redirect:/find/email";
-                } else {
-//                    userService.sendPwdEmail(nick_nm,pwd );
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+//        if (type == "user") {
+        try {
+            email = userService.findUserEmail(nick_nm, pwd);
+            if (email == null) {
+                rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
                 return "redirect:/find/email";
             }
-        } else { //seller
-            try {
-                email = userService.findUserEmail(nick_nm, pwd); //seller로 수정할 것
-                if (email == null) {
-                    rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
-                    return "redirect:/find/email";
-                } else {
-//                    userService.sendPwdEmail(nick_nm,pwd );
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
-                return "redirect:/find/email";
-            }
-        }
+            log.info("email = " + email);
 
-        rattr.addFlashAttribute("find_email", email); //성공페이지에 뿌리기
-        return "redirect:/find/email/success"; //성공
+            rattr.addFlashAttribute("findEmail", email); //성공페이지에 뿌리기
+            return "redirect:/find/email/success"; //성공
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/find/email";
+        }
+//        }
+        /**
+         * 절대 성공케이스를 try-catch 바깥에 짜지 말것. 항상 성공처리가 된다.
+         * 지금 if type 분기처리는 seller 추가시 부활 예정. seller도 회원과 동일하게 try-catch 삽질 그만하고 짜라.
+         * try-catch 내부에서 모든 return 케이스를 처리해라.
+         */
     }
 
     @GetMapping("/find/pwd") //비번찾기화면
@@ -76,53 +64,48 @@ public class MemberController {
 
     @PostMapping("/find/pwd")
     public String findPwd(String nick_nm, String email, String type, RedirectAttributes rattr) {
-        log.info(nick_nm + email + type + "::: jinvicky");
-        boolean userChk = false;
 
         if (nick_nm == "" || email == "") { //유효성 검사
             rattr.addFlashAttribute("msg", "EMPTY_ERR");
             return "redirect:/find/pwd";
         }
 
-        if (type == "user") {
-            try {
-                userChk = userService.isUserPresent(nick_nm, email);
-                if (!userChk) {
-                    rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
-                    return "redirect:/find/email";
+        boolean userChk = false;
+//        if (type == "user") {
+        try {
+            userChk = userService.isUserPresent(nick_nm, email);
+            if (!userChk) {
+                rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
+                return "redirect:/find/email";
+            } else { //회원 존재
+                int result = userService.sendPwdEmail(nick_nm, email);
+                if (result == 1) { //성공
+                    rattr.addFlashAttribute("toEmail", email);
+                    return "redirect:/find/pwd/success"; //성공
                 } else {
+                    rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+                    return "redirect:/find/pwd";
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
-                return "redirect:/find/email";
             }
-        } else { //seller
-            try {
-                userChk = userService.isUserPresent(nick_nm, email);
-                if (!userChk) {
-                    rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
-                    return "redirect:/find/email";
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
-                return "redirect:/find/email";
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/find/pwd";
         }
-        return "redirect:/find/pwd/success"; //성공
+//        } else { //seller
+//        }
     }
 
     @GetMapping("/find/{type}/success")
     public String findSuccessView(@PathVariable String type, RedirectAttributes rattr) {
         rattr.addAttribute("type", type);
-        //TODO:: 새로 고침시 성공 페이지 진입 불가
         return "findSuccess";
+        //TODO:: 새로 고침시 성공 페이지 진입 불가
     }
 
     //회원가입안내
     @GetMapping("/register/intro")
-    public String regIntroView () {
+    public String regIntroView() {
         return "registerIntro";
     }
 
