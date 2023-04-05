@@ -43,7 +43,7 @@ public class CartController {
     // 매개변수 : Integer prod_idx, Integer user_idx
     // 요청URL : /cart/remove?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx} GET
     @GetMapping("/remove")
-    public String deleteBoard(Integer prod_idx, Integer user_idx) {
+    public String deleteCartProduct(Integer prod_idx, Integer user_idx) {
         try {
             // 1. cartService의 remove메서드 호출 결과, DB에서 영향 받은 행의 개수를 변수 rowCnt에 저장
             int rowCnt = cartService.remove(prod_idx, user_idx);
@@ -82,12 +82,14 @@ public class CartController {
     // 반환타입 : String
     // 요청URL : /cart/subtractCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx} GET
     @GetMapping("/subtractCnt")
-    public String subtractProductCnt(Integer prod_idx, Integer user_idx) {
-
+    public String subtractProductCnt(Integer prod_idx, Integer user_idx, Integer prod_cnt) {
         try {
-            int rowCnt = cartService.subtractCount(prod_idx, user_idx);
-            if(rowCnt != 1) {
-                throw new Exception("addCount failed");
+            // 삼품 개수가 1보다 큰 경우
+            if(prod_cnt > 1) {
+                int rowCnt = cartService.subtractCount(prod_idx, user_idx);
+                if (rowCnt != 1) {
+                    throw new Exception("addCount failed");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

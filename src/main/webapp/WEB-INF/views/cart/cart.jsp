@@ -128,9 +128,13 @@
             cursor: pointer;
         }
 
+
         .cart_item__close > a, #subtractBtn > a, #addBtn > a {
             text-decoration: none;
             color: black;
+        }
+        .cart_item__close > a {
+            color: lightgray;
         }
         .cart_item > input {
             margin-right: 15px;
@@ -234,6 +238,7 @@
                                     </div>
                                 </div>
                             </li>
+
                         </c:forEach>
                     </ul>
                 </div>
@@ -265,6 +270,7 @@
             </div>
         </div>
         <div class="footer"></div>
+        <%@ include file="/WEB-INF/views/include/modal.jsp" %>
     </div>
     <script>
         $(document).ready(function() {
@@ -278,7 +284,7 @@
             })
 
             // 상품금액이 총 얼마인지 계산
-            // 상품개수가 1 이하인 경우, - 버튼 비활성화, 그렇지 않은 경우 활성화
+            // 상품개수가 1 이하인 경우, - 버튼 비활성화, 그렇지 않은 경우 활성
             for(let i = 1; i <= cnt; i++) {
                 price += parseInt($('li:nth-child(' + i + ') > .cart_item__contents > .cart_item__price').text());
                 let a = parseInt($('li:nth-child(' + i + ') > .cart_item__contents > .cart_item__cnt > .item__count').text());
@@ -297,7 +303,19 @@
             $('#prodPrice').text(price + "원");  // 상품금액 태그에 내용으로 price 추가
             price += 2500;                      // 상품금액에 배송비를 추가한다.
             $('#totalPrice').text(price + "원")  // 결제예정금액에 price값을 추가한다.
-            // $('.cart_item__price').text($(this).text() + "원");
+
+            $('.cart_item__close > a').click((event) => {
+                if (confirm("삭제하시겠습니까?") == true){
+                    //true는 확인버튼을 눌렀을 때 코드 작성
+                }else{
+                    // false는 취소버튼을 눌렀을 때, 취소됨
+                    event.preventDefault();
+                }
+            })
+
+
+
+
             // 이벤트 대상 : .input-all
             // 이벤트 : click
             // 이벤트 핸들러 기능 : 전체 선택 시, 모든 상품의 체크박스 체크드 처리
