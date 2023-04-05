@@ -13,6 +13,6 @@ public class AddressController {
     @GetMapping("/mypage/address")
     public String myPageAddrView(HttpServletRequest req, Model m) {
         m.addAttribute("mypageUrl", req.getRequestURI());
-        return "/myPage/addrList";
+        return "user/addrList";
     }
 }

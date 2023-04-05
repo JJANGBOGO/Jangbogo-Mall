@@ -18,14 +18,14 @@ public class MyPageController {
     @GetMapping("/info") //개인 정보 인증.
     public String info (Model model ) {
         model.addAttribute("userDto", new User());
-        return "/mypage/validateUser";
+        return "user/validateUser";
     }
 
     @PostMapping("/info")
     public String verifyPwd (@Valid @ModelAttribute("userDto") User user, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
-            return "/mypage/validateUser";
+            return "user/validateUser";
         } else {
             //유저 찾기
         }
@@ -33,7 +33,7 @@ public class MyPageController {
     }
 
     @GetMapping("/modify") //개인 정보 수정.
-    public String infoModify() { return "/mypage/modifyUser"; }
+    public String infoModify() { return "user/modifyUser"; }
 
 
 //    소셜회원인지 유형 체크
@@ -49,7 +49,7 @@ public class MyPageController {
     @GetMapping("/info/link") //일반과 소셜 연동.
     public String linkView(Model model) {
         model.addAttribute("mode", "new");
-        return "/mypage/modifyUser";
+        return "user/modifyUser";
     };
 
 }

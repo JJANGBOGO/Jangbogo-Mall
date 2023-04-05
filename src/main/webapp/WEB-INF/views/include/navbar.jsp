@@ -39,9 +39,13 @@
                         <i class="fa-solid fa-cart-shopping"></i>
                         <div class="icon-desc">장바구니</div>
                     </a>
-                    <a href="/mypage/pick/list">
+                    <a href="/mypage/address">
                         <i class="fa-regular fa-user"></i>
                         <div class="icon-desc">마이페이지</div>
+                    </a>
+                    <a href="/myseller/modify/brnd">
+                        <i class="fa-regular fa-user"></i>
+                        <div class="icon-desc">마이셀러</div>
                     </a>
                 </div>
             </div>
