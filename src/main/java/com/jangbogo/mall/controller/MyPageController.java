@@ -52,13 +52,4 @@ public class MyPageController {
         return "/mypage/modifyUser";
     };
 
-    @GetMapping("/leave") //탈퇴
-    public String deleteUserView () { return "/mypage/leaveUser";}
-
-    @PostMapping("/leave")
-    public String deleteUser () {
-//       회원상태코드를 3으로 변경.
-//       시큐리티 인증 삭제
-        return "redirect:/";
-    }
 }

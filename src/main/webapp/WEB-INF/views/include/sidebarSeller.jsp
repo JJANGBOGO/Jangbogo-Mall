@@ -9,55 +9,30 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <nav>
     <div class="sidebar">
-        <div class="header">마이장보고</div>
+        <div class="header">판매자 장보고</div>
         <ul>
             <li>
                 <a href="">
-                    주문 내역
+                    브랜드 수정
                     <span> &gt; </span>
                 </a>
             </li>
             <li>
                 <a href="">
-                    선물 내역
+                    판매자 정보 수정
                     <span> &gt; </span>
                 </a>
             </li>
             <li>
                 <a href="">
-                    찜한 상품
+                    팔로워 리스트
                     <span> &gt; </span>
                 </a>
             </li>
             <li>
                 <a href="/mypage/address" class="<c:if test='${mypageUrl eq "/mypage/address"}'>active</c:if> ">
 <%--                    <div class=" <c:if test='${addClass eq 'Y'}'>redBackground</c:if> ">--%>
-                    배송지 관리
-                    <span> &gt; </span>
-                </a>
-            </li>
-            <li>
-                <a href="/">
-                    상품 후기
-                    <span> &gt; </span>
-                </a>
-            </li>
-            <li>
-                <a href=""
-                >적립금
-                    <span> &gt; </span>
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    쿠폰
-                    <span> &gt; </span>
-                </a>
-            </li>
-            <li>
-                <a
-                        href="/mypage/info"
-                >개인정보 수정
+                    정산 신청
                     <span> &gt; </span>
                 </a>
             </li>
