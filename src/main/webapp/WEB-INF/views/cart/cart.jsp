@@ -97,12 +97,22 @@
             margin-right: 40px;
             width: 90px;
         }
-
+        .item__count {
+            text-align: center;
+        }
         .cart_item__cnt > div {
-            padding: 5px 10px;
+            /*padding: 5px 10px;*/
         }
         #subtract-btn, #add-btn {
             cursor: pointer;
+        }
+        #subtract-btn > a {
+            display:  block;
+            padding: 5px 10px;
+        }
+        #add-btn > a {
+            display:  block;
+            padding: 5px 10px;
         }
         .cart_item__price {
             font-weight: 700;
@@ -212,7 +222,7 @@
                                         <div id="subtract-btn">
                                             <a href="<c:url value="/cart/subtractCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}&prod_cnt=${cartDto.prod_cnt}"/>">-</a>
                                         </div>
-                                        <div>${cartDto.prod_cnt}</div>
+                                        <div class="item__count">${cartDto.prod_cnt}</div>
                                         <div id="add-btn">
                                             <a href="<c:url value="/cart/addCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}"/>">+</a>
                                         </div>
