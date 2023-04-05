@@ -45,6 +45,7 @@ public class ProductController {
 
             List<ProdInqryDto> prodInqryDto = prodInqryDao.selectPage(map);
             m.addAttribute("prodInqryDto", prodInqryDto);
+            m.addAttribute("ph", prodInqryPageHandler);
         } catch (Exception e) {
             e.printStackTrace();
         }

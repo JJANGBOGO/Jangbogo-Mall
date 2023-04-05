@@ -21,7 +21,7 @@ public class ProdInqryPageHandler {
         this.pageSize = pageSize;
 
         totalPage = (int)Math.ceil(totalCnt / (double)pageSize);
-        beginPage = page/ naviSize * naviSize +1;
+        beginPage = (page-1)/ naviSize * naviSize +1;
         endPage = Math.min(beginPage+naviSize-1, totalPage);
         showPrev = beginPage != 1;
         showNext = endPage != totalPage;
