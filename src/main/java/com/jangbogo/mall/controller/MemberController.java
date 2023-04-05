@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
@@ -123,5 +124,11 @@ public class MemberController {
     @GetMapping("/register/intro")
     public String regIntroView () {
         return "registerIntro";
+    }
+
+    //로그안뷰
+    @RequestMapping("/login") //아마 시큐리티는 RequestMapping()
+    public String loginView() {
+        return "login";
     }
 }

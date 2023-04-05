@@ -41,6 +41,10 @@
     line-height: 20px;
 }
 
+.reg-form .center-padding .input-label label {
+    font-size: 16px;
+}
+
 .reg-form .center-padding .input-label span {
     color: var(--text-danger);
 }

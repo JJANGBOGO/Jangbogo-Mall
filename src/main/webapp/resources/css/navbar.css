@@ -11,6 +11,7 @@
 
 a {
     cursor: pointer;
+    color: var(--text-dark);
 }
 
 /* navbar start*/
