@@ -24,7 +24,7 @@
                 </a>
             </li>
             <li>
-                <a href="/myseller/modify/seller" class="<c:if test='${mySellerUrl eq "/myseller/modify/seller"}'>active</c:if> ">
+                <a href="/myseller/followers" class="<c:if test='${mySellerUrl eq "/myseller/followers"}'>active</c:if> ">
                     팔로워 리스트
                     <span> &gt; </span>
                 </a>
