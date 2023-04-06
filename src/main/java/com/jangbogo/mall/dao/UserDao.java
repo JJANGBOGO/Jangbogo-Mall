@@ -23,4 +23,6 @@ public interface UserDao {
     // insert한 후 idx 리턴. 배송지 추가에 필요
     int insertUser (User user) throws Exception;
 
+    int updateLoginTm (int idx, String email) throws Exception;
+
 }

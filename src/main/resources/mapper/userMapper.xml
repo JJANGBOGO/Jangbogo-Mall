@@ -60,5 +60,9 @@
         </selectKey>
     </insert>
 
+    <update id="updateLoginTm" parameterType="map">
+        UPDATE USER SET LAST_LOGIN_TM = NOW() WHERE IDX = #{idx} AND EMAIL = #{email};
+    </update>
+
 </mapper>
 

@@ -73,7 +73,7 @@
                     <button class="login-button" type="submit">
                         로그인
                     </button>
-                    <a href="/register"
+                    <a href="/register/intro"
                        class="register-button">회원가입</a>
                 </form>
                 <div class="social-box">

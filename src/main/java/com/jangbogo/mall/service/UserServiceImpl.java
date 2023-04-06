@@ -1,6 +1,8 @@
 package com.jangbogo.mall.service;
 
+import com.jangbogo.mall.dao.AddressDao;
 import com.jangbogo.mall.dao.UserDao;
+import com.jangbogo.mall.domain.Address;
 import com.jangbogo.mall.domain.Email;
 import com.jangbogo.mall.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserDao dao;
+
+    @Autowired
+    AddressDao addrDao;
 
     @Autowired
     EmailSender emailSender;
@@ -82,8 +87,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int registerUser (User user) throws Exception {
+    public int insertUser (User user) throws Exception {
         return dao.insertUser(user);
     }
+
+
+
+
 
 }

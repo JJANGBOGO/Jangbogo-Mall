@@ -23,6 +23,7 @@ public class User {
     private String pwd; //비밀번호
     private String mpno; //휴대전화번호
 
+    @DateTimeFormat(pattern ="yyyy-MM-dd") //400에러 방지
     private Date brdy; //생일
 
     private String user_agre_yn; //개인정보수집동의여부

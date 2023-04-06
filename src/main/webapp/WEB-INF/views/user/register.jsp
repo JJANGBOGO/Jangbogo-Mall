@@ -15,7 +15,7 @@
         <div class="reg-header">회원가입</div>
         <div class="section-line"></div>
         <div class="reg-form-box">
-            <form class="reg-form" action="" method="post">
+            <form class="reg-form" action="/register/user" method="post">
                 <div class="center-padding">
                     <div class="input-line">
                         <div class="input-label">
@@ -102,13 +102,13 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="mobl_no">휴대전화<span>*</span></label>
+                            <label for="mpno">휴대전화<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="mobl_no"
-                                        id="mobl_no"
+                                        name="mpno"
+                                        id="mpno"
                                         type="text"
                                         placeholder="01026558945"
                                 />
@@ -120,11 +120,11 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="addr">주소<span>*</span></label>
+                            <label for="addr-display">주소<span>*</span></label>
                         </div>
                         <div class="input-box">
-                            <input name="postcode" id="postcode" hidden/>
-                            <input name="addr" id="addr" hidden/>
+                            <input name="zpcd" id="zpcd" hidden/>
+                            <input name="addr_base" id="addr_base" hidden/>
                             <div class="input">
                                 <input
                                         name="addrdisplay"
@@ -135,8 +135,8 @@
                             </div>
                             <div class="input" style="margin-top: 10px">
                                 <input
-                                        name="addrdetail"
-                                        id="addr-detail"
+                                        name="addr_dtl"
+                                        id="addr_dtl"
                                         type="text"
                                         placeholder="상세 주소를 입력해주세요"
                                 />
@@ -151,13 +151,13 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="birth">생년월일</label>
+                            <label for="brdy">생년월일</label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="birth"
-                                        id="birth"
+                                        name="brdy"
+                                        id="brdy"
                                         type="date"
                                         placeholder="yyyy / mm / dd"
                                 />
@@ -220,7 +220,7 @@
                                 <span>개인정보 수집 및 이용 동의</span>
                             </label>
                             <label for="check_4" class="input-line">
-                                <input type="checkbox" id="check_4" class="normal" hidden/>
+                                <input type="checkbox" id="check_4" class="normal" name="" hidden/>
                                 <img
                                         class="agree-checkbox"
                                         src="/img/unchecked.png"
@@ -237,7 +237,7 @@
                         </div>
                     </div>
                     <div class="btn-container">
-                        <button class="reg-confirm">가입하기</button>
+                        <button class="reg-confirm" tyee="submit">가입하기</button>
                     </div>
                 </div>
             </form>
@@ -280,8 +280,8 @@
                 if (extraAddr !== "") extraAddr = " (" + extraAddr + ")";
 
                 $("#addr-display").val(data.zonecode + " / " + data.address);
-                $("#postcode").val(data.zonecode);
-                $("#addr").val(data.address);
+                $("#zpcd").val(data.zonecode);
+                $("#addr_base").val(data.address);
                 $("#addr-detail").focus(); //상세주소에 focus
             },
         }).open();

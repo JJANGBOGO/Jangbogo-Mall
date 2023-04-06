@@ -1,6 +1,7 @@
 package com.jangbogo.mall.controller;
 
 
+import com.jangbogo.mall.domain.Address;
 import com.jangbogo.mall.domain.KakaoLoginBo;
 import com.jangbogo.mall.domain.NaverLoginBo;
 import com.github.scribejava.core.model.OAuth2AccessToken;
@@ -71,6 +72,22 @@ public class UserController {
     public String registerUserView() {
         return "/user/register";
     }
+
+    @PostMapping("/register/user")
+    public String registerUser(User user, Address addr, RedirectAttributes rattr) {
+        log.info("user...." + user);
+        log.info("addr...." + addr);
+
+        try {
+            return "redirect:/login";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR"); //가입 도중 에러
+            return "redirect:/register/user";
+        }
+    }
+
 
     //로그인뷰
     @RequestMapping("/login") //꼭 requestMapping

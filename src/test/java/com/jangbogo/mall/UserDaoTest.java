@@ -91,5 +91,12 @@ public class UserDaoTest {
         assertTrue(result != 0);
     }
 
+    @Test
+    public void updateLoginTm () throws Exception { //ok
+        int result = dao.updateLoginTm(26, "jinvicky@naver.com");
+        log.info("result=" + result);
+        assertTrue(result != 0);
+    }
+
 
 }

@@ -83,7 +83,7 @@ public class UserServiceTest {
                 .markt_agre_yn("N")
                 .build();
 
-        int result = service.registerUser(user);
+        int result = service.insertUser(user);
         log.info("result= " + result);
         assertTrue(result != 0); //테스트 실패시 빨간 줄 추가됨. 무시
     }

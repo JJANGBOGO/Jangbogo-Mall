@@ -72,5 +72,13 @@ public class UserDaoImpl implements UserDao{
         return user.getIdx();
     }
 
+    @Override
+    public  int updateLoginTm (int idx, String email) throws Exception {
+        Map map = new HashMap();
+        map.put("idx", idx);
+        map.put("email", email);
+        return session.update(nameSpace + "updateLoginTm", map);
+    }
+
 }
 
