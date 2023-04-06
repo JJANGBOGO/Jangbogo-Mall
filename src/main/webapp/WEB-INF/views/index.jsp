@@ -8,11 +8,8 @@
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page session="true" %>
 
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
-
-<c:set var="loginType" value="${sessionScope.login_type}"/>
 <html>
 <head>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
@@ -20,23 +17,6 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
-<s:authorize access="isAuthenticated()">
-    <div>로그아웃-------------------------------</div>
-    <div>로그인은 : ${userInfo}</div>
-    <c:choose>
-        <c:when test="${loginType eq 'kakao'}">
-            <a href="https://kauth.kakao.com/oauth/logout?client_id=bb092eaed861b067f81667b75af60fbb&logout_redirect_uri=http://localhost:8080/social/kakao_logout">
-                카카오 로그아웃
-            </a>
-        </c:when>
-        <c:when test="${loginType eq 'naver'}">
-            <a href="">네이버 로그아웃</a>
-        </c:when>
-        <c:otherwise>
-            <a href="/security_logout">시큐리티 로그아웃</a>
-        </c:otherwise>
-    </c:choose>
-</s:authorize>
 <%--지우팀장님 슬라이드쇼--%>
 <div class="mySlides_container">
     <img class="mySlides"

@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+
+<c:set var="loginType" value="${sessionScope.userInfo.login_tp_cd}"/>
+<c:set var="nick" value="${sessionScope.userInfo.nick_nm}"/>
 <nav>
     <div class="sticky-wrap">
         <div class="top-navigation">
@@ -15,7 +19,25 @@
                     </s:authorize>
                     <s:authorize access="isAuthenticated()">
                         <li>
-                            <a href="">남궁진님</a>
+                            <a>${nick}님</a>
+                        </li>
+                        <li>
+                            <c:choose>
+                                <c:when test="${loginType == 2}">
+                                    <%-- 카카오 로그아웃--%>
+                                    <a href="https://kauth.kakao.com/oauth/logout?client_id=bb092eaed861b067f81667b75af60fbb&logout_redirect_uri=http://localhost:8080/social/kakao_logout">
+                                        로그아웃
+                                    </a>
+                                </c:when>
+                                <c:when test="${loginType == 3}">
+                                    <%-- 네이버 로그아웃 TODO:: 직접 구현--%>
+                                    <a href="/">로그아웃</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <%-- 일반 로그아웃--%>
+                                    <a href="/security_logout">로그아웃</a>
+                                </c:otherwise>
+                            </c:choose>
                         </li>
                     </s:authorize>
                 </ul>

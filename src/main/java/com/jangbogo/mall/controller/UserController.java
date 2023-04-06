@@ -83,7 +83,8 @@ public class UserController {
     }
 
 
-    @GetMapping("/social/kakao") //경로 나중에 수정
+    //카카오 로그인
+    @GetMapping("/social/kakao")
     public String buildKaKao(HttpSession session, String code, String state, RedirectAttributes rattr) {
 
         try {
@@ -125,13 +126,21 @@ public class UserController {
         }
     }
 
-    public String crtNickName() { //랜덤 문자열 생성
+    public String crtNickName() { //랜덤 문자열 생성, 소셜 닉네임 생성
         String uuid = "";
 
         for (int i = 0; i < 12; i++) { // TODO:: 나중에 공통으로 묶기
             uuid += (char) ((Math.random() * 26) + 97);
         }
         return "뉴비_" +uuid;
+    }
+
+    //카카오 로그아웃
+    @GetMapping("/social/kakao_logout")
+    public String kakaoLogout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        session.removeAttribute("userInfo"); //세션 삭제
+        deleteAuth(request, response); //인증 삭제
+        return "redirect:/";
     }
 
     //    @GetMapping("/social/naver")
@@ -157,12 +166,7 @@ public class UserController {
 //        return "redirect:/";
 //    }
 //
-//    //카카오 로그아웃
-    @GetMapping("/social/kakao_logout")
-    public String kakaoLogout(HttpServletRequest request, HttpServletResponse response) {
-        deleteAuth(request, response);
-        return "redirect:/";
-    }
+//
 
     //
     public JSONObject getParsedApiResult(String apiResult) throws Exception {
