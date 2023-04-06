@@ -1,5 +1,6 @@
 package com.jangbogo.mall.dao;
 
+import com.jangbogo.mall.domain.Address;
 import com.jangbogo.mall.domain.User;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,11 @@ public class UserDaoImpl implements UserDao{
     public int insertUser (User user) throws Exception {
         session.insert(nameSpace + "insertUser", user);
         return user.getIdx();
+    }
+
+    @Override
+    public int insertAddr (Address addr) throws Exception {
+        return session.insert(nameSpace + "insertAddr", addr);
     }
 
 }

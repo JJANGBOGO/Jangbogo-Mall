@@ -26,7 +26,7 @@ public class Address {
     private String rcpr_nm; //수령자이름
     private String rcpr_mobl_no;  //수령인전화번호
 
-    private boolean is_default_yn; //기본배송지여부
+    private String is_default_yn; //기본배송지여부
     private int state_cd; //배송지상태코드
 
     @DateTimeFormat(pattern ="yyyy-MM-dd")

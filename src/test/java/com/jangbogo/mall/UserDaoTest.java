@@ -2,6 +2,7 @@ package com.jangbogo.mall;
 
 
 import com.jangbogo.mall.dao.UserDao;
+import com.jangbogo.mall.domain.Address;
 import com.jangbogo.mall.domain.User;
 import com.jangbogo.mall.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -88,5 +89,35 @@ public class UserDaoTest {
         int idx = user.getIdx();
         log.info("result=" + idx);
         assertTrue(result != 0);
+    }
+
+    @Test //OK
+    public void insertAddr () throws Exception {
+        User user = User.builder()
+                .email("10@naver.com")
+                .nick_nm("뉴비_10")
+                .pwd("1000")
+                .mpno("010")
+                .brdy(new Date("2001/10/07"))
+                .user_agre_yn("Y")
+                .markt_agre_yn("N")
+                .build();
+        int result = dao.insertUser(user);
+        int idx = user.getIdx();
+
+        Address addr = Address.builder()
+                .user_idx(idx)
+                .zpcd("16836")
+                .addr_base("base_Addr")
+                .addr_dtl("detail address")
+                .rcpr_nm("수령자명 11")
+                .rcpr_mobl_no("909090")
+                .is_default_yn("Y")
+                .build();
+
+        int addrResult = dao.insertAddr(addr);
+
+        log.info("result=" + addrResult);
+        assertTrue(addrResult != 0);
     }
 }

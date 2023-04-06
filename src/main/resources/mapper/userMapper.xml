@@ -59,5 +59,10 @@
             SELECT LAST_INSERT_ID() AS IDX
         </selectKey>
     </insert>
+
+    <insert id="insertAddr" parameterType="User">
+        INSERT INTO DLVPN (USER_IDX, ZPCD, ADDR_BASE, ADDR_DTL, RCPR_NM, RCPR_MOBL_NO, IS_DEFAULT_YN)
+        VALUES (#{user_idx}, #{zpcd}, #{addr_base}, #{addr_dtl}, #{rcpr_nm}, #{rcpr_mobl_no}, #{is_default_yn});
+    </insert>
 </mapper>
 
