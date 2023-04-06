@@ -248,4 +248,28 @@ public class UserController {
         return "OK";
     }
 
+    //회원수정전 인증
+    @GetMapping("/mypage/user/info")
+    public String verifyUserView () {
+        return "/user/verify";
+    }
+
+    //회원수정전 인증
+    @PostMapping("/mypage/user/info")
+    public String verifyUser (String pwd) {
+
+//        비번이 일치하지 않으면 error와 함께 redirect
+//        validator 대신 == ""  비교로 백 유효성 체크
+//        일치하면 return "redirect:/mypage/user";
+        return "redirect:/mypage/user/info";
+    }
+
+    //회원수정뷰
+    @GetMapping("/mypage/user")
+    public String modifyUserView (HttpSession session) {
+        if(session.getAttribute("modify") == null) {
+            return "redirect:/mypage/user/info";
+        }
+        return "user/modfiy";
+    }
 }

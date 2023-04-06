@@ -55,7 +55,7 @@
             </li>
             <li>
                 <a
-                        href="/mypage/info"
+                        href="/mypage/user/info"
                 >개인정보 수정
                     <span> &gt; </span>
                 </a>
