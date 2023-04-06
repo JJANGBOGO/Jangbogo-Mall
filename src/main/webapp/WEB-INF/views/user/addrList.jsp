@@ -18,6 +18,16 @@
             <h2>배송지 관리</h2>
         </div>
 
+        <ul>
+            <c:forEach var="addr" items="${addrList}">
+                <li>
+                    <div>${addr.idx}</div>
+                    <div>${addr.zpcd}</div>
+                    <div>${addr.addr_base}</div>
+                    <div>${addr.addr_dtl}</div>
+                </li>
+            </c:forEach>
+        </ul>
     </div>
 </div>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
