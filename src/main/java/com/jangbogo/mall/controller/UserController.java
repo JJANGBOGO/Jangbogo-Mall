@@ -84,7 +84,7 @@ public class UserController {
 
 
     @GetMapping("/social/kakao") //경로 나중에 수정
-    public String buildKaKao(HttpSession session, String code, String state) {
+    public String buildKaKao(HttpSession session, String code, String state, RedirectAttributes rattr) {
 
         try {
             oauthToken = kakaoLoginBO.getAccessToken(session, code, state);
@@ -92,7 +92,6 @@ public class UserController {
 
             jsonObj = getParsedApiResult(apiResult);
             JSONObject response_obj = (JSONObject) jsonObj.get("kakao_account");
-            JSONObject response_obj2 = (JSONObject) response_obj.get("profile");
 
             String email = (String) response_obj.get("email");
 
@@ -105,33 +104,34 @@ public class UserController {
 
                 user = User.builder()
                         .email(email)
-                        .nick_nm("뉴비_" + createUuid())
+                        .nick_nm(crtNickName())
                         .login_tp_cd(KAKAO)
                         .build();
 
                 log.info("뉴비...." + user);
-//                userService.regSocialUser(user);
-//
-            }else {
+                int idx = userService.regSocialUser(user);
+                user = userService.selectUser(idx);
+            } else {
                 log.info("이미 존재하는 이메일입니다.");
             }
 
             makeAuth(email);
-            session.setAttribute("user", user);
+            session.setAttribute("userInfo", user); // session으로 해야 한다.
             return "redirect:/";
         } catch (Exception e) {
 //            예외 발생
-            return "redirect:/";
+            rattr.addFlashAttribute("msg", "LOGIN_ERR"); //로그인 에러
+            return "redirect:/login";
         }
     }
 
-    public String createUuid() { //랜덤 문자열 생성
+    public String crtNickName() { //랜덤 문자열 생성
         String uuid = "";
 
         for (int i = 0; i < 12; i++) { // TODO:: 나중에 공통으로 묶기
             uuid += (char) ((Math.random() * 26) + 97);
         }
-        return uuid;
+        return "뉴비_" +uuid;
     }
 
     //    @GetMapping("/social/naver")

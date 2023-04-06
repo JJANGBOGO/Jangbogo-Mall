@@ -22,7 +22,7 @@
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
 <s:authorize access="isAuthenticated()">
     <div>로그아웃-------------------------------</div>
-    <div>로그인은 : ${loginType}</div>
+    <div>로그인은 : ${userInfo}</div>
     <c:choose>
         <c:when test="${loginType eq 'kakao'}">
             <a href="https://kauth.kakao.com/oauth/logout?client_id=bb092eaed861b067f81667b75af60fbb&logout_redirect_uri=http://localhost:8080/social/kakao_logout">

@@ -63,7 +63,8 @@ public class UserServiceTest {
 
     @Test //OK
     public void regSocialUser () throws Exception {
-        int result = service.regSocialUser("dugu@naver.com", "지우님", 2);
+        User user = User.builder().email("sky@naver.com").nick_nm("하늘님").login_tp_cd(2).build();
+        int result = service.regSocialUser(user);
         log.info("result= "+ result);
         assertTrue(result != 0); //테스트 실패시 빨간 줄 추가됨. 무시
     }

@@ -20,5 +20,5 @@ public interface UserService {
     User chkDuplicateEmail (String email) throws Exception;
 
     //소셜가입
-    int regSocialUser (String email, String nick_nm, int login_type) throws Exception;
+    int regSocialUser (User user) throws Exception;
 }

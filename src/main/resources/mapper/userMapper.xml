@@ -31,6 +31,9 @@
     <insert id="insertSocialUser" parameterType="User">
         INSERT INTO USER (AUTH_IDX, RNK_IDX, EMAIL, NICK_NM, USER_AGRE_YN, LOGIN_TP_CD, LAST_LOGIN_TM)
         VALUES (1, 1, #{email}, #{nick_nm},'Y', #{login_tp_cd} ,now());
+        <selectKey resultType="int" keyProperty="idx" order="AFTER">
+            SELECT LAST_INSERT_ID() AS IDX
+        </selectKey>
     </insert>
 </mapper>
 

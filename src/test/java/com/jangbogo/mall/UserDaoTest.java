@@ -61,9 +61,11 @@ public class UserDaoTest {
     }
 
     @Test //OK
-    public void regSocialUser () throws Exception {
-        int result = dao.insertSocialUser("jinvicky@naver.com", "jin", 2);
-        log.info("result="+ result);
+    public void insertSocialUser () throws Exception {
+        User user = User.builder().email("test16@naver.com").nick_nm("테스트16").login_tp_cd(2).build();
+        int result = dao.insertSocialUser(user);
+        int idx = user.getIdx();
+        log.info("result=" + idx);
         assertTrue(result != 0);
     }
 }

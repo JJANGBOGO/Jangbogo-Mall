@@ -83,16 +83,16 @@
                     </div>
                     <div class="join-buttons">
                         <a
-                            href="${urlKakao}"
-                            class="login-social kakao"
+                                href="${urlKakao}"
+                                class="login-social kakao"
                         >
                         <span>
                           <strong>카카오</strong>
                         </span>로 로그인
                         </a>
                         <a
-                            href="${urlNaver}"
-                            class="login-social naver"
+                                href="${urlNaver}"
+                                class="login-social naver"
                         >
                         <span>
                           <strong>네이버</strong>
@@ -110,9 +110,10 @@
     let signupMsg = "${signupMsg}";
     if (signupMsg == "MSG_OK") alert("회원 가입에 성공했습니다.");
 
-    let loginMsg = "${loginMsg}";
-    if (loginMsg == "LOGIN_ERROR") alert("로그인 도중 오류가 발생하였습니다. 다시 시도해 주세요.");
+    let msg = "${msg}";
+    if (msg == "LOGIN_ERR") alert("로그인 도중 오류가 발생하였습니다. 다시 시도해 주세요.");
 
+    //비번 보여주기 toggle
     let pwdToggle = () => {
         const checked = $("#showPwd").is(":checked");
         $("#pwd").attr("type", checked ? "text" : "password");
