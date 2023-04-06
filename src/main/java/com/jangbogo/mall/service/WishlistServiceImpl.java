@@ -1,6 +1,7 @@
 package com.jangbogo.mall.service;
 
 import com.jangbogo.mall.dao.WishlistDao;
+import com.jangbogo.mall.domain.ProductDto;
 import com.jangbogo.mall.domain.WishlistDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,10 @@ public class WishlistServiceImpl implements WishlistService {
     @Override
     public int checkCart(Integer prod_idx, Integer user_idx) throws Exception{
         return wishlistDao.checkCart(prod_idx,user_idx);
+    }
+    @Override
+    public List<ProductDto> getProduct(Integer[] prodArr) throws Exception{
+        return wishlistDao.getProduct(prodArr);
     }
 
 }

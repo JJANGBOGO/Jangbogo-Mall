@@ -1,5 +1,6 @@
 package com.jangbogo.mall.dao;
 
+import com.jangbogo.mall.domain.ProductDto;
 import com.jangbogo.mall.domain.WishlistDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +51,14 @@ public class WishlistDaoImpl implements WishlistDao {
         return session.selectOne(namespace+"checkCart",map);
     }
 
-    public int selectUser(String email) throws Exception{
+    public int getUser(String email) throws Exception{
         Map map = new HashMap();
         map.put("email",email);
-        return session.selectOne(namespace+"selectUser",map);
+        return session.selectOne(namespace+"getUser",map);
+    }
+
+    public List<ProductDto> getProduct(Integer[] prodArr) throws Exception{
+        return session.selectList(namespace+"getProduct",prodArr);
     }
 
 

@@ -1,5 +1,6 @@
 package com.jangbogo.mall.service;
 
+import com.jangbogo.mall.domain.ProductDto;
 import com.jangbogo.mall.domain.WishlistDto;
 
 import java.util.List;
@@ -15,4 +16,6 @@ public interface WishlistService {
     int updateCartCnt(Integer prod_idx, Integer user_idx, Integer cnt) throws Exception;
 
     int checkCart(Integer prod_idx, Integer user_idx) throws Exception;
+
+    List<ProductDto> getProduct(Integer[] prodArr) throws Exception;
 }

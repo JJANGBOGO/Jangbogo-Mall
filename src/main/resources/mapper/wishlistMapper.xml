@@ -8,37 +8,47 @@
     <select id="getlist" parameterType="int" resultType="WishlistDto">
         select PROD_IDX, USER_IDX, REG_TM, CRT_TM, CRT_IDX, UPT_TM, UPT_IDX
         from WISHLIST
-        where USER_IDX = ${idx}
+        where USER_IDX = #{idx}
     </select>
 
     <delete id="delete" parameterType="map">
         DELETE FROM WISHLIST
-        WHERE PROD_IDX = ${prod_idx} and USER_IDX = ${user_idx}
+        WHERE PROD_IDX = #{prod_idx} and USER_IDX = #{user_idx}
     </delete>
 
     <insert id="insertCart" parameterType="map">
         insert into CART (PROD_IDX, USER_IDX, PROD_CNT)
-        values (${prod_idx},${user_idx},${prod_cnt})
+        values (#{prod_idx},#{user_idx},#{prod_cnt})
 
     </insert>
     <update id="updateCartCnt" parameterType="map">
         UPDATE CART
         SET   PROD_CNT = PROD_CNT + #{cnt}
-        WHERE  PROD_IDX = ${prod_idx} and USER_IDX = ${user_idx}
+        WHERE  PROD_IDX = #{prod_idx} and USER_IDX = #{user_idx}
     </update>
 
     <select id="checkCart" parameterType="map" resultType="int">
         select count(*)
         from CART
-        where PROD_IDX = ${prod_idx} and USER_IDX = ${user_idx}
+        where PROD_IDX = #{prod_idx} and USER_IDX = #{user_idx}
     </select>
-    
-    <select id="selectUser" parameterType="map" resultType="int">
+
+<!--    getUser는 아직 미완성-->
+    <select id="getUser" parameterType="map" resultType="int">
         select IDX
         from USER
         where EMAIL = #{email}
     </select>
 
+    <select id="getProduct" resultType="ProductDto">
+        select *
+        from PRODUCT
+        where IDX in
+        <foreach collection="array" item="idx" open="(" close=")" separator=",">
+            #{idx}
+        </foreach>
+
+    </select>
 
 
 </mapper>

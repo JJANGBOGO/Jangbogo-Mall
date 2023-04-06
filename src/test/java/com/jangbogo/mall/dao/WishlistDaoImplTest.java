@@ -1,5 +1,6 @@
 package com.jangbogo.mall.dao;
 
+import com.jangbogo.mall.domain.ProductDto;
 import com.jangbogo.mall.domain.WishlistDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,13 +66,23 @@ public class WishlistDaoImplTest {
     }
 
     @Test
-    public void selectUser() throws Exception{
+    public void getUser() throws Exception{
         assertTrue(wishlistDao != null);
         System.out.println("wishlistDao = " + wishlistDao);
 //        String email = "carabut@naver.com";
-        int cnt = wishlistDao.selectUser("carabut@naver.com");
+        int cnt = wishlistDao.getUser("carabut@naver.com");
         assertTrue(cnt==2);
         System.out.println("cnt = " + cnt);
+
+    }
+    @Test
+    public void getProduct() throws Exception{
+        assertTrue(wishlistDao != null);
+        System.out.println("wishlistDao = " + wishlistDao);
+        List<ProductDto> list = wishlistDao.getProduct(new Integer[]{1,2});
+        assertTrue(list.get(0).getName().equals("홈런볼"));
+        assertTrue(list.get(1).getName().equals("맛동산"));
+        System.out.println(list.get(0).getName());
 
     }
 
