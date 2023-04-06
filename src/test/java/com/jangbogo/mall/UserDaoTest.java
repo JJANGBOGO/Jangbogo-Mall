@@ -8,8 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import static org.junit.Assert.*;
 
@@ -64,6 +68,23 @@ public class UserDaoTest {
     public void insertSocialUser () throws Exception {
         User user = User.builder().email("test16@naver.com").nick_nm("테스트16").login_tp_cd(2).build();
         int result = dao.insertSocialUser(user);
+        int idx = user.getIdx();
+        log.info("result=" + idx);
+        assertTrue(result != 0);
+    }
+
+    @Test //OK
+    public void insertUser () throws Exception {
+        User user = User.builder()
+                .email("3@naver.com")
+                .nick_nm("뉴비_3")
+                .pwd("1000")
+                .mpno("010")
+                .brdy(new Date("2001/10/07"))
+                .user_agre_yn("Y")
+                .markt_agre_yn("N")
+                .build();
+        int result = dao.insertUser(user);
         int idx = user.getIdx();
         log.info("result=" + idx);
         assertTrue(result != 0);

@@ -16,6 +16,9 @@ public interface UserDao {
 
     User chkDuplicateEmail (String email) throws Exception; //소셜, 일반 가입 시 이메일 중복 검사.
 
-    //insert후 idx 리턴
+    //소셜회원 가입. insert후 idx 리턴
     int insertSocialUser (User user) throws Exception;
+
+    // insert한 후 idx 리턴. 배송지 추가에 필요
+    int insertUser (User user) throws Exception;
 }

@@ -81,4 +81,9 @@ public class UserServiceImpl implements UserService {
         return dao.insertSocialUser(user);
     }
 
+    @Override
+    public int registerUser (User user) throws Exception {
+        return dao.insertUser(user);
+    }
+
 }

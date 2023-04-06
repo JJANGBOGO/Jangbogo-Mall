@@ -21,4 +21,7 @@ public interface UserService {
 
     //소셜가입
     int regSocialUser (User user) throws Exception;
+
+    //일반가입
+    int registerUser (User user) throws Exception;
 }

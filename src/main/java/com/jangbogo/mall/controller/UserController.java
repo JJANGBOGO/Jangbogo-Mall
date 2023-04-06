@@ -79,6 +79,9 @@ public class UserController {
         String kakaoAuthUrl = kakaoLoginBO.getAuthorizationUrl(session);
         m.addAttribute("urlKakao", kakaoAuthUrl);
 
+        String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+        m.addAttribute("urlNaver", naverAuthUrl);
+
         return "login";
     }
 
@@ -114,6 +117,7 @@ public class UserController {
                 user = userService.selectUser(idx);
             } else {
                 log.info("이미 존재하는 이메일입니다.");
+                session.setAttribute("loginService", "kakao"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
             }
 
             makeAuth(email);
@@ -132,7 +136,7 @@ public class UserController {
         for (int i = 0; i < 12; i++) { // TODO:: 나중에 공통으로 묶기
             uuid += (char) ((Math.random() * 26) + 97);
         }
-        return "뉴비_" +uuid;
+        return "뉴비_" + uuid;
     }
 
     //카카오 로그아웃
@@ -143,32 +147,48 @@ public class UserController {
         return "redirect:/";
     }
 
-    //    @GetMapping("/social/naver")
-//    public String callbackNaver(String code, String state, HttpSession session) throws Exception {
-//
-//        oauthToken = naverLoginBO.getAccessToken(session, code, state);
-//        apiResult = naverLoginBO.getUserProfile(oauthToken);
-//
-//        jsonObj = getParsedApiResult(apiResult);
-//        JSONObject response_obj = (JSONObject) jsonObj.get("response");
-//
-//        String email = (String) response_obj.get("email");
-//        String name = (String) response_obj.get("name");
-//
-////        if (loginService.loadUserByUsername(name) == null) {
-////            signUpService.insertUserInfo(name, ""); //빈 문자열도 인코딩해서 비번 막 생긴다.
-////        } else {
-////            log.info("이미 가입된 사용자입니다.");
-////        }
-//        makeAuth(name);
-//
-//        session.setAttribute("login_type", "naver");
-//        return "redirect:/";
-//    }
-//
-//
+    @GetMapping("/social/naver")
+    public String naverLogin(HttpSession session, String code, String state, RedirectAttributes rattr) {
+        try {
+            oauthToken = naverLoginBO.getAccessToken(session, code, state);
+            apiResult = naverLoginBO.getUserProfile(oauthToken);
 
-    //
+            jsonObj = getParsedApiResult(apiResult);
+            JSONObject response_obj = (JSONObject) jsonObj.get("response");
+
+            String email = (String) response_obj.get("email");
+
+            log.info("email....." + email);
+
+            User user = userService.chkDuplicateEmail(email);
+
+            if (user == null) { //신규
+                final int NAVER = 3;
+
+                user = User.builder()
+                        .email(email)
+                        .nick_nm(crtNickName())
+                        .login_tp_cd(NAVER)
+                        .build();
+
+                log.info("뉴비...." + user);
+                int idx = userService.regSocialUser(user);
+                user = userService.selectUser(idx);
+            } else {
+                log.info("이미 존재하는 이메일입니다.");
+                session.setAttribute("loginService", "naver"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
+            }
+
+            makeAuth(email);
+            session.setAttribute("userInfo", user); // session으로 해야 한다.
+            return "redirect:/";
+        } catch (Exception e) {
+//            예외 발생
+            rattr.addFlashAttribute("msg", "LOGIN_ERR"); //로그인 에러
+            return "redirect:/login";
+        }
+    }
+
     public JSONObject getParsedApiResult(String apiResult) throws Exception {
         JSONParser jsonParser = new JSONParser();
         return (JSONObject) jsonParser.parse(apiResult);
@@ -189,13 +209,13 @@ public class UserController {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
     }
-//
-//    // 일반 회원 로그아웃
-//    @GetMapping("/security_logout")
-//    public String logout(HttpServletRequest request, HttpServletResponse response) {
-//        deleteAuth(request, response);
-//        return "redirect:/";
-//    }
+
+    // 일반 회원 로그아웃
+    @GetMapping("/security_logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        deleteAuth(request, response);
+        return "redirect:/";
+    }
 //
 //
 //    // 회원가입

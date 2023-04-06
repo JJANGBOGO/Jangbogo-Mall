@@ -65,6 +65,11 @@ public class UserDaoImpl implements UserDao{
         return user.getIdx();
     }
 
+    @Override
+    public int insertUser (User user) throws Exception {
+        session.insert(nameSpace + "insertUser", user);
+        return user.getIdx();
+    }
 
 }
 

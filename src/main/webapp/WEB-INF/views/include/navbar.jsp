@@ -2,7 +2,7 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 
-<c:set var="loginType" value="${sessionScope.userInfo.login_tp_cd}"/>
+<c:set var="loginService" value="${sessionScope.loginService}"/>
 <c:set var="nick" value="${sessionScope.userInfo.nick_nm}"/>
 <nav>
     <div class="sticky-wrap">
@@ -23,13 +23,13 @@
                         </li>
                         <li>
                             <c:choose>
-                                <c:when test="${loginType == 2}">
+                                <c:when test="${loginService == 'kakao'}">
                                     <%-- 카카오 로그아웃--%>
                                     <a href="https://kauth.kakao.com/oauth/logout?client_id=bb092eaed861b067f81667b75af60fbb&logout_redirect_uri=http://localhost:8080/social/kakao_logout">
                                         로그아웃
                                     </a>
                                 </c:when>
-                                <c:when test="${loginType == 3}">
+                                <c:when test="${loginService == 'naver'}">
                                     <%-- 네이버 로그아웃 TODO:: 직접 구현--%>
                                     <a href="/">로그아웃</a>
                                 </c:when>
