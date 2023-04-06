@@ -3,6 +3,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jangbogo.mall.dao.CartMapper">
     <!--
+    태   그 : select
+    기   능 : 회원번호 찾기 위해 dto 리턴
+    아이디명 : selectUserIndex
+    반환타입 : CartDto
+-->
+    <select id="selectUserIndex" parameterType="String" resultType="CartDto">
+        SELECT CART.PROD_IDX, CART.USER_IDX, PRODUCT.NAME as prod_name , PRODUCT.PRC as prod_price, PRODUCT.RESV_PHOTO_UPLOAD_PATH as prod_rpath,CART.REG_TM, CART.PROD_CNT as prod_cnt, CART.REG_TM, CART.CRT_TM, CART.UPT_TM
+        FROM CART, PRODUCT, USER
+        WHERE CART.PROD_IDX = PRODUCT.IDX AND CART.USER_IDX = USER.IDX AND USER.EMAIL = #{email};
+    </select>
+
+
+    <!--
         태   그 : select
         기   능 : 장바구니를 통해 상품 정보 가져오기
         아이디명 : selectAll
@@ -11,9 +24,8 @@
     <select id="selectAll" resultType="CartDto">
         SELECT CART.PROD_IDX, CART.USER_IDX, PRODUCT.NAME as prod_name , PRODUCT.PRC as prod_price, PRODUCT.RESV_PHOTO_UPLOAD_PATH as prod_rpath,CART.REG_TM, CART.PROD_CNT as prod_cnt, CART.REG_TM, CART.CRT_TM, CART.UPT_TM
         FROM CART, PRODUCT, USER
-        WHERE CART.PROD_IDX = PRODUCT.IDX AND CART.USER_IDX = USER.IDX;
+        WHERE CART.PROD_IDX = PRODUCT.IDX AND CART.USER_IDX = USER.IDX AND CART.USER_IDX = #{user_idx};
     </select>
-
 
     <!--
         태   그 : delete
@@ -25,4 +37,36 @@
         DELETE FROM CART
         WHERE prod_idx = #{prod_idx} AND user_idx = #{user_idx};
     </delete>
+
+    <!--
+        태   그 : update
+        기   능 : 장바구니 물품 개수를 1 증가시킨다.
+        아이디명 : addCount
+        매개변수타입 : map(Integer, Integer)
+    -->
+    <update id="addCount" parameterType="map">
+        UPDATE CART SET prod_cnt = prod_cnt + 1
+        WHERE prod_idx = #{prod_idx} AND user_idx = #{user_idx};
+    </update>
+    <!--
+        태   그 : update
+        기   능 : 장바구니 물품 개수를 1 감소시킨다.
+        아이디명 : subtractCount
+        매개변수타입 : map(Integer, Integer)
+    -->
+    <update id="subtractCount" parameterType="map">
+        UPDATE CART SET prod_cnt = prod_cnt - 1
+        WHERE prod_idx = #{prod_idx} AND user_idx = #{user_idx};
+    </update>
+
+    <!--
+        태   그 : select
+        기   능 : 주문총금액을 계산한다.
+        아이디명 : getTotalPrice
+    -->
+<!--       <select id="getTotalPrice" resultType="Integer">-->
+<!--           SELECT SUM(CART.PROD_CNT * PRODUCT.PRC)-->
+<!--           FROM CART, PRODUCT, USER-->
+<!--           WHERE prod_idx = #{prod_idx} AND user_idx = #{user_idx};-->
+<!--       </select>-->
 </mapper>

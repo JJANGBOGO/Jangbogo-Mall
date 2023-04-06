@@ -20,7 +20,7 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
             Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
         }
-        .item-list {
+        #itemList {
             padding: 0;
         }
         .cart_item {
@@ -129,11 +129,11 @@
         }
 
 
-        .cart_item__close > a, #subtractBtn > a, #addBtn > a {
+        .cart_item__close, #subtractBtn > a, #addBtn > a {
             text-decoration: none;
             color: black;
         }
-        .cart_item__close > a {
+        .cart_item__close {
             color: lightgray;
         }
         .cart_item > input {
@@ -215,36 +215,9 @@
                 <div class="selection">
                     <input type="checkbox" name="chk-all" class="input-all" /> 전체선택(<span id="checked">0</span>/${list.size()}) |  선택삭제
                 </div>
-                <div class="cart_items">
-                    <ul id="item-list">
-                        <c:forEach var="cartDto" items="${list}">  <!-- 반복문 입력 -->
-                            <li class="cart_item">
-                                <input type="checkbox" name="chk"  />
-                                <img src="${cartDto.prod_rpath}" alt="" />
-                                <div class="cart_item__title">${cartDto.prod_name}</div>
-                                <div class="cart_item__contents">
-                                    <div class="cart_item__cnt">
-                                        <div class="subtract-btn" id="subtractBtn">
-                                            <a href="<c:url value="/cart/subtractCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}&prod_cnt=${cartDto.prod_cnt}"/>">-</a>
-                                        </div>
-                                        <div class="item__count">${cartDto.prod_cnt}</div>
-                                        <div id="addBtn">
-                                            <a href="<c:url value="/cart/addCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}"/>">+</a>
-                                        </div>
-                                    </div>
-                                    <div class="cart_item__price">${cartDto.prod_price * cartDto.prod_cnt}</div><span>원</span>
-                                    <div class="cart_item__close" id="removeBtn">
-                                        <a href="<c:url value="/cart/remove?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}"/>">&times;</a>
-                                    </div>
-                                </div>
-                            </li>
+                <div id="cartItems">
 
-                        </c:forEach>
-                    </ul>
                 </div>
-<%--                <div class="selection">--%>
-<%--                    <input type="checkbox" name="chk-all" class="input-all" /> 전체선택(1/${list.size()}) |  선택삭제--%>
-<%--                </div>--%>
             </div>
             <div class="summary">
                 <section class="dilvp">
@@ -273,7 +246,61 @@
         <%@ include file="/WEB-INF/views/include/modal.jsp" %>
     </div>
     <script>
+        // 1. 장바구니 전체 목록 조회
+        let toHtml = (items) => {
+            let tmp = "<ul>";
+
+            items.forEach((item) => {
+                tmp += '<li class="cart_item">';
+                tmp += '<input type="checkbox" name="chk"  />';
+                tmp += '<img src=' + item.prod_rpath + " alt='' />";
+                tmp += "<div class='cart_item__title'>" + item.prod_name + "</div>";
+                tmp += '<div class="cart_item__contents">';
+                tmp += '<div class="cart_item__cnt">';
+                tmp += '<div id="subtractBtn">';
+                tmp += "<a href=''>" + "-" + "</a>";
+                tmp += '</div>';
+                tmp += '<div class=item__count>' + item.prod_cnt + "</div>";
+                tmp += '<div id="addBtn">';
+                tmp += "<a href=''>" + "+" + "</a>";
+                tmp += '</div>';
+                tmp += '</div>';
+                tmp += "<div class='cart_item__price'>" + item.prod_price * item.prod_cnt + "</div><span>원</span>";
+                tmp += '<div class="cart_item__close">&times;</div>';
+                tmp += '</div>';
+                tmp += '</li>';
+            })
+            return tmp += '</ul>';
+        }
+        let showList = (user_idx) => {
+            $.ajax({
+                type:'GET',
+                url:'/cart/list?user_idx=' + user_idx,
+                success: (result) => {
+                    $('#cartItems').html(toHtml(result));
+                },
+                error : function() { alert("comment get error");}
+            })
+        }
+
+        $(document).on("click", ".cart_item__close", () => {
+            if(!confirm("정말로 삭제하시겠습니까?")) return;
+            $.ajax({
+                type:'DELETE',                                                  // 요청 메서드
+                url: '/cart/remove?prod_idx=${prod_idx}&user_idx=${user_idx}',  // 요청 URI
+                success : (result) => {
+                    alert("success");                                               // 서버로부터 응답이 도착하면 호출될 함수.
+                },
+                error   : () => {
+                    alert("error");
+                }
+            });  // $.ajax()
+        })
         $(document).ready(function() {
+            showList(1234);  // 회원번호(user_idx) 하드코딩
+
+            // 이벤트 핸들러에서 user_idx와 prod_idx를 사용하려면?
+            // 동적으로 생성된 태그에 이벤트를 걸려면 document 객체에서 잡아와서 이벤트를 걸어야한다.
 
             let cnt = 0;    // li 태그 개수를 저장할 변수 cnt 선언 및 0으로 초기화
             let price = 0;  // 상품금액을 저장할 변수 price 선언 및 0으로 초기화
@@ -284,7 +311,7 @@
             })
 
             // 상품금액이 총 얼마인지 계산
-            // 상품개수가 1 이하인 경우, - 버튼 비활성화, 그렇지 않은 경우 활성
+            // 상품개수가 1 이하인 경우, - 버튼 비활성화, 그렇지 않은 경우 활성화
             for(let i = 1; i <= cnt; i++) {
                 price += parseInt($('li:nth-child(' + i + ') > .cart_item__contents > .cart_item__price').text());
                 let a = parseInt($('li:nth-child(' + i + ') > .cart_item__contents > .cart_item__cnt > .item__count').text());
@@ -304,27 +331,9 @@
             price += 2500;                      // 상품금액에 배송비를 추가한다.
             $('#totalPrice').text(price + "원")  // 결제예정금액에 price값을 추가한다.
 
-            $('.cart_item__close > a').click((event) => {
-                if (confirm("삭제하시겠습니까?") == true){
-                    //true는 확인버튼을 눌렀을 때 코드 작성
-                }else{
-                    // false는 취소버튼을 눌렀을 때, 취소됨
-                    event.preventDefault();
-                }
-            })
-
-
-
-
             // 이벤트 대상 : .input-all
             // 이벤트 : click
             // 이벤트 핸들러 기능 : 전체 선택 시, 모든 상품의 체크박스 체크드 처리
-            // 1. 체크
-                // 1.1 '전체'
-                // 1.2 '특정 종목'
-            // 2. 언체크
-                // 2.1 '전체'
-                // 2.2 '특정 종목'
             $(".input-all").click(function() {
                 if($(".input-all").is(":checked")) $("input[name=chk]").prop("checked", true);
                 else $("input[name=chk]").prop("checked", false);
@@ -342,8 +351,10 @@
                 if(total != checked) $(".input-all").prop("checked", false);
                 else $(".input-all").prop("checked", true);
             });
-
+            // JQUERY를 이용한 Ajax 사용
         })
+
     </script>
+
 </body>
 </html>

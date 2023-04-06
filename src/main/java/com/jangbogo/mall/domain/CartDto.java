@@ -101,7 +101,7 @@ public class CartDto {
 
     @Override
     public String toString() {
-        return "CartDto{" +
+        return "{" +
                 "prod_idx=" + prod_idx +
                 ", user_idx=" + user_idx +
                 ", prod_name='" + prod_name + '\'' +
