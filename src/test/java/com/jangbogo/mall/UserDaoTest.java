@@ -59,4 +59,11 @@ public class UserDaoTest {
         log.info("result="+ result);
         assertTrue(result != null);
     }
+
+    @Test //OK
+    public void regSocialUser () throws Exception {
+        int result = dao.insertSocialUser("jinvicky@naver.com", "jin", 2);
+        log.info("result="+ result);
+        assertTrue(result != 0);
+    }
 }

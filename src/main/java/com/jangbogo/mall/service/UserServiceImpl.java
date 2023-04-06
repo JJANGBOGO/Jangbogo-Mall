@@ -62,6 +62,11 @@ public class UserServiceImpl implements UserService {
         return 0; //실패.
     }
 
+    @Override
+    public User chkDuplicateEmail (String email) throws Exception {
+        return dao.chkDuplicateEmail(email);
+    }
+
     //임시 비번 생성
     public String createTmpPwd() {
         String pwd = "";

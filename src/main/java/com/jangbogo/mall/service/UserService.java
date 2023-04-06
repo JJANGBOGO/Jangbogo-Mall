@@ -16,4 +16,6 @@ public interface UserService {
 
     int sendPwdEmail (String nick_nm, String toEmail) throws Exception; //임시비번을 이메일로 전송
 
+    //이메일로 중복 확인
+    User chkDuplicateEmail (String email) throws Exception;
 }

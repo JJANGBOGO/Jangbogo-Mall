@@ -95,24 +95,29 @@ public class UserController {
             JSONObject response_obj2 = (JSONObject) response_obj.get("profile");
 
             String email = (String) response_obj.get("email");
-            final int KAKAO = 2;
 
-            String uuid = "";
+            log.info("email....." + email);
 
-            for (int i = 0; i < 12; i++) { // TODO:: 나중에 공통으로 묶고 싶은 부분
-                uuid += (char) ((Math.random() * 26) + 97);
+            User user = userService.chkDuplicateEmail(email);
+
+            if (user == null) { //신규
+                final int KAKAO = 2;
+
+                user = User.builder()
+                        .email(email)
+                        .nick_nm("뉴비_" + createUuid())
+                        .login_tp_cd(KAKAO)
+                        .build();
+
+                log.info("뉴비...." + user);
+//                userService.regSocialUser(user);
+//
+            }else {
+                log.info("이미 존재하는 이메일입니다.");
             }
 
-            User user = User.builder().nick_nm("뉴비_" + uuid).email("jinvicky@naver.com").login_tp_cd(KAKAO).build();
-//
-//            if (!userService.duplicateEmailChk(email)) {
-//                userService.regSocialUser("뉴비_randomString", email, kakao); //내가 만든 닉네임과 이메일로 회원가입
-//            } else {
-//                log.info("이미 가입한 사용자입니다.");
-//            }
-
             makeAuth(email);
-            session.setAttribute("login_type", "kakao");
+            session.setAttribute("user", user);
             return "redirect:/";
         } catch (Exception e) {
 //            예외 발생
@@ -120,7 +125,16 @@ public class UserController {
         }
     }
 
-//    @GetMapping("/social/naver")
+    public String createUuid() { //랜덤 문자열 생성
+        String uuid = "";
+
+        for (int i = 0; i < 12; i++) { // TODO:: 나중에 공통으로 묶기
+            uuid += (char) ((Math.random() * 26) + 97);
+        }
+        return uuid;
+    }
+
+    //    @GetMapping("/social/naver")
 //    public String callbackNaver(String code, String state, HttpSession session) throws Exception {
 //
 //        oauthToken = naverLoginBO.getAccessToken(session, code, state);

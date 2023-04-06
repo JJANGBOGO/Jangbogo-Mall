@@ -58,5 +58,14 @@ public class UserDaoImpl implements UserDao{
     public User chkDuplicateEmail (String email) throws Exception {
         return session.selectOne(nameSpace + "chkDuplicateEmail", email);
     }
+
+    @Override
+    public int insertSocialUser (String email, String nick_nm, int login_type) throws Exception {
+        Map map = new HashMap();
+        map.put("email", email);
+        map.put("nick_nm", nick_nm);
+        map.put("login_tp_cd", login_type);
+        return session.insert(nameSpace + "insertSocialUser", map);
+    }
 }
 
