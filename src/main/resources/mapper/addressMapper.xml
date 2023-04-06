@@ -8,5 +8,9 @@
         INSERT INTO DLVPN (USER_IDX, ZPCD, ADDR_BASE, ADDR_DTL, RCPR_NM, RCPR_MOBL_NO, IS_DEFAULT_YN)
         VALUES (#{user_idx}, #{zpcd}, #{addr_base}, #{addr_dtl}, #{rcpr_nm}, #{rcpr_mobl_no}, #{is_default_yn});
     </insert>
+
+    <select id="selAddrList" resultType="Address">
+        SELECT * FROM DLVPN WHERE USER_IDX = #{user_idx};
+    </select>
 </mapper>
 
