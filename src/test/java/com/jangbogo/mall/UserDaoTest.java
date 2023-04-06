@@ -98,5 +98,12 @@ public class UserDaoTest {
         assertTrue(result != 0);
     }
 
+    @Test
+    public void chkDuplicateNick () throws Exception  {
+        User result = dao.chkDuplicateNick("뉴비_1");
+        log.info("result=" + result);
+        assertTrue(result != null);
+    }
+
 
 }

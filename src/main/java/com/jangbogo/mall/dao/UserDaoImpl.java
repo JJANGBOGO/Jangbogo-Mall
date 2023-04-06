@@ -10,15 +10,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Repository
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
 
     @Autowired
     SqlSession session;
 
-    private static String nameSpace = "com.jangbogo.mall.dao.UserMapper.";
+    private static final String nameSpace = "com.jangbogo.mall.dao.UserMapper.";
 
     @Override
-    public int deleteUser (int idx, String email) throws Exception {
+    public int deleteUser(int idx, String email) throws Exception {
         Map map = new HashMap();
         map.put("idx", idx);
         map.put("email", email);
@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public String selUserEmail (String nick_nm, String pwd) throws Exception {
+    public String selUserEmail(String nick_nm, String pwd) throws Exception {
         Map map = new HashMap();
         map.put("nick_nm", nick_nm);
         map.put("pwd", pwd);
@@ -34,7 +34,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User selUserByEmail (String nick_nm, String email) throws Exception {
+    public User selUserByEmail(String nick_nm, String email) throws Exception {
         Map map = new HashMap();
         map.put("nick_nm", nick_nm);
         map.put("email", email);
@@ -42,12 +42,12 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User selectUser (int idx) throws Exception {
+    public User selectUser(int idx) throws Exception {
         return session.selectOne(nameSpace + "selectUser", idx);
     }
 
     @Override
-    public int updatePwd (String pwd, String nick_nm, String email) throws Exception {
+    public int updatePwd(String pwd, String nick_nm, String email) throws Exception {
         Map map = new HashMap();
         map.put("pwd", pwd);
         map.put("nick_nm", nick_nm);
@@ -56,28 +56,33 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public User chkDuplicateEmail (String email) throws Exception {
+    public User chkDuplicateEmail(String email) throws Exception {
         return session.selectOne(nameSpace + "chkDuplicateEmail", email);
     }
 
     @Override
-    public int insertSocialUser (User user) throws Exception {
+    public int insertSocialUser(User user) throws Exception {
         session.insert(nameSpace + "insertSocialUser", user);
         return user.getIdx();
     }
 
     @Override
-    public int insertUser (User user) throws Exception {
+    public int insertUser(User user) throws Exception {
         session.insert(nameSpace + "insertUser", user);
         return user.getIdx();
     }
 
     @Override
-    public  int updateLoginTm (int idx, String email) throws Exception {
+    public int updateLoginTm(int idx, String email) throws Exception {
         Map map = new HashMap();
         map.put("idx", idx);
         map.put("email", email);
         return session.update(nameSpace + "updateLoginTm", map);
+    }
+
+    @Override
+    public User chkDuplicateNick(String nick_nm) throws Exception {
+        return session.selectOne(nameSpace + "chkDuplicateNick", nick_nm);
     }
 
 }
