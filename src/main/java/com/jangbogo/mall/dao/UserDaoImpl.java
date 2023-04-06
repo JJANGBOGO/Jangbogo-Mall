@@ -67,5 +67,7 @@ public class UserDaoImpl implements UserDao{
         map.put("login_tp_cd", login_type);
         return session.insert(nameSpace + "insertSocialUser", map);
     }
+
+
 }
 

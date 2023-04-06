@@ -60,5 +60,12 @@ public class UserServiceTest {
         log.info("result= "+ result);
         assertTrue(result != null); //테스트 실패시 빨간 줄 추가됨. 무시
     }
+
+    @Test //OK
+    public void regSocialUser () throws Exception {
+        int result = service.regSocialUser("dugu@naver.com", "지우님", 2);
+        log.info("result= "+ result);
+        assertTrue(result != 0); //테스트 실패시 빨간 줄 추가됨. 무시
+    }
 }
 

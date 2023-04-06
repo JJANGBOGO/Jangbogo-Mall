@@ -76,4 +76,9 @@ public class UserServiceImpl implements UserService {
         return pwd;
     }
 
+    @Override
+    public int regSocialUser (String email, String nick_nm, int login_type) throws Exception {
+        return dao.insertSocialUser(email, nick_nm, login_type);
+    }
+
 }

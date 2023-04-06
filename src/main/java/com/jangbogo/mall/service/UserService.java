@@ -18,4 +18,7 @@ public interface UserService {
 
     //이메일로 중복 확인
     User chkDuplicateEmail (String email) throws Exception;
+
+    //소셜가입
+    int regSocialUser (String email, String nick_nm, int login_type) throws Exception;
 }
