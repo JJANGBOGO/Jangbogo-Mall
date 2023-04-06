@@ -52,4 +52,11 @@ public class UserDaoTest {
         log.info("result="+ result);
         assertTrue(result != 0);
     }
+
+    @Test //OK
+    public void chkDuplicateEmail () throws Exception {
+        User result = dao.chkDuplicateEmail("jinvicky@naver.com");
+        log.info("result="+ result);
+        assertTrue(result != null);
+    }
 }

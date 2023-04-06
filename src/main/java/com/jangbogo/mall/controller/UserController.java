@@ -4,16 +4,25 @@ package com.jangbogo.mall.controller;
 import com.jangbogo.mall.domain.KakaoLoginBo;
 import com.jangbogo.mall.domain.NaverLoginBo;
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.jangbogo.mall.domain.User;
 import com.jangbogo.mall.service.UserService;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject; //json.simple이어야 한다.
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -28,7 +37,7 @@ public class UserController {
 
     OAuth2AccessToken oauthToken;
     JSONObject jsonObj;
-    private final String apiResult = null;
+    private String apiResult = null;
 
     @Autowired
     UserService userService;
@@ -59,47 +68,58 @@ public class UserController {
 
     //가입
     @GetMapping("/register/user")
-    public String registerUserView () {
+    public String registerUserView() {
         return "/user/register";
     }
 
     //로그인뷰
-    @GetMapping("/login/user")
-    public String loginUserView() {
+    @RequestMapping("/login") //꼭 requestMapping
+    public String loginUserView(Model m, HttpSession session) {
+
+        String kakaoAuthUrl = kakaoLoginBO.getAuthorizationUrl(session);
+        m.addAttribute("urlKakao", kakaoAuthUrl);
+
         return "login";
     }
 
-    //로그인
-    @PostMapping("/login/user")
-    public String loginUser() {
-//        TODO:: 세션에 유저 정보 저장 필수
-        return "redirect:/";
+
+    @GetMapping("/social/kakao") //경로 나중에 수정
+    public String buildKaKao(HttpSession session, String code, String state) {
+
+        try {
+            oauthToken = kakaoLoginBO.getAccessToken(session, code, state);
+            apiResult = kakaoLoginBO.getUserProfile(oauthToken);
+
+            jsonObj = getParsedApiResult(apiResult);
+            JSONObject response_obj = (JSONObject) jsonObj.get("kakao_account");
+            JSONObject response_obj2 = (JSONObject) response_obj.get("profile");
+
+            String email = (String) response_obj.get("email");
+            final int KAKAO = 2;
+
+            String uuid = "";
+
+            for (int i = 0; i < 12; i++) { // TODO:: 나중에 공통으로 묶고 싶은 부분
+                uuid += (char) ((Math.random() * 26) + 97);
+            }
+
+            User user = User.builder().nick_nm("뉴비_" + uuid).email("jinvicky@naver.com").login_tp_cd(KAKAO).build();
+//
+//            if (!userService.duplicateEmailChk(email)) {
+//                userService.regSocialUser("뉴비_randomString", email, kakao); //내가 만든 닉네임과 이메일로 회원가입
+//            } else {
+//                log.info("이미 가입한 사용자입니다.");
+//            }
+
+            makeAuth(email);
+            session.setAttribute("login_type", "kakao");
+            return "redirect:/";
+        } catch (Exception e) {
+//            예외 발생
+            return "redirect:/";
+        }
     }
-//
-//
-//    @GetMapping("/social/kakao") //경로 나중에 수정
-//    public String buildKaKao(HttpSession session, String code, String state) throws Exception {
-//
-//        oauthToken = kakaoLoginBO.getAccessToken(session, code, state);
-//        apiResult = kakaoLoginBO.getUserProfile(oauthToken);
-//
-//        jsonObj = getParsedApiResult(apiResult);
-//        JSONObject response_obj = (JSONObject) jsonObj.get("kakao_account");
-//        JSONObject response_obj2 = (JSONObject) response_obj.get("profile");
-//
-//        String email = (String) response_obj.get("email");
-//        String name = (String) response_obj2.get("nickname");
-//
-////        if (loginService.loadUserByUsername(name) == null) {
-////            signUpService.insertUserInfo(name, ""); //빈 문자열도 인코딩해서 비번 막 생긴다.
-////        } else {
-////            log.info("이미 가입된 사용자입니다.");
-////        }
-//        makeAuth(name);
-//        session.setAttribute("login_type", "kakao");
-//        return "redirect:/";
-//    }
-//
+
 //    @GetMapping("/social/naver")
 //    public String callbackNaver(String code, String state, HttpSession session) throws Exception {
 //
@@ -124,32 +144,33 @@ public class UserController {
 //    }
 //
 //    //카카오 로그아웃
-//    @GetMapping("/social/kakao_logout")
-//    public String kakaoLogout(HttpServletRequest request, HttpServletResponse response) {
-//        deleteAuth(request, response);
-//        return "redirect:/";
-//    }
-//
-//    public JSONObject getParsedApiResult(String apiResult) throws Exception {
-//        JSONParser jsonParser = new JSONParser();
-//        return (JSONObject) jsonParser.parse(apiResult);
-//    }
-//
-//    // 인증 생성
-//    public void makeAuth(Object obj) {
-//        Authentication authentication =
-//                new UsernamePasswordAuthenticationToken(obj, null);
-//        SecurityContext securityContext = SecurityContextHolder.getContext();
-//        securityContext.setAuthentication(authentication);
-//    }
-//
-//    // 로그아웃시 인증 삭제
-//    public void deleteAuth(HttpServletRequest request, HttpServletResponse response) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        if (auth != null) {
-//            new SecurityContextLogoutHandler().logout(request, response, auth);
-//        }
-//    }
+    @GetMapping("/social/kakao_logout")
+    public String kakaoLogout(HttpServletRequest request, HttpServletResponse response) {
+        deleteAuth(request, response);
+        return "redirect:/";
+    }
+
+    //
+    public JSONObject getParsedApiResult(String apiResult) throws Exception {
+        JSONParser jsonParser = new JSONParser();
+        return (JSONObject) jsonParser.parse(apiResult);
+    }
+
+    // 인증 생성
+    public void makeAuth(Object obj) {
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken(obj, null);
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(authentication);
+    }
+
+    // 로그아웃시 인증 삭제
+    public void deleteAuth(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+    }
 //
 //    // 일반 회원 로그아웃
 //    @GetMapping("/security_logout")
@@ -158,10 +179,6 @@ public class UserController {
 //        return "redirect:/";
 //    }
 //
-//    @GetMapping("/user/signup")
-//    public String userSignupView() {
-//        return "/user/signup";
-//    }
 //
 //    // 회원가입
 //    @RequestMapping("/signUpView")

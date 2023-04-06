@@ -24,5 +24,13 @@
         UPDATE USER SET PWD = #{pwd} WHERE NICK_NM = #{nick_nm} AND EMAIL = #{email};
     </update>
 
+    <select id="chkDuplicateEmail" parameterType="String" resultType="User">
+        SELECT * FROM USER WHERE EMAIL = #{email}
+    </select>
+
+    <insert id="regSocialUser" parameterType="User">
+        INSERT INTO USER (AUTH_IDX, RNK_IDX, EMAIL, NICK_NM, USER_AGRE_YN, LOGIN_TP_CD, LAST_LOGIN_TM)
+        VALUES (1, 1, #{email}, #{nick_nm},'Y', #{login_tp_cd} ,now());
+    </insert>
 </mapper>
 

@@ -14,4 +14,6 @@ public interface UserDao {
 
     int updatePwd (String pwd, String nick_nm, String email) throws Exception; //비밀번호 수정
 
+    User chkDuplicateEmail (String email) throws Exception; //소셜, 일반 가입 시 이메일 중복 검사.
+
 }

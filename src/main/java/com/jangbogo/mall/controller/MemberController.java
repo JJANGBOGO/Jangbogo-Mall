@@ -109,9 +109,5 @@ public class MemberController { //회원, 판매자 공통작업 수행
         return "registerIntro";
     }
 
-    //로그안뷰
-    @RequestMapping("/login") //아마 시큐리티는 RequestMapping()
-    public String loginView() {
-        return "login";
-    }
+
 }

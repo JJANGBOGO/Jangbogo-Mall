@@ -53,5 +53,10 @@ public class UserDaoImpl implements UserDao{
         map.put("email", email);
         return session.update(nameSpace + "updatePwd", map);
     }
+
+    @Override
+    public User chkDuplicateEmail (String email) throws Exception {
+        return session.selectOne(nameSpace + "chkDuplicateEmail", email);
+    }
 }
 
