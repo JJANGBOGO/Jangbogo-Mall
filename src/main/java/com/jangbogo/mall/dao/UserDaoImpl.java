@@ -72,10 +72,5 @@ public class UserDaoImpl implements UserDao{
         return user.getIdx();
     }
 
-    @Override
-    public int insertAddr (Address addr) throws Exception {
-        return session.insert(nameSpace + "insertAddr", addr);
-    }
-
 }
 

@@ -23,6 +23,4 @@ public interface UserDao {
     // insert한 후 idx 리턴. 배송지 추가에 필요
     int insertUser (User user) throws Exception;
 
-    //가입 시 배송지 추가
-    int insertAddr (Address addr) throws Exception;
 }
