@@ -91,6 +91,11 @@ public class UserServiceImpl implements UserService {
         return dao.insertUser(user);
     }
 
+    @Override
+    public int updateLoginTm (int idx, String email) throws Exception {
+        return dao.updateLoginTm(idx, email);
+    }
+
 
 
 

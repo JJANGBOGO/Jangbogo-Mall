@@ -67,28 +67,6 @@ public class UserController {
         return msg;
     }
 
-    //가입
-    @GetMapping("/register/user")
-    public String registerUserView() {
-        return "/user/register";
-    }
-
-    @PostMapping("/register/user")
-    public String registerUser(User user, Address addr, RedirectAttributes rattr) {
-        log.info("user...." + user);
-        log.info("addr...." + addr);
-
-        try {
-            return "redirect:/login";
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            rattr.addFlashAttribute("msg", "EXCEPTION_ERR"); //가입 도중 에러
-            return "redirect:/register/user";
-        }
-    }
-
-
     //로그인뷰
     @RequestMapping("/login") //꼭 requestMapping
     public String loginUserView(Model m, HttpSession session) {
@@ -101,7 +79,6 @@ public class UserController {
 
         return "login";
     }
-
 
     //카카오 로그인
     @GetMapping("/social/kakao")
@@ -134,6 +111,7 @@ public class UserController {
                 user = userService.selectUser(idx);
             } else {
                 log.info("이미 존재하는 이메일입니다.");
+                userService.updateLoginTm(user.getIdx(), user.getEmail());
                 session.setAttribute("loginService", "kakao"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
             }
 
@@ -193,6 +171,7 @@ public class UserController {
                 user = userService.selectUser(idx);
             } else {
                 log.info("이미 존재하는 이메일입니다.");
+                userService.updateLoginTm(user.getIdx(), user.getEmail()); //ok
                 session.setAttribute("loginService", "naver"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
             }
 
@@ -233,19 +212,40 @@ public class UserController {
         deleteAuth(request, response);
         return "redirect:/";
     }
-//
-//
-//    // 회원가입
-//    @RequestMapping("/signUpView")
-//    public String signUpView(Model model) {
-//        return "signUpView";
-//    }
-//
-//    @RequestMapping("/signUp")
-//    public String signUp(HttpServletRequest request, Model model) {
-////        boolean isInserted = signUpService.insertUserInfo(request.getParameter("id"), request.getParameter("password"));
-//        boolean isInserted = true;
-//        if (isInserted) return "user/login";
-//        else return "signUpView";
-//    }
+
+    //가입
+    @GetMapping("/register/user")
+    public String registerUserView() {
+        return "/user/register";
+    }
+
+    @PostMapping("/register/user")
+    public String registerUser(User user, Address addr, RedirectAttributes rattr) {
+        log.info("user...." + user);
+        log.info("addr...." + addr);
+
+        try {
+            return "redirect:/login";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR"); //가입 도중 에러
+            return "redirect:/register/user";
+        }
+    }
+
+    //닉네임 중복 체크
+    @PostMapping("/chk/duplicate/nickname")
+    @ResponseBody
+    public String chkDuplicateNick () {
+        return "OK";
+    }
+
+    //이메일 중복 체크
+    @PostMapping("/chk/duplicate/email")
+    @ResponseBody
+    public String chkDuplicateEmail () {
+        return "OK";
+    }
+
 }

@@ -24,4 +24,7 @@ public interface UserService {
 
     //일반가입
     int insertUser (User user) throws Exception;
+
+    //로그인시각 업데이트
+    int updateLoginTm (int idx, String email) throws Exception;
 }

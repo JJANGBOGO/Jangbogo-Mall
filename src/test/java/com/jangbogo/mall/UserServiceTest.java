@@ -87,5 +87,11 @@ public class UserServiceTest {
         log.info("result= " + result);
         assertTrue(result != 0); //테스트 실패시 빨간 줄 추가됨. 무시
     }
+
+    @Test
+    public void updateLoginTm() throws Exception { //ok
+        int result = service.updateLoginTm(23, "3@naver.com");
+        log.info("result= "+ result);
+    }
 }
 
