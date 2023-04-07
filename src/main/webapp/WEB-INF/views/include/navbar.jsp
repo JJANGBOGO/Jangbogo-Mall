@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 
 <c:set var="loginService" value="${sessionScope.loginService}"/>
-<c:set var="nick" value="${sessionScope.userInfo.nick_nm}"/>
+<c:set var="nick" value="${sessionScope.nickName}"/>
 <nav>
     <div class="sticky-wrap">
         <div class="top-navigation">

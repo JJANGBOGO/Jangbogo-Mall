@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
@@ -23,37 +22,33 @@
                 회원님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번
                 확인해주세요.
             </p>
-            <form:form class="check-pwd-form" action="/mypage/info" method="post" id="verify_form" modelAttribute="userDto">
-                <form:errors path="id" />
-                <form:errors path="pwd" />
+            <form class="check-pwd-form" action="/mypage/info" method="post" id="verify_form">
                 <div class="center-padding">
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="id">아이디</label>
+                            <label>이메일</label>
                         </div>
                         <div class="input">
-<%--                            시큐리티에서 적용한 value 적용이 필요--%>
-                            <form:input path="id" name="id" type="text" readonly="true" value="jinvicky" />
+                            <input name="id" type="text" readonly="true" value="${sessionScope.email}" />
                         </div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="pwd"
+                            <label
                             >비밀번호
                                 <span class="required">*</span>
                             </label>
                         </div>
                         <div class="input">
-                            <form:input path="pwd" name="pwd" type="password" />
+                            <input name="pwd" type="password" />
                         </div>
                     </div>
                 </div>
                 <!-- end of center-padding -->
                 <div class="button-box">
                     <button type="submit" class="">확인</button>
-                    <button type="button" class="">일반 계정과 연동</button>
                 </div>
-            </form:form>
+            </form>
         </div>
     </div>
 </div>

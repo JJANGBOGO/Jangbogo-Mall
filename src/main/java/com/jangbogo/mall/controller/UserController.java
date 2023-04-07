@@ -116,7 +116,7 @@ public class UserController {
 
             makeAuth(email);
             session.setAttribute("loginService", "kakao"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
-            session.setAttribute("userInfo", user); // session으로 해야 한다.
+            crtSession(session, user);
             return "redirect:/";
         } catch (Exception e) {
 //            예외 발생
@@ -137,7 +137,7 @@ public class UserController {
     //카카오 로그아웃
     @GetMapping("/social/kakao_logout")
     public String kakaoLogout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        session.removeAttribute("userInfo"); //세션 삭제
+        session.invalidate();
         deleteAuth(request, response); //인증 삭제
         return "redirect:/";
     }
@@ -176,7 +176,7 @@ public class UserController {
 
             makeAuth(email);
             session.setAttribute("loginService", "naver"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
-            session.setAttribute("userInfo", user); // session으로 해야 한다.
+            crtSession(session, user);
             return "redirect:/";
         } catch (Exception e) {
 //            예외 발생
@@ -184,6 +184,9 @@ public class UserController {
             return "redirect:/login";
         }
     }
+
+    //TODO:: 네이버 로그아웃
+
 
     public JSONObject getParsedApiResult(String apiResult) throws Exception {
         JSONParser jsonParser = new JSONParser();
@@ -208,7 +211,8 @@ public class UserController {
 
     // 일반 회원 로그아웃
     @GetMapping("/security_logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) {
+    public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+        session.invalidate();
         deleteAuth(request, response);
         return "redirect:/";
     }
@@ -269,10 +273,18 @@ public class UserController {
         return msg;
     }
 
+    @GetMapping("/test/login")
+    public String testLogin(HttpSession session) throws Exception {
+        User user = userService.selectUser(26);
+        session.setAttribute("loginService", "jangbogo");
+        crtSession(session, user);
+        return "";
+    }
+
     //회원수정전 인증
     @GetMapping("/mypage/user/info")
     public String verifyUserView(HttpSession session) {
-        log.info("loginService..."+session.getAttribute("loginService"));
+        log.info("loginService..." + session.getAttribute("loginService"));
         if (session.getAttribute("loginService") != "jangbogo")
             //일반 로그인이 아닌 경우
             return "/user/verifySocial";
@@ -299,11 +311,11 @@ public class UserController {
         return "user/modfiy";
     }
 
-    //세션 저장 TODO:: 고민중...
+    //세션 저장
     public void crtSession(HttpSession session, User user) {
         session.setAttribute("idx", user.getIdx());
         session.setAttribute("email", user.getEmail());
-//        session.setAttribute("loginType", user.getLogin_tp_cd());
-//        session.setAttribute("authType", user.getAuth_idx());
+        session.setAttribute("nickName", user.getNick_nm());
     }
+
 }

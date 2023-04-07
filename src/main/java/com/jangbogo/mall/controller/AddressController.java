@@ -26,10 +26,10 @@ public class AddressController {
     public String myPageAddrView(HttpServletRequest req, Model m, HttpSession session) {
         m.addAttribute("mypageUrl", req.getRequestURI());
 
-        User user = (User) session.getAttribute("userInfo"); //세션 얻기
+        int idx = (int) session.getAttribute("idx"); //세션 얻기
 
         try {
-            List<Address> list = service.selAddrList(user.getIdx());
+            List<Address> list = service.selAddrList(idx);
             m.addAttribute("addrList", list);
         } catch(Exception e) {
             e.printStackTrace();
