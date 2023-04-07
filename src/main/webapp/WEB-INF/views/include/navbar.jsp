@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:set var="loginService" value="${sessionScope.loginService}"/>
-<c:set var="nick" value="${sessionScope.nickName}"/>
+<c:set var="nickname" value="${sessionScope.nickName}"/>
 <nav>
     <div class="sticky-wrap">
         <div class="top-navigation">
@@ -19,7 +20,7 @@
                     </s:authorize>
                     <s:authorize access="isAuthenticated()">
                         <li>
-                            <a>${nick}님</a>
+                            <a>${nickname}님</a>
                         </li>
                         <li>
                             <c:choose>

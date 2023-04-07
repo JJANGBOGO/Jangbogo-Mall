@@ -6,6 +6,7 @@ import com.jangbogo.mall.domain.Address;
 import com.jangbogo.mall.domain.Email;
 import com.jangbogo.mall.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     EmailSender emailSender;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     public int withdrawUser(int idx, String email) throws Exception {
@@ -50,8 +54,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public int sendPwdEmail(String nick_nm, String toEmail) throws Exception {
         String tmpPwd = createTmpPwd();
+        String encodedPwd = passwordEncoder.encode(tmpPwd);
 
-        int result = updatePwd(tmpPwd, nick_nm, toEmail); //임시비번으로 비번 업데이트.
+        int result = updatePwd(encodedPwd, nick_nm, toEmail); //임시비번으로 비번 업데이트.
 
         if (result != 0) {
             Email email = Email.builder()

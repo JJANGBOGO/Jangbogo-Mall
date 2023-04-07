@@ -278,6 +278,7 @@ public class UserController {
         return msg;
     }
 
+    //테스트용 로그인 (TODO:: 추후 삭제)
     @GetMapping("/test/login")
     public String testLogin(HttpSession session) throws Exception {
         User user = userService.selectUser(27);
@@ -286,7 +287,7 @@ public class UserController {
         return "";
     }
 
-    //회원수정전 인증
+    //회원인증뷰
     @GetMapping("/mypage/user/info")
     public String verifyUserView(HttpSession session) {
         log.info("loginService..." + session.getAttribute("loginService"));
@@ -339,7 +340,8 @@ public class UserController {
     }
 
     @PostMapping("/mypage/modify/user")
-    public String modifyUser(HttpSession session) {
+    public String modifyUser(User user, HttpSession session) {
+        log.info("modify user...." + user);
 //      session.removeAttribute("modify"); //수정 성공시 해당 세션도 삭제
 
         return "user/modify";

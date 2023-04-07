@@ -153,6 +153,7 @@
         $("#optional_chk").click(function () {
             $(".agree-checkbox2").attr("src", imgUrl($(this).is(":checked")));
         });
+
     });
 </script>
 </body>

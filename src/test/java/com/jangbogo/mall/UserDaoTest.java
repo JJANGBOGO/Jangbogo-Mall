@@ -110,5 +110,13 @@ public class UserDaoTest {
         assertTrue(result != null);
     }
 
+    @Test
+    public void encodingTest () throws Exception { //ok 비번변경에 패스워드 인코딩 적용
+        String pwd = "nepqxywqfnfj";
+        String encodedPwd = "$2a$10$5./yx3UOnTkBviEiuawzBe8WeRqqqlPTtV6wmcuWDdsMpO/4hZm8u";
+
+        assertTrue(passwordEncoder.matches(pwd, encodedPwd));
+    }
+
 
 }
