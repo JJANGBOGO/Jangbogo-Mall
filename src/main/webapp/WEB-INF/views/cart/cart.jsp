@@ -31,14 +31,10 @@
             border-top: lightgray 1px solid;
             padding-top: 20px;
         }
-        .header {
-            background: #B4C79E;
-            height: 20%;
-        }
-        .title {
+        .cart-title {
             padding: 50px 0;
         }
-        .title > h1 {
+        .cart-title > h1 {
             font-weight: 600;
             text-align: center;
         }
@@ -48,12 +44,11 @@
             margin: 0 125px;
             margin-bottom: 30px;
         }
-        .container {
+        .cart-container {
             width: 100%;
             height: 100%;
         }
-        .content {
-            /*background: #3498db;*/
+        .cart-content {
             height: 60%;
             width: 730px;
             margin-right: 20px;
@@ -62,15 +57,15 @@
             background: #B3945A;
             height: 20%;
         }
-        .selection {
+        #totalChkBox {
             padding: 10px 0;
         }
 
-        .selection > input {
+        #totalChkBox > input {
             font-size: 14px;
         }
 
-        .selection:last-child {
+        #totalChkBox:last-child {
             border: none;
         }
         .cart_item {
@@ -128,7 +123,6 @@
             cursor: pointer;
         }
 
-
         .cart_item__close, #subtractBtn, #addBtn {
             text-decoration: none;
             color: black;
@@ -145,7 +139,7 @@
             width: 60px;
             height: 78px;
         }
-        .summary {
+        #cartReceipt {
             position: relative;
             width: 360px;
             height: 430px;
@@ -153,7 +147,7 @@
         .dilvp > h3 {
             font-weight: 500;
         }
-        .dilvp, .order-summary {
+        .dilvp, .cart-receipt {
             padding: 25px;
             border: 1px solid #f2f2f2;
         }
@@ -162,7 +156,7 @@
             height: 190px;
         }
 
-        .order-summary {
+        .cart-receipt {
             height: 160px;
             background: #fafafa;
         }
@@ -204,26 +198,22 @@
 </head>
 <body>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
-    <div class="container">
+    <div class="cart-container">
     <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
-<%--        <div class="header"></div>--%>
-        <div class="title">
+        <div class="cart-title">
             <h1>장바구니</h1>
         </div>
         <div class="cart">
-            <div class="content">
-                <div class="selection">
-                    <input type="checkbox" name="chk-all" class="input-all" /> 전체선택(<span id="checked">0</span>/${list.size()}) |  선택삭제
-                </div>
+            <div class="cart-content">
+                <div id="totalChkBox"></div>
                 <div id="cartItems"></div>
             </div>
-            <div class="summary"></div>
+            <div id="cartReceipt"></div>
         </div>
         <div class="footer"></div>
     </div>
     <script>
-        let cnt = 0;    // li 태그 개수를 저장할 변수 cnt 선언 및 0으로 초기화
-        // 1. 장바구니 전체 목록 조회
+        // 1. 요소를 동적으로 생성하는 메서드 - 장바구니 목록 및 정보를 담은 html태그
         let toHtml = (items) => {
             let tmp = "<ul>";
 
@@ -246,7 +236,7 @@
             cnt = items.length;
             return tmp += '</ul>';
         }
-
+        // 2. 요소를 동적으로 생성하는 메서드 - 배송지 & 상품금액 정보를 담은 html태그
         let toHtml2 = (items) => {
             let price = 0;
             let tmp = "";
@@ -257,7 +247,7 @@
             tmp += '<h3 class="dilvp-title">배송지</h3>'
             tmp += '<span class="dilvp-content">경기 의왕시 원골로 43(모락산현대아파트)118동 202호</span>'
             tmp += '</section>'
-            tmp += '<section class="order-summary">'
+            tmp += '<section class="cart-receipt">'
             tmp += '<section class="prod-price">'
             tmp += '<span class="prod-title">상품금액</span>'
             tmp += '<span class="prod-content" id="prodPrice">' + price + '원</span>'
@@ -275,13 +265,21 @@
             return tmp;
         }
 
+        // 3. 요소를 동적으로 생성하는 메서드 - 선택된 상품 및 전체 장바구니 상품 개수 정보를 담은 html태그
+        let toHtml3 = (items) => {
+            let tmp = "";
+            tmp = '<input type="checkbox" name="chk-all" class="input-all" /> 전체선택(<span id="checked">0</span>/' + items.length+') |  선택삭제';
+            return tmp;
+        }
+
         let showList = (user_idx) => {
             $.ajax({
                 type:'GET',
                 url:'/cart/list?user_idx=' + user_idx,
                 success: (result) => {
                     $('#cartItems').html(toHtml(result));
-                    $('.summary').html(toHtml2(result));
+                    $('#cartReceipt').html(toHtml2(result));
+                    $('#totalChkBox').html(toHtml3(result));
                 },
                 error : function() { alert("comment get error");}
             })
@@ -294,10 +292,10 @@
             // 동적으로 생성된 태그에 이벤트를 걸려면 document 객체에서 잡아와서 이벤트를 걸어야한다.
 
 
-            // 이벤트 대상 : .input-all
+            // 이벤트 대상 : .input-all 전체선택 체크박스
             // 이벤트 : click
             // 이벤트 핸들러 기능 : 전체 선택 시, 모든 상품의 체크박스 체크드 처리
-            $(".input-all").click(function() {
+            $(document).on("click", ".input-all", (e) => {
                 if($(".input-all").is(":checked")) $("input[name=chk]").prop("checked", true);
                 else $("input[name=chk]").prop("checked", false);
 
@@ -305,7 +303,10 @@
                 $(".selection > span ").prop("innerHTML", checked);
             });
 
-            $("input[name=chk]").click(function() {
+            // 이벤트 대상 : input[name=ck] 개별선택 체크박스
+            // 이벤트 : click
+            // 이벤트 핸들러 기능 : 개별 상품 선택 시, 해당 상품의 체크박스 체크드 처리, 모든 상품 선택 시, 전체선택 체크박스도 체크드 처리
+            $(document).on("click", "input[name=chk]", (e) => {
                 let total = $("input[name=chk]").length;
                 let checked = $("input[name=chk]:checked").length;
 
@@ -315,6 +316,9 @@
                 else $(".input-all").prop("checked", true);
             });
 
+            // 이벤트 대상 : .cart_item__close 장바구니 개별 상품의 삭제 버튼
+            // 이벤트 : click
+            // 이벤트 핸들러 기능 : 삭제 버튼 클릭 시, 해당 장바구니 상품 삭제 처리
             $(document).on("click", ".cart_item__close", (e) => {// 회원번호와 상품번호를 JQUERY단에 가져와야 한다.
                 let element = $(e.target).closest("li").data("pid"); // console.log(element) - 100, 101, 102 출력
                 let element2 = $(e.target).closest("li").data("uid"); // console.log(element2) - 1234 출력
@@ -331,8 +335,10 @@
                     }
                 });  // $.ajax()
             })
-
-            $(document).on("click", "#subtractBtn", (e) => {// 회원번호와 상품번호, 그리고 상품개수를 JQUERY단에 가져와야 한다.
+            // 이벤트 대상 : #subtractBtn 상품개수조절 '-' 버튼
+            // 이벤트 : click
+            // 이벤트 핸들러 기능 : '-' 버튼 클릭 시, 해당 상품의 개수를 -1 처리
+            $(document).on("click", "#subtractBtn", (e) => {// 회원번호와 상품번호, 그리고 상품개수를 JQUERY단에 가져와야 한다. -> data속성 이용
                 let element = $(e.target).closest("li").data("pid"); // console.log(element) - 100, 101, 102 출력
                 let element2 = $(e.target).closest("li").data("uid"); // console.log(element2) - 1234 출력
                 let element3 = parseInt($(e.target).next("div").text()); // console.log(element2) - 1 출력
@@ -349,7 +355,10 @@
                 });  // $.ajax()
             })
 
-            $(document).on("click", "#addBtn", (e) => {// 회원번호와 상품번호, 그리고 상품개수를 JQUERY단에 가져와야 한다.
+            // 이벤트 대상 : #addBtn 상품개수조절 '+' 버튼
+            // 이벤트 : click
+            // 이벤트 핸들러 기능 : '+' 버튼 클릭 시, 해당 상품의 개수를 +1 처리
+            $(document).on("click", "#addBtn", (e) => { // 회원번호와 상품번호, 그리고 상품개수를 JQUERY단에 가져와야 한다. -> data속성 이용
                 let element = $(e.target).closest("li").data("pid"); // console.log(element) - 100, 101, 102 출력
                 let element2 = $(e.target).closest("li").data("uid"); // console.log(element2) - 1 출력
 
@@ -366,8 +375,6 @@
             })
 
         })
-
     </script>
-
 </body>
 </html>
