@@ -112,10 +112,10 @@ public class UserController {
             } else {
                 log.info("이미 존재하는 이메일입니다.");
                 userService.updateLoginTm(user.getIdx(), user.getEmail());
-                session.setAttribute("loginService", "kakao"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
             }
 
             makeAuth(email);
+            session.setAttribute("loginService", "kakao"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
             session.setAttribute("userInfo", user); // session으로 해야 한다.
             return "redirect:/";
         } catch (Exception e) {
@@ -172,10 +172,10 @@ public class UserController {
             } else {
                 log.info("이미 존재하는 이메일입니다.");
                 userService.updateLoginTm(user.getIdx(), user.getEmail()); //ok
-                session.setAttribute("loginService", "naver"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
             }
 
             makeAuth(email);
+            session.setAttribute("loginService", "naver"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
             session.setAttribute("userInfo", user); // session으로 해야 한다.
             return "redirect:/";
         } catch (Exception e) {
@@ -213,14 +213,15 @@ public class UserController {
         return "redirect:/";
     }
 
-    //가입
+    //가입화면
     @GetMapping("/register/user")
     public String registerUserView() {
         return "/user/register";
     }
 
+    //가입처리
     @PostMapping("/register/user")
-    public String registerUser(User user, Address addr, RedirectAttributes rattr) {
+    public String registerUser(User user, Address addr, RedirectAttributes rattr) { //validator 추가 TODO
         log.info("user...." + user);
         log.info("addr...." + addr);
 
@@ -234,29 +235,39 @@ public class UserController {
         }
     }
 
-    //닉네임 중복 체크
-    @PostMapping("/chk/duplicate/nickname")
-    @ResponseBody
-    public String chkDuplicateNick () {
-        return "OK";
-    }
-
     //이메일 중복 체크
     @PostMapping("/chk/duplicate/email")
     @ResponseBody
-    public String chkDuplicateEmail () {
+    public String chkDuplicateEmail(String email) {
+        log.info("email...." + email);
+        String msg = "DUPLICATE";
+        try {
+            User user = userService.chkDuplicateEmail(email);
+            if (user == null) {
+                msg = "OK";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return msg;
+    }
+
+    //닉네임 중복 체크
+    @PostMapping("/chk/duplicate/nickname")
+    @ResponseBody
+    public String chkDuplicateNick(String nick_nm) {
         return "OK";
     }
 
     //회원수정전 인증
     @GetMapping("/mypage/user/info")
-    public String verifyUserView () {
+    public String verifyUserView() {
         return "/user/verify";
     }
 
     //회원수정전 인증
     @PostMapping("/mypage/user/info")
-    public String verifyUser (String pwd) {
+    public String verifyUser(String pwd) {
 
 //        비번이 일치하지 않으면 error와 함께 redirect
 //        validator 대신 == ""  비교로 백 유효성 체크
@@ -266,10 +277,18 @@ public class UserController {
 
     //회원수정뷰
     @GetMapping("/mypage/user")
-    public String modifyUserView (HttpSession session) {
-        if(session.getAttribute("modify") == null) {
+    public String modifyUserView(HttpSession session) {
+        if (session.getAttribute("modify") == null) {
             return "redirect:/mypage/user/info";
         }
         return "user/modfiy";
+    }
+
+    //세션 저장 TODO:: 고민중...
+    public void crtSession(HttpSession session, User user) {
+        session.setAttribute("idx", user.getIdx());
+        session.setAttribute("email", user.getEmail());
+//        session.setAttribute("loginType", user.getLogin_tp_cd());
+//        session.setAttribute("authType", user.getAuth_idx());
     }
 }

@@ -111,13 +111,10 @@
     color: var(--primary-color);
 }
 
-.reg-form .input-line .input-box .addr-btn {
-    border: 1px solid var(--primary-color);
-    background-color: white;
-    width: 100%;
-    border-radius: 4px;
-    height: 46px;
-    color: var(--primary-color);
+/* 중복 검사 통과 후 input, button 비활성화 css 추가 */
+.reg-form .input-line .btn-space button:disabled,
+.reg-form .input-line .input-box input:read-only {
+    opacity: 0.4;
 }
 
 .checkbox-group .input-line span {
