@@ -68,8 +68,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User chkDuplicateEmail (String email) throws Exception {
-        return dao.chkDuplicateEmail(email);
+    public User getUserByEmail (String email) throws Exception {
+        return dao.getUserByEmail(email);
     }
 
     //임시 비번 생성
@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User chkDuplicateNick (String nick_nm) throws Exception {
-        return dao.chkDuplicateNick(nick_nm);
+        return dao.getUserByNick(nick_nm);
     }
 
 }

@@ -22,14 +22,14 @@
                 회원님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번
                 확인해주세요.
             </p>
-            <form class="check-pwd-form" action="/mypage/info" method="post" id="verify_form">
+            <form class="check-pwd-form" action="/mypage/user/info" method="post" id="verify_form">
                 <div class="center-padding">
                     <div class="input-line">
                         <div class="input-label">
                             <label>이메일</label>
                         </div>
                         <div class="input">
-                            <input name="id" type="text" readonly="true" value="${sessionScope.email}" />
+                            <input name="email" type="text" readonly="true" value="${sessionScope.email}" />
                         </div>
                     </div>
                     <div class="input-line">
@@ -46,7 +46,7 @@
                 </div>
                 <!-- end of center-padding -->
                 <div class="button-box">
-                    <button type="submit" class="">확인</button>
+                    <button id="verify_confirm">확인</button>
                 </div>
             </form>
         </div>
@@ -54,9 +54,21 @@
 </div>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
+    let msg = "${msg}";
+    if(msg == "PWD_EMPTY_ERR") alert("비밀번호를 입력해 주세요");
+    if(msg == "NOT_FOUND_ERR") alert("정보를 찾을 수 없습니다");
+    if(msg == "EXCEPTION_ERR") alert("오류가 발생했습니다. 다시 시도해 주세요");
+</script>
+<script>
     $(document).ready(function() {
-        $("#pwd_verity_btn").click(function(e){
-        //   alert null check needed
+        $("#verify_confirm").click(function(e){
+            e.preventDefault();
+            let pwd = $("input[name=pwd]").val();
+            if($.trim(pwd) == "") {
+                alert("비밀번호를 입력해주세요"); //ok
+            } else {
+                $(".check-pwd-form").submit();
+            }
         });
     });
 </script>

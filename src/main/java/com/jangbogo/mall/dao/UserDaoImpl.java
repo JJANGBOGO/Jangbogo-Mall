@@ -56,8 +56,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User chkDuplicateEmail(String email) throws Exception {
-        return session.selectOne(nameSpace + "chkDuplicateEmail", email);
+    public User getUserByEmail(String email) throws Exception {
+        return session.selectOne(nameSpace + "getUserByEmail", email);
     }
 
     @Override
@@ -81,8 +81,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User chkDuplicateNick(String nick_nm) throws Exception {
-        return session.selectOne(nameSpace + "chkDuplicateNick", nick_nm);
+    public User getUserByNick(String nick_nm) throws Exception {
+        return session.selectOne(nameSpace + "getUserByNick", nick_nm);
     }
 
 }

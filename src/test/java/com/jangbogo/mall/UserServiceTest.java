@@ -58,7 +58,7 @@ public class UserServiceTest {
 
     @Test //OK
     public void chkDuplicateEmail() throws Exception {
-        User result = service.chkDuplicateEmail("jinvicky@naver.com");
+        User result = service.getUserByEmail("jinvicky@naver.com");
         log.info("result= " + result);
         assertTrue(result != null); //테스트 실패시 빨간 줄 추가됨. 무시
     }

@@ -16,6 +16,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +44,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     //회원탈퇴뷰
     @GetMapping("/withdraw/user")
@@ -95,7 +100,7 @@ public class UserController {
 
             log.info("email....." + email);
 
-            User user = userService.chkDuplicateEmail(email);
+            User user = userService.getUserByEmail(email);
 
             if (user == null) { //신규
                 final int KAKAO = 2;
@@ -155,7 +160,7 @@ public class UserController {
 
             log.info("email....." + email);
 
-            User user = userService.chkDuplicateEmail(email);
+            User user = userService.getUserByEmail(email);
 
             if (user == null) { //신규
                 final int NAVER = 3;
@@ -246,7 +251,7 @@ public class UserController {
         log.info("email...." + email);
         String msg = "DUPLICATE";
         try {
-            User user = userService.chkDuplicateEmail(email);
+            User user = userService.getUserByEmail(email);
             if (user == null) {
                 msg = "OK";
             }
@@ -275,7 +280,7 @@ public class UserController {
 
     @GetMapping("/test/login")
     public String testLogin(HttpSession session) throws Exception {
-        User user = userService.selectUser(26);
+        User user = userService.selectUser(27);
         session.setAttribute("loginService", "jangbogo");
         crtSession(session, user);
         return "";
@@ -286,29 +291,58 @@ public class UserController {
     public String verifyUserView(HttpSession session) {
         log.info("loginService..." + session.getAttribute("loginService"));
         if (session.getAttribute("loginService") != "jangbogo")
-            //일반 로그인이 아닌 경우
             return "/user/verifySocial";
+
+        session.setAttribute("modify", "OK");
 
         return "/user/verify";
     }
 
     //회원수정전 인증
     @PostMapping("/mypage/user/info")
-    public String verifyUser(String pwd) {
+    public String verifyUser(String email, String pwd, RedirectAttributes rattr) {
+        log.info("pwd..." + email + pwd);
 
-//        비번이 일치하지 않으면 error와 함께 redirect
-//        validator 대신 == ""  비교로 백 유효성 체크
-//        일치하면 return "redirect:/mypage/user";
-        return "redirect:/mypage/user/info";
+        if (pwd == "") { //비밀번호 입력X
+            rattr.addFlashAttribute("msg", "PWD_EMPTY_ERR");
+            return "redirect:/mypage/user/info";
+        }
+
+        try {
+            User user = userService.getUserByEmail(email);
+            String encodedPwd = user.getPwd();
+            log.info("encoding..." + passwordEncoder.matches(pwd, encodedPwd));
+
+            if (passwordEncoder.matches(pwd, encodedPwd)) { //비번 일치. 인증 성공
+                return "redirect:/mypage/modify/user";
+            } else {
+                //회원 존재X
+                rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
+                return "redirect:/mypage/user/info";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/mypage/user/info";
+        }
+
     }
 
     //회원수정뷰
-    @GetMapping("/mypage/user")
+    @GetMapping("/mypage/modify/user")
     public String modifyUserView(HttpSession session) {
-        if (session.getAttribute("modify") == null) {
+        if (session.getAttribute("modify") != "OK") {
             return "redirect:/mypage/user/info";
         }
-        return "user/modfiy";
+        return "user/modify";
+    }
+
+    @PostMapping("/mypage/modify/user")
+    public String modifyUser(HttpSession session) {
+//      session.removeAttribute("modify"); //수정 성공시 해당 세션도 삭제
+
+        return "user/modify";
     }
 
     //세션 저장

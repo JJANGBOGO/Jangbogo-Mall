@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -25,6 +26,9 @@ public class UserDaoTest {
 
     @Autowired
     UserDao dao;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
 
     @Test //OK
@@ -60,7 +64,7 @@ public class UserDaoTest {
 
     @Test //OK
     public void chkDuplicateEmail () throws Exception {
-        User result = dao.chkDuplicateEmail("jinvicky@naver.com");
+        User result = dao.getUserByEmail("jinvicky@naver.com");
         log.info("result="+ result);
         assertTrue(result != null);
     }
@@ -76,10 +80,11 @@ public class UserDaoTest {
 
     @Test //OK
     public void insertUser () throws Exception {
+        String encodedPwd = passwordEncoder.encode("1000");
         User user = User.builder()
-                .email("3@naver.com")
-                .nick_nm("뉴비_3")
-                .pwd("1000")
+                .email("11@naver.com")
+                .nick_nm("뉴비_11")
+                .pwd(encodedPwd)
                 .mpno("010")
                 .brdy(new Date("2001/10/07"))
                 .user_agre_yn("Y")
@@ -100,7 +105,7 @@ public class UserDaoTest {
 
     @Test
     public void chkDuplicateNick () throws Exception  {
-        User result = dao.chkDuplicateNick("뉴비_1");
+        User result = dao.getUserByNick("뉴비_1");
         log.info("result=" + result);
         assertTrue(result != null);
     }
