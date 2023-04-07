@@ -356,8 +356,8 @@
             $(document).on("click", "#subtractBtn", (e) => {// 회원번호와 상품번호, 그리고 상품개수를 JQUERY단에 가져와야 한다.
                 let element = $(e.target).closest("li").data("pid"); // console.log(element) - 100, 101, 102 출력
                 let element2 = $(e.target).closest("li").data("uid"); // console.log(element2) - 1234 출력
-                let element3 = parseInt($(e.target).next("div").text()); // console.log(element2) - 1234 출력
-
+                let element3 = parseInt($(e.target).next("div").text()); // console.log(element2) - 1 출력
+                if(element3 < 2) return;    // 상품 개수가 2보다 작은 경우 요청을 보내지 않는다.
                 $.ajax({
                     type:'GET',                                                                                        // 1. 요청 메서드
                     url: '/cart/subtractCnt?prod_idx=' + element + '&user_idx=' + element2 + "&prod_cnt=" + element3,  // 2. 요청 URI, 상품번호(prod_idx), 회원번호(user_idx), 상품개수(prod_cnt) 변수 처리
@@ -372,7 +372,7 @@
 
             $(document).on("click", "#addBtn", (e) => {// 회원번호와 상품번호, 그리고 상품개수를 JQUERY단에 가져와야 한다.
                 let element = $(e.target).closest("li").data("pid"); // console.log(element) - 100, 101, 102 출력
-                let element2 = $(e.target).closest("li").data("uid"); // console.log(element2) - 1234 출력
+                let element2 = $(e.target).closest("li").data("uid"); // console.log(element2) - 1 출력
 
                 $.ajax({
                     type:'GET',                                                         // 1. 요청 메서드
