@@ -30,12 +30,33 @@
                                         name="email"
                                         type="text"
                                 <%--                                        추후 로그인된 값으로 수정--%>
-                                        value="${sessionScope.email}"
+                                        value="${user.email}"
                                         readonly
                                 />
                             </div>
                         </div>
                         <div class="btn-space"></div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label for="email">닉네임</label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        id="nick_nm"
+                                        name="nick_nm"
+                                        type="text"
+                                        value="${user.nick_nm}"
+                                        placeholder="닉네임을 입력해주세요"
+                                />
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                            <button>
+                                중복확인
+                            </button>
+                        </div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
@@ -73,26 +94,6 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="email">닉네임</label>
-                        </div>
-                        <div class="input-box">
-                            <div class="input">
-                                <input
-                                        id="nick_nm"
-                                        name="nick_nm"
-                                        type="text"
-                                        placeholder="닉네임을 입력해주세요"
-                                />
-                            </div>
-                        </div>
-                        <div class="btn-space">
-                            <button>
-                                중복확인
-                            </button>
-                        </div>
-                    </div>
-                    <div class="input-line">
-                        <div class="input-label">
                             <label for="phone">휴대전화</label>
                         </div>
                         <div class="input-box">
@@ -101,6 +102,7 @@
                                         id="phone"
                                         type="text"
                                         name="email"
+                                        value="${user.mpno}"
                                         placeholder="휴대전화를 숫자만 입력해주세요"
                                 />
                             </div>
@@ -154,6 +156,12 @@
             $(".agree-checkbox2").attr("src", imgUrl($(this).is(":checked")));
         });
 
+        let current_pwd = "${user.pwd}";
+
+        //submit
+        /*
+        * form submit할 때 새 비밀번호와 비밀번호 확인이 둘 다 ""면 #pwd.val()에 current_pwd를 넣는다.
+        * */
     });
 </script>
 </body>

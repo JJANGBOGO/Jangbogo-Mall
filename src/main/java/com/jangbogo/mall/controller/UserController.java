@@ -342,11 +342,22 @@ public class UserController {
 
     //회원수정뷰
     @GetMapping("/mypage/modify/user")
-    public String modifyUserView(HttpSession session) {
+    public String modifyUserView(HttpSession session, Model m, RedirectAttributes rattr) {
         if (session.getAttribute("modify") != "OK") {
             return "redirect:/mypage/user/info";
         }
-        return "user/modify";
+        try {
+            int idx = (int) session.getAttribute("idx");
+            User user = userService.selectUser(idx);
+            m.addAttribute("user", user);
+
+            return "user/modify";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/";
+        }
     }
 
     @PostMapping("/mypage/modify/user")

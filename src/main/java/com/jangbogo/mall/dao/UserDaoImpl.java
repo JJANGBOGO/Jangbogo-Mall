@@ -85,5 +85,17 @@ public class UserDaoImpl implements UserDao {
         return session.selectOne(nameSpace + "getUserByNick", nick_nm);
     }
 
+    @Override
+    public int updateUser (User user) throws Exception {
+        return session.update(nameSpace +"updateUser", user);
+    }
+
+    @Override
+    public int updatePwdUptTm (int idx, String email) throws Exception  {
+        Map map = new HashMap();
+        map.put("idx", idx);
+        map.put("email", email);
+        return session.update(nameSpace +"updatePwdUptTm", map);
+    }
 }
 

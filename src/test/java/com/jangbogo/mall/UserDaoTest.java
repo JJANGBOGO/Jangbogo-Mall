@@ -104,7 +104,7 @@ public class UserDaoTest {
     }
 
     @Test
-    public void chkDuplicateNick () throws Exception  {
+    public void chkDuplicateNick () throws Exception  { //ok
         User result = dao.getUserByNick("뉴비_1");
         log.info("result=" + result);
         assertTrue(result != null);
@@ -118,5 +118,26 @@ public class UserDaoTest {
         assertTrue(passwordEncoder.matches(pwd, encodedPwd));
     }
 
+    @Test
+    public void updateUser () throws Exception  {
+        User user = User.builder()
+                .idx(20)
+                .email("1@naver.com")
+                .nick_nm("뉴비_update")
+                .pwd("encodedPwdUpdate")
+                .mpno("010update")
+                .markt_agre_yn("Y")
+                .build();
+        int result = dao.updateUser(user);
+        log.info("result=" + result);
+        assertTrue(result != 0);
+    }
+
+    @Test
+    public void updatePwdUptTm () throws Exception  { //ok
+        int result = dao.updatePwdUptTm(22, "2@naver.com");
+        log.info("result=" + result);
+        assertTrue(result != 0);
+    }
 
 }

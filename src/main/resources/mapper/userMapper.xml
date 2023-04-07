@@ -70,5 +70,13 @@
         WHERE NICK_NM = #{nick_nm}
     </select>
 
+    <update id="updateUser" parameterType="User">
+        UPDATE USER SET NICK_NM = #{nick_nm}, PWD = #{pwd}, MPNO = #{mpno}, MARKT_AGRE_YN = #{markt_agre_yn}, CHG_TM = NOW() WHERE IDX = #{idx} AND EMAIL = #{email};
+    </update>
+
+    <update id="updatePwdUptTm" parameterType="map">
+        UPDATE USER SET PWD_UPT_TM = NOW() WHERE IDX = #{idx} AND EMAIL = #{email};
+    </update>
+
 </mapper>
 

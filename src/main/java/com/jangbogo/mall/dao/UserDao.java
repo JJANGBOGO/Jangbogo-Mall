@@ -30,5 +30,10 @@ public interface UserDao {
     //닉네임으로 유저찾기
     User getUserByNick (String nick_nm) throws Exception;
 
+    //회원수정
+    int updateUser (User user) throws Exception;
+
+    //비번변경날짜 업데이트
+    int updatePwdUptTm (int idx, String email) throws Exception;
 
 }

@@ -19,11 +19,6 @@ public class SignUpService {
     @Autowired //can not autowired 에러 발생
     private BCryptPasswordEncoder passwordEncoder;
 
-    @Bean
-    public static BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     @Autowired
     private SqlSessionTemplate sqlSession;
 
