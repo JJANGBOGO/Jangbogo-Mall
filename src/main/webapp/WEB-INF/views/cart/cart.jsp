@@ -300,7 +300,7 @@
                 else $("input[name=chk]").prop("checked", false);
 
                 let checked = $("input[name=chk]:checked").length;
-                $(".selection > span ").prop("innerHTML", checked);
+                $("#totalChkBox > span ").prop("innerHTML", checked);
             });
 
             // 이벤트 대상 : input[name=ck] 개별선택 체크박스
@@ -310,7 +310,7 @@
                 let total = $("input[name=chk]").length;
                 let checked = $("input[name=chk]:checked").length;
 
-                $(".selection > span ").prop("innerHTML", checked);
+                $("#totalChkBox > span ").prop("innerHTML", checked);
 
                 if(total != checked) $(".input-all").prop("checked", false);
                 else $(".input-all").prop("checked", true);
