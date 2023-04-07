@@ -1,0 +1,28 @@
+.social-user-alert .content .center-padding {
+    padding: 90px 80px 20px 20px;
+}
+
+.social-user-alert .content .center-padding h2 {
+    text-align: center;
+}
+
+.social-user-alert .content .button-box {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin-top: 40px;
+}
+.social-user-alert .content .button-box button{
+    display: block;
+    padding: 0px 10px;
+    text-align: center;
+    overflow: hidden;
+    width: 200px;
+    height: 56px;
+    border-radius: 3px;
+    color: rgb(255, 255, 255);
+    background-color: var(--primary-color);
+    border: 0px none;
+
+    font-size: 16px;
+}

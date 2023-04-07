@@ -344,8 +344,7 @@
         //    이메일 중복 검사 ajax
         $("#email_duplicate_chk").click(function (e) {
             e.preventDefault(); //form 전송 방지
-            let email = $().val();
-            email = "jinvicky@naver.com";
+            let email = $("#email").val();
             //validateNick()  //유효성 검사. 널과 정규식
 
             $.ajax({
@@ -370,8 +369,7 @@
         //닉네임 중복검사
         $("#nick_duplicate_chk").click(function (e) {
             e.preventDefault(); //form 전송 방지
-            let nickname = $().val();
-            nickname = "뉴비_1";
+            let nickname = $("#nick_nm").val();
             //validateNick()  //유효성 검사. 널과 정규식
 
             $.ajax({

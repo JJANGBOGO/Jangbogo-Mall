@@ -271,7 +271,12 @@ public class UserController {
 
     //회원수정전 인증
     @GetMapping("/mypage/user/info")
-    public String verifyUserView() {
+    public String verifyUserView(HttpSession session) {
+        log.info("loginService..."+session.getAttribute("loginService"));
+        if (session.getAttribute("loginService") != "jangbogo")
+            //일반 로그인이 아닌 경우
+            return "/user/verifySocial";
+
         return "/user/verify";
     }
 
