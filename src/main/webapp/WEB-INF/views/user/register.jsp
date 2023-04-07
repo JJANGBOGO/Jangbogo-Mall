@@ -341,19 +341,19 @@
             showRawPwd("#show-pwd-confirm", "#pwd-confirm", "#eye2")
         );
 
-    //    이메일 중복 검사 ajax
-        $("#email_duplicate_chk").click(function(e) {
+        //    이메일 중복 검사 ajax
+        $("#email_duplicate_chk").click(function (e) {
             e.preventDefault(); //form 전송 방지
             let email = $().val();
-            email = "dugu@naver.com";
+            email = "jinvicky@naver.com";
             //validateNick()  //유효성 검사. 널과 정규식
 
             $.ajax({
                 url: '/chk/duplicate/email',
                 data: {email: email},
                 type: 'POST',
-                success: function(result) {
-                    if(result == "OK") {
+                success: function (result) {
+                    if (result == "OK") {
                         alert("사용 가능한 이메일입니다.");
                         $("#email_duplicate_chk").attr("disabled", true); //버튼 비활성화
                         $("#email").attr("readonly", true); //인풋 비활성화
@@ -361,7 +361,35 @@
                         alert("이미 사용중인 이메일입니다.");
                     }
                 },
-                error: function (err) { alert ("error: ", err)}
+                error: function (err) {
+                    alert("error: ", err)
+                }
+            }); //$.ajax
+        });
+
+        //닉네임 중복검사
+        $("#nick_duplicate_chk").click(function (e) {
+            e.preventDefault(); //form 전송 방지
+            let nickname = $().val();
+            nickname = "뉴비_1";
+            //validateNick()  //유효성 검사. 널과 정규식
+
+            $.ajax({
+                url: '/chk/duplicate/nickname',
+                data: {nick_nm: nickname},
+                type: 'POST',
+                success: function (result) {
+                    if (result == "OK") {
+                        alert("사용 가능한 닉네임입니다.");
+                        $("#nick_duplicate_chk").attr("disabled", true); //버튼 비활성화
+                        $("#nick_nm").attr("readonly", true); //인풋 비활성화
+                    } else {
+                        alert("이미 사용중인 닉네임입니다.");
+                    }
+                },
+                error: function (err) {
+                    alert("error: ", err)
+                }
             }); //$.ajax
         });
     });

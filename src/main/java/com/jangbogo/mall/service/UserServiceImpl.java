@@ -96,8 +96,9 @@ public class UserServiceImpl implements UserService {
         return dao.updateLoginTm(idx, email);
     }
 
-
-
-
+    @Override
+    public User chkDuplicateNick (String nick_nm) throws Exception {
+        return dao.chkDuplicateNick(nick_nm);
+    }
 
 }

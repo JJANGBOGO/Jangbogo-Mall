@@ -16,7 +16,7 @@ public interface UserService {
 
     int sendPwdEmail (String nick_nm, String toEmail) throws Exception; //임시비번을 이메일로 전송
 
-    //이메일로 중복 확인
+    //이메일 중복체크
     User chkDuplicateEmail (String email) throws Exception;
 
     //소셜가입
@@ -27,4 +27,7 @@ public interface UserService {
 
     //로그인시각 업데이트
     int updateLoginTm (int idx, String email) throws Exception;
+
+    //닉네임 중복체크
+    User chkDuplicateNick (String nick_nm) throws Exception;
 }

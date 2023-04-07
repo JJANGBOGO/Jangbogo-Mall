@@ -256,7 +256,17 @@ public class UserController {
     @PostMapping("/chk/duplicate/nickname")
     @ResponseBody
     public String chkDuplicateNick(String nick_nm) {
-        return "OK";
+        log.info("nick...." + nick_nm);
+        String msg = "DUPLICATE";
+        try {
+            User user = userService.chkDuplicateNick(nick_nm);
+            if (user == null) {
+                msg = "OK";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return msg;
     }
 
     //회원수정전 인증

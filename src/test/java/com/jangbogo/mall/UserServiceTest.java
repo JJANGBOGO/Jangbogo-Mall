@@ -88,10 +88,17 @@ public class UserServiceTest {
         assertTrue(result != 0); //테스트 실패시 빨간 줄 추가됨. 무시
     }
 
-    @Test
+    @Test //ok
     public void updateLoginTm() throws Exception { //ok
         int result = service.updateLoginTm(23, "3@naver.com");
         log.info("result= "+ result);
+    }
+
+    @Test //ok
+    public void chkDuplicateNick() throws Exception { //ok
+        User user = service.chkDuplicateNick("뉴비_1");
+        log.info("result..."+ user);
+        assertTrue( user !=null);
     }
 }
 
