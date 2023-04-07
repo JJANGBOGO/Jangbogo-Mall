@@ -28,7 +28,7 @@
             align-items: center;
             list-style: none;
             margin-top: 15px;
-            border-top: black 1px solid;
+            border-top: lightgray 1px solid;
             padding-top: 20px;
         }
         .header {
@@ -215,36 +215,14 @@
                 <div class="selection">
                     <input type="checkbox" name="chk-all" class="input-all" /> 전체선택(<span id="checked">0</span>/${list.size()}) |  선택삭제
                 </div>
-                <div id="cartItems">
-
-                </div>
+                <div id="cartItems"></div>
             </div>
-            <div class="summary">
-                <section class="dilvp">
-                    <h3 class="dilvp-title">배송지</h3>
-                    <span class="dilvp-content">경기 의왕시 원골로 43(모락산현대아파트)118동 202호</span>
-                </section>
-                <section class="order-summary">
-                    <section class="prod-price">
-                        <span class="prod-title">상품금액</span>
-                        <span class="prod-content" id="prodPrice"></span>
-                    </section>
-                    <section class="dilv-cost">
-                        <span class="prod-title">배송비</span>
-                        <span class="prod-content">2500원</span>
-                    </section>
-                    <section class="dilv-total">
-                        <span class="prod-title">결제예정금액</span>
-                        <span class="prod-content" id="totalPrice">0원</span>
-                    </section>
-
-                </section>
-                <input type="button" name="order" value="주문하기" />
-            </div>
+            <div class="summary"></div>
         </div>
         <div class="footer"></div>
     </div>
     <script>
+        let cnt = 0;    // li 태그 개수를 저장할 변수 cnt 선언 및 0으로 초기화
         // 1. 장바구니 전체 목록 조회
         let toHtml = (items) => {
             let tmp = "<ul>";
@@ -260,60 +238,61 @@
                 tmp += '<div class=item__count>' + item.prod_cnt + "</div>";
                 tmp += '<div id="addBtn">+</div>';
                 tmp += '</div>';
-                tmp += '</div>';
                 tmp += "<div class='cart_item__price'>" + item.prod_price * item.prod_cnt + "</div><span>원</span>";
                 tmp += '<div class="cart_item__close">&times;</div>';
                 tmp += '</div>';
                 tmp += '</li>';
             })
+            cnt = items.length;
             return tmp += '</ul>';
         }
+
+        let toHtml2 = (items) => {
+            let price = 0;
+            let tmp = "";
+            items.forEach((item) => {
+                price += item.prod_price * item.prod_cnt;
+            })
+            tmp += '<section class="dilvp">'
+            tmp += '<h3 class="dilvp-title">배송지</h3>'
+            tmp += '<span class="dilvp-content">경기 의왕시 원골로 43(모락산현대아파트)118동 202호</span>'
+            tmp += '</section>'
+            tmp += '<section class="order-summary">'
+            tmp += '<section class="prod-price">'
+            tmp += '<span class="prod-title">상품금액</span>'
+            tmp += '<span class="prod-content" id="prodPrice">' + price + '원</span>'
+            tmp += '</section>'
+            tmp += '<section class="dilv-cost">'
+            tmp += '<span class="prod-title">배송비</span>'
+            tmp += '<span class="prod-content">2500원</span>'
+            tmp += '</section>'
+            tmp += '<section class="dilv-total">'
+            tmp += '<span class="prod-title">결제예정금액</span>'
+            tmp += '<span class="prod-content" id="totalPrice">' + (parseInt(price) + 2500) +'원</span>'
+            tmp += '</section>'
+            tmp += '</section>'
+            tmp += '<input type="button" name="order" value= "주문하기" />'
+            return tmp;
+        }
+
         let showList = (user_idx) => {
             $.ajax({
                 type:'GET',
                 url:'/cart/list?user_idx=' + user_idx,
                 success: (result) => {
                     $('#cartItems').html(toHtml(result));
+                    $('.summary').html(toHtml2(result));
                 },
                 error : function() { alert("comment get error");}
             })
         }
 
+        // 메인
         $(document).ready(function() {
             showList(1234);  // 회원번호(user_idx) 하드코딩
-
-
             // 이벤트 핸들러에서 user_idx와 prod_idx를 사용하려면?
             // 동적으로 생성된 태그에 이벤트를 걸려면 document 객체에서 잡아와서 이벤트를 걸어야한다.
 
-            let cnt = 0;    // li 태그 개수를 저장할 변수 cnt 선언 및 0으로 초기화
-            let price = 0;  // 상품금액을 저장할 변수 price 선언 및 0으로 초기화
-
-            // li태그의 개수가 몇 개인지 each메서드를 사용하여 계산
-            $('.cart_item__price').each(() => {
-                cnt++;
-            })
-
-            // 상품금액이 총 얼마인지 계산
-            // 상품개수가 1 이하인 경우, - 버튼 비활성화, 그렇지 않은 경우 활성화
-            for(let i = 1; i <= cnt; i++) {
-                price += parseInt($('li:nth-child(' + i + ') > .cart_item__contents > .cart_item__price').text());
-                let a = parseInt($('li:nth-child(' + i + ') > .cart_item__contents > .cart_item__cnt > .item__count').text());
-                let b = $('li:nth-child(' + i + ') > .cart_item__contents > .cart_item__cnt > .subtract-btn');
-                if(a <= 1) {
-                    b.css("color", "rgb(244, 244, 244)");
-                    b.css("cursor", "default");
-                    b.attr("disabled", true);
-                } else {
-                    b.css("color", "black");
-                    b.css("cursor", "pointer");
-                    b.attr("disabled", false);
-                }
-            }
-
-            $('#prodPrice').text(price + "원");  // 상품금액 태그에 내용으로 price 추가
-            price += 2500;                      // 상품금액에 배송비를 추가한다.
-            $('#totalPrice').text(price + "원")  // 결제예정금액에 price값을 추가한다.
 
             // 이벤트 대상 : .input-all
             // 이벤트 : click
