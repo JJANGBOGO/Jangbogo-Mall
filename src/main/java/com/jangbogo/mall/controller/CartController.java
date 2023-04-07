@@ -56,20 +56,20 @@ public class CartController {
     // 반환타입 : String
     // 매개변수 : Integer prod_idx, Integer user_idx
     // 요청URL : /cart/remove?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx} GET
-//    @DeleteMapping("/remove")
-//    public ResponseEntity<String> remove(@RequestBody Integer prod_idx, @RequestBody Integer user_idx) {
-//        int rowCnt = 0;  // 영향 받은 테이블의 행을 저장할 변수 rowCnt 선언 및 0으로 초기화
-//        try {
-//            rowCnt = cartService.remove(prod_idx, user_idx);
-//            if(rowCnt != 1) {
-//                throw new Exception("delete failed");
-//            }
-//            return new ResponseEntity<>("DEL_OK", HttpStatus.OK);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResponseEntity<>("DEL_OK", HttpStatus.OK);
-//        }
-//    }
+    @DeleteMapping("/cart/remove")
+    public ResponseEntity<String> remove(Integer prod_idx, Integer user_idx) {
+        int rowCnt = 0;  // 영향 받은 테이블의 행을 저장할 변수 rowCnt 선언 및 0으로 초기화
+        try {
+            rowCnt = cartService.remove(prod_idx, user_idx);
+            if(rowCnt != 1) {
+                throw new Exception("delete failed");
+            }
+            return new ResponseEntity<>("DEL_OK", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("DEL_OK", HttpStatus.OK);
+        }
+    }
 
 
 

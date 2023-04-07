@@ -251,7 +251,7 @@
             let tmp = "<ul>";
 
             items.forEach((item) => {
-                tmp += '<li class="cart_item">';
+                tmp += '<li class="cart_item" data-pid=' + item.prod_idx + ' data-uid=' + item.user_idx +' >';
                 tmp += '<input type="checkbox" name="chk"  />';
                 tmp += '<img src=' + item.prod_rpath + " alt='' />";
                 tmp += "<div class='cart_item__title'>" + item.prod_name + "</div>";
@@ -283,21 +283,9 @@
             })
         }
 
-        $(document).on("click", ".cart_item__close", () => {
-            if(!confirm("정말로 삭제하시겠습니까?")) return;
-            $.ajax({
-                type:'DELETE',                                                  // 요청 메서드
-                url: '/cart/remove?prod_idx=${prod_idx}&user_idx=${user_idx}',  // 요청 URI
-                success : (result) => {
-                    alert("success");                                               // 서버로부터 응답이 도착하면 호출될 함수.
-                },
-                error   : () => {
-                    alert("error");
-                }
-            });  // $.ajax()
-        })
         $(document).ready(function() {
             showList(1234);  // 회원번호(user_idx) 하드코딩
+
 
             // 이벤트 핸들러에서 user_idx와 prod_idx를 사용하려면?
             // 동적으로 생성된 태그에 이벤트를 걸려면 document 객체에서 잡아와서 이벤트를 걸어야한다.
@@ -351,7 +339,24 @@
                 if(total != checked) $(".input-all").prop("checked", false);
                 else $(".input-all").prop("checked", true);
             });
-            // JQUERY를 이용한 Ajax 사용
+
+            $(document).on("click", ".cart_item__close", (e) => {// 회원번호와 상품번호를 JQUERY단에 가져와야 한다.
+                let element = $(e.target).closest("li").data("pid"); // console.log(element) - 100, 101, 102 출력
+                let element2 = $(e.target).closest("li").data("uid"); // console.log(element2) - 1234 출력
+
+                if(!confirm("정말로 삭제하시겠습니까?")) return;                               // 1. 버튼 클릭 시, 확인 창 팝업
+                $.ajax({
+                    type:'DELETE',                                                      // 2. 요청 메서드
+                    url: '/cart/remove?prod_idx=' + element + '&user_idx=' + element2,  // 3. 요청 URI, 상품번호(prod_idx), 회원번호(user_idx) 변수 처리
+                    success : (result) => {
+                        showList(element2);                                             // 4. 서버로부터 성공 응답이 도착하면 호출될 함수.
+                    },
+                    error   : () => {
+                        alert("error");                                                 // 서버로부터 실패 응답이 도착하면 호출될 함수
+                    }
+                });  // $.ajax()
+            })
+
         })
 
     </script>
