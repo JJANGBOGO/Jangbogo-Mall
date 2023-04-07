@@ -320,13 +320,10 @@ public class UserController {
         }
 
         try {
-            User user = userService.getUserByEmail(email);
-            String encodedPwd = user.getPwd();
-            log.info("encoding..." + passwordEncoder.matches(pwd, encodedPwd));
-
-            if (passwordEncoder.matches(pwd, encodedPwd)) { //비번 일치. 인증 성공
+            boolean userChk = userService.verifyUser(email, pwd);
+            if (userChk)
                 return "redirect:/mypage/modify/user";
-            } else {
+            else {
                 //회원 존재X
                 rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
                 return "redirect:/mypage/user/info";
@@ -361,9 +358,20 @@ public class UserController {
     }
 
     @PostMapping("/mypage/modify/user")
-    public String modifyUser(User user, HttpSession session) {
+    public String modifyUser(User user, HttpSession session, RedirectAttributes rattr) {
         log.info("modify user...." + user);
-//      session.removeAttribute("modify"); //수정 성공시 해당 세션도 삭제
+
+        try {
+            user.setIdx((int) session.getAttribute("idx"));
+            userService.updateUser(user); //회원 업데이트
+
+            session.removeAttribute("modify"); //수정 성공시 해당 세션도 삭제
+            rattr.addFlashAttribute("msg", "OK"); // 수정완료 메세지
+            return "redirect:/mypage/user/info"; //이전 페이지로 돌아가기
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return "user/modify";
     }

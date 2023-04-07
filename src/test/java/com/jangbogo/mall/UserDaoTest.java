@@ -36,11 +36,6 @@ public class UserDaoTest {
         int result = dao.deleteUser(1, "jinvicky@naver.com");
         log.info("result="+ result);
     }
-    @Test //OK
-    public void findEmailTest () throws Exception {
-        String result = dao.selUserEmail("진진자라", "1234");
-        log.info("result="+ result);
-    }
 
     @Test //OK
     public void findByEmailTest () throws Exception {

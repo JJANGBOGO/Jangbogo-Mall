@@ -32,11 +32,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String findUserEmail(String nick_nm, String pwd) throws Exception {
-        return dao.selUserEmail(nick_nm, pwd);
-    }
-
-    @Override
     public boolean isUserPresent(String nick_nm, String email) throws Exception {
         return dao.selUserByEmail(nick_nm, email) != null;
     }
@@ -105,5 +100,37 @@ public class UserServiceImpl implements UserService {
     public User chkDuplicateNick (String nick_nm) throws Exception {
         return dao.getUserByNick(nick_nm);
     }
+
+//    이메일과 회원번호가 일치하는 지 확인
+    @Override
+    public boolean verifyUser (String email, String pwd) throws Exception {
+        User user = getUserByEmail(email);
+        String encodedPwd = user.getPwd();
+
+        return  passwordEncoder.matches(pwd, encodedPwd);
+    }
+
+    @Override
+    public int updateUser (User user) throws Exception  {
+        String email = user.getEmail();
+        User member = getUserByEmail(email);
+
+        if (passwordEncoder.matches(user.getPwd(), member.getPwd())) {
+            updatePwdUptTm(user.getIdx(), email); //비번변경날짜 수정
+        }
+        return dao.updateUser(user);
+    }
+
+    @Override
+    public int updatePwdUptTm (int idx, String email) throws Exception {
+        return dao.updatePwdUptTm(idx, email);
+    }
+
+    @Override
+    public String findUserEmail (String nick_nm, String pwd) throws Exception {
+        User user = dao.getUserByNick(nick_nm);
+        return passwordEncoder.matches(pwd, user.getPwd()) ? user.getEmail() : null;
+    }
+
 
 }

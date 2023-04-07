@@ -26,14 +26,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public String selUserEmail(String nick_nm, String pwd) throws Exception {
-        Map map = new HashMap();
-        map.put("nick_nm", nick_nm);
-        map.put("pwd", pwd);
-        return session.selectOne(nameSpace + "selUserEmail", map);
-    }
-
-    @Override
     public User selUserByEmail(String nick_nm, String email) throws Exception {
         Map map = new HashMap();
         map.put("nick_nm", nick_nm);
