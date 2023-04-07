@@ -43,8 +43,8 @@ public class CartService {
     // 메서드명 : subtractCount
     // 기   능 : cartDao의 subtractCount메서드 호출
     // 반환타입 : Integer prod_idx, Integer user_idx
-    public int subtractCount(Integer prod_idx, Integer user_idx) throws Exception {
-        return cartDao.subtractCount(prod_idx, user_idx);
+    public int subtractCount(Integer prod_idx, Integer user_idx, Integer prod_cnt) throws Exception {
+        return cartDao.subtractCount(prod_idx, user_idx, prod_cnt);
     }
     // 메서드명 : getTotalPrice
     // 기   능 : cartDao의 getTotalPrice메서드 호출

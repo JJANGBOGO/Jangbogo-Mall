@@ -107,11 +107,11 @@
         #subtractBtn, #addBtn {
             cursor: pointer;
         }
-        #subtractBtn > a {
+        #subtractBtn {
             display:  block;
             padding: 5px 10px;
         }
-        #addBtn > a {
+        #addBtn  {
             display:  block;
             padding: 5px 10px;
         }
@@ -129,7 +129,7 @@
         }
 
 
-        .cart_item__close, #subtractBtn > a, #addBtn > a {
+        .cart_item__close, #subtractBtn, #addBtn {
             text-decoration: none;
             color: black;
         }
@@ -243,7 +243,6 @@
             </div>
         </div>
         <div class="footer"></div>
-        <%@ include file="/WEB-INF/views/include/modal.jsp" %>
     </div>
     <script>
         // 1. 장바구니 전체 목록 조회
@@ -257,12 +256,9 @@
                 tmp += "<div class='cart_item__title'>" + item.prod_name + "</div>";
                 tmp += '<div class="cart_item__contents">';
                 tmp += '<div class="cart_item__cnt">';
-                tmp += '<div id="subtractBtn">';
-                tmp += "<a href=''>" + "-" + "</a>";
-                tmp += '</div>';
+                tmp += '<div id="subtractBtn">-</div>';
                 tmp += '<div class=item__count>' + item.prod_cnt + "</div>";
-                tmp += '<div id="addBtn">';
-                tmp += "<a href=''>" + "+" + "</a>";
+                tmp += '<div id="addBtn">+</div>';
                 tmp += '</div>';
                 tmp += '</div>';
                 tmp += "<div class='cart_item__price'>" + item.prod_price * item.prod_cnt + "</div><span>원</span>";
@@ -303,7 +299,7 @@
             for(let i = 1; i <= cnt; i++) {
                 price += parseInt($('li:nth-child(' + i + ') > .cart_item__contents > .cart_item__price').text());
                 let a = parseInt($('li:nth-child(' + i + ') > .cart_item__contents > .cart_item__cnt > .item__count').text());
-                let b = $('li:nth-child(' + i + ') > .cart_item__contents > .cart_item__cnt > .subtract-btn > a');
+                let b = $('li:nth-child(' + i + ') > .cart_item__contents > .cart_item__cnt > .subtract-btn');
                 if(a <= 1) {
                     b.css("color", "rgb(244, 244, 244)");
                     b.css("cursor", "default");
@@ -352,7 +348,40 @@
                         showList(element2);                                             // 4. 서버로부터 성공 응답이 도착하면 호출될 함수.
                     },
                     error   : () => {
-                        alert("error");                                                 // 서버로부터 실패 응답이 도착하면 호출될 함수
+                        alert("error");                                                 // 5. 서버로부터 실패 응답이 도착하면 호출될 함수
+                    }
+                });  // $.ajax()
+            })
+
+            $(document).on("click", "#subtractBtn", (e) => {// 회원번호와 상품번호, 그리고 상품개수를 JQUERY단에 가져와야 한다.
+                let element = $(e.target).closest("li").data("pid"); // console.log(element) - 100, 101, 102 출력
+                let element2 = $(e.target).closest("li").data("uid"); // console.log(element2) - 1234 출력
+                let element3 = parseInt($(e.target).next("div").text()); // console.log(element2) - 1234 출력
+
+                $.ajax({
+                    type:'GET',                                                                                        // 1. 요청 메서드
+                    url: '/cart/subtractCnt?prod_idx=' + element + '&user_idx=' + element2 + "&prod_cnt=" + element3,  // 2. 요청 URI, 상품번호(prod_idx), 회원번호(user_idx), 상품개수(prod_cnt) 변수 처리
+                    success : (result) => {
+                        showList(element2);                                                                            // 3. 서버로부터 성공 응답이 도착하면 호출될 함수.
+                    },
+                    error   : () => {
+                        alert("error");                                                                                // 4. 서버로부터 실패 응답이 도착하면 호출될 함수.
+                    }
+                });  // $.ajax()
+            })
+
+            $(document).on("click", "#addBtn", (e) => {// 회원번호와 상품번호, 그리고 상품개수를 JQUERY단에 가져와야 한다.
+                let element = $(e.target).closest("li").data("pid"); // console.log(element) - 100, 101, 102 출력
+                let element2 = $(e.target).closest("li").data("uid"); // console.log(element2) - 1234 출력
+
+                $.ajax({
+                    type:'GET',                                                         // 1. 요청 메서드
+                    url: '/cart/addCnt?prod_idx=' + element + '&user_idx=' + element2,  // 2. 요청 URI, 상품번호(prod_idx), 회원번호(user_idx) 변수 처리
+                    success : (result) => {
+                        showList(element2);                                             // 3. 서버로부터 성공 응답이 도착하면 호출될 함수.
+                    },
+                    error   : () => {
+                        alert("error");                                                 // 4. 서버로부터 실패 응답이 도착하면 호출될 함수.
                     }
                 });  // $.ajax()
             })

@@ -55,7 +55,7 @@
         매개변수타입 : map(Integer, Integer)
     -->
     <update id="subtractCount" parameterType="map">
-        UPDATE CART SET prod_cnt = prod_cnt - 1
+        UPDATE CART SET prod_cnt = #{prod_cnt} - 1
         WHERE prod_idx = #{prod_idx} AND user_idx = #{user_idx};
     </update>
 
