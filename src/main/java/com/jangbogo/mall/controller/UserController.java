@@ -50,10 +50,20 @@ public class UserController {
 
     //회원탈퇴뷰
     @GetMapping("/withdraw/user")
-    public String withdrawUserView(HttpSession session, Model m, Authentication auth) {
-        if (auth == null) return "redirect:/login/user";
-        m.addAttribute("user", session.getAttribute("user"));
-        return "/user/withdraw";
+    public String withdrawUserView(HttpSession session, Model m, Authentication auth, RedirectAttributes rattr) {
+//        if (auth == null) return "redirect:/login"; //TODO:: 시큐리티 개발 후 수정 필요.
+
+        int idx = (int) session.getAttribute("idx");
+        try {
+            User user = userService.selectUser(idx);
+            m.addAttribute("user", user);
+            return "/user/withdraw";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/";
+        }
     }
 
     //회원탈퇴

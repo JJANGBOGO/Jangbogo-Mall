@@ -376,6 +376,10 @@
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script>
+    let msg ="${msg}";
+    if (msg == "EXCEPTION_ERR") alert("예상치 못한 오류가 발생했습니다. 불편을 끼쳐드려 죄송합니다.");
+</script>
+<script>
     $(document).ready(function () {
         // 처음에는 맨 첫번째 탭을 보여준다.
         $(".tab-button").eq(0).addClass("on");

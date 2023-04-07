@@ -33,10 +33,10 @@
         <p>가입날짜: <span>${user.reg_tm}</span></p>
         <p>로그인타입: <span>
             <c:choose>
-                <c:when test="${user.login_tp_cd == 2}">
+                <c:when test="${loginService eq 'kakao'}">
                     카카오
                 </c:when>
-                <c:when test="${user.login_tp_cd == 3}">
+                <c:when test="${loginService eq 'naver'}">
                     네이버
                 </c:when>
                 <c:otherwise>
