@@ -62,12 +62,19 @@
     align-items: center;
     width: 101px;
     height: 36px;
+    margin-right: 5px;
 }
 .span11{
     font-weight: bold;
     font-size: 16px;
 }
 .span22{
+    font-weight: bold;
+    font-size: 16px;
+
+
+}
+.span33{
     margin-left: 4px;
     color: rgb(181, 181, 181);
     text-decoration: line-through;
@@ -138,7 +145,7 @@
 }
 .cancle-btn{
     width: 50%;
-    margin: 0px 4px;
+    margin-right: 4px;
     border: 1px solid rgb(221, 221, 221);
     border-radius: 3px;
     height: 56px;

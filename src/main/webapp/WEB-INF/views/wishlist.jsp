@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +44,8 @@
       찜한 상품은 최대 200개까지 저장됩니다
     </span>
 </div>
-<c:forEach var="product"  items="${list2}">
+
+<c:forEach var="product"  items="${list2}" varStatus="i">
   <div class="a">
     <a href="">
       <img src="${product.resv_photo_upload_path}" alt="">
@@ -50,19 +53,31 @@
 
     <div class="b">
       <div class="c">
-        <a href="">${product.name}</a>
+        <a href="" id="name${i.index}">${product.name}</a>
         <div class="d">
+
+            <c:choose>
+                <c:when test="${product.dc_rate != 0}">
+                    <span class="span1" id="dc_rate${i.index}">${product.dc_rate}%</span>
+                    <span class="span2" id="dc_prc${i.index}"><fmt:formatNumber value="${product.prc - (product.prc / 100 * product.dc_rate)}" pattern="#,###"/>원</span>
+                    <span class="span3" id="prc${i.index}"><fmt:formatNumber value="${product.prc}" pattern="#,###"/>원</span>
+                </c:when>
+                <c:otherwise>
+                    <span class="span2" id="dc_prc${i.index}"><fmt:formatNumber value="${product.prc}" pattern="#,###"/>원</span>
+                    <span class="span3" id="prc${i.index}"></span>
+
+                </c:otherwise>
+            </c:choose>
                                  <%--   != 대신에 ne도 가능--%>
-          <c:if test="${product.dc_rate != 0}">
-            <span class="span1">${product.dc_rate}%</span>
-          </c:if>
-          <span class="span2">${product.prc - (product.prc / 100 * product.dc_rate)}원</span><span class="span3">${product.prc}원</span>
+
+<%--                    <span class="span3" id="prc${i.index}"><fmt:formatNumber value="${product.prc}" pattern="#,###"/>원</span>--%>
         </div>
       </div>
 
       <div class="e">
         <button class="css-1h4lltl e4nu7ef3" type="button" width="104" height="36" radius="4" onclick=remove(${product.idx})>삭제</button>
-        <button class="css-102v0ri e4nu7ef3" id="show" type="button" width="104" height="36" radius="4" onclick= show('${product.name}',${product.prc})><span class="css-ymwvow e4nu7ef1"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTM2IDM2SDBWMGgzNnoiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1LjE2NCA2LjU0NykiIHN0cm9rZT0iIzVmMDA4MCIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjciPgogICAgICAgICAgICA8cGF0aCBkPSJtMjUuNjggMy42Ni0yLjcyIDExLjU3SDcuMzdMNC42NiAzLjY2eiIvPgogICAgICAgICAgICA8Y2lyY2xlIGN4PSIyMC41MiIgY3k9IjIwLjc4IiByPSIyLjE0Ii8+CiAgICAgICAgICAgIDxjaXJjbGUgY3g9IjkuODEiIGN5PSIyMC43OCIgcj0iMi4xNCIvPgogICAgICAgICAgICA8cGF0aCBkPSJNMCAwaDMuOGwxLjc2IDcuNSIvPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==" alt="" class="css-1m3kac1 e4nu7ef0">담기</span></button>
+        <button class="css-102v0ri e4nu7ef3" type="button" width="104" height="36" radius="4" onclick= show(${i.index})><span class="css-ymwvow e4nu7ef1"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTM2IDM2SDBWMGgzNnoiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1LjE2NCA2LjU0NykiIHN0cm9rZT0iIzVmMDA4MCIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjciPgogICAgICAgICAgICA8cGF0aCBkPSJtMjUuNjggMy42Ni0yLjcyIDExLjU3SDcuMzdMNC42NiAzLjY2eiIvPgogICAgICAgICAgICA8Y2lyY2xlIGN4PSIyMC41MiIgY3k9IjIwLjc4IiByPSIyLjE0Ii8+CiAgICAgICAgICAgIDxjaXJjbGUgY3g9IjkuODEiIGN5PSIyMC43OCIgcj0iMi4xNCIvPgogICAgICAgICAgICA8cGF0aCBkPSJNMCAwaDMuOGwxLjc2IDcuNSIvPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==" alt="" class="css-1m3kac1 e4nu7ef0">담기</span></button>
+
       </div>
     </div>
   </div>
@@ -76,19 +91,19 @@
 
 
         <div class="b1">
-            <div id="c2" class="c1">
-                <span id="c3">[호텔 컬렉션] 한우만두</span>
+            <div class="c1">
+                <span class="c3">[호텔 컬렉션] 한우만두</span>
             </div>
             <div class="d1">
                 <div class="e1">
-                    <span class="span11">10%</span><span class="span22">1200원</span><span class="span33">1500원</span>
+                    <span class="span22">1200원</span><span class="span33">1500원</span>
                 </div>
                 <div class="f1">
-                    <button class="button1" type="button" ></button>
+                    <button class="button1" type="button" onclick= constructor()></button>
                     <div class="count">
                         1
                     </div>
-                    <button class="button2" type="button" width="104" height="36" radius="4"></button>
+                    <button class="button2" type="button" width="104" height="36" radius="4" onclick=count("minus")></button>
                 </div>
             </div>
         </div>
@@ -98,12 +113,12 @@
                 <p class="total2">
                     합계
                 </p>
-                <div>
+                <div style="padding-top: 15px">
               <span class="price">
                 66,000
               </span>
-                    <span>
-                원
+              <span style= "font-weight: 600 ;vertical-align: 3px; margin-right: 5px">
+                 원
               </span>
                 </div>
             </div>
@@ -153,15 +168,41 @@
       <%--location.href='<c:url value="/mypage/wishlistremove?prod_idx='+prod_idx+'"/>'--%>
     }
 
-    function show(productname,productprc) {
-        console.log(productname,productprc);
-        let name = productname;
+    function show(ioo) {
+        console.log(ioo);
+        console.log(document.getElementById("name"+ioo).innerText);
 
-        console.log(name);
-        console.log(document.getElementById('c2'))
-        console.log(document.getElementById('c2').innerHTML)
+        console.log(document.getElementById("prc"+ioo).innerText);
+        console.log(document.getElementById("dc_prc"+ioo).innerText);
+
+        let name = document.getElementById("name"+ioo).innerText;
+        let prc = document.getElementById("prc"+ioo).innerText;
+        let dc_prc = document.getElementById("dc_prc"+ioo).innerText;
+
+        document.querySelector(".c3").innerHTML = name;
+        // document.querySelector(".span11").innerHTML = dc_rate;
+        document.querySelector(".span22").innerHTML = dc_prc;
+        document.querySelector(".span33").innerHTML = prc;
+
+
+
+
+
+
+
+
+
+        // let a = document.getElementsByClassName('css-102v0ri e4nu7ef3')[0];
+        // console.log(a.value);
+        // console.log(productname,productprc,productdcrate);
+
+        // console.log(product);
+
+
         document.querySelector(".background").className = "background show";
-        document.getElementById('c3').innerHTML = name;
+        // document.getElementsByClassName('c3')[0].innerHTML = productname.value.idx;
+        // document.getElementsByClassName('span33')[0].innerHTML = productprc+"won";
+
 
 
     }
@@ -171,7 +212,28 @@
     }
 
     // document.querySelector("#show").addEventListener("click", show);
-    document.querySelector("#close").addEventListener("click", close);
+    document.querySelector(".btn-container").addEventListener("click", close);
+
+
+
+
+
+
+    function constructor() {
+        // 버튼 클릭 횟수
+        this.clickedCount = 0;
+
+        const button = document.querySelector('.button1');
+        const clickedCountText = document.querySelector('.count');
+
+        // 화살표 함수로 이벤트 리스너 정의
+        button.addEventListener('click', () => {
+            this.clickedCount += 1;
+            clickedCountText.textContent = this.clickedCount;
+        });
+    }
+
+
 
   </script>
 </div>
