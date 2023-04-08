@@ -115,7 +115,7 @@
                             </div>
                         </div>
                         <div class="btn-space">
-                            <button>인증</button>
+                            <button id="mpno_chk">인증</button>
                         </div>
                     </div>
                     <div class="input-line">
@@ -387,6 +387,30 @@
                 },
                 error: function (err) {
                     alert("error: ", err)
+                }
+            }); //$.ajax
+        });
+
+        //휴대전화 인증 검사
+        $("#mpno_chk").click(function(e) {
+            e.preventDefault();
+            let mpno = $("#mpno").val();
+            let verifyNum = ""; //인증번호
+
+            //chk null or invalid regEx
+            // if (notValidMpno(mpno)) {}
+
+            $.ajax({
+                url: '/chk/mpno',
+                data: JSON.stringify({ to : mpno }), // 객체를 전송할때는 stringify() 필요, @RequestBody때문
+                type: 'POST',
+                contentType: "application/json",
+                success: function (numStr) { // test, 문자열 온다.
+                    console.log(numStr, numStr.numStr);
+                    verifyNum = numStr;
+                },
+                error: function (err) {
+                    alert("오류가 발생했습니다. 다시 시도해 주세요"); //controller에서 500발생해서 보낼 경우 여기로 온다.
                 }
             }); //$.ajax
         });

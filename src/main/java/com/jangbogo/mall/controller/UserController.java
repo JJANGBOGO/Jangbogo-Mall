@@ -157,6 +157,7 @@ public class UserController {
         return "redirect:/";
     }
 
+    //네이버 로그인
     @GetMapping("/social/naver")
     public String naverLogin(HttpSession session, String code, String state, RedirectAttributes rattr) {
         try {
@@ -287,6 +288,8 @@ public class UserController {
         }
         return msg;
     }
+
+
 
     //테스트용 로그인 (TODO:: 추후 삭제)
     @GetMapping("/test/login")
