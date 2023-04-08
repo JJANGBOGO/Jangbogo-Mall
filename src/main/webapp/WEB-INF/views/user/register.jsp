@@ -405,8 +405,9 @@
                 data: JSON.stringify({ to : mpno }), // 객체를 전송할때는 stringify() 필요, @RequestBody때문
                 type: 'POST',
                 contentType: "application/json",
-                success: function (numStr) { // test, 문자열 온다.
-                    console.log(numStr, numStr.numStr);
+                success: function (resp) { // test, 문자열 온다.
+                    //resp.numStr : 인증번호
+                    console.log(resp, resp.numStr);
                     verifyNum = numStr;
                 },
                 error: function (err) {
