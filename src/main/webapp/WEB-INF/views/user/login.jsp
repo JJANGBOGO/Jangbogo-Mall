@@ -19,19 +19,12 @@
     <div class="contents">
         <div class="login-wrap">
             <h2 class="page-title">로그인</h2>
+            <div class="tab-box">
+                <button class="tab-button on">회원</button>
+                <button class="tab-button" id="seller_login_link">판매자</button>
+            </div>
             <div class="login-form">
                 <form action="/login" method="post">
-                    <fieldset>
-                        <label>
-                            <input type="radio" name="type" value="user" checked/>
-                            <span>회원</span>
-                        </label>
-
-                        <label>
-                            <input type="radio" name="type" value="seller"/>
-                            <span>판매자</span>
-                        </label>
-                    </fieldset>
                     <input
                             name="email"
                             type="text"
@@ -78,7 +71,7 @@
                 </form>
                 <div class="social-box">
                     <div class="warning-text">
-                        *소셜 로그인의 경우 판매자 등록, 개인정보 수정, 탈퇴가 불가능합니다.
+                        *소셜 로그인의 경우 판매자 등록, 개인정보 수정이 불가능합니다.
                     </div>
                     <div class="join-buttons">
                         <a
@@ -112,6 +105,10 @@
     let msg = "${msg}";
     if (msg == "LOGIN_ERR") alert("로그인 도중 오류가 발생하였습니다. 다시 시도해 주세요.");
 
+    $("#seller_login_link").click(function() {
+        window.location.href = "/seller/login";
+    });
+
     //비번 보여주기 toggle
     let pwdToggle = () => {
         const checked = $("#showPwd").is(":checked");
@@ -136,12 +133,6 @@
                     checked ? "/img/checked.png" : "/img/unchecked.png"
                 );
         });
-
-        $("input[type=radio]").click(function () {
-            if ($("input[type=radio]:checked").val() == "seller") {
-                $(".social-box").css("display", "none");
-            } else $(".social-box").css("display", "block");
-        })
     });
 </script>
 </body>

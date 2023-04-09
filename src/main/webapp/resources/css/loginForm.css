@@ -38,11 +38,14 @@
     flex-grow: 1;
     position: relative;
     height: 48px;
-    font-weight: 500;
+
     font-size: 18px;
+    font-weight: 500;
     color: var(--text-dark);
+
     line-height: 18px;
     background-color: white;
+    cursor: pointer;
 }
 
 .login-container .contents .login-wrap .tab-box .tab-button.on {
