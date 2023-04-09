@@ -213,10 +213,19 @@
         <div class="footer"></div>
     </div>
     <script>
-        // 1. 요소를 동적으로 생성하는 메서드 - 장바구니 목록 및 정보를 담은 html태그
+        // 메서드명 : listToHtml
+        // 기   능 : 장바구니 목록 및 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
+        // 매개변수 : items - cartDto
+        // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
         let listToHtml = (items) => {
+            // 변수명 : tmp
+            // 저장값 : 동적으로 생성할 html 태그(문자열)
             let tmp = "<ul>";
 
+            // 메서드명 : forEach
+            // 기   능 : 복수의 CartDto값들을 저장한 list에서 각각의 CartDto에 저장된 iv들을 적절한 태그의 속성값 또는 내용에 위치시키는 메서드
+            // 사용대상 : items - Array : List<CartDto>, 장바구니 목록
+            // 매개변수 : item - Object : CartDto, 장바구니 개별 품목
             items.forEach((item) => {
                 tmp += '<li class="cart_item" data-pid=' + item.prod_idx + ' data-uid=' + item.user_idx +' >';
                 tmp += '<input type="checkbox" name="chk"  />';
@@ -233,13 +242,27 @@
                 tmp += '</div>';
                 tmp += '</li>';
             })
-            cnt = items.length;
+            // 변수명 : cnt
+            // 저장값 : 장바구니에 담긴 모든 품목 개수
+            let cnt = items.length;
             return tmp += '</ul>';
         }
-        // 2. 요소를 동적으로 생성하는 메서드 - 배송지 & 상품금액 정보를 담은 html태그
+        // 메서드명 : priceToHtml
+        // 기   능 : 배송지와 주문금액 관련 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
+        // 매개변수 : items - cartDto
+        // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
         let priceToHtml = (items) => {
+            // 변수명 : price
+            // 저장값 : 모든 상품 가격 x 담은 개수
             let price = 0;
+            // 변수명 : tmp
+            // 저장값 : 동적으로 생성할 html 태그(문자열)
             let tmp = "";
+
+            // 메서드명 : forEach
+            // 기   능 : 복수의 CartDto값들을 저장한 list에서 각각의 CartDto에 저장된 iv들을 적절한 태그의 속성값 또는 내용에 위치시키는 메서드
+            // 사용대상 : items - Array : List<CartDto>, 장바구니 목록
+            // 매개변수 : item - Object : CartDto, 장바구니 개별 품목
             items.forEach((item) => {
                 price += item.prod_price * item.prod_cnt;
             })
@@ -265,10 +288,15 @@
             return tmp;
         }
 
-        // 3. 요소를 동적으로 생성하는 메서드 - 선택된 상품 및 전체 장바구니 상품 개수 정보를 담은 html태그
+        // 메서드명 : checkBoxToHtml
+        // 기   능 : 전체선택 체크박스와 전체상품개수, 체크된 상품개수 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
+        // 매개변수 : items - cartDto
+        // 반환타입 : tmp - 동적으로 생성한 html 태그
         let checkBoxToHtml = (items) => {
+            // 변수명 : tmp
+            // 저장값 : 동적으로 생성할 html 태그(문자열)
             let tmp = "";
-            tmp = '<input type="checkbox" name="chk-all" class="input-all" /> 전체선택(<span id="checked">0</span>/' + items.length+') |  선택삭제';
+            tmp = '<input type="checkbox" name="chk-all" class="input-all" /> 전체선택(<span id="checked">0</span>/' + items.length+') |  <span id="checkedDelBtn">선택삭제</span>';
             return tmp;
         }
 
@@ -278,11 +306,11 @@
                 type:'GET',
                 url:'/cart/list?user_idx=' + user_idx,
                 success: (result) => {  // 성공 응답이 오면, 장바구니 목록, 주문정보, 체크박스 정보를 페이지에 랜더링하기
-                    $('#cartItems').html(listToHtml(result));
-                    $('#cartReceipt').html(priceToHtml(result));
-                    $('#totalChkBox').html(checkBoxToHtml(result));
+                    $('#cartItems').html(listToHtml(result));       // listToHtml메서드 호출
+                    $('#cartReceipt').html(priceToHtml(result));    // priceToHtml메서드 호출
+                    $('#totalChkBox').html(checkBoxToHtml(result)); // checkBoxToHtml메서드 호출
                 },
-                error : function() { alert("comment get error");} // 실패 응답이 오면, 경고창 띄우기
+                error : function() { alert("comment get error");}   // 실패 응답이 오면, 경고창 띄우기
             })
         }
 
