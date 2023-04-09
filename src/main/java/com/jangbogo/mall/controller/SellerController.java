@@ -14,6 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class SellerController {
 
+    @GetMapping("/seller/login")
+    public String loginSellerView () {
+        return "/seller/login";
+    }
+
     //판매자가입 뷰
     @GetMapping("/seller/register")
     public String regSellerView () {

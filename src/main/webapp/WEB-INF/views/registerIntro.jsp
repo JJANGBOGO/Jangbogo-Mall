@@ -18,12 +18,10 @@
     <h1 class="title">회원 가입</h1>
     <div class="link-box">
         <div class="link">
-<%--            <img class="icon" src="/img/buyer.png" alt=""/>--%>
-            <a href="/register/user" class="link-btn">회원 가입</a>
+            <a href="/user/register" class="link-btn">회원 가입</a>
         </div>
         <div class="link">
-<%--            <img class="icon seller" src="/img/seller.png" alt=""/>--%>
-            <a href="/register/seller" class="link-btn seller">판매자 가입</a>
+            <a href="/seller/register" class="link-btn seller">판매자 가입</a>
         </div>
     </div>
 </div>

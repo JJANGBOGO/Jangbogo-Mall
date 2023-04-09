@@ -12,7 +12,7 @@
                 <ul>
                     <s:authorize access="isAnonymous()">
                         <li>
-                            <a href="/login">로그인</a>
+                            <a href="/user/login">로그인</a>
                         </li>
                         <li>
                             <a href="/register/intro">회원가입</a>

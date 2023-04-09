@@ -90,7 +90,7 @@ public class UserController {
         String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
         m.addAttribute("urlNaver", naverAuthUrl);
 
-        return "login";
+        return "user/login";
     }
 
     //카카오 로그인
