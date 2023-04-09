@@ -11,8 +11,8 @@
         <div class="header">판매자 장보고</div>
         <ul>
             <li>
-                <a href="/seller/modify/brnd" class="<c:if test='${mySellerUrl eq "/seller/modify/brnd"}'>active</c:if> ">
-                    브랜드 수정
+                <a href="/seller/read/brnd" class="<c:if test='${mySellerUrl eq "/seller/read/brnd" || mySellerUrl eq "/seller/modify/brnd"}'>active</c:if> ">
+                    내 브랜드
                     <span> &gt; </span>
                 </a>
             </li>

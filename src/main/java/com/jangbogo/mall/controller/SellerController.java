@@ -68,6 +68,13 @@ public class SellerController {
         return msg;
     }
 
+    //마이셀러 브랜드조회 뷰
+    @GetMapping("/seller/read/brnd")
+    public String readBrndView (HttpServletRequest req, Model m) {
+        m.addAttribute("mySellerUrl", req.getRequestURI());
+        return "/seller/readBrnd";
+    }
+
     //마이셀러 브랜드수정 뷰
     @GetMapping("/seller/modify/brnd")
     public String chgBrndView (HttpServletRequest req, Model m) {

@@ -46,6 +46,7 @@ public class MemberController { //회원, 판매자 공통작업 수행
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return "redirect:/find/email";
         }
+
 //        }
         /**
          * 절대 성공케이스를 try-catch 바깥에 짜지 말것. 항상 성공처리가 된다.
