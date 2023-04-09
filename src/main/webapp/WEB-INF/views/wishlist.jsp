@@ -53,37 +53,36 @@
 
     <div class="b">
       <div class="c">
-        <a href="" id="name${i.index}">${product.name}</a>
+        <a href="" id="name${product.idx}">${product.name}</a>
         <div class="d">
 
             <c:choose>
                 <c:when test="${product.dc_rate != 0}">
-                    <span class="span1" id="dc_rate${i.index}">${product.dc_rate}%</span>
-                    <span class="span2" id="dc_prc${i.index}"><fmt:formatNumber value="${product.prc - (product.prc / 100 * product.dc_rate)}" pattern="#,###"/>원</span>
-                    <span class="span3" id="prc${i.index}"><fmt:formatNumber value="${product.prc}" pattern="#,###"/>원</span>
+                    <span class="span1" id="dc_rate${product.idx}">
+                            ${product.dc_rate}%
+                    </span>
+                    <span class="span2" id="dc_prc${product.idx}"><fmt:formatNumber value="${product.prc - (product.prc / 100 * product.dc_rate)}" pattern="#,###"/>원</span>
+                    <span class="span3" id="prc${product.idx}"><fmt:formatNumber value="${product.prc}" pattern="#,###"/>원</span>
                 </c:when>
                 <c:otherwise>
-                    <span class="span2" id="dc_prc${i.index}"><fmt:formatNumber value="${product.prc}" pattern="#,###"/>원</span>
-                    <span class="span3" id="prc${i.index}"></span>
-
+                    <span class="span2" id="dc_prc${product.idx}"><fmt:formatNumber value="${product.prc}" pattern="#,###"/>원</span>
+                    <span class="span3" id="prc${product.idx}"></span>
                 </c:otherwise>
             </c:choose>
-                                 <%--   != 대신에 ne도 가능--%>
 
-<%--                    <span class="span3" id="prc${i.index}"><fmt:formatNumber value="${product.prc}" pattern="#,###"/>원</span>--%>
         </div>
       </div>
 
       <div class="e">
         <button class="css-1h4lltl e4nu7ef3" type="button" width="104" height="36" radius="4" onclick=remove(${product.idx})>삭제</button>
-        <button class="css-102v0ri e4nu7ef3" type="button" width="104" height="36" radius="4" onclick= show(${i.index})><span class="css-ymwvow e4nu7ef1"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTM2IDM2SDBWMGgzNnoiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1LjE2NCA2LjU0NykiIHN0cm9rZT0iIzVmMDA4MCIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjciPgogICAgICAgICAgICA8cGF0aCBkPSJtMjUuNjggMy42Ni0yLjcyIDExLjU3SDcuMzdMNC42NiAzLjY2eiIvPgogICAgICAgICAgICA8Y2lyY2xlIGN4PSIyMC41MiIgY3k9IjIwLjc4IiByPSIyLjE0Ii8+CiAgICAgICAgICAgIDxjaXJjbGUgY3g9IjkuODEiIGN5PSIyMC43OCIgcj0iMi4xNCIvPgogICAgICAgICAgICA8cGF0aCBkPSJNMCAwaDMuOGwxLjc2IDcuNSIvPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==" alt="" class="css-1m3kac1 e4nu7ef0">담기</span></button>
+        <button class="css-102v0ri e4nu7ef3" type="button" width="104" height="36" radius="4" onclick= show(${product.idx})><span class="css-ymwvow e4nu7ef1"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTM2IDM2SDBWMGgzNnoiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1LjE2NCA2LjU0NykiIHN0cm9rZT0iIzVmMDA4MCIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjciPgogICAgICAgICAgICA8cGF0aCBkPSJtMjUuNjggMy42Ni0yLjcyIDExLjU3SDcuMzdMNC42NiAzLjY2eiIvPgogICAgICAgICAgICA8Y2lyY2xlIGN4PSIyMC41MiIgY3k9IjIwLjc4IiByPSIyLjE0Ii8+CiAgICAgICAgICAgIDxjaXJjbGUgY3g9IjkuODEiIGN5PSIyMC43OCIgcj0iMi4xNCIvPgogICAgICAgICAgICA8cGF0aCBkPSJNMCAwaDMuOGwxLjc2IDcuNSIvPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==" alt="" class="css-1m3kac1 e4nu7ef0">담기</span></button>
 
       </div>
     </div>
   </div>
 
-  </c:forEach>
 
+</c:forEach>
 <div class="background">
 
     <div class="popup">
@@ -92,18 +91,18 @@
 
         <div class="b1">
             <div class="c1">
-                <span class="c3">[호텔 컬렉션] 한우만두</span>
+                <span class="c3"></span>
             </div>
             <div class="d1">
                 <div class="e1">
-                    <span class="span22">1200원</span><span class="span33">1500원</span>
+                    <span class="span22"></span><span class="span33"></span>
                 </div>
                 <div class="f1">
-                    <button class="button1" type="button" onclick= constructor()></button>
+                    <button class="button1" type="button"></button>
                     <div class="count">
-                        1
+
                     </div>
-                    <button class="button2" type="button" width="104" height="36" radius="4" onclick=count("minus")></button>
+                    <button class="button2" type="button"></button>
                 </div>
             </div>
         </div>
@@ -145,9 +144,8 @@
 
 
 
-<div style="text-align:center">
+<%--<div style="text-align:center">--%>
 
-  </table>
   <script>
 
     function remove(prod_idx){
@@ -159,21 +157,41 @@
       <%--location.href='<c:url value="/mypage/removeWishlist?prod_idx='+prod_idx+'"/>'--%>
     }
 
-    function insertCart(prod_idx){
-      if(!confirm("정말로 담을건가요?")) return;
-      let form = document.getElementById("form");
-      form.setAttribute("action",'<c:url value="/mypage/insertCart?prod_idx='+prod_idx+'"/>')
-      form.setAttribute("method", "post");
-      form.submit();
+    function insertCart(prod_idx){    // map으로 주는 방법을 생각해보자? ㅇㄴ
+      // if(!confirm("정말로 담을건가요?")) return;
+        console.log(prod_idx);
+      let form = document.createElement("form");
+      <%--form.setAttribute("action",'<c:url value="/mypage/insertCart?prod_idx='+prod_idx+'"/>')--%>
+      <%--form.setAttribute("method", "post");--%>
+      <%--form.submit();--%>
+
+        // let f = document.createElement('form');
+
+        let obj;
+        obj = document.createElement('input');
+        obj.setAttribute('type', 'hidden');
+        // obj.setAttribute('name', 'userid');
+        // obj.setAttribute('value', prod_idx);
+
+        form.appendChild(obj);
+        form.setAttribute('method', 'post');
+        form.setAttribute("action",'<c:url value="/mypage/insertCart?prod_idx='+prod_idx+'"/>')
+        document.body.appendChild(form);
+        form.submit();
       <%--location.href='<c:url value="/mypage/wishlistremove?prod_idx='+prod_idx+'"/>'--%>
     }
 
-    function show(ioo) {
-        console.log(ioo);
-        console.log(document.getElementById("name"+ioo).innerText);
 
-        console.log(document.getElementById("prc"+ioo).innerText);
-        console.log(document.getElementById("dc_prc"+ioo).innerText);
+    // 담기 버튼(모달창 오픈)
+    function show(ioo) {
+        // console.log(ioo);
+        // console.log(document.getElementById("md_name"+ioo).innerText);
+        // console.log(document.getElementById("md_prc_price"+ioo).innerText);
+        // console.log(document.getElementById("md_price"+ioo).innerText);
+
+        // console.log(document.getElementById("md_name"+ioo).innerText);
+        // console.log(document.getElementById("md_prc_price"+ioo).innerText);
+        // console.log(document.getElementById("md_price"+ioo).innerText);
 
         let name = document.getElementById("name"+ioo).innerText;
         let prc = document.getElementById("prc"+ioo).innerText;
@@ -184,54 +202,58 @@
         document.querySelector(".span22").innerHTML = dc_prc;
         document.querySelector(".span33").innerHTML = prc;
 
-
-
-
-
-
-
-
-
-        // let a = document.getElementsByClassName('css-102v0ri e4nu7ef3')[0];
-        // console.log(a.value);
-        // console.log(productname,productprc,productdcrate);
-
-        // console.log(product);
-
+        document.querySelector(".insert-btn").setAttribute("onclick","insertCart("+ioo+")");
+        console.log(document.querySelector(".insert-btn").getAttribute("onclick"));
 
         document.querySelector(".background").className = "background show";
-        // document.getElementsByClassName('c3')[0].innerHTML = productname.value.idx;
-        // document.getElementsByClassName('span33')[0].innerHTML = productprc+"won";
-
-
 
     }
-
     function close() {
         document.querySelector(".background").className = "background";
+        counter = 1;
+        count.innerHTML = counter;
     }
 
+
+    // 모달 취소버튼
+    document.querySelector(".cancle-btn").addEventListener("click", close);
     // document.querySelector("#show").addEventListener("click", show);
-    document.querySelector(".btn-container").addEventListener("click", close);
+
+    // 모달 카운터
+    let counter = 1;
+    const button1 = document.querySelector('.button1');
+    const button2 = document.querySelector('.button2');
+    const count = document.querySelector('.count');
+
+    // if (count.innerHTML == 1) {
+    //     document.querySelector(".button1").className = "button3";
+    //
+    // }
+    count.innerHTML = counter;
+
+    // (-)마이너스 버튼
+    button1.addEventListener("click", () => {
+
+        count.innerHTML = --counter;
+        let price = document.querySelector('.price');
+        let a = counter * parseInt(document.querySelector(".span22").innerHTML.replace(',',""));
+        price.innerHTML = a.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
 
 
+    })
+    // (+)플러스 버튼
+    button2.addEventListener('click', () => {
 
+        count.innerHTML = ++counter;
+        let price = document.querySelector('.price');
 
+        console.log(document.querySelector(".span22").innerHTML.replace(',',""));
+        console.log(parseInt(document.querySelector(".span22").innerHTML.replace(',',"")))
 
+        let a = counter * parseInt(document.querySelector(".span22").innerHTML.replace(',',""));
+        price.innerHTML = a.toString().replace(/\B(?=(\d{3})+(?!\d))/g,",");
 
-    function constructor() {
-        // 버튼 클릭 횟수
-        this.clickedCount = 0;
-
-        const button = document.querySelector('.button1');
-        const clickedCountText = document.querySelector('.count');
-
-        // 화살표 함수로 이벤트 리스너 정의
-        button.addEventListener('click', () => {
-            this.clickedCount += 1;
-            clickedCountText.textContent = this.clickedCount;
-        });
-    }
+    })
 
 
 

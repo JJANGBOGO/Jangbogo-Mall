@@ -79,6 +79,9 @@ public class WishlistController {
     @PostMapping ("/insertCart")  // 장바구니담기    /담기 클릭 시 장바구니에 담는다
     public String insertCart(Integer prod_idx, Integer prod_cnt, Model m, RedirectAttributes ratt, HttpServletRequest request) {
         // 세션에서 이메일 가저온뒤에 넣어주면 그 이메일을 가진 회원번호 알아낸다
+        System.out.println("prod_idxasdsadsadas = " + prod_idx);
+
+
         try {
             // 첫 번째로 장바구니에 이 상품이 있는지 조회한다
             int CartCnt = wishlistService.checkCart(prod_idx,3); // 상품번호, 회원번호(하드코딩)
