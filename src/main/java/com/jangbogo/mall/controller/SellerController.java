@@ -95,4 +95,10 @@ public class SellerController {
         m.addAttribute("mySellerUrl", req.getRequestURI());
         return "/seller/modifySeller";
     }
+
+    //판매자탈퇴 뷰
+    @GetMapping("/seller/withdraw")
+    public String withdrawSellerView () {
+        return "/seller/withdraw";
+    }
 }
