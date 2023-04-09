@@ -15,29 +15,36 @@ import javax.servlet.http.HttpServletRequest;
 public class SellerController {
 
     //판매자가입 뷰
-    @GetMapping("/register/seller")
+    @GetMapping("/seller/register")
     public String regSellerView () {
         return "/seller/register";
     }
 
     //판매자가입 처리
-    @PostMapping("/register/seller")
+    @PostMapping("/seller/register")
     public String regSeller (Seller seller, Model m) {
         log.info("seller..." + seller);
-        return "";
+        return "seller/register";
     }
 
     //마이셀러 브랜드수정 뷰
-    @GetMapping("/myseller/modify/brnd")
+    @GetMapping("/seller/modify/brnd")
     public String chgBrndView (HttpServletRequest req, Model m) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
         return "/seller/modifyBrnd";
     }
 
-    //마이셀러 판매자수정 뷰
-    @GetMapping("/myseller/modify/seller")
+    //판매자수정 인증 뷰
+    @GetMapping("/seller/info")
+    public String verifySeller (HttpServletRequest req, Model m) {
+        m.addAttribute("mySellerUrl", req.getRequestURI());
+        return "/seller/verify";
+    }
+
+    //판매자수정 뷰
+    @GetMapping("/seller/modify")
     public String chgSellerView (HttpServletRequest req, Model m) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
-        return "seller/modifySeller";
+        return "/seller/modifySeller";
     }
 }

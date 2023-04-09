@@ -7,7 +7,6 @@ import com.jangbogo.mall.domain.NaverLoginBo;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.jangbogo.mall.domain.User;
 import com.jangbogo.mall.service.UserService;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject; //json.simple이어야 한다.
 import org.json.simple.parser.JSONParser;
@@ -17,7 +16,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,7 +47,7 @@ public class UserController {
     BCryptPasswordEncoder passwordEncoder;
 
     //회원탈퇴뷰
-    @GetMapping("/withdraw/user")
+    @GetMapping("/user/withdraw")
     public String withdrawUserView(HttpSession session, Model m, Authentication auth, RedirectAttributes rattr) {
 //        if (auth == null) return "redirect:/login"; //TODO:: 시큐리티 개발 후 수정 필요.
 
@@ -67,7 +65,7 @@ public class UserController {
     }
 
     //회원탈퇴
-    @PostMapping("/withdraw/user")
+    @PostMapping("/user/withdraw")
     @ResponseBody
     public String withdrawUser(int idx, String email) {
         String msg = "";
@@ -83,7 +81,7 @@ public class UserController {
     }
 
     //로그인뷰
-    @RequestMapping("/login") //꼭 requestMapping
+    @RequestMapping("/user/login") //꼭 requestMapping
     public String loginUserView(Model m, HttpSession session) {
 
         String kakaoAuthUrl = kakaoLoginBO.getAuthorizationUrl(session);
@@ -136,7 +134,7 @@ public class UserController {
         } catch (Exception e) {
 //            예외 발생
             rattr.addFlashAttribute("msg", "LOGIN_ERR"); //로그인 에러
-            return "redirect:/login";
+            return "redirect:/user/login";
         }
     }
 
@@ -197,7 +195,7 @@ public class UserController {
         } catch (Exception e) {
 //            예외 발생
             rattr.addFlashAttribute("msg", "LOGIN_ERR"); //로그인 에러
-            return "redirect:/login";
+            return "redirect:/user/login";
         }
     }
 
@@ -234,24 +232,24 @@ public class UserController {
     }
 
     //가입화면
-    @GetMapping("/register/user")
+    @GetMapping("/user/register")
     public String registerUserView() {
         return "/user/register";
     }
 
     //가입처리
-    @PostMapping("/register/user")
+    @PostMapping("/user/register")
     public String registerUser(User user, Address addr, RedirectAttributes rattr) { //validator 추가 TODO
         log.info("user...." + user);
         log.info("addr...." + addr);
 
         try {
-            return "redirect:/login";
+            return "redirect:/user/login";
 
         } catch (Exception e) {
             e.printStackTrace();
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR"); //가입 도중 에러
-            return "redirect:/register/user";
+            return "redirect:/user/register";
         }
     }
 
@@ -289,8 +287,6 @@ public class UserController {
         return msg;
     }
 
-
-
     //테스트용 로그인 (TODO:: 추후 삭제)
     @GetMapping("/test/login")
     public String testLogin(HttpSession session) throws Exception {
@@ -301,7 +297,7 @@ public class UserController {
     }
 
     //회원인증뷰
-    @GetMapping("/mypage/user/info")
+    @GetMapping("/user/info")
     public String verifyUserView(HttpSession session) {
         log.info("loginService..." + session.getAttribute("loginService"));
         if (session.getAttribute("loginService") != "jangbogo")
@@ -313,38 +309,38 @@ public class UserController {
     }
 
     //회원수정전 인증
-    @PostMapping("/mypage/user/info")
+    @PostMapping("/user/info")
     public String verifyUser(String email, String pwd, RedirectAttributes rattr) {
         log.info("pwd..." + email + pwd);
 
         if (pwd == "") { //비밀번호 입력X
             rattr.addFlashAttribute("msg", "PWD_EMPTY_ERR");
-            return "redirect:/mypage/user/info";
+            return "redirect:/user/info";
         }
 
         try {
             boolean userChk = userService.verifyUser(email, pwd);
             if (userChk)
-                return "redirect:/mypage/modify/user";
+                return "redirect:/user/modify";
             else {
                 //회원 존재X
                 rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
-                return "redirect:/mypage/user/info";
+                return "redirect:/user/info";
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
-            return "redirect:/mypage/user/info";
+            return "redirect:/user/info";
         }
 
     }
 
     //회원수정뷰
-    @GetMapping("/mypage/modify/user")
+    @GetMapping("/user/modify")
     public String modifyUserView(HttpSession session, Model m, RedirectAttributes rattr) {
         if (session.getAttribute("modify") != "OK") {
-            return "redirect:/mypage/user/info";
+            return "redirect:/user/info";
         }
         try {
             int idx = (int) session.getAttribute("idx");
@@ -360,7 +356,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/mypage/modify/user")
+    @PostMapping("/user/modify")
     public String modifyUser(User user, HttpSession session, RedirectAttributes rattr) {
         log.info("modify user...." + user);
 
@@ -370,7 +366,7 @@ public class UserController {
 
             session.removeAttribute("modify"); //수정 성공시 해당 세션도 삭제
             rattr.addFlashAttribute("msg", "OK"); // 수정완료 메세지
-            return "redirect:/mypage/user/info"; //이전 페이지로 돌아가기
+            return "redirect:/user/info"; //이전 페이지로 돌아가기
 
         } catch (Exception e) {
             e.printStackTrace();
