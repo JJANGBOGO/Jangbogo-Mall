@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class CartService {
+    // CartDao 자동 주입
     @Autowired
     CartDao cartDao;
 
@@ -46,10 +47,4 @@ public class CartService {
     public int subtractCount(Integer prod_idx, Integer user_idx, Integer prod_cnt) throws Exception {
         return cartDao.subtractCount(prod_idx, user_idx, prod_cnt);
     }
-    // 메서드명 : getTotalPrice
-    // 기   능 : cartDao의 getTotalPrice메서드 호출
-    // 반환타입 : Integer user_idx
-//    public int getTotalPrice(Integer prod_idx, Integer user_idx) throws Exception {
-//        return cartDao.getTotalPrice(prod_idx, user_idx);
-//    }
 }

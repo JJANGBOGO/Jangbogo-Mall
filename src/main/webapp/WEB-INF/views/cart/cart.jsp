@@ -214,7 +214,7 @@
     </div>
     <script>
         // 1. 요소를 동적으로 생성하는 메서드 - 장바구니 목록 및 정보를 담은 html태그
-        let toHtml = (items) => {
+        let listToHtml = (items) => {
             let tmp = "<ul>";
 
             items.forEach((item) => {
@@ -237,7 +237,7 @@
             return tmp += '</ul>';
         }
         // 2. 요소를 동적으로 생성하는 메서드 - 배송지 & 상품금액 정보를 담은 html태그
-        let toHtml2 = (items) => {
+        let priceToHtml = (items) => {
             let price = 0;
             let tmp = "";
             items.forEach((item) => {
@@ -266,40 +266,43 @@
         }
 
         // 3. 요소를 동적으로 생성하는 메서드 - 선택된 상품 및 전체 장바구니 상품 개수 정보를 담은 html태그
-        let toHtml3 = (items) => {
+        let checkBoxToHtml = (items) => {
             let tmp = "";
             tmp = '<input type="checkbox" name="chk-all" class="input-all" /> 전체선택(<span id="checked">0</span>/' + items.length+') |  선택삭제';
             return tmp;
         }
 
         let showList = (user_idx) => {
+            // ajax 요청(비동기)
             $.ajax({
                 type:'GET',
                 url:'/cart/list?user_idx=' + user_idx,
-                success: (result) => {
-                    $('#cartItems').html(toHtml(result));
-                    $('#cartReceipt').html(toHtml2(result));
-                    $('#totalChkBox').html(toHtml3(result));
+                success: (result) => {  // 성공 응답이 오면, 장바구니 목록, 주문정보, 체크박스 정보를 페이지에 랜더링하기
+                    $('#cartItems').html(listToHtml(result));
+                    $('#cartReceipt').html(priceToHtml(result));
+                    $('#totalChkBox').html(checkBoxToHtml(result));
                 },
-                error : function() { alert("comment get error");}
+                error : function() { alert("comment get error");} // 실패 응답이 오면, 경고창 띄우기
             })
         }
 
         // 메인
         $(document).ready(function() {
-            showList(1234);  // 회원번호(user_idx) 하드코딩
-            // 이벤트 핸들러에서 user_idx와 prod_idx를 사용하려면?
-            // 동적으로 생성된 태그에 이벤트를 걸려면 document 객체에서 잡아와서 이벤트를 걸어야한다.
-
+            showList(1234);  // 회원번호(user_idx) 하드코딩 - 세션에서 회원번호를 가져와야 한다. 세션 연동 시, 추후 테스트 필요
 
             // 이벤트 대상 : .input-all 전체선택 체크박스
             // 이벤트 : click
             // 이벤트 핸들러 기능 : 전체 선택 시, 모든 상품의 체크박스 체크드 처리
             $(document).on("click", ".input-all", (e) => {
+                // 전체선택 체크박스가 체크되는 경우, 개별 선택 체크박스 전부 체크드 처리
                 if($(".input-all").is(":checked")) $("input[name=chk]").prop("checked", true);
+                // 전체선택 체크박스가 체크해제되는 경우, 개별 선택 체크박스 전부 체크해제 처리
                 else $("input[name=chk]").prop("checked", false);
 
+                // 변수명 : checked
+                // 저장값 : 개별 체크박스들 중 체크드 처리된 것들의 개수를 저장
                 let checked = $("input[name=chk]:checked").length;
+                // 이벤트 발생 결과, 체크드 처리된 체크박스 개수를 화면에서 보여준다.
                 $("#totalChkBox > span ").prop("innerHTML", checked);
             });
 
@@ -307,19 +310,26 @@
             // 이벤트 : click
             // 이벤트 핸들러 기능 : 개별 상품 선택 시, 해당 상품의 체크박스 체크드 처리, 모든 상품 선택 시, 전체선택 체크박스도 체크드 처리
             $(document).on("click", "input[name=chk]", (e) => {
+                // 변수명 : total
+                // 저장값 : 개별 체크박스 개수
                 let total = $("input[name=chk]").length;
+                // 변수명 : checked
+                // 저장값 : 개별 체크박스 중 체크드 처리된 체크박스 개수
                 let checked = $("input[name=chk]:checked").length;
 
+                // 이벤트 발생 결과, 체크드 처리된 체크박스 개수를 화면에서 보여준다.
                 $("#totalChkBox > span ").prop("innerHTML", checked);
 
+                // 모든 개별 체크박스가 체크드 상태가 아니라면, 전체선택 체크박스를 체크해제 처리한다.
                 if(total != checked) $(".input-all").prop("checked", false);
+                // 모든 개별 체크박스가 체크드 상태라면, 전체선택 체크박스를 체크드 처리한다.
                 else $(".input-all").prop("checked", true);
             });
 
             // 이벤트 대상 : .cart_item__close 장바구니 개별 상품의 삭제 버튼
             // 이벤트 : click
             // 이벤트 핸들러 기능 : 삭제 버튼 클릭 시, 해당 장바구니 상품 삭제 처리
-            $(document).on("click", ".cart_item__close", (e) => {// 회원번호와 상품번호를 JQUERY단에 가져와야 한다.
+            $(document).on("click", ".cart_item__close", (e) => {// 회원번호와 상품번호를 html태그의 data속성에서 가져와야 한다.
                 let element = $(e.target).closest("li").data("pid"); // console.log(element) - 100, 101, 102 출력
                 let element2 = $(e.target).closest("li").data("uid"); // console.log(element2) - 1234 출력
 
@@ -338,7 +348,7 @@
             // 이벤트 대상 : #subtractBtn 상품개수조절 '-' 버튼
             // 이벤트 : click
             // 이벤트 핸들러 기능 : '-' 버튼 클릭 시, 해당 상품의 개수를 -1 처리
-            $(document).on("click", "#subtractBtn", (e) => {// 회원번호와 상품번호, 그리고 상품개수를 JQUERY단에 가져와야 한다. -> data속성 이용
+            $(document).on("click", "#subtractBtn", (e) => {// 회원번호와 상품번호, 그리고 상품개수를 html태그의 data속성에서 가져와야 한다.
                 let element = $(e.target).closest("li").data("pid"); // console.log(element) - 100, 101, 102 출력
                 let element2 = $(e.target).closest("li").data("uid"); // console.log(element2) - 1234 출력
                 let element3 = parseInt($(e.target).next("div").text()); // console.log(element2) - 1 출력

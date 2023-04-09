@@ -59,14 +59,4 @@
         WHERE prod_idx = #{prod_idx} AND user_idx = #{user_idx};
     </update>
 
-    <!--
-        태   그 : select
-        기   능 : 주문총금액을 계산한다.
-        아이디명 : getTotalPrice
-    -->
-<!--       <select id="getTotalPrice" resultType="Integer">-->
-<!--           SELECT SUM(CART.PROD_CNT * PRODUCT.PRC)-->
-<!--           FROM CART, PRODUCT, USER-->
-<!--           WHERE prod_idx = #{prod_idx} AND user_idx = #{user_idx};-->
-<!--       </select>-->
 </mapper>
