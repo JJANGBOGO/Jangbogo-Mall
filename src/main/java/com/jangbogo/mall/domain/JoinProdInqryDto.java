@@ -3,7 +3,7 @@ package com.jangbogo.mall.domain;
 import java.util.Date;
 import java.util.Objects;
 
-public class ProdInqryDto {
+public class JoinProdInqryDto {
 
     private Integer idx;
     private Integer prod_idx;
@@ -14,10 +14,13 @@ public class ProdInqryDto {
     private Integer res_state_cd;
     private String opub_yn;
     private Date wrt_tm;
+    private String ans_content;
+    private String ans_writer;
+    private Date ans_write_time;
 
-    public ProdInqryDto() {}
+    public JoinProdInqryDto() {}
 
-    public ProdInqryDto(Integer idx, Integer prod_idx, Integer user_idx, String title, String ctent, String writer, Integer res_state_cd, String opub_yn) {
+    public JoinProdInqryDto(Integer idx, Integer prod_idx, Integer user_idx, String title, String ctent, String writer, Integer res_state_cd, String opub_yn, String ans_content, String ans_writer) {
         this.idx = idx;
         this.prod_idx = prod_idx;
         this.user_idx = user_idx;
@@ -26,26 +29,13 @@ public class ProdInqryDto {
         this.writer = writer;
         this.res_state_cd = res_state_cd;
         this.opub_yn = opub_yn;
-
-
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProdInqryDto that = (ProdInqryDto) o;
-        return Objects.equals(idx, that.idx) && Objects.equals(prod_idx, that.prod_idx) && Objects.equals(user_idx, that.user_idx) && Objects.equals(title, that.title) && Objects.equals(ctent, that.ctent) && Objects.equals(writer, that.writer) && Objects.equals(res_state_cd, that.res_state_cd) && Objects.equals(opub_yn, that.opub_yn);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idx, prod_idx, user_idx, title, ctent, writer, res_state_cd, opub_yn);
+        this.ans_content = ans_content;
+        this.ans_writer = ans_writer;
     }
 
     @Override
     public String toString() {
-        return "ProdInqryDto{" +
+        return "JoinProdInqryDto{" +
                 "idx=" + idx +
                 ", prod_idx=" + prod_idx +
                 ", user_idx=" + user_idx +
@@ -55,7 +45,23 @@ public class ProdInqryDto {
                 ", res_state_cd=" + res_state_cd +
                 ", opub_yn='" + opub_yn + '\'' +
                 ", wrt_tm=" + wrt_tm +
+                ", ans_content='" + ans_content + '\'' +
+                ", ans_writer='" + ans_writer + '\'' +
+                ", ans_write_time=" + ans_write_time +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        JoinProdInqryDto that = (JoinProdInqryDto) o;
+        return Objects.equals(idx, that.idx) && Objects.equals(prod_idx, that.prod_idx) && Objects.equals(user_idx, that.user_idx) && Objects.equals(title, that.title) && Objects.equals(ctent, that.ctent) && Objects.equals(writer, that.writer) && Objects.equals(res_state_cd, that.res_state_cd) && Objects.equals(opub_yn, that.opub_yn) && Objects.equals(ans_content, that.ans_content) && Objects.equals(ans_writer, that.ans_writer);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idx, prod_idx, user_idx, title, ctent, writer, res_state_cd, opub_yn, ans_content, ans_writer);
     }
 
     public Integer getIdx() {
@@ -130,4 +136,27 @@ public class ProdInqryDto {
         this.wrt_tm = wrt_tm;
     }
 
+    public String getAns_content() {
+        return ans_content;
+    }
+
+    public void setAns_content(String ans_content) {
+        this.ans_content = ans_content;
+    }
+
+    public String getAns_writer() {
+        return ans_writer;
+    }
+
+    public void setAns_writer(String ans_writer) {
+        this.ans_writer = ans_writer;
+    }
+
+    public Date getAns_write_time() {
+        return ans_write_time;
+    }
+
+    public void setAns_write_time(Date ans_write_time) {
+        this.ans_write_time = ans_write_time;
+    }
 }

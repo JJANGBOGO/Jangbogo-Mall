@@ -19,13 +19,13 @@ public class ProdController {
     @Autowired
     ProdInqryService service;
 
-    @GetMapping("/test")
-    public String test() {
-        return "test";
+    @GetMapping("/product")
+    public String product() {
+        return "product";
     }
 
     //게시물을 수정
-    @PatchMapping("/product/{idx}")
+    @PatchMapping("/products/{idx}")
     public ResponseEntity<String> modify(@PathVariable Integer idx, @RequestBody ProdInqryDto dto, Integer prod_idx, HttpSession session) {
         Integer user_idx = 1010;
         dto.setIdx(idx);
@@ -44,7 +44,7 @@ public class ProdController {
     }
 
     //상품문의 게시물을 등록
-    @PostMapping("/product")  // /product?prod_idx=1 POST
+    @PostMapping("/products")  // /product?prod_idx=1 POST
     public ResponseEntity<String> write(@RequestBody ProdInqryDto dto, Integer prod_idx, HttpSession session) {
         Integer user_idx = 1010;
         dto.setUser_idx(user_idx);
@@ -62,7 +62,7 @@ public class ProdController {
     }
 
     //상품문의 게시물을 삭제
-    @DeleteMapping("/product/{idx}")  // /product/1
+    @DeleteMapping("/products/{idx}")  // /product/1
     public ResponseEntity<String> remove(@PathVariable Integer idx, Integer prod_idx, HttpSession session) {
         Integer user_idx = 1010;
         try {
@@ -79,7 +79,7 @@ public class ProdController {
     }
 
     //상품문의 게시물 가져오기
-    @GetMapping("/product")
+    @GetMapping("/products")
     public ResponseEntity<List<JoinProdInqryDto>> list(Integer prod_idx) {
         List<JoinProdInqryDto> list = null;
         try {
