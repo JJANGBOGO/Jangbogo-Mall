@@ -254,9 +254,9 @@ public class UserController {
     }
 
     //이메일 중복 체크
-    @PostMapping("/chk/duplicate/email")
+    @PostMapping("/user/duplicate/email")
     @ResponseBody
-    public String chkDuplicateEmail(String email) {
+    public String chkDuplicateEmail(String email, String type) {
         log.info("email...." + email);
         String msg = "DUPLICATE";
         try {
@@ -271,9 +271,9 @@ public class UserController {
     }
 
     //닉네임 중복 체크
-    @PostMapping("/chk/duplicate/nickname")
+    @PostMapping("/user/duplicate/nickname")
     @ResponseBody
-    public String chkDuplicateNick(String nick_nm) {
+    public String chkDuplicateNick(String nick_nm, String type) {
         log.info("nick...." + nick_nm);
         String msg = "DUPLICATE";
         try {

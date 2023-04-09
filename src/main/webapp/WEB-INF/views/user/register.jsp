@@ -348,7 +348,7 @@
             //validateNick()  //유효성 검사. 널과 정규식
 
             $.ajax({
-                url: '/chk/duplicate/email',
+                url: '/user/duplicate/email',
                 data: {email: email},
                 type: 'POST',
                 success: function (result) {
@@ -373,7 +373,7 @@
             //validateNick()  //유효성 검사. 널과 정규식
 
             $.ajax({
-                url: '/chk/duplicate/nickname',
+                url: '/user/duplicate/nickname',
                 data: {nick_nm: nickname},
                 type: 'POST',
                 success: function (result) {

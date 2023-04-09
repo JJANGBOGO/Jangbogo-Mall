@@ -2,11 +2,13 @@ package com.jangbogo.mall.controller;
 
 
 import com.jangbogo.mall.domain.Seller;
+import com.jangbogo.mall.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,6 +32,40 @@ public class SellerController {
     public String regSeller (Seller seller, Model m) {
         log.info("seller..." + seller);
         return "seller/register";
+    }
+
+    //이메일 중복 체크
+    @PostMapping("/seller/duplicate/email")
+    @ResponseBody
+    public String chkDuplicateEmail(String email, String type) {
+        log.info("email...." + email);
+        String msg = "DUPLICATE";
+        try {
+//            User user = userService.getUserByEmail(email);
+//            if (user == null) {
+//                msg = "OK";
+//            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return msg;
+    }
+
+    //닉네임 중복 체크
+    @PostMapping("/seller/duplicate/nickname")
+    @ResponseBody
+    public String chkDuplicateNick(String nick_nm, String type) {
+        log.info("nick...." + nick_nm);
+        String msg = "DUPLICATE";
+        try {
+//            User user = userService.chkDuplicateNick(nick_nm);
+//            if (user == null) {
+//                msg = "OK";
+//            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return msg;
     }
 
     //마이셀러 브랜드수정 뷰

@@ -202,23 +202,6 @@
                     <h3 class="section-header">브랜드 기본 정보</h3>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="mobl_no">브랜드 공식 이름<span>*</span></label>
-                        </div>
-                        <div class="input-box">
-                            <div class="input">
-                                <input
-                                        name="brnd_nm"
-                                        id="brnd_nm"
-                                        type="text"
-                                        placeholder=""
-                                />
-                            </div>
-                        </div>
-                        <div class="btn-space">
-                        </div>
-                    </div>
-                    <div class="input-line">
-                        <div class="input-label">
                             <label for="repr_telno">브랜드 공식 연락처<span>*</span></label>
                         </div>
                         <div class="input-box">
@@ -227,7 +210,7 @@
                                         name="repr_telno"
                                         id="repr_telno"
                                         type="text"
-                                        placeholder=""
+                                        placeholder="-제외 숫자만 입력해주세요"
                                 />
                             </div>
                         </div>
@@ -244,7 +227,7 @@
                                         name="brnd_cn"
                                         id="brnd_cn"
                                         type="text"
-                                        placeholder="수정 시 섬머노트 적용"
+                                        placeholder="브랜드 내용을 입력해주세요"
                                 />
                             </div>
                         </div>
@@ -277,57 +260,6 @@
                                         name="brnd_profile"
                                         id="brnd_profile"
                                         type="file"
-                                />
-                            </div>
-                        </div>
-                        <div class="btn-space">
-                        </div>
-                    </div>
-                    <h3 class="section-header">정산 정보</h3>
-
-                    <div class="input-line">
-                        <div class="input-label">
-                            <label>은행 이름<span>*</span></label>
-                        </div>
-                        <div class="input-box">
-                            <div class="input">
-                                <select>>
-                                    <option>하나은행</option>
-                                    <option>카카오뱅크</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="btn-space">
-                        </div>
-                    </div>
-                    <div class="input-line">
-                        <div class="input-label">
-                            <label>계좌번호<span>*</span></label>
-                        </div>
-                        <div class="input-box">
-                            <div class="input">
-                                <input
-                                        name="acc_no"
-                                        id="acc_no"
-                                        type="text"
-                                        placeholder="29807"
-                                />
-                            </div>
-                        </div>
-                        <div class="btn-space">
-                        </div>
-                    </div>
-                    <div class="input-line">
-                        <div class="input-label">
-                            <label>소유자명<span>*</span></label>
-                        </div>
-                        <div class="input-box">
-                            <div class="input">
-                                <input
-                                        name="acc_nm"
-                                        id="acc_nm"
-                                        type="text"
-                                        placeholder="남궁진"
                                 />
                             </div>
                         </div>
