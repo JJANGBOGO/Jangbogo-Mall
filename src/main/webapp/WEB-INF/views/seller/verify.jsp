@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
@@ -12,10 +11,10 @@
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
 <div class="mypage-banner"></div>
 <div class="mypage-base">
-    <%@ include file="/WEB-INF/views/include/sidebar.jsp" %>
+    <%@ include file="/WEB-INF/views/include/sidebarSeller.jsp" %>
     <div class="mypage-content">
         <div class="page-header">
-            <h2>개인 정보 수정</h2>
+            <h2>판매자 정보 수정</h2>
         </div>
         <div class="check-pwd-content">
             <h4>비밀번호 재확인</h4>
@@ -23,45 +22,54 @@
                 회원님의 정보를 안전하게 보호하기 위해 비밀번호를 다시 한번
                 확인해주세요.
             </p>
-            <form:form class="check-pwd-form" action="/mypage/info" method="post" id="verify_form" modelAttribute="userDto">
-                <form:errors path="id" />
-                <form:errors path="pwd" />
+            <form class="check-pwd-form" action="/seller/info" method="post" id="verify_form">
                 <div class="center-padding">
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="id">아이디</label>
+                            <label>이메일</label>
                         </div>
                         <div class="input">
-<%--                            시큐리티에서 적용한 value 적용이 필요--%>
-                            <form:input path="id" name="id" type="text" readonly="true" value="jinvicky" />
+                            <input name="email" type="text" readonly="true" value="${sessionScope.email}" />
                         </div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="pwd"
+                            <label
                             >비밀번호
                                 <span class="required">*</span>
                             </label>
                         </div>
                         <div class="input">
-                            <form:input path="pwd" name="pwd" type="password" />
+                            <input name="pwd" type="password" />
                         </div>
                     </div>
                 </div>
                 <!-- end of center-padding -->
                 <div class="button-box">
-                    <button type="submit" class="">확인</button>
-                    <button type="button" class="">일반 계정과 연동</button>
+                    <button id="verify_confirm">확인</button>
                 </div>
-            </form:form>
+            </form>
         </div>
     </div>
 </div>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
+    let msg = "${msg}";
+    if(msg == "PWD_EMPTY_ERR") alert("비밀번호를 입력해 주세요");
+    if(msg == "NOT_FOUND_ERR") alert("정보를 찾을 수 없습니다");
+    if(msg == "EXCEPTION_ERR") alert("오류가 발생했습니다. 다시 시도해 주세요");
+    if(msg == "OK") alert("회원정보 수정을 성공했습니다");
+</script>
+<script>
     $(document).ready(function() {
-        $("#pwd_verity_btn").click(function(e){
-        //   alert null check needed
+        $("#verify_confirm").click(function(e){
+            e.preventDefault();
+            let pwd = $("input[name=pwd]").val();
+            if($.trim(pwd) == "") {
+                alert("비밀번호를 입력해주세요"); //ok
+            } else {
+                $(".check-pwd-form").submit();
+            }
         });
     });
 </script>

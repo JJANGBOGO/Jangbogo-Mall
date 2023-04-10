@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jangbogo.mall.dao.AddressMapper">
+
+    <insert id="insertAddr" parameterType="Address">
+        INSERT INTO DLVPN (USER_IDX, ZPCD, ADDR_BASE, ADDR_DTL, RCPR_NM, RCPR_MOBL_NO, IS_DEFAULT_YN)
+        VALUES (#{user_idx}, #{zpcd}, #{addr_base}, #{addr_dtl}, #{rcpr_nm}, #{rcpr_mobl_no}, #{is_default_yn});
+    </insert>
+
+    <select id="selAddrList" resultType="Address">
+        SELECT * FROM DLVPN WHERE USER_IDX = #{user_idx};
+    </select>
+</mapper>
+

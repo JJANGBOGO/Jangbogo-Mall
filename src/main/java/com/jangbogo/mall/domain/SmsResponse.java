@@ -22,4 +22,6 @@ public class SmsResponse {
     private String statusCode;
     private String statusName;
 
+    private String numStr; //인증번호
+
 }

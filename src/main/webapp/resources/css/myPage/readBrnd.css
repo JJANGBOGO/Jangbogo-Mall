@@ -1,0 +1,84 @@
+
+.brnd-content .banner {
+    width: 100%;
+    height: 200px;
+}
+
+.brnd-content .banner img {
+    width: 100%;
+    height: 100%;
+}
+
+.brnd-content .brnd-profile {
+    position: relative;
+    width: 90%;
+    margin: 40px auto;
+    display: flex;
+    align-items: center;
+}
+
+.brnd-content .brnd-profile .profile-circle {
+    width: 108px;
+    height: 108px;
+    position: relative;
+    margin-right: 33px;
+
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid hsla(0,0%,85%,.5)
+}
+
+.brnd-content .brnd-profile .profile-circle img {
+    width: 100%;
+    height: 100%;
+}
+
+.brnd-content .brnd-profile div .brnd-title  {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.brnd-content .brnd-profile div .follower-cnt {
+    margin-top: 10px;
+}
+
+.brnd-content .brnd-profile div .follower-cnt .cnt-num {
+    color: gray;
+    margin-left: 10px;
+}
+
+.brnd-content .profile-tab{
+    border: 1px solid #ddd;
+    border-left: none;
+    border-right: none;
+    padding: 15px;
+    text-align: center;
+
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.brnd-content .brnd-intro {
+    min-height: 400px;
+    border: 1px solid #ddd;
+    border-top: none;
+    padding: 20px;
+}
+
+.brnd-content .modify-brnd {
+    padding: 15px;
+    border-radius: 4px;
+    margin-top: 20px;
+    float: right;
+
+    color: var(--primary-color);
+    background-color: white;
+    border: 1px solid var(--primary-color);
+
+    cursor: pointer;
+}
+
+.brnd-content .modify-brnd:hover {
+    background-color: #f4f4f4;
+    transition: ease-in-out 0.1s;
+}

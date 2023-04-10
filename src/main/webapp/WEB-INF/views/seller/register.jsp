@@ -1,35 +1,50 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
+    <link rel="stylesheet" href="/css/radioBtn.css"/>
     <link rel="stylesheet" href="/css/user/signupForm.css"/>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
-<%--    <c:if test="${param.ng!=null}">--%>
-<%--        <p> error : <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/> </p>--%>
-<%--    </c:if>--%>
 <div class="register-page">
     <div class="reg-page-center">
-        <div class="reg-header">회원가입</div>
+        <div class="reg-header">판매자가입</div>
         <div class="section-line"></div>
         <div class="reg-form-box">
             <form class="reg-form" action="" method="post">
                 <div class="center-padding">
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="id">아이디<span>*</span></label>
+                            <label for="email">이메일<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="id"
-                                        id="id"
+                                        id="email"
+                                        name="email"
                                         type="text"
-                                        placeholder="아이디를 입력해주세요"
+                                        placeholder="jungsukmarket@naver.com"
+                                />
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                            <button>
+                                중복확인
+                            </button>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label for="nick_nm">상호명(브랜드명)<span>*</span></label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name="nick_nm"
+                                        id="nick_nm"
+                                        type="text"
+                                        placeholder="닉네임을 입력해주세요"
                                 />
                             </div>
                         </div>
@@ -84,43 +99,78 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="name">이름<span>*</span></label>
+                            <label for="mobl_no">휴대전화<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="name"
-                                        id="name"
+                                        name="mobl_no"
+                                        id="mobl_no"
                                         type="text"
-                                        placeholder="이름을 입력해주세요"
-                                />
-                            </div>
-                        </div>
-                        <div class="btn-space"></div>
-                    </div>
-                    <div class="input-line">
-                        <div class="input-label">
-                            <label for="email">이메일<span>*</span></label>
-                        </div>
-                        <div class="input-box">
-                            <div class="input">
-                                <input
-                                        id="email"
-                                        name="email"
-                                        type="text"
-                                        placeholder="jungsukmarket@naver.com"
+                                        placeholder="01026558945"
                                 />
                             </div>
                         </div>
                         <div class="btn-space">
-                            <button>
-                                중복확인
-                            </button>
+                            <button>인증</button>
+                        </div>
+                    </div>
+                    <h3 class="section-header">사업자 기본 정보</h3>
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label>사업유형<span>*</span></label>
+                        </div>
+                        <fieldset style="padding: 0; margin-top: 7px;">
+                            <label>
+                                <input type="radio" name="type" value="user" checked/>
+                                <span>개인사업자</span>
+                            </label>
+
+                            <label>
+                                <input type="radio" name="type" value="seller"/>
+                                <span>법인사업자</span>
+                            </label>
+                        </fieldset>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label for="mobl_no">사업자번호<span>*</span></label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name=""
+                                        id=""
+                                        type="text"
+                                        placeholder=""
+                                />
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                            <button>인증</button>
                         </div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="addr">주소<span>*</span></label>
+                            <label for="mobl_no">통신판매업신고번호<span>*</span></label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name=""
+                                        id="sle"
+                                        type="text"
+                                        placeholder=""
+                                />
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                            <button>인증</button>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label for="addr">사업지 주소<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <input name="postcode" id="postcode" hidden/>
@@ -144,26 +194,77 @@
                         </div>
                         <div class="btn-space">
                             <button id="addr-search">
-                                  <i class="fa-solid fa-magnifying-glass"></i>
-                                  검색
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                검색
                             </button>
                         </div>
                     </div>
+                    <h3 class="section-header">브랜드 기본 정보</h3>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="birth">생년월일</label>
+                            <label for="repr_telno">브랜드 공식 연락처<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="birth"
-                                        id="birth"
+                                        name="repr_telno"
+                                        id="repr_telno"
                                         type="text"
-                                        placeholder="yyyy / mm / dd"
+                                        placeholder="-제외 숫자만 입력해주세요"
                                 />
                             </div>
                         </div>
-                        <div class="btn-space"></div>
+                        <div class="btn-space">
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label>브랜드 설명<span>*</span></label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name="brnd_cn"
+                                        id="brnd_cn"
+                                        type="text"
+                                        placeholder="브랜드 내용을 입력해주세요"
+                                />
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label>브랜드 배너이미지</label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name="brnd_bnr"
+                                        id="brnd_bnr"
+                                        type="file"
+                                />
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label>브랜드 프로필</label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name="brnd_profile"
+                                        id="brnd_profile"
+                                        type="file"
+                                />
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                        </div>
                     </div>
                     <div class="section-line bottom"></div>
                     <div class="checkbox-group">
@@ -207,33 +308,8 @@
                                         width="20"
                                         height="20"
                                 />
-                                <span>이용약관 동의</span>
+                                <span>판매자 이용약관 동의</span>
                             </label>
-                            <label for="check_3" class="input-line">
-                                <input type="checkbox" id="check_3" class="normal" hidden/>
-                                <img
-                                        class="agree-checkbox"
-                                        src="/img/unchecked.png"
-                                        width="20"
-                                        height="20"
-                                />
-                                <span>개인정보 수집 및 이용 동의</span>
-                            </label>
-                            <label for="check_4" class="input-line">
-                                <input type="checkbox" id="check_4" class="normal" hidden/>
-                                <img
-                                        class="agree-checkbox"
-                                        src="/img/unchecked.png"
-                                        width="20"
-                                        height="20"
-                                />
-                                <span
-                                >할인쿠폰/이벤트/감동적인 뉴스레터 선택 동의 (선택)</span
-                                >
-                            </label>
-                        </div>
-                        <div class="input-line" style="color: red; font-size: 14px">
-                            개인정보 수집 및 이용 동의는 필수 입니다.
                         </div>
                     </div>
                     <div class="btn-container">
@@ -246,7 +322,8 @@
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+
 <script>
     let showRawPwd = (checkboxId, inputId, iconId) => {
         const checked = $(checkboxId).is(":checked");
@@ -341,6 +418,7 @@
             showRawPwd("#show-pwd-confirm", "#pwd-confirm", "#eye2")
         );
     });
+
 </script>
 </body>
 </html>
