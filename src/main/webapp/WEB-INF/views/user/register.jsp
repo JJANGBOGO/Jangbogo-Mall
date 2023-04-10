@@ -51,6 +51,7 @@
                                         placeholder="닉네임을 입력해주세요"
                                 />
                             </div>
+                            <div class="error-msg nick"></div>
                         </div>
                         <div class="btn-space">
                             <button id="nick_duplicate_chk">중복확인</button>
@@ -73,19 +74,18 @@
                                     <i id="eye" class="fa-regular fa-eye-slash"></i>
                                 </label>
                             </div>
-                            <div class="error-msg">최소 10자 입력</div>
+                            <div class="error-msg pwd"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="pwd-confirm">비밀번호 확인<span>*</span></label>
+                            <label for="pwd_confirm">비밀번호 확인<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="pwd-confirm"
-                                        id="pwd-confirm"
+                                        id="pwd_confirm"
                                         type="password"
                                         placeholder="비밀번호를 한번 더 입력해주세요"
                                 />
@@ -98,6 +98,7 @@
                                     <i id="eye2" class="fa-regular fa-eye-slash"></i>
                                 </label>
                             </div>
+                            <div class="error-msg pwd-confirm"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -295,6 +296,11 @@
     let email_reg =
         /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
+    let nick_reg = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/i;
+
+    let pwd_reg =
+        /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/i;
+
     $(document).ready(function () {
         $("#addr-search").click(function (e) {
             addressCallback(e);
@@ -349,7 +355,18 @@
         $("#email_duplicate_chk").click(function (e) {
             e.preventDefault(); //form 전송 방지
             let email = $("#email").val();
-            //validateNick()  //유효성 검사. 널과 정규식
+
+            if (email == "") {
+                alert("이메일을 입력해 주세요");
+                $("#email").focus();
+                return false;
+            }
+
+            if (!email_reg.test(email)) {
+                alert("이메일 형식에 맞게 입력해 주세요");
+                $("#email").focus();
+                return false;
+            }
 
             $.ajax({
                 url: '/user/duplicate/email',
@@ -362,6 +379,7 @@
                         $("#email").attr("readonly", true); //인풋 비활성화
                     } else {
                         alert("이미 사용중인 이메일입니다.");
+                        $("#email").focus();
                     }
                 },
                 error: function (err) {
@@ -373,12 +391,26 @@
         //닉네임 중복검사
         $("#nick_duplicate_chk").click(function (e) {
             e.preventDefault(); //form 전송 방지
-            let nickname = $("#nick_nm").val();
-            //validateNick()  //유효성 검사. 널과 정규식
+            let nick = $("#nick_nm").val();
+
+            //닉네임
+            if (nick == "") {
+                alert("닉네임을 입력해 주세요");
+                $("#nick_nm").focus();
+                return false;
+            }
+
+            if (!nick_reg.test(nick)) {
+                alert(
+                    "닉네임은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요"
+                );
+                $("#nick_nm").focus();
+                return false;
+            }
 
             $.ajax({
                 url: '/user/duplicate/nickname',
-                data: {nick_nm: nickname},
+                data: {nick_nm: nick},
                 type: 'POST',
                 success: function (result) {
                     if (result == "OK") {
@@ -387,6 +419,7 @@
                         $("#nick_nm").attr("readonly", true); //인풋 비활성화
                     } else {
                         alert("이미 사용중인 닉네임입니다.");
+                        $("#nick_nm").focus();
                     }
                 },
                 error: function (err) {
@@ -420,8 +453,9 @@
         });
 
         //input 아래 에러메세지
+        //이메일
         $("#email").keyup(function () {
-            let email = $.trim($("#email").val()); //밖으로 빼지 말기
+            let email = $("#email").val(); //밖으로 빼지 말기
 
             if (email == "") {
                 $(".error-msg.email").html("이메일을 입력해 주세요");
@@ -434,16 +468,85 @@
                 $(".error-msg.email").html("이메일 형식에 맞게 입력해 주세요");
                 return false;
             } else {
-                $(".err-msg.email").empty();
+                $(".error-msg.email").empty();
+            }
+        });
+
+        $("#nick_nm").keyup(function () {
+            let nick = $("#nick_nm").val();
+
+            //nickname
+            if (nick == "") {
+                $(".error-msg.nick").html("닉네임을 입력해 주세요");
+                return false;
+            } else {
+                $(".error-msg.nick").empty();
+            }
+
+            if (!nick_reg.test(nick)) {
+                $(".error-msg.nick").html(
+                    "닉네임은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요"
+                );
+            } else {
+                $(".error-msg.nick").empty();
+            }
+        });
+
+        $("#pwd").keyup(function () {
+            let pwd = $("#pwd").val();
+            let pwd_confirm = $("#pwd_confirm").val();
+
+            if (pwd == "") {
+                $(".error-msg.pwd").html("비밀번호를 입력해 주세요");
+                return false;
+            } else {
+                $(".error-msg.pwd").empty();
+            }
+
+            if (!pwd_reg.test(pwd)) {
+                $(".error-msg.pwd").html(
+                    "비밀번호를 6자 이상 16자 이하, 영어와 숫자의 조합으로 입력해 주세요. 특수문자 허용"
+                );
+                return false;
+            } else {
+                $(".error-msg.pwd").empty();
+            }
+
+            if (pwd_confirm != pwd) {
+                $(".error-msg.pwd-confirm").html(
+                    "비밀번호와 동일한 값을 입력해 주세요"
+                );
+                return false;
+            } else {
+                $(".error-msg.pwd-confirm").empty();
+            }
+        });
+
+        $("#pwd_confirm").keyup(function () {
+            let pwd = $("#pwd").val();
+            let pwd_confirm = $("#pwd_confirm").val();
+
+            if (pwd_confirm == "") {
+                $(".error-msg.pwd-confirm").html("비밀번호 확인을 입력해 주세요");
+                return false;
+            } else {
+                $(".error-msg.pwd-confirm").empty();
+            }
+
+            if (pwd_confirm != pwd) {
+                $(".error-msg.pwd-confirm").html(
+                    "비밀번호와 동일한 값을 입력해 주세요"
+                );
+                return false;
+            } else {
+                $(".error-msg.pwd-confirm").empty();
             }
         });
 
         //가입하기 버튼 유효성 검사
         $(".reg-confirm").click(function (e) {
             e.preventDefault(); //버튼 기본 이벤트 방지
-            let email = $.trim($("#email").val()); //밖으로 빼지 말기
-
-            console.log(email);
+            let email = $("#email").val(); //밖으로 빼지 말기
 
             if (email == "") {
                 alert("이메일을 입력해 주세요");
@@ -461,6 +564,54 @@
             if (!$("#email_duplicate_chk").is(":disabled")) {
                 alert("이메일 중복 검사를 해주세요");
                 $("#email").focus();
+                return false;
+            }
+
+            let nick = $("#nick_nm").val();
+
+            //닉네임
+            if (nick == "") {
+                alert("닉네임을 입력해 주세요");
+                $("#nick_nm").focus();
+                return false;
+            }
+
+            if (!nick_reg.test(nick)) {
+                alert(
+                    "닉네임은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요"
+                );
+                $("#nick_nm").focus();
+                return false;
+            }
+
+            //닉네임 중복 검사
+            if (!$("#nick_duplicate_chk").is(":disabled")) {
+                alert("닉네임 중복 검사를 해주세요");
+                $("#nick_nm").focus();
+                return false;
+            }
+
+            //비번과 비번확인
+            let pwd = $("#pwd").val();
+            let pwd_confirm = $("#pwd_confirm").val();
+
+            if (pwd == "") {
+                alert("비밀번호를 입력해 주세요");
+                $("#pwd").focus();
+                return false;
+            }
+
+            if (!pwd_reg.test(pwd)) {
+                alert(
+                    "비밀번호를 6자 이상 16자 이하, 영어와 숫자의 조합으로 입력해 주세요. 특수문자 허용"
+                );
+                $("#pwd").focus();
+                return false;
+            }
+
+            if (pwd != pwd_confirm) {
+                alert("동일한 비밀번호를 입력해 주세요");
+                $("#pwd_confirm").focus();
                 return false;
             }
         });
