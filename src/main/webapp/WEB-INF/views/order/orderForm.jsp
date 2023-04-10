@@ -12,7 +12,6 @@
         <style>
             * {
                 box-sizing: border-box;
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
             }
             h3 {
                 font-size: 20px;
@@ -69,6 +68,11 @@
                 position: relative;
                 width: 284px;
             }
+            .order-amount__box {
+                position: absolute;
+                top: 0px;
+                width: 284px;
+            }
             .order-amount__title {
                 display: flex;
                 flex-direction: row;
@@ -108,6 +112,41 @@
                 border-top: 1px solid rgb(244, 244, 244);
                 font-size: 16px;
                 color: rgb(76, 76, 76);
+            }
+            .paragraph {
+                padding-left: 16px;
+                font-size: 12px;
+                line-height: 16px;
+                color: rgb(102, 102, 102);
+            }
+            .paragraph::before {
+                display: inline-block;
+                width: 16px;
+                margin-left: -16px;
+                content: "※";
+            }
+            .order-button {
+                text-align: center;
+            }
+
+            .order-button > button {
+                display: block;
+                padding: 0 10px;
+                text-align: center;
+                overflow: hidden;
+                width: 240px;
+                height: 56px;
+                border-radius: 3px;
+                background-color: var(--primary-color);
+                border: 0px none;
+                margin: 40px auto 30px;
+                font-weight: 500;
+            }
+            .order-button > button > span {
+                display: inline-block;
+                font-size: 16px;
+                font-weight: 500;
+                color: rgb(255, 255, 255);
             }
         </style>
         <%@ include file="/WEB-INF/views/include/header.jsp" %>
@@ -169,36 +208,47 @@
                             </ul>
                         </div>
                     </section>
+                    <p class="paragraph">
+                        주문완료 상태일 경우에만 주문 취소가 가능하며, 상품 미배송 시 결제하신 수단으로 환불됩니다.
+                    </p>
+                    <p class="paragraph">
+                        컬리 내 개별 판매자가 등록한 오픈마켓 상품의 경우 컬리는 통신판매중개자로서 주문, 품질, 교환/환불 등 의무와 책임을 부담하지 않습니다.
+                    </p>
+                    <div class="order-button">
+                        <button class="css-1lha8en e4nu7ef3" type="button"><span>5,610원 결제하기</span></button>
+                    </div>
                 </div>
                 <div class="order-amount__container">
-                    <div class="order-amount__title"><h3>결제 금액</h3></div>
-                    <div class="order-amount">
-                        <div class="order-amount__section">
-                            <div class="order-amount__section-name">주문금액</div>
-                            <div class="order-amount__section-content">
-                                <span>2,610</span>
-                                <span>원</span>
+                    <div class="order-amount__box">
+                        <div class="order-amount__title"><h3>결제 금액</h3></div>
+                        <div class="order-amount">
+                            <div class="order-amount__section">
+                                <div class="order-amount__section-name">주문금액</div>
+                                <div class="order-amount__section-content">
+                                    <span>2,610</span>
+                                    <span>원</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="order-amount__section">
-                            <div class="order-amount__section-name">배송비</div>
-                            <div class="order-amount__section-content">
-                                <span>3,000</span>
-                                <span>원</span>
+                            <div class="order-amount__section">
+                                <div class="order-amount__section-name">배송비</div>
+                                <div class="order-amount__section-content">
+                                    <span>3,000</span>
+                                    <span>원</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="order-amount__section">
-                            <div class="order-amount__section-name">쿠폰할인</div>
-                            <div class="order-amount__section-content">
-                                <span>0</span>
-                                <span>원</span>
+                            <div class="order-amount__section">
+                                <div class="order-amount__section-name">쿠폰할인</div>
+                                <div class="order-amount__section-content">
+                                    <span>0</span>
+                                    <span>원</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="order-amount__section-final">
-                            <div class="order-amount__section-name">최종결제금액</div>
-                            <div class="order-amount__section-content">
-                                <span>5,610</span>
-                                <span>원</span>
+                            <div class="order-amount__section-final">
+                                <div class="order-amount__section-name">최종결제금액</div>
+                                <div class="order-amount__section-content">
+                                    <span>5,610</span>
+                                    <span>원</span>
+                                </div>
                             </div>
                         </div>
                     </div>
