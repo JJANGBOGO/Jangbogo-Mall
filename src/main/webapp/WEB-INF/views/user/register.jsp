@@ -123,18 +123,12 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="addr-display">주소<span>*</span></label>
+                            <label>주소<span>*</span></label>
                         </div>
                         <div class="input-box">
-                            <input name="zpcd" id="zpcd" hidden/>
-                            <input name="addr_base" id="addr_base" hidden/>
+                                <input name="zpcd" id="zpcd" hidden/>
                             <div class="input">
-                                <input
-                                        name="addrdisplay"
-                                        id="addr-display"
-                                        type="text"
-                                        placeholder="주소를 검색해주세요"
-                                />
+                                <input name="addr_base" id="addr_base" placeholder="주소를 검색해 주세요" readonly/>
                             </div>
                             <div class="input" style="margin-top: 10px">
                                 <input
@@ -279,10 +273,8 @@
 
                 if (extraAddr !== "") extraAddr = " (" + extraAddr + ")";
 
-                $("#addr-display").val(data.zonecode + " / " + data.address);
                 $("#zpcd").val(data.zonecode);
                 $("#addr_base").val(data.address);
-                $("#addr-detail").focus(); //상세주소에 focus
             },
         }).open();
     };
@@ -578,7 +570,7 @@
             }
         });
 
-        $(document).on("keyup", "#mpno_verify", function() { //동적 태그라서 document에 이벤트 연결
+        $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
             console.log("값: ", $("#mpno_verify").val(), mpno_verify_num, $("#mpno_verify").val());
             if ($("#mpno_verify").val() == mpno_verify_num) {
                 $(".error-msg.mpno-verify").html("인증되었습니다");
@@ -679,6 +671,21 @@
             if (!$("#mpno_chk").is(":disabled")) {
                 alert("휴대전화인증을 해주세요.");
                 $("#mpno").focus();
+                return false;
+            }
+
+            //주소
+            let addr_base = $("#addr_base").val();
+            let addr_dtl = $("#addr_dtl").val();
+
+            if (addr_base == "") {
+                alert("주소를 검색해 주세요");
+                return false;
+            }
+
+            if (addr_dtl == "") {
+                alert("상세 주소를 입력해 주세요");
+                $("#addr_dtl").focus();
                 return false;
             }
         });
