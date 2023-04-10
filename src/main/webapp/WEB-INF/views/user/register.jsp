@@ -30,6 +30,7 @@
                                         placeholder="jungsukmarket@naver.com"
                                 />
                             </div>
+                            <div class="error-msg email"></div>
                         </div>
                         <div class="btn-space">
                             <button id="email_duplicate_chk">
@@ -291,6 +292,9 @@
         return checked ? "/img/checked.png" : "/img/unchecked.png";
     }
 
+    let email_reg =
+        /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+
     $(document).ready(function () {
         $("#addr-search").click(function (e) {
             addressCallback(e);
@@ -413,6 +417,52 @@
                     alert("오류가 발생했습니다. 다시 시도해 주세요"); //controller에서 500발생해서 보낼 경우 여기로 온다.
                 }
             }); //$.ajax
+        });
+
+        //input 아래 에러메세지
+        $("#email").keyup(function () {
+            let email = $.trim($("#email").val()); //밖으로 빼지 말기
+
+            if (email == "") {
+                $(".error-msg.email").html("이메일을 입력해 주세요");
+                return false; //good
+            } else {
+                $(".error-msg.email").empty();
+            }
+
+            if (!email_reg.test(email)) {
+                $(".error-msg.email").html("이메일 형식에 맞게 입력해 주세요");
+                return false;
+            } else {
+                $(".err-msg.email").empty();
+            }
+        });
+
+        //가입하기 버튼 유효성 검사
+        $(".reg-confirm").click(function (e) {
+            e.preventDefault(); //버튼 기본 이벤트 방지
+            let email = $.trim($("#email").val()); //밖으로 빼지 말기
+
+            console.log(email);
+
+            if (email == "") {
+                alert("이메일을 입력해 주세요");
+                $("#email").focus();
+                return false;
+            }
+
+            if (!email_reg.test(email)) {
+                alert("이메일 형식에 맞게 입력해 주세요");
+                $("#email").focus();
+                return false;
+            }
+
+            //중복검사
+            if (!$("#email_duplicate_chk").is(":disabled")) {
+                alert("이메일 중복 검사를 해주세요");
+                $("#email").focus();
+                return false;
+            }
         });
     });
 </script>
