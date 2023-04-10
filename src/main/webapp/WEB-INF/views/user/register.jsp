@@ -248,7 +248,6 @@
 <script>
     let showRawPwd = (checkboxId, inputId, iconId) => {
         const checked = $(checkboxId).is(":checked");
-        console.log(inputId, "::: inputId");
         $(inputId).attr("type", !checked ? "text" : "password");
         $(iconId).attr(
             "class",
@@ -579,7 +578,6 @@
         });
 
         $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
-            console.log("값: ", $("#mpno_verify").val(), mpno_verify_num, $("#mpno_verify").val());
             if ($("#mpno_verify").val() == mpno_verify_num) {
                 $(".error-msg.mpno-verify").html("인증되었습니다");
                 $(".error-msg.mpno-verify").css('color', 'green');
