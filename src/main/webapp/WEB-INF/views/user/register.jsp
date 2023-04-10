@@ -115,6 +115,7 @@
                                         placeholder="01026558945"
                                 />
                             </div>
+                            <div class="error-msg mpno"></div>
                         </div>
                         <div class="btn-space">
                             <button id="mpno_chk">인증</button>
@@ -199,7 +200,7 @@
                                         width="20"
                                         height="20"
                                 />
-                                <span>만 14세 이상입니다.</span>
+                                <span>만 14세 이상입니다 (필수)</span>
                             </label>
                             <label for="check_2" class="input-line">
                                 <input type="checkbox" id="check_2" class="normal" hidden/>
@@ -209,7 +210,7 @@
                                         width="20"
                                         height="20"
                                 />
-                                <span>이용약관 동의</span>
+                                <span>이용약관 동의 (필수)</span>
                             </label>
                             <label for="check_3" class="input-line">
                                 <input type="checkbox" id="check_3" class="normal" hidden/>
@@ -219,7 +220,7 @@
                                         width="20"
                                         height="20"
                                 />
-                                <span>개인정보 수집 및 이용 동의</span>
+                                <span>개인정보 수집 및 이용 동의수 (필수)</span>
                             </label>
                             <label for="check_4" class="input-line">
                                 <input type="checkbox" id="check_4" class="normal" name="" hidden/>
@@ -233,9 +234,6 @@
                                 >할인쿠폰/이벤트/감동적인 뉴스레터 선택 동의 (선택)</span
                                 >
                             </label>
-                        </div>
-                        <div class="input-line" style="color: red; font-size: 14px">
-                            개인정보 수집 및 이용 동의는 필수 입니다.
                         </div>
                     </div>
                     <div class="btn-container">
@@ -300,6 +298,11 @@
 
     let pwd_reg =
         /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/i;
+
+    let mpno_reg = /^(\d{2,3})(\d{3,4})(\d{4})$/i;
+
+    let mpno_verify_num = "";
+
 
     $(document).ready(function () {
         $("#addr-search").click(function (e) {
@@ -429,22 +432,34 @@
         });
 
         //휴대전화 인증 검사
-        $("#mpno_chk").click(function(e) {
+        $("#mpno_chk").click(function (e) {
             e.preventDefault();
             let mpno = $("#mpno").val();
-            let verifyNum = ""; //인증번호
 
-            //chk null or invalid regEx
-            // if (notValidMpno(mpno)) {}
+            if (mpno == "") {
+                alert("휴대전화번호를 입력해주세요");
+                $("#mpno").focus();
+                return false;
+            }
+
+            if (!mpno_reg.test(mpno)) {
+                alert("휴대전화형식을 지켜주세요. -제외 숫자만");
+                $("#mpno").focus();
+                return false;
+            }
 
             $.ajax({
                 url: '/chk/mpno',
-                data: JSON.stringify({ to : mpno }), // 객체를 전송할때는 stringify() 필요, @RequestBody때문
+                data: JSON.stringify({to: mpno}), // 객체를 전송할때는 stringify() 필요, @RequestBody때문
                 type: 'POST',
                 contentType: "application/json",
-                success: function (numStr) { // test, 문자열 온다.
-                    console.log(numStr, numStr.numStr);
-                    verifyNum = numStr;
+                success: function (result) { // test, 문자열 온다.
+                    alert("인증번호 전송에 성공했습니다");
+                    console.log(result, result.numStr);
+                    mpno_verify_num = result.numStr;
+                    $("#mpno").closest(".input-box").append('<div class="input">' +
+                        '<input id="mpno_verify" type="text" placeholder="인증번호를 입력해 주세요">' +
+                        '</div><div class="error-msg mpno-verify"></div>');
                 },
                 error: function (err) {
                     alert("오류가 발생했습니다. 다시 시도해 주세요"); //controller에서 500발생해서 보낼 경우 여기로 온다.
@@ -543,6 +558,37 @@
             }
         });
 
+        $("#mpno").keyup(function () {
+            let mpno = $("#mpno").val();
+
+            if (mpno == "") {
+                $(".error-msg.mpno").html("휴대전화를 입력해 주세요");
+                return false;
+            } else {
+                $(".error-msg.mpno").empty();
+            }
+
+            if (!mpno_reg.test(mpno)) {
+                $(".error-msg.mpno").html(
+                    "휴대전화 형식에 맞춰 입력해 주세요 (-제외 숫자만)"
+                );
+                return false;
+            } else {
+                $(".error-msg.mpno").empty();
+            }
+        });
+
+        $(document).on("keyup", "#mpno_verify", function() { //동적 태그라서 document에 이벤트 연결
+            console.log("값: ", $("#mpno_verify").val(), mpno_verify_num, $("#mpno_verify").val());
+            if ($("#mpno_verify").val() == mpno_verify_num) {
+                $(".error-msg.mpno-verify").html("인증되었습니다");
+                $(".error-msg.mpno-verify").css('color', 'green');
+                $("#mpno_chk").attr("disabled", true);
+                $("#mpno").attr('readonly', true);
+
+            }
+        })
+
         //가입하기 버튼 유효성 검사
         $(".reg-confirm").click(function (e) {
             e.preventDefault(); //버튼 기본 이벤트 방지
@@ -612,6 +658,27 @@
             if (pwd != pwd_confirm) {
                 alert("동일한 비밀번호를 입력해 주세요");
                 $("#pwd_confirm").focus();
+                return false;
+            }
+
+            //휴대전화
+            let mpno = $("#mpno").val();
+
+            if (mpno == "") {
+                alert("휴대전화번호를 입력해주세요");
+                $("#mpno").focus();
+                return false;
+            }
+
+            if (!mpno_reg.test(mpno)) {
+                alert("휴대전화형식을 지켜주세요. -제외 숫자만");
+                $("#mpno").focus();
+                return false;
+            }
+
+            if (!$("#mpno_chk").is(":disabled")) {
+                alert("휴대전화인증을 해주세요.");
+                $("#mpno").focus();
                 return false;
             }
         });
