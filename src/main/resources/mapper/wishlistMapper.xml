@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.jangbogo.mall.dao.WishlistMapper">
+
+    <select id="getlist" parameterType="int" resultType="WishlistDto">
+        select PROD_IDX, USER_IDX, REG_TM, CRT_TM, CRT_IDX, UPT_TM, UPT_IDX
+        from WISHLIST
+        where USER_IDX = #{idx}
+    </select>
+
+    <delete id="delete" parameterType="map">
+        DELETE FROM WISHLIST
+        WHERE PROD_IDX = #{prod_idx} and USER_IDX = #{user_idx}
+    </delete>
+
+    <insert id="insertCart" parameterType="map">
+        insert into CART (PROD_IDX, USER_IDX, PROD_CNT)
+        values (#{prod_idx},#{user_idx},#{prod_cnt})
+
+    </insert>
+    <update id="updateCartCnt" parameterType="map">
+        UPDATE CART
+        SET   PROD_CNT = PROD_CNT + #{cnt}
+        WHERE  PROD_IDX = #{prod_idx} and USER_IDX = #{user_idx}
+    </update>
+
+    <select id="checkCart" parameterType="map" resultType="int">
+        select count(*)
+        from CART
+        where PROD_IDX = #{prod_idx} and USER_IDX = #{user_idx}
+    </select>
+
+<!--    getUser는 아직 미완성-->
+    <select id="getUser" parameterType="map" resultType="int">
+        select IDX
+        from USER
+        where EMAIL = #{email}
+    </select>
+
+    <select id="getProduct" resultType="ProductDto">
+        select *
+        from PRODUCT
+        where IDX in
+        <foreach collection="array" item="idx" open="(" close=")" separator=",">
+            #{idx}
+        </foreach>
+
+    </select>
+
+
+</mapper>
