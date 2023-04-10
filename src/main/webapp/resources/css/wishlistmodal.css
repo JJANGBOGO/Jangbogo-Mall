@@ -43,20 +43,23 @@
   transform: translate(-50%, -50%);
   transition: all 0.5s;
 } */
-.background .popup .b{
+.background .popup .b {
     margin: 2px 0px 4px;
     padding: 12px 0px;
 }
-.c1{
+
+.c1 {
     /* display: flex; */
 }
-.d1{
+
+.d1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-top: 6px;
 }
-.f1{
+
+.f1 {
     display: flex;
     border: 1px solid rgb(221, 223, 225);
     justify-content: center;
@@ -65,23 +68,26 @@
     height: 36px;
     margin-right: 5px;
 }
-.span11{
+
+.span11 {
     font-weight: bold;
     font-size: 16px;
 }
-.span22{
+
+.span22 {
     font-weight: bold;
     font-size: 16px;
 
 
 }
-.span33{
+
+.span33 {
     margin-left: 4px;
     color: rgb(181, 181, 181);
     text-decoration: line-through;
 }
 
-.button1{
+.button1 {
     display: inline-flex;
     width: 28px;
     height: 28px;
@@ -95,7 +101,8 @@
 
     cursor: pointer;
 }
-.button2{
+
+.button2 {
     display: inline-flex;
     width: 28px;
     height: 28px;
@@ -111,7 +118,7 @@
 
 }
 
-.button3{
+.button3 {
     display: inline-flex;
     width: 28px;
     height: 28px;
@@ -126,7 +133,8 @@
     pointer-events: none;
     /*--btn-disabled: false;*/
 }
-.count{
+
+.count {
     display: inline-flex;
 
     justify-content: center;
@@ -136,32 +144,34 @@
 
 }
 
-.totalprice{
+.totalprice {
     width: 100%;
     margin: 20px 0px;
 }
-.total1{
+
+.total1 {
     display: flex;
     justify-content: space-between;
 
 }
 
-.total2{
+.total2 {
     font-size: 16px;
     /* line-height: 24px; */
     font-weight: 600;
 }
 
-.price{
+.price {
     font-size: 24px;
     font-weight: 700;
     line-height: 24px;
 }
 
-.btn-container{
+.btn-container {
     display: flex;
 }
-.cancle-btn{
+
+.cancle-btn {
     width: 50%;
     margin-right: 4px;
     border: 1px solid rgb(221, 221, 221);
@@ -170,7 +180,8 @@
 
     cursor: pointer;
 }
-.insert-btn{
+
+.insert-btn {
     width: 50%;
     margin: 0px 4px;
     color: rgb(255, 255, 255);
