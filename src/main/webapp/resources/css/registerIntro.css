@@ -1,0 +1,65 @@
+.reg-intro-content {
+    position: relative;
+    margin: 0 auto;
+    width: 900px;
+}
+
+.reg-intro-content .header, .reg-intro-content .title {
+    text-align: center;
+}
+
+.reg-intro-content .header {
+    margin-top: 80px;
+}
+
+.reg-intro-content .title {
+    margin: 60px 0;
+    font-weight: bold;
+}
+
+.reg-intro-content .link-box {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    width: 100%;
+}
+
+.reg-intro-content .link-box .link {
+    display: flex;
+    justify-content: center;
+    width: 200px;
+    height: 85px;
+    margin-bottom: 160px;
+}
+
+.reg-intro-content .link-box .link .icon {
+    width: 100%;
+    height: 100%;
+}
+
+.reg-intro-content .link-box .link .icon.seller {
+    width: 95%;
+    height: 95%;
+}
+
+
+.reg-intro-content .link-box .link .link-btn {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 4px;
+    padding: 20px 20px;
+
+    font-size: 20px;
+    text-align: center;
+    background-color: orange;
+    color: white;
+    text-decoration: none;
+}
+
+.reg-intro-content .link-box .link .link-btn.seller {
+    color: orange;
+    border: 1px solid orange;
+    background-color: white;
+}
+

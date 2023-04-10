@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<c:set var="loginService" value="${sessionScope.loginService}"/>
+<c:set var="nickname" value="${sessionScope.nickName}"/>
 <nav>
     <div class="sticky-wrap">
         <div class="top-navigation">
@@ -10,12 +15,30 @@
                             <a href="/user/login">로그인</a>
                         </li>
                         <li>
-                            <a href="/user/signup">회원가입</a>
+                            <a href="/register/intro">회원가입</a>
                         </li>
                     </s:authorize>
                     <s:authorize access="isAuthenticated()">
                         <li>
-                            <a href="">남궁진님</a>
+                            <a>${nickname}님</a>
+                        </li>
+                        <li>
+                            <c:choose>
+                                <c:when test="${loginService == 'kakao'}">
+                                    <%-- 카카오 로그아웃--%>
+                                    <a href="https://kauth.kakao.com/oauth/logout?client_id=bb092eaed861b067f81667b75af60fbb&logout_redirect_uri=http://localhost:8080/social/kakao_logout">
+                                        로그아웃
+                                    </a>
+                                </c:when>
+                                <c:when test="${loginService == 'naver'}">
+                                    <%-- 네이버 로그아웃 TODO:: 직접 구현--%>
+                                    <a href="/">로그아웃</a>
+                                </c:when>
+                                <c:otherwise>
+                                    <%-- 일반 로그아웃--%>
+                                    <a href="/security_logout">로그아웃</a>
+                                </c:otherwise>
+                            </c:choose>
                         </li>
                     </s:authorize>
                 </ul>
@@ -39,9 +62,13 @@
                         <i class="fa-solid fa-cart-shopping"></i>
                         <div class="icon-desc">장바구니</div>
                     </a>
-                    <a href="/mypage/pick/list">
+                    <a href="/user/info">
                         <i class="fa-regular fa-user"></i>
                         <div class="icon-desc">마이페이지</div>
+                    </a>
+                    <a href="/seller/info">
+                        <i class="fa-regular fa-user"></i>
+                        <div class="icon-desc">마이셀러</div>
                     </a>
                 </div>
             </div>

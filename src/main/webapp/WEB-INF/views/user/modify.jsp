@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
@@ -15,30 +14,49 @@
     <%@ include file="/WEB-INF/views/include/sidebar.jsp" %>
     <div class="mypage-content">
         <div class="page-header">
-<%--            이거 안 뜸.--%>
-            <h2><c:if test="${mode == 'new' ? '일반 계정 연동' : '개인 정보 수정' }"/></h2>
+            <h2>개인 정보 수정</h2>
         </div>
-        <!-- end of page-header -->
         <div class="check-pwd-content">
             <form class="check-pwd-form" action="">
                 <div class="center-padding">
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="nickname">아이디</label>
+                            <label for="email">이메일</label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        id="nickname"
-                                        name="nickname"
+                                        id="email"
+                                        name="email"
                                         type="text"
                                 <%--                                        추후 로그인된 값으로 수정--%>
-                                        value="jinvicky"
+                                        value="${user.email}"
                                         readonly
                                 />
                             </div>
                         </div>
                         <div class="btn-space"></div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
+                            <label for="email">닉네임</label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        id="nick_nm"
+                                        name="nick_nm"
+                                        type="text"
+                                        value="${user.nick_nm}"
+                                        placeholder="닉네임을 입력해주세요"
+                                />
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                            <button>
+                                중복확인
+                            </button>
+                        </div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
@@ -76,27 +94,6 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="email">이메일</label>
-                        </div>
-                        <div class="input-box">
-                            <div class="input">
-                                <input
-                                        id="email"
-                                        name="email"
-                                        type="text"
-                                        placeholder="이메일을 입력해주세요"
-                                />
-                            </div>
-                            <div class="error-msg">이메일을 바꾸면, 연동된 소셜 계정으로 접속이 불가능합니다.</div>
-                        </div>
-                        <div class="btn-space">
-                            <button>
-                                중복확인
-                            </button>
-                        </div>
-                    </div>
-                    <div class="input-line">
-                        <div class="input-label">
                             <label for="phone">휴대전화</label>
                         </div>
                         <div class="input-box">
@@ -105,6 +102,7 @@
                                         id="phone"
                                         type="text"
                                         name="email"
+                                        value="${user.mpno}"
                                         placeholder="휴대전화를 숫자만 입력해주세요"
                                 />
                             </div>
@@ -157,6 +155,13 @@
         $("#optional_chk").click(function () {
             $(".agree-checkbox2").attr("src", imgUrl($(this).is(":checked")));
         });
+
+        let current_pwd = "${user.pwd}";
+
+        //submit
+        /*
+        * form submit할 때 새 비밀번호와 비밀번호 확인이 둘 다 ""면 #pwd.val()에 current_pwd를 넣는다.
+        * */
     });
 </script>
 </body>
