@@ -15,7 +15,7 @@
         <div class="reg-header">회원가입</div>
         <div class="section-line"></div>
         <div class="reg-form-box">
-            <form class="reg-form" action="/register/user" method="post">
+            <form class="reg-form" action="/user/register" method="post">
                 <div class="center-padding">
                     <div class="input-line">
                         <div class="input-label">
@@ -231,7 +231,7 @@
                         </div>
                     </div>
                     <div class="btn-container">
-                        <button class="reg-confirm" tyee="submit">가입하기</button>
+                        <button class="reg-confirm" >가입하기</button>
                     </div>
                 </div>
             </form>
@@ -241,6 +241,10 @@
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script>
+    let msg = "${msg}";
+    if(msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다. 다시 시도해 주세요");
+</script>
 <script>
     let showRawPwd = (checkboxId, inputId, iconId) => {
         const checked = $(checkboxId).is(":checked");
@@ -293,6 +297,7 @@
 
     let mpno_reg = /^(\d{2,3})(\d{3,4})(\d{4})$/i;
 
+    //인증번호 문자열
     let mpno_verify_num = "";
 
 
@@ -343,7 +348,7 @@
             showRawPwd("#show-pwd", "#pwd", "#eye")
         );
         $("#show-pwd-confirm-toggle").click(() =>
-            showRawPwd("#show-pwd-confirm", "#pwd-confirm", "#eye2")
+            showRawPwd("#show-pwd-confirm", "#pwd_confirm", "#eye2")
         );
 
         //    이메일 중복 검사 ajax
@@ -706,6 +711,8 @@
                 alert("필수 동의 항목에 모두 동의해 주세요");
                 return false;
             }
+
+            $(".reg-form").submit();
         });
     });
 </script>

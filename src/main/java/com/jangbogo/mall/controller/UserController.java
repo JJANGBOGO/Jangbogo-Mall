@@ -244,6 +244,10 @@ public class UserController {
         log.info("addr...." + addr);
 
         try {
+            if (userService.registerUser(user, addr) != 1)
+                throw new Exception("register failed");
+
+            rattr.addFlashAttribute("msg", "REG_OK");
             return "redirect:/user/login";
 
         } catch (Exception e) {
@@ -260,12 +264,10 @@ public class UserController {
         log.info("email...." + email);
         String msg = "DUPLICATE";
         try {
-            User user = userService.getUserByEmail(email);
-            if (user == null) {
-                msg = "OK";
-            }
+            if (userService.getUserByEmail(email) == null) msg = "OK";
         } catch (Exception e) {
             e.printStackTrace();
+            msg = "ERROR";
         }
         return msg;
     }
@@ -277,10 +279,7 @@ public class UserController {
         log.info("nick...." + nick_nm);
         String msg = "DUPLICATE";
         try {
-            User user = userService.chkDuplicateNick(nick_nm);
-            if (user == null) {
-                msg = "OK";
-            }
+            if (userService.chkDuplicateNick(nick_nm) == null) msg = "OK";
         } catch (Exception e) {
             e.printStackTrace();
         }

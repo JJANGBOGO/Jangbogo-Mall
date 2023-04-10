@@ -87,8 +87,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int insertUser (User user) throws Exception {
-        return dao.insertUser(user);
+    @Transactional
+    public int registerUser (User user, Address addr) throws Exception {
+        final int SUCCESS = 1;
+        final int FAILED = 0;
+
+        int userResult = dao.insertUser(user);
+        int addrResult = addrDao.insertAddr(addr);
+
+        return (userResult == 1 && addrResult == 1) ? SUCCESS : FAILED;
     }
 
     @Override
