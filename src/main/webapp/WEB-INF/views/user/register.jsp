@@ -207,7 +207,7 @@
                                 <span>이용약관 동의 (필수)</span>
                             </label>
                             <label for="check_3" class="input-line">
-                                <input type="checkbox" id="check_3" class="normal" hidden/>
+                                <input type="checkbox" id="check_3" class="normal" name="user_agre_yn" hidden value="Y"/>
                                 <img
                                         class="agree-checkbox"
                                         src="/img/unchecked.png"
@@ -217,7 +217,7 @@
                                 <span>개인정보 수집 및 이용 동의수 (필수)</span>
                             </label>
                             <label for="check_4" class="input-line">
-                                <input type="checkbox" id="check_4" class="normal" name="" hidden/>
+                                <input type="checkbox" id="check_4" class="normal" name="markt_agre_yn" hidden value="Y"/>
                                 <img
                                         class="agree-checkbox"
                                         src="/img/unchecked.png"
@@ -686,6 +686,24 @@
             if (addr_dtl == "") {
                 alert("상세 주소를 입력해 주세요");
                 $("#addr_dtl").focus();
+                return false;
+            }
+
+            //생일
+            let brdy = $("#brdy").val();
+
+            if (brdy == "") {
+                alert("생일을 입력해 주세요");
+                return false;
+            }
+
+            //필수동의여부
+            let checked_1 = $("#check_1").is(":checked");
+            let checked_2 = $("#check_2").is(":checked");
+            let checked_3 = $("#check_3").is(":checked");
+
+            if (!(checked_1 && checked_2 && checked_3)) {
+                alert("필수 동의 항목에 모두 동의해 주세요");
                 return false;
             }
         });
