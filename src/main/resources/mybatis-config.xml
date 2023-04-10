@@ -8,5 +8,6 @@
         <typeAlias alias="ProdInqryDto" type="com.jangbogo.mall.domain.ProdInqryDto"/>
         <typeAlias alias="JoinProdInqryDto" type="com.jangbogo.mall.domain.JoinProdInqryDto"/>
         <!--        <typeAlias alias="Attach" type="com.jangbogo.mall.domain.User"/>-->
+        <typeAlias alias="Address" type="com.jangbogo.mall.domain.Address"/>
     </typeAliases>
 </configuration>

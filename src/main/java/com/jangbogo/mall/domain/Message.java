@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class MessageDto {
+public class Message {
 
     private String to;
 

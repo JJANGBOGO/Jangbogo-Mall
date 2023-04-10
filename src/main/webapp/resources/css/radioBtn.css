@@ -1,0 +1,54 @@
+/*label {*/
+/*    font-size: 18px;*/
+/*    line-height: 2rem;*/
+/*    padding: 0.2em 0.4em;*/
+/*}*/
+
+span {
+    vertical-align: middle;
+}
+
+[type="radio"] {
+    vertical-align: middle;
+    appearance: none;
+    border: max(2px, 0.1em) solid gray;
+    border-radius: 50%;
+    width: 1.6em;
+    height: 1.6em;
+    transition: border 0.5s ease-in-out;
+}
+
+[type="radio"]:checked {
+    border: 0.4em solid var(--primary-color);
+}
+
+[type="radio"]:focus-visible {
+    outline-offset: max(2px, 0.1em);
+    outline: max(2px, 0.1em) dotted var(--primary-color);
+}
+
+[type="radio"]:hover {
+    box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+    cursor: pointer;
+}
+
+[type="radio"]:disabled {
+    background-color: lightgray;
+    box-shadow: none;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+[type="radio"]:disabled + span {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Global CSS */
+fieldset {
+    display: flex;
+    justify-content: space-around;
+    border: none;
+    margin: 0;
+    padding: 22px 20px;
+}

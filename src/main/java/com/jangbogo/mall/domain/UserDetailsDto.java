@@ -10,7 +10,6 @@ import java.util.Collection;
 
 public class UserDetailsDto implements UserDetails {
 
-    @NotEmpty(message="아이디 빈 값 안됩니다.")
     private String ID;
 
     private String PASSWORD;

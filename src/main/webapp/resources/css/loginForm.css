@@ -22,11 +22,42 @@
     padding: 44px 37px 40px;
 }
 
+.login-container .contents .login-wrap .tab-box {
+    display: flex;
+    flex-wrap: nowrap;
+    margin-bottom: 30px;
+
+    background-color: white;
+    text-align: center;
+}
+
+
+.login-container .contents .login-wrap .tab-box button {
+    display: block;
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    position: relative;
+    height: 48px;
+
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-dark);
+
+    line-height: 18px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.login-container .contents .login-wrap .tab-box .tab-button.on {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
 .login-container .contents .login-wrap .page-title {
     margin: 0;
     padding-bottom: 20px;
     font-size: 24px;
-    color: #333;
+    color: var(--text-dark);
     line-height: 30px;
     text-align: center;
 }
@@ -39,7 +70,7 @@
     border-radius: 4px;
     padding: 0 15px 1px;
     font-size: 14px;
-    color: #000;
+    color: var(--text-dark);
     line-height: 48px;
 }
 
@@ -83,6 +114,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
+    font-size: 14px;
 }
 
 .login-form form .user-info-link ul {
@@ -167,3 +199,5 @@
     color: white;
     background-color: #00c73c;
 }
+
+
