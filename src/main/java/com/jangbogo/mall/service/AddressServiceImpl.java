@@ -14,8 +14,8 @@ public class AddressServiceImpl implements AddressService{
     AddressDao dao;
 
     @Override
-    public int insertAddr (Address addr) throws Exception {
-        return dao.insertAddr(addr);
+    public int insertAddr (int user_idx, Address addr) throws Exception {
+        return dao.insertAddr(user_idx, addr);
     }
 
     @Override

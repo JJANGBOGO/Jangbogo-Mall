@@ -248,6 +248,7 @@
 <script>
     let showRawPwd = (checkboxId, inputId, iconId) => {
         const checked = $(checkboxId).is(":checked");
+        console.log(inputId, "::: inputId");
         $(inputId).attr("type", !checked ? "text" : "password");
         $(iconId).attr(
             "class",
@@ -349,6 +350,8 @@
         );
         $("#show-pwd-confirm-toggle").click(() =>
             showRawPwd("#show-pwd-confirm", "#pwd_confirm", "#eye2")
+        //    $("#pwd_confirm").attr("type", "text")
+
         );
 
         //    이메일 중복 검사 ajax

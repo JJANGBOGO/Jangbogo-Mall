@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
                     .fromEmail("jinvicky17@gmail.com") //장보고 이메일
                     .toEmail(toEmail)
                     .title("임시 비밀번호 전달")
-                    .content("회원님의 임시 비밀번호는 "+ tmpPwd + " 입니다.")
+                    .content("회원님의 임시 비밀번호는 " + tmpPwd + " 입니다.")
 //                    TODO:: 추후 이메일 템플릿 적용
                     .build();
             emailSender.sendMail(email);
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByEmail (String email) throws Exception {
+    public User getUserByEmail(String email) throws Exception {
         return dao.getUserByEmail(email);
     }
 
@@ -82,43 +82,44 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int regSocialUser (User user) throws Exception {
+    public int regSocialUser(User user) throws Exception {
         return dao.insertSocialUser(user);
     }
 
     @Override
     @Transactional
-    public int registerUser (User user, Address addr) throws Exception {
+    public int registerUser(User user, Address addr) throws Exception {
         final int SUCCESS = 1;
         final int FAILED = 0;
 
-        int userResult = dao.insertUser(user);
-        int addrResult = addrDao.insertAddr(addr);
+        int userResult = dao.insertUser(user); //성공시 idx 리턴
+        int addrResult = addrDao.insertAddr(user.getIdx(), addr); //성공시 1
 
-        return (userResult == 1 && addrResult == 1) ? SUCCESS : FAILED;
+        return (userResult != 0 && addrResult != 0) ? SUCCESS : FAILED;
+//        원인: insertUser의 리턴값이 user의 idx 여서
     }
 
     @Override
-    public int updateLoginTm (int idx, String email) throws Exception {
+    public int updateLoginTm(int idx, String email) throws Exception {
         return dao.updateLoginTm(idx, email);
     }
 
     @Override
-    public User chkDuplicateNick (String nick_nm) throws Exception {
+    public User chkDuplicateNick(String nick_nm) throws Exception {
         return dao.getUserByNick(nick_nm);
     }
 
-//    이메일과 회원번호가 일치하는 지 확인
+    //    이메일과 회원번호가 일치하는 지 확인
     @Override
-    public boolean verifyUser (String email, String pwd) throws Exception {
+    public boolean verifyUser(String email, String pwd) throws Exception {
         User user = getUserByEmail(email);
         String encodedPwd = user.getPwd();
 
-        return  passwordEncoder.matches(pwd, encodedPwd);
+        return passwordEncoder.matches(pwd, encodedPwd);
     }
 
     @Override
-    public int updateUser (User user) throws Exception  {
+    public int updateUser(User user) throws Exception {
         String email = user.getEmail();
         User member = getUserByEmail(email);
 
@@ -129,12 +130,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int updatePwdUptTm (int idx, String email) throws Exception {
+    public int updatePwdUptTm(int idx, String email) throws Exception {
         return dao.updatePwdUptTm(idx, email);
     }
 
     @Override
-    public String findUserEmail (String nick_nm, String pwd) throws Exception {
+    public String findUserEmail(String nick_nm, String pwd) throws Exception {
         User user = dao.getUserByNick(nick_nm);
         return passwordEncoder.matches(pwd, user.getPwd()) ? user.getEmail() : null;
     }

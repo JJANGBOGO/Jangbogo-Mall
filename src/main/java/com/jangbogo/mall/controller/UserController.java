@@ -244,6 +244,9 @@ public class UserController {
         log.info("addr...." + addr);
 
         try {
+            addr.setRcpr_nm(user.getNick_nm()); //수령자명
+            addr.setRcpr_mobl_no(user.getMpno()); //수령자전화번호
+            addr.setIs_default_yn("Y"); //최초 회원가입시 insert한 배송지가 기본배송지다.
             if (userService.registerUser(user, addr) != 1)
                 throw new Exception("register failed");
 

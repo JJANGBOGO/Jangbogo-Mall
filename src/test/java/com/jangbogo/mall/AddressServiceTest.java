@@ -35,7 +35,7 @@ public class AddressServiceTest {
                 .is_default_yn("Y")
                 .build();
 
-        int addrResult = service.insertAddr(addr);
+        int addrResult = service.insertAddr(30, addr);
 
         log.info("result=" + addrResult);
         assertTrue(addrResult != 0);
