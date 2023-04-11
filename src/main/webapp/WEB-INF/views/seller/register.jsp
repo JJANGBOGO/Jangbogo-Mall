@@ -12,7 +12,7 @@
         <div class="reg-header">판매자가입</div>
         <div class="section-line"></div>
         <div class="reg-form-box">
-            <form class="reg-form" action="" method="post">
+            <form id="seller_register" class="reg-form" action="/seller/register" method="post">
                 <div class="center-padding">
                     <div class="input-line">
                         <div class="input-label">
@@ -24,32 +24,34 @@
                                         id="email"
                                         name="email"
                                         type="text"
-                                        placeholder="jungsukmarket@naver.com"
+                                        placeholder="이메일을 입력해 주세요"
                                 />
                             </div>
+                            <div class="error-msg email"></div>
                         </div>
                         <div class="btn-space">
-                            <button>
+                            <button id="email_duplicate_chk">
                                 중복확인
                             </button>
                         </div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="nick_nm">상호명(브랜드명)<span>*</span></label>
+                            <label for="cpnm">상호명(브랜드명)<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="nick_nm"
-                                        id="nick_nm"
+                                        name="cpnm"
+                                        id="cpnm"
                                         type="text"
-                                        placeholder="닉네임을 입력해주세요"
+                                        placeholder="브랜드명을 입력해 주세요"
                                 />
                             </div>
+                            <div class="error-msg cpnm"></div>
                         </div>
                         <div class="btn-space">
-                            <button>중복확인</button>
+                            <button id="cpnm_duplicate_chk">중복확인</button>
                         </div>
                     </div>
                     <div class="input-line">
@@ -64,52 +66,53 @@
                                         type="password"
                                         placeholder="비밀번호를 입력해주세요"
                                 />
-                                <input type="checkbox" id="show-pwd" hidden/>
-                                <label id="show-pwd-toggle" class="show-pwd" for="show-pwd">
+                                <input type="checkbox" id="show_pwd" hidden/>
+                                <label id="show_pwd_toggle" class="show-pwd" for="show_pwd">
                                     <i id="eye" class="fa-regular fa-eye-slash"></i>
                                 </label>
                             </div>
-                            <div class="error-msg">최소 10자 입력</div>
+                            <div class="error-msg pwd"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="pwd-confirm">비밀번호 확인<span>*</span></label>
+                            <label for="pwd_confirm">비밀번호 확인<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="pwd-confirm"
-                                        id="pwd-confirm"
+                                        id="pwd_confirm"
                                         type="password"
                                         placeholder="비밀번호를 한번 더 입력해주세요"
                                 />
-                                <input type="checkbox" id="show-pwd-confirm" hidden/>
+                                <input type="checkbox" id="show_pwd_confirm" hidden/>
                                 <label
-                                        id="show-pwd-confirm-toggle"
+                                        id="show_pwd_confirm_toggle"
                                         class="show-pwd"
-                                        for="show-pwd-confirm"
+                                        for="show_pwd_confirm"
                                 >
                                     <i id="eye2" class="fa-regular fa-eye-slash"></i>
                                 </label>
                             </div>
+                            <div class="error-msg pwd-confirm"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="mobl_no">휴대전화<span>*</span></label>
+                            <label for="mpno">휴대전화<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="mobl_no"
-                                        id="mobl_no"
+                                        name="mpno"
+                                        id="mpno"
                                         type="text"
-                                        placeholder="01026558945"
+                                        placeholder="-제외 숫자만 입력해 주세요"
                                 />
                             </div>
+                            <div class="error-msg mpno"></div>
                         </div>
                         <div class="btn-space">
                             <button>인증</button>
@@ -120,7 +123,7 @@
                         <div class="input-label">
                             <label>사업유형<span>*</span></label>
                         </div>
-                        <fieldset style="padding: 0; margin-top: 7px;">
+                        <fieldset>
                             <label>
                                 <input type="radio" name="type" value="user" checked/>
                                 <span>개인사업자</span>
@@ -134,17 +137,18 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="mobl_no">사업자번호<span>*</span></label>
+                            <label for="brno">사업자번호<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name=""
-                                        id=""
+                                        name="brno"
+                                        id="brno"
                                         type="text"
-                                        placeholder=""
+                                        placeholder="사업자 등록 번호를 입력해 주세요"
                                 />
                             </div>
+                            <div class="error-msg brno"></div>
                         </div>
                         <div class="btn-space">
                             <button>인증</button>
@@ -152,45 +156,45 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="mobl_no">통신판매업신고번호<span>*</span></label>
+                            <label for="sle_biz_no">통신판매업신고번호<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name=""
-                                        id="sle"
+                                        name="sle_biz_no"
+                                        id="sle_biz_no"
                                         type="text"
-                                        placeholder=""
+                                        placeholder="통신판매업신고번호를 입력해 주세요"
                                 />
                             </div>
+                            <div class="error-msg sle-biz-no"></div>
                         </div>
                         <div class="btn-space">
-                            <button>인증</button>
                         </div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="addr">사업지 주소<span>*</span></label>
+                            <label>사업지 주소<span>*</span></label>
                         </div>
                         <div class="input-box">
-                            <input name="postcode" id="postcode" hidden/>
-                            <input name="addr" id="addr" hidden/>
+                            <input name="bsplc_zpcd" id="bsplc_zpcd" hidden/>
                             <div class="input">
                                 <input
-                                        name="addrdisplay"
-                                        id="addr-display"
+                                        name="bsplc_base"
+                                        id="bsplc_base"
                                         type="text"
                                         placeholder="주소를 검색해주세요"
                                 />
                             </div>
-                            <div class="input" style="margin-top: 10px">
+                            <div class="input addr-dtl">
                                 <input
-                                        name="addrdetail"
-                                        id="addr-detail"
+                                        name="bsplc_dtl"
+                                        id="bsplc_dtl"
                                         type="text"
                                         placeholder="상세 주소를 입력해주세요"
                                 />
                             </div>
+                            <div class="error-msg bsplc-dtl"></div>
                         </div>
                         <div class="btn-space">
                             <button id="addr-search">
@@ -213,6 +217,7 @@
                                         placeholder="-제외 숫자만 입력해주세요"
                                 />
                             </div>
+                            <div class="error-msg bsplc-dtl"></div>
                         </div>
                         <div class="btn-space">
                         </div>
@@ -230,6 +235,7 @@
                                         placeholder="브랜드 내용을 입력해주세요"
                                 />
                             </div>
+                            <div class="error-msg brnd-cn"></div>
                         </div>
                         <div class="btn-space">
                         </div>
@@ -241,8 +247,8 @@
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="brnd_bnr"
-                                        id="brnd_bnr"
+                                        name="brnd_bnr_upload_path"
+                                        id="brnd_bnr_upload_path"
                                         type="file"
                                 />
                             </div>
@@ -257,8 +263,8 @@
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="brnd_profile"
-                                        id="brnd_profile"
+                                        name="brnd_upload_path"
+                                        id="brnd_upload_path"
                                         type="file"
                                 />
                             </div>
@@ -283,13 +289,7 @@
                             />
                             <span>모두 동의합니다.</span>
                         </label>
-                        <div
-                                class=""
-                                style="
-                    border-top: 1px solid #ddd;
-                    border-bottom: 1px solid #ddd;
-                  "
-                        >
+                        <div class="chk-group-line">
                             <label for="check_1" class="input-line">
                                 <input type="checkbox" id="check_1" class="normal" hidden/>
                                 <img
@@ -301,7 +301,8 @@
                                 <span>만 14세 이상입니다.</span>
                             </label>
                             <label for="check_2" class="input-line">
-                                <input type="checkbox" id="check_2" class="normal" hidden/>
+                                <input type="checkbox" name="seler_agre_yn" value="Y" id="check_2" class="normal"
+                                       hidden/>
                                 <img
                                         class="agree-checkbox"
                                         src="/img/unchecked.png"
@@ -322,18 +323,11 @@
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
-
+<script src="/js/member/regEx.js"></script>
+<script src="/js/member/msg.js"></script>
+<script src="/js/member/common.js"></script>
 <script>
-    let showRawPwd = (checkboxId, inputId, iconId) => {
-        const checked = $(checkboxId).is(":checked");
-        $(inputId).attr("type", !checked ? "text" : "password");
-        $(iconId).attr(
-            "class",
-            !checked ? "fa-regular fa-eye" : "fa-regular fa-eye-slash"
-        );
-    };
-
+    //파일 분리 안됨. val() 때문에
     let addressCallback = (e) => {
         e.preventDefault(); //405 이슈 해결.
 
@@ -356,17 +350,12 @@
 
                 if (extraAddr !== "") extraAddr = " (" + extraAddr + ")";
 
-                $("#addr-display").val(data.zonecode + " / " + data.address);
-                $("#postcode").val(data.zonecode);
-                $("#addr").val(data.address);
-                $("#addr-detail").focus(); //상세주소에 focus
+                $("#bsplc_zpcd").val(data.zonecode);
+                $("#bsplc_base").val(data.address);
+                $("#bsplc_dtl").focus(); //상세주소에 focus
             },
         }).open();
     };
-
-    let imgUrl = (checked) => {
-        return checked ? "/img/checked.png" : "/img/unchecked.png";
-    }
 
     $(document).ready(function () {
         $("#addr-search").click(function (e) {
@@ -410,15 +399,7 @@
                     );
             });
         });
-
-        $("#show-pwd-toggle").click(() =>
-            showRawPwd("#show-pwd", "#pwd", "#eye")
-        );
-        $("#show-pwd-confirm-toggle").click(() =>
-            showRawPwd("#show-pwd-confirm", "#pwd-confirm", "#eye2")
-        );
     });
-
 </script>
 </body>
 </html>

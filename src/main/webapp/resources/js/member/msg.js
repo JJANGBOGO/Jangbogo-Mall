@@ -6,7 +6,6 @@ pwd_confirm_empty = "비밀번호 확인을 입력해 주세요";
 mpno_empty = "휴대전화를 입력해 주세요";
 addr_base_empty = "주소를 검색해 주세요";
 addr_dtl_empty = "상세 주소를 입력해 주세요";
-brdy_empty = "생일을 입력해 주세요";
 
 // reg.test() failed
 let not_valid_email = "이메일 형식에 맞춰서 입력해 주세요";

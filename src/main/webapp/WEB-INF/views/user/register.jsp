@@ -15,7 +15,7 @@
         <div class="reg-header">회원가입</div>
         <div class="section-line"></div>
         <div class="reg-form-box">
-            <form class="reg-form" action="/user/register" method="post">
+            <form id="user_register" class="reg-form" action="/user/register" method="post">
                 <div class="center-padding">
                     <div class="input-line">
                         <div class="input-label">
@@ -126,11 +126,11 @@
                             <label>주소<span>*</span></label>
                         </div>
                         <div class="input-box">
-                                <input name="zpcd" id="zpcd" hidden/>
+                            <input name="zpcd" id="zpcd" hidden/>
                             <div class="input">
                                 <input name="addr_base" id="addr_base" placeholder="주소를 검색해 주세요" readonly/>
                             </div>
-                            <div class="input" style="margin-top: 10px">
+                            <div class="input addr-dtl">
                                 <input
                                         name="addr_dtl"
                                         id="addr_dtl"
@@ -179,13 +179,7 @@
                             />
                             <span>모두 동의합니다.</span>
                         </label>
-                        <div
-                                class=""
-                                style="
-                    border-top: 1px solid #ddd;
-                    border-bottom: 1px solid #ddd;
-                  "
-                        >
+                        <div class="chk-group-line">
                             <label for="check_1" class="input-line">
                                 <input type="checkbox" id="check_1" class="normal" hidden/>
                                 <img
@@ -207,7 +201,8 @@
                                 <span>이용약관 동의 (필수)</span>
                             </label>
                             <label for="check_3" class="input-line">
-                                <input type="checkbox" id="check_3" class="normal" name="user_agre_yn" hidden value="Y"/>
+                                <input type="checkbox" id="check_3" class="normal" name="user_agre_yn" hidden
+                                       value="Y"/>
                                 <img
                                         class="agree-checkbox"
                                         src="/img/unchecked.png"
@@ -217,7 +212,8 @@
                                 <span>개인정보 수집 및 이용 동의수 (필수)</span>
                             </label>
                             <label for="check_4" class="input-line">
-                                <input type="checkbox" id="check_4" class="normal" name="markt_agre_yn" hidden value="Y"/>
+                                <input type="checkbox" id="check_4" class="normal" name="markt_agre_yn" hidden
+                                       value="Y"/>
                                 <img
                                         class="agree-checkbox"
                                         src="/img/unchecked.png"
@@ -231,7 +227,7 @@
                         </div>
                     </div>
                     <div class="btn-container">
-                        <button class="reg-confirm" >가입하기</button>
+                        <button class="reg-confirm">가입하기</button>
                     </div>
                 </div>
             </form>
@@ -245,7 +241,7 @@
 <script src="/js/member/common.js"></script>
 <script>
     let msg = "${msg}";
-    if(msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다. 다시 시도해 주세요");
+    if (msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다. 다시 시도해 주세요");
 </script>
 <script>
     let addressCallback = (e) => {
@@ -322,7 +318,7 @@
             });
         });
 
-        //    이메일 중복 검사 ajax
+        //  이메일 중복 검사 ajax
         $("#email_duplicate_chk").click(function (e) {
             e.preventDefault(); //form 전송 방지
             let email = $("#email").val();
@@ -606,9 +602,7 @@
             }
 
             if (!pwd_reg.test(pwd)) {
-                alert(
-                    "비밀번호를 6자 이상 16자 이하, 영어와 숫자의 조합으로 입력해 주세요. 특수문자 허용"
-                );
+                alert("비밀번호를 6자 이상 16자 이하, 영어와 숫자의 조합으로 입력해 주세요. 특수문자 허용");
                 $("#pwd").focus();
                 return false;
             }
@@ -655,14 +649,6 @@
                 return false;
             }
 
-            //생일
-            let brdy = $("#brdy").val();
-
-            if (brdy == "") {
-                alert("생일을 입력해 주세요");
-                return false;
-            }
-
             //필수동의여부
             let checked_1 = $("#check_1").is(":checked");
             let checked_2 = $("#check_2").is(":checked");
@@ -673,7 +659,7 @@
                 return false;
             }
 
-            $(".reg-form").submit();
+            $("#user_register").submit();
         });
     });
 </script>
