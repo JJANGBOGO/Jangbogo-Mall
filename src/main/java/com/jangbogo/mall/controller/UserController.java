@@ -258,7 +258,7 @@ public class UserController {
 
     //가입처리
     @PostMapping("/user/register")
-    public String registerUser(User user, Address addr, RedirectAttributes rattr) { //validator 추가 TODO
+    public String registerUser(User user, Address addr, RedirectAttributes rattr) { //validator 추가 TODO::
         log.info("user...." + user);
         log.info("addr...." + addr);
 
@@ -307,6 +307,7 @@ public class UserController {
             if (userService.chkDuplicateNick(nick_nm) == null) msg = "OK";
         } catch (Exception e) {
             e.printStackTrace();
+            msg = "ERROR";
         }
         return msg;
     }
