@@ -126,6 +126,8 @@ public class UserServiceImpl implements UserService {
         if (!passwordEncoder.matches(user.getPwd(), prev_user.getPwd())) {
             updatePwdUptTm(user.getIdx(), email); //비번변경날짜 수정
         }
+
+        user.setPwd(passwordEncoder.encode(user.getPwd())); //패스워드 인코딩
         return dao.updateUser(user);
     }
 

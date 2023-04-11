@@ -325,8 +325,8 @@ public class UserController {
     @GetMapping("/user/info")
     public String verifyUserView(HttpSession session) {
         log.info("loginService..." + session.getAttribute("loginService"));
-        if (session.getAttribute("loginService") != "jangbogo")
-            return "/user/verifySocial";
+//        if (session.getAttribute("loginService") != "jangbogo")
+//            return "/user/verifySocial";
 
         session.setAttribute("modify", "OK");
 
@@ -384,20 +384,24 @@ public class UserController {
     public String modifyUser(User user, HttpSession session, RedirectAttributes rattr) {
         log.info("회원수정....." + user);
 
-//        try {
+        try {
 //            user.setIdx((int) session.getAttribute("idx"));
-//            userService.updateUser(user); //회원 업데이트
-//
-//            session.removeAttribute("modify"); //수정 성공시 해당 세션도 삭제
-//            rattr.addFlashAttribute("msg", "OK"); // 수정완료 메세지
-//            return "redirect:/user/info"; //이전 페이지로 돌아가기
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+            user.setIdx(36);
+            int result = userService.updateUser(user); //회원 업데이트
 
-//        return "user/modify";
-        return "";
+            if (userService.updateUser(user) != 1)
+                throw new Exception("modify failed");
+
+            session.removeAttribute("modify"); //수정 성공시 해당 세션도 삭제
+            rattr.addFlashAttribute("msg", "MOD_OK"); // 수정완료 메세지
+            return "redirect:/user/info"; //이전 페이지로 돌아가기
+            //loginService가 null이면
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/user/info";
+        }
     }
 
     //세션 저장
