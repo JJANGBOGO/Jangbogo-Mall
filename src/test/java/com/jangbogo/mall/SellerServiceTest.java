@@ -35,5 +35,19 @@ public class SellerServiceTest {
         assertTrue(seller != null);
     }
 
+    @Test //ok
+    public void updateSeller () throws Exception {
+        Seller seller = Seller.builder()
+                .idx(8)
+                .email("jinvicky1008")
+                .cpnm("진이사과나무")
+                .repr_nm("포도조아")
+                .pwd("rnpqus")
+                .mpno("8989").build();
+        int result = service.updateSeller(seller);
+        log.info("seler" + result);
+        assertTrue(result != 0);
+    }
+
 
 }
