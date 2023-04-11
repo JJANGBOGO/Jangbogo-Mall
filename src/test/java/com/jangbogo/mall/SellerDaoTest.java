@@ -63,5 +63,19 @@ public class SellerDaoTest {
         assertTrue(result != 0);
     }
 
+    @Test //ok
+    public void insertSellerDtl() throws Exception {
+        SellerDtl dtl = SellerDtl.builder()
+                .seler_idx(6)
+                .guid_nm("담당자100")
+                .guid_email("guid@naver.com")
+                .cllr_nm("cllr_진이")
+                .cllr_telno("cllr_진이번호")
+                .build();
+        int result = dao.insertSellerDtl(dtl);
+        log.info("result" + result);
+        assertTrue(result != 0);
+    }
+
 
 }

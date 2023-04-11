@@ -3,6 +3,7 @@ package com.jangbogo.mall;
 
 import com.jangbogo.mall.dao.SellerDao;
 import com.jangbogo.mall.domain.Seller;
+import com.jangbogo.mall.domain.SellerDtl;
 import com.jangbogo.mall.service.SellerService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -47,6 +48,20 @@ public class SellerServiceTest {
         int result = service.updateSeller(seller);
         log.info("seler" + result);
         assertTrue(result != 0);
+    }
+
+    @Test //ok
+    public void insertSellerDtl () throws Exception {
+            SellerDtl dtl = SellerDtl.builder()
+                    .seler_idx(6)
+                    .guid_nm("담당자555")
+                    .guid_email("guid555@naver.com")
+                    .cllr_nm("cllr_진이55")
+                    .cllr_telno("cllr_진이번호55")
+                    .build();
+            int result = service.insertSellerDtl(dtl);
+            log.info("result" + result);
+            assertTrue(result != 0);
     }
 
 

@@ -37,9 +37,10 @@
         WHERE SELER_IDX = #{seler_idx};
     </update>
 
-    <!--    <insert id="insertSellerDtl" parameterType="SellerDtl">-->
-    <!--        insert into seler_dtl (seler_idx, guid_nm, guid_email, cllr_nm, cllr_telno) values (8, "김수현", "so@naver.com", "고객상담수진", "36558945");-->
-    <!--    </insert>-->
+    <insert id="insertSellerDtl" parameterType="SellerDtl">
+        INSERT INTO SELER_DTL (SELER_IDX, GUID_NM, GUID_EMAIL, CLLR_NM, CLLR_TELNO)
+        VALUES (#{seler_idx}, #{guid_nm}, #{guid_email}, #{cllr_nm}, #{cllr_telno});
+    </insert>
 
 
 </mapper>
