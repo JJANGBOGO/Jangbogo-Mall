@@ -64,7 +64,7 @@ public class SellerDaoTest {
     }
 
     @Test //ok
-    public void insertSellerDtl() throws Exception {
+    public void insertSellerDtl () throws Exception {
         SellerDtl dtl = SellerDtl.builder()
                 .seler_idx(6)
                 .guid_nm("담당자100")
@@ -75,6 +75,13 @@ public class SellerDaoTest {
         int result = dao.insertSellerDtl(dtl);
         log.info("result" + result);
         assertTrue(result != 0);
+    }
+
+    @Test //ok
+    public void getSellerDtl () throws Exception {
+        SellerDtl dtl = dao.getSellerDtl(6);
+        log.info("dtl..." + dtl);
+        assertTrue(dtl != null);
     }
 
 

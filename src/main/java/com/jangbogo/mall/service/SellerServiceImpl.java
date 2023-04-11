@@ -30,14 +30,19 @@ public class SellerServiceImpl implements SellerService{
     @Override
     public int updateSellerDtl (SellerDtl detail) throws Exception {
 
-//        Seller seller = getSellerByIdx(detail.getSeler_idx()); //dtl을 뒤져야 하는데 틀렸다.
-//        if (seller == null) return insertSellerDtl(detail); //정보가 없을 경우 새로 insert
+        SellerDtl selerDtl = getSellerDtl(detail.getSeler_idx()); //user_idx로 상세정보 탐색
+        if (selerDtl == null) return insertSellerDtl(detail); //정보가 없을 경우 새로 insert
         return dao.updateSellerDtl(detail); //수정
     }
 
     @Override
     public int insertSellerDtl (SellerDtl detail) throws Exception {
         return dao.insertSellerDtl(detail);
+    }
+
+    @Override
+    public SellerDtl getSellerDtl (Integer seler_idx) throws Exception {
+        return dao.getSellerDtl(seler_idx);
     }
 
 

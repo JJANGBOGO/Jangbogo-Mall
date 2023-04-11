@@ -42,6 +42,10 @@
         VALUES (#{seler_idx}, #{guid_nm}, #{guid_email}, #{cllr_nm}, #{cllr_telno});
     </insert>
 
+    <select id="getSellerDtl" resultType="SellerDtl">
+        SELECT * FROM SELER_DTL WHERE SELER_IDX = #{seler_idx}
+    </select>
+
 
 </mapper>
 

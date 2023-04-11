@@ -44,4 +44,9 @@ public class SellerDaoImpl implements SellerDao {
     public int insertSellerDtl (SellerDtl detail) throws Exception {
         return session.insert(nameSpace + "insertSellerDtl", detail);
     }
+
+    @Override
+    public SellerDtl getSellerDtl (Integer seler_idx) throws Exception {
+        return session.selectOne(nameSpace + "getSellerDtl", seler_idx);
+    }
 }

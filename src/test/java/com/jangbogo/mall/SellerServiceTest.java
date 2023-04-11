@@ -64,5 +64,20 @@ public class SellerServiceTest {
             assertTrue(result != 0);
     }
 
+    @Test //ok
+    public void updateSellerDtl () throws Exception {
+        SellerDtl dtl = SellerDtl.builder()
+                .seler_idx(6)
+                .guid_nm("바꿔주세요")
+                .guid_email("change@naver.com")
+                .cllr_nm("change_cllr")
+                .cllr_telno("change_11")
+                .build();
+
+        int result = service.updateSellerDtl(dtl);
+        log.info("result" + result);
+        assertTrue(result != 0);
+    }
+
 
 }

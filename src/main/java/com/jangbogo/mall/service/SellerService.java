@@ -19,4 +19,7 @@ public interface SellerService {
 
     //판매자 상세 추가
     int insertSellerDtl (SellerDtl detail) throws Exception;
+
+    //판매자 상세 조회
+    SellerDtl getSellerDtl (Integer seler_idx) throws Exception;
 }
