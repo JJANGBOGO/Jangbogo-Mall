@@ -69,8 +69,8 @@
                                         type="password"
                                         placeholder="비밀번호를 입력해주세요"
                                 />
-                                <input type="checkbox" id="show-pwd" hidden/>
-                                <label id="show-pwd-toggle" class="show-pwd" for="show-pwd">
+                                <input type="checkbox" id="show_pwd" hidden/>
+                                <label id="show_pwd_toggle" class="show-pwd" for="show_pwd">
                                     <i id="eye" class="fa-regular fa-eye-slash"></i>
                                 </label>
                             </div>
@@ -89,11 +89,11 @@
                                         type="password"
                                         placeholder="비밀번호를 한번 더 입력해주세요"
                                 />
-                                <input type="checkbox" id="show-pwd-confirm" hidden/>
+                                <input type="checkbox" id="show_pwd_confirm" hidden/>
                                 <label
-                                        id="show-pwd-confirm-toggle"
+                                        id="show_pwd_confirm_toggle"
                                         class="show-pwd"
-                                        for="show-pwd-confirm"
+                                        for="show_pwd_confirm"
                                 >
                                     <i id="eye2" class="fa-regular fa-eye-slash"></i>
                                 </label>
@@ -241,21 +241,13 @@
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script src="/js/regEx.js"></script>
+<script src="/js/member/regEx.js"></script>
+<script src="/js/member/common.js"></script>
 <script>
     let msg = "${msg}";
     if(msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다. 다시 시도해 주세요");
 </script>
 <script>
-    let showRawPwd = (checkboxId, inputId, iconId) => {
-        const checked = $(checkboxId).is(":checked");
-        $(inputId).attr("type", !checked ? "text" : "password");
-        $(iconId).attr(
-            "class",
-            !checked ? "fa-regular fa-eye" : "fa-regular fa-eye-slash"
-        );
-    };
-
     let addressCallback = (e) => {
         e.preventDefault(); //405 이슈 해결.
 
@@ -283,10 +275,6 @@
             },
         }).open();
     };
-
-    let imgUrl = (checked) => {
-        return checked ? "/img/checked.png" : "/img/unchecked.png";
-    }
 
     //인증번호 문자열
     let mpno_verify_num = "";
@@ -333,15 +321,6 @@
                     );
             });
         });
-
-        $("#show-pwd-toggle").click(() =>
-            showRawPwd("#show-pwd", "#pwd", "#eye")
-        );
-        $("#show-pwd-confirm-toggle").click(() =>
-            showRawPwd("#show-pwd-confirm", "#pwd_confirm", "#eye2")
-        //    $("#pwd_confirm").attr("type", "text")
-
-        );
 
         //    이메일 중복 검사 ajax
         $("#email_duplicate_chk").click(function (e) {
@@ -514,15 +493,6 @@
                 return false;
             } else {
                 $(".error-msg.pwd").empty();
-            }
-
-            if (pwd_confirm != pwd) {
-                $(".error-msg.pwd-confirm").html(
-                    "비밀번호와 동일한 값을 입력해 주세요"
-                );
-                return false;
-            } else {
-                $(".error-msg.pwd-confirm").empty();
             }
         });
 

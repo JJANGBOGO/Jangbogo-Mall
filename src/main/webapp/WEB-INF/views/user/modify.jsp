@@ -69,6 +69,10 @@
                                         type="password"
                                         placeholder="새 비밀번호를 입력해주세요"
                                 />
+                                <input type="checkbox" id="show_pwd" hidden/>
+                                <label id="show_pwd_toggle" class="show-pwd" for="show_pwd">
+                                    <i id="eye" class="fa-regular fa-eye-slash"></i>
+                                </label>
                             </div>
                             <div class="error-msg pwd"></div>
                         </div>
@@ -86,6 +90,14 @@
                                         type="password"
                                         placeholder="새 비밀번호를 다시 입력해주세요"
                                 />
+                                <input type="checkbox" id="show_pwd_confirm" hidden/>
+                                <label
+                                        id="show_pwd_confirm_toggle"
+                                        class="show-pwd"
+                                        for="show_pwd_confirm"
+                                >
+                                    <i id="eye2" class="fa-regular fa-eye-slash"></i>
+                                </label>
                             </div>
                             <div class="error-msg pwd-confirm"></div>
                         </div>
@@ -132,7 +144,7 @@
                         </label>
                     </div>
                     <div class="btn-container">
-                        <button class="info-modify">탈퇴하기</button>
+                        <button class="info-modify cancel">수정 취소</button>
                         <button class="info-modify">회원정보 수정</button>
                     </div>
                 </div>
@@ -144,6 +156,7 @@
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/js/member/regEx.js"></script>
+<script src="/js/member/msg.js"></script>
 <script src="/js/member/common.js"></script>
 <script>
     $(document).ready(function () {
@@ -159,6 +172,10 @@
             $(".agree-checkbox2").attr("src", imgUrl($(this).is(":checked")));
         });
 
+        $(".info-modify.cancel").click(function() {
+            window.location.href="/user/info";
+        })
+
         //keyup
         //닉네임
         $("#nick_nm").keyup(function () {
@@ -167,12 +184,12 @@
             let prev_nick = "${user.nick_nm}";
 
             if (nick == "") {
-                err_ref.html("닉네임을 입력해 주세요");
+                err_ref.html(nick_empty);
                 return false;
             } else err_ref.empty();
 
             if (!nick_reg.test(nick)) {
-                err_ref.html("닉네임은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요");
+                err_ref.html(not_valid_nick);
             } else err_ref.empty();
 
             $("#nick_duplicate_chk").attr("disabled", nick == prev_nick ? true : false);
@@ -184,27 +201,17 @@
             let pwd_confirm = $("#pwd_confirm").val();
             let pwd_err_ref = $(".error-msg.pwd");
 
+            console.log("pwd dif....", pwd, pwd_confirm);
+
             if (pwd == "") {
-                pwd_err_ref.html("비밀번호를 입력해 주세요");
+                pwd_err_ref.html(pwd_empty);
                 return false;
             } else pwd_err_ref.empty();
-
 
             if (!pwd_reg.test(pwd)) {
-                pwd_err_ref.html(
-                    "비밀번호를 6자 이상 16자 이하, 영어와 숫자의 조합으로 입력해 주세요. 특수문자 허용"
-                );
+                pwd_err_ref.html(not_valid_pwd);
                 return false;
             } else pwd_err_ref.empty();
-
-            if (pwd_confirm != pwd) {
-                $(".error-msg.pwd-confirm").html(
-                    "비밀번호와 동일한 값을 입력해 주세요"
-                );
-                return false;
-            } else {
-                $(".error-msg.pwd-confirm").empty();
-            }
         });
 
         //비번확인
@@ -214,12 +221,12 @@
             let err_ref = $(".error-msg.pwd-confirm");
 
             if (pwd_confirm == "") {
-                err_ref.html("비밀번호 확인을 입력해 주세요");
+                err_ref.html(pwd_confirm_empty);
                 return false;
             } else err_ref.empty();
 
             if (pwd_confirm != pwd) {
-                err_ref.html("비밀번호와 동일한 값을 입력해 주세요");
+                err_ref.html(not_valid_pwd_confirm);
                 return false;
             } else err_ref.empty();
         });
@@ -231,12 +238,12 @@
             let prev_mpno = "${user.mpno}";
 
             if (mpno == "") {
-                err_ref.html("휴대전화를 입력해 주세요");
+                err_ref.html(mpno_empty);
                 return false;
             } else err_ref.empty();
 
             if (!mpno_reg.test(mpno)) {
-                err_ref.html("휴대전화 형식에 맞춰 입력해 주세요 (-제외 숫자만)");
+                err_ref.html(not_valid_mpno);
                 return false;
             } else err_ref.empty();
 
@@ -250,13 +257,13 @@
 
             //닉네임
             if (nick_ref.val() == "") {
-                alert("닉네임을 입력해 주세요");
+                alert(nick_empty);
                 nick_ref.focus();
                 return false;
             }
 
             if (!nick_reg.test(nick_ref.val())) {
-                alert("닉네임은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요");
+                alert(not_valid_nick);
                 nick_ref.focus();
                 return false;
             }
@@ -267,16 +274,16 @@
                 type: 'POST',
                 success: function (result) {
                     if (result == "OK") {
-                        alert("사용 가능한 닉네임입니다.");
+                        alert(available_nick);
                         $("#nick_duplicate_chk").attr("disabled", true); //버튼 비활성화
                         nick_ref.attr("readonly", true); //인풋 비활성화
                     } else {
-                        alert("이미 사용중인 닉네임입니다.");
+                        alert(duplicate_nick);
                         nick_ref.focus();
                     }
                 },
                 error: function (err) {
-                    alert("error: ", err);
+                    alert(error_msg);
                 }
             }); //$.ajax
         });
@@ -287,13 +294,13 @@
             let mpno_ref = $("#mpno");
 
             if (mpno_ref.val() == "") {
-                alert("휴대전화번호를 입력해주세요");
+                alert(mpno_empty);
                 mpno_ref.focus();
                 return false;
             }
 
             if (!mpno_reg.test(mpno_ref.val())) {
-                alert("휴대전화형식을 지켜주세요. -제외 숫자만");
+                alert(not_valid_mpno);
                 mpno_ref.focus();
                 return false;
             }
@@ -303,8 +310,8 @@
                 data: JSON.stringify({to: mpno_ref.val()}), // 객체를 전송할때는 stringify() 필요, @RequestBody때문
                 type: 'POST',
                 contentType: "application/json",
-                success: function (result) { // test, 문자열 온다.
-                    alert("인증번호 전송에 성공했습니다");
+                success: function (result) {
+                    alert(mpno_send_ok);
                     console.log(result, result.numStr);
                     mpno_verify_num = result.numStr;
                     $("#mpno").closest(".input-box").append('<div class="input">' +
@@ -312,14 +319,14 @@
                         '</div><div class="error-msg mpno-verify"></div>');
                 },
                 error: function (err) {
-                    alert("오류가 발생했습니다. 다시 시도해 주세요");
+                    alert(error_msg);
                 }
             }); //$.ajax
         });
 
         $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
             if ($("#mpno_verify").val() == mpno_verify_num) {
-                $(".error-msg.mpno-verify").html("인증되었습니다");
+                $(".error-msg.mpno-verify").html(mpno_verified);
                 $(".error-msg.mpno-verify").css('color', 'green');
                 $("#mpno_chk").attr("disabled", true);
                 $("#mpno").attr('readonly', true);
@@ -332,21 +339,19 @@
             let nick_ref = $("#nick_nm");
 
             if (nick_ref.val() == "") {
-                alert("닉네임을 입력해 주세요");
+                alert(nick_empty);
                 nick_ref.focus();
                 return false;
             }
 
             if (!nick_reg.test(nick_ref.val())) {
-                alert(
-                    "닉네임은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요"
-                );
+                alert(not_valid_nick);
                 nick_ref.focus();
                 return false;
             }
 
             if (!$("#nick_duplicate_chk").is(":disabled")) {
-                alert("닉네임 중복 검사를 해주세요");
+                alert(chk_nick_required);
                 nick_ref.focus();
                 return false;
             }
@@ -354,9 +359,7 @@
             let pwd_ref = $("#pwd");
             //비번
             if (pwd_ref.val() != "" && !pwd_reg.test(pwd_ref.val())) {
-                alert(
-                    "비밀번호를 6자 이상 16자 이하, 영어와 숫자의 조합으로 입력해 주세요. 특수문자 허용"
-                );
+                alert(not_valid_pwd);
                 pwd_ref.focus();
                 return false;
             }
@@ -365,7 +368,7 @@
 
             //비번 확인
             if (pwd_ref.val() != pwd_confirm_ref.val()) {
-                alert("동일한 비밀번호를 입력해 주세요");
+                alert(not_valid_pwd_confirm);
                 pwd_confirm_ref.focus();
                 return false;
             }
@@ -373,30 +376,27 @@
             //휴대전화 인증
             let mpno_ref = $("#mpno");
             if (mpno_ref.val() == "") {
-                alert("휴대전화를 입력해 주세요");
+                alert(mpno_empty);
                 mpno_ref.focus();
                 return false;
             }
 
             if (!mpno_reg.test(mpno_ref.val())) {
-                alert("휴대전화 형식에 맞춰 입력해 주세요 (-제외 숫자만)");
+                alert(not_valid_mpno);
                 mpno_ref.focus();
                 return false;
             }
 
             if (!$("#mpno_chk").is(":disabled")) {
-                alert("휴대전화 인증을 해주세요");
+                alert(chk_mpno_required);
                 return false;
             }
 
             //통과
             let prev_pwd = "${user.pwd}";
             if (pwd_ref.val() == "") pwd_ref.val(prev_pwd); //새 비밀번호를 입력하지 않은 경우 기존 비밀번호를 넣는다.
-
             $("#modify_user").submit();
-
         });
-
     });
 </script>
 </body>
