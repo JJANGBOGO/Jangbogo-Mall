@@ -3,33 +3,40 @@ package com.jangbogo.mall.controller;
 
 import com.jangbogo.mall.domain.Seller;
 import com.jangbogo.mall.domain.User;
+import com.jangbogo.mall.service.SellerService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Slf4j
 @Controller
 public class SellerController {
 
+    @Autowired
+    SellerService service;
+
     @GetMapping("/seller/login")
-    public String loginSellerView () {
+    public String loginSellerView() {
         return "/seller/login";
     }
 
     //판매자가입 뷰
     @GetMapping("/seller/register")
-    public String regSellerView () {
+    public String regSellerView() {
         return "/seller/register";
     }
 
     //판매자가입 처리
     @PostMapping("/seller/register")
-    public String regSeller (Seller seller, Model m) {
+    public String regSeller(Seller seller, Model m) {
         log.info("seller..." + seller);
         return "seller/register";
     }
@@ -70,35 +77,58 @@ public class SellerController {
 
     //마이셀러 브랜드조회 뷰
     @GetMapping("/seller/read/brnd")
-    public String readBrndView (HttpServletRequest req, Model m) {
+    public String readBrndView(HttpServletRequest req, Model m) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
         return "/seller/readBrnd";
     }
 
     //마이셀러 브랜드수정 뷰
     @GetMapping("/seller/modify/brnd")
-    public String chgBrndView (HttpServletRequest req, Model m) {
+    public String chgBrndView(HttpServletRequest req, Model m) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
         return "/seller/modifyBrnd";
     }
 
     //판매자수정 인증 뷰
     @GetMapping("/seller/info")
-    public String verifySeller (HttpServletRequest req, Model m) {
+    public String verifySeller(HttpServletRequest req, Model m) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
         return "/seller/verify";
     }
 
     //판매자수정 뷰
     @GetMapping("/seller/modify")
-    public String chgSellerView (HttpServletRequest req, Model m) {
+    public String chgSellerView(HttpServletRequest req, Model m) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
         return "/seller/modifySeller";
     }
 
     //판매자탈퇴 뷰
     @GetMapping("/seller/withdraw")
-    public String withdrawSellerView () {
+    public String withdrawSellerView() {
         return "/seller/withdraw";
+    }
+
+    @PostMapping("/seller/withdraw")
+    public String withdrawSeller(String pwd, RedirectAttributes rattr, HttpSession session) {
+        int idx = (int) session.getAttribute("idx");
+        String email = (String) session.getAttribute("email"); //이메일 얻기
+        try {
+//            Seller seller = service.verifySeller(email, pwd); //비번 인증
+//            if (seller != null) {
+//                if (service.withdrawSeller(idx, pwd) == 0) {
+//                    throw new Exception("withdraw failed");
+//                }
+//                rattr.addFlashAttribute("msg", "SELER_WITHDRAW_OK"); //탈퇴완료
+//                return "redirect:/";
+//            }
+            rattr.addFlashAttribute("msg", "SELLER_NOT_FOUND"); //판매자 존재 X
+            return "redirect:/";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "SELER_WITHDRAW_OK"); //탈퇴완료
+            return "redirect:/";
+        }
     }
 }
