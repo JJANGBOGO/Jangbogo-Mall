@@ -18,7 +18,7 @@
         </div>
         <!-- end of page-header -->
         <div class="check-pwd-content">
-            <form class="check-pwd-form" action="">
+            <form id="modify_seller" class="check-pwd-form" action="/seller/modify" method="post">
                 <div class="center-padding">
                     <div class="input-line">
                         <div class="input-label">
@@ -30,8 +30,7 @@
                                         id="email"
                                         name="email"
                                         type="text"
-                                <%--                                        추후 로그인된 값으로 수정--%>
-                                        value="jinvicky@naver.com"
+                                        value="${seller.email}"
                                         readonly
                                 />
                             </div>
@@ -40,20 +39,21 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="nick_nm">닉네임</label>
+                            <label for="cpnm">브랜드명<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        id="nick_nm"
-                                        name="nick_nm"
+                                        id="cpnm"
+                                        name="cpnm"
                                         type="text"
-                                        placeholder="닉네임을 입력해주세요"
+                                        placeholder="브랜드명을 입력해주세요"
+                                        value="${seller.cpnm}"
                                 />
                             </div>
                         </div>
                         <div class="btn-space">
-                            <button>
+                            <button id="cpnm_duplicate_chk">
                                 중복확인
                             </button>
                         </div>
@@ -95,7 +95,7 @@
 
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="phone">휴대전화</label>
+                            <label for="phone">휴대전화<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
@@ -103,12 +103,13 @@
                                         id="phone"
                                         type="text"
                                         name="email"
+                                        value="${seller.mpno}"
                                         placeholder="휴대전화를 숫자만 입력해주세요"
                                 />
                             </div>
                         </div>
                         <div class="btn-space">
-                            <button>
+                            <button id="mpno_chk">
                                 다른 번호로 인증
                             </button>
                         </div>
@@ -183,26 +184,9 @@
                         </div>
                         <div class="btn-space"></div>
                     </div>
-                    <div class="input-line agree-form">
-                        <label for="optional_chk" class="input-line">
-                            <input
-                                    type="checkbox"
-                                    name="optional_agree"
-                                    id="optional_chk"
-                                    hidden
-                            />
-                            <img
-                                    class="agree-checkbox2"
-                                    src="/img/unchecked.png"
-                                    width="20"
-                                    height="20"
-                            />
-                            <span>무료배송, 할인쿠폰 등 혜택/정보 수신 동의 (선택)</span>
-                        </label>
-                    </div>
                     <div class="btn-container">
-                        <button class="info-modify">탈퇴하기</button>
-                        <button class="info-modify">회원정보 수정</button>
+                        <button class="info-modify">수정 취소</button>
+                        <button class="info-modify">수정 완료</button>
                     </div>
                 </div>
                 <!-- end of center-padding -->
@@ -219,6 +203,11 @@
         $("#optional_chk").click(function () {
             $(".agree-checkbox2").attr("src", imgUrl($(this).is(":checked")));
         });
+
+        //인증버튼들 비활성화 (초기값)
+        $("#cpnm_duplicate_chk").attr("disabled", true); // #nick_duplicate_chk
+        $("#mpno_chk").attr("disabled", true);
+
     });
 </script>
 </body>

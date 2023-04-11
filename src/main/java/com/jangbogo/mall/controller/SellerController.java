@@ -100,9 +100,14 @@ public class SellerController {
     @GetMapping("/seller/modify")
     public String chgSellerView(HttpServletRequest req, Model m) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
-
-        //
-        return "/seller/modifySeller";
+        try {
+            Seller seller = service.getSellerByIdx(8);
+            m.addAttribute("seller", seller);
+            return "/seller/modifySeller";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/seller/info";
+        }
     }
 
     //판매자탈퇴 뷰

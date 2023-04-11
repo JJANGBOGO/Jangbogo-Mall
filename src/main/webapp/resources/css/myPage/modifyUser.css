@@ -27,6 +27,10 @@
     padding-top: 12px;
 }
 
+.check-pwd-form .center-padding .input-label span {
+    color: var(--text-danger);
+}
+
 .check-pwd-form .input-box {
     flex: 1 1 0%;
     width: 100%;

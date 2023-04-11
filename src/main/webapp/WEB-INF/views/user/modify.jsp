@@ -37,7 +37,7 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="nick_nm">닉네임</label>
+                            <label for="nick_nm">닉네임<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
@@ -105,7 +105,7 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="mpno">휴대전화</label>
+                            <label for="mpno">휴대전화<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
@@ -145,7 +145,7 @@
                     </div>
                     <div class="btn-container">
                         <button class="info-modify cancel">수정 취소</button>
-                        <button class="info-modify">회원정보 수정</button>
+                        <button class="info-modify">수정 완료</button>
                     </div>
                 </div>
                 <!-- end of center-padding -->
