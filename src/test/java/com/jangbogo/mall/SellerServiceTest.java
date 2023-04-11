@@ -2,6 +2,7 @@ package com.jangbogo.mall;
 
 
 import com.jangbogo.mall.dao.SellerDao;
+import com.jangbogo.mall.domain.Seller;
 import com.jangbogo.mall.service.SellerService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -25,6 +26,13 @@ public class SellerServiceTest {
         int result = service.withdrawSeller(8, "jinvicky1008");
         log.info("result=" + result);
         assertTrue(result != 0);
+    }
+
+    @Test //ok
+    public void getSellerByIdx () throws Exception {
+        Seller seller = service.getSellerByIdx(8);
+        log.info("seller=" + seller);
+        assertTrue(seller != null);
     }
 
 

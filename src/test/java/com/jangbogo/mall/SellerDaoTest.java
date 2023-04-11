@@ -3,6 +3,7 @@ package com.jangbogo.mall;
 
 import com.jangbogo.mall.dao.SellerDao;
 import com.jangbogo.mall.dao.UserDao;
+import com.jangbogo.mall.domain.Seller;
 import com.jangbogo.mall.domain.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -30,6 +31,13 @@ public class SellerDaoTest {
         int result = dao.deleteSeller(8, "jinvicky1008");
         log.info("result=" + result);
         assertTrue(result != 0);
+    }
+
+    @Test //ok
+    public void getUserByIdx () throws Exception {
+        Seller seller = dao.getSellerByIdx(8);
+        log.info("seler" + seller);
+        assertTrue(seller != null);
     }
 
 

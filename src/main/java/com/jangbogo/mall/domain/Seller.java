@@ -15,7 +15,7 @@ public class Seller {
 
     public Seller() {} //기본 생성자
 
-    private int idx; //번호
+    private Integer idx; //번호 . 상품 => 판매자 조회페이지로 갈 때 /seller/1 식일 수 있다. 1이 없을 경우 null에러 방지하려고
     private int auth_idx; //권한번호 1:사용자, 2:판매자 3:관리자
 
     private String email; //이메일

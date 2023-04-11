@@ -409,6 +409,8 @@ public class UserController {
         session.setAttribute("idx", user.getIdx());
         session.setAttribute("email", user.getEmail());
         session.setAttribute("nickName", user.getNick_nm());
+//        요청으로 mpno도 추가
+        session.setAttribute("mpno", user.getMpno());
     }
 
 }

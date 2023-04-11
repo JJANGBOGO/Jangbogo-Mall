@@ -100,6 +100,8 @@ public class SellerController {
     @GetMapping("/seller/modify")
     public String chgSellerView(HttpServletRequest req, Model m) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
+
+        //
         return "/seller/modifySeller";
     }
 

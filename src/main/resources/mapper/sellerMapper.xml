@@ -10,5 +10,10 @@
         WHERE IDX = #{idx} AND EMAIL = #{email};
     </update>
 
+    <select id="getSellerByIdx" resultType="Seller">
+        SELECT *
+        FROM SELER WHERE IDX = #{idx};
+    </select>
+
 </mapper>
 

@@ -40,6 +40,26 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
+                            <label for="nick_nm">닉네임</label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        id="nick_nm"
+                                        name="nick_nm"
+                                        type="text"
+                                        placeholder="닉네임을 입력해주세요"
+                                />
+                            </div>
+                        </div>
+                        <div class="btn-space">
+                            <button>
+                                중복확인
+                            </button>
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
                             <label for="pwd">새 비밀번호</label>
                         </div>
                         <div class="input-box">
@@ -72,26 +92,7 @@
                         </div>
                         <div class="btn-space"></div>
                     </div>
-                    <div class="input-line">
-                        <div class="input-label">
-                            <label for="nick_nm">닉네임</label>
-                        </div>
-                        <div class="input-box">
-                            <div class="input">
-                                <input
-                                        id="nick_nm"
-                                        name="nick_nm"
-                                        type="text"
-                                        placeholder="닉네임을 입력해주세요"
-                                />
-                            </div>
-                        </div>
-                        <div class="btn-space">
-                            <button>
-                                중복확인
-                            </button>
-                        </div>
-                    </div>
+
                     <div class="input-line">
                         <div class="input-label">
                             <label for="phone">휴대전화</label>
@@ -211,7 +212,7 @@
 </div>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="/js/member/regEx.js" ></script>
+<script src="/js/member/regEx.js"></script>
 <script src="/js/member/common.js"></script>
 <script>
     $(document).ready(function () {
