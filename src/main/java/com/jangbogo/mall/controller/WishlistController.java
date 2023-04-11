@@ -80,16 +80,17 @@ public class WishlistController {
     public String insertCart(Integer prod_idx, Integer prod_cnt, Model m, RedirectAttributes ratt, HttpServletRequest request) {
         // 세션에서 이메일 가저온뒤에 넣어주면 그 이메일을 가진 회원번호 알아낸다
         System.out.println("prod_idxasdsadsadas = " + prod_idx);
+        System.out.println("prod_cnt = " + prod_cnt);
 
 
         try {
             // 첫 번째로 장바구니에 이 상품이 있는지 조회한다
             int CartCnt = wishlistService.checkCart(prod_idx,3); // 상품번호, 회원번호(하드코딩)
             if(CartCnt!=1){ // 장바구니에 이 상품이 없으면
-                int cnt = wishlistService.insertCart(prod_idx, 3, 2); // 상품번호,회원번호(하드코딩),개수(하드코딩)를 넣어주면 장바구니에 담긴다
+                int cnt = wishlistService.insertCart(prod_idx, 3, prod_cnt); // 상품번호,회원번호(하드코딩),개수(하드코딩)를 넣어주면 장바구니에 담긴다
                 ratt.addFlashAttribute("msg","add");
             }else {
-                int cnt = wishlistService.updateCartCnt(prod_idx,3,2);
+                int cnt = wishlistService.updateCartCnt(prod_idx,3,prod_cnt);
                 ratt.addFlashAttribute("msg","addmore");
             }
             
