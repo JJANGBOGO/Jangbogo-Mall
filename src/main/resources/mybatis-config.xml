@@ -6,6 +6,7 @@
     <typeAliases>
         <typeAlias alias="User" type="com.jangbogo.mall.domain.User"/>
         <typeAlias alias="Seller" type="com.jangbogo.mall.domain.Seller"/>
+        <typeAlias alias="SellerDtl" type="com.jangbogo.mall.domain.SellerDtl"/>
 <!--        <typeAlias alias="Attach" type="com.jangbogo.mall.domain.User"/>-->
         <typeAlias alias="WishlistDto" type="com.jangbogo.mall.domain.WishlistDto"/>
         <typeAlias alias="ProductDto" type="com.jangbogo.mall.domain.ProductDto"/>

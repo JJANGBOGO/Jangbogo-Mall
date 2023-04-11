@@ -205,7 +205,7 @@
         });
 
         //인증버튼들 비활성화 (초기값)
-        $("#cpnm_duplicate_chk").attr("disabled", true); // #nick_duplicate_chk
+        $("#cpnm_duplicate_chk").attr("disabled", true); // #nick_duplicate_chk과 동일
         $("#mpno_chk").attr("disabled", true);
 
     });

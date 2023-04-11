@@ -1,6 +1,7 @@
 package com.jangbogo.mall.dao;
 
 import com.jangbogo.mall.domain.Seller;
+import com.jangbogo.mall.domain.SellerDtl;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,5 +28,15 @@ public class SellerDaoImpl implements SellerDao {
     @Override
     public Seller getSellerByIdx (Integer idx) throws Exception  {
         return session.selectOne(nameSpace + "getSellerByIdx", idx);
+    }
+
+    @Override
+    public int updateSeller (Seller seller) throws Exception {
+        return session.update(nameSpace + "updateSeller", seller);
+    }
+
+    @Override
+    public int updateSellerDtl (SellerDtl detail) throws Exception {
+        return session.update(nameSpace + "updateSellerDtl", detail);
     }
 }

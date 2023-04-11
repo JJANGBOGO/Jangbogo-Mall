@@ -7,13 +7,40 @@
     <update id="deleteSeller" parameterType="map">
         UPDATE SELER
         SET STATE_CD = 3
-        WHERE IDX = #{idx} AND EMAIL = #{email};
+        WHERE IDX = #{idx}
+          AND EMAIL = #{email};
     </update>
 
     <select id="getSellerByIdx" resultType="Seller">
         SELECT *
-        FROM SELER WHERE IDX = #{idx};
+        FROM SELER
+        WHERE IDX = #{idx};
     </select>
+
+    <update id="updateSeller" parameterType="Seller">
+        UPDATE SELER
+        SET CPNM    = #{cpnm}
+          , REPR_NM = #{repr_nm}
+          , PWD     = #{pwd}
+          , MPNO    = #{mpno}
+          , CHG_TM  = NOW()
+        WHERE IDX = #{idx}
+          AND EMAIL = #{email};
+    </update>
+
+    <update id="updateSellerDtl" parameterType="SellerDtl">
+        UPDATE SELER_DTL
+        SET GUID_NM    = #{guid_nm},
+            GUID_EMAIL = #{guid_email},
+            CLLR_NM    = #{cllr_nm},
+            CLLR_TELNO = #{cllr_telno}
+        WHERE SELER_IDX = #{seler_idx};
+    </update>
+
+    <!--    <insert id="insertSellerDtl" parameterType="SellerDtl">-->
+    <!--        insert into seler_dtl (seler_idx, guid_nm, guid_email, cllr_nm, cllr_telno) values (8, "김수현", "so@naver.com", "고객상담수진", "36558945");-->
+    <!--    </insert>-->
+
 
 </mapper>
 
