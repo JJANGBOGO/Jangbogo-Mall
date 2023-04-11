@@ -53,7 +53,7 @@
                             </div>
                         </div>
                         <div class="btn-space">
-                            <button>
+                            <button id="nick_duplicate_chk">
                                 중복확인
                             </button>
                         </div>
@@ -142,6 +142,7 @@
 </div>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/js/regEx.js"></script>
 <script>
     let imgUrl = (checked) => {
         return checked ? "/img/checked.png" : "/img/unchecked.png";
@@ -162,6 +163,7 @@
         /*
         * form submit할 때 새 비밀번호와 비밀번호 확인이 둘 다 ""면 #pwd.val()에 current_pwd를 넣는다.
         * */
+
     });
 </script>
 </body>

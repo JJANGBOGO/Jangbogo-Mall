@@ -241,6 +241,7 @@
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="/js/regEx.js"></script>
 <script>
     let msg = "${msg}";
     if(msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다. 다시 시도해 주세요");
@@ -287,19 +288,8 @@
         return checked ? "/img/checked.png" : "/img/unchecked.png";
     }
 
-    let email_reg =
-        /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-
-    let nick_reg = /^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$/i;
-
-    let pwd_reg =
-        /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*()._-]{6,16}$/i;
-
-    let mpno_reg = /^(\d{2,3})(\d{3,4})(\d{4})$/i;
-
     //인증번호 문자열
     let mpno_verify_num = "";
-
 
     $(document).ready(function () {
         $("#addr-search").click(function (e) {
