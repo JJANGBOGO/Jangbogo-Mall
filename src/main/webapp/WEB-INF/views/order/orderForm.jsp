@@ -10,6 +10,7 @@
     <head>
         <title>주문서 작성</title>
         <style>
+            /* 공통 태그 */
             * {
                 box-sizing: border-box;
             }
@@ -25,11 +26,15 @@
             }
             body {
             }
+
+            /* 주문서 페이지 container */
             .order-container {
                 padding: 50px 0 60px 0;
                 width: 1050px;
                 margin: 0 auto;
             }
+
+            /* 주문서 페이지 제목 */
             .order-title {
                 text-align: center;
                 padding-bottom: 48px;
@@ -37,8 +42,10 @@
                 font-size: 28px;
                 line-height: 29px;
             }
-            .order-section {
 
+            /* 모든 주문 관련 정보 섹션 태그 */
+            .order-section {
+                margin-top: 75px;
             }
             .order-section__title {
                 display: flex;
@@ -57,6 +64,8 @@
                 border-bottom: 1px solid rgb(244, 244, 244);
                 line-height: 29px;
             }
+
+            /* 쿠폰, 결제 수단, 개인정보 수집/제공 정보 섹션 컨테이너 */
             .order-container__parent {
                 display: flex;
                 justify-content: space-between;
@@ -64,10 +73,14 @@
             .order-container__child {
                 width: 724px;
             }
+
+            /* 결제 금액 섹션 컨테이너 */
             .order-amount__container {
                 position: relative;
                 width: 284px;
             }
+
+            /* 결제 금액 섹션 박스 */
             .order-amount__box {
                 position: absolute;
                 top: 0px;
@@ -113,6 +126,48 @@
                 font-size: 16px;
                 color: rgb(76, 76, 76);
             }
+
+            /* 주문 상품 섹션 */
+            #orderItems {
+                padding: 0;
+            }
+            .order-item {
+                display: flex;
+                align-items: center;
+                list-style: none;
+                padding: 25px 0;
+            }
+            .order-item:not(:last-child) {
+                border-bottom: 1px solid rgb(244, 244, 244);
+            }
+            .order-item__title {
+                width: 50%;
+                text-align: left;
+                font-weight: 600;
+                margin-left: 40px;
+            }
+            .order-item__contents {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                width: 180px;
+                margin-left: 240px;
+            }
+            .order-item__count {
+                text-align: center;
+            }
+            .order-item__price {
+                font-weight: 700;
+                text-align: right;
+                width: 80px;
+            }
+            .order-item > img {
+                display: inline-block;
+                width: 60px;
+                height: 78px;
+            }
+
+            /* 주문서 관련 주석 */
             .paragraph {
                 padding-left: 16px;
                 font-size: 12px;
@@ -125,10 +180,11 @@
                 margin-left: -16px;
                 content: "※";
             }
+
+            /* 주문완료 버튼 */
             .order-button {
                 text-align: center;
             }
-
             .order-button > button {
                 display: block;
                 padding: 0 10px;
@@ -161,10 +217,7 @@
                     <h3>주문 상품</h3>
                     <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#212529'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>
                 </div>
-                <div class="order-section__content">
-                    <ul id="orderItems">
-
-                    </ul>
+                <div class="order-section__content" id="orderItems">
                 </div>
             </section>
             <section class="order-section">
@@ -256,8 +309,52 @@
             </div>
         </div>
         <script>
-            $(document).ready(() => {
+            // 메서드명 : listToHtml
+            // 기   능 : 장바구니 목록 및 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
+            // 매개변수 : items - cartDto
+            // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
+            let listToHtml = (items) => {
+                // 변수명 : tmp
+                // 저장값 : 동적으로 생성할 html 태그(문자열)
+                let tmp = "<ul>";
 
+                // 메서드명 : forEach
+                // 기   능 : 복수의 CartDto값들을 저장한 list에서 각각의 CartDto에 저장된 iv들을 적절한 태그의 속성값 또는 내용에 위치시키는 메서드
+                // 사용대상 : items - Array : List<CartDto>, 장바구니 목록
+                // 매개변수 : item - Object : CartDto, 장바구니 개별 품목
+                items.forEach((item) => {
+                    tmp += '<li class="order-item" data-pid=' + item.prod_idx + ' data-uid=' + item.user_idx +' >';
+                    tmp += '<img src=' + item.prod_rpath + " alt='' />";
+                    tmp += "<div class='order-item__title'>" + item.prod_name + "</div>";
+                    tmp += '<div class="order-item__contents">';
+                    tmp += '<div class="order-item__count">' + item.prod_cnt + "<span>개</span></div>";
+                    tmp += "<div class='order-item__price'>" + item.prod_price * item.prod_cnt + "<span>원</span></div>";
+                    tmp += '</div>';
+                    tmp += '</li>';
+                })
+                // 변수명 : cnt
+                // 저장값 : 장바구니에 담긴 모든 품목 개수
+                let cnt = items.length;
+                return tmp += '</ul>';
+            }
+
+            let showList = (user_idx) => {
+                // ajax 요청(비동기)
+                $.ajax({
+                    type:'GET',
+                    url:'/cart/list?user_idx=' + user_idx,
+                    success: (result) => {  // 성공 응답이 오면, 장바구니 목록, 주문정보, 체크박스 정보를 페이지에 랜더링하기
+                        $('#orderItems').html(listToHtml(result));       // listToHtml메서드 호출
+                    },
+                    error : function() { alert("comment get error");}   // 실패 응답이 오면, 경고창 띄우기
+                });  // $.ajax() end
+            }
+
+            $(document).ready(() => {
+                // 회원번호(user_idx) 하드코딩
+                // 세션에서 회원번호를 가져와야 한다. 세션 연동 시, 추후 테스트 필요.
+                // data-uid는 장바구니가 비었을 경우도 있기 때문에 사용할 수 없다.
+                showList(1234);
             })
         </script>
         <%@ include file="/WEB-INF/views/include/footer.jsp" %>
