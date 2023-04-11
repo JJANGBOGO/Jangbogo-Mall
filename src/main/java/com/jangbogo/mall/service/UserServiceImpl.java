@@ -121,9 +121,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateUser(User user) throws Exception {
         String email = user.getEmail();
-        User member = getUserByEmail(email);
+        User prev_user = getUserByEmail(email);
 
-        if (passwordEncoder.matches(user.getPwd(), member.getPwd())) {
+        if (!passwordEncoder.matches(user.getPwd(), prev_user.getPwd())) {
             updatePwdUptTm(user.getIdx(), email); //비번변경날짜 수정
         }
         return dao.updateUser(user);

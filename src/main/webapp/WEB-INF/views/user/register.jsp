@@ -112,7 +112,7 @@
                                         name="mpno"
                                         id="mpno"
                                         type="text"
-                                        placeholder="01026558945"
+                                        placeholder="-제외 숫자만 입력해주세요"
                                 />
                             </div>
                             <div class="error-msg mpno"></div>
@@ -423,23 +423,23 @@
         //휴대전화 인증 검사
         $("#mpno_chk").click(function (e) {
             e.preventDefault();
-            let mpno = $("#mpno").val();
+            let mpno_ref = $("#mpno");
 
-            if (mpno == "") {
+            if (mpno_ref.val() == "") {
                 alert("휴대전화번호를 입력해주세요");
-                $("#mpno").focus();
+                mpno_ref.focus();
                 return false;
             }
 
-            if (!mpno_reg.test(mpno)) {
+            if (!mpno_reg.test(mpno_ref.val())) {
                 alert("휴대전화형식을 지켜주세요. -제외 숫자만");
-                $("#mpno").focus();
+                mpno_ref.focus();
                 return false;
             }
 
             $.ajax({
                 url: '/chk/mpno',
-                data: JSON.stringify({to: mpno}), // 객체를 전송할때는 stringify() 필요, @RequestBody때문
+                data: JSON.stringify({to: mpno_ref.val()}), // 객체를 전송할때는 stringify() 필요, @RequestBody때문
                 type: 'POST',
                 contentType: "application/json",
                 success: function (result) { // test, 문자열 온다.

@@ -211,16 +211,10 @@
 </div>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/js/member/regEx.js" ></script>
+<script src="/js/member/common.js"></script>
 <script>
-    let imgUrl = (checked) => {
-        return checked ? "/img/checked.png" : "/img/unchecked.png";
-    };
-
     $(document).ready(function () {
-        $("#required_chk").click(function () {
-            $(".agree-checkbox1").attr("src", imgUrl($(this).is(":checked")));
-        });
-
         $("#optional_chk").click(function () {
             $(".agree-checkbox2").attr("src", imgUrl($(this).is(":checked")));
         });

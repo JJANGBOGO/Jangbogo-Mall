@@ -367,8 +367,8 @@ public class UserController {
 //            return "redirect:/user/info";
 //        }
         try {
-            int idx = (int) session.getAttribute("idx");
-            User user = userService.selectUser(idx);
+//            int idx = (int) session.getAttribute("idx");
+            User user = userService.selectUser(36);
             m.addAttribute("user", user);
 
             return "user/modify";
@@ -382,7 +382,7 @@ public class UserController {
 
     @PostMapping("/user/modify")
     public String modifyUser(User user, HttpSession session, RedirectAttributes rattr) {
-        log.info("modify user...." + user);
+        log.info("회원수정....." + user);
 
 //        try {
 //            user.setIdx((int) session.getAttribute("idx"));
@@ -396,7 +396,8 @@ public class UserController {
 //            e.printStackTrace();
 //        }
 
-        return "user/modify";
+//        return "user/modify";
+        return "";
     }
 
     //세션 저장

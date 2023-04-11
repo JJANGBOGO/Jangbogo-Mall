@@ -49,7 +49,7 @@
                                         placeholder="닉네임을 입력해주세요"
                                 />
                             </div>
-                            <div class="error-msg nick">닉네임.</div>
+                            <div class="error-msg nick"></div>
                         </div>
                         <div class="btn-space">
                             <button id="nick_duplicate_chk">
@@ -70,7 +70,7 @@
                                         placeholder="새 비밀번호를 입력해주세요"
                                 />
                             </div>
-                            <div class="error-msg pwd">새 비밀번호를 입력해 주세요.</div>
+                            <div class="error-msg pwd"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -87,7 +87,7 @@
                                         placeholder="새 비밀번호를 다시 입력해주세요"
                                 />
                             </div>
-                            <div class="error-msg pwd-confirm">새 비밀번호와 일치하지 않습니다.</div>
+                            <div class="error-msg pwd-confirm"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -105,7 +105,7 @@
                                         placeholder="휴대전화를 숫자만 입력해주세요"
                                 />
                             </div>
-                            <div class="error-msg mpno">휴대폰.</div>
+                            <div class="error-msg mpno"></div>
                         </div>
                         <div class="btn-space">
                             <button id="mpno_chk">
@@ -114,11 +114,12 @@
                         </div>
                     </div>
                     <div class="input-line agree-form">
-                        <label for="optional_chk" class="input-line">
+                        <label for="markt_agre_yn" class="input-line">
                             <input
                                     type="checkbox"
-                                    name="optional_agree"
-                                    id="optional_chk"
+                                    name="markt_agre_yn"
+                                    id="markt_agre_yn"
+                                    value="Y"
                                     hidden
                             />
                             <img
@@ -142,24 +143,192 @@
 </div>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="/js/regEx.js"></script>
+<script src="/js/member/regEx.js"></script>
+<script src="/js/member/common.js"></script>
 <script>
-    let imgUrl = (checked) => {
-        return checked ? "/img/checked.png" : "/img/unchecked.png";
-    };
-
     $(document).ready(function () {
-        $("#required_chk").click(function () {
-            $(".agree-checkbox1").attr("src", imgUrl($(this).is(":checked")));
-        });
+        //인증버튼들 비활성화
+        $("#nick_duplicate_chk").attr("disabled", true);
+        $("#mpno_chk").attr("disabled", true);
+        //초기 마케팅 수신동의 상태
+        $("#markt_agre_yn").attr("checked", "${user.markt_agre_yn}" == "Y" ? true : false);
+        $(".agree-checkbox2").attr("src", imgUrl($("#markt_agre_yn").is(":checked")));
 
-        $("#optional_chk").click(function () {
+        //커스텀 체크박스
+        $("#markt_agre_yn").click(function () {
             $(".agree-checkbox2").attr("src", imgUrl($(this).is(":checked")));
         });
 
-        let current_pwd = "${user.pwd}";
+        //keyup
+        //닉네임
+        $("#nick_nm").keyup(function () {
+            let nick = $("#nick_nm").val();
+            let err_ref = $(".error-msg.nick");
+            let prev_nick = "${user.nick_nm}";
 
-        $(".info-modify").click(function () { //수정버튼 클릭
+            if (nick == "") {
+                err_ref.html("닉네임을 입력해 주세요");
+                return false;
+            } else err_ref.empty();
+
+            if (!nick_reg.test(nick)) {
+                err_ref.html("닉네임은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요");
+            } else err_ref.empty();
+
+            $("#nick_duplicate_chk").attr("disabled", nick == prev_nick ? true : false);
+        });
+
+        //비번
+        $("#pwd").keyup(function () {
+            let pwd = $("#pwd").val();
+            let pwd_confirm = $("#pwd_confirm").val();
+            let pwd_err_ref = $(".error-msg.pwd");
+
+            if (pwd == "") {
+                pwd_err_ref.html("비밀번호를 입력해 주세요");
+                return false;
+            } else pwd_err_ref.empty();
+
+
+            if (!pwd_reg.test(pwd)) {
+                pwd_err_ref.html(
+                    "비밀번호를 6자 이상 16자 이하, 영어와 숫자의 조합으로 입력해 주세요. 특수문자 허용"
+                );
+                return false;
+            } else pwd_err_ref.empty();
+
+            if (pwd_confirm != pwd) {
+                $(".error-msg.pwd-confirm").html(
+                    "비밀번호와 동일한 값을 입력해 주세요"
+                );
+                return false;
+            } else {
+                $(".error-msg.pwd-confirm").empty();
+            }
+        });
+
+        //비번확인
+        $("#pwd_confirm").keyup(function () {
+            let pwd = $("#pwd").val();
+            let pwd_confirm = $("#pwd_confirm").val();
+            let err_ref = $(".error-msg.pwd-confirm");
+
+            if (pwd_confirm == "") {
+                err_ref.html("비밀번호 확인을 입력해 주세요");
+                return false;
+            } else err_ref.empty();
+
+            if (pwd_confirm != pwd) {
+                err_ref.html("비밀번호와 동일한 값을 입력해 주세요");
+                return false;
+            } else err_ref.empty();
+        });
+
+        //휴대전화
+        $("#mpno").keyup(function () {
+            let mpno = $("#mpno").val();
+            let err_ref = $(".error-msg.mpno");
+            let prev_mpno = "${user.mpno}";
+
+            if (mpno == "") {
+                err_ref.html("휴대전화를 입력해 주세요");
+                return false;
+            } else err_ref.empty();
+
+            if (!mpno_reg.test(mpno)) {
+                err_ref.html("휴대전화 형식에 맞춰 입력해 주세요 (-제외 숫자만)");
+                return false;
+            } else err_ref.empty();
+
+            $("#mpno_chk").attr("disabled", mpno == prev_mpno ? true : false);
+        });
+
+        //닉네임 중복검사
+        $("#nick_duplicate_chk").click(function (e) {
+            e.preventDefault(); //form 전송 방지
+            let nick_ref = $("#nick_nm");
+
+            //닉네임
+            if (nick_ref.val() == "") {
+                alert("닉네임을 입력해 주세요");
+                nick_ref.focus();
+                return false;
+            }
+
+            if (!nick_reg.test(nick_ref.val())) {
+                alert("닉네임은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요");
+                nick_ref.focus();
+                return false;
+            }
+
+            $.ajax({
+                url: '/user/duplicate/nickname',
+                data: {nick_nm: nick_ref.val()},
+                type: 'POST',
+                success: function (result) {
+                    if (result == "OK") {
+                        alert("사용 가능한 닉네임입니다.");
+                        $("#nick_duplicate_chk").attr("disabled", true); //버튼 비활성화
+                        nick_ref.attr("readonly", true); //인풋 비활성화
+                    } else {
+                        alert("이미 사용중인 닉네임입니다.");
+                        nick_ref.focus();
+                    }
+                },
+                error: function (err) {
+                    alert("error: ", err);
+                }
+            }); //$.ajax
+        });
+
+        //휴대전화 인증 검사
+        $("#mpno_chk").click(function (e) {
+            e.preventDefault();
+            let mpno_ref = $("#mpno");
+
+            if (mpno_ref.val() == "") {
+                alert("휴대전화번호를 입력해주세요");
+                mpno_ref.focus();
+                return false;
+            }
+
+            if (!mpno_reg.test(mpno_ref.val())) {
+                alert("휴대전화형식을 지켜주세요. -제외 숫자만");
+                mpno_ref.focus();
+                return false;
+            }
+
+            $.ajax({
+                url: '/chk/mpno',
+                data: JSON.stringify({to: mpno_ref.val()}), // 객체를 전송할때는 stringify() 필요, @RequestBody때문
+                type: 'POST',
+                contentType: "application/json",
+                success: function (result) { // test, 문자열 온다.
+                    alert("인증번호 전송에 성공했습니다");
+                    console.log(result, result.numStr);
+                    mpno_verify_num = result.numStr;
+                    $("#mpno").closest(".input-box").append('<div class="input">' +
+                        '<input id="mpno_verify" type="text" placeholder="인증번호를 입력해 주세요">' +
+                        '</div><div class="error-msg mpno-verify"></div>');
+                },
+                error: function (err) {
+                    alert("오류가 발생했습니다. 다시 시도해 주세요");
+                }
+            }); //$.ajax
+        });
+
+        $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
+            if ($("#mpno_verify").val() == mpno_verify_num) {
+                $(".error-msg.mpno-verify").html("인증되었습니다");
+                $(".error-msg.mpno-verify").css('color', 'green');
+                $("#mpno_chk").attr("disabled", true);
+                $("#mpno").attr('readonly', true);
+
+            }
+        })
+
+        $(".info-modify").click(function (e) { //수정버튼 클릭
+            e.preventDefault();
             let nick_ref = $("#nick_nm");
 
             if (nick_ref.val() == "") {
