@@ -29,7 +29,6 @@ public class SellerServiceImpl implements SellerService{
 
     @Override
     public int updateSellerDtl (SellerDtl detail) throws Exception {
-
         SellerDtl selerDtl = getSellerDtl(detail.getSeler_idx()); //user_idx로 상세정보 탐색
         if (selerDtl == null) return insertSellerDtl(detail); //정보가 없을 경우 새로 insert
         return dao.updateSellerDtl(detail); //수정

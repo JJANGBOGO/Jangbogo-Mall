@@ -79,6 +79,13 @@ public class SellerController {
     @GetMapping("/seller/read/brnd")
     public String readBrndView(HttpServletRequest req, Model m) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
+
+        try {
+            Seller seller = service.getSellerByIdx(6); //추후 세션에서 받아오는 걸로 수정
+            m.addAttribute("seller", seller);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "/seller/readBrnd";
     }
 
@@ -121,14 +128,7 @@ public class SellerController {
         int idx = (int) session.getAttribute("idx");
         String email = (String) session.getAttribute("email"); //이메일 얻기
         try {
-//            Seller seller = service.verifySeller(email, pwd); //비번 인증
-//            if (seller != null) {
-//                if (service.withdrawSeller(idx, pwd) == 0) {
-//                    throw new Exception("withdraw failed");
-//                }
-//                rattr.addFlashAttribute("msg", "SELER_WITHDRAW_OK"); //탈퇴완료
-//                return "redirect:/";
-//            }
+//          TODO:: 구현해야 함
             rattr.addFlashAttribute("msg", "SELLER_NOT_FOUND"); //판매자 존재 X
             return "redirect:/";
 
