@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="/css/myPage/baseLayout.css"/>
     <link rel="stylesheet" href="/css/myPage/sidebar.css"/>
     <link rel="stylesheet" href="/css/myPage/modifyUser.css"/>
-    <%--    경로에 warning이 뜨면 카멜케이스로 명명 수정한다. mypage(x) myPage(o). 어길시 css 404--%>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
@@ -17,7 +16,7 @@
             <h2>개인 정보 수정</h2>
         </div>
         <div class="check-pwd-content">
-            <form class="check-pwd-form" action="">
+            <form id="modify_user" class="check-pwd-form" action="/user/modify" method="post">
                 <div class="center-padding">
                     <div class="input-line">
                         <div class="input-label">
@@ -29,7 +28,6 @@
                                         id="email"
                                         name="email"
                                         type="text"
-                                <%--                                        추후 로그인된 값으로 수정--%>
                                         value="${user.email}"
                                         readonly
                                 />
@@ -39,7 +37,7 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="email">닉네임</label>
+                            <label for="nick_nm">닉네임</label>
                         </div>
                         <div class="input-box">
                             <div class="input">
@@ -51,6 +49,7 @@
                                         placeholder="닉네임을 입력해주세요"
                                 />
                             </div>
+                            <div class="error-msg nick">닉네임.</div>
                         </div>
                         <div class="btn-space">
                             <button id="nick_duplicate_chk">
@@ -71,6 +70,7 @@
                                         placeholder="새 비밀번호를 입력해주세요"
                                 />
                             </div>
+                            <div class="error-msg pwd">새 비밀번호를 입력해 주세요.</div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -87,28 +87,28 @@
                                         placeholder="새 비밀번호를 다시 입력해주세요"
                                 />
                             </div>
-                            <!-- 없었다가 에러 시 참조 얻어서 append를 한다. 그렇지 않으면 영역이 깨짐 -->
-                            <div class="error-msg">새 비밀번호와 일치하지 않습니다.</div>
+                            <div class="error-msg pwd-confirm">새 비밀번호와 일치하지 않습니다.</div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="phone">휴대전화</label>
+                            <label for="mpno">휴대전화</label>
                         </div>
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        id="phone"
+                                        id="mpno"
                                         type="text"
-                                        name="email"
+                                        name="mpno"
                                         value="${user.mpno}"
                                         placeholder="휴대전화를 숫자만 입력해주세요"
                                 />
                             </div>
+                            <div class="error-msg mpno">휴대폰.</div>
                         </div>
                         <div class="btn-space">
-                            <button>
+                            <button id="mpno_chk">
                                 다른 번호로 인증
                             </button>
                         </div>
@@ -159,10 +159,74 @@
 
         let current_pwd = "${user.pwd}";
 
-        //submit
-        /*
-        * form submit할 때 새 비밀번호와 비밀번호 확인이 둘 다 ""면 #pwd.val()에 current_pwd를 넣는다.
-        * */
+        $(".info-modify").click(function () { //수정버튼 클릭
+            let nick_ref = $("#nick_nm");
+
+            if (nick_ref.val() == "") {
+                alert("닉네임을 입력해 주세요");
+                nick_ref.focus();
+                return false;
+            }
+
+            if (!nick_reg.test(nick_ref.val())) {
+                alert(
+                    "닉네임은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요"
+                );
+                nick_ref.focus();
+                return false;
+            }
+
+            if (!$("#nick_duplicate_chk").is(":disabled")) {
+                alert("닉네임 중복 검사를 해주세요");
+                nick_ref.focus();
+                return false;
+            }
+
+            let pwd_ref = $("#pwd");
+            //비번
+            if (pwd_ref.val() != "" && !pwd_reg.test(pwd_ref.val())) {
+                alert(
+                    "비밀번호를 6자 이상 16자 이하, 영어와 숫자의 조합으로 입력해 주세요. 특수문자 허용"
+                );
+                pwd_ref.focus();
+                return false;
+            }
+
+            let pwd_confirm_ref = $("#pwd_confirm");
+
+            //비번 확인
+            if (pwd_ref.val() != pwd_confirm_ref.val()) {
+                alert("동일한 비밀번호를 입력해 주세요");
+                pwd_confirm_ref.focus();
+                return false;
+            }
+
+            //휴대전화 인증
+            let mpno_ref = $("#mpno");
+            if (mpno_ref.val() == "") {
+                alert("휴대전화를 입력해 주세요");
+                mpno_ref.focus();
+                return false;
+            }
+
+            if (!mpno_reg.test(mpno_ref.val())) {
+                alert("휴대전화 형식에 맞춰 입력해 주세요 (-제외 숫자만)");
+                mpno_ref.focus();
+                return false;
+            }
+
+            if (!$("#mpno_chk").is(":disabled")) {
+                alert("휴대전화 인증을 해주세요");
+                return false;
+            }
+
+            //통과
+            let prev_pwd = "${user.pwd}";
+            if (pwd_ref.val() == "") pwd_ref.val(prev_pwd); //새 비밀번호를 입력하지 않은 경우 기존 비밀번호를 넣는다.
+
+            $("#modify_user").submit();
+
+        });
 
     });
 </script>

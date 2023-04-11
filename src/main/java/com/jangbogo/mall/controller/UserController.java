@@ -384,17 +384,17 @@ public class UserController {
     public String modifyUser(User user, HttpSession session, RedirectAttributes rattr) {
         log.info("modify user...." + user);
 
-        try {
-            user.setIdx((int) session.getAttribute("idx"));
-            userService.updateUser(user); //회원 업데이트
-
-            session.removeAttribute("modify"); //수정 성공시 해당 세션도 삭제
-            rattr.addFlashAttribute("msg", "OK"); // 수정완료 메세지
-            return "redirect:/user/info"; //이전 페이지로 돌아가기
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            user.setIdx((int) session.getAttribute("idx"));
+//            userService.updateUser(user); //회원 업데이트
+//
+//            session.removeAttribute("modify"); //수정 성공시 해당 세션도 삭제
+//            rattr.addFlashAttribute("msg", "OK"); // 수정완료 메세지
+//            return "redirect:/user/info"; //이전 페이지로 돌아가기
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         return "user/modify";
     }

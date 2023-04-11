@@ -118,3 +118,10 @@
 .check-pwd-form .center-padding .input-line i {
     color: var(--primary-color);
 }
+
+/* disabled css*/
+.check-pwd-form .input-box .input input:read-only,
+.check-pwd-form .input-line .btn-space button:disabled
+{
+    opacity: 0.4;
+}
