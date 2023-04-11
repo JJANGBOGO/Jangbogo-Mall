@@ -44,9 +44,10 @@
             }
 
             /* 모든 주문 관련 정보 섹션 태그 */
-            .order-section {
+            .order-section:not(:first-of-type) {
                 margin-top: 75px;
             }
+
             .order-section__title {
                 display: flex;
                 justify-content: space-between;
@@ -167,6 +168,31 @@
                 height: 78px;
             }
 
+            /* 주문자 정보 섹션 */
+            #ordererInform {
+                padding: 10px 0;
+            }
+            .orderer-section {
+                display: flex;
+                justify-content: left;
+                align-items: flex-start;
+                padding: 8px 0;
+            }
+            .orderer-inform {
+                width: 160px;
+                font-size: 14px;
+                font-weight: 600;
+                margin-right: 30px;
+            }
+            .orderer-value {
+                width: 70%;
+                font-size: 14px;
+            }
+            .orderer-value__paragraph > p {
+                font-size: 12px;
+                line-height: 21px;
+                color: rgb(102, 102, 102);
+            }
             /* 주문서 관련 주석 */
             .paragraph {
                 padding-left: 16px;
@@ -222,10 +248,8 @@
             </section>
             <section class="order-section">
                 <div class="order-section__title"><h3>주문자 정보</h3></div>
-                <div class="order-section__content">
-                    <ul id="ordererInform">
+                <div class="order-section__content" id="ordererInform">
 
-                    </ul>
                 </div>
             </section>
             <section class="order-section">
@@ -310,7 +334,7 @@
         </div>
         <script>
             // 메서드명 : listToHtml
-            // 기   능 : 장바구니 목록 및 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
+            // 기   능 : 주문 상품 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
             // 매개변수 : items - cartDto
             // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
             let listToHtml = (items) => {
@@ -338,23 +362,80 @@
                 return tmp += '</ul>';
             }
 
-            let showList = (user_idx) => {
+            // 메서드명 : ordererToHtml
+            // 기   능 : 주문자 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
+            // 매개변수 : ordererInfo - Object(User)
+            // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
+            let ordererToHtml = (ordererInfo) => {
+                // 변수명 : tmp
+                // 저장값 : 동적으로 생성할 html 태그(문자열)
+                let tmp = "";
+
+                tmp += "<div class='orderer-section'>"
+                tmp += "<div class='orderer-inform'>"
+                tmp += "<span>보내는 분</span>"
+                tmp += "</div>"
+                tmp += "<div class='orderer-value'>"
+                tmp += "<span>" + ordererInfo.nick_nm + "</span>"
+                tmp += "</div>"
+                tmp += "</div>"
+                tmp += "<div class='orderer-section'>"
+                tmp += "<div class='orderer-inform'>"
+                tmp += "<span>휴대폰</span>"
+                tmp += "</div>"
+                tmp += "<div class='orderer-value'>"
+                tmp += "<span>" + ordererInfo.mpno + "</span>"
+                tmp += "</div>"
+                tmp += "</div>"
+                tmp += "<div class='orderer-section'>"
+                tmp += "<div class='orderer-inform'>"
+                tmp += "<span>이메일</span>"
+                tmp += "</div>"
+                tmp += "<div class='orderer-value'>"
+                tmp += "<span>" + ordererInfo.email + "</span>"
+                tmp += "<div class='orderer-value__paragraph'>"
+                tmp += "<p>이메일을 통해 주문처리과정을 보내드립니다.</p>"
+                tmp += "<p>정보 변경은 마이페이지 > 개인정보 수정 메뉴에서 가능합니다.</p>"
+                tmp += "</div>"
+                tmp += "</div>"
+                tmp += "</div>"
+                 ;
+            return tmp;
+            }
+
+            let showItemList = (user_idx) => {
                 // ajax 요청(비동기)
                 $.ajax({
                     type:'GET',
                     url:'/cart/list?user_idx=' + user_idx,
-                    success: (result) => {  // 성공 응답이 오면, 장바구니 목록, 주문정보, 체크박스 정보를 페이지에 랜더링하기
-                        $('#orderItems').html(listToHtml(result));       // listToHtml메서드 호출
+                    success: (result) => {                                              // 성공 응답이 오면, 주문 상품 정보를 페이지에 랜더링하기
+                        $('#orderItems').html(listToHtml(result));                      // listToHtml메서드 호출
                     },
-                    error : function() { alert("comment get error");}   // 실패 응답이 오면, 경고창 띄우기
+                    error : function() { alert("showItemList 실패 응답 : 회원번호 누락");}   // 실패 응답이 오면, 경고창 띄우기
+                });  // $.ajax() end
+            }
+
+            let showOrdererInfo = (user_idx) => {
+                // ajax 요청(비동기)
+                $.ajax({
+                    type:'GET',
+                    url:'/order/orderer?user_idx=' + user_idx,
+                    success: (result) => {                                              // 성공 응답이 오면, 주문자 정보를 페이지에 랜더링하기
+                        $('#ordererInform').html(ordererToHtml(result));                // ordererToHtml메서드 호출
+                    },
+                    error : function() { alert("showOrderInfo 실패 응답 : 회원번호 누락");}   // 실패 응답이 오면, 경고창 띄우기
                 });  // $.ajax() end
             }
 
             $(document).ready(() => {
-                // 회원번호(user_idx) 하드코딩
-                // 세션에서 회원번호를 가져와야 한다. 세션 연동 시, 추후 테스트 필요.
-                // data-uid는 장바구니가 비었을 경우도 있기 때문에 사용할 수 없다.
-                showList(1234);
+                // TODO : 세션에서 회원번호를 가져와야 한다. 세션 연동 시, 추후 테스트 필요.
+                // 변수명 : idx
+                // 저장값 : 세션에 저장된 회원번호(user_idx)
+                let idx = `${idx}`;
+
+                // 메서드 호출
+                showItemList(idx);
+                showOrdererInfo(idx);
             })
         </script>
         <%@ include file="/WEB-INF/views/include/footer.jsp" %>
