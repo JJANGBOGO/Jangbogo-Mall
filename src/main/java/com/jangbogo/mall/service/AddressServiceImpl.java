@@ -19,7 +19,17 @@ public class AddressServiceImpl implements AddressService{
     }
 
     @Override
-    public List<Address> selAddrList (int user_idx) throws Exception {
+    public List<Address> selAddrList (Integer user_idx) throws Exception {
         return dao.selAddrList(user_idx);
+    }
+
+    @Override
+    public Address selAddr (Integer idx) throws Exception {
+        return dao.selAddr(idx);
+    }
+
+    @Override
+    public Integer deleteAddr (Integer idx, Integer user_idx) throws Exception {
+        return dao.deleteAddr(idx,user_idx);
     }
 }

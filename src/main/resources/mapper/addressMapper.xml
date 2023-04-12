@@ -9,8 +9,25 @@
         VALUES (#{user_idx}, #{zpcd}, #{addr_base}, #{addr_dtl}, #{rcpr_nm}, #{rcpr_mobl_no}, #{is_default_yn});
     </insert>
 
-    <select id="selAddrList" resultType="Address">
-        SELECT * FROM DLVPN WHERE USER_IDX = #{user_idx};
+    <select id="selAddrList" parameterType="int" resultType="Address">
+        SELECT *
+        FROM DLVPN
+        WHERE USER_IDX = #{user_idx} AND NOT STATE_CD = 3;
     </select>
+
+    <select id="selAddr" parameterType="map" resultType="Address">
+        SELECT *
+        FROM DLVPN
+        WHERE IDX = #{idx}
+    </select>
+
+    <update id="deleteAddr" parameterType="map">
+        UPDATE DLVPN
+        SET STATE_CD = 3
+        WHERE IDX = #{idx} AND USER_IDX = #{user_idx};
+    </update>
+
+
+
 </mapper>
 

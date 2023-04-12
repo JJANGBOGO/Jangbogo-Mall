@@ -8,6 +8,9 @@ public interface AddressService {
 
     int insertAddr (Address addr) throws Exception;
 
-    List<Address> selAddrList (int user_idx) throws Exception;
+    List<Address> selAddrList (Integer user_idx) throws Exception;
 
+    Address selAddr (Integer idx) throws Exception;
+
+    Integer deleteAddr (Integer idx, Integer user_idx) throws Exception;
 }
