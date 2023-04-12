@@ -35,7 +35,7 @@
                 <div class="c">
                     <a href="" id="name${product.idx}">${product.name}</a>
                     <div class="d">
-    <%--                    만약 상품 할인율이 0이면 --%>
+                        <%--만약 상품 할인율이 0이면 --%>
                         <c:choose>
                             <c:when test="${product.dc_rate != 0}">
                                 <span class="span1" id="dc_rate${product.idx}">${product.dc_rate}%</span>
@@ -62,7 +62,6 @@
                 </div>
             </div>
         </div>
-
     </c:forEach>
     <div class="background">
         <div class="popup">
@@ -113,8 +112,6 @@
     </div>
 
 
-    <%--<div style="text-align:center">--%>
-
     <script>
         let msg = "${msg}"
         if(msg=="add") alert("장바구니에 상품이 담겼습니다");
@@ -122,7 +119,6 @@
         function remove(prod_idx) {
             if (!confirm("정말로 삭제하시겠습니까")) return;
             let form = document.createElement("form");
-
             form.setAttribute("action", '<c:url value="/mypage/removeWishlist?prod_idx='+prod_idx+'"/>')
             form.setAttribute("method", "post");
             document.body.appendChild(form);
@@ -165,13 +161,11 @@
             document.querySelector(".span22").innerHTML = dc_prc; // 할인된 가격
             document.querySelector(".span33").innerHTML = prc; // 원래 가격
             document.querySelector('.price').innerHTML = parseInt(dc_prc.replace(',', "")).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 정규식으로 숫자만
-            // console.log(parseInt(dc_prc.replace(',', "")).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
             document.querySelector('.hidden_input').value = ioo;
             // 모달창 보이게 클레스 이름 변경
             document.querySelector(".background").className = "background show";
 
         }
-
 
         // 모달 취소버튼
         document.querySelector(".cancle-btn").addEventListener("click", close); // document.querySelector("#show").addEventListener("click", show);
