@@ -55,5 +55,10 @@ public class SellerServiceImpl implements SellerService{
         return dao.insertSeller(seller);
     }
 
+    @Override
+    public int updateSellerBrnd (Seller seller) throws Exception {
+        return dao.updateSellerBrnd(seller);
+    }
+
 
 }

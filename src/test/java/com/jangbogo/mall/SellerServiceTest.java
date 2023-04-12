@@ -104,5 +104,20 @@ public class SellerServiceTest {
         assertTrue(result != 0);
     }
 
+    @Test
+    public void updateSellerBrnd () throws Exception {
+        Seller seller = Seller.builder()
+                .idx(6)
+                .email("jinvicky1007")
+                .cpnm("service테스트")
+                .brnd_cn("서비스테스트")
+                .brnd_bnr_upload_path("default_banner.jpeg")
+                .brnd_upload_path("default.png")
+                .build();
+        int result = service.updateSellerBrnd(seller);
+        log.info("result......." + result);
+        assertTrue(result != 0);
+    }
+
 
 }

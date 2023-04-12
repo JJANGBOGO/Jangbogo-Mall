@@ -25,4 +25,7 @@ public interface SellerService {
 
     //판매자 추가
     int registerSeller (Seller seller) throws Exception;
+
+    //판매자 브랜드 수정
+    int updateSellerBrnd (Seller seller) throws Exception;
 }
