@@ -30,10 +30,16 @@ public class OrderController {
 
     // 메서드명 : goToOrderForm
     // 기   능 : 주문서 작성 페이지로 이동
+    // 매개변수 : HttpSession session
     // 반환타입 : String
-    // 요청URL : /order/checkout
+    // 요청URL : /order/checkout GET
     @GetMapping("/order/checkout")
-    public String goToOrderForm() { return "/order/orderForm"; }
+    public String goToOrderForm(HttpSession session) {
+        // 1. 로그인 확인 - loginCheck메서드가 false를 반환하는 경우, 로그인 페이지로 리다이렉트
+        if(!loginCheck(session)) return "redirect:/user/login";
+        // 2. 로그인 확인 완료 시, 주문서 작성 페이지로 이동
+        return "/order/orderForm";
+    }
 
     // 메서드명 : getItemList
     // 기   능 : 주문상품 목록을 불러오는 ajax요청을 처리한다.
@@ -136,5 +142,14 @@ public class OrderController {
             return new ResponseEntity<Map>(map, HttpStatus.BAD_REQUEST);
         }
         // 2. 소프트 코딩
+    }
+
+    // 메서드명 : loginCheck
+    // 기   능 : 로그인 상태 여부 확인
+    // 매개변수 : HttpSession session
+    // 반환타입 : boolean
+    private static boolean loginCheck(HttpSession session) {
+        // session에 저장된 idx값이 null이 아니면 true 반환
+        return session.getAttribute("idx") != null;
     }
 }
