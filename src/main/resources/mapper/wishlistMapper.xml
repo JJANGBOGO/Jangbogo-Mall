@@ -9,6 +9,7 @@
         select PROD_IDX, USER_IDX, REG_TM, CRT_TM, CRT_IDX, UPT_TM, UPT_IDX
         from WISHLIST
         where USER_IDX = #{idx}
+        order by CRT_TM;
     </select>
 
     <delete id="delete" parameterType="map">
