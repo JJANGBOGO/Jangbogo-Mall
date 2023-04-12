@@ -209,7 +209,7 @@
                                         width="20"
                                         height="20"
                                 />
-                                <span>개인정보 수집 및 이용 동의수 (필수)</span>
+                                <span>개인정보 수집 및 이용 동의 (필수)</span>
                             </label>
                             <label for="check_4" class="input-line">
                                 <input type="checkbox" id="check_4" class="normal" name="markt_agre_yn" hidden

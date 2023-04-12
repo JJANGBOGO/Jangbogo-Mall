@@ -43,8 +43,18 @@
     </insert>
 
     <select id="getSellerDtl" resultType="SellerDtl">
-        SELECT * FROM SELER_DTL WHERE SELER_IDX = #{seler_idx}
+        SELECT *
+        FROM SELER_DTL
+        WHERE SELER_IDX = #{seler_idx}
     </select>
+
+    <insert id="insertSeller" parameterType="Seller">
+        INSERT INTO SELER (AUTH_IDX, EMAIL, CPNM, REPR_NM, PWD, MPNO, REPR_TELNO, BIZ_TYPE, BRNO, SLE_BIZ_NO,
+                           BSPLC_ZPCD, BSPLC_BASE, BSPLC_DTL, SELER_AGRE_YN, BRND_BNR_UPLOAD_PATH, BRND_UPLOAD_PATH,
+                           BRND_CN, PWD_UPT_TM)
+        VALUES (2, #{email}, #{cpnm}, #{repr_nm}, #{pwd}, #{mpno}, #{repr_telno}, #{biz_type}, #{brno}, #{sle_biz_no},
+                #{bsplc_zpcd}, #{bsplc_base}, #{bsplc_dtl}, #{seler_agre_yn}, #{brnd_bnr_upload_path},#{brnd_upload_path}, #{brnd_cn}, now());
+    </insert>
 
 
 </mapper>

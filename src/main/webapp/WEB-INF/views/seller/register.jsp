@@ -56,6 +56,24 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
+                            <label for="repr_nm">대표 이름<span>*</span></label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name="repr_nm"
+                                        id="repr_nm"
+                                        type="text"
+                                        placeholder="대표자 이름을 입력해 주세요"
+                                />
+                            </div>
+                            <div class="error-msg cpnm"></div>
+                        </div>
+                        <div class="btn-space">
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
                             <label for="pwd">비밀번호<span>*</span></label>
                         </div>
                         <div class="input-box">
@@ -125,12 +143,12 @@
                         </div>
                         <fieldset>
                             <label>
-                                <input type="radio" name="type" value="user" checked/>
+                                <input type="radio" name="biz_type" value="1" checked/>
                                 <span>개인사업자</span>
                             </label>
 
                             <label>
-                                <input type="radio" name="type" value="seller"/>
+                                <input type="radio" name="biz_type" value="2"/>
                                 <span>법인사업자</span>
                             </label>
                         </fieldset>
@@ -298,7 +316,7 @@
                                         width="20"
                                         height="20"
                                 />
-                                <span>만 14세 이상입니다.</span>
+                                <span>만 14세 이상입니다 (필수)</span>
                             </label>
                             <label for="check_2" class="input-line">
                                 <input type="checkbox" name="seler_agre_yn" value="Y" id="check_2" class="normal"
@@ -309,7 +327,18 @@
                                         width="20"
                                         height="20"
                                 />
-                                <span>판매자 이용약관 동의</span>
+                                <span>판매자 이용약관 동의 (필수)</span>
+                            </label>
+                            <label for="check_3" class="input-line">
+                                <input type="checkbox" id="check_3" class="normal" name="user_agre_yn" hidden
+                                       value="Y"/>
+                                <img
+                                        class="agree-checkbox"
+                                        src="/img/unchecked.png"
+                                        width="20"
+                                        height="20"
+                                />
+                                <span>개인정보 수집 및 이용 동의 (필수)</span>
                             </label>
                         </div>
                     </div>

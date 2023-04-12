@@ -25,7 +25,7 @@ public class Seller {
     private String pwd; //비밀번호
 
     private String mpno; //휴대전화
-    private String repr_tellno; //회사대표전화
+    private String repr_telno; //회사대표전화
 
     private int biz_type; //사업자유형 1:개인사업, 2:법인사업
 
@@ -40,7 +40,7 @@ public class Seller {
     private String acc_no; //계좌번호
     private String acc_nm; //주인이름
 
-    private boolean seler_agre_yn; //판매자동의여부
+    private String seler_agre_yn; //판매자동의여부
 
     private String brnd_bnr_upload_path;  //브랜드배너파일경로
     private String brnd_upload_path;  //브랜드프로필파일경로

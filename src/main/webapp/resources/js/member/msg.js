@@ -22,8 +22,8 @@ let chk_agre_required = "필수 동의 항목에 모두 동의해 주세요";
 
 //ok
 let available_nick = "사용 가능한 닉네임입니다";
-
 let available_email = "사용 가능한 이메일입니다";
+
 //duplicated
 let duplicate_nick = "이미 사용중인 닉네임입니다";
 let duplicate_email = "이미 사용중인 이메일입니다";

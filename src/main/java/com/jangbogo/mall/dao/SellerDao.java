@@ -22,4 +22,7 @@ public interface SellerDao {
 
     //판매자 상세 조회
     SellerDtl getSellerDtl (Integer seler_idx) throws Exception;
+
+    //판매자 추가
+    int insertSeller (Seller seller) throws Exception;
 }

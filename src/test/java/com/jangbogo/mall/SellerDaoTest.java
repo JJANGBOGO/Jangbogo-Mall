@@ -64,7 +64,7 @@ public class SellerDaoTest {
     }
 
     @Test //ok
-    public void insertSellerDtl () throws Exception {
+    public void insertSellerDtl() throws Exception {
         SellerDtl dtl = SellerDtl.builder()
                 .seler_idx(6)
                 .guid_nm("담당자100")
@@ -78,10 +78,35 @@ public class SellerDaoTest {
     }
 
     @Test //ok
-    public void getSellerDtl () throws Exception {
+    public void getSellerDtl() throws Exception {
         SellerDtl dtl = dao.getSellerDtl(6);
         log.info("dtl..." + dtl);
         assertTrue(dtl != null);
+    }
+
+    @Test
+    public void insertSeller() throws Exception {
+        Seller seller = Seller.builder()
+                .email("seller1@naver.com")
+                .cpnm("sellerCompany")
+                .repr_nm("대표남궁진")
+                .pwd("sellerpwd")
+                .mpno("sellerMpno")
+                .repr_telno("대표연락처")
+                .biz_type(1) //개인
+                .brno("787978972424") //사업자번호
+                .sle_biz_no("경기_24242") //통신판매
+                .bsplc_zpcd("16836")
+                .bsplc_base("풍덕천 어딘가")
+                .bsplc_dtl("805동")
+                .seler_agre_yn("Y") //필수 동의
+                .brnd_bnr_upload_path("/img/default_banner.jpeg")
+                .brnd_upload_path("/img/default_profile.png")
+                .brnd_cn("진이는 취직을 원해요")
+                .build();
+        int result = dao.insertSeller(seller);
+        log.info("result..." + result);
+        assertTrue(result != 0);
     }
 
 
