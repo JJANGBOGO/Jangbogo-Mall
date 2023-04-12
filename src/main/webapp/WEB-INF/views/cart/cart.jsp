@@ -489,9 +489,8 @@
             // 이벤트 대상 : input[name=order] 주문 버튼
             // 이벤트 : click
             // 이벤트 핸들러 기능 : '주문' 버튼 클릭 시, 주문서 작성 페이지로 이동
-            $(document).on("click", "input[name=order]", (e) => { // 회원번호와 상품번호, 그리고 상품개수를 html태그의 data속성에서 가져와야 한다.
-                let link = "/order/checkout";
-                location.href= link;
+            $(document).on("click", "input[name=order]", () => {
+                location.href= "/order/checkout";
             });
         })
     </script>
