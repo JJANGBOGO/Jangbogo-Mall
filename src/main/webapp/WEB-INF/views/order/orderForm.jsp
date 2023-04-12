@@ -407,7 +407,7 @@
                 // ajax 요청(비동기)
                 $.ajax({
                     type:'GET',
-                    url:'/cart/list?user_idx=' + user_idx,
+                    url:'/order/list?user_idx=' + user_idx,
                     success: (result) => {                                              // 성공 응답이 오면, 주문 상품 정보를 페이지에 랜더링하기
                         $('#orderItems').html(listToHtml(result));                      // listToHtml메서드 호출
                     },
