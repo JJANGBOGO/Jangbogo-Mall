@@ -136,7 +136,7 @@ public class UploadController {
     }
 
     //특정한 파일 이름을 받아서 이미지 데이터를 전송하는 코드
-    @GetMapping("/display")
+    @GetMapping(value = {"/display", "/{view_dir}/display"}) // view 폴더 추가
     @ResponseBody
     public ResponseEntity<byte[]> getFile(String fileName) {
         log.info("fileName: " + fileName); // 받아온 파일 이름 확인

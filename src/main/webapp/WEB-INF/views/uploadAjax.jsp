@@ -27,10 +27,6 @@
             padding: 10px;
         }
 
-        .uploadResult ul li img {
-            width: 20px;
-        }
-
         .uploadResult ul li span {
             color: white;
         }
@@ -74,12 +70,13 @@
     </ul>
 </div>
 
-<div class="bigPictureWrapper">
-    <%--    지니야 제발 이름좀 제대로 복붙을 하든지 확인을 좀 해라.ㅏ--%>
-    <div class="bigPicture">
+<%--<div class="bigPictureWrapper">--%>
+<%--    &lt;%&ndash;    지니야 제발 이름좀 제대로 복붙을 하든지 확인을 좀 해라.ㅏ&ndash;%&gt;--%>
+<%--    <div class="bigPicture">--%>
 
-    </div>
-</div>
+<%--    </div>--%>
+<%--</div>--%>
+<%--showImage()용--%>
 
 <button id="uploadBtn">Upload</button>
 
@@ -88,14 +85,14 @@
 <script>
     <%--    최상단에 위치해야 reference error가 안뜬다.--%>
 
-    function showImage(fileCallPath) {
-        // alert(fileCallPath);
-
-        $(".bigPictureWrapper").css("display", "flex").show();
-        $(".bigPicture")
-            .html("<img src='/display?fileName=" + encodeURI(fileCallPath) + "'>")
-            .animate({width: '100%', height: '100%'}, 1000); //애니메이션 효과를 추가한다.
-    }
+    // function showImage(fileCallPath) {
+    //     // alert(fileCallPath);
+    //
+    //     $(".bigPictureWrapper").css("display", "flex").show();
+    //     $(".bigPicture")
+    //         .html("<img src='/display?fileName=" + encodeURI(fileCallPath) + "'>")
+    //         .animate({width: '100%', height: '100%'}, 1000); //애니메이션 효과를 추가한다.
+    // }
 
     $(document).ready(function () { //도큐먼트가 로드되었을
 
@@ -158,10 +155,6 @@
             uploadResult.append(str);
         }
 
-
-
-
-
         $("#uploadBtn").on("click", function (e) { //업로드 버튼을 눌렀을 때 이벤트를 연결한다.
             var formData = new FormData();
             var inputFile = $("input[name='uploadFile']");
@@ -200,13 +193,13 @@
             });
         });
 
-        //원본 이미지 div 화면을 클릭 시 다시 사라지게 하는 이벤트 처리.
-        $(".bigPictureWrapper").on("click", function (e) {
-            $(".bigPicture").animate({width: '0%', height: '0%'}, 100);
-            setTimeout(() => {
-                $(this).hide();
-            }, 1000);
-        });
+        // //원본 이미지 div 화면을 클릭 시 다시 사라지게 하는 이벤트 처리.
+        // $(".bigPictureWrapper").on("click", function (e) {
+        //     $(".bigPicture").animate({width: '0%', height: '0%'}, 100);
+        //     setTimeout(() => {
+        //         $(this).hide();
+        //     }, 1000);
+        // });
 
         //span태그인 X를 클릭했을 떄 동작할 함수를 연결
         $(".uploadResult").on("click", "span", function(e) {
