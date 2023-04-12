@@ -22,14 +22,14 @@
         <div class="brnd-content">
             <div class="banner">
                 <img
-                        src="${seller.brnd_bnr_upload_path}"
+                        src="display?fileName=${seller.brnd_bnr_upload_path}"
                         alt="banner"
                 />
             </div>
             <div class="brnd-profile">
                 <div class="profile-circle">
                     <img
-                            src="${seller.brnd_upload_path}"
+                            src="display?fileName=${seller.brnd_upload_path}"
                             alt="profile"
                     />
                 </div>

@@ -23,21 +23,21 @@ public class SellerServiceTest {
     SellerService service;
 
     @Test //OK
-    public void withdrawSeller () throws Exception {
+    public void withdrawSeller() throws Exception {
         int result = service.withdrawSeller(8, "jinvicky1008");
         log.info("result=" + result);
         assertTrue(result != 0);
     }
 
     @Test //ok
-    public void getSellerByIdx () throws Exception {
+    public void getSellerByIdx() throws Exception {
         Seller seller = service.getSellerByIdx(8);
         log.info("seller=" + seller);
         assertTrue(seller != null);
     }
 
     @Test //ok
-    public void updateSeller () throws Exception {
+    public void updateSeller() throws Exception {
         Seller seller = Seller.builder()
                 .idx(8)
                 .email("jinvicky1008")
@@ -51,21 +51,21 @@ public class SellerServiceTest {
     }
 
     @Test //ok
-    public void insertSellerDtl () throws Exception {
-            SellerDtl dtl = SellerDtl.builder()
-                    .seler_idx(6)
-                    .guid_nm("담당자555")
-                    .guid_email("guid555@naver.com")
-                    .cllr_nm("cllr_진이55")
-                    .cllr_telno("cllr_진이번호55")
-                    .build();
-            int result = service.insertSellerDtl(dtl);
-            log.info("result" + result);
-            assertTrue(result != 0);
+    public void insertSellerDtl() throws Exception {
+        SellerDtl dtl = SellerDtl.builder()
+                .seler_idx(6)
+                .guid_nm("담당자555")
+                .guid_email("guid555@naver.com")
+                .cllr_nm("cllr_진이55")
+                .cllr_telno("cllr_진이번호55")
+                .build();
+        int result = service.insertSellerDtl(dtl);
+        log.info("result" + result);
+        assertTrue(result != 0);
     }
 
     @Test //ok
-    public void updateSellerDtl () throws Exception {
+    public void updateSellerDtl() throws Exception {
         SellerDtl dtl = SellerDtl.builder()
                 .seler_idx(6)
                 .guid_nm("바꿔주세요")
@@ -76,6 +76,31 @@ public class SellerServiceTest {
 
         int result = service.updateSellerDtl(dtl);
         log.info("result" + result);
+        assertTrue(result != 0);
+    }
+
+    @Test
+    public void insertSeller() throws Exception {
+        Seller seller = Seller.builder()
+                .email("seller100@naver.com")
+                .cpnm("sellerCompany100")
+                .repr_nm("대표남궁진")
+                .pwd("sellerpwd")
+                .mpno("sellerMpno")
+                .repr_telno("대표연락처")
+                .biz_type(1) //개인
+                .brno("787978972424") //사업자번호
+                .sle_biz_no("경기_24242") //통신판매
+                .bsplc_zpcd("16836")
+                .bsplc_base("풍덕천 어딘가")
+                .bsplc_dtl("805동")
+                .seler_agre_yn("Y") //필수 동의
+                .brnd_bnr_upload_path("2023%2F04%2F12%2Fs_193e04e3-72d9-4f1e-9807-eea281c0b2ce_26_%E1%84%86%E1%85%B5%E1%84%8B%E1%85%A9.png")
+                .brnd_upload_path("/img/default_profile.png")
+                .brnd_cn("진이는 취직을 원해요")
+                .build();
+        int result = service.registerSeller(seller);
+        log.info("result...." + result);
         assertTrue(result != 0);
     }
 

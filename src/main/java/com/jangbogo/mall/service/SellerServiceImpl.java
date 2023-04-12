@@ -4,6 +4,7 @@ import com.jangbogo.mall.dao.SellerDao;
 import com.jangbogo.mall.domain.Seller;
 import com.jangbogo.mall.domain.SellerDtl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,6 +12,9 @@ public class SellerServiceImpl implements SellerService{
 
     @Autowired
     SellerDao dao;
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public int withdrawSeller (Integer idx, String email) throws Exception {
@@ -33,6 +37,7 @@ public class SellerServiceImpl implements SellerService{
         if (selerDtl == null) return insertSellerDtl(detail); //정보가 없을 경우 새로 insert
         return dao.updateSellerDtl(detail); //수정
     }
+    // updateSeller랑 updateSellerDtl 합쳐야 함. 한 쪽이 다른 쪽으로 들어가든가.
 
     @Override
     public int insertSellerDtl (SellerDtl detail) throws Exception {
@@ -42,6 +47,12 @@ public class SellerServiceImpl implements SellerService{
     @Override
     public SellerDtl getSellerDtl (Integer seler_idx) throws Exception {
         return dao.getSellerDtl(seler_idx);
+    }
+
+    @Override
+    public int registerSeller (Seller seller) throws Exception  {
+        seller.setPwd(passwordEncoder.encode(seller.getPwd()));
+        return dao.insertSeller(seller);
     }
 
 

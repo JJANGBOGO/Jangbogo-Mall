@@ -267,7 +267,7 @@
                             <div class="input">
                                 <label class="upload-label" for="upload_bnr">브랜드 이미지 선택 <img src="/img/upload_dir.png"></label>
                                 <div class="upload-input bnr">
-                                    <input type="file" name="brnd_bnr_upload_path" id="upload_bnr">
+                                    <input type="file" name="upload_bnr" id="upload_bnr">
                                 </div>
                             </div>
                         </div>
@@ -286,9 +286,10 @@
                         </div>
                         <div class="input-box">
                             <div class="input">
-                                <label class="upload-label" for="upload_bnr">프로필 이미지 선택 <img src="/img/upload_dir.png"></label>
+                                <label class="upload-label" for="upload_profile">프로필 이미지 선택 <img
+                                        src="/img/upload_dir.png"></label>
                                 <div class="upload-input profile">
-                                    <input type="file" name="brnd_upload_path" id="upload_profile">
+                                    <input type="file" name="upload_profile" id="upload_profile">
                                 </div>
                             </div>
                         </div>
@@ -455,7 +456,7 @@
         $("#bnr_upload_btn").on("click", function (e) { //업로드 버튼을 눌렀을 때 이벤트를 연결한다.
             e.preventDefault();
             var formData = new FormData();
-            var inputFile = $("input[name='brnd_bnr_upload_path']");
+            var inputFile = $("input[name='upload_bnr']");
 
             checkFileList(inputFile[0].files, formData);
 
@@ -477,7 +478,7 @@
         $("#profile_upload_btn").on("click", function (e) {
             e.preventDefault();
             var formData = new FormData();
-            var inputFile = $("input[name='brnd_upload_path']");
+            var inputFile = $("input[name='upload_profile']");
 
             checkFileList(inputFile[0].files, formData);
 
@@ -493,6 +494,24 @@
                     $(".upload-input.profile").html(clone_profile.html()); //파일 초기화
                 }
             });
+        });
+
+        //가입하기 버튼
+        $(".reg-confirm").click(function (e) {
+            e.preventDefault();
+
+            let form = $("#seller_register");
+
+            let bnr_path = $(".upload-result.bnr ul li").data("upload-path");
+            let profile_path = $(".upload-result.profile ul li").data("upload-path");
+
+            let files = "<input type='hidden' name='brnd_bnr_upload_path' value=" + bnr_path + ">" +
+                "<input type='hidden' name='brnd_upload_path' value=" + profile_path + ">";
+
+            form.append(files); //form에 업로드 파일 정보 추가
+
+            form.submit();
+
         });
 
     });

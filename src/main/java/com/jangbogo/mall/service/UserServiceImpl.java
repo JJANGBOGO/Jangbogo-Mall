@@ -6,6 +6,7 @@ import com.jangbogo.mall.domain.Address;
 import com.jangbogo.mall.domain.Email;
 import com.jangbogo.mall.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
     EmailSender emailSender;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    BCryptPasswordEncoder passwordEncoder;
 
     @Override
     public int withdrawUser(int idx, String email) throws Exception {
@@ -92,11 +93,16 @@ public class UserServiceImpl implements UserService {
         final int SUCCESS = 1;
         final int FAILED = 0;
 
+        addr.setRcpr_nm(user.getNick_nm()); //수령자명
+        addr.setRcpr_mobl_no(user.getMpno()); //수령자전화번호
+        addr.setIs_default_yn("Y"); //최초 회원가입시 insert한 배송지가 기본배송지다.
+
+        user.setPwd(passwordEncoder.encode(user.getPwd()));
+
         int userResult = dao.insertUser(user); //성공시 idx 리턴
         int addrResult = addrDao.insertAddr(user.getIdx(), addr); //성공시 1
 
         return (userResult != 0 && addrResult != 0) ? SUCCESS : FAILED;
-//        원인: insertUser의 리턴값이 user의 idx 여서
     }
 
     @Override

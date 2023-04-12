@@ -137,12 +137,11 @@ public class UploadController {
     }
 
     //특정한 파일 이름을 받아서 이미지 데이터를 전송하는 코드
-    @GetMapping(value = {"/display", "/{view_dir}/display"}) // view 폴더 추가
+    @GetMapping(value = {"/display", "/{view}/display","/{view}/{view}/display" }) // view 폴더 추가
     @ResponseBody
     public ResponseEntity<byte[]> getFile(String fileName) {
         log.info("fileName: " + fileName); // 받아온 파일 이름 확인
 
-        //temp/ 필요 => 진짜 이것 땜에 삽질 오졌다고ㅜㅜㅜ
         File file = new File("/Users/namgungjin/Desktop/upload/temp/" + fileName); // 파일 업로드할 폴더 경로랑 파일 이름 합쳐서 파일 객체 생성.
 
         log.info("file: " + file); // 파일 객체 제대로 만들어졌나 로그로 확인

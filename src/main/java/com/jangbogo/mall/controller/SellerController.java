@@ -37,7 +37,7 @@ public class SellerController {
     //판매자가입 처리
     @PostMapping("/seller/register")
     public String regSeller(Seller seller, Model m) {
-        log.info("seller..." + seller);
+        log.info("판매자 가입........" + seller);
         return "seller/register";
     }
 
@@ -81,7 +81,7 @@ public class SellerController {
         m.addAttribute("mySellerUrl", req.getRequestURI());
 
         try {
-            Seller seller = service.getSellerByIdx(6); //추후 세션에서 받아오는 걸로 수정
+            Seller seller = service.getSellerByIdx(14); //추후 세션에서 받아오는 걸로 수정
             m.addAttribute("seller", seller);
         } catch (Exception e) {
             e.printStackTrace();
