@@ -63,22 +63,17 @@
     <input type="file" name="uploadFile" multiple>
 </div>
 
-<%--.uploadResult를 작성한다. 자식으로 ul을 가진다. --%>
 <div class="uploadResult">
     <ul>
 
     </ul>
 </div>
 
-<%--<div class="bigPictureWrapper">--%>
-<%--    &lt;%&ndash;    지니야 제발 이름좀 제대로 복붙을 하든지 확인을 좀 해라.ㅏ&ndash;%&gt;--%>
-<%--    <div class="bigPicture">--%>
-
-<%--    </div>--%>
-<%--</div>--%>
-<%--showImage()용--%>
-
 <button id="uploadBtn">Upload</button>
+
+
+
+
 
 <%--제이쿼리 스크립트를 추가한다.--%>
 <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>

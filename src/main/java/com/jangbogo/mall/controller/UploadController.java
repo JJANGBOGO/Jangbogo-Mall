@@ -38,8 +38,9 @@ public class UploadController {
     private String uploadFolder = "/Users/namgungjin/Desktop/upload/temp";
 
     @GetMapping("/uploadAjax")
-    public void uploadAjax() {
+    public String uploadAjax() {
         log.info("upload ajax");
+        return "uploadAjax2";
     }
 
     private String getFolder() {

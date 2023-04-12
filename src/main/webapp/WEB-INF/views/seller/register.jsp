@@ -502,9 +502,6 @@
             return true;
         }
 
-        //.uploadDiv를 클론한 객체를 생성한다.
-        var cloneObj = $(".uploadDiv").clone();
-
         //.uploadResult ul의 참조를 얻어온다.
         var uploadResult = $(".uploadResult ul");
 
@@ -572,9 +569,6 @@
 
                     //업로드할 파일들을 추가하는 함수를 호출한다.
                     showUploadedFile(result);
-
-                    //html 뭔지 알아보자.
-                    $(".uploadDiv").html(cloneObj.html());
                 }
             });
         });
