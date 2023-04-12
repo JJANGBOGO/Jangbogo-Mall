@@ -134,7 +134,7 @@
                             <div class="error-msg mpno"></div>
                         </div>
                         <div class="btn-space">
-                            <button>인증</button>
+                            <button id="mpno_chk">인증</button>
                         </div>
                     </div>
                     <h3 class="section-header">사업자 기본 정보</h3>
@@ -408,16 +408,7 @@
             e.preventDefault();
 
             let brno_ref = $("#brno");
-
-            if (brno_ref.val() == "") {
-                alert("사업자 번호를 입력해 주세요");
-                return false;
-            }
-
-            if ((brno_ref.val().includes("-"))) {
-                alert("-제외 숫자만 입력해 주세요");
-                return false;
-            }
+            if (!validateBrnoAlert(brno_ref)) return false;
 
             let brno = {
                 b_no: [$("#brno").val()] //-제외 숫자만 입력할 것. 그렇지 않으면 잘못된 조회결과 발생
@@ -549,45 +540,65 @@
         $(".reg-confirm").click(function (e) {
             e.preventDefault();
 
-            let email_ref = $("#email");
-            let email_chk_btn = $("#email_duplicate_chk");
-
-            if(!validateEmailAlert(email_ref, email_chk_btn)) return false; //이메일 검사
-
-            let cpnm_ref = $("#cpnm");
-
-            if (cpnm_ref.val() == "" ) {
-                alert("브랜드명을 입력해 주세요");
-                cpnm_ref.focus();
-                return false;
-            }
-
-            if (!nick_reg.test(cpnm_ref.val())) {
-                alert("브랜드명은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요");
-                cpnm_ref.focus();
-                return false;
-            }
-
-            if (!$("#cpnm_duplicate_chk").is(":disabled")) {
-                alert("브랜드명 중복 검사를 해주세요");
-                cpnm_ref.focus();
-                return false;
-            }
-
-            let name_ref = $("#repr_nm");
-
-            if (name_ref.val() == "") {
-                alert("대표의 이름을 입력해 주세요");
-                name_ref.focus();
-                return false;
-            }
-
-            if (name_ref.val().length > 20) {
-                alert("대표의 이름은 20자 미만으로 입력해 주세요");
-                name_ref.focus();
-                return false;
-            }
-
+            // let email_ref = $("#email");
+            // let email_chk_btn = $("#email_duplicate_chk");
+            //
+            // if(!validateEmailAlert(email_ref, email_chk_btn)) return false; //이메일 검사
+            //
+            // let cpnm_ref = $("#cpnm");
+            //
+            // if (cpnm_ref.val() == "" ) {
+            //     alert("브랜드명을 입력해 주세요");
+            //     cpnm_ref.focus();
+            //     return false;
+            // }
+            //
+            // if (!nick_reg.test(cpnm_ref.val())) {
+            //     alert("브랜드명은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요");
+            //     cpnm_ref.focus();
+            //     return false;
+            // }
+            //
+            // if (!$("#cpnm_duplicate_chk").is(":disabled")) {
+            //     alert("브랜드명 중복 검사를 해주세요");
+            //     cpnm_ref.focus();
+            //     return false;
+            // }
+            //
+            // let name_ref = $("#repr_nm");
+            //
+            // if (name_ref.val() == "") {
+            //     alert("대표의 이름을 입력해 주세요");
+            //     name_ref.focus();
+            //     return false;
+            // }
+            //
+            // if (name_ref.val().length > 20) {
+            //     alert("대표의 이름은 20자 미만으로 입력해 주세요");
+            //     name_ref.focus();
+            //     return false;
+            // }
+            //
+            // let pwd_ref = $("#pwd");
+            // if(!validatePwdAlert(pwd_ref)) return false; //비번 검사
+            //
+            // let pwd_confirm_ref = $("#pwd_confirm");
+            // if(!validatePwdConfirmAlert(pwd_ref, pwd_confirm_ref)) return false;
+            //
+            // let mpno_ref = $("#mpno");
+            // let mpno_chk_btn = $("#mpno_chk");
+            // if(!validateMpnoAlert(mpno_ref,mpno_chk_btn)) return false;
+            //
+            // let brno_ref = $("#brno");
+            // let brno_chk_btn = $("#brno_chk");
+            //
+            // if (!validateBrnoAlert(brno_ref)) return false;
+            //
+            // if (!brno_chk_btn.is(":disabled")) {
+            //     alert("사업자 인증을 해 주세요");
+            //     brno_ref.focus();
+            //     return false;
+            // }
 
 
             let form = $("#seller_register");
