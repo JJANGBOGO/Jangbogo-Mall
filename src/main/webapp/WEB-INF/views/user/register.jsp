@@ -236,7 +236,7 @@
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script src="/js/member/regEx.js"></script>
 <script src="/js/member/common.js"></script>
 <script>

@@ -4,52 +4,7 @@
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
     <link rel="stylesheet" href="/css/radioBtn.css"/>
     <link rel="stylesheet" href="/css/user/signupForm.css"/>
-    <style>
-        .uploadResult {
-            width: 100%;
-            background-color: gray;
-        }
-
-        .uploadResult ul {
-            display: flex;
-            flex-flow: row;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .uploadResult ul li {
-            list-style: none;
-            padding: 10px;
-        }
-
-        .uploadResult ul li span {
-            color: white;
-        }
-
-        .bigPictureWrapper {
-            position: absolute;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            top: 0%;
-            width: 100%;
-            height: 100%;
-            background-color: gray;
-            z-index: 100;
-            background: rgba(255, 255, 255, 0.5);
-        }
-
-        .bigPicture {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .bigPicture img {
-            width: 600px;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/upload.css"/>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
@@ -310,16 +265,20 @@
                         </div>
                         <div class="input-box">
                             <div class="input">
-                                <input
-                                        name="brnd_bnr_upload_path"
-                                        id="brnd_bnr_upload_path"
-                                        type="file"
-                                />
+                                <label class="upload-label" for="upload_bnr">브랜드 이미지 선택 <img src="/img/upload_dir.png"></label>
+                                <div class="upload-input bnr">
+                                    <input type="file" name="brnd_bnr_upload_path" id="upload_bnr">
+                                </div>
                             </div>
                         </div>
                         <div class="btn-space">
-                            <button>업로드</button>
+                            <button id="bnr_upload_btn">업로드</button>
                         </div>
+                    </div>
+                    <div class="upload-result bnr">
+                        <ul>
+
+                        </ul>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
@@ -327,23 +286,22 @@
                         </div>
                         <div class="input-box">
                             <div class="input">
-                                <input
-                                        name="brnd_upload_path"
-                                        id="brnd_upload_path"
-                                        type="file"
-                                />
+                                <label class="upload-label" for="upload_bnr">프로필 이미지 선택 <img src="/img/upload_dir.png"></label>
+                                <div class="upload-input profile">
+                                    <input type="file" name="brnd_upload_path" id="upload_profile">
+                                </div>
                             </div>
                         </div>
                         <div class="btn-space">
-                            <button id="uploadBtn">업로드</button>
+                            <button id="profile_upload_btn">업로드</button>
                         </div>
                     </div>
-                    <div class="uploadResult">
+                    <div class="upload-result profile">
                         <ul>
 
                         </ul>
                     </div>
-<%--                    file upload--%>
+                    <%--       동의 여부 --%>
                     <div class="section-line bottom"></div>
                     <div class="checkbox-group">
                         <label for="check-all" class="input-line">
@@ -405,10 +363,12 @@
     </div>
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
+<%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/js/member/regEx.js"></script>
 <script src="/js/member/msg.js"></script>
 <script src="/js/member/common.js"></script>
+<script src="/js/upload/common.js"></script>
 <script>
     //파일 분리 허용X. val() 때문에
     let addressCallback = (e) => {
@@ -483,117 +443,56 @@
             });
         });
 
+
         //file upload
-        var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
-        var maxSize = 5242880; //5MB
-
-        function checkExtension(fileName, fileSize) {
-            //1. fileSize가 최대를 넘는 지 확인한다.
-            if (fileSize >= maxSize) {
-                alert("파일 사이즈 초과");
-                return false;
-            }
-
-            //파일 종류가 정규식을 통과하는 지 확인한다.
-            if (regex.test(fileName)) {
-                alert("해당 종류의 파일은 업로드 할 수 없습니다.");
-                return false;
-            }
-            return true;
-        }
+        let clone_bnr = $(".upload-input.bnr").clone();
+        let clone_profile = $(".upload-input.profile").clone();
 
         //.uploadResult ul의 참조를 얻어온다.
-        var uploadResult = $(".uploadResult ul");
+        let bnr_upload_list = $(".upload-result.bnr ul");
+        var profile_upload_list = $(".upload-result.profile ul");
 
-
-        //업로드한 파일들을 <li>태그로 감싸서 추가하는 foreach문을 돌린다. => showUploadFile();
-        function showUploadedFile(uploadResultArr) {
-            var str = "";
-
-            $(uploadResultArr).each(function (i, obj) {
-                if (!obj.image) {
-                    //fileCallPath 선언한다.
-                    var fileCallPath = encodeURIComponent(obj.uploadPath + "/" + obj.uuid + "_" + obj.fileName);
-
-                    var fileLink = fileCallPath.replace(new RegExp((/\\/g), "/"));
-
-                    //왜 resources에 있는 걸 못찾는 지 나도 모르겠다.....
-                    // str += "<li><a href='/download?fileName="+ fileCallPath + "'>" + "<img src='/resources/img/attach.png'>" + obj.fileName + "</a></li>";
-
-                    str += "<li><div><a href='/download?fileName=" + fileCallPath + "'>" +
-                        "<img src='/resources/img/attach.png'>" + obj.fileName + "</a>" +
-                        "<span data-file=\'" + fileCallPath + "\' data-type='file'>X</span>" + "</div></li>";
-
-                } else {
-                    var fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
-
-                    var originPath = obj.uploadPath + "\\" + obj.uuid + "_" + obj.fileName;
-                    originPath = originPath.replace(new RegExp(/\\/g), "/");
-
-                    str += "<li>" + "<img src='/seller/display?fileName=" + fileCallPath + "'>" +
-                        "<span data-file=\'" + fileCallPath + "\' data-type='image'>X</span></li>";
-                }
-            });
-            uploadResult.append(str);
-        }
-
-        $("#uploadBtn").on("click", function (e) {
+        $("#bnr_upload_btn").on("click", function (e) { //업로드 버튼을 눌렀을 때 이벤트를 연결한다.
             e.preventDefault();
             var formData = new FormData();
-            var inputFile = $("input[name='brnd_upload_path']"); //프사로 테스트
+            var inputFile = $("input[name='brnd_bnr_upload_path']");
 
-            var files = inputFile[0].files;
-            console.log("파일들:: ", files);
-
-            for (var i = 0; i < files.length; i++) {
-                //위에서 만든 확장자, 사이즈 체크 메서드를 초과한다.
-                if (!checkExtension(files[i].name, files[i].size)) {
-                    return false;
-                }
-
-                //formData에 내가 선택한 파일들을 추가한다.
-                formData.append("uploadFile", files[i]);
-            }
+            checkFileList(inputFile[0].files, formData);
 
             $.ajax({
-                //컨트롤러와 동일한 경로인지 확인한다.
                 url: '/uploadAjaxAction',
                 processData: false,
                 contentType: false,
-                //전송할 데이터와 타입이 맞는지 확인한다. 전송은 post지.
                 data: formData,
                 type: 'POST',
                 dataType: "json",
                 success: function (result) {
-                    console.log("결괏값:: ", result);
-
-                    //업로드할 파일들을 추가하는 함수를 호출한다.
-                    showUploadedFile(result);
+                    bnr_upload_list.append(showUploadedFile(result));
+                    $(".upload-input.bnr").html(clone_bnr.html());
                 }
             });
         });
 
-        //span태그인 X를 클릭했을 떄 동작할 함수를 연결
-        $(".uploadResult").on("click", "span", function(e) {
-            var targetFile = $(this).data("file");
-            var type = $(this).data("type");
-            console.log(targetFile, "$$$$");
+        //uploadBtn2
+        $("#profile_upload_btn").on("click", function (e) {
+            e.preventDefault();
+            var formData = new FormData();
+            var inputFile = $("input[name='brnd_upload_path']");
 
-            //ajax 성공시 브라우저에서도 해당 li태그를 지워야 한다.
-            var targetLi = $(this).closest("li");
+            checkFileList(inputFile[0].files, formData);
 
             $.ajax({
-                url: '/deleteFile',
-                data: {fileName: targetFile, type: type},
-                dataType: 'text',
+                url: '/uploadAjaxAction',
+                processData: false,
+                contentType: false,
+                data: formData,
                 type: 'POST',
-                success: function(result) {
-                    alert(result+ "result");
-
-                    //controller에서 삭제에 성공하면 targetLi를 지운다.
-                    targetLi.remove();
+                dataType: "json",
+                success: function (result) {
+                    profile_upload_list.append(showUploadedFile(result));
+                    $(".upload-input.profile").html(clone_profile.html()); //파일 초기화
                 }
-            }); //$.ajax
+            });
         });
 
     });

@@ -1,44 +1,46 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: namgungjin
-  Date: 2023/02/03
-  Time: 11:08 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="/css/upload.css">
+    <%@ include file="/WEB-INF/views/include/header.jsp" %>
+    <link rel="stylesheet" href="/css/upload.css" />
+
+<%--    css import --%>
+    <style>
+        .upload-label {
+            background: white;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <h1>Upload with Ajax</h1>
-
-<div class="uploadDiv">
-    <input type="file" name="uploadFile">
+<label class="upload-label" for="upload_bnr">브랜드 이미지 선택 <img src="/img/upload_dir.png"></label>
+<div class="upload-input bnr">
+    <input type="file" name="brnd_bnr_upload_path" id="upload_bnr">
 </div>
 
-<div class="uploadResult profile">
+<div class="upload-result bnr">
     <ul>
 
     </ul>
 </div>
 
-<button id="uploadBtn">Upload</button>
+<button id="bnr_upload_btn">Upload</button>
 <%--end of 1--%>
 
-
-<div class="uploadDiv2">
-    <input type="file" name="uploadFile2">
+<label class="upload-label" for="upload_profile">브랜드 프로필 선택</label>
+<div class="upload-input profile">
+    <input type="file" name="brnd_upload_path" id="upload_profile">
 </div>
 
-<div class="uploadResult bnr">
+<div class="upload-result profile">
     <ul>
 
     </ul>
 </div>
 
-<button id="uploadBtn2">Upload</button>
+<button id="profile_upload_btn">Upload</button>
 
 <%--제이쿼리 스크립트를 추가한다.--%>
 <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -46,77 +48,52 @@
 <script>
     $(document).ready(function () { //도큐먼트가 로드되었을
 
-        var cloneObj = $(".uploadDiv").clone();
-        var cloneObj2 = $(".uploadDiv2").clone();
+        let clone_bnr = $(".upload-input.bnr").clone();
+        let clone_profile = $(".upload-input.profile").clone();
 
         //.uploadResult ul의 참조를 얻어온다.
-        var uploadResult = $(".uploadResult.profile ul");
-        let uploadResult2 = $(".uploadResult.bnr ul");
+        let bnr_upload_list = $(".upload-result.bnr ul");
+        var profile_upload_list = $(".upload-result.profile ul");
 
-        //
-
-        $("#uploadBtn").on("click", function (e) { //업로드 버튼을 눌렀을 때 이벤트를 연결한다.
+        $("#bnr_upload_btn").on("click", function (e) { //업로드 버튼을 눌렀을 때 이벤트를 연결한다.
             e.preventDefault();
             var formData = new FormData();
-            var inputFile = $("input[name='uploadFile']");
+            var inputFile = $("input[name='brnd_bnr_upload_path']");
 
-            var files = inputFile[0].files;
-
-            for (var i = 0; i < files.length; i++) {
-                //위에서 만든 확장자, 사이즈 체크 메서드를 초과한다.
-                if (!checkExtension(files[i].name, files[i].size)) {
-                    return false;
-                }
-                formData.append("uploadFile", files[i]);
-            }
+            checkFileList(inputFile[0].files, formData);
 
             $.ajax({
-                //컨트롤러와 동일한 경로인지 확인한다.
                 url: '/uploadAjaxAction',
                 processData: false,
                 contentType: false,
-                //전송할 데이터와 타입이 맞는지 확인한다. 전송은 post지.
                 data: formData,
                 type: 'POST',
                 dataType: "json",
                 success: function (result) {
-                    console.log("결괏값:: ", result);
-                    uploadResult.append(showUploadedFile(result));
-                    $(".uploadDiv").html(cloneObj.html());
+                    bnr_upload_list.append(showUploadedFile(result));
+                    $(".upload-input.bnr").html(clone_bnr.html());
                 }
             });
         });
 
         //uploadBtn2
-        $("#uploadBtn2").on("click", function (e) { //업로드 버튼을 눌렀을 때 이벤트를 연결한다.
+        $("#profile_upload_btn").on("click", function (e) {
+            e.preventDefault();
             var formData = new FormData();
-            var inputFile = $("input[name='uploadFile2']");
+            var inputFile = $("input[name='brnd_upload_path']");
 
-            var files = inputFile[0].files;
-            console.log("파일들:: ", files);
-
-            for (var i = 0; i < files.length; i++) {
-                //위에서 만든 확장자, 사이즈 체크 메서드를 초과한다.
-                if (!checkExtension(files[i].name, files[i].size)) {
-                    return false;
-                }
-                formData.append("uploadFile", files[i]);
-            }
+            checkFileList(inputFile[0].files, formData);
 
             $.ajax({
-                //컨트롤러와 동일한 경로인지 확인한다.
                 url: '/uploadAjaxAction',
                 processData: false,
                 contentType: false,
-                //전송할 데이터와 타입이 맞는지 확인한다. 전송은 post지.
                 data: formData,
                 type: 'POST',
                 dataType: "json",
                 success: function (result) {
-                    console.log("결괏값:: ", result);
-                    //업로드할 파일들을 추가하는 함수를 호출한다.
-                    uploadResult2.append(showUploadedFile(result));
-                    $(".uploadDiv2").html(cloneObj2.html()); //파일 초기화
+                    profile_upload_list.append(showUploadedFile(result));
+                    $(".upload-input.profile").html(clone_profile.html()); //파일 초기화
                 }
             });
         });

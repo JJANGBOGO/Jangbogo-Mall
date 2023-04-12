@@ -14,6 +14,17 @@ function checkExtension(fileName, fileSize) {
     return true;
 }
 
+//checkExtension() for 반복
+function checkFileList(files, formData) {
+    for (let i = 0; i < files.length; i++) {
+        //위에서 만든 확장자, 사이즈 체크 메서드를 초과한다.
+        if (!checkExtension(files[i].name, files[i].size)) {
+            return false;
+        }
+        formData.append("uploadFile", files[i]);
+    }
+}
+
 function showUploadedFile(uploadResultArr) { //업로드 리스트 str 반환
     let str = "";
 
@@ -33,17 +44,16 @@ function showUploadedFile(uploadResultArr) { //업로드 리스트 str 반환
             originPath = originPath.replace(new RegExp(/\\/g), "/");
 
             str += "<li>" + "<img src='display?fileName=" + fileCallPath + "'>" +
-                "<span data-file=\'" + fileCallPath + "\' data-type='image'>X</span></li>";
+                "<span data-file=\'" + fileCallPath + "\' data-type='image'><img src='/img/cancel_btn.png'></span></li>";
         }
     });
     return str;
 }
 
 //삭제, span태그인 X를 클릭했을 떄 동작할 함수를 연결
-$(".uploadResult").on("click", "span", function(e) {
+$(".upload-result").on("click", "span", function (e) {
     var targetFile = $(this).data("file");
     var type = $(this).data("type");
-    console.log(targetFile, "$$$$");
 
     //ajax 성공시 브라우저에서도 해당 li태그를 지워야 한다.
     var targetLi = $(this).closest("li");
@@ -53,11 +63,12 @@ $(".uploadResult").on("click", "span", function(e) {
         data: {fileName: targetFile, type: type},
         dataType: 'text',
         type: 'POST',
-        success: function(result) {
-            alert(result+ "result");
+        success: function (result) {
+            alert(result + "result");
 
             //controller에서 삭제에 성공하면 targetLi를 지운다.
             targetLi.remove();
         }
     }); //$.ajax
 });
+

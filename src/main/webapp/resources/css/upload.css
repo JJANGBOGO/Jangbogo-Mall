@@ -1,44 +1,40 @@
-.uploadResult {
+.upload-result {
     width: 100%;
-    background-color: gray;
+    background-color: #eeeeee;
+    overflow: scroll;
 }
 
-.uploadResult ul {
+.upload-result ul {
     display: flex;
     flex-flow: row;
     justify-content: center;
     align-items: center;
 }
 
-.uploadResult ul li {
+.upload-result ul li {
     list-style: none;
     padding: 10px;
+    margin-right: 20px;
 }
 
-.uploadResult ul li span {
-    color: white;
-}
-
-.bigPictureWrapper {
+.upload-result ul li span {
     position: absolute;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    top: 0%;
-    width: 100%;
-    height: 100%;
-    background-color: gray;
-    z-index: 100;
-    background: rgba(255, 255, 255, 0.5);
 }
 
-.bigPicture {
+.upload-result ul li span img {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 25px;
 }
 
-.bigPicture img {
-    width: 600px;
+.upload-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: var(--input-placeholder);
+    cursor: pointer;
+}
+
+input[type=file] {
+    display: none;
 }
