@@ -203,6 +203,7 @@
                                         id="bsplc_base"
                                         type="text"
                                         placeholder="주소를 검색해주세요"
+                                        readonly
                                 />
                             </div>
                             <div class="input addr-dtl">
@@ -600,6 +601,41 @@
             //     return false;
             // }
 
+            //통신판매업은 숫자+문자 등 fixed가 아니라 ""체크만 한다.
+            // let sle_biz_ref = $("#sle_biz_no");
+            // if (sle_biz_ref.val() =="") {
+            //     alert("통신판매업신고번호를 입력해 주세요");
+            //     sle_biz_ref.focus();
+            //     return false;
+            // }
+
+            // let addr_base_ref = $("#bsplc_base");
+            // let addr_dtl_ref = $("#bsplc_dtl");
+            //
+            // if (!validateAddrAlert(addr_base_ref, addr_dtl_ref)) return false; //주소
+
+            // let telno_ref = $("#repr_telno"); //브랜드 공식 연락처
+            // if (telno_ref.val() == "") {
+            //     alert("대표 연락처를 입력해 주세요");
+            //     telno_ref.focus();
+            //     return false;
+            // }
+            //
+            // if (!mpno_reg.test(telno_ref.val())) {
+            //     alert(not_valid_mpno);
+            //     telno_ref.focus();
+            //     return false;
+            // }
+            //
+            // let brnd_cn_ref = $("#brnd_cn"); //브랜드 내용
+            // if (brnd_cn_ref.val() == "") {
+            //     alert("브랜드 내용을 입력해 주세요");
+            //     brnd_cn_ref.focus();
+            //     return false;
+            // }
+
+
+            //TODO:: 체크박스 동의 유효성 구현. form submit 구현
 
             let form = $("#seller_register");
 

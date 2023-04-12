@@ -86,6 +86,7 @@ function validateMpnoAlert (mpno_ref, mpno_chk_btn) {
     return true;
 }
 
+//사업자
 function validateBrnoAlert (brno_ref) { //인증버튼 상태는 제외.
     if (brno_ref.val() == "") {
         alert("사업자 번호를 입력해 주세요");
@@ -96,6 +97,22 @@ function validateBrnoAlert (brno_ref) { //인증버튼 상태는 제외.
     if ((brno_ref.val().includes("-"))) {
         alert("-제외 숫자만 입력해 주세요");
         brno_ref.focus();
+        return false;
+    }
+    return true;
+}
+
+//주소
+function validateAddrAlert (addr_base_ref, addr_dtl_ref) {
+
+    if (addr_base_ref.val() == "") { //readonly
+        alert(addr_base_empty);
+        return false;
+    }
+
+    if (addr_dtl_ref.val() == "") {
+        alert(addr_dtl_empty);
+        addr_dtl_ref.focus();
         return false;
     }
     return true;
