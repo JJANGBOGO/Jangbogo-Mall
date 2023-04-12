@@ -170,7 +170,7 @@
                             <div class="error-msg brno"></div>
                         </div>
                         <div class="btn-space">
-                            <button>인증</button>
+                            <button id="brno_chk">인증</button>
                         </div>
                     </div>
                     <div class="input-line">
@@ -402,6 +402,33 @@
     };
 
     $(document).ready(function () {
+
+        $("#brno_chk").click(function (e) {
+            e.preventDefault();
+            let brno = {
+                b_no: [$("#brno").val()] //-제외 숫자만 입력할 것. 그렇지 않으면 잘못된 조회결과 발생
+            };
+
+            let serviceKey = "5RrGC%2BYxMLKxHrcaSzs46HaxE7ye2QKnjkO%2F4uATqcBp9fzXBmyqAqEDY1GFkwqWj4lUxEA8R8nskdqUCJhohQ%3D%3D";
+            $.ajax({
+                url:
+                    "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=" +
+                    serviceKey,
+                type: "POST",
+                data: JSON.stringify(brno),
+                dataType: "JSON",
+                contentType: "application/json",
+                accept: "application/json",
+                success: function (result) {
+                    console.log(result);
+                    console.log(result.data[0].b_stt_cd, result.data[0].b_no);
+                },
+                error: function (error) {
+                    console.log("에러: ", error);
+                },
+            });
+        });
+
         $("#addr-search").click(function (e) {
             addressCallback(e);
         });
