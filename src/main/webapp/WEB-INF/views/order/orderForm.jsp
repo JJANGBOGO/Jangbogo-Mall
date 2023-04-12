@@ -172,19 +172,19 @@
             #ordererInform {
                 padding: 10px 0;
             }
-            .orderer-section {
+            .orderer-section, .delivery-section {
                 display: flex;
                 justify-content: left;
                 align-items: flex-start;
                 padding: 8px 0;
             }
-            .orderer-inform {
+            .orderer-inform, .delivery-inform {
                 width: 160px;
                 font-size: 14px;
                 font-weight: 600;
                 margin-right: 30px;
             }
-            .orderer-value {
+            .orderer-value, .delivery-value {
                 width: 70%;
                 font-size: 14px;
             }
@@ -193,7 +193,50 @@
                 line-height: 21px;
                 color: rgb(102, 102, 102);
             }
-            /* 주문서 관련 주석 */
+            /* 배송 정보 섹션 */
+            #deliveryInform {}
+            .delivery-section {}
+            .delivery-inform {}
+            .delivery-value {}
+            .delivery-value__column {
+                font-size: 14px;
+                color: rgb(102, 102, 102);
+                line-height: 24px;
+                margin-bottom: 9px;
+            }
+            .delivery-value__column:first-child {
+                font-size: 14px;
+                color: rgb(51, 51, 51);
+                margin-bottom: 9px;
+                line-height: 24px;
+            }
+            .delivery-value__column:not(:first-child) {
+                margin-top: 4px;
+            }
+            .delivery-value__column:not(:first-child) > span {
+                font-size: 14px;
+                color: rgb(102, 102, 102);
+                line-height: 24px;
+            }
+            .delivery-value__column:last-child {
+                margin-top: 20px;
+            }
+            #deliveryModBtn {
+                display: block;
+                padding: 0px 10px;
+                text-align: center;
+                overflow: hidden;
+                width: 60px;
+                height: 30px;
+                border-radius: 3px;
+                color: rgb(51, 51, 51);
+                background-color: rgb(255, 255, 255);
+                border: 1px solid rgb(221, 221, 221);
+                cursor: pointer;
+            }
+
+
+                /* 주문서 관련 주석 */
             .paragraph {
                 padding-left: 16px;
                 font-size: 12px;
@@ -254,10 +297,8 @@
             </section>
             <section class="order-section">
                 <div class="order-section__title"><h3>배송 정보</h3></div>
-                <div class="order-section__content">
-                    <ul id="deliveryInform">
+                <div class="order-section__content" id="deliveryInform">
 
-                    </ul>
                 </div>
             </section>
             <div class="order-container__parent">
@@ -403,6 +444,45 @@
             return tmp;
             }
 
+            // 메서드명 : deliveryToHtml
+            // 기   능 : 배송 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
+            // 매개변수 : items - deliveryDto
+            // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
+            let deliveryToHtml = (deliveryInfo) => {
+                // 변수명 : tmp
+                // 저장값 : 동적으로 생성할 html 태그(문자열)
+                let tmp = "";
+                tmp += "<div class='delivery-section'>"
+                tmp += "<div class='delivery-inform'>"
+                tmp += "<span>배송지</span>"
+                tmp += "</div>"
+                tmp += "<div class='delivery-value'>"
+                tmp += "<span>" + deliveryInfo.address + "</span>"
+                tmp += "</div>"
+                tmp += "</div>"
+                tmp += "<div class='delivery-section'>"
+                tmp += "<div class='delivery-inform'>"
+                tmp += "<span>상세정보</span>"
+                tmp += "</div>"
+                tmp += "<div class='delivery-value'>"
+                tmp += "<div class='delivery-value__column'>"
+                tmp += "<span>" + deliveryInfo.recipient + " , " + deliveryInfo.mpno + "</span>"
+                tmp += "</div>"
+                tmp += "<div class='delivery-value__column'>"
+                tmp += "<span>" + deliveryInfo.pickUpLocation + " | " + (deliveryInfo.hasGatePwd ? "공동현관 출입번호" : "자유 출입 가능") + "</span>"
+                tmp += "</div>"
+                tmp += "<div class='delivery-value__column'>"
+                tmp += "<span>배송완료 메시지 | " + (deliveryInfo.completeMsg ? "배송 직후" : "오전 7시") + "</span>"
+                tmp += "</div>"
+                tmp += "<div class='delivery-value__column'>"
+                tmp += "<button type='button' id='deliveryModBtn'>수정</button>"
+                tmp += "</div>"
+                tmp += "</div>"
+                tmp += "</div>"
+                return tmp;
+
+            }
+
             let showItemList = (user_idx) => {
                 // ajax 요청(비동기)
                 $.ajax({
@@ -427,6 +507,38 @@
                 });  // $.ajax() end
             }
 
+            let showDeliveryInfo = (user_idx) => {
+                // ajax 요청(비동기)
+                $.ajax({
+                    type:'GET',
+                    url:'/order/delivery?user_idx=' + user_idx,
+                    success: (result) => {                                                 // 성공 응답이 오면, 주문자 정보를 페이지에 랜더링하기
+                        $('#deliveryInform').html(deliveryToHtml(result));                 // deliveryToHtml메서드 호출
+                    },
+                    error : function() { alert("showDeliveryInfo 실패 응답 : 회원번호 누락");}  // 실패 응답이 오면, 경고창 띄우기
+                });  // $.ajax() end
+            }
+
+            // 이벤트 대상 : #deliveryModBtn 배송 정보 수정 버튼
+            // 이벤트 : click
+            // 이벤트 핸들러 기능 : '수정' 버튼 클릭 시, 배송 상제 정보 수정 창 새로 띄우기
+            $(document).on("click", "#deliveryModBtn", (e) => { // 회원번호를 html태그의 data속성에서 가져와야 한다. '/order/recipient-details?user_idx=' + element2,
+                // 변수명 : url
+                // 저장값 : 새창에 해당하는 url
+                let url = "/order/recipient-details";
+                // 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
+                popupCenter(url, 500, 800);
+            });
+
+            function popupCenter(url, width, height) {
+                let xPos = (document.body.offsetWidth/2) - (width/2); // 가운데 정렬
+                let yPos = (document.body.offsetHeight/2) - (height/2);
+                xPos += window.screenLeft; // 듀얼 모니터일 때
+
+                window.open(url, "장보고", "width="+ width +", height="+ height +", left="+xPos+", top="+yPos+", menubar=yes, status=yes, titlebar=yes, resizable=yes");
+            }
+
+
             $(document).ready(() => {
                 // TODO : 세션에서 회원번호를 가져와야 한다. 세션 연동 시, 추후 테스트 필요.
                 // 변수명 : idx
@@ -436,6 +548,7 @@
                 // 메서드 호출
                 showItemList(idx);
                 showOrdererInfo(idx);
+                showDeliveryInfo(idx);
             })
         </script>
         <%@ include file="/WEB-INF/views/include/footer.jsp" %>
