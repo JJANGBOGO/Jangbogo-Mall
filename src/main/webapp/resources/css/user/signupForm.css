@@ -119,7 +119,7 @@
 
 /* 중복 검사 통과 후 input, button 비활성화 css 추가 */
 .reg-form .input-line .btn-space button:disabled,
-.reg-form .input-line .input-box input[name='text']:read-only {
+.reg-form .input-line .input-box .input input[type=text]:read-only {
     opacity: 0.4;
 }
 

@@ -164,7 +164,7 @@
                                         name="brno"
                                         id="brno"
                                         type="text"
-                                        placeholder="사업자 등록 번호를 입력해 주세요"
+                                        placeholder="-제외 숫자만 입력해 주세요"
                                 />
                             </div>
                             <div class="error-msg brno"></div>
@@ -403,8 +403,22 @@
 
     $(document).ready(function () {
 
+        //사업자 인증
         $("#brno_chk").click(function (e) {
             e.preventDefault();
+
+            let brno_ref = $("#brno");
+
+            if (brno_ref.val() == "") {
+                alert("사업자 번호를 입력해 주세요");
+                return false;
+            }
+
+            if ((brno_ref.val().includes("-"))) {
+                alert("-제외 숫자만 입력해 주세요");
+                return false;
+            }
+
             let brno = {
                 b_no: [$("#brno").val()] //-제외 숫자만 입력할 것. 그렇지 않으면 잘못된 조회결과 발생
             };
@@ -420,11 +434,20 @@
                 contentType: "application/json",
                 accept: "application/json",
                 success: function (result) {
-                    console.log(result);
-                    console.log(result.data[0].b_stt_cd, result.data[0].b_no);
+                    let biz_state= result.data[0].b_stt_cd;
+
+                    if (biz_state == "") {
+                        alert("국세청에 등록되지 않은 사업자 번호입니다.");
+                    } else if (biz_state != 1) { //계속사업자가 아님
+                        alert("휴/폐업 사업자 번호입니다. 다른 번호를 입력해 주세요");
+                    } else {
+                        alert("사용가능한 사업자 번호입니다.");
+                        $("#brno_chk").attr("disabled", true);
+                        $("#brno").attr("readonly", true);
+                    }
                 },
                 error: function (error) {
-                    console.log("에러: ", error);
+                    console.log("오류가 발생했습니다. 다시 시도해 주세요");
                 },
             });
         });
