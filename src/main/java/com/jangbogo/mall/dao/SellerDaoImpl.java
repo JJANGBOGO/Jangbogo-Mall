@@ -54,4 +54,9 @@ public class SellerDaoImpl implements SellerDao {
     public int insertSeller (Seller seller) throws Exception {
         return session.insert(nameSpace + "insertSeller", seller);
     }
+
+    @Override
+    public int updateSellerBrnd (Seller seller) throws Exception {
+        return session.update(nameSpace + "updateSellerBrnd", seller);
+    }
 }

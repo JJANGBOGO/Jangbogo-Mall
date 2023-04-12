@@ -109,5 +109,20 @@ public class SellerDaoTest {
         assertTrue(result != 0);
     }
 
+    @Test //ok
+    public void updateSellerBrnd() throws Exception {
+        Seller seller = Seller.builder()
+                .idx(14)
+                .email("seller100@naver.com") //하드코딩
+                .cpnm("sellerNoMore")
+                .brnd_cn("<p><b>브랜드내용수정</b></p>") //<> 테스트
+                .brnd_bnr_upload_path("변경된배너.png")
+                .brnd_upload_path("바꾼배너.png")
+                .build();
+        int result = dao.updateSellerBrnd(seller);
+        log.info("result...." + result);
+        assertTrue(result != 0);
+    }
+
 
 }

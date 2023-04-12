@@ -25,4 +25,7 @@ public interface SellerDao {
 
     //판매자 추가
     int insertSeller (Seller seller) throws Exception;
+
+    //브랜드 수정
+    int updateSellerBrnd (Seller seller) throws Exception;
 }

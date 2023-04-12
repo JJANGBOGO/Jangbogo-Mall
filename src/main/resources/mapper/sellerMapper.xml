@@ -53,8 +53,21 @@
                            BSPLC_ZPCD, BSPLC_BASE, BSPLC_DTL, SELER_AGRE_YN, BRND_BNR_UPLOAD_PATH, BRND_UPLOAD_PATH,
                            BRND_CN, PWD_UPT_TM)
         VALUES (2, #{email}, #{cpnm}, #{repr_nm}, #{pwd}, #{mpno}, #{repr_telno}, #{biz_type}, #{brno}, #{sle_biz_no},
-                #{bsplc_zpcd}, #{bsplc_base}, #{bsplc_dtl}, #{seler_agre_yn}, #{brnd_bnr_upload_path},#{brnd_upload_path}, #{brnd_cn}, now());
+                #{bsplc_zpcd}, #{bsplc_base}, #{bsplc_dtl}, #{seler_agre_yn}, #{brnd_bnr_upload_path},
+                #{brnd_upload_path}, #{brnd_cn}, NOW());
     </insert>
+
+    <update id="updateSellerBrnd" parameterType="Seller">
+        <![CDATA[
+        UPDATE SELER
+        SET CPNM                 = #{cpnm},
+            BRND_CN              = #{brnd_cn},
+            BRND_BNR_UPLOAD_PATH = #{brnd_bnr_upload_path},
+            BRND_UPLOAD_PATH     = #{brnd_upload_path}
+        WHERE IDX = #{idx}
+          AND EMAIL = #{email};
+        ]]>
+    </update>
 
 
 </mapper>
