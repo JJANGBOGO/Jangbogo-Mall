@@ -96,6 +96,14 @@ public class SellerController {
         return "/seller/modifyBrnd";
     }
 
+    //브랜드 수정
+    @PostMapping("/seller/modify/brnd")
+    public String chgBrnd (Seller seller) {
+        log.info("brnd...." + seller);
+
+        return "/seller/modfiyBrnd";
+    }
+
     //판매자수정 인증 뷰
     @GetMapping("/seller/info")
     public String verifySeller(HttpServletRequest req, Model m) {

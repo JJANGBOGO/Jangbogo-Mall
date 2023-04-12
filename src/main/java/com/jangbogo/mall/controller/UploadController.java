@@ -63,6 +63,7 @@ public class UploadController {
     @PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public ResponseEntity<List<AttachFileDto>> uploadAjaxPost(MultipartFile[] uploadFile) {
+        log.info("wjy....?" + uploadFile);
 
         //새로운 ArrList를 생성한다.
         List<AttachFileDto> list = new ArrayList<>();

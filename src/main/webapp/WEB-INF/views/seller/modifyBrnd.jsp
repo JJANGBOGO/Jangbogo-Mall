@@ -108,12 +108,12 @@
 
                                 </ul>
                             </div>
-                                <div class="section-line bottom"></div>
-                                <div class="btn-container">
-                                    <button class="mod-confirm" id="brnd-cancel">취소하기</button>
-                                    <button class="mod-confirm" id="brnd_modify">수정하기</button>
-                                </div>
+                            <div class="section-line bottom"></div>
+                            <div class="btn-container">
+                                <button class="mod-confirm" id="brnd-cancel">취소하기</button>
+                                <button class="mod-confirm" id="brnd_modify">수정하기</button>
                             </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -123,15 +123,12 @@
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script src="/js/upload/common.js"></script>
 <script>
+
     //summernote
     $(".summernote").summernote({
         height: 450,
         lang: "ko-KR",
-        // callbacks: {
-        //     onImageUpload: function (files) {
-        //         $(".summernote").summernote("editor.insertImage", "/jinvicky.png");
-        //     },
-        // },
+
     });
 
     //file upload
@@ -189,8 +186,15 @@
     //수정 버튼
     $("#brnd_modify").click(function (e) {
         e.preventDefault();
+
+        let form = $(".mod-brnd-form"); //form ref
         let summernoteContent = $(".summernote").summernote("code"); //썸머노트(설명)
         console.log("summernoteContent : " + summernoteContent);
+
+        let str = "<input type='hidden' name='brnd_cn' value='" + summernoteContent +"'>";
+        form.append(str);
+        form.submit();
+
     });
 </script>
 </body>
