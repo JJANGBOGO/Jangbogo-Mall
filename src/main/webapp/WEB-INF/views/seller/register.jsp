@@ -549,6 +549,47 @@
         $(".reg-confirm").click(function (e) {
             e.preventDefault();
 
+            let email_ref = $("#email");
+            let email_chk_btn = $("#email_duplicate_chk");
+
+            if(!validateEmailAlert(email_ref, email_chk_btn)) return false; //이메일 검사
+
+            let cpnm_ref = $("#cpnm");
+
+            if (cpnm_ref.val() == "" ) {
+                alert("브랜드명을 입력해 주세요");
+                cpnm_ref.focus();
+                return false;
+            }
+
+            if (!nick_reg.test(cpnm_ref.val())) {
+                alert("브랜드명은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요");
+                cpnm_ref.focus();
+                return false;
+            }
+
+            if (!$("#cpnm_duplicate_chk").is(":disabled")) {
+                alert("브랜드명 중복 검사를 해주세요");
+                cpnm_ref.focus();
+                return false;
+            }
+
+            let name_ref = $("#repr_nm");
+
+            if (name_ref.val() == "") {
+                alert("대표의 이름을 입력해 주세요");
+                name_ref.focus();
+                return false;
+            }
+
+            if (name_ref.val().length > 20) {
+                alert("대표의 이름은 20자 미만으로 입력해 주세요");
+                name_ref.focus();
+                return false;
+            }
+
+
+
             let form = $("#seller_register");
 
             let bnr_path = $(".upload-result.bnr ul li").data("upload-path");
