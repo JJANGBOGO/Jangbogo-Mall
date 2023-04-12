@@ -444,7 +444,6 @@
             });
         });
 
-
         //file upload
         let clone_bnr = $(".upload-input.bnr").clone();
         let clone_profile = $(".upload-input.profile").clone();
