@@ -34,4 +34,6 @@ public interface SellerService {
 
     //이메일 중복 검사
     boolean isEmailDuplicated (String email) throws Exception;
+
+    String findSellerEmail (String cpnm, String pwd) throws Exception;
 }

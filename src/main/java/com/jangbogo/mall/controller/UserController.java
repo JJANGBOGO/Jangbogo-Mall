@@ -407,4 +407,23 @@ public class UserController {
         session.setAttribute("mpno", user.getMpno());
     }
 
+    //이메일 찾기
+    @PostMapping("/user/find/email")
+    public String findUserEmail (String nick_nm, String pwd, RedirectAttributes rattr) {
+        try {
+            String email = userService.findUserEmail(nick_nm, pwd);
+            if (email == null) {
+                rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
+                return "redirect:/find/email";
+            }
+            rattr.addFlashAttribute("userEmail", email);
+            return "redirect:/find/email/success?member=user"; //성공
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/find/email";
+        }
+    }
+
 }

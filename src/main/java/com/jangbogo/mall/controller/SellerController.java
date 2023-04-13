@@ -178,4 +178,23 @@ public class SellerController {
             return "redirect:/";
         }
     }
+
+    //이메일 찾기
+    @PostMapping("/seller/find/email")
+    public String findSellerEmail (String cpnm, String pwd, Model m, RedirectAttributes rattr) {
+        try {
+            String email = service.findSellerEmail(cpnm, pwd);
+            if (email == null) {
+                rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
+                return "redirect:/find/email";
+            }
+            rattr.addFlashAttribute("sellerEmail", email);
+            return "redirect:/find/email/success?member=seller"; //성공
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/find/email";
+        }
+    }
 }

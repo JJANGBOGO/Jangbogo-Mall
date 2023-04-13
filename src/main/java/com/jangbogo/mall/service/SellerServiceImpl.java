@@ -81,5 +81,14 @@ public class SellerServiceImpl implements SellerService{
         return dao.getSellerByEmail(email) != null;
     }
 
+    @Override
+    public String findSellerEmail (String cpnm, String pwd) throws Exception {
+        Seller seller = dao.getSellerByCpnm(cpnm); //브랜드명으로 판매자 조회
+
+        if (seller == null || !passwordEncoder.matches(pwd, seller.getPwd())) return null; //미존재 판매자
+        if (seller.getState_cd() == 3) return null; //탈퇴판매자 제외
+        return seller.getEmail();
+    }
+
 
 }

@@ -145,7 +145,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public String findUserEmail(String nick_nm, String pwd) throws Exception {
         User user = dao.getUserByNick(nick_nm);
-        return passwordEncoder.matches(pwd, user.getPwd()) ? user.getEmail() : null;
+
+        if (user == null || !passwordEncoder.matches(pwd, user.getPwd())) return null;
+        if (user.getState_cd() == 3) return null;
+        return user.getEmail();
     }
 
 

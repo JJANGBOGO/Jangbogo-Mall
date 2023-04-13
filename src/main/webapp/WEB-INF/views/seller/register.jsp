@@ -463,9 +463,8 @@
             let brno_ref = $("#brno");
             if (!validateBrnoAlert(brno_ref)) return false;
 
-            let brno = {
-                b_no: [$("#brno").val()] //-제외 숫자만 입력할 것. 그렇지 않으면 잘못된 조회결과 발생
-            };
+            let brno = { b_no: [$("#brno").val()]};
+                //-제외 숫자만 입력할 것. 그렇지 않으면 잘못된 조회결과 발생
 
             let serviceKey = "5RrGC%2BYxMLKxHrcaSzs46HaxE7ye2QKnjkO%2F4uATqcBp9fzXBmyqAqEDY1GFkwqWj4lUxEA8R8nskdqUCJhohQ%3D%3D";
             $.ajax({
@@ -496,10 +495,12 @@
             });
         });
 
+        //주소 검색
         $("#addr-search").click(function (e) {
             addressCallback(e);
         });
 
+        //체크박스 모두 동의
         $(".checkbox-group").on("click", "#check-all", function () {
             let is_checked = $(this).is(":checked");
 
@@ -515,6 +516,7 @@
             );
         });
 
+        //체크박스
         $(".checkbox-group").on("click", ".normal", function () {
             var is_checked = true;
 
@@ -538,7 +540,7 @@
             });
         });
 
-        //file upload
+        //파일 업로드
         let clone_bnr = $(".upload-input.bnr").clone();
         let clone_profile = $(".upload-input.profile").clone();
 
@@ -546,6 +548,7 @@
         let bnr_upload_list = $(".upload-result.bnr ul");
         var profile_upload_list = $(".upload-result.profile ul");
 
+        //브랜드 업로드
         $("#bnr_upload_btn").on("click", function (e) { //업로드 버튼을 눌렀을 때 이벤트를 연결한다.
             e.preventDefault();
             let formData = new FormData();
@@ -571,7 +574,7 @@
             });
         });
 
-        //uploadBtn2
+        //프로필 업로드
         $("#profile_upload_btn").on("click", function (e) {
             e.preventDefault();
             var formData = new FormData();

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -21,6 +22,9 @@ public class SellerServiceTest {
 
     @Autowired
     SellerService service;
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     @Test //OK
     public void withdrawSeller() throws Exception {
@@ -131,6 +135,13 @@ public class SellerServiceTest {
         boolean isDuplicated = service.isEmailDuplicated("seller100@naver.com");
         log.info("duplicate...." + isDuplicated);
         assertTrue(isDuplicated == true);
+    }
+
+    @Test
+    public void pwdEncoding() throws Exception {
+        String pwd = passwordEncoder.encode("test");
+        //$2a$10$H2fvSscBWnbGI0UXRwEaNeW55Cg/TMZdlY839dowTTMrKZ0hhAz0q
+        log.info("pwd..." +pwd);
     }
 
 
