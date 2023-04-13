@@ -164,7 +164,7 @@
             bottom: 0;
             left: 0;
             border-style: none;
-            background: #5f0080;
+            background: #f58412;
             color: white;
             width: 100%;
             height: 56px;
@@ -213,7 +213,7 @@
             </div>
             <div id="cartEstimate"></div>
         </div>
-        <div class="footer"></div>
+        <%@ include file="/WEB-INF/views/include/footer.jsp" %>
     </div>
     <script>
         // 메서드명 : listToHtml
@@ -323,7 +323,10 @@
             // 회원번호(user_idx) 하드코딩
             // 세션에서 회원번호를 가져와야 한다. 세션 연동 시, 추후 테스트 필요.
             // data-uid는 장바구니가 비었을 경우도 있기 때문에 사용할 수 없다.
-            showList(1234);
+            // 변수명 : idx
+            // 저장값 : 세션에 저장된 회원번호(user_idx)
+            let idx = `${idx}`;
+            showList(idx);
 
             // 이벤트 대상 : .input-all 전체선택 체크박스
             // 이벤트 : click
@@ -486,9 +489,8 @@
             // 이벤트 대상 : input[name=order] 주문 버튼
             // 이벤트 : click
             // 이벤트 핸들러 기능 : '주문' 버튼 클릭 시, 주문서 작성 페이지로 이동
-            $(document).on("click", "input[name=order]", (e) => { // 회원번호와 상품번호, 그리고 상품개수를 html태그의 data속성에서 가져와야 한다.
-                let link = "/order/checkout";
-                location.href= link;
+            $(document).on("click", "input[name=order]", () => {
+                location.href= "/order/checkout";
             });
         })
     </script>
