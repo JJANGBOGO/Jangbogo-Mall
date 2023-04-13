@@ -39,12 +39,6 @@ public class UserDaoTest {
     }
 
     @Test //OK
-    public void findByEmailTest () throws Exception {
-        User result = dao.selUserByEmail("진진자라", "jinvicky@naver.com");
-        log.info("result="+ result);
-    }
-
-    @Test //OK
     public void selectUserTest () throws Exception {
         User result = dao.selectUser(1);
         log.info("result="+ result);

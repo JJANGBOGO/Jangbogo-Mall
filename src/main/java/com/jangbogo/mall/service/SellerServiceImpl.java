@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class SellerServiceImpl implements SellerService{
 
@@ -88,6 +90,12 @@ public class SellerServiceImpl implements SellerService{
         if (seller == null || !passwordEncoder.matches(pwd, seller.getPwd())) return null; //미존재 판매자
         if (seller.getState_cd() == 3) return null; //탈퇴판매자 제외
         return seller.getEmail();
+    }
+
+    @Override
+    public boolean isSellerPresent (String cpnm, String email) throws Exception {
+        Seller seller = dao.getSellerByCpnm(cpnm);
+        return seller != null && Objects.equals(email, seller.getEmail());
     }
 
 

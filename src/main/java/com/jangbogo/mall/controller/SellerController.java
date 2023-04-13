@@ -197,4 +197,26 @@ public class SellerController {
             return "redirect:/find/email";
         }
     }
+
+    //비번 찾기
+    @PostMapping("/seller/find/pwd")
+    public String findSellerPwd (String cpnm, String email, RedirectAttributes rattr) {
+
+        try {
+            if (service.isSellerPresent(cpnm, email)) {
+                rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
+                return "redirect:/find/email";
+            }
+
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/find/pwd";
+        }
+
+        return "redirect:/find/pwd";
+    }
 }

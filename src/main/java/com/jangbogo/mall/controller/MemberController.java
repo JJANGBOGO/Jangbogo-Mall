@@ -11,7 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
-public class MemberController { //회원, 판매자 공통작업 수행
+public class MemberController { //회원, 판매자 공통화면
 
     @Autowired
     UserService userService;
@@ -42,8 +42,7 @@ public class MemberController { //회원, 판매자 공통작업 수행
                 rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
                 return "redirect:/find/email";
             } else { //회원 존재
-                int result = userService.sendPwdEmail(nick_nm, email);
-                if (result == 1) { //성공
+                if (userService.sendPwdEmail(nick_nm, email) == 1) { //성공
                     m.addAttribute("userEmail", email);
                     return "redirect:/find/pwd/success"; //성공
                 } else {

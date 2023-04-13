@@ -7,8 +7,6 @@ public interface UserDao {
 
     int deleteUser (int idx, String email) throws Exception; //회원탈퇴
 
-    User selUserByEmail (String nick_nm, String email) throws Exception; //닉넴, 이메일로 회원찾기
-
     User selectUser (int idx) throws Exception; //회원상세조회
 
     int updatePwd (String pwd, String nick_nm, String email) throws Exception; //비밀번호 수정

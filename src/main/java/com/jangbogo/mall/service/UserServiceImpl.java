@@ -5,14 +5,18 @@ import com.jangbogo.mall.dao.UserDao;
 import com.jangbogo.mall.domain.Address;
 import com.jangbogo.mall.domain.Email;
 import com.jangbogo.mall.domain.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -34,7 +38,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUserPresent(String nick_nm, String email) throws Exception {
-        return dao.selUserByEmail(nick_nm, email) != null;
+        User user = dao.getUserByNick(nick_nm);
+        return user != null && Objects.equals(email, user.getEmail());
     }
 
     @Override
@@ -60,7 +65,6 @@ public class UserServiceImpl implements UserService {
                     .toEmail(toEmail)
                     .title("임시 비밀번호 전달")
                     .content("회원님의 임시 비밀번호는 " + tmpPwd + " 입니다.")
-//                    TODO:: 추후 이메일 템플릿 적용
                     .build();
             emailSender.sendMail(email);
             return 1; //성공
