@@ -2,6 +2,7 @@ package com.jangbogo.mall.controller;
 
 
 import com.jangbogo.mall.domain.Seller;
+import com.jangbogo.mall.domain.SellerDtl;
 import com.jangbogo.mall.domain.User;
 import com.jangbogo.mall.service.SellerService;
 import lombok.extern.slf4j.Slf4j;
@@ -137,14 +138,19 @@ public class SellerController {
 
     //판매자수정 뷰
     @GetMapping("/seller/modify")
-    public String chgSellerView(HttpServletRequest req, Model m) {
+    public String chgSellerView(HttpServletRequest req, Model m, RedirectAttributes rattr) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
         try {
-            Seller seller = service.getSellerByIdx(8);
+            // TODO:: 세션에서 idx 받아오기
+            Seller seller = service.getSellerByIdx(14);
+            SellerDtl sellerDtl = service.getSellerDtl(14);
+
             m.addAttribute("seller", seller);
+            m.addAttribute("sellerDtl", sellerDtl);
             return "/seller/modifySeller";
         } catch (Exception e) {
             e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return "redirect:/seller/info";
         }
     }

@@ -56,6 +56,16 @@ function validatePwdAlert (pwd_ref) {
     return true;
 }
 
+//수정 시 사용하는 비밀번호 체크
+function validateNewPwdAlert (pwd_ref) {
+    if (pwd_ref.val() != "" && !pwd_reg.test(pwd_ref.val())) {
+        alert(not_valid_pwd);
+        pwd_ref.focus();
+        return false;
+    }
+    return true;
+}
+
 function validatePwdConfirmAlert (pwd_ref, pwd_confirm_ref) {
     if (pwd_ref.val() != pwd_confirm_ref.val()) {
         alert(not_valid_pwd_confirm);
@@ -65,7 +75,8 @@ function validatePwdConfirmAlert (pwd_ref, pwd_confirm_ref) {
     return true;
 }
 
-function validateMpnoAlert (mpno_ref, mpno_chk_btn) {
+//휴대전화 인증 체크
+function validateMpnoAlert (mpno_ref) {
     if (mpno_ref.val() == "") {
         alert(mpno_empty);
         mpno_ref.focus();
@@ -77,7 +88,10 @@ function validateMpnoAlert (mpno_ref, mpno_chk_btn) {
         mpno_ref.focus();
         return false;
     }
+    return true;
+}
 
+function chkMpnoAlert (mpno_ref, mpno_chk_btn) {
     if (!mpno_chk_btn.is(":disabled")) {
         alert(chk_mpno_required);
         mpno_ref.focus();
@@ -153,6 +167,16 @@ function validateBrndNameAlert (cpnm_ref) { //인증버튼 상태 제외
 
     if (!nick_reg.test(cpnm_ref.val())) {
         alert(not_valid_brnd_nm);
+        cpnm_ref.focus();
+        return false;
+    }
+    return true;
+}
+
+//브랜드명 중복 검사 alert
+function chkBrndNameAlert (cpnm_ref, cpnm_chk_btn) {
+    if (!cpnm_chk_btn.is(":disabled")) {
+        alert(chk_brnd_name_required);
         cpnm_ref.focus();
         return false;
     }

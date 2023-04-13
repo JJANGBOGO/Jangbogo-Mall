@@ -237,15 +237,11 @@
         e.preventDefault();
         let form = $(".mod-brnd-form"); //form ref
 
-        //브랜드명
         let cpnm_ref = $("#cpnm");
-        if (!validateBrndNameAlert(cpnm_ref)) return false;
+        let cpnm_chk_btn = $("#cpnm_duplicate_chk");
 
-        if (!$("#cpnm_duplicate_chk").is(":disabled")) {
-            alert(chk_brnd_name_required);
-            cpnm_ref.focus();
-            return false;
-        }
+        if (!validateBrndNameAlert(cpnm_ref)) return false;
+        if (!chkBrndNameAlert(cpnm_ref, cpnm_chk_btn)) return false;
 
         //브랜드 설명
         let summernoteContent = $(".summernote").summernote("code"); //썸머노트(설명)
