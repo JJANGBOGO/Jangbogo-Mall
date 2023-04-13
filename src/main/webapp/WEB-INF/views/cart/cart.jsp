@@ -164,7 +164,7 @@
             bottom: 0;
             left: 0;
             border-style: none;
-            background: #5f0080;
+            background: #f58412;
             color: white;
             width: 100%;
             height: 56px;
@@ -213,7 +213,7 @@
             </div>
             <div id="cartEstimate"></div>
         </div>
-        <div class="footer"></div>
+        <%@ include file="/WEB-INF/views/include/footer.jsp" %>
     </div>
     <script>
         // 메서드명 : listToHtml
