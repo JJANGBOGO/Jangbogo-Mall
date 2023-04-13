@@ -469,7 +469,7 @@
                 tmp += "<span>" + deliveryInfo.recipient + " , " + deliveryInfo.mpno + "</span>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-value__column'>"
-                tmp += "<span>" + deliveryInfo.pickUpLocation + " | " + (deliveryInfo.hasGatePwd ? "공동현관 출입번호" : "자유 출입 가능") + "</span>"
+                tmp += "<span>받으실 장소 | " + deliveryInfo.pickUpLocation + "</span>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-value__column'>"
                 tmp += "<span>배송완료 메시지 | " + (deliveryInfo.completeMsg ? "배송 직후" : "오전 7시") + "</span>"
@@ -526,6 +526,9 @@
                 // 변수명 : url
                 // 저장값 : 새창에 해당하는 url
                 let url = "/order/recipient-details";
+                // 비동기 요청 수정
+                // 1. 수정 페이지 이동 2. 값 입력 후 저장 버튼 클릭 3. result로 값이 오고 deliveryToHtml 호출
+                // location.href(url);
                 // 팝업을 가운데 위치시키기 위해 아래와 같이 값 구하기
                 popupCenter(url, 500, 800);
             });
