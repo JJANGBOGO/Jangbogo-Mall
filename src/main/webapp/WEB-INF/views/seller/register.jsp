@@ -372,6 +372,9 @@
 <script src="/js/member/common.js"></script>
 <script src="/js/upload/common.js"></script>
 <script>
+    let msg= "${msg}";
+    if (msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다 다시 시도해 주세요");
+
     //파일 분리 허용X. val() 때문에
     let addressCallback = (e) => {
         e.preventDefault(); //405 이슈 해결.

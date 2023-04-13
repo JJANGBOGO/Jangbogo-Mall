@@ -372,14 +372,12 @@ public class UserController {
         try {
 //            user.setIdx((int) session.getAttribute("idx"));
             user.setIdx(36);
-            int result = userService.updateUser(user); //회원 업데이트
-
             if (userService.updateUser(user) != 1)
                 throw new Exception("modify failed");
 
             session.removeAttribute("modify"); //수정 성공시 해당 세션도 삭제
             rattr.addFlashAttribute("msg", "MOD_OK"); // 수정완료 메세지
-            return "redirect:/user/info"; //이전 페이지로 돌아가기
+            return "redirect:/user/info";
             //loginService가 null이면
 
         } catch (Exception e) {
@@ -394,8 +392,6 @@ public class UserController {
         session.setAttribute("idx", user.getIdx());
         session.setAttribute("email", user.getEmail());
         session.setAttribute("nickName", user.getNick_nm());
-//        요청으로 mpno도 추가
-        session.setAttribute("mpno", user.getMpno());
     }
 
     //이메일 찾기

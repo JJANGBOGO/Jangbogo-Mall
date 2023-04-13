@@ -59,6 +59,25 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
+                            <label for="repr_nm">대표 이름<span>*</span></label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        id="repr_nm"
+                                        name="repr_nm"
+                                        type="text"
+                                        placeholder="대표자 이름을 입력해주세요"
+                                        value="${seller.repr_nm}"
+                                />
+                            </div>
+                            <div class="error-msg repr-nm"></div>
+                        </div>
+                        <div class="btn-space">
+                        </div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
                             <label for="pwd">새 비밀번호</label>
                         </div>
                         <div class="input-box">
@@ -259,56 +278,56 @@
             e.preventDefault();
             let form = $("#modify_seller");
 
-            let cpnm_ref = $("#cpnm");
-            let cpnm_chk_btn = $("#cpnm_duplicate_chk");
-
-            if (!validateBrndNameAlert(cpnm_ref)) return false;
-            if (!chkBrndNameAlert(cpnm_ref, cpnm_chk_btn)) return false; //브랜드명
-
+            // let cpnm_ref = $("#cpnm");
+            // let cpnm_chk_btn = $("#cpnm_duplicate_chk");
+            //
+            // if (!validateBrndNameAlert(cpnm_ref)) return false;
+            // if (!chkBrndNameAlert(cpnm_ref, cpnm_chk_btn)) return false; //브랜드명
+            //
             let pwd_ref = $("#pwd");
-            let pwd_confirm_ref = $("#pwd_confirm");
-
-            if (!validateNewPwdAlert(pwd_ref)) return false; //수정시 비번 체크가 다른다
-            if (!validatePwdConfirmAlert(pwd_ref, pwd_confirm_ref)) return false; //비번
-
-            let mpno_ref = $("#mpno");
-            let mpno_chk_btn = $("#mpno_chk");
-
-            if (!validateMpnoAlert(mpno_ref)) return false;
-            if (!chkMpnoAlert(mpno_ref, mpno_chk_btn)) return false; //휴대전화
-
-            //판매자 수정 단독
-            let guid_nm_ref = $("#guid_nm");
-
-            if (guid_nm_ref.val() != "" && !nick_reg.test(guid_nm_ref.val())) {
-                alert("안내담당자 이름은 공백 제외로 실명을 적어주세요 (20자 이내)");
-                guid_nm_ref.focus();
-                return false;
-            }
-
-            let guid_email_ref = $("#guid_email");
-
-            if (guid_email_ref.val() != "" && !email_reg.test(guid_email_ref.val())) {
-                alert(not_valid_email);
-                guid_email_ref.focus();
-                return false;
-            }
-
-            let cllr_nm_ref = $("#cllr_nm");
-            let cllr_telno_ref = $("#cllr_telno");
-
-            //콜센터
-            if (cllr_nm_ref.val() != "" && !nick_reg.test(cllr_nm_ref.val())) {
-                alert("고객센터 담당자 이름은 공백 제외로 실명을 적어주세요 (20자 이내)");
-                guid_nm_ref.focus();
-                return false;
-            }
-
-            if (cllr_telno_ref.val() != "" && !mpno_reg.test(cllr_telno_ref.val())) {
-                alert(not_valid_mpno);
-                cllr_telno_ref.focus();
-                return false;
-            }
+            // let pwd_confirm_ref = $("#pwd_confirm");
+            //
+            // if (!validateNewPwdAlert(pwd_ref)) return false; //수정시 비번 체크가 다른다
+            // if (!validatePwdConfirmAlert(pwd_ref, pwd_confirm_ref)) return false; //비번
+            //
+            // let mpno_ref = $("#mpno");
+            // let mpno_chk_btn = $("#mpno_chk");
+            //
+            // if (!validateMpnoAlert(mpno_ref)) return false;
+            // if (!chkMpnoAlert(mpno_ref, mpno_chk_btn)) return false; //휴대전화
+            //
+            // //판매자 수정 단독
+            // let guid_nm_ref = $("#guid_nm");
+            //
+            // if (guid_nm_ref.val() != "" && !nick_reg.test(guid_nm_ref.val())) {
+            //     alert("안내담당자 이름은 공백 제외로 실명을 적어주세요 (20자 이내)");
+            //     guid_nm_ref.focus();
+            //     return false;
+            // }
+            //
+            // let guid_email_ref = $("#guid_email");
+            //
+            // if (guid_email_ref.val() != "" && !email_reg.test(guid_email_ref.val())) {
+            //     alert(not_valid_email);
+            //     guid_email_ref.focus();
+            //     return false;
+            // }
+            //
+            // let cllr_nm_ref = $("#cllr_nm");
+            // let cllr_telno_ref = $("#cllr_telno");
+            //
+            // //콜센터
+            // if (cllr_nm_ref.val() != "" && !nick_reg.test(cllr_nm_ref.val())) {
+            //     alert("고객센터 담당자 이름은 공백 제외로 실명을 적어주세요 (20자 이내)");
+            //     guid_nm_ref.focus();
+            //     return false;
+            // }
+            //
+            // if (cllr_telno_ref.val() != "" && !mpno_reg.test(cllr_telno_ref.val())) {
+            //     alert(not_valid_mpno);
+            //     cllr_telno_ref.focus();
+            //     return false;
+            // }
 
             let prev_pwd = "${seller.pwd}";
             if (pwd_ref.val() == "") pwd_ref.val(prev_pwd); //새 비밀번호를 입력하지 않은 경우 기존 비밀번호를 넣는다.
