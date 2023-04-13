@@ -13,6 +13,8 @@ public interface ProdInqryService {
     @Transactional(rollbackFor = Exception.class)
     int remove(Integer idx, Integer prod_idx, Integer user_idx) throws Exception;
 
+    String getNickName(Integer user_idx) throws Exception;
+
     @Transactional(rollbackFor = Exception.class)
     int write(ProdInqryDto prodInqryDto) throws Exception;
 
