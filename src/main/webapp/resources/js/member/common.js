@@ -75,7 +75,7 @@ function validatePwdConfirmAlert (pwd_ref, pwd_confirm_ref) {
     return true;
 }
 
-//휴대전화 인증 체크
+//전화인증 유효성 alert
 function validateMpnoAlert (mpno_ref) {
     if (mpno_ref.val() == "") {
         alert(mpno_empty);
@@ -91,6 +91,7 @@ function validateMpnoAlert (mpno_ref) {
     return true;
 }
 
+//전화인증여부 alert
 function chkMpnoAlert (mpno_ref, mpno_chk_btn) {
     if (!mpno_chk_btn.is(":disabled")) {
         alert(chk_mpno_required);
@@ -100,7 +101,7 @@ function chkMpnoAlert (mpno_ref, mpno_chk_btn) {
     return true;
 }
 
-//사업자
+//사업자 alert
 function validateBrnoAlert (brno_ref) { //인증버튼 상태는 제외.
     if (brno_ref.val() == "") {
         alert("사업자 번호를 입력해 주세요");
@@ -116,7 +117,7 @@ function validateBrnoAlert (brno_ref) { //인증버튼 상태는 제외.
     return true;
 }
 
-//주소 체크
+//주소 alert
 function validateAddrAlert (addr_base_ref, addr_dtl_ref) {
 
     if (addr_base_ref.val() == "") { //readonly
@@ -132,7 +133,7 @@ function validateAddrAlert (addr_base_ref, addr_dtl_ref) {
     return true;
 }
 
-//브랜드 배너, 프사 이미지 길이 체크
+//브랜드 배너, 프사 이미지 길이 alert
 function validateBrndImgAlert (bnr_list, prof_list) {
     if (bnr_list.length > 1) {
         alert(bnr_overflow);
@@ -146,7 +147,7 @@ function validateBrndImgAlert (bnr_list, prof_list) {
     return true;
 }
 
-//브랜드 내용 체크
+//브랜드 내용 alert
 function validateBrndCnAlert (content_ref) {
     if (content_ref.val() == "") {
         alert("브랜드 내용을 입력해 주세요");
@@ -156,7 +157,7 @@ function validateBrndCnAlert (content_ref) {
     return true;
 }
 
-//브랜드명 체크
+//브랜드명 alert
 function validateBrndNameAlert (cpnm_ref) { //인증버튼 상태 제외
 
     if (cpnm_ref.val() == "" ) {
@@ -173,7 +174,7 @@ function validateBrndNameAlert (cpnm_ref) { //인증버튼 상태 제외
     return true;
 }
 
-//브랜드명 중복 검사 alert
+//브랜드명 중복검사 alert
 function chkBrndNameAlert (cpnm_ref, cpnm_chk_btn) {
     if (!cpnm_chk_btn.is(":disabled")) {
         alert(chk_brnd_name_required);
@@ -192,6 +193,40 @@ function cpnmErrMsg (cpnm, err_ref) {
 
     if (!nick_reg.test(cpnm)) err_ref.html(not_valid_brnd_nm);
     else err_ref.empty();
+}
+
+//비번 keyup 에러메세지
+function pwdErrMsg (pwd, err_ref) {
+    if (pwd == "") {
+        err_ref.html(pwd_empty);
+        return false;
+    } else err_ref.empty();
+
+    if (!pwd_reg.test(pwd)) {
+        err_ref.html(not_valid_pwd);
+        return false;
+    } else err_ref.empty();
+}
+
+//새 비번 keyup 에러메세지
+function newPwdErrMsg (pwd, err_ref) {
+    if (pwd != "" && !pwd_reg.test(pwd)) {
+        err_ref.html(not_valid_pwd);
+        return false;
+    } else err_ref.empty();
+}
+
+//휴대전화 keyup 에러메세지
+function mpnoErrMsg (mpno, err_ref) {
+    if (mpno == "") {
+        err_ref.html(mpno_empty);
+        return false;
+    } else err_ref.empty();
+
+    if (!mpno_reg.test(mpno)) {
+        err_ref.html(not_valid_mpno);
+        return false;
+    } else err_ref.empty();
 }
 
 

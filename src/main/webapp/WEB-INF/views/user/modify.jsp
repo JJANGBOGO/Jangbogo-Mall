@@ -231,23 +231,13 @@
             } else err_ref.empty();
         });
 
-        //휴대전화
+        //휴대전화 keyup
         $("#mpno").keyup(function () {
             let mpno = $("#mpno").val();
             let err_ref = $(".error-msg.mpno");
-            let prev_mpno = "${user.mpno}";
 
-            if (mpno == "") {
-                err_ref.html(mpno_empty);
-                return false;
-            } else err_ref.empty();
-
-            if (!mpno_reg.test(mpno)) {
-                err_ref.html(not_valid_mpno);
-                return false;
-            } else err_ref.empty();
-
-            $("#mpno_chk").attr("disabled", mpno == prev_mpno ? true : false);
+            mpnoErrMsg(mpno, err_ref);
+            $("#mpno_chk").attr("disabled", (mpno == "${user.mpno}") ? true : false);
         });
 
         //닉네임 중복검사

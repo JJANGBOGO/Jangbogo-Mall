@@ -49,6 +49,7 @@
                                         value="${seller.cpnm}"
                                 />
                             </div>
+                            <div class="error-msg cpnm"></div>
                         </div>
                         <div class="btn-space">
                             <button id="cpnm_duplicate_chk">
@@ -69,6 +70,7 @@
                                         placeholder="새 비밀번호를 입력해주세요"
                                 />
                             </div>
+                            <div class="error-msg pwd"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -85,7 +87,7 @@
                                         placeholder="새 비밀번호를 다시 입력해주세요"
                                 />
                             </div>
-                            <div class="error-msg pwd-confirm">새 비밀번호와 일치하지 않습니다.</div>
+                            <div class="error-msg pwd-confirm"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -125,6 +127,7 @@
                                         placeholder="안내 담당자 이름을 입력해 주세요"
                                 />
                             </div>
+                            <div class="error-msg guid_nm"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -142,6 +145,7 @@
                                         placeholder="안내 담당자 이메일을 입력해 주세요"
                                 />
                             </div>
+                            <div class="error-msg guid_email"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -159,6 +163,7 @@
                                         placeholder="고객센터 담당자 이름을 입력해 주세요"
                                 />
                             </div>
+                            <div class="error-msg cllr_nm"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -176,6 +181,7 @@
                                         placeholder="고객센터 전화번호를 입력해 주세요"
                                 />
                             </div>
+                            <div class="error-msg cllr_telno"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -208,14 +214,47 @@
         $("#cpnm").keyup(function () { //브랜드명
             let cpnm = $("#cpnm").val();
             let err_ref = $(".error-msg.cpnm");
-            cpnmErrMsg(cpnm, err_ref);
 
-            //브랜드명이 입력값과 같으면 중복확인 disabled
+            cpnmErrMsg(cpnm, err_ref);
             $("#cpnm_duplicate_chk").attr("disabled", (cpnm == "${seller.cpnm}") ? true : false);
         });
 
+        //새 비번 keyup
+        $("#pwd").keyup(function () {
+            let pwd = $("#pwd").val();
+            let err_ref = $(".error-msg.pwd");
+
+            newPwdErrMsg(pwd, err_ref); //그냥 비번과 다름
+        });
+
+        //휴대전화 keyup
+        $("#mpno").keyup(function () {
+            let mpno = $("#mpno").val();
+            let err_ref = $(".error-msg.mpno");
+
+            mpnoErrMsg(mpno, err_ref);
+            $("#mpno_chk").attr("disabled", (mpno == "${seller.mpno}") ? true : false);
+        });
+
+        //판매자 수정 단독
+        $("#guid_nm").keyup(function() {
+
+        });
+
+        $("#guid_email").keyup(function() {
+
+        });
+
+        $("#cllr_nm").keyup(function() {
+
+        });
+
+        $("#cllr_telno").keyup(function() {
+
+        });
+
         //수정완료 버튼
-        $("#seller_modify").click(function(e) {
+        $("#seller_modify").click(function (e) {
             e.preventDefault();
             let form = $("#modify_seller");
 
@@ -234,13 +273,13 @@
             let mpno_ref = $("#mpno");
             let mpno_chk_btn = $("#mpno_chk");
 
-            if(!validateMpnoAlert(mpno_ref)) return false;
+            if (!validateMpnoAlert(mpno_ref)) return false;
             if (!chkMpnoAlert(mpno_ref, mpno_chk_btn)) return false; //휴대전화
 
             //판매자 수정 단독
             let guid_nm_ref = $("#guid_nm");
 
-            if(guid_nm_ref.val() != "" && !nick_reg.test(guid_nm_ref.val())) {
+            if (guid_nm_ref.val() != "" && !nick_reg.test(guid_nm_ref.val())) {
                 alert("안내담당자 이름은 공백 제외로 실명을 적어주세요 (20자 이내)");
                 guid_nm_ref.focus();
                 return false;
