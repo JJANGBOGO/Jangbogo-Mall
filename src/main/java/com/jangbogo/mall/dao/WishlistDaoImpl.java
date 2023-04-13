@@ -17,7 +17,7 @@ public class WishlistDaoImpl implements WishlistDao {
 
     String namespace = "com.jangbogo.mall.dao.WishlistMapper.";
     @Override
-    public List<WishlistDto> getlist(int idx) throws Exception{
+    public List<ProductDto> getlist(int idx) throws Exception{
         return session.selectList(namespace+"getlist",idx);
     }
 
