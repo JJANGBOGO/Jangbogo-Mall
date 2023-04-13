@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-    <head>
+    <head> // 딜리버리 다오, 디티오 삭제
         <title>주문서 작성</title>
         <link rel="stylesheet" href="/css/order/orderForm.css"/>
         <%@ include file="/WEB-INF/views/include/header.jsp" %>
