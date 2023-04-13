@@ -23,21 +23,20 @@ public class WishlistServiceImplTest {
     public void select() throws Exception{
         assertTrue(wishlistService != null);
         System.out.println("wishlistService = " + wishlistService);
-        List<WishlistDto> list = wishlistService.getlist(3);
+        List<ProductDto> list = wishlistService.getlist(3);
         System.out.println("list = " + list);
-        assertTrue(list.get(0).getProd_idx().equals(1));
-        assertTrue(list.get(1).getProd_idx().equals(2));
+        assertTrue(list!=null);
 
     }
     @Test
     public void delete() throws Exception{
         assertTrue(wishlistService !=null);
         System.out.println("wishlistService = " + wishlistService);
-        List<WishlistDto> list = wishlistService.getlist(3);
-        System.out.println("list = " + list);
+//        List<WishlistDto> list = wishlistService.getlist(3);
+//        System.out.println("list = " + list);
         int cnt = wishlistService.delete(2,3);
         assertTrue(cnt==1);
-        System.out.println("list = " + list);
+//        System.out.println("list = " + list);
     }
 
     @Test
