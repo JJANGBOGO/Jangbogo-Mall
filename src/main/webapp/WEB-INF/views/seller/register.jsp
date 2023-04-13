@@ -628,7 +628,7 @@
             // }
             //
             let brnd_cn_ref = $("#brnd_cn"); //브랜드 내용
-            if (!valdiateBrndCnAlert(brnd_cn_ref)) return false;
+            if (!validateBrndCnAlert(brnd_cn_ref)) return false;
 
             //브랜드 배너, 프로필 이미지가 2개 이상이면 alert("이미지를 1개만 업로드");
             let bnr_list = $(".upload-result.bnr ul li");
@@ -640,10 +640,7 @@
             let agre_chk = function chkAgreed () {
                 let is_Agreed;
                 $(".chk-group-line .input-line input[type=checkbox]").each(function(i, obj) {
-                    if (!obj.checked) {
-                        is_Agreed = obj.checked;
-                        return false;
-                    }
+                    is_Agreed = (!obj.checked) ? obj.checked : true;
                 });
                 return is_Agreed;
             };
@@ -652,8 +649,6 @@
                 alert(chk_agre_required);
                 return false;
             }
-
-            //TODO:: form submit 구현
 
             let form = $("#seller_register");
 
@@ -664,9 +659,7 @@
                 "<input type='hidden' name='brnd_upload_path' value=" + profile_path + ">";
 
             form.append(files); //form에 업로드 파일 정보 추가
-
             form.submit();
-
         });
 
     });

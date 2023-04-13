@@ -133,7 +133,7 @@ function validateBrndImgAlert (bnr_list, prof_list) {
 }
 
 //브랜드 내용 체크
-function valdiateBrndCnAlert (content_ref) {
+function validateBrndCnAlert (content_ref) {
     if (content_ref.val() == "") {
         alert("브랜드 내용을 입력해 주세요");
         content_ref.focus();
