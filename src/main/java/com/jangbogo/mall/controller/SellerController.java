@@ -64,7 +64,7 @@ public class SellerController {
     @ResponseBody
     public ResponseEntity<String> chkDuplicateNick(String cpnm, String type) {
         try {
-        log.info("cpnm...." + cpnm + service.isCpnmDuplicated(cpnm));
+            log.info("cpnm...." + cpnm + service.isCpnmDuplicated(cpnm));
             String msg = (!service.isCpnmDuplicated(cpnm)) ? "OK" : "DUPLICATED";
             return ResponseEntity.ok().body(msg);
         } catch (Exception e) {
@@ -89,17 +89,42 @@ public class SellerController {
 
     //마이셀러 브랜드수정 뷰
     @GetMapping("/seller/modify/brnd")
-    public String chgBrndView(HttpServletRequest req, Model m) {
+    public String modifyBrandView(HttpServletRequest req, Model m, RedirectAttributes rattr) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
-        return "/seller/modifyBrnd";
+
+        try {
+            // TODO:: 세션에서 idx 얻어서 판매자 정보 뿌리는걸로 추후 수정
+            Seller seller = service.getSellerByIdx(14);
+            m.addAttribute("seller", seller);
+            return "/seller/modifyBrnd";
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/";
+        }
     }
 
     //브랜드 수정
     @PostMapping("/seller/modify/brnd")
-    public String chgBrnd(Seller seller) {
+    public String modifyBrand(Seller seller, RedirectAttributes rattr) {
         log.info("brnd...." + seller);
 
-        return "/seller/modfiyBrnd";
+        //set idx, email from session => 지금은 하드코딩이지만 security이후 세션에서 받아오기로 수정
+        seller.setIdx(14);
+        seller.setEmail("seller100@naver.com");
+
+        try {
+            if (service.updateSellerBrnd(seller) != 1)
+                throw new Exception("Modify failed");
+
+            rattr.addFlashAttribute("msg", "MODIFY_BRND_OK");
+            return "redirect:/seller/read/brnd";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/seller/read/brnd";
+        }
     }
 
     //판매자수정 인증 뷰

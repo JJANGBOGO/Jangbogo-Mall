@@ -43,6 +43,7 @@
                                                 id="cpnm"
                                                 type="text"
                                                 placeholder="브랜드명을 입력해주세요"
+                                                value="${seller.cpnm}"
                                         />
                                     </div>
                                     <div class="error-msg cpnm">
@@ -130,6 +131,9 @@
         lang: "ko-KR",
     });
 
+    $(".summernote").summernote("code", "${seller.brnd_cn}"); //브랜드 내용 붙이기
+    $("#cpnm_duplicate_chk").attr("disabled", true); //기본으로 disabled (같은값)
+
     //file upload
     let clone_bnr = $(".upload-input.bnr").clone();
     let clone_profile = $(".upload-input.profile").clone();
@@ -197,6 +201,9 @@
         let cpnm = $("#cpnm").val();
         let err_ref = $(".error-msg.cpnm");
         cpnmErrMsg(cpnm, err_ref);
+
+        //브랜드명이 입력값과 같으면 중복확인 disabled
+        $("#cpnm_duplicate_chk").attr("disabled", (cpnm == "${seller.cpnm}") ? true : false);
     });
 
     $("#cpnm_duplicate_chk").click(function (e) {
@@ -252,6 +259,9 @@
 
         let bnr_path = $(".upload-result.bnr ul li").data("upload-path");
         let profile_path = $(".upload-result.profile ul li").data("upload-path");
+
+        if (bnr_path == undefined) bnr_path = "${seller.brnd_bnr_upload_path}"; //''가 아니라 undefined
+        if (profile_path == undefined) profile_path = "${seller.brnd_upload_path}"; //''가 아니라 undefined
 
         form_str += "<input type='hidden' name='brnd_bnr_upload_path' value=" + bnr_path + ">" +
             "<input type='hidden' name='brnd_upload_path' value=" + profile_path + ">";
