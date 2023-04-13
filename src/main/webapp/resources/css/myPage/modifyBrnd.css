@@ -93,8 +93,13 @@
     text-align: center;
 }
 
+.mod-brnd-form .input-line .btn-space button:disabled,
+.mod-brnd-form .input-box .input input:read-only {
+    opacity: 0.4;
+}
 
-/* 가입하기 버튼 영역 */
+
+    /* 가입하기 버튼 영역 */
 .mod-brnd-form .btn-container {
     display: flex;
     -webkit-box-pack: center;

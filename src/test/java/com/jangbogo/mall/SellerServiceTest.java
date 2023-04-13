@@ -119,5 +119,12 @@ public class SellerServiceTest {
         assertTrue(result != 0);
     }
 
+    @Test //ok
+    public void duplicateCpnmChk () throws Exception {
+        boolean isDuplicated = service.isCpnmDuplicated("진이사과나무2");
+        log.info("duplicate...." + isDuplicated);
+        assertTrue(isDuplicated == true);
+    }
+
 
 }

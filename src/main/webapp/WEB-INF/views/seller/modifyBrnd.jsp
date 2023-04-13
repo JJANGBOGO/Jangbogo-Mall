@@ -15,7 +15,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="/summernote/summernote-lite.js"></script>
     <script src="/summernote/lang/summernote-ko-KR.js"></script>
-    <%--    반드시 상단에 script 추가, summernote 한정--%>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
@@ -210,8 +209,8 @@
             url: '/seller/duplicate/cpnm',
             data: {cpnm: cpnm_ref.val()},
             type: 'POST',
-            success: function (result) {
-                if (result == "OK") {
+            success: function (msg) {
+                if (msg == "OK") {
                     alert(available_cpnm);
                     $("#cpnm_duplicate_chk").attr("disabled", true); //버튼 비활성화
                     cpnm_ref.attr("readonly", true); //인풋 비활성화

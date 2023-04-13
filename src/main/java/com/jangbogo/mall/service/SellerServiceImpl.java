@@ -60,5 +60,10 @@ public class SellerServiceImpl implements SellerService{
         return dao.updateSellerBrnd(seller);
     }
 
+    @Override
+    public boolean isCpnmDuplicated (String cpnm) throws Exception {
+        return dao.getSellerByCpnm(cpnm) != null; //중복 시 true 반환
+    }
+
 
 }

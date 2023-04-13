@@ -6,6 +6,7 @@ import com.jangbogo.mall.domain.User;
 import com.jangbogo.mall.service.SellerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,18 +62,15 @@ public class SellerController {
     //브랜드명 중복 체크
     @PostMapping("/seller/duplicate/cpnm")
     @ResponseBody
-    public String chkDuplicateNick(String cpnm, String type) {
-        log.info("cpnm...." + cpnm);
-        String msg = "DUPLICATE";
+    public ResponseEntity<String> chkDuplicateNick(String cpnm, String type) {
         try {
-//            User user = userService.chkDuplicateNick(nick_nm);
-//            if (user == null) {
-//                msg = "OK";
-//            }
+        log.info("cpnm...." + cpnm + service.isCpnmDuplicated(cpnm));
+            String msg = (!service.isCpnmDuplicated(cpnm)) ? "OK" : "DUPLICATED";
+            return ResponseEntity.ok().body(msg);
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.status(500).body("EXCEPTION_ERR"); //test ok
         }
-        return msg;
     }
 
     //마이셀러 브랜드조회 뷰
@@ -98,7 +96,7 @@ public class SellerController {
 
     //브랜드 수정
     @PostMapping("/seller/modify/brnd")
-    public String chgBrnd (Seller seller) {
+    public String chgBrnd(Seller seller) {
         log.info("brnd...." + seller);
 
         return "/seller/modfiyBrnd";

@@ -28,4 +28,7 @@ public interface SellerService {
 
     //판매자 브랜드 수정
     int updateSellerBrnd (Seller seller) throws Exception;
+
+    //브랜드명 중복 검사
+    boolean isCpnmDuplicated (String cpnm) throws Exception;
 }
