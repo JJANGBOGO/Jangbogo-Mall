@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -31,7 +32,7 @@ public class SellerController {
     RegEx regEx;
 
     //로그인화면
-    @GetMapping("/seller/login")
+    @RequestMapping("/seller/login")
     public String loginSellerView() {
         return "/seller/login";
     }
@@ -205,6 +206,9 @@ public class SellerController {
         String email = (String) session.getAttribute("email"); //이메일 얻기
         try {
 //          TODO:: 구현해야 함
+            if(service.withdrawSeller(idx, email) != 1)
+                throw new Exception("withdraw failed");
+
             rattr.addFlashAttribute("msg", "SELLER_NOT_FOUND"); //판매자 존재 X
             return "redirect:/seller/withdraw";
 

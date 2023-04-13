@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int sendPwdEmail(String nick_nm, String toEmail) throws Exception {
-        String tmpPwd = utils.createTmpPwd();
+        String tmpPwd = utils.createRandomStr();
         String encodedPwd = passwordEncoder.encode(tmpPwd);
 
         int result = dao.updatePwd(encodedPwd, nick_nm, toEmail); //임시비번으로 비번 업데이트.

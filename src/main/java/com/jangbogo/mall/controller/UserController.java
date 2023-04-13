@@ -7,6 +7,7 @@ import com.jangbogo.mall.domain.NaverLoginBo;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.jangbogo.mall.domain.User;
 import com.jangbogo.mall.service.UserService;
+import com.jangbogo.mall.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject; //json.simple이어야 한다.
 import org.json.simple.parser.JSONParser;
@@ -46,10 +47,12 @@ public class UserController {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    Utils utils;
+
     //회원탈퇴뷰
     @GetMapping("/user/withdraw")
     public String withdrawUserView(HttpSession session, Model m, Authentication auth, RedirectAttributes rattr) {
-//        if (auth == null) return "redirect:/login"; //TODO:: 시큐리티 개발 후 수정 필요.
 
         int idx = (int) session.getAttribute("idx");
         try {
@@ -110,7 +113,7 @@ public class UserController {
         String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
         m.addAttribute("urlNaver", naverAuthUrl);
 
-        return "user/login";
+        return "/user/login";
     }
 
     //카카오 로그인
@@ -152,19 +155,13 @@ public class UserController {
             crtSession(session, user);
             return "redirect:/";
         } catch (Exception e) {
-//            예외 발생
             rattr.addFlashAttribute("msg", "LOGIN_ERR"); //로그인 에러
             return "redirect:/user/login";
         }
     }
 
     public String crtNickName() { //랜덤 문자열 생성, 소셜 닉네임 생성
-        String uuid = "";
-
-        for (int i = 0; i < 12; i++) { // TODO:: 나중에 공통으로 묶기
-            uuid += (char) ((Math.random() * 26) + 97);
-        }
-        return "뉴비_" + uuid;
+        return "뉴비_" + utils.createRandomStr();
     }
 
     //카카오 로그아웃
