@@ -32,12 +32,18 @@
         ORDER BY pi.idx desc
         LIMIT #{offset}, #{pageSize}
     </select>
+
+    <select id="selectNickName" parameterType="int" resultType="String">
+        select nick_nm
+        from user
+        where idx = #{user_idx};
+    </select>
 <!--하나의 상품 게시판 안 상품문의 게시물 한 개 올리기-->
     <insert id="insert" parameterType="ProdInqryDto">
         INSERT INTO prod_inqry
-            (prod_idx, user_idx, title, ctent, writer, res_state_cd, opub_yn)
+            (prod_idx, user_idx, title, ctent, writer, opub_yn)
         VALUES
-            (#{prod_idx}, #{user_idx}, #{title}, #{ctent}, #{writer}, #{res_state_cd}, #{opub_yn})
+            (#{prod_idx}, #{user_idx}, #{title}, #{ctent}, #{writer}, #{opub_yn})
     </insert>
 <!--하나의 상품 게시판 안 상품문의 게시물 한 개 지우기-->
     <delete id="delete" parameterType="map">
