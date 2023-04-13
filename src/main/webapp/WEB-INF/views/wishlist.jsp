@@ -16,6 +16,7 @@
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
 <%--    <%@ include file="/WEB-INF/views/include/sidebar.jsp" %>--%>
+    <div class="king">
     <div class="title">
         <h2 class="h2">
             찜한 상품(${totalCnt})
@@ -56,13 +57,12 @@
                             onclick=remove(${product.idx})>삭제
                     </button>
                     <button class="css-102v0ri e4nu7ef3" type="button" width="104" height="36" radius="4"
-                            onclick=show(${product.idx})><span class="css-ymwvow e4nu7ef1"><img
-                            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTTM2IDM2SDBWMGgzNnoiLz4KICAgICAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1LjE2NCA2LjU0NykiIHN0cm9rZT0iIzVmMDA4MCIgc3Ryb2tlLWxpbmVjYXA9InNxdWFyZSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIxLjciPgogICAgICAgICAgICA8cGF0aCBkPSJtMjUuNjggMy42Ni0yLjcyIDExLjU3SDcuMzdMNC42NiAzLjY2eiIvPgogICAgICAgICAgICA8Y2lyY2xlIGN4PSIyMC41MiIgY3k9IjIwLjc4IiByPSIyLjE0Ii8+CiAgICAgICAgICAgIDxjaXJjbGUgY3g9IjkuODEiIGN5PSIyMC43OCIgcj0iMi4xNCIvPgogICAgICAgICAgICA8cGF0aCBkPSJNMCAwaDMuOGwxLjc2IDcuNSIvPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg=="
-                            alt="" class="css-1m3kac1 e4nu7ef0">담기</span></button>
+                            onclick=show(${product.idx})><span class="css-ymwvow e4nu7ef1">담기</span></button>
                 </div>
             </div>
         </div>
     </c:forEach>
+</div>
     <div class="background">
         <div class="popup">
             <div class="b1">
@@ -75,7 +75,7 @@
                     </div>
                     <div class="f1">
                         <button class="button1" type="button"></button>
-    <%--                    <button class="button3" type="button"></button>--%>
+<%--                        <button class="button3" type="button"></button>--%>
 
                         <div class="count">
 
@@ -173,7 +173,7 @@
             document.querySelector(".background").className = "background";
             counter = 1;
             count.innerHTML = counter;
-            document.querySelector('.button3').className = "button1";
+            document.querySelector(".button3").className = "button1";
         }
 
         // 모달 카운터
