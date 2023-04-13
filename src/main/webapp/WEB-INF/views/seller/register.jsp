@@ -38,7 +38,7 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="cpnm">상호명(브랜드명)<span>*</span></label>
+                            <label for="cpnm">브랜드명<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
@@ -496,9 +496,13 @@
 
         $("#bnr_upload_btn").on("click", function (e) { //업로드 버튼을 눌렀을 때 이벤트를 연결한다.
             e.preventDefault();
-            var formData = new FormData();
-            var inputFile = $("input[name='upload_bnr']");
+            let formData = new FormData();
+            let inputFile = $("input[name='upload_bnr']");
 
+            if (inputFile[0].files.length < 1) { //파일 선택 안 한 경우
+                alert(bnr_upload_empty);
+                return false;
+            }
             checkFileList(inputFile[0].files, formData);
 
             $.ajax({
@@ -521,6 +525,10 @@
             var formData = new FormData();
             var inputFile = $("input[name='upload_profile']");
 
+            if (inputFile[0].files.length < 1) { //파일 선택 안 한 경우
+                alert(profile_upload_empty);
+                return false;
+            }
             checkFileList(inputFile[0].files, formData);
 
             $.ajax({
@@ -546,25 +554,9 @@
             //
             // if(!validateEmailAlert(email_ref, email_chk_btn)) return false; //이메일 검사
             //
-            // let cpnm_ref = $("#cpnm");
-            //
-            // if (cpnm_ref.val() == "" ) {
-            //     alert("브랜드명을 입력해 주세요");
-            //     cpnm_ref.focus();
-            //     return false;
-            // }
-            //
-            // if (!nick_reg.test(cpnm_ref.val())) {
-            //     alert("브랜드명은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요");
-            //     cpnm_ref.focus();
-            //     return false;
-            // }
-            //
-            // if (!$("#cpnm_duplicate_chk").is(":disabled")) {
-            //     alert("브랜드명 중복 검사를 해주세요");
-            //     cpnm_ref.focus();
-            //     return false;
-            // }
+            let cpnm_ref = $("#cpnm");
+            //브랜드명
+            if (!validateBrndNameAlert(cpnm_ref)) return false;
             //
             // let name_ref = $("#repr_nm");
             //
@@ -645,7 +637,7 @@
                 return is_Agreed;
             };
 
-            if (!agre_chk()) {
+            if (!agre_chk()) { //필수 동의 안함
                 alert(chk_agre_required);
                 return false;
             }

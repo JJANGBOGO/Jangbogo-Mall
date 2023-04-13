@@ -35,13 +35,13 @@
                         <div class="center-padding">
                             <div class="input-line">
                                 <div class="input-label">
-                                    <label for="brnd_nm">브랜드명<span>*</span></label>
+                                    <label for="cpnm">브랜드명<span>*</span></label>
                                 </div>
                                 <div class="input-box">
                                     <div class="input">
                                         <input
-                                                name="brnd_nm"
-                                                id="brnd_nm"
+                                                name="cpnm"
+                                                id="cpnm"
                                                 type="text"
                                                 placeholder="브랜드명을 입력해주세요"
                                         />
@@ -122,13 +122,14 @@
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script src="/js/upload/common.js"></script>
+<script src="/js/member/common.js"></script>
+<script src="/js/member/msg.js"></script>
+<script src="/js/member/regEx.js"></script>
 <script>
-
-    //summernote
+    //summernote 렌더링
     $(".summernote").summernote({
         height: 450,
         lang: "ko-KR",
-
     });
 
     //file upload
@@ -144,6 +145,11 @@
         e.preventDefault();
         var formData = new FormData();
         var inputFile = $("input[name='upload_bnr']");
+
+        if (inputFile[0].files.length < 1) { //파일 선택 안 한 경우
+            alert(bnr_upload_empty);
+            return false;
+        }
 
         checkFileList(inputFile[0].files, formData);
 
@@ -167,6 +173,11 @@
         var formData = new FormData();
         var inputFile = $("input[name='upload_profile']");
 
+        if (inputFile[0].files.length < 1) { //파일 선택 안 한 경우
+            alert(profile_upload_empty);
+            return false;
+        }
+
         checkFileList(inputFile[0].files, formData);
 
         $.ajax({
@@ -186,15 +197,30 @@
     //수정 버튼
     $("#brnd_modify").click(function (e) {
         e.preventDefault();
-
         let form = $(".mod-brnd-form"); //form ref
+
+        //브랜드명
+        let cpnm_ref = $("#cpnm");
+        if (!validateBrndNameAlert(cpnm_ref)) return false;
+
+        //브랜드 설명
         let summernoteContent = $(".summernote").summernote("code"); //썸머노트(설명)
-        console.log("summernoteContent : " + summernoteContent);
+        if (summernoteContent == "") {
+            alert(brnd_content_empty);
+            return false;
+        }
 
-        let str = "<input type='hidden' name='brnd_cn' value='" + summernoteContent +"'>";
-        form.append(str);
+        let form_str = "";
+        form_str += "<input type='hidden' name='brnd_cn' value='" + summernoteContent +"'>";
+
+        let bnr_path = $(".upload-result.bnr ul li").data("upload-path");
+        let profile_path = $(".upload-result.profile ul li").data("upload-path");
+
+        form_str += "<input type='hidden' name='brnd_bnr_upload_path' value=" + bnr_path + ">" +
+            "<input type='hidden' name='brnd_upload_path' value=" + profile_path + ">";
+
+        form.append(form_str);
         form.submit();
-
     });
 </script>
 </body>

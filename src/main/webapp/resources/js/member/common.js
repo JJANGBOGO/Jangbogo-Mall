@@ -142,5 +142,27 @@ function validateBrndCnAlert (content_ref) {
     return true;
 }
 
+//브랜드명 체크
+function validateBrndNameAlert (cpnm_ref) {
+
+    if (cpnm_ref.val() == "" ) {
+        alert(brnd_name_empty);
+        cpnm_ref.focus();
+        return false;
+    }
+
+    if (!nick_reg.test(cpnm_ref.val())) {
+        alert(not_valid_brnd_nm);
+        cpnm_ref.focus();
+        return false;
+    }
+
+    if (!$("#cpnm_duplicate_chk").is(":disabled")) {
+        alert(chk_brnd_name_required);
+        cpnm_ref.focus();
+        return false;
+    }
+    return true;
+}
 
 
