@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,8 +47,8 @@ public class OrderController {
     // 기   능 : 주문상품 목록을 불러오는 ajax요청을 처리한다.
     // 반환타입 : ResponseEntity<List<CartDto>>
     // 매개변수 : Integer user_idx
-    // 요청URL : /order/list?user_idx=1234 GET
-    @GetMapping("/order/list")
+    // 요청URL : /order/checkout/list?user_idx=1234 GET
+    @GetMapping("/order/checkout/item-list")
     public ResponseEntity<List<CartDto>> getItemList(Integer user_idx) {
         // 변수명 : list
         // 저장값 : CartDto 저장소 List
@@ -69,8 +70,8 @@ public class OrderController {
     // 메서드명 : getOrdererInfo
     // 기   능 : 주문자 정보 불러오기
     // 반환타입 : ResponseEntity<Map>
-    // 요청URL : order/orderer?user_idx=1234 GET
-    @GetMapping("/order/orderer")
+    // 요청URL : order/checkout/orderer?user_idx=1234 GET
+    @GetMapping("/order/checkout/orderer")
     public ResponseEntity<Map> getOrderInfo(HttpSession session) {
         // 변수명 : ordererInfo
         // 저장값 :
@@ -108,8 +109,8 @@ public class OrderController {
     // 메서드명 : getDeliveryInfo
     // 기   능 : 배송 정보 불러오기
     // 반환타입 : ResponseEntity<Map>
-    // 요청URL : order/delivery?user_idx=1234 GET
-    @GetMapping("/order/delivery")
+    // 요청URL : order/checkout/delivery?user_idx=1234 GET
+    @GetMapping("/order/checkout/delivery")
     public ResponseEntity<Map> getDeliveryInfo() {
         Map map = new HashMap();
         // 1. 하드코딩
@@ -144,6 +145,7 @@ public class OrderController {
         }
         // 2. 소프트 코딩
     }
+
     // 메서드명 : goToRecipientDetails
     // 기   능 : 배송 정보 수정 페이지로 이동
     // 매개변수 : HttpSession session
@@ -152,6 +154,27 @@ public class OrderController {
     @GetMapping("/order/checkout/recipient-details")
     public String goToRecipientDetails() {
         return "/order/recipientDetails";
+    }
+
+    // 메서드명 : getCouponList
+    // 기   능 : 쿠폰 목록 불러오기
+    // 반환타입 :
+    // 요청URL : order/checkout/coupons?user_idx=1234 GET
+    @GetMapping("/order/checkout/coupons")
+    public ResponseEntity<List<String>> getCouponList() {
+        List<String> list = new ArrayList();
+        try {
+            list.add("첫주문 감사 5천원 할인쿠폰(3만원 이상 주문시)");
+            list.add("배송비 무료 쿠폰");
+            // ResponseEntity<List<CouponDto> list값과 상태코드를 함께 반환하기 위한 클래스
+            // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
+            return new ResponseEntity<List<String>>(list, HttpStatus.OK);
+        } catch(Exception e) {
+            // 에러 발생 시, 에러 내용을 로그에 출력
+            e.printStackTrace();
+            // 에러 발생 시, list값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
+            return new ResponseEntity<List<String>>(list, HttpStatus.BAD_REQUEST);
+        }
     }
 
     // 메서드명 : loginCheck
