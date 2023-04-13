@@ -1,5 +1,6 @@
 package com.jangbogo.mall.service;
 
+import com.jangbogo.mall.domain.Address;
 import com.jangbogo.mall.domain.User;
 
 public interface UserService {
@@ -24,7 +25,7 @@ public interface UserService {
     int regSocialUser (User user) throws Exception;
 
     //일반가입
-    int insertUser (User user) throws Exception;
+    int registerUser (User user, Address addr) throws Exception;
 
     //로그인시각 업데이트
     int updateLoginTm (int idx, String email) throws Exception;

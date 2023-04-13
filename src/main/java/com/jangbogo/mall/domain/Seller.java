@@ -15,7 +15,7 @@ public class Seller {
 
     public Seller() {} //기본 생성자
 
-    private int idx; //번호
+    private Integer idx; //번호 . 상품 => 판매자 조회페이지로 갈 때 /seller/1 식일 수 있다. 1이 없을 경우 null에러 방지하려고
     private int auth_idx; //권한번호 1:사용자, 2:판매자 3:관리자
 
     private String email; //이메일
@@ -25,7 +25,7 @@ public class Seller {
     private String pwd; //비밀번호
 
     private String mpno; //휴대전화
-    private String repr_tellno; //회사대표전화
+    private String repr_telno; //회사대표전화
 
     private int biz_type; //사업자유형 1:개인사업, 2:법인사업
 
@@ -40,7 +40,7 @@ public class Seller {
     private String acc_no; //계좌번호
     private String acc_nm; //주인이름
 
-    private boolean seler_agre_yn; //판매자동의여부
+    private String seler_agre_yn; //판매자동의여부
 
     private String brnd_bnr_upload_path;  //브랜드배너파일경로
     private String brnd_upload_path;  //브랜드프로필파일경로
