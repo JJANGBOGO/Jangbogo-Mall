@@ -40,8 +40,8 @@ public class AddressController {
         return "dlvpn/dlvpnlist";
     }
 
-    @GetMapping("/addressupdate") //배송지 수정 팝업 창 뷰
-    public String myPageAddrUpdate(Integer idx,HttpServletRequest req, Model m, HttpSession session) {
+    @GetMapping("/addressopen") //배송지 수정 팝업 창 뷰
+    public String myPageAddrOpen(Integer idx,HttpServletRequest req, Model m, HttpSession session) {
 //        m.addAttribute("mypageUrl", req.getRequestURI());
 
 //        int idx = (int) session.getAttribute("idx"); //세션 얻기
@@ -54,9 +54,9 @@ public class AddressController {
         } catch(Exception e) {
             e.printStackTrace();
         }
-        return "dlvpn/dlvpnupdate";
+        return "dlvpn/dlvpnopen";
     }
-
+///유효성 검사 해야함 ! 번호 체크 !
     @GetMapping ("/addressremove") //배송지 수정 삭제후 새로고침 // 사실상 post방식으로 해줘야한다(어떻게 팝업창 닫고 부모창을 이 경로로 가게해주나 (post)방식으로
     public String myPageAddrRemove(Address address,Integer idx,HttpServletRequest req, Model m, HttpSession session) {
 //        m.addAttribute("mypageUrl", req.getRequestURI());
@@ -76,11 +76,63 @@ public class AddressController {
             e.printStackTrace();
         }
         System.out.println("ㅎ2ㅎ2ㅎ = ");
-//        return "redirect:/";
         return "redirect:/mypage/addresslist";
 
     }
+
+    @GetMapping ("/addressupdate") //배송지 수정 삭제후 새로고침 // 사실상 post방식으로 해줘야한다(어떻게 팝업창 닫고 부모창을 이 경로로 가게해주나 (post)방식으로
+    public String myPageAddrUpdate(Address address,HttpServletRequest req, Model m, HttpSession session) {
+
+
+        // m.addAttribute("mypageUrl", req.getRequestURI());
+        // int idx = (int) session.getAttribute("idx"); //세션 얻기
+
+        // 1. 일단 로그인 체크부터 하자
+
+
+        // 2. 그리고 세션에서 정보를 가저온 뒤에 회원번호 회득
+        int user_idx = (int) session.getAttribute("idx");
+        address.setUser_idx(user_idx);
+//        System.out.println("user_idx = " + user_idx);
+//        System.out.println("address = " + address);
+//        System.out.println("address.getAddr_dtl() = " + address.getAddr_dtl());
+//        System.out.println("address.getRcpr_nm() = " + address.getRcpr_nm());
+//        System.out.println("address.getRcpr_mobl_no() = " + address.getRcpr_mobl_no());
+//        System.out.println("address.getIs_default_yn() = " + address.getIs_default_yn());
+//        System.out.println("address.getIdx() = " + address.getIdx());
+
+
+        try {
+            if (address.getIs_default_yn().equals("true")) {
+                service.resetDefault_N(user_idx);
+                service.updateAddr(address);
+            }else {
+                service.updateAddr(address);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/mypage/addresslist";
+
+    }
+
+
+    @GetMapping("/test")
+    public String test () {
+        return "/user/addrTest";
+    }
+
+
+
+//        System.out.println("address = " + address);
+//        System.out.println("address.getAddr_dtl() = " + address.getAddr_dtl());
+//        System.out.println("address.getRcpr_nm() = " + address.getRcpr_nm());
+//        System.out.println("address.getRcpr_mobl_no() = " + address.getRcpr_mobl_no());
+//        System.out.println("address.getIs_default_yn() = " + address.getIs_default_yn());
 }
+
+
+
 
 
 //1. 컨트롤러

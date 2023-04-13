@@ -43,9 +43,64 @@ public class AddressDaoTest {
 
     @Test
     public void selAddrList () throws Exception { //OK
-        List<Address> list = dao.selAddrList(25);
+        List<Address> list = dao.selAddrList(1);
         log.info("list.... " + list);
         assertTrue(list != null);
+
     }
+
+    @Test
+    public void selAddr() throws Exception { //OK
+        Address address = dao.selAddr(7);
+        System.out.println("address = " + address);
+//        log.info("list.... " + list);
+        assertTrue(address != null);
+
+    }
+
+    @Test
+    public void deleteAddr() throws Exception { //OK
+        int cnt = dao.deleteAddr(7,1);
+        System.out.println("cnt = " + cnt);
+        Address address = dao.selAddr(7);
+        System.out.println("address = " + address);
+        System.out.println("address.getState_cd() = " + address.getState_cd());
+        assertTrue(address.getState_cd()==3);
+//        log.info("list.... " + list);
+        assertTrue(cnt != 0);
+
+    }
+
+    @Test
+    public void updateAddr() throws Exception { //OK
+        Address address = new Address();
+//        address.setAddr_dtl("101동302호");
+        address.setRcpr_nm("박하늘");
+//        address.setRcpr_mobl_no("010-9276-8137");
+        address.setIs_default_yn("true");
+        address.setIdx(3);
+        address.setUser_idx(1);
+//        address.setIs_default_yn("false");
+//        Integer cnt1 = dao.resetDefault_N(1);
+        Integer cnt2 = dao.updateAddr(address);
+        System.out.println("address = " + address);
+//        System.out.println("cnt1 = " + cnt1);
+        System.out.println("cnt2 = " + cnt2);
+//        assertTrue(cnt1!=0);
+        assertTrue(cnt2!=0);
+
+    }
+
+    @Test
+    public void changeState() throws Exception { //OK
+       dao.resetStateCD(3);
+       dao.AddrStateCD(9);
+       assertTrue(true);
+
+    }
+
+
+
+
 
 }

@@ -13,4 +13,8 @@ public interface AddressService {
     Address selAddr (Integer idx) throws Exception;
 
     Integer deleteAddr (Integer idx, Integer user_idx) throws Exception;
+
+    Integer updateAddr(Address address) throws Exception;
+
+    Integer resetDefault_N ( Integer user_idx) throws Exception;
 }

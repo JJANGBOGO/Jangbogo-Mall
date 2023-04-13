@@ -8,26 +8,59 @@
         INSERT INTO DLVPN (USER_IDX, ZPCD, ADDR_BASE, ADDR_DTL, RCPR_NM, RCPR_MOBL_NO, IS_DEFAULT_YN)
         VALUES (#{user_idx}, #{zpcd}, #{addr_base}, #{addr_dtl}, #{rcpr_nm}, #{rcpr_mobl_no}, #{is_default_yn});
     </insert>
-
+<!--배송지 목록 조회-->
     <select id="selAddrList" parameterType="int" resultType="Address">
         SELECT *
         FROM DLVPN
-        WHERE USER_IDX = #{user_idx} AND NOT STATE_CD = 3;
+        WHERE USER_IDX = #{user_idx} AND NOT STATE_CD = 3
+        order by STATE_CD asc, IS_DEFAULT_YN desc , CHG_TM desc ,REG_TM desc;
     </select>
-
+<!--배송지 조회-->
     <select id="selAddr" parameterType="map" resultType="Address">
         SELECT *
         FROM DLVPN
         WHERE IDX = #{idx}
     </select>
-
+<!-- 배송지 삭제-->
     <update id="deleteAddr" parameterType="map">
         UPDATE DLVPN
         SET STATE_CD = 3
         WHERE IDX = #{idx} AND USER_IDX = #{user_idx};
     </update>
 
+<!-- 배송지 수정-->
+    <update id="updateAddr" parameterType="Address">
+        UPDATE DLVPN
+        <choose>
+            <when test='is_default_yn=="true"'>
+                SET ADDR_DTL = #{addr_dtl}, RCPR_NM = #{rcpr_nm}, RCPR_MOBL_NO = #{rcpr_mobl_no}, IS_DEFAULT_YN = 'Y', CHG_TM = now()
+            </when>
+            <otherwise>
+                SET ADDR_DTL = #{addr_dtl}, RCPR_NM = #{rcpr_nm}, RCPR_MOBL_NO = #{rcpr_mobl_no}, CHG_TM = now()
+            </otherwise>
+        </choose>
+        WHERE IDX = #{idx} AND USER_IDX = #{user_idx};
+    </update>
 
+<!-- 해당 회원번호의 기본배송지상태 N(해체) 초기화-->
+    <update id="resetDefault_N" parameterType="int">
+        UPDATE DLVPN
+        SET IS_DEFAULT_YN = 'N'
+        WHERE USER_IDX = #{user_idx} and IS_DEFAULT_YN = 'Y';
+    </update>
+
+
+    <update id="AddrStateCD" parameterType="int">
+        UPDATE DLVPN
+        SET STATE_CD = 1
+        WHERE IDX = #{idx}
+    </update>
+
+    <update id="resetStateCD" parameterType="int">
+        UPDATE DLVPN
+        SET STATE_CD = 2
+        WHERE USER_IDX = #{user_idx} AND STATE_CD = 1
+    </update>
 
 </mapper>
 

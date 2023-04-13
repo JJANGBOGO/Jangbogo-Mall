@@ -40,6 +40,25 @@ public class AddressDaoImpl implements AddressDao {
         return session.update(nameSpace+"deleteAddr",map);
     }
 
+    @Override
+    public Integer updateAddr(Address address) throws Exception { // 배송지 수정
+        return session.update(nameSpace+"updateAddr",address);
+    }
+
+    @Override
+    public Integer resetDefault_N(Integer user_idx) throws Exception { // 배송지 기본배송지상태 초기화
+        return session.update(nameSpace+"resetDefault_N",user_idx);
+    }
+
+    @Override
+    public Integer AddrStateCD(Integer idx) throws Exception { // 배송지 선택
+        return session.update(nameSpace+"AddrStateCD",idx);
+    }
+
+    @Override
+    public Integer resetStateCD(Integer user_idx) throws Exception { // 배송지 선택
+        return session.update(nameSpace+"resetStateCD",user_idx);
+    }
 
 
 

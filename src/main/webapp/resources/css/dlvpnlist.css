@@ -5,7 +5,7 @@
     padding-bottom: 20px;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    border-bottom: 2px solid rgb(51, 51, 51);
+    border-bottom: 2px solid #f58412;
 }
 .dlvpn-notc{
     display: flex;
@@ -32,7 +32,7 @@
 .dlvpn-column{
     display: flex;
     padding: 20px 0px;
-    border-bottom: 1px solid rgb(51, 51, 51);
+    border-bottom: 2px solid #f58412;
     color: #333;
     font-size: 14px;
 }
@@ -78,9 +78,13 @@
     color: rgb(51, 51, 51);
     flex-basis: 60px;
 }
+ul{
+    padding: 0;
+}
+
 li{
     list-style-type: none;
-    border-bottom: 1px solid rgb(244, 244, 244);
+    border-bottom: 1px solid #f58412;
 }
 .list{
     display: flex;
@@ -101,6 +105,7 @@ li{
 
 }
 label{
+    margin-left: 15px;
     padding: 0;
     margin-right: 52px;
     vertical-align: middle;
@@ -119,6 +124,7 @@ label{
     justify-content: start;
     font-size: 16px;
     text-align: left;
+    margin-left: 20px;
 }
 .base{
     display: block;
@@ -177,7 +183,7 @@ label{
     flex-basis: 100px;
 
 
-    color: rgb(95, 0, 128);
+    color: #f58412;
     font-size: 14px;
 }
 .list-change{

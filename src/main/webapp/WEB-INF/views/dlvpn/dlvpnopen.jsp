@@ -36,11 +36,11 @@
 
     <div>
       <label class="dlvpn-label4">
-        <input type="checkbox">
+        <input class="base_button" type="checkbox">
         <span style="margin-left: 12px;">기본 배송지로 저장</span>
       </label>
-      <button class="save-button">저장</button>
-      <button class="delete-button">삭제</button>
+      <button class="update-button">저장</button>
+      <button type="" class="delete-button">삭제</button>
     </div>
   </div>
 
@@ -51,8 +51,13 @@
 <script>
 
   window.onload = function (){
+    if("${address.is_default_yn}"=="Y"){
+      document.querySelector('.dlvpn-label4').style.display = "none";
+      document.querySelector('.delete-button').style.display = "none";
+      document.querySelector('.update-button').style.marginTop = "20px";
+    }
 
-    let addr_dtl = document.querySelector('.dlvpn-input1');
+    // let addr_dtl = document.querySelector('.dlvpn-input1');
     if("${address.addr_dtl}"!=""){
       console.log("h2");
       document.querySelector('.dlvpn-input1').value = "${address.addr_dtl}";
@@ -63,6 +68,7 @@
     if("${address.rcpr_mobl_no}"!=""){
       document.querySelector('.dlvpn-input3').value = "${address.rcpr_mobl_no}"
     }
+
     document.querySelector('.delete-button').addEventListener('click',remove);
 
     function remove() {
@@ -84,9 +90,21 @@
 
       <%--form.submit();--%>
       // opener.parent.location.reload();
-
+    }
+    document.querySelector('.update-button').addEventListener('click',save)
+    function save(){
+      let addr_dtl = document.querySelector('.dlvpn-input1').value;
+      let rcpr_nm = document.querySelector('.dlvpn-input2').value;
+      let rcpr_mobl_no = document.querySelector('.dlvpn-input3').value;
+      let is_default_yn = document.querySelector('.base_button').checked;
+      let idx = ${address.idx};
+      opener.parent.location='<c:url value="/mypage/addressupdate?addr_dtl='+addr_dtl+'&rcpr_nm='+rcpr_nm+'&rcpr_mobl_no='+rcpr_mobl_no+'&is_default_yn='+is_default_yn+'&idx='+idx+'"/>';
+      <%--opener.parent.location='<c:url value="/mypage/addressupdate?address=`{address}`"/>';--%>
+      self.close()
 
     }
+
+
 
   }
 

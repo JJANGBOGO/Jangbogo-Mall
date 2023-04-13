@@ -14,7 +14,7 @@
     <title>Document</title>
 </head>
 <body>
-<div style="width: 1020px">
+<div style="width: 1020px; width: 900px; margin: auto">
     <div class="dlvpn-top">
         <div class="dlvpn-notc">
             <span class="dlvpn-notc2">배송지 관리</span>
@@ -56,8 +56,8 @@
         <c:forEach var="addrlist" items="${addrList}" varStatus="i">
             <li>
                 <div class="list">
-                    <div class="list-checkbox"><label><input type="checkbox"></label></div>
-                    <div class="list-address"><div><c:if test="${addrlist.is_default_yn=='Y'}"><div class="base">기본 배송지</div></c:if>${addrlist.addr_base}${addrlist.addr_dtl}</div></div>
+                    <div class="list-checkbox"><label><input type="checkbox" <c:if test="${addrlist.state_cd==1}"> checked </c:if>></label></div>
+                    <div class="list-address"><div><c:if test="${addrlist.is_default_yn=='Y'}"><div class="base">기본 배송지</div></c:if>${addrlist.addr_base} ${addrlist.addr_dtl}</div></div>
                     <div class="list-name">${addrlist.rcpr_nm}</div>
                     <div class="list-number">${addrlist.rcpr_mobl_no}</div>
                     <div class="list-type"><div><span>샛별배송</span></div></div>
@@ -67,13 +67,17 @@
         </c:forEach>
     </ul>
 </div>
+
 <script>
     // document.querySelector('button').addEventListener('click',update)
+
     function update(i){
         console.log(i)
-        <%--console.log(${addrList.get(i)});--%>
-        let link = '<c:url value="/mypage/addressupdate?idx='+i+'"/>'
+        let link = '<c:url value="/mypage/addressopen?idx='+i+'"/>'
         window.open(link, "_blank", "width=500, height=500");
+    }
+    function selected(i){
+
     }
 
 </script>
