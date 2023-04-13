@@ -26,17 +26,19 @@
 }
 
 /* reg form start */
+.reg-form .center-padding .section-header {
+    margin: 40px 0 10px 0;
+}
+
 .reg-form .center-padding .input-line {
     width: 100%;
     display: inline-flex;
     padding: 10px 20px;
 }
-
-.reg-form .center-padding .section-header {
-    margin: 40px 0 10px 0;
+.reg-form .center-padding .input-line fieldset label:last-child {
+    margin-left: 77px;
 }
-
-.reg-form .center-padding .input-label {
+.reg-form .center-padding .input-line .input-label {
     width: 139px;
     padding-top: 12px;
 
@@ -76,6 +78,10 @@
     color: var(--text-dark);
 }
 
+.reg-form .input-box .input.addr-dtl {
+    margin-top: 10px;
+}
+
 .reg-form .input-box .input label i {
     color: rgb(117, 117, 117)
 }
@@ -113,13 +119,18 @@
 
 /* 중복 검사 통과 후 input, button 비활성화 css 추가 */
 .reg-form .input-line .btn-space button:disabled,
-.reg-form .input-line .input-box input:read-only {
+.reg-form .input-line .input-box .input input[type=text]:read-only {
     opacity: 0.4;
 }
 
 .checkbox-group .input-line span {
     margin-left: 10px;
     color: var(--text-dark);
+}
+
+.checkbox-group .chk-group-line {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
 }
 
 /* 가입하기 버튼 영역 */
