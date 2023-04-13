@@ -254,7 +254,7 @@
             return false;
         }
 
-        let form_str = "";
+        let form_str = ""; //전송할 <input> 문자열
         form_str += "<input type='hidden' name='brnd_cn' value='" + summernoteContent + "'>";
 
         let bnr_path = $(".upload-result.bnr ul li").data("upload-path");

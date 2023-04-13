@@ -29,13 +29,13 @@ public class SellerController {
         return "/seller/login";
     }
 
-    //판매자가입 뷰
+    //판매자가입화면
     @GetMapping("/seller/register")
     public String regSellerView() {
         return "/seller/register";
     }
 
-    //판매자가입 처리
+    //가입 처리
     @PostMapping("/seller/register")
     public String regSeller(Seller seller, Model m) {
         log.info("판매자 가입........" + seller);
@@ -60,11 +60,10 @@ public class SellerController {
     }
 
     //브랜드명 중복 체크
-    @PostMapping("/seller/duplicate/cpnm")
+    @PostMapping("/seller/duplicate/cpnm") //ok
     @ResponseBody
-    public ResponseEntity<String> chkDuplicateNick(String cpnm, String type) {
+    public ResponseEntity<String> chkDuplicateNick(String cpnm) {
         try {
-            log.info("cpnm...." + cpnm + service.isCpnmDuplicated(cpnm));
             String msg = (!service.isCpnmDuplicated(cpnm)) ? "OK" : "DUPLICATED";
             return ResponseEntity.ok().body(msg);
         } catch (Exception e) {
@@ -75,19 +74,21 @@ public class SellerController {
 
     //마이셀러 브랜드조회 뷰
     @GetMapping("/seller/read/brnd")
-    public String readBrndView(HttpServletRequest req, Model m) {
-        m.addAttribute("mySellerUrl", req.getRequestURI());
+    public String readBrandView(HttpServletRequest req, Model m, RedirectAttributes rattr) {
+        m.addAttribute("mySellerUrl", req.getRequestURI()); //sidebar css
 
         try {
-            Seller seller = service.getSellerByIdx(14); //추후 세션에서 받아오는 걸로 수정
+            Seller seller = service.getSellerByIdx(14); // TODO:: 추후 세션에서 받아오는 걸로 수정
             m.addAttribute("seller", seller);
+            return "/seller/readBrnd";
         } catch (Exception e) {
             e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/";
         }
-        return "/seller/readBrnd";
     }
 
-    //마이셀러 브랜드수정 뷰
+    //브랜드수정화면
     @GetMapping("/seller/modify/brnd")
     public String modifyBrandView(HttpServletRequest req, Model m, RedirectAttributes rattr) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
@@ -109,7 +110,7 @@ public class SellerController {
     public String modifyBrand(Seller seller, RedirectAttributes rattr) {
         log.info("brnd...." + seller);
 
-        //set idx, email from session => 지금은 하드코딩이지만 security이후 세션에서 받아오기로 수정
+        //TODO:: set idx, email from session => security이후 세션에서 받아오기로 수정
         seller.setIdx(14);
         seller.setEmail("seller100@naver.com");
 

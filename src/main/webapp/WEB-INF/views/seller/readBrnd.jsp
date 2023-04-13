@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: namgungjin
-  Date: 2023/04/05
-  Time: 1:44 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -44,10 +37,6 @@
             <div class="profile-tab">프로필 내용</div>
             <div class="brnd-intro">
                 ${seller.brnd_cn}
-                <%--                <p>--%>
-                <%--                    쿼카는 옛날부터 시리얼이 좋더라구~ 그렇지만 너희들도 특별히 줄게!--%>
-                <%--                </p>--%>
-                <%--                <p>나는 특별히 그릭요거트에 그라놀라가 좋더라~ 너희도 그렇지?</p>--%>
             </div>
             <button class="modify-brnd">내 브랜드 수정하기</button>
         </div>
@@ -56,9 +45,15 @@
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
-    $(".modify-brnd").click(function () {
-        window.location.href = "/seller/modify/brnd";
-    })
+    let msg = "${msg}";
+    if (msg == "MODIFY_BRND_OK") alert("브랜드 수정에 성공했습니다");
+    if (msg == "EXCEPTION_ERR") alert("오류가 발생했습니다 다시 시도해 주세요");
+
+    $(document).ready(function () {
+        $(".modify-brnd").click(function () {
+            window.location.href = "/seller/modify/brnd";
+        });
+    });
 </script>
 </body>
 </html>
