@@ -102,7 +102,7 @@ function validateBrnoAlert (brno_ref) { //인증버튼 상태는 제외.
     return true;
 }
 
-//주소
+//주소 체크
 function validateAddrAlert (addr_base_ref, addr_dtl_ref) {
 
     if (addr_base_ref.val() == "") { //readonly
@@ -117,4 +117,30 @@ function validateAddrAlert (addr_base_ref, addr_dtl_ref) {
     }
     return true;
 }
+
+//브랜드 배너, 프사 이미지 길이 체크
+function validateBrndImgAlert (bnr_list, prof_list) {
+    if (bnr_list.length > 1) {
+        alert(bnr_overflow);
+        return false;
+    }
+
+    if (prof_list.length > 1) {
+        alert(prof_overflow);
+        return false;
+    }
+    return true;
+}
+
+//브랜드 내용 체크
+function valdiateBrndCnAlert (content_ref) {
+    if (content_ref.val() == "") {
+        alert("브랜드 내용을 입력해 주세요");
+        content_ref.focus();
+        return false;
+    }
+    return true;
+}
+
+
 

@@ -627,15 +627,33 @@
             //     return false;
             // }
             //
-            // let brnd_cn_ref = $("#brnd_cn"); //브랜드 내용
-            // if (brnd_cn_ref.val() == "") {
-            //     alert("브랜드 내용을 입력해 주세요");
-            //     brnd_cn_ref.focus();
-            //     return false;
-            // }
+            let brnd_cn_ref = $("#brnd_cn"); //브랜드 내용
+            if (!valdiateBrndCnAlert(brnd_cn_ref)) return false;
 
+            //브랜드 배너, 프로필 이미지가 2개 이상이면 alert("이미지를 1개만 업로드");
+            let bnr_list = $(".upload-result.bnr ul li");
+            let prof_list = $(".upload-result.profile ul li");
 
-            //TODO:: 체크박스 동의 유효성 구현. form submit 구현
+            if (!validateBrndImgAlert(bnr_list, prof_list)) return false;
+
+            //필수동의
+            let agre_chk = function chkAgreed () {
+                let is_Agreed;
+                $(".chk-group-line .input-line input[type=checkbox]").each(function(i, obj) {
+                    if (!obj.checked) {
+                        is_Agreed = obj.checked;
+                        return false;
+                    }
+                });
+                return is_Agreed;
+            };
+
+            if (!agre_chk()) {
+                alert(chk_agre_required);
+                return false;
+            }
+
+            //TODO:: form submit 구현
 
             let form = $("#seller_register");
 

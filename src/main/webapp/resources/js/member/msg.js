@@ -34,3 +34,7 @@ let error_msg = "실행 도중 오류가 발생했습니다. 다시 시도해 �
 //mpno send ok
 let mpno_send_ok = "인증번호 전송에 성공했습니다";
 let mpno_verified = "인증되었습니다";
+
+//upload
+let bnr_overflow = "브랜드 배너는 1개만 업로드 가능합니다";
+let prof_overflow = "브랜드 프로필은 1개만 업로드 가능합니다";

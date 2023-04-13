@@ -64,7 +64,7 @@ $(".upload-result").on("click", "span", function (e) {
         dataType: 'text',
         type: 'POST',
         success: function (result) {
-            alert(result + "result");
+            alert("성공적으로 삭제했습니다");
 
             //controller에서 삭제에 성공하면 targetLi를 지운다.
             targetLi.remove();
