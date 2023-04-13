@@ -26,43 +26,10 @@ public class MemberController { //회원, 판매자 공통화면
         return "findPwd";
     }
 
-    @PostMapping("/find/pwd")
-    public String findPwd(String nick_nm, String email, String type, RedirectAttributes rattr, Model m) {
-
-        if (nick_nm == "" || email == "") { //유효성 검사
-            rattr.addFlashAttribute("msg", "EMPTY_ERR");
-            return "redirect:/find/pwd";
-        }
-
-        boolean userChk = false;
-//        if (type == "user") {
-        try {
-            userChk = userService.isUserPresent(nick_nm, email);
-            if (!userChk) {
-                rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
-                return "redirect:/find/email";
-            } else { //회원 존재
-                if (userService.sendPwdEmail(nick_nm, email) == 1) { //성공
-                    m.addAttribute("userEmail", email);
-                    return "redirect:/find/pwd/success"; //성공
-                } else {
-                    rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
-                    return "redirect:/find/pwd";
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
-            return "redirect:/find/pwd";
-        }
-//        } else { //seller
-//        }
-    }
-
     @GetMapping("/find/{type}/success")
     public String findSuccessView(@PathVariable String type, String member, Model m) {
         m.addAttribute("type", type);
-        m.addAttribute("member", member); //새로고침 시 진입불가가 어려워서 m으로 대체
+        m.addAttribute("member", member);
         return "findSuccess";
     }
 
@@ -71,8 +38,5 @@ public class MemberController { //회원, 판매자 공통화면
     public String regIntroView() {
         return "registerIntro";
     }
-
-
-
 
 }

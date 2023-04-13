@@ -40,5 +40,6 @@ public interface SellerService {
     //비번찾기용 회원 인증
     boolean isSellerPresent (String cpnm, String email) throws Exception;
 
-
+    //임시비번 메일 전송
+    int sendPwdEmail (String cpnm, String toEmail) throws Exception;
 }

@@ -153,7 +153,7 @@ public class SellerController {
     }
 
     @PostMapping("/seller/modify")
-    public String modifySeller (Seller seller, SellerDtl sellerDtl, HttpServletRequest req, Model m){
+    public String modifySeller(Seller seller, SellerDtl sellerDtl, HttpServletRequest req, Model m) {
         return "redirect:/seller/info";
     }
 
@@ -181,7 +181,7 @@ public class SellerController {
 
     //이메일 찾기
     @PostMapping("/seller/find/email")
-    public String findSellerEmail (String cpnm, String pwd, Model m, RedirectAttributes rattr) {
+    public String findSellerEmail(String cpnm, String pwd, Model m, RedirectAttributes rattr) {
         try {
             String email = service.findSellerEmail(cpnm, pwd);
             if (email == null) {
@@ -200,23 +200,24 @@ public class SellerController {
 
     //비번 찾기
     @PostMapping("/seller/find/pwd")
-    public String findSellerPwd (String cpnm, String email, RedirectAttributes rattr) {
+    public String findSellerPwd(String cpnm, String email, RedirectAttributes rattr) {
 
         try {
-            if (service.isSellerPresent(cpnm, email)) {
+            if (!service.isSellerPresent(cpnm, email)) {
                 rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
-                return "redirect:/find/email";
+                return "redirect:/find/pwd";
             }
 
+            if (service.sendPwdEmail(cpnm, email) != 1)
+                throw new Exception("send mail failed");
 
-
+            rattr.addFlashAttribute("toEmail", email);
+            return "redirect:/find/pwd/success?member=seller";
 
         } catch (Exception e) {
             e.printStackTrace();
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return "redirect:/find/pwd";
         }
-
-        return "redirect:/find/pwd";
     }
 }

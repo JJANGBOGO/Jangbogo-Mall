@@ -14,7 +14,6 @@ public interface UserService {
 
     User selectUser (int idx) throws Exception; //회원상세조회
 
-    int updatePwd (String pwd, String nick_nm, String email) throws Exception; //비번을 임시 비번으로 변경.
 
     int sendPwdEmail (String nick_nm, String toEmail) throws Exception; //임시비번을 이메일로 전송
 

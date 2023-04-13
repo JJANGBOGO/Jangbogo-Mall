@@ -1,8 +1,10 @@
 package com.jangbogo.mall.service;
 
 import com.jangbogo.mall.dao.SellerDao;
+import com.jangbogo.mall.domain.Email;
 import com.jangbogo.mall.domain.Seller;
 import com.jangbogo.mall.domain.SellerDtl;
+import com.jangbogo.mall.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,7 +18,13 @@ public class SellerServiceImpl implements SellerService{
     SellerDao dao;
 
     @Autowired
+    EmailSender emailSender;
+
+    @Autowired
     BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    Utils utils;
 
     @Override
     public int withdrawSeller (Integer idx, String email) throws Exception {
@@ -96,6 +104,24 @@ public class SellerServiceImpl implements SellerService{
     public boolean isSellerPresent (String cpnm, String email) throws Exception {
         Seller seller = dao.getSellerByCpnm(cpnm);
         return seller != null && Objects.equals(email, seller.getEmail());
+    }
+
+    @Override
+    public int sendPwdEmail (String cpnm, String toEmail) throws Exception {
+        String tmpPwd = utils.createTmpPwd();
+        String encodedPwd = passwordEncoder.encode(tmpPwd);
+
+        if (dao.updatePwd(encodedPwd, cpnm, toEmail) != 0) { //비번 업데이트 성공
+            Email email = Email.builder()
+                    .fromEmail("jinvicky17@gmail.com") //장보고 이메일
+                    .toEmail(toEmail)
+                    .title("임시 비밀번호 전달")
+                    .content("회원님의 임시 비밀번호는 " + tmpPwd + " 입니다.")
+                    .build();
+            emailSender.sendMail(email);
+            return 1; //성공
+        }
+        return 0; //실패.
     }
 
 

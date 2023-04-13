@@ -65,7 +65,7 @@
                         <input
                                 class="input-control"
                                 name="pwd"
-                                type="text"
+                                type="password"
                                 placeholder="비밀번호를 입력해주세요"
                         />
                     </div>

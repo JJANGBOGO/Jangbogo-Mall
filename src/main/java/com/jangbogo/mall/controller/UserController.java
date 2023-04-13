@@ -306,15 +306,6 @@ public class UserController {
         return msg;
     }
 
-    //테스트용 로그인 (TODO:: 추후 삭제)
-    @GetMapping("/test/login")
-    public String testLogin(HttpSession session) throws Exception {
-        User user = userService.selectUser(35);
-        session.setAttribute("loginService", "jangbogo");
-        crtSession(session, user);
-        return "";
-    }
-
     //회원인증뷰
     @GetMapping("/user/info")
     public String verifyUserView(HttpSession session) {
@@ -423,6 +414,29 @@ public class UserController {
             e.printStackTrace();
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return "redirect:/find/email";
+        }
+    }
+
+    //비번 찾기
+    @PostMapping("/user/find/pwd")
+    public String findUserPwd (String nick_nm, String email, RedirectAttributes rattr) {
+
+        try {
+            if (!userService.isUserPresent(nick_nm, email)) {
+                rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
+                return "redirect:/find/pwd";
+            }
+
+            if (userService.sendPwdEmail(nick_nm, email) != 1)
+                throw new Exception("send mail failed");
+
+            rattr.addFlashAttribute("toEmail", email);
+            return "redirect:/find/pwd/success?member=user";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/find/pwd";
         }
     }
 
