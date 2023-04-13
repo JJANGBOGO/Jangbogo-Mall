@@ -64,4 +64,8 @@ public class SellerDaoImpl implements SellerDao {
     public Seller getSellerByCpnm (String cpnm) throws Exception {
         return session.selectOne(nameSpace + "getSellerByCpnm", cpnm);
     }
+
+    public Seller getSellerByEmail (String email) throws Exception {
+        return session.selectOne(nameSpace = "getSellerByEmail", email);
+    }
 }

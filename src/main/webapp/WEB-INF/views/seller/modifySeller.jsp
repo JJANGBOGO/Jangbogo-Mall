@@ -106,6 +106,7 @@
                                         placeholder="-제외 숫자만 입력해 주세요"
                                 />
                             </div>
+                            <div class="error-msg mpno"></div>
                         </div>
                         <div class="btn-space">
                             <button id="mpno_chk">
@@ -237,19 +238,19 @@
         });
 
         //판매자 수정 단독
-        $("#guid_nm").keyup(function() {
+        $("#guid_nm").keyup(function () {
 
         });
 
-        $("#guid_email").keyup(function() {
+        $("#guid_email").keyup(function () {
 
         });
 
-        $("#cllr_nm").keyup(function() {
+        $("#cllr_nm").keyup(function () {
 
         });
 
-        $("#cllr_telno").keyup(function() {
+        $("#cllr_telno").keyup(function () {
 
         });
 

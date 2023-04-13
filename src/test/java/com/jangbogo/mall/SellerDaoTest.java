@@ -131,5 +131,12 @@ public class SellerDaoTest {
         assertTrue(seller != null);
     }
 
+    @Test //ok
+    public void getSellerByEmail () throws Exception {
+        Seller seller = dao.getSellerByEmail("seller100@naver.com");
+        log.info("seller...." + seller);
+        assertTrue(seller != null);
+    }
+
 
 }

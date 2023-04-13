@@ -28,11 +28,22 @@ public class SellerServiceImpl implements SellerService{
 
     @Override
     public int updateSeller (Seller seller) throws Exception {
+        /*
+        * String email = user.getEmail();
+        User prev_user = getUserByEmail(email);
+
+        if (!passwordEncoder.matches(user.getPwd(), prev_user.getPwd())) {
+            updatePwdUptTm(user.getIdx(), email); //비번변경날짜 수정
+        }
+
+        user.setPwd(passwordEncoder.encode(user.getPwd()));
+        * */
         return dao.updateSeller(seller);
     }
 
     @Override
     public int updateSellerDtl (SellerDtl detail) throws Exception {
+        //controller에서 넘어올 때 detail이 iv가 넷 다 비면 값이 null인지 아닌지 확인
         SellerDtl selerDtl = getSellerDtl(detail.getSeler_idx()); //user_idx로 상세정보 탐색
         if (selerDtl == null) return insertSellerDtl(detail); //정보가 없을 경우 새로 insert
         return dao.updateSellerDtl(detail); //수정

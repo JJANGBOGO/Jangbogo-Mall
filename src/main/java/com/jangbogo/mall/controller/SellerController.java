@@ -25,12 +25,13 @@ public class SellerController {
     @Autowired
     SellerService service;
 
+    //로그인화면
     @GetMapping("/seller/login")
     public String loginSellerView() {
         return "/seller/login";
     }
 
-    //판매자가입화면
+    //가입화면
     @GetMapping("/seller/register")
     public String regSellerView() {
         return "/seller/register";
@@ -153,6 +154,11 @@ public class SellerController {
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return "redirect:/seller/info";
         }
+    }
+
+    @PostMapping("/seller/modify")
+    public String modifySeller (Seller seller, SellerDtl sellerDtl, HttpServletRequest req, Model m){
+        return "redirect:/seller/info";
     }
 
     //판매자탈퇴 뷰
