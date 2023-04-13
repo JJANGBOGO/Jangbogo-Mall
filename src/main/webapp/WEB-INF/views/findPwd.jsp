@@ -84,7 +84,6 @@
     </div>
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
-<%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
     let msg = "${msg}";
     if(msg == "EMPTY_ERR") alert("정보를 모두 입력해 주세요");

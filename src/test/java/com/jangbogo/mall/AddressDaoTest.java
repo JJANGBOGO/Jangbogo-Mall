@@ -35,7 +35,8 @@ public class AddressDaoTest {
                 .is_default_yn("Y")
                 .build();
 
-        int addrResult = dao.insertAddr(addr);
+
+        int addrResult = dao.insertAddr(30, addr);
 
         log.info("result=" + addrResult);
         assertTrue(addrResult != 0);
