@@ -14,7 +14,7 @@ public class ProdInqryDto {
     private Integer res_state_cd;
     private String opub_yn;
     private Date wrt_tm;
-
+    private String nick_nm;
     public ProdInqryDto() {}
 
     public ProdInqryDto(Integer idx, Integer prod_idx, Integer user_idx, String title, String ctent, String writer, Integer res_state_cd, String opub_yn) {
@@ -56,6 +56,14 @@ public class ProdInqryDto {
                 ", opub_yn='" + opub_yn + '\'' +
                 ", wrt_tm=" + wrt_tm +
                 '}';
+    }
+
+    public String getNick_nm() {
+        return nick_nm;
+    }
+
+    public void setNick_nm(String nick_nm) {
+        this.nick_nm = nick_nm;
     }
 
     public Integer getIdx() {

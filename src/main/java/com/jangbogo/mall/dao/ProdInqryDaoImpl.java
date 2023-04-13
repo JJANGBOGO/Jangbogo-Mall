@@ -38,6 +38,10 @@ public class ProdInqryDaoImpl implements ProdInqryDao {
         return session.selectList(namespace + "selectPage", map);
     }
 
+    public String selectNickName(Integer user_idx) throws Exception {
+        return session.selectOne(namespace + "selectNickName", user_idx);
+    }
+
     @Override
     public int insert(ProdInqryDto prodInqryDto) throws Exception {
         return session.insert(namespace + "insert", prodInqryDto);
