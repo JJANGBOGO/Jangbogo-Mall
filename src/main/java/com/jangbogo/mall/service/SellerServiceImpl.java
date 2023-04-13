@@ -76,5 +76,10 @@ public class SellerServiceImpl implements SellerService{
         return dao.getSellerByCpnm(cpnm) != null; //중복 시 true 반환
     }
 
+    @Override
+    public boolean isEmailDuplicated (String email) throws Exception {
+        return dao.getSellerByEmail(email) != null;
+    }
+
 
 }

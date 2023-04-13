@@ -403,6 +403,58 @@
     };
 
     $(document).ready(function () {
+        $("#email_duplicate_chk").click(function (e) {
+            e.preventDefault();
+            let email_ref = $("#email");
+
+            if (!validateEmailAlert(email_ref)) return false;
+
+            $.ajax({
+                url: '/seller/duplicate/email',
+                data: {email: email_ref.val()},
+                type: 'POST',
+                success: function (msg) {
+                    if (msg == "OK") {
+                        alert(available_cpnm);
+                        $("#email_duplicate_chk").attr("disabled", true); //버튼 비활성화
+                        email_ref.attr("readonly", true); //인풋 비활성화
+                    } else {
+                        alert(duplicate_cpnm);
+                        email_ref.focus();
+                    }
+                },
+                error: function (err) {
+                    alert(error_msg);
+                }
+            }); //$.ajax
+        });
+
+        //브랜드명 중복 체크
+        $("#cpnm_duplicate_chk").click(function (e) {
+            e.preventDefault();
+            let cpnm_ref = $("#cpnm");
+
+            if (!validateBrndNameAlert(cpnm_ref)) return false;
+
+            $.ajax({
+                url: '/seller/duplicate/cpnm',
+                data: {cpnm: cpnm_ref.val()},
+                type: 'POST',
+                success: function (msg) {
+                    if (msg == "OK") {
+                        alert(available_cpnm);
+                        $("#cpnm_duplicate_chk").attr("disabled", true); //버튼 비활성화
+                        cpnm_ref.attr("readonly", true); //인풋 비활성화
+                    } else {
+                        alert(duplicate_cpnm);
+                        cpnm_ref.focus();
+                    }
+                },
+                error: function (err) {
+                    alert(error_msg);
+                }
+            }); //$.ajax
+        });
 
         //사업자 인증
         $("#brno_chk").click(function (e) {
@@ -549,11 +601,12 @@
         $(".reg-confirm").click(function (e) {
             e.preventDefault();
 
-            // let email_ref = $("#email");
-            // let email_chk_btn = $("#email_duplicate_chk");
-            //
-            // if(!validateEmailAlert(email_ref, email_chk_btn)) return false; //이메일 검사
-            //
+            let email_ref = $("#email");
+            let email_chk_btn = $("#email_duplicate_chk");
+
+            if(!validateEmailAlert(email_ref)) return false; //이메일 검사
+            if(!chkEmailAlert(email_ref, email_chk_btn)) return false; //이메일 중복 검사
+
             let cpnm_ref = $("#cpnm");
             //브랜드명
             if (!validateBrndNameAlert(cpnm_ref)) return false;

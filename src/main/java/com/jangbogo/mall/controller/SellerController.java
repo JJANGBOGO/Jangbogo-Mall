@@ -47,18 +47,14 @@ public class SellerController {
     //이메일 중복 체크
     @PostMapping("/seller/duplicate/email")
     @ResponseBody
-    public String chkDuplicateEmail(String email, String type) {
-        log.info("email...." + email);
-        String msg = "DUPLICATE";
+    public ResponseEntity<String> chkDuplicateEmail(String email, String type) {
         try {
-//            User user = userService.getUserByEmail(email);
-//            if (user == null) {
-//                msg = "OK";
-//            }
+            String msg = (!service.isEmailDuplicated(email)) ? "OK" : "DUPLICATED";
+            return ResponseEntity.ok().body(msg);
         } catch (Exception e) {
             e.printStackTrace();
+            return ResponseEntity.status(500).body("EXCEPTION_ERR"); //test ok
         }
-        return msg;
     }
 
     //브랜드명 중복 체크

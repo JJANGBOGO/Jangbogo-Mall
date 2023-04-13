@@ -126,5 +126,12 @@ public class SellerServiceTest {
         assertTrue(isDuplicated == true);
     }
 
+    @Test //ok
+    public void isEmailDuplicated () throws Exception {
+        boolean isDuplicated = service.isEmailDuplicated("seller100@naver.com");
+        log.info("duplicate...." + isDuplicated);
+        assertTrue(isDuplicated == true);
+    }
+
 
 }

@@ -31,4 +31,7 @@ public interface SellerService {
 
     //브랜드명 중복 검사
     boolean isCpnmDuplicated (String cpnm) throws Exception;
+
+    //이메일 중복 검사
+    boolean isEmailDuplicated (String email) throws Exception;
 }
