@@ -5,7 +5,7 @@ import com.jangbogo.mall.domain.SellerDtl;
 
 public interface SellerDao {
 
-    //판매자 탈퇴
+    //판매자 삭제(탈퇴)
     int deleteSeller (Integer idx, String email) throws Exception;
 
     //판매자 조회
@@ -28,4 +28,7 @@ public interface SellerDao {
 
     //브랜드 수정
     int updateSellerBrnd (Seller seller) throws Exception;
+
+    //브랜드명 중복 체크
+    Seller getSellerByCpnm (String cpnm) throws Exception;
 }

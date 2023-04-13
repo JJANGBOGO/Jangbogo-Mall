@@ -143,7 +143,7 @@ function validateBrndCnAlert (content_ref) {
 }
 
 //브랜드명 체크
-function validateBrndNameAlert (cpnm_ref) {
+function validateBrndNameAlert (cpnm_ref) { //인증버튼 상태 제외
 
     if (cpnm_ref.val() == "" ) {
         alert(brnd_name_empty);
@@ -156,13 +156,18 @@ function validateBrndNameAlert (cpnm_ref) {
         cpnm_ref.focus();
         return false;
     }
-
-    if (!$("#cpnm_duplicate_chk").is(":disabled")) {
-        alert(chk_brnd_name_required);
-        cpnm_ref.focus();
-        return false;
-    }
     return true;
+}
+
+// 브랜드명 keyup 에러메세지
+function cpnmErrMsg (cpnm, err_ref) {
+    if (cpnm == "") {
+        err_ref.html(brnd_name_empty);
+        return false; //필요
+    } else err_ref.empty();
+
+    if (!nick_reg.test(cpnm)) err_ref.html(not_valid_brnd_nm);
+    else err_ref.empty();
 }
 
 

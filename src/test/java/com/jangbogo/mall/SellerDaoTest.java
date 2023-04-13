@@ -124,5 +124,12 @@ public class SellerDaoTest {
         assertTrue(result != 0);
     }
 
+    @Test //ok
+    public void getSellerByCpnm () throws Exception {
+        Seller seller = dao.getSellerByCpnm("진이사과나무");
+        log.info("seller...." + seller);
+        assertTrue(seller != null);
+    }
+
 
 }

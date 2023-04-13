@@ -13,8 +13,8 @@ profile_upload_empty = "브랜드 프로필 이미지를 선택해 주세요";
 
 // reg.test() failed
 let not_valid_email = "이메일 형식에 맞춰서 입력해 주세요";
-let not_valid_nick = "닉네임은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요";
-let not_valid_brnd_nm = "브랜드명은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요";
+let not_valid_nick = "닉네임은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요 (공백제외)";
+let not_valid_brnd_nm = "브랜드명은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요 (공백제외)";
 let not_valid_pwd = "비밀번호는 6자 이상 16자 이하, 영어와 숫자의 조합으로 입력해 주세요. 특수문자 허용";
 let not_valid_mpno = "전화번호 형식에 맞춰 입력해 주세요 (-제외 숫자만)";
 let not_valid_pwd_confirm = "비밀번호와 동일한 값을 입력해 주세요";
@@ -28,10 +28,12 @@ let chk_agre_required = "필수 동의 항목에 모두 동의해 주세요";
 
 //ok
 let available_nick = "사용 가능한 닉네임입니다";
+let available_cpnm = "사용 가능한 브랜드명입니다";
 let available_email = "사용 가능한 이메일입니다";
 
 //duplicated
 let duplicate_nick = "이미 사용중인 닉네임입니다";
+let duplicate_cpnm = "이미 사용중인 브랜드명입니다";
 let duplicate_email = "이미 사용중인 이메일입니다";
 
 //error

@@ -541,7 +541,7 @@
                 $("#mpno").attr('readonly', true);
 
             }
-        })
+        });
 
         //가입하기 버튼 유효성 검사
         $(".reg-confirm").click(function (e) {

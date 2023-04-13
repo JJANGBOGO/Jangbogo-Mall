@@ -58,11 +58,11 @@ public class SellerController {
         return msg;
     }
 
-    //닉네임 중복 체크
-    @PostMapping("/seller/duplicate/nickname")
+    //브랜드명 중복 체크
+    @PostMapping("/seller/duplicate/cpnm")
     @ResponseBody
-    public String chkDuplicateNick(String nick_nm, String type) {
-        log.info("nick...." + nick_nm);
+    public String chkDuplicateNick(String cpnm, String type) {
+        log.info("cpnm...." + cpnm);
         String msg = "DUPLICATE";
         try {
 //            User user = userService.chkDuplicateNick(nick_nm);

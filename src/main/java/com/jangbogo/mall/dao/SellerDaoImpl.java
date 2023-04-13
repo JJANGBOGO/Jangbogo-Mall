@@ -59,4 +59,9 @@ public class SellerDaoImpl implements SellerDao {
     public int updateSellerBrnd (Seller seller) throws Exception {
         return session.update(nameSpace + "updateSellerBrnd", seller);
     }
+
+    @Override
+    public Seller getSellerByCpnm (String cpnm) throws Exception {
+        return session.selectOne(nameSpace + "getSellerByCpnm", cpnm);
+    }
 }

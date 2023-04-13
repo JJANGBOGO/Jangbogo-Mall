@@ -46,12 +46,11 @@
                                                 placeholder="브랜드명을 입력해주세요"
                                         />
                                     </div>
-                                    <div class="error-msg">
-                                        최소1자에서 최대 20자까지 입력해주세요
+                                    <div class="error-msg cpnm">
                                     </div>
                                 </div>
                                 <div class="btn-space">
-                                    <button>중복확인</button>
+                                    <button id="cpnm_duplicate_chk">중복확인</button>
                                 </div>
                             </div>
 
@@ -194,6 +193,39 @@
         });
     });
 
+    //keyup
+    $("#cpnm").keyup(function () { //브랜드명
+        let cpnm = $("#cpnm").val();
+        let err_ref = $(".error-msg.cpnm");
+        cpnmErrMsg(cpnm, err_ref);
+    });
+
+    $("#cpnm_duplicate_chk").click(function (e) {
+        e.preventDefault();
+        let cpnm_ref = $("#cpnm");
+
+        if (!validateBrndNameAlert(cpnm_ref)) return false;
+
+        $.ajax({
+            url: '/seller/duplicate/cpnm',
+            data: {cpnm: cpnm_ref.val()},
+            type: 'POST',
+            success: function (result) {
+                if (result == "OK") {
+                    alert(available_cpnm);
+                    $("#cpnm_duplicate_chk").attr("disabled", true); //버튼 비활성화
+                    cpnm_ref.attr("readonly", true); //인풋 비활성화
+                } else {
+                    alert(duplicate_cpnm);
+                    cpnm_ref.focus();
+                }
+            },
+            error: function (err) {
+                alert(error_msg);
+            }
+        }); //$.ajax
+    });
+
     //수정 버튼
     $("#brnd_modify").click(function (e) {
         e.preventDefault();
@@ -203,6 +235,12 @@
         let cpnm_ref = $("#cpnm");
         if (!validateBrndNameAlert(cpnm_ref)) return false;
 
+        if (!$("#cpnm_duplicate_chk").is(":disabled")) {
+            alert(chk_brnd_name_required);
+            cpnm_ref.focus();
+            return false;
+        }
+
         //브랜드 설명
         let summernoteContent = $(".summernote").summernote("code"); //썸머노트(설명)
         if (summernoteContent == "") {
@@ -211,7 +249,7 @@
         }
 
         let form_str = "";
-        form_str += "<input type='hidden' name='brnd_cn' value='" + summernoteContent +"'>";
+        form_str += "<input type='hidden' name='brnd_cn' value='" + summernoteContent + "'>";
 
         let bnr_path = $(".upload-result.bnr ul li").data("upload-path");
         let profile_path = $(".upload-result.profile ul li").data("upload-path");

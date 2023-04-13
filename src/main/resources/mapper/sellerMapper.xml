@@ -69,6 +69,10 @@
         ]]>
     </update>
 
+    <select id="getSellerByCpnm" resultType="Seller">
+        SELECT * FROM SELER WHERE CPNM = #{cpnm}
+    </select>
+
 
 </mapper>
 
