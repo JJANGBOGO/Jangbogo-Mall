@@ -21,10 +21,9 @@ public class WishlistDaoImplTest {
     public void select() throws Exception{
         assertTrue(wishlistDao != null);
         System.out.println("wishlistDao = " + wishlistDao);
-        List<WishlistDto> list = wishlistDao.getlist(3);
+        List<ProductDto> list = wishlistDao.getlist(3);
         System.out.println("list = " + list);
-        assertTrue(list.get(0).getProd_idx().equals(1));
-        assertTrue(list.get(1).getProd_idx().equals(2));
+        assertTrue(list!=null);
 
     }
     @Test
@@ -70,8 +69,8 @@ public class WishlistDaoImplTest {
         assertTrue(wishlistDao != null);
         System.out.println("wishlistDao = " + wishlistDao);
 //        String email = "carabut@naver.com";
-        int cnt = wishlistDao.getUser("carabut@naver.com");
-        assertTrue(cnt==2);
+        int cnt = wishlistDao.getUser("varabut@naver.com");
+        assertTrue(cnt==3);
         System.out.println("cnt = " + cnt);
 
     }

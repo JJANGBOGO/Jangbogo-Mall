@@ -5,11 +5,14 @@
 
 <mapper namespace="com.jangbogo.mall.dao.WishlistMapper">
 
-    <select id="getlist" parameterType="int" resultType="WishlistDto">
-        select PROD_IDX, USER_IDX, REG_TM, CRT_TM, CRT_IDX, UPT_TM, UPT_IDX
-        from WISHLIST
-        where USER_IDX = #{idx}
+    <select id="getlist" parameterType="int" resultType="ProductDto">
+        select PRODUCT.*
+        from WISHLIST , PRODUCT
+        where WISHLIST.PROD_IDX = PRODUCT.IDX and WISHLIST.USER_IDX = #{idx}
+        order by WISHLIST.REG_TM;
     </select>
+
+
 
     <delete id="delete" parameterType="map">
         DELETE FROM WISHLIST
@@ -34,7 +37,7 @@
     </select>
 
 <!--    getUser는 아직 미완성-->
-    <select id="getUser" parameterType="map" resultType="int">
+    <select id="getUser" parameterType="String" resultType="int">
         select IDX
         from USER
         where EMAIL = #{email}
@@ -49,6 +52,8 @@
         </foreach>
 
     </select>
+
+
 
 
 </mapper>
