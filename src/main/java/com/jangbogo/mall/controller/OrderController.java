@@ -30,19 +30,6 @@ public class OrderController {
     @Autowired
     UserService userService;
 
-    // 메서드명 : goToOrderForm
-    // 기   능 : 주문서 작성 페이지로 이동
-    // 매개변수 : HttpSession session
-    // 반환타입 : String
-    // 요청URL : /order/checkout GET
-    @GetMapping("/order/checkout")
-    public String goToOrderForm(HttpSession session) {
-        // 1. 로그인 확인 - loginCheck메서드가 false를 반환하는 경우, 로그인 페이지로 리다이렉트
-        if(!loginCheck(session)) return "redirect:/user/login";
-        // 2. 로그인 확인 완료 시, 주문서 작성 페이지로 이동
-        return "/order/orderForm";
-    }
-
     // 메서드명 : getItemList
     // 기   능 : 주문상품 목록을 불러오는 ajax요청을 처리한다.
     // 반환타입 : ResponseEntity<List<CartDto>>
