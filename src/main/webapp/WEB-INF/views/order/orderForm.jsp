@@ -9,271 +9,7 @@
 <html>
     <head>
         <title>주문서 작성</title>
-        <style>
-            /* 공통 태그 */
-            * {
-                box-sizing: border-box;
-            }
-            h3 {
-                font-size: 20px;
-            }
-            svg {
-                display: inline-block;
-                width: 25px;
-                height: 25px;
-                padding: 5px;
-                cursor: pointer;
-            }
-            body {
-            }
-
-            /* 주문서 페이지 container */
-            .order-container {
-                padding: 50px 0 60px 0;
-                width: 1050px;
-                margin: 0 auto;
-            }
-
-            /* 주문서 페이지 제목 */
-            .order-title {
-                text-align: center;
-                padding-bottom: 48px;
-                font-weight: 500;
-                font-size: 28px;
-                line-height: 29px;
-            }
-
-            /* 모든 주문 관련 정보 섹션 태그 */
-            .order-section:not(:first-of-type) {
-                margin-top: 75px;
-            }
-
-            .order-section__title {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                line-height: 29px;
-                border-bottom: 1px solid black;
-            }
-            .order-section__title > h3 {
-                padding: 16px 0;
-                font-weight: 500;
-                font-size: 20px;
-            }
-            .order-section__content {
-                padding: 28px 0;
-                border-bottom: 1px solid rgb(244, 244, 244);
-                line-height: 29px;
-            }
-
-            /* 쿠폰, 결제 수단, 개인정보 수집/제공 정보 섹션 컨테이너 */
-            .order-container__parent {
-                display: flex;
-                justify-content: space-between;
-            }
-            .order-container__child {
-                width: 724px;
-            }
-
-            /* 결제 금액 섹션 컨테이너 */
-            .order-amount__container {
-                position: relative;
-                width: 284px;
-            }
-
-            /* 결제 금액 섹션 박스 */
-            .order-amount__box {
-                position: absolute;
-                top: 0px;
-                width: 284px;
-            }
-            .order-amount__title {
-                display: flex;
-                flex-direction: row;
-                -webkit-box-pack: justify;
-                justify-content: space-between;
-                -webkit-box-align: center;
-                align-items: center;
-            }
-            .order-amount__title > h3 {
-                padding: 16px 0;
-                font-weight: 500;
-                font-size: 20px;
-                color: rgb(51, 51, 51);
-                line-height: 29px;
-            }
-            .order-amount {
-                width: 100%;
-                padding: 17px 16px 18px 18px;
-                background: rgb(250, 250, 250);
-                border: 1px solid rgb(242, 242, 242);
-            }
-            .order-amount__section {
-                display: flex;
-                -webkit-box-pack: justify;
-                justify-content: space-between;
-                margin-top: 16px;
-                font-size: 16px;
-                color: rgb(51, 51, 51);
-                padding-bottom: 8px;
-            }
-            .order-amount__section-final {
-                display: flex;
-                -webkit-box-pack: justify;
-                justify-content: space-between;
-                margin-top: 16px;
-                padding: 16px 0px 1px;
-                border-top: 1px solid rgb(244, 244, 244);
-                font-size: 16px;
-                color: rgb(76, 76, 76);
-            }
-
-            /* 주문 상품 섹션 */
-            #orderItems {
-                padding: 0;
-            }
-            .order-item {
-                display: flex;
-                align-items: center;
-                list-style: none;
-                padding: 25px 0;
-            }
-            .order-item:not(:last-child) {
-                border-bottom: 1px solid rgb(244, 244, 244);
-            }
-            .order-item__title {
-                width: 50%;
-                text-align: left;
-                font-weight: 600;
-                margin-left: 40px;
-            }
-            .order-item__contents {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                width: 180px;
-                margin-left: 240px;
-            }
-            .order-item__count {
-                text-align: center;
-            }
-            .order-item__price {
-                font-weight: 700;
-                text-align: right;
-                width: 80px;
-            }
-            .order-item > img {
-                display: inline-block;
-                width: 60px;
-                height: 78px;
-            }
-
-            /* 주문자 정보 섹션 */
-            #ordererInform {
-                padding: 10px 0;
-            }
-            .orderer-section, .delivery-section {
-                display: flex;
-                justify-content: left;
-                align-items: flex-start;
-                padding: 8px 0;
-            }
-            .orderer-inform, .delivery-inform {
-                width: 160px;
-                font-size: 14px;
-                font-weight: 600;
-                margin-right: 30px;
-            }
-            .orderer-value, .delivery-value {
-                width: 70%;
-                font-size: 14px;
-            }
-            .orderer-value__paragraph > p {
-                font-size: 12px;
-                line-height: 21px;
-                color: rgb(102, 102, 102);
-            }
-            /* 배송 정보 섹션 */
-            #deliveryInform {}
-            .delivery-section {}
-            .delivery-inform {}
-            .delivery-value {}
-            .delivery-value__column {
-                font-size: 14px;
-                color: rgb(102, 102, 102);
-                line-height: 24px;
-                margin-bottom: 9px;
-            }
-            .delivery-value__column:first-child {
-                font-size: 14px;
-                color: rgb(51, 51, 51);
-                margin-bottom: 9px;
-                line-height: 24px;
-            }
-            .delivery-value__column:not(:first-child) {
-                margin-top: 4px;
-            }
-            .delivery-value__column:not(:first-child) > span {
-                font-size: 14px;
-                color: rgb(102, 102, 102);
-                line-height: 24px;
-            }
-            .delivery-value__column:last-child {
-                margin-top: 20px;
-            }
-            #deliveryModBtn {
-                display: block;
-                padding: 0px 10px;
-                text-align: center;
-                overflow: hidden;
-                width: 60px;
-                height: 30px;
-                border-radius: 3px;
-                color: rgb(51, 51, 51);
-                background-color: rgb(255, 255, 255);
-                border: 1px solid rgb(221, 221, 221);
-                cursor: pointer;
-            }
-
-
-                /* 주문서 관련 주석 */
-            .paragraph {
-                padding-left: 16px;
-                font-size: 12px;
-                line-height: 16px;
-                color: rgb(102, 102, 102);
-            }
-            .paragraph::before {
-                display: inline-block;
-                width: 16px;
-                margin-left: -16px;
-                content: "※";
-            }
-
-            /* 주문완료 버튼 */
-            .order-button {
-                text-align: center;
-            }
-            .order-button > button {
-                display: block;
-                padding: 0 10px;
-                text-align: center;
-                overflow: hidden;
-                width: 240px;
-                height: 56px;
-                border-radius: 3px;
-                background-color: var(--primary-color);
-                border: 0px none;
-                margin: 40px auto 30px;
-                font-weight: 500;
-            }
-            .order-button > button > span {
-                display: inline-block;
-                font-size: 16px;
-                font-weight: 500;
-                color: rgb(255, 255, 255);
-            }
-        </style>
+        <link rel="stylesheet" href="/css/order/orderForm.css"/>
         <%@ include file="/WEB-INF/views/include/header.jsp" %>
     </head>
     <body>
@@ -456,7 +192,7 @@
                 tmp += "<div class='delivery-inform'>"
                 tmp += "<span>배송지</span>"
                 tmp += "</div>"
-                tmp += "<div class='delivery-value'>"
+                tmp += "<div id='deliveryAddress' class='delivery-value' >"
                 tmp += "<span>" + deliveryInfo.address + "</span>"
                 tmp += "</div>"
                 tmp += "</div>"
@@ -465,14 +201,11 @@
                 tmp += "<span>상세정보</span>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-value'>"
-                tmp += "<div class='delivery-value__column'>"
-                tmp += "<span>" + deliveryInfo.recipient + " , " + deliveryInfo.mpno + "</span>"
+                tmp += "<div class='delivery-value__column' id='deliveryRecipient'>"
+                tmp += "<span>" + deliveryInfo.recipient + "</span> , <span>" + deliveryInfo.mpno + "</span>"
                 tmp += "</div>"
-                tmp += "<div class='delivery-value__column'>"
+                tmp += "<div class='delivery-value__column' id='deliveryLocation'>"
                 tmp += "<span>받으실 장소 | " + deliveryInfo.pickUpLocation + "</span>"
-                tmp += "</div>"
-                tmp += "<div class='delivery-value__column'>"
-                tmp += "<span>배송완료 메시지 | " + (deliveryInfo.completeMsg ? "배송 직후" : "오전 7시") + "</span>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-value__column'>"
                 tmp += "<button type='button' id='deliveryModBtn'>수정</button>"
@@ -525,7 +258,7 @@
             $(document).on("click", "#deliveryModBtn", (e) => { // 회원번호를 html태그의 data속성에서 가져와야 한다. '/order/recipient-details?user_idx=' + element2,
                 // 변수명 : url
                 // 저장값 : 새창에 해당하는 url
-                let url = "/order/recipient-details";
+                let url = "/order/checkout/recipient-details";
                 // 비동기 요청 수정
                 // 1. 수정 페이지 이동 2. 값 입력 후 저장 버튼 클릭 3. result로 값이 오고 deliveryToHtml 호출
                 // location.href(url);

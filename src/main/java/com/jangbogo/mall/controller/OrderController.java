@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -142,6 +143,15 @@ public class OrderController {
             return new ResponseEntity<Map>(map, HttpStatus.BAD_REQUEST);
         }
         // 2. 소프트 코딩
+    }
+    // 메서드명 : goToRecipientDetails
+    // 기   능 : 배송 정보 수정 페이지로 이동
+    // 매개변수 : HttpSession session
+    // 반환타입 : String
+    // 요청URL : /order/checkout/recipient-details GET
+    @GetMapping("/order/checkout/recipient-details")
+    public String goToRecipientDetails() {
+        return "/order/recipientDetails";
     }
 
     // 메서드명 : loginCheck
