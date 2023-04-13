@@ -99,10 +99,8 @@
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
-    let signupMsg = "${signupMsg}";
-    if (signupMsg == "MSG_OK") alert("회원 가입에 성공했습니다.");
-
     let msg = "${msg}";
+    if (msg == "REG_OK") alert("회원 가입에 성공했습니다.");
     if (msg == "LOGIN_ERR") alert("로그인 도중 오류가 발생하였습니다. 다시 시도해 주세요.");
 
     $("#seller_login_link").click(function() {

@@ -1,0 +1,40 @@
+.upload-result {
+    width: 100%;
+    background-color: #eeeeee;
+    overflow: scroll;
+}
+
+.upload-result ul {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.upload-result ul li {
+    list-style: none;
+    padding: 10px;
+    margin-right: 20px;
+}
+
+.upload-result ul li span {
+    position: absolute;
+}
+
+.upload-result ul li span img {
+    position: relative;
+    width: 25px;
+}
+
+.upload-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: var(--input-placeholder);
+    cursor: pointer;
+}
+
+input[type=file] {
+    display: none;
+}
