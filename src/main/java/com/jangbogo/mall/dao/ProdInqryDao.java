@@ -17,7 +17,7 @@ public interface ProdInqryDao {
 
     // 게시물 페이지 단위로 보여주기
     List<JoinProdInqryDto> selectPage(Map map) throws Exception;
-
+    String selectNickName(Integer user_idx) throws Exception;
     int insert(ProdInqryDto prodInqryDto) throws Exception;
 
     int delete(Integer idx, Integer prod_idx, Integer user_idx) throws Exception;
