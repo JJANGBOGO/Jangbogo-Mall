@@ -289,3 +289,44 @@ select[name="coupons"] {
     font-weight: 500;
     color: rgb(255, 255, 255);
 }
+
+.order__payment-section {
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.order__payment-inform {
+    width: 160px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 44px;
+    color: rgb(51, 51, 51);
+    letter-spacing: -0.32px;
+    vertical-align: top;
+}
+
+.order__payment-value {
+    width: 414px;
+}
+
+.order__payment-value-section {
+}
+
+.order__payment-value-section > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    height: 48px;
+    border: 1px solid rgb(246, 229, 0);
+    font-size: 18px;
+    color: rgb(255, 255, 255);
+    background: rgb(246, 229, 0);
+    font-weight: 600;
+    border-radius: 3px;
+    letter-spacing: 1.8px;
+}

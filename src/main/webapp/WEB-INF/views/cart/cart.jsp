@@ -282,7 +282,7 @@
             tmp += '</section>'
             tmp += '<section class="dilv-cost">'
             tmp += '<span class="prod-title">배송비</span>'
-            tmp += '<span class="prod-content">2500원</span>'
+            tmp += '<span class="prod-content">2,500원</span>'
             tmp += '</section>'
             tmp += '<section class="dilv-total">'
             tmp += '<span class="prod-title">결제예정금액</span>'

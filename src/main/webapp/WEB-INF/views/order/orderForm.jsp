@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-    <head> // 딜리버리 다오, 디티오 삭제
+    <head>
         <title>주문서 작성</title>
         <link rel="stylesheet" href="/css/order/orderForm.css"/>
         <%@ include file="/WEB-INF/views/include/header.jsp" %>
@@ -46,11 +46,7 @@
                     </section>
                     <section class="order-section">
                         <div class="order-section__title"><h3>결제 수단</h3></div>
-                        <div class="order-section__content">
-                            <ul id="paymentMethod">
-
-                            </ul>
-                        </div>
+                        <div class="order-section__content" id="paymentMethod"></div>
                     </section>
                     <section class="order-section">
                         <div class="order-section__title"><h3>개인정보 수집/제공</h3></div>
@@ -86,7 +82,6 @@
                 tmp += " 결제하기</span>";
                 return tmp;
             }
-
 
             // 메서드명 : invoiceToHtml
             // 기   능 : 결제 금액 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
@@ -264,6 +259,31 @@
                 tmp += "</div>";
                 return tmp;
             }
+
+            // 메서드명 : paymentMethodsToHtml
+            // 기   능 : 결제수단 목록을 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
+            // 매개변수 : items - CouponDto
+            // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
+            let paymentMethodsToHtml = (paymentMethods) => {
+                // 변수명 : tmp
+                // 저장값 : 동적으로 생성할 html 태그(문자열)
+                let tmp = "";
+                tmp += "<div class='order__payment-section'>";
+                tmp +=      "<div class='order__payment-inform'>"
+                tmp +=          "<span>결제수단 선택</span>"
+                tmp +=      "</div>"
+                tmp +=      "<div class='order__payment-value'>"
+                tmp +=          "<div class='order__payment-value-section'>"
+                tmp +=              "<button type='button' >"
+                tmp +=              "<span>" + "Kakao Pay" + "</span>"
+                tmp +=              "</button>"
+                tmp +=          "</div>"
+                tmp +=      "</div>"
+                tmp += "</div>"
+
+                return tmp;
+            }
+
             // 메서드명 : showItemList
             // 기   능 : orderController에 ajax요청하여 주문 상품 목록을 가져온다.
             // 매개변수 : user_idx - 회원번호
@@ -326,6 +346,20 @@
                 });  // $.ajax() end
             }
 
+            // 메서드명 : showPaymentMethod
+            // 기   능 : 결제수단 목록을 가져온다.
+            let showPaymentMethods = (user_idx) => {
+                // ajax 요청(비동기)
+                $.ajax({
+                    type:'GET',
+                    url:'/order/checkout/payment?user_idx=' + user_idx,
+                    success: (result) => {                                                 // 성공 응답이 오면, 쿠폰 정보를 페이지에 랜더링하기
+                        $('#paymentMethod').html(paymentMethodsToHtml(result));                   // couponListToHtml메서드 호출
+                    },
+                    error : function() { alert("showPaymentMethods 실패 응답 : 회원번호 누락");}  // 실패 응답이 오면, 경고창 띄우기
+                });  // $.ajax() end
+            }
+
             $(document).ready(() => {
                 // TODO : 세션에서 회원번호를 가져와야 한다. 세션 연동 시, 추후 테스트 필요.
                 // 변수명 : idx
@@ -337,6 +371,7 @@
                 showOrdererInfo(idx);
                 showDeliveryInfo(idx);
                 showCouponList(idx);
+                showPaymentMethods(idx);
 
                 // 메서드명 : popupCenter
                 // 기   능 : 자식창을 열고, 스크린 가운데로 위치시키기
