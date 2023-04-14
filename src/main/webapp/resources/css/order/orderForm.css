@@ -344,6 +344,7 @@ select[name="coupons"] {
 }
 
 .order__personalInfo-section > button {
+    visibility: hidden;
     color: rgb(153, 153, 153);
     text-decoration: underline;
     background-color: transparent;
