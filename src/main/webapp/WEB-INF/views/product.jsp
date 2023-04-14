@@ -837,28 +837,10 @@
   $(document).ready(function(){
     showList(prod_idx);
 
-    // $("#modBtn").click(function(){
-    //   let idx = $(this).attr("data-idx");
-    //
-    //   let ctent = $("input[name=ctent]").val();
-    //   let title = $("input[name=title]").val();
-    //   let writer = $("input[name=writer]").val();
-    //   let res_state_cd = $("input[name=res_state_cd]").val();
-    //   let opub_yn = $("input[name=opub_yn]").val();
-    //
-    //
-    //   $.ajax({
-    //     type:'PATCH',       // 요청 메서드
-    //     url: '/products/'+idx,  // 요청 URI   // /product?prod_idx=1 POST
-    //     headers : { "content-type": "application/json"}, // 요청 헤더
-    //     data : JSON.stringify({idx:idx, title:title, ctent:ctent, opub_yn:opub_yn}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
-    //     success : function(result){
-    //       alert(result)
-    //       showList(prod_idx); //갱신된 게시물 보여준다.
-    //     },
-    //     error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
-    //   }); // $.ajax()
-    // });
+    $(".open-modal").click(function() {
+      $(".modal").css("display", "block");
+    })
+
 
     $("#sendBtn").click(function(){
       let ctent = $("input[id=modal-ctent]").val();
@@ -884,16 +866,17 @@
         },
         error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
       }); // $.ajax()
-    });
 
-    // let showModal = function() {
-    //   let modal = document.querySelector(".modal");
-    //   modal.classList.toggle("show");
-    // }
+      //모달을 안보이게 한다.
+      $(".modal").css("display", "none");
+    });
 
 
     $("#table").on("click", ".modBtn", function() {
       let modal = document.querySelector(".modal");
+      //모달이 열린다.
+      $(".modal").css("display", "block");
+
       //수정 버튼이 포함되어 있는 tr 라인 안에 들어있는 idx를 가져온다.
       //title과 ctent의 내용들도 가져와서 변수에 담는다.
       let idx = $(this).closest("tr").attr("data-idx");
@@ -935,9 +918,6 @@
       $("input[id=modal-ctent]").val(ctent);
       $("input[type=checkbox]").attr("checked", isChecked(opub_yn));
 
-
-      //모달이 열린다
-      $(".modal").css("display", "block");
     });
 
     $(".inqry_button").on("click", "#modBtn", function() {
@@ -986,27 +966,6 @@
         error   : function(){ alert("삭제권한이 없습니다.") } // 에러가 발생했을 때, 호출될 함수
       }); // $.ajax()
     })
-  });
-
-  const xBtn = document.querySelector(".xBtn");
-  const openModal = document.querySelector(".open-modal");
-  const modal = document.querySelector(".modal");
-  xBtn.addEventListener("click", function () {});
-
-  openModal.addEventListener("click", function () {
-    modal.classList.toggle("show");
-    if (modal.classList.contains("show")) {
-      body.style.overflow = "hidden";
-    }
-  });
-
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.classList.toggle("show");
-      if (!modal.classList.contains("show")) {
-        body.style.overflow = "auto";
-      }
-    }
   });
 
   let resStateToString = function(states) {
