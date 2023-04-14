@@ -8,14 +8,20 @@
       <meta charset="UTF-8">
       <title>fastcampus</title>
       <%@ include file="/WEB-INF/views/include/header.jsp" %>
-<%--      <link rel="stylesheet" href="/css/myPage/sidebar.css">--%>
+        <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
+
+        <%@ include file="/WEB-INF/views/include/sidebar.jsp" %>
+        <link rel="stylesheet" href="/css/myPage/sidebar.css"/>
+
       <link rel="stylesheet" href="/css/wishlist.css">
       <link rel="stylesheet" href="/css/wishlistmodal.css">
     </head>
     <body>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
-    <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
+<%--    <%@ include file="/WEB-INF/views/include/navbar.jsp" %>--%>
 <%--    <%@ include file="/WEB-INF/views/include/sidebar.jsp" %>--%>
+
+
     <div class="king">
     <div class="title">
         <h2 class="h2">
@@ -26,7 +32,7 @@
         </span>
     </div>
 
-    <c:forEach var="product" items="${list2}" varStatus="i">
+    <c:forEach var="product" items="${list}" varStatus="i">
         <div class="a">
             <a href="">
                 <img src="${product.resv_photo_upload_path}" alt="">
