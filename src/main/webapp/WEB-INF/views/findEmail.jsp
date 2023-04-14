@@ -17,7 +17,7 @@
                 <button class="tab-button" data-a="1">판매자</button>
             </div>
             <div class="member-form">
-                <form id="user_find_email" class="find-form" action="/find/email" method="post">
+                <form id="user_find_email" class="find-form" action="/user/find/email" method="post">
                     <div class="find-input-box">
                         <label>닉네임</label>
                         <input
@@ -50,14 +50,14 @@
                 </form>
             </div>
             <div class="member-form">
-                <form id="seller_form" class="find-form" action="/find/email" method="post">
+                <form id="seller_find_email" class="find-form" action="/seller/find/email" method="post">
                     <div class="find-input-box">
-                        <label>닉네임</label>
+                        <label>브랜드명</label>
                         <input
                                 class="input-control"
-                                name="nick_nm"
+                                name="cpnm"
                                 type="text"
-                                placeholder="닉네임을 입력해주세요"
+                                placeholder="브랜드명을 입력해주세요"
                         />
                     </div>
                     <div class="find-input-box">
@@ -65,7 +65,7 @@
                         <input
                                 class="input-control"
                                 name="pwd"
-                                type="text"
+                                type="password"
                                 placeholder="비밀번호를 입력해주세요"
                         />
                     </div>
@@ -125,6 +125,9 @@
 
             e.preventDefault();
             if (findEmailChk(user_nick, user_pwd))
+                //유효성 검사 다시 해. 여기서도 이메일 형식 검사하잖아.
+                // 컬리는 button을 disabled한다.
+                // 로그인 시에는 아이디랑 비번 형식을 안 따지는데/
                 $("#user_find_email").submit();
         });
 

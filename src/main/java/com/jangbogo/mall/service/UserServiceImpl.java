@@ -5,14 +5,19 @@ import com.jangbogo.mall.dao.UserDao;
 import com.jangbogo.mall.domain.Address;
 import com.jangbogo.mall.domain.Email;
 import com.jangbogo.mall.domain.User;
+import com.jangbogo.mall.utils.Utils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -27,6 +32,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    Utils utils;
+
     @Override
     public int withdrawUser(int idx, String email) throws Exception {
         return dao.deleteUser(idx, email);
@@ -34,7 +42,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean isUserPresent(String nick_nm, String email) throws Exception {
-        return dao.selUserByEmail(nick_nm, email) != null;
+        User user = dao.getUserByNick(nick_nm);
+        return user != null && Objects.equals(email, user.getEmail());
     }
 
     @Override
@@ -43,16 +52,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int updatePwd(String pwd, String nick_nm, String email) throws Exception {
-        return dao.updatePwd(pwd, nick_nm, email);
-    }
-
-    @Override
     public int sendPwdEmail(String nick_nm, String toEmail) throws Exception {
-        String tmpPwd = createTmpPwd();
+        String tmpPwd = utils.createRandomStr();
         String encodedPwd = passwordEncoder.encode(tmpPwd);
 
-        int result = updatePwd(encodedPwd, nick_nm, toEmail); //임시비번으로 비번 업데이트.
+        int result = dao.updatePwd(encodedPwd, nick_nm, toEmail); //임시비번으로 비번 업데이트.
 
         if (result != 0) {
             Email email = Email.builder()
@@ -60,7 +64,6 @@ public class UserServiceImpl implements UserService {
                     .toEmail(toEmail)
                     .title("임시 비밀번호 전달")
                     .content("회원님의 임시 비밀번호는 " + tmpPwd + " 입니다.")
-//                    TODO:: 추후 이메일 템플릿 적용
                     .build();
             emailSender.sendMail(email);
             return 1; //성공
@@ -71,15 +74,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByEmail(String email) throws Exception {
         return dao.getUserByEmail(email);
-    }
-
-    //임시 비번 생성
-    public String createTmpPwd() {
-        String pwd = "";
-        for (int i = 0; i < 12; i++) {
-            pwd += (char) ((Math.random() * 26) + 97);
-        }
-        return pwd;
     }
 
     @Override
@@ -145,8 +139,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public String findUserEmail(String nick_nm, String pwd) throws Exception {
         User user = dao.getUserByNick(nick_nm);
-        return passwordEncoder.matches(pwd, user.getPwd()) ? user.getEmail() : null;
-    }
 
+        if (user == null || !passwordEncoder.matches(pwd, user.getPwd())) return null;
+        if (user.getState_cd() == 3) return null;
+        return user.getEmail();
+    }
 
 }

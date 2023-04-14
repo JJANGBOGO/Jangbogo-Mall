@@ -31,4 +31,10 @@ public interface SellerDao {
 
     //브랜드명 중복 체크
     Seller getSellerByCpnm (String cpnm) throws Exception;
+
+    //이메일 중복 체크
+    Seller getSellerByEmail (String email) throws Exception;
+
+    //판매자 비번 수정
+    int updatePwd (String pwd, String cpnm, String email) throws Exception;
 }
