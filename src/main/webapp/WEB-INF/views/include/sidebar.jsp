@@ -23,7 +23,7 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="/mypage/wishlist">
                     찜한 상품
                     <span> &gt; </span>
                 </a>

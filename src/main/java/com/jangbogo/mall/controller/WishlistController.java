@@ -1,7 +1,6 @@
 package com.jangbogo.mall.controller;
 
 import com.jangbogo.mall.domain.ProductDto;
-import com.jangbogo.mall.domain.WishlistDto;
 import com.jangbogo.mall.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/mypage")
@@ -37,7 +34,7 @@ public class WishlistController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return "/user/addrList";                                                           // 6. 위시리스트 조회 화면으로 이동
+        return "wishlist";                                                           // 6. 위시리스트 조회 화면으로 이동
     }
 
     @PostMapping("/removeWishlist")
