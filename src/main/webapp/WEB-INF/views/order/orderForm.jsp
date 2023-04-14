@@ -50,9 +50,18 @@
                     </section>
                     <section class="order-section">
                         <div class="order-section__title"><h3>개인정보 수집/제공</h3></div>
-                        <div class="order-section__content">
-                            <ul id="agreeOfPersonalInform">
-                            </ul>
+                        <div class="order-section__content" id="agreeOfPersonalInform">
+                            <div class="order__personalInfo-section">
+                                <span>개인정보 수집∙이용 및 처리 동의</span>
+                                <button type="button" id="personalPolicyBtn">보기</button>
+                            </div>
+                            <div class="order__personalInfo-section">
+                                <span>전자지급 결제대행 서비스 이용약관 동의</span>
+                                <button type="button" id="paymentPolicyBtn">보기</button>
+                            </div>
+                            <div class="order__personalInfo-section">
+                                <span>위 내용을 확인 하였으며 결제에 동의합니다.</span>
+                            </div>
                         </div>
                     </section>
                     <p class="paragraph">
@@ -360,6 +369,12 @@
                 });  // $.ajax() end
             }
 
+            // 메서드명 : showPersonalInfoAgreement
+            // 기   능 : 개인정보 수집/제공을 가져온다.
+            function showPersonalInfoAgreement(idx) {
+
+            }
+
             $(document).ready(() => {
                 // TODO : 세션에서 회원번호를 가져와야 한다. 세션 연동 시, 추후 테스트 필요.
                 // 변수명 : idx
@@ -372,6 +387,7 @@
                 showDeliveryInfo(idx);
                 showCouponList(idx);
                 showPaymentMethods(idx);
+                showPersonalInfoAgreement(idx);
 
                 // 메서드명 : popupCenter
                 // 기   능 : 자식창을 열고, 스크린 가운데로 위치시키기
