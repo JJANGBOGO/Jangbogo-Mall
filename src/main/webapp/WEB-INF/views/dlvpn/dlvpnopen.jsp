@@ -75,21 +75,15 @@
       if(!confirm("정말로 삭제하시겠습니까"))return;
 
       let a = ${address.idx};
-      <%--let b = "<c:out value='${address.rcpr_nm}'/>";--%>
-      // console.log(a);
-      // console.log(b);
-      opener.parent.location='<c:url value="/mypage/addressremove?idx='+a+'"/>';
-      self.close()
-      <%--let form = document.createElement("form");--%>
-      <%--let obj = document.createElement('input');--%>
-      <%--obj.setAttribute('type', 'hidden');--%>
-      <%--form.appendChild(obj);--%>
-      <%--form.setAttribute("action", '<c:url value="/mypage/addressremove?idx='+a+'"/>');--%>
-      <%--form.setAttribute("method", "post");--%>
-      <%--document.body.appendChild(form);--%>
 
-      <%--form.submit();--%>
-      // opener.parent.location.reload();
+      var form = document.createElement('form');
+      form.setAttribute('method', 'post');
+      form.setAttribute('action', '<c:url value="/mypage/addressremove?idx='+a+'"/>');
+      window.opener.document.body.appendChild(form);
+      form.submit();
+      <%--opener.parent.location='<c:url value="/mypage/addressremove?idx='+a+'"/>';--%>
+      self.close()
+
     }
     document.querySelector('.update-button').addEventListener('click',save)
     function save(){
@@ -98,8 +92,13 @@
       let rcpr_mobl_no = document.querySelector('.dlvpn-input3').value;
       let is_default_yn = document.querySelector('.base_button').checked;
       let idx = ${address.idx};
-      opener.parent.location='<c:url value="/mypage/addressupdate?addr_dtl='+addr_dtl+'&rcpr_nm='+rcpr_nm+'&rcpr_mobl_no='+rcpr_mobl_no+'&is_default_yn='+is_default_yn+'&idx='+idx+'"/>';
-      <%--opener.parent.location='<c:url value="/mypage/addressupdate?address=`{address}`"/>';--%>
+
+      var form = document.createElement('form');
+      form.setAttribute('method', 'post');
+      form.setAttribute('action', '<c:url value="/mypage/addressupdate?addr_dtl='+addr_dtl+'&rcpr_nm='+rcpr_nm+'&rcpr_mobl_no='+rcpr_mobl_no+'&is_default_yn='+is_default_yn+'&idx='+idx+'"/>');
+      window.opener.document.body.appendChild(form);
+      form.submit();
+      <%--opener.parent.location='<c:url value="/mypage/addressupdate?addr_dtl='+addr_dtl+'&rcpr_nm='+rcpr_nm+'&rcpr_mobl_no='+rcpr_mobl_no+'&is_default_yn='+is_default_yn+'&idx='+idx+'"/>';--%>
       self.close()
 
     }
