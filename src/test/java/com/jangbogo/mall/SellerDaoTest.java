@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -25,6 +26,9 @@ public class SellerDaoTest {
 
     @Autowired
     SellerDao dao;
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     @Test //OK
     public void deleteSeller() throws Exception {
@@ -131,5 +135,23 @@ public class SellerDaoTest {
         assertTrue(seller != null);
     }
 
+    @Test //ok
+    public void getSellerByEmail () throws Exception {
+        Seller seller = dao.getSellerByEmail("seller100@naver.com");
+        log.info("seller...." + seller);
+        assertTrue(seller != null);
+    }
+
+    @Test //ok
+    public void updatePwd () throws Exception {
+        String pwd = "temp";
+        String encodedPwd = passwordEncoder.encode(pwd);
+        String test = "$2a$10$pYlqkEwwVJV/IvsMF0nTKuta2Mcv8zQF5c4.AvSQI99Bw0dnvmZF6";
+
+        log.info("...same...." + passwordEncoder.matches(pwd, test)); //ok
+
+        int result = dao.updatePwd(encodedPwd, "service테스트", "jinvicky1007");
+        assertTrue(result != 0);
+    }
 
 }

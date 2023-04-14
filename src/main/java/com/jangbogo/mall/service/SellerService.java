@@ -31,4 +31,15 @@ public interface SellerService {
 
     //브랜드명 중복 검사
     boolean isCpnmDuplicated (String cpnm) throws Exception;
+
+    //이메일 중복 검사
+    boolean isEmailDuplicated (String email) throws Exception;
+
+    String findSellerEmail (String cpnm, String pwd) throws Exception;
+
+    //비번찾기용 회원 인증
+    boolean isSellerPresent (String cpnm, String email) throws Exception;
+
+    //임시비번 메일 전송
+    int sendPwdEmail (String cpnm, String toEmail) throws Exception;
 }
