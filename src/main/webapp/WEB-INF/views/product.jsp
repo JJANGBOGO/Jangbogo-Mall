@@ -896,7 +896,8 @@
       let modal = document.querySelector(".modal");
       //수정 버튼이 포함되어 있는 tr 라인 안에 들어있는 idx를 가져온다.
       //title과 ctent의 내용들도 가져와서 변수에 담는다.
-
+      let idx = $(this).closest("tr").attr("data-idx");
+      console.log(idx);
       let ctent = $(this).closest("tr").children().children().children().find('div:eq(1)[name=text]').children().text();
       let inquiry_idx = $(this).closest("tr").attr("data-idx");
       let dtoArr = $(".modBtn").closest("tr").siblings("tr[data-idx=" + inquiry_idx + "]");
@@ -927,6 +928,9 @@
       let modBtn = $('<button class="register" id="modBtn">수정</button>');
       inqryButton.append(modBtn);
 
+      //idx값을 새로 생성한 태그에 전달
+      modBtn.attr("data-idx", idx);
+
       $("input[id=modal-title]").val(title);
       $("input[id=modal-ctent]").val(ctent);
       $("input[type=checkbox]").attr("checked", isChecked(opub_yn));
@@ -936,8 +940,8 @@
       $(".modal").css("display", "block");
     });
 
-    $("#modBtn").click( function() {
-      let idx = $(this).closest("tr").attr("data-idx");
+    $(".inqry_button").on("click", "#modBtn", function() {
+      let idx = $(this).attr("data-idx");
 
       let modal = document.querySelector(".modal");
       //동일하게 불러온 정보를 변수에 저장한다.
