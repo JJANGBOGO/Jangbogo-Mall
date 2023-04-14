@@ -10,6 +10,7 @@
     <head>
         <title>배송 정보 수정</title>
         <link rel="stylesheet" href="/css/order/recipientDetails.css"/>
+        <script src = "/js/order/format.js"></script>
     </head>
     <body>
         <script src="https://code.jquery.com/jquery-1.11.3.js"></script>

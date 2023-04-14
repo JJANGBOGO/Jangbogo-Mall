@@ -164,6 +164,26 @@ public class OrderController {
         }
     }
 
+    // 메서드명 : getPaymentMethodList
+    // 기   능 : 결제수단 목록 불러오기
+    // 반환타입 : ResponseEntity<List<String>>
+    // 요청URL : order/checkout/payment?user_idx=1234 GET
+    @GetMapping("/order/checkout/payment")
+    public ResponseEntity<List<String>> getPaymentMethodList() {
+        List<String> list = new ArrayList();
+        try {
+            list.add("카카오페이");
+            // ResponseEntity<List<CouponDto> list값과 상태코드를 함께 반환하기 위한 클래스
+            // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
+            return new ResponseEntity<List<String>>(list, HttpStatus.OK);
+        } catch(Exception e) {
+            // 에러 발생 시, 에러 내용을 로그에 출력
+            e.printStackTrace();
+            // 에러 발생 시, list값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
+            return new ResponseEntity<List<String>>(list, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     // 메서드명 : loginCheck
     // 기   능 : 로그인 상태 여부 확인
     // 매개변수 : HttpSession session
