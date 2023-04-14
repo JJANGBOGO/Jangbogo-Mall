@@ -74,6 +74,7 @@
       box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
 
       transform: translateX(-50%) translateY(-50%);
+      z-index: 1;
     }
     .modal_body .inqry_head {
       display: flex;
@@ -772,8 +773,8 @@
           </div>
           <div class="inqry_secret">
             <div class="secret_head"></div>
-            <label for="">
-              <input type="checkbox" name="opub_yn"/>
+            <label for="isSecret">
+              <input id="isSecret" type="checkbox" name="opub_yn"/>
               <span>비밀글로 문의하기</span>
             </label>
           </div>
@@ -894,7 +895,6 @@
     $("#table").on("click", ".modBtn", function() {
       let modal = document.querySelector(".modal");
       //수정 버튼이 포함되어 있는 tr 라인 안에 들어있는 idx를 가져온다.
-      let idx = $(this).closest("tr").attr("data-idx");
       //title과 ctent의 내용들도 가져와서 변수에 담는다.
 
       let ctent = $(this).closest("tr").children().children().children().find('div:eq(1)[name=text]').children().text();
@@ -910,20 +910,35 @@
           isChecked = false;
         }
       }
+      //버튼 자체를 바꾸자
+      //.modBtn을 누르면 #sendBtn 을 #modBtn으로 바꾼다.
+      //"전송" 도 "수정" 이라고 바꾼다.
+      //태그 삭제
+      // $("button.register").remove();
+      // //태그 삽입
+      //
+      // let modBtn = $("<button id='modBtn' class='register'>수정<button>");
+      // $(".inqry_button").append(modBtn);
+
+      // 태그 제거 해줌
+      let inqryButton = $(".inqry_button");
+      inqryButton[0].children[1].remove();
+      //태그 생성
+      let modBtn = $('<button class="register" id="modBtn">수정</button>');
+      inqryButton.append(modBtn);
 
       $("input[id=modal-title]").val(title);
       $("input[id=modal-ctent]").val(ctent);
       $("input[type=checkbox]").attr("checked", isChecked(opub_yn));
 
-      $("#sendBtn").innerHTML("수정");
-
-
 
       //모달이 열린다
-      modal.classList.add("show");
+      $(".modal").css("display", "block");
     });
 
-    $("#sendBtn").click( function() {
+    $("#modBtn").click( function() {
+      let idx = $(this).closest("tr").attr("data-idx");
+
       let modal = document.querySelector(".modal");
       //동일하게 불러온 정보를 변수에 저장한다.
       let newTitle = $("input[id=modal-title]").val();
@@ -943,12 +958,13 @@
         },
         error: function() {alert("error")}
       })
+      //모달을 안보이게 한다.
+      $(".modal").css("display", "none");
+
       //input란에 있던 정보를 없앤다
       $("input[id=modal-title]").val("");
       $("input[id=modal-ctent]").val("");
       $("input[type=checkbox]").prop("checked", false);
-      //모달을 안보이게 한다.
-      modal.classList.remove("show");
 
     });
 
@@ -963,7 +979,7 @@
           alert(result);
           showList(prod_idx);
         },
-        error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+        error   : function(){ alert("삭제권한이 없습니다.") } // 에러가 발생했을 때, 호출될 함수
       }); // $.ajax()
     })
   });
