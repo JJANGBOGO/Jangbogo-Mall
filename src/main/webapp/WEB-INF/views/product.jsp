@@ -837,16 +837,33 @@
   $(document).ready(function(){
     showList(prod_idx);
 
+
+
     $(".open-modal").click(function() {
       $(".modal").css("display", "block");
+
+
+      $(".xBtn").click(function() {
+        $(".modal").css("display", "none");
+
+        $("input[id=modal-title]").val("");
+        $("input[id=modal-ctent]").val("");
+        $("input[type=checkbox]").prop("checked", false);
+      })
+
+      $(".closeBtn").click(function() {
+        $(".modal").css("display", "none");
+
+        $("input[id=modal-title]").val("");
+        $("input[id=modal-ctent]").val("");
+        $("input[type=checkbox]").prop("checked", false);
+      })
     })
 
 
     $("#sendBtn").click(function(){
       let ctent = $("input[id=modal-ctent]").val();
       let title = $("input[id=modal-title]").val();
-      // let writer = $("input[name=writer]").val();
-      // let res_state_cd = $("input[name=res_state_cd]").val();
       let opub_yn;
 
       if($("input:checkbox[name=opub_yn]").is(":checked")) {
@@ -894,16 +911,6 @@
           isChecked = false;
         }
       }
-      //버튼 자체를 바꾸자
-      //.modBtn을 누르면 #sendBtn 을 #modBtn으로 바꾼다.
-      //"전송" 도 "수정" 이라고 바꾼다.
-      //태그 삭제
-      // $("button.register").remove();
-      // //태그 삽입
-      //
-      // let modBtn = $("<button id='modBtn' class='register'>수정<button>");
-      // $(".inqry_button").append(modBtn);
-
       // 태그 제거 해줌
       let inqryButton = $(".inqry_button");
       inqryButton[0].children[1].remove();
@@ -928,7 +935,6 @@
       let newTitle = $("input[id=modal-title]").val();
       let newCtent = $("input[id=modal-ctent]").val();
       let newOpub_yn = $("input[type=checkbox]").attr("checked")
-
 
       //등록 버튼을 눌러 새롭게 정보를 저장한다.
       $.ajax({
