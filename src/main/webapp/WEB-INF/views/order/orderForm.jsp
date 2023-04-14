@@ -7,10 +7,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-    <head> // 딜리버리 다오, 디티오 삭제
+    <head>
         <title>주문서 작성</title>
         <link rel="stylesheet" href="/css/order/orderForm.css"/>
         <%@ include file="/WEB-INF/views/include/header.jsp" %>
+        <script src = "/js/order/format.js"></script>
     </head>
     <body>
         <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
@@ -45,17 +46,22 @@
                     </section>
                     <section class="order-section">
                         <div class="order-section__title"><h3>결제 수단</h3></div>
-                        <div class="order-section__content">
-                            <ul id="paymentMethod">
-
-                            </ul>
-                        </div>
+                        <div class="order-section__content" id="paymentMethod"></div>
                     </section>
                     <section class="order-section">
                         <div class="order-section__title"><h3>개인정보 수집/제공</h3></div>
-                        <div class="order-section__content">
-                            <ul id="agreeOfPersonalInform">
-                            </ul>
+                        <div class="order-section__content" id="agreeOfPersonalInform">
+                            <div class="order__personalInfo-section">
+                                <span>개인정보 수집∙이용 및 처리 동의</span>
+                                <button type="button" id="personalPolicyBtn">보기</button>
+                            </div>
+                            <div class="order__personalInfo-section">
+                                <span>전자지급 결제대행 서비스 이용약관 동의</span>
+                                <button type="button" id="paymentPolicyBtn">보기</button>
+                            </div>
+                            <div class="order__personalInfo-section">
+                                <span>위 내용을 확인 하였으며 결제에 동의합니다.</span>
+                            </div>
                         </div>
                     </section>
                     <p class="paragraph">
@@ -65,13 +71,26 @@
                         컬리 내 개별 판매자가 등록한 오픈마켓 상품의 경우 컬리는 통신판매중개자로서 주문, 품질, 교환/환불 등 의무와 책임을 부담하지 않습니다.
                     </p>
                     <div class="order-button">
-                        <button class="css-1lha8en e4nu7ef3" type="button"><span>5,610원 결제하기</span></button>
+                        <button type="button"></button>
                     </div>
                 </div>
                 <div class="order-amount__container"></div>
             </div>
         </div>
         <script>
+            // 메서드명 : orderBtnToHtml
+            // 기   능 : '결제하기' 버튼을 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
+            let orderBtnToHtml = (items) => {
+                let price = 0;
+                items.forEach((item) => {
+                    price += item.prod_price * item.prod_cnt;
+                })
+                let tmp = "";
+                tmp += "<span>";
+                tmp += formatPriceWithComma(price + 2500) + "원";
+                tmp += " 결제하기</span>";
+                return tmp;
+            }
 
             // 메서드명 : invoiceToHtml
             // 기   능 : 결제 금액 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
@@ -87,7 +106,7 @@
                 tmp += '<div class="order-amount__section">'
                 tmp += '<div class="order-amount__section-name">주문금액</div>'
                 tmp += '<div class="order-amount__section-content">'
-                tmp += '<span>' + price + '</span>'
+                tmp += '<span>' + formatPriceWithComma(price) + '</span>'
                 tmp += '<span>원</span>'
                 tmp += '</div>'
                 tmp += '</div>'
@@ -108,7 +127,7 @@
                 tmp += '<div class="order-amount__section-final">'
                 tmp += '<div class="order-amount__section-name">최종결제금액</div>'
                 tmp += '<div class="order-amount__section-content">'
-                tmp += '<span>' + (price + 2500) + '</span>'
+                tmp += '<span>' + formatPriceWithComma(price + 2500) + '</span>'
                 tmp += '<span>원</span>'
                 tmp += '</div>'
                 tmp += '</div>'
@@ -136,7 +155,7 @@
                     tmp += "<div class='order-item__title'>" + item.prod_name + "</div>";
                     tmp += '<div class="order-item__contents">';
                     tmp += '<div class="order-item__count">' + item.prod_cnt + "<span>개</span></div>";
-                    tmp += "<div class='order-item__price'>" + item.prod_price * item.prod_cnt + "<span>원</span></div>";
+                    tmp += "<div class='order-item__price'>" + formatPriceWithComma(item.prod_price * item.prod_cnt) + "<span>원</span></div>";
                     tmp += '</div>';
                     tmp += '</li>';
                 })
@@ -168,7 +187,7 @@
                 tmp += "<span>휴대폰</span>"
                 tmp += "</div>"
                 tmp += "<div class='orderer-value'>"
-                tmp += "<span>" + ordererInfo.mpno + "</span>"
+                tmp += "<span>" + formatMpnoWithHyphen(ordererInfo.mpno) + "</span>"
                 tmp += "</div>"
                 tmp += "</div>"
                 tmp += "<div class='orderer-section'>"
@@ -208,7 +227,7 @@
                 tmp += "</div>"
                 tmp += "<div class='delivery-value'>"
                 tmp += "<div class='delivery-value__column' id='deliveryRecipient'>"
-                tmp += "<span>" + deliveryInfo.recipient + "</span> , <span>" + deliveryInfo.mpno + "</span>"
+                tmp += "<span>" + deliveryInfo.recipient + "</span> , <span>" + formatMpnoWithHyphen(deliveryInfo.mpno) + "</span>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-value__column' id='deliveryLocation'>"
                 tmp += "<span>받으실 장소 | " + deliveryInfo.pickUpLocation + "</span>"
@@ -249,6 +268,30 @@
                 tmp += "</div>";
                 return tmp;
             }
+
+            // 메서드명 : paymentMethodsToHtml
+            // 기   능 : 결제수단 목록을 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
+            // 매개변수 : items - CouponDto
+            // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
+            let paymentMethodsToHtml = (paymentMethods) => {
+                // 변수명 : tmp
+                // 저장값 : 동적으로 생성할 html 태그(문자열)
+                let tmp = "";
+                tmp += "<div class='order__payment-section'>";
+                tmp +=      "<div class='order__payment-inform'>"
+                tmp +=          "<span>결제수단 선택</span>"
+                tmp +=      "</div>"
+                tmp +=      "<div class='order__payment-value'>"
+                tmp +=          "<div class='order__payment-value-section'>"
+                tmp +=              "<button type='button' >"
+                tmp +=              "<span>" + "Kakao Pay" + "</span>"
+                tmp +=              "</button>"
+                tmp +=          "</div>"
+                tmp +=      "</div>"
+                tmp += "</div>"
+                return tmp;
+            }
+
             // 메서드명 : showItemList
             // 기   능 : orderController에 ajax요청하여 주문 상품 목록을 가져온다.
             // 매개변수 : user_idx - 회원번호
@@ -260,6 +303,7 @@
                     success: (result) => {                                              // 성공 응답이 오면, 주문 상품 정보를 페이지에 랜더링하기
                         $('#orderItems').html(listToHtml(result));                      // listToHtml메서드 호출
                         $('.order-amount__container').html(invoiceToHtml(result));      // invoiceToHtml 호출
+                        $('.order-button > button').html(orderBtnToHtml(result));
                     },
                     error : function() { alert("showItemList 실패 응답 : 회원번호 누락");}   // 실패 응답이 오면, 경고창 띄우기
                 });  // $.ajax() end
@@ -310,6 +354,25 @@
                 });  // $.ajax() end
             }
 
+            // 메서드명 : showPaymentMethod
+            // 기   능 : 결제수단 목록을 가져온다.
+            let showPaymentMethods = (user_idx) => {
+                // ajax 요청(비동기)
+                $.ajax({
+                    type:'GET',
+                    url:'/order/checkout/payment?user_idx=' + user_idx,
+                    success: (result) => {                                                 // 성공 응답이 오면, 쿠폰 정보를 페이지에 랜더링하기
+                        $('#paymentMethod').html(paymentMethodsToHtml(result));                   // couponListToHtml메서드 호출
+                    },
+                    error : function() { alert("showPaymentMethods 실패 응답 : 회원번호 누락");}  // 실패 응답이 오면, 경고창 띄우기
+                });  // $.ajax() end
+            }
+
+            // 메서드명 : showPersonalInfoAgreement
+            // 기   능 : 개인정보 수집/제공을 가져온다.
+            function showPersonalInfoAgreement(idx) {
+
+            }
 
             $(document).ready(() => {
                 // TODO : 세션에서 회원번호를 가져와야 한다. 세션 연동 시, 추후 테스트 필요.
@@ -322,6 +385,8 @@
                 showOrdererInfo(idx);
                 showDeliveryInfo(idx);
                 showCouponList(idx);
+                showPaymentMethods(idx);
+                showPersonalInfoAgreement(idx);
 
                 // 메서드명 : popupCenter
                 // 기   능 : 자식창을 열고, 스크린 가운데로 위치시키기

@@ -16,7 +16,7 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="/mypage/wishlist">
                     위시리스트
                 </a>
             </li>
