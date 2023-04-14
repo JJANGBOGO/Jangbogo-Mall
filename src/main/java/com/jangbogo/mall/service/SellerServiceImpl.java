@@ -108,7 +108,7 @@ public class SellerServiceImpl implements SellerService{
 
     @Override
     public int sendPwdEmail (String cpnm, String toEmail) throws Exception {
-        String tmpPwd = utils.createTmpPwd();
+        String tmpPwd = utils.createRandomStr();
         String encodedPwd = passwordEncoder.encode(tmpPwd);
 
         if (dao.updatePwd(encodedPwd, cpnm, toEmail) != 0) { //비번 업데이트 성공
