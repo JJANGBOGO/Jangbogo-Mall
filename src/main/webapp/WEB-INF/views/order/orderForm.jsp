@@ -11,6 +11,7 @@
         <title>주문서 작성</title>
         <link rel="stylesheet" href="/css/order/orderForm.css"/>
         <%@ include file="/WEB-INF/views/include/header.jsp" %>
+        <script src = "/js/order/format.js"></script>
     </head>
     <body>
         <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
@@ -65,13 +66,27 @@
                         컬리 내 개별 판매자가 등록한 오픈마켓 상품의 경우 컬리는 통신판매중개자로서 주문, 품질, 교환/환불 등 의무와 책임을 부담하지 않습니다.
                     </p>
                     <div class="order-button">
-                        <button class="css-1lha8en e4nu7ef3" type="button"><span>5,610원 결제하기</span></button>
+                        <button type="button"></button>
                     </div>
                 </div>
                 <div class="order-amount__container"></div>
             </div>
         </div>
         <script>
+            // 메서드명 : orderBtnToHtml
+            // 기   능 : '결제하기' 버튼을 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
+            let orderBtnToHtml = (items) => {
+                let price = 0;
+                items.forEach((item) => {
+                    price += item.prod_price * item.prod_cnt;
+                })
+                let tmp = "";
+                tmp += "<span>";
+                tmp += formatPriceWithComma(price + 2500) + "원";
+                tmp += " 결제하기</span>";
+                return tmp;
+            }
+
 
             // 메서드명 : invoiceToHtml
             // 기   능 : 결제 금액 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
@@ -87,7 +102,7 @@
                 tmp += '<div class="order-amount__section">'
                 tmp += '<div class="order-amount__section-name">주문금액</div>'
                 tmp += '<div class="order-amount__section-content">'
-                tmp += '<span>' + price + '</span>'
+                tmp += '<span>' + formatPriceWithComma(price) + '</span>'
                 tmp += '<span>원</span>'
                 tmp += '</div>'
                 tmp += '</div>'
@@ -108,7 +123,7 @@
                 tmp += '<div class="order-amount__section-final">'
                 tmp += '<div class="order-amount__section-name">최종결제금액</div>'
                 tmp += '<div class="order-amount__section-content">'
-                tmp += '<span>' + (price + 2500) + '</span>'
+                tmp += '<span>' + formatPriceWithComma(price + 2500) + '</span>'
                 tmp += '<span>원</span>'
                 tmp += '</div>'
                 tmp += '</div>'
@@ -136,7 +151,7 @@
                     tmp += "<div class='order-item__title'>" + item.prod_name + "</div>";
                     tmp += '<div class="order-item__contents">';
                     tmp += '<div class="order-item__count">' + item.prod_cnt + "<span>개</span></div>";
-                    tmp += "<div class='order-item__price'>" + item.prod_price * item.prod_cnt + "<span>원</span></div>";
+                    tmp += "<div class='order-item__price'>" + formatPriceWithComma(item.prod_price * item.prod_cnt) + "<span>원</span></div>";
                     tmp += '</div>';
                     tmp += '</li>';
                 })
@@ -168,7 +183,7 @@
                 tmp += "<span>휴대폰</span>"
                 tmp += "</div>"
                 tmp += "<div class='orderer-value'>"
-                tmp += "<span>" + ordererInfo.mpno + "</span>"
+                tmp += "<span>" + formatMpnoWithHyphen(ordererInfo.mpno) + "</span>"
                 tmp += "</div>"
                 tmp += "</div>"
                 tmp += "<div class='orderer-section'>"
@@ -208,7 +223,7 @@
                 tmp += "</div>"
                 tmp += "<div class='delivery-value'>"
                 tmp += "<div class='delivery-value__column' id='deliveryRecipient'>"
-                tmp += "<span>" + deliveryInfo.recipient + "</span> , <span>" + deliveryInfo.mpno + "</span>"
+                tmp += "<span>" + deliveryInfo.recipient + "</span> , <span>" + formatMpnoWithHyphen(deliveryInfo.mpno) + "</span>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-value__column' id='deliveryLocation'>"
                 tmp += "<span>받으실 장소 | " + deliveryInfo.pickUpLocation + "</span>"
@@ -260,6 +275,7 @@
                     success: (result) => {                                              // 성공 응답이 오면, 주문 상품 정보를 페이지에 랜더링하기
                         $('#orderItems').html(listToHtml(result));                      // listToHtml메서드 호출
                         $('.order-amount__container').html(invoiceToHtml(result));      // invoiceToHtml 호출
+                        $('.order-button > button').html(orderBtnToHtml(result));
                     },
                     error : function() { alert("showItemList 실패 응답 : 회원번호 누락");}   // 실패 응답이 오면, 경고창 띄우기
                 });  // $.ajax() end
@@ -309,7 +325,6 @@
                     error : function() { alert("showCouponList 실패 응답 : 회원번호 누락");}  // 실패 응답이 오면, 경고창 띄우기
                 });  // $.ajax() end
             }
-
 
             $(document).ready(() => {
                 // TODO : 세션에서 회원번호를 가져와야 한다. 세션 연동 시, 추후 테스트 필요.
