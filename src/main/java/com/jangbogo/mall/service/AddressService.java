@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface AddressService {
 
-    int insertAddr (Address addr) throws Exception;
+    int insertAddr (int user_idx , Address addr) throws Exception;
 
     List<Address> selAddrList (Integer user_idx) throws Exception;
 

@@ -29,6 +29,10 @@ public class ProdInqryServiceImpl implements ProdInqryService {
         return rowCnt;
     }
 
+    public String getNickName(Integer user_idx) throws Exception {
+        return prodInqryDao.selectNickName(user_idx);
+    }
+
     @Override
     @Transactional(rollbackFor = Exception.class)
     public int write(ProdInqryDto prodInqryDto) throws Exception {

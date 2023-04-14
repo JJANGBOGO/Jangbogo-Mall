@@ -4,9 +4,9 @@
 
 <mapper namespace="com.jangbogo.mall.dao.AddressMapper">
 
-    <insert id="insertAddr" parameterType="Address">
+    <insert id="insertAddr" parameterType="map">
         INSERT INTO DLVPN (USER_IDX, ZPCD, ADDR_BASE, ADDR_DTL, RCPR_NM, RCPR_MOBL_NO, IS_DEFAULT_YN)
-        VALUES (#{user_idx}, #{zpcd}, #{addr_base}, #{addr_dtl}, #{rcpr_nm}, #{rcpr_mobl_no}, #{is_default_yn});
+        VALUES (#{user_idx}, #{addr.zpcd}, #{addr.addr_base}, #{addr.addr_dtl}, #{addr.rcpr_nm}, #{addr.rcpr_mobl_no}, #{addr.is_default_yn});
     </insert>
 <!--배송지 목록 조회-->
     <select id="selAddrList" parameterType="int" resultType="Address">

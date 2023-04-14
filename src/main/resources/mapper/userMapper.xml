@@ -18,13 +18,6 @@
           AND PWD = #{pwd};
     </select>
 
-    <select id="selUserByEmail" parameterType="map" resultType="User">
-        SELECT *
-        FROM USER
-        WHERE NICK_NM = #{nick_nm}
-          AND EMAIL = #{email};
-    </select>
-
     <select id="selectUser" resultType="User">
         SELECT *
         FROM USER

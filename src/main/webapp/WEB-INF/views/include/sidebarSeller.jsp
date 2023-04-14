@@ -8,32 +8,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav>
     <div class="sidebar">
-        <div class="header">판매자 장보고</div>
+        <div class="header">마이셀러</div>
         <ul>
             <li>
                 <a href="/seller/read/brnd" class="<c:if test='${mySellerUrl eq "/seller/read/brnd" || mySellerUrl eq "/seller/modify/brnd"}'>active</c:if> ">
                     내 브랜드
-                    <span> &gt; </span>
+                </a>
+            </li>
+            <li>
+                <a href="/seller/info" class="<c:if test='${mySellerUrl eq "/seller/info" || mySellerUrl eq "/seller/modify"}'>active</c:if> ">
+                    내 상품들
                 </a>
             </li>
             <li>
                 <a href="/seller/info" class="<c:if test='${mySellerUrl eq "/seller/info" || mySellerUrl eq "/seller/modify"}'>active</c:if> ">
                     판매자 정보 수정
-                    <span> &gt; </span>
-                </a>
-            </li>
-            <li>
-                <a href="/myseller/followers" class="<c:if test='${mySellerUrl eq "/myseller/followers"}'>active</c:if> ">
-                    팔로워 리스트
-                    <span> &gt; </span>
                 </a>
             </li>
         </ul>
-        <a href="/mypage/inquiry/list" class="mypage-inquiry">
-            <div>
-                <span class="ask-help">도움이 필요하신가요?</span>
-                <span>1:1 문의하기</span>
-            </div>
-        </a>
     </div>
 </nav>

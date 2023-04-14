@@ -17,7 +17,7 @@
                 <button class="tab-button" data-a="1">판매자</button>
             </div>
             <div class="member-form">
-                <form id="user_find_pwd" class="find-form" action="/find/pwd" method="post">
+                <form id="user_find_pwd" class="find-form" action="/user/find/pwd" method="post">
                     <div class="find-input-box">
                         <label>닉네임</label>
                         <input
@@ -50,14 +50,14 @@
                 </form>
             </div>
             <div class="member-form">
-                <form class="find-form" action="find/seller/pwd" method="post">
+                <form id="seller_find_pwd" class="find-form" action="/seller/find/pwd" method="post">
                     <div class="find-input-box">
-                        <label>닉네임</label>
+                        <label>브랜드명</label>
                         <input
                                 class="input-control"
-                                name="nick_nm"
+                                name="cpnm"
                                 type="text"
-                                placeholder="닉네임을 입력해주세요."
+                                placeholder="브랜드명을 입력해주세요."
                         />
                     </div>
                     <div class="find-input-box">
@@ -75,7 +75,7 @@
                             value="seller"
                     />
                     <a class="find-other-link" href="/find/email">이메일 찾기</a>
-                    <button class="find-confirm-button" type="submit">
+                    <button class="find-confirm-button" type="submit" id="seller_form_btn">
                         확인
                     </button>
                 </form>
@@ -127,6 +127,11 @@
             if (findPwdChk(user_nick, user_email))
                 $("#user_find_pwd").submit();
         });
+
+        // $("#seller_form_btn").click(function(e) {
+        //     e.preventDefault();
+        //     $("#seller_find_pwd").submit();
+        // })
     });
 </script>
 </body>

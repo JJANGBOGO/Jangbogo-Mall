@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -23,7 +25,9 @@ public class CartController {
     // 매개변수 : Model model
     // 요청URL : /cart/cart GET
     @GetMapping("/cart")
-    public String goToCart(Model model) {
+    public String goToCart(HttpSession session, Model model) {
+        // 1. 로그인 확인 - loginCheck메서드가 false를 반환하는 경우, 로그인 페이지로 리다이렉트
+        if(!loginCheck(session)) return "redirect:/user/login";
         return "cart/cart";
     }
 
@@ -133,5 +137,28 @@ public class CartController {
             return new ResponseEntity<>("ADD_ERR", HttpStatus.OK);
         }
 
+    }
+
+    // 메서드명 : goToOrderForm
+    // 기   능 : 주문서 작성 페이지로 이동한다.
+    // 반환타입 : String
+    // 매개변수 : HttpSession session
+    // 요청URL : /order/checkout GET
+    @GetMapping("/order/checkout")
+    public String goToOrderForm(HttpSession session) {
+        // 1. 로그인 확인 - loginCheck메서드가 false를 반환하는 경우, 로그인 페이지로 리다이렉트
+        if(!loginCheck(session)) return "redirect:/user/login";
+
+        // 2. 주문서 작성 페이지로 이동
+        return "order/orderForm";
+    }
+
+    // 메서드명 : loginCheck
+    // 기   능 : 로그인 상태 여부 확인
+    // 매개변수 : HttpServletRequest request
+    // 반환타입 : boolean
+    private static boolean loginCheck(HttpSession session) {
+        // session에 저장된 idx값이 null이 아니면 true 반환
+        return session.getAttribute("idx") != null;
     }
 }

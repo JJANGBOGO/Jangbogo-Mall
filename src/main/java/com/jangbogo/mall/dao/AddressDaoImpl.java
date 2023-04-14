@@ -18,8 +18,11 @@ public class AddressDaoImpl implements AddressDao {
     private static final String nameSpace = "com.jangbogo.mall.dao.AddressMapper.";
 
     @Override
-    public int insertAddr(Address addr) throws Exception {
-        return session.insert(nameSpace + "insertAddr", addr);
+    public int insertAddr(int user_idx, Address addr) throws Exception {
+        Map map = new HashMap();
+        map.put("user_idx", user_idx);
+        map.put("addr", addr);
+        return session.insert(nameSpace + "insertAddr", map);
     }
 
     @Override

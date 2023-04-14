@@ -1,5 +1,6 @@
 package com.jangbogo.mall.service;
 
+import com.jangbogo.mall.domain.Address;
 import com.jangbogo.mall.domain.User;
 
 public interface UserService {
@@ -13,7 +14,6 @@ public interface UserService {
 
     User selectUser (int idx) throws Exception; //회원상세조회
 
-    int updatePwd (String pwd, String nick_nm, String email) throws Exception; //비번을 임시 비번으로 변경.
 
     int sendPwdEmail (String nick_nm, String toEmail) throws Exception; //임시비번을 이메일로 전송
 
@@ -24,7 +24,7 @@ public interface UserService {
     int regSocialUser (User user) throws Exception;
 
     //일반가입
-    int insertUser (User user) throws Exception;
+    int registerUser (User user, Address addr) throws Exception;
 
     //로그인시각 업데이트
     int updateLoginTm (int idx, String email) throws Exception;
