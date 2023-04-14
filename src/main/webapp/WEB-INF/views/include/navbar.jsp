@@ -62,6 +62,11 @@
                         <i class="fa-solid fa-cart-shopping"></i>
                         <div class="icon-desc">장바구니</div>
                     </a>
+                    <a href="/mypage/wishlist">
+                        <i class="fa-regular fa-heart"></i>
+                        <div class="icon-desc">위시리스트</div>
+                    </a>
+<%--                    <i class="fa-regular fa-heart"></i>--%>
                     <a href="/user/info">
                         <i class="fa-regular fa-user"></i>
                         <div class="icon-desc">마이페이지</div>

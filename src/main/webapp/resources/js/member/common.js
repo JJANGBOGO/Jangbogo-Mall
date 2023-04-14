@@ -20,7 +20,7 @@ $("#show_pwd_confirm_toggle").click(() =>
 
 
 //이메일 alert 검사
-function validateEmailAlert (email_ref, email_chk_btn) {
+function validateEmailAlert (email_ref) {
     if (email_ref.val() == "") {
         alert(email_empty);
         email_ref.focus();
@@ -32,7 +32,10 @@ function validateEmailAlert (email_ref, email_chk_btn) {
         email_ref.focus();
         return false;
     }
+    return true;
+}
 
+function chkEmailAlert (email_ref, email_chk_btn) {
     if (!email_chk_btn.is(":disabled")){
         alert(chk_email_required);
         email_ref.focus();

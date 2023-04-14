@@ -372,6 +372,9 @@
 <script src="/js/member/common.js"></script>
 <script src="/js/upload/common.js"></script>
 <script>
+    let msg= "${msg}";
+    if (msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다 다시 시도해 주세요");
+
     //파일 분리 허용X. val() 때문에
     let addressCallback = (e) => {
         e.preventDefault(); //405 이슈 해결.
@@ -403,6 +406,58 @@
     };
 
     $(document).ready(function () {
+        $("#email_duplicate_chk").click(function (e) {
+            e.preventDefault();
+            let email_ref = $("#email");
+
+            if (!validateEmailAlert(email_ref)) return false;
+
+            $.ajax({
+                url: '/seller/duplicate/email',
+                data: {email: email_ref.val()},
+                type: 'POST',
+                success: function (msg) {
+                    if (msg == "OK") {
+                        alert(available_cpnm);
+                        $("#email_duplicate_chk").attr("disabled", true); //버튼 비활성화
+                        email_ref.attr("readonly", true); //인풋 비활성화
+                    } else {
+                        alert(duplicate_cpnm);
+                        email_ref.focus();
+                    }
+                },
+                error: function (err) {
+                    alert(error_msg);
+                }
+            }); //$.ajax
+        });
+
+        //브랜드명 중복 체크
+        $("#cpnm_duplicate_chk").click(function (e) {
+            e.preventDefault();
+            let cpnm_ref = $("#cpnm");
+
+            if (!validateBrndNameAlert(cpnm_ref)) return false;
+
+            $.ajax({
+                url: '/seller/duplicate/cpnm',
+                data: {cpnm: cpnm_ref.val()},
+                type: 'POST',
+                success: function (msg) {
+                    if (msg == "OK") {
+                        alert(available_cpnm);
+                        $("#cpnm_duplicate_chk").attr("disabled", true); //버튼 비활성화
+                        cpnm_ref.attr("readonly", true); //인풋 비활성화
+                    } else {
+                        alert(duplicate_cpnm);
+                        cpnm_ref.focus();
+                    }
+                },
+                error: function (err) {
+                    alert(error_msg);
+                }
+            }); //$.ajax
+        });
 
         //사업자 인증
         $("#brno_chk").click(function (e) {
@@ -411,9 +466,8 @@
             let brno_ref = $("#brno");
             if (!validateBrnoAlert(brno_ref)) return false;
 
-            let brno = {
-                b_no: [$("#brno").val()] //-제외 숫자만 입력할 것. 그렇지 않으면 잘못된 조회결과 발생
-            };
+            let brno = { b_no: [$("#brno").val()]};
+                //-제외 숫자만 입력할 것. 그렇지 않으면 잘못된 조회결과 발생
 
             let serviceKey = "5RrGC%2BYxMLKxHrcaSzs46HaxE7ye2QKnjkO%2F4uATqcBp9fzXBmyqAqEDY1GFkwqWj4lUxEA8R8nskdqUCJhohQ%3D%3D";
             $.ajax({
@@ -444,10 +498,12 @@
             });
         });
 
+        //주소 검색
         $("#addr-search").click(function (e) {
             addressCallback(e);
         });
 
+        //체크박스 모두 동의
         $(".checkbox-group").on("click", "#check-all", function () {
             let is_checked = $(this).is(":checked");
 
@@ -463,6 +519,7 @@
             );
         });
 
+        //체크박스
         $(".checkbox-group").on("click", ".normal", function () {
             var is_checked = true;
 
@@ -486,7 +543,7 @@
             });
         });
 
-        //file upload
+        //파일 업로드
         let clone_bnr = $(".upload-input.bnr").clone();
         let clone_profile = $(".upload-input.profile").clone();
 
@@ -494,6 +551,7 @@
         let bnr_upload_list = $(".upload-result.bnr ul");
         var profile_upload_list = $(".upload-result.profile ul");
 
+        //브랜드 업로드
         $("#bnr_upload_btn").on("click", function (e) { //업로드 버튼을 눌렀을 때 이벤트를 연결한다.
             e.preventDefault();
             let formData = new FormData();
@@ -519,7 +577,7 @@
             });
         });
 
-        //uploadBtn2
+        //프로필 업로드
         $("#profile_upload_btn").on("click", function (e) {
             e.preventDefault();
             var formData = new FormData();
@@ -549,11 +607,12 @@
         $(".reg-confirm").click(function (e) {
             e.preventDefault();
 
-            // let email_ref = $("#email");
-            // let email_chk_btn = $("#email_duplicate_chk");
-            //
-            // if(!validateEmailAlert(email_ref, email_chk_btn)) return false; //이메일 검사
-            //
+            let email_ref = $("#email");
+            let email_chk_btn = $("#email_duplicate_chk");
+
+            if(!validateEmailAlert(email_ref)) return false; //이메일 검사
+            if(!chkEmailAlert(email_ref, email_chk_btn)) return false; //이메일 중복 검사
+
             let cpnm_ref = $("#cpnm");
             //브랜드명
             if (!validateBrndNameAlert(cpnm_ref)) return false;

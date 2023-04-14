@@ -7,12 +7,6 @@
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
 <body>
-<%--                <c:choose>--%>
-<%--                    <c:when test="${verifyType eq 'email'}">--%>
-<%--                        <i class="fa-regular fa-envelope"></i>--%>
-<%--                    </c:when>--%>
-<%--                    <c:otherwise><i class="fa-solid fa-phone"></i></c:otherwise>--%>
-<%--                </c:choose>--%>
 <div class="find-success-content">
     <div class="find-success-content">
         <div class="center">
@@ -26,7 +20,14 @@
                         임시 비밀번호가 전송되었어요.
                     </c:when>
                     <c:otherwise>
-                        회원님의 이메일은 ${findEmail} 입니다.
+                        <c:choose>
+                            <c:when test="${member eq 'seller'}">
+                                판매자님의 이메일은 ${sellerEmail} 입니다.
+                            </c:when>
+                            <c:when test="${member eq 'user'}">
+                                회원님의 이메일은 ${userEmail} 입니다.
+                            </c:when>
+                        </c:choose>
                     </c:otherwise>
                 </c:choose>
             </p>

@@ -7,6 +7,7 @@ import com.jangbogo.mall.domain.NaverLoginBo;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.jangbogo.mall.domain.User;
 import com.jangbogo.mall.service.UserService;
+import com.jangbogo.mall.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject; //json.simple이어야 한다.
 import org.json.simple.parser.JSONParser;
@@ -46,10 +47,12 @@ public class UserController {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    Utils utils;
+
     //회원탈퇴뷰
     @GetMapping("/user/withdraw")
     public String withdrawUserView(HttpSession session, Model m, Authentication auth, RedirectAttributes rattr) {
-//        if (auth == null) return "redirect:/login"; //TODO:: 시큐리티 개발 후 수정 필요.
 
         int idx = (int) session.getAttribute("idx");
         try {
@@ -110,7 +113,7 @@ public class UserController {
         String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
         m.addAttribute("urlNaver", naverAuthUrl);
 
-        return "user/login";
+        return "/user/login";
     }
 
     //카카오 로그인
@@ -152,19 +155,13 @@ public class UserController {
             crtSession(session, user);
             return "redirect:/";
         } catch (Exception e) {
-//            예외 발생
             rattr.addFlashAttribute("msg", "LOGIN_ERR"); //로그인 에러
             return "redirect:/user/login";
         }
     }
 
     public String crtNickName() { //랜덤 문자열 생성, 소셜 닉네임 생성
-        String uuid = "";
-
-        for (int i = 0; i < 12; i++) { // TODO:: 나중에 공통으로 묶기
-            uuid += (char) ((Math.random() * 26) + 97);
-        }
-        return "뉴비_" + uuid;
+        return "뉴비_" + utils.createRandomStr();
     }
 
     //카카오 로그아웃
@@ -306,15 +303,6 @@ public class UserController {
         return msg;
     }
 
-    //테스트용 로그인 (TODO:: 추후 삭제)
-    @GetMapping("/test/login")
-    public String testLogin(HttpSession session) throws Exception {
-        User user = userService.selectUser(35);
-        session.setAttribute("loginService", "jangbogo");
-        crtSession(session, user);
-        return "";
-    }
-
     //회원인증뷰
     @GetMapping("/user/info")
     public String verifyUserView(HttpSession session) {
@@ -381,14 +369,12 @@ public class UserController {
         try {
 //            user.setIdx((int) session.getAttribute("idx"));
             user.setIdx(36);
-            int result = userService.updateUser(user); //회원 업데이트
-
             if (userService.updateUser(user) != 1)
                 throw new Exception("modify failed");
 
             session.removeAttribute("modify"); //수정 성공시 해당 세션도 삭제
             rattr.addFlashAttribute("msg", "MOD_OK"); // 수정완료 메세지
-            return "redirect:/user/info"; //이전 페이지로 돌아가기
+            return "redirect:/user/info";
             //loginService가 null이면
 
         } catch (Exception e) {
@@ -403,8 +389,48 @@ public class UserController {
         session.setAttribute("idx", user.getIdx());
         session.setAttribute("email", user.getEmail());
         session.setAttribute("nickName", user.getNick_nm());
-//        요청으로 mpno도 추가
-        session.setAttribute("mpno", user.getMpno());
+    }
+
+    //이메일 찾기
+    @PostMapping("/user/find/email")
+    public String findUserEmail (String nick_nm, String pwd, RedirectAttributes rattr) {
+        try {
+            String email = userService.findUserEmail(nick_nm, pwd);
+            if (email == null) {
+                rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
+                return "redirect:/find/email";
+            }
+            rattr.addFlashAttribute("userEmail", email);
+            return "redirect:/find/email/success?member=user"; //성공
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/find/email";
+        }
+    }
+
+    //비번 찾기
+    @PostMapping("/user/find/pwd")
+    public String findUserPwd (String nick_nm, String email, RedirectAttributes rattr) {
+
+        try {
+            if (!userService.isUserPresent(nick_nm, email)) {
+                rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
+                return "redirect:/find/pwd";
+            }
+
+            if (userService.sendPwdEmail(nick_nm, email) != 1)
+                throw new Exception("send mail failed");
+
+            rattr.addFlashAttribute("toEmail", email);
+            return "redirect:/find/pwd/success?member=user";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/find/pwd";
+        }
     }
 
 }
