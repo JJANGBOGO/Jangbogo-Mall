@@ -11,6 +11,7 @@
 <head>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
     <link rel="stylesheet" href="/css/main.css"/>
+    <script src = "/js/order/format.js"></script>
     <style>
         * {
             box-sizing: border-box;
@@ -240,7 +241,7 @@
                 tmp += '<div class=item__count>' + item.prod_cnt + "</div>";
                 tmp += '<div id="addBtn">+</div>';
                 tmp += '</div>';
-                tmp += "<div class='cart_item__price'>" + item.prod_price * item.prod_cnt + "</div><span>원</span>";
+                tmp += "<div class='cart_item__price'>" + formatPriceWithComma(item.prod_price * item.prod_cnt) + "</div><span>원</span>";
                 tmp += '<div class="cart_item__close">&times;</div>';
                 tmp += '</div>';
                 tmp += '</li>';
@@ -277,7 +278,7 @@
             tmp += '<section class="cart-estimate">'
             tmp += '<section class="prod-price">'
             tmp += '<span class="prod-title">상품금액</span>'
-            tmp += '<span class="prod-content" id="prodPrice">' + price + '원</span>'
+            tmp += '<span class="prod-content" id="prodPrice">' + formatPriceWithComma(price) + '원</span>'
             tmp += '</section>'
             tmp += '<section class="dilv-cost">'
             tmp += '<span class="prod-title">배송비</span>'
@@ -285,7 +286,7 @@
             tmp += '</section>'
             tmp += '<section class="dilv-total">'
             tmp += '<span class="prod-title">결제예정금액</span>'
-            tmp += '<span class="prod-content" id="totalPrice">' + (parseInt(price) + 2500) +'원</span>'
+            tmp += '<span class="prod-content" id="totalPrice">' + formatPriceWithComma(parseInt(price) + 2500) +'원</span>'
             tmp += '</section>'
             tmp += '</section>'
             tmp += '<input type="button" name="order" value= "주문하기" />'
