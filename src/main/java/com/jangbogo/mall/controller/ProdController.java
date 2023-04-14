@@ -34,8 +34,8 @@ public class ProdController {
         dto.setIdx(idx);
         System.out.println("dto = " + dto);
         try {
-
-            System.out.println("modiNNamedto = " + dto);
+            String nickName = service.getNickName(user_idx);
+            dto.setWriter(nickName);
             if(service.modify(dto) != 1) {
                 throw new Exception("Write failed");
             }
