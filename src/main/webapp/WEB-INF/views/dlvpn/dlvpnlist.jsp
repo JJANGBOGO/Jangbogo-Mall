@@ -56,7 +56,7 @@
         <c:forEach var="addrlist" items="${addrList}" varStatus="i">
             <li>
                 <div class="list">
-                    <div class="list-checkbox"><label><input type="checkbox" <c:if test="${addrlist.state_cd==1}"> checked </c:if>></label></div>
+                    <div class="list-checkbox"><label><input class="checkbox${addrlist.idx}" onclick="selected(${addrlist.idx})" type="checkbox" <c:if test="${addrlist.state_cd==1}"> checked </c:if>></label></div>
                     <div class="list-address"><div><c:if test="${addrlist.is_default_yn=='Y'}"><div class="base">기본 배송지</div></c:if>${addrlist.addr_base} ${addrlist.addr_dtl}</div></div>
                     <div class="list-name">${addrlist.rcpr_nm}</div>
                     <div class="list-number">${addrlist.rcpr_mobl_no}</div>
@@ -74,9 +74,29 @@
     function update(i){
         console.log(i)
         let link = '<c:url value="/mypage/addressopen?idx='+i+'"/>'
-        window.open(link, "_blank", "width=500, height=500");
+        // window.open(link, "_blank", "width=500, height=500");
+        var popupWidth = 500;
+        var popupHeight = 500;
+        var popupX = (window.screen.width / 2) - (popupWidth / 2);
+        var popupY= (window.screen.height / 2) - (popupHeight / 2);
+        window.open(link, '', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY);
     }
-    function selected(i){
+    // document.querySelector('.checkbox').addEventListener('click',selected)
+
+
+
+    function selected(idx){
+        let form = document.createElement('form'); // form 태그 생성
+        let obj = document.createElement('input'); // input 태그 생성
+        obj.setAttribute('type', 'hidden'); // type = "hidden"
+        obj.setAttribute('name', 'idx'); // name = "idx" 라는 이름으로 값을 넘긴다 (중요)
+        obj.setAttribute('value', idx); // value = "idx" (addrlist.idx) 값
+
+        form.appendChild(obj); // form 태그의 자식으로 input 태그를 추가
+        form.setAttribute('method', 'post'); // 전달 방식 : POST
+        form.setAttribute('action', '<c:url value="/mypage/changestate"/>');  // 전달 컨트롤러 주소 : mypage/changestate
+        document.body.appendChild(form); // body 태그의 자식으로 form 태그를 추가
+        form.submit(); // 전달
 
     }
 

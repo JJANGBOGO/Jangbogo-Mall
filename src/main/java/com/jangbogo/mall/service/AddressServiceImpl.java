@@ -42,4 +42,14 @@ public class AddressServiceImpl implements AddressService{
     public Integer resetDefault_N ( Integer user_idx) throws Exception {
         return dao.resetDefault_N(user_idx);
     }
+
+    @Override
+    public Integer AddrStateCD ( Integer idx) throws Exception {
+        return dao.AddrStateCD(idx);
+    }
+
+    @Override
+    public Integer resetStateCD ( Integer user_idx) throws Exception {
+        return dao.resetStateCD(user_idx);
+    }
 }

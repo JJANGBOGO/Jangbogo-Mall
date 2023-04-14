@@ -116,6 +116,26 @@ public class AddressController {
 
     }
 
+    @PostMapping ("/changestate") // 배송지 선택 상태 변경
+    public void chageState(Address address,HttpServletRequest req, Model m, HttpSession session) {
+
+        int user_idx = (int) session.getAttribute("idx");
+        int idx = address.getIdx();
+
+        System.out.println("user_idx = " + user_idx);
+        System.out.println("idx = " + idx);
+        System.out.println("address = " + address);
+
+        try {
+//            service.resetStateCD(user_idx);
+//            service.AddrStateCD(idx);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+//        return "redirect:/mypage/addresslist";
+
+    }
+
 
     @GetMapping("/test")
     public String test () {
