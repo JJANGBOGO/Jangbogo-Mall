@@ -1,45 +1,7 @@
-/*button{*/
-/*    cursor: pointer;*/
-/*}*/
-/*.css-1h4lltl {*/
-/*    display: block;*/
-/*    padding: 0px 10px;*/
-/*    text-align: center;*/
-/*    !* overflow: hidden; *!*/
-/*    width: 104px;*/
-/*    height: 36px;*/
-/*    border-radius: 4px;*/
-/*    color: rgb(51, 51, 51);*/
-/*    background-color: rgb(255, 255, 255);*/
-/*    border: 1px solid rgb(221, 221, 221);*/
-/*    cursor: pointer;*/
-/*}*/
-/*.css-102v0ri {*/
-/*    display: block;*/
-/*    padding: 0px 10px;*/
-/*    text-align: center;*/
-/*    overflow: hidden;*/
-/*    width: 104px;*/
-/*    height: 36px;*/
-/*    border-radius: 4px;*/
-/*    color: rgb(95, 0, 128);*/
-/*    background-color: rgb(255, 255, 255);*/
-/*    border: 1px solid rgb(95, 0, 128);*/
-/*}*/
-/*.css-102v0ri span {*/
-/*    display: flex;*/
-/*    -webkit-box-align: center;*/
-/*    align-items: center;*/
-/*    -webkit-box-pack: center;*/
-/*    justify-content: center;*/
-/*}*/
-/*.css-1m3kac1 {*/
-/*    display: inline-block;*/
-/*    width: 20px;*/
-/*    height: 20px;*/
-/*    margin-right: 4px;*/
-/*    vertical-align: middle;*/
-/*}*/
+.king{
+    /*width: 1000px;*/
+    margin: auto;
+}
 
 button {
     cursor: pointer;
@@ -69,9 +31,9 @@ button {
     width: 104px;
     height: 36px;
     border-radius: 4px;
-    color: rgb(95, 0, 128);
-    background-color: rgb(255, 255, 255);
-    border: 1px solid rgb(95, 0, 128);
+    color: #f58412;
+    background-color: #f58412;
+    border: 1px solid whitesmoke;
 }
 
 .css-102v0ri span {
@@ -80,6 +42,7 @@ button {
     align-items: center;
     -webkit-box-pack: center;
     justify-content: center;
+    color: white;
 }
 
 .css-1m3kac1 {
@@ -100,7 +63,7 @@ button {
 .b {
     display: flex;
     padding-left: 16px;
-    width: 500px;
+    width: 650px;
     justify-content: space-between;
 }
 
@@ -152,7 +115,7 @@ img {
     align-items: center;
     padding-bottom: 27px;
     border-bottom: 2px solid rgb(51, 51, 51);
-    padding-top: 30px;
+    /*padding-top: 30px;*/
 }
 
 .h2 {
