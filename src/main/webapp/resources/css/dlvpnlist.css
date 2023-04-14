@@ -84,7 +84,7 @@ ul{
 
 li{
     list-style-type: none;
-    border-bottom: 1px solid #f58412;
+    border-bottom: 1px solid rgb(244, 244, 244);
 }
 .list{
     display: flex;
@@ -132,10 +132,10 @@ label{
     height: 22px;
     margin-bottom: 7px;
     border-radius: 11px;
-    background-color: rgb(247, 247, 247);
+    background-color: #f58412;
     font-weight: 700;
     font-size: 12px;
-    color: rgb(102, 102, 102);
+    color: white;
     line-height: 22px;
     letter-spacing: 0px;
     text-align: center;

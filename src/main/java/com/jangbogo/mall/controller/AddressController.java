@@ -26,13 +26,16 @@ public class AddressController {
     AddressService service;
 
     @GetMapping("/addresslist") //배송지 관리 뷰
-    public String myPageAddrList(HttpServletRequest req, Model m, HttpSession session) {
+    public String myPageAddrList(HttpServletRequest req, Model m, HttpSession session,HttpServletRequest request) {
         m.addAttribute("mypageUrl", req.getRequestURI());
 
-//        int idx = (int) session.getAttribute("idx"); //세션 얻기
+        if(!loginCheck(request))
+            return "redirect:/user/login?toURL="+request.getRequestURL();  // 로그인을 안했으면 로그인 화면으로 이동
+
+        int user_idx = (int) session.getAttribute("idx"); //세션에서 회원번호 얻기
 
         try {
-            List<Address> list = service.selAddrList(1);
+            List<Address> list = service.selAddrList(user_idx);
             m.addAttribute("addrList", list);
         } catch(Exception e) {
             e.printStackTrace();
@@ -117,7 +120,7 @@ public class AddressController {
     }
 
     @PostMapping ("/changestate") // 배송지 선택 상태 변경
-    public void chageState(Address address,HttpServletRequest req, Model m, HttpSession session) {
+    public String chageState(Address address,HttpServletRequest req, Model m, HttpSession session) {
 
         int user_idx = (int) session.getAttribute("idx");
         int idx = address.getIdx();
@@ -127,19 +130,22 @@ public class AddressController {
         System.out.println("address = " + address);
 
         try {
-//            service.resetStateCD(user_idx);
-//            service.AddrStateCD(idx);
+            service.resetStateCD(user_idx);
+            service.AddrStateCD(idx);
         } catch(Exception e) {
             e.printStackTrace();
         }
-//        return "redirect:/mypage/addresslist";
+        return "redirect:/mypage/addresslist";
 
     }
 
 
-    @GetMapping("/test")
-    public String test () {
-        return "/user/addrTest";
+    private boolean loginCheck(HttpServletRequest request) {
+        // 1. 세션을 얻어서
+        HttpSession session = request.getSession();
+        // 2. 세션에 id가 있는지 확인, 있으면 true를 반환
+        return session.getAttribute("idx")!=null;
+//        return true;  // 일단 (하드코딩) true 박기
     }
 
 
