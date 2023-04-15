@@ -861,8 +861,7 @@
 
     showList(prod_idx);
 
-    $(".xBtn").click(function(e) {
-      e.stopPropagation();
+    $(".xBtn").click(function() {
       $(".modal").css("display", "none");
 
       $("input[id=modal-title]").val("");
@@ -871,8 +870,7 @@
       return;
     })
 
-    $(".closeBtn").click(function(e) {
-      e.stopPropagation();
+    $(".closeBtn").click(function() {
       $(".modal").css("display", "none");
 
       $("input[id=modal-title]").val("");
@@ -882,49 +880,46 @@
       return;
     })
 
-    $(".open-modal").click(function(e) {
-      e.stopPropagation();
+    $(".open-modal").click(function() {
       $(".modal").css("display", "block");
-
-      $("#sendBtn").click(function(e) {
-        e.stopPropagation();
-        let thisthis = $(this);
-        console.log("등록버튼 누르면thisthis="+thisthis);
-        let ctent = $("input[id=modal-ctent]").val();
-        let title = $("input[id=modal-title]").val();
-        let opub_yn;
-
-        if($("input:checkbox[name=opub_yn]").is(":checked")) {
-          opub_yn = 'N';
-        } else {
-          opub_yn = 'Y';
-        }
-
-        $.ajax({
-          type:'POST',       // 요청 메서드
-          url: '/products?prod_idx='+prod_idx,  // 요청 URI   // /product?prod_idx=1 POST
-          headers : { "content-type": "application/json"}, // 요청 헤더
-          data : JSON.stringify({prod_idx:prod_idx, title:title, ctent:ctent, opub_yn:opub_yn}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
-          success : function(result){
-            alert(result);
-            showList(prod_idx);
-          },
-          error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
-        }); // $.ajax()
-
-        //모달을 안보이게 한다.
-        $(".modal").css("display", "none");
-
-        //input란에 있던 정보를 없앤다
-        $("input[id=modal-title]").val("");
-        $("input[id=modal-ctent]").val("");
-        $("input[type=checkbox]").prop("checked", false);
-      });
     })
+
+    $("#sendBtn").click(function() {
+      let thisthis = $(this);
+      console.log("등록버튼 누르면thisthis="+thisthis);
+      let ctent = $("input[id=modal-ctent]").val();
+      let title = $("input[id=modal-title]").val();
+      let opub_yn;
+
+      if($("input:checkbox[name=opub_yn]").is(":checked")) {
+        opub_yn = 'N';
+      } else {
+        opub_yn = 'Y';
+      }
+
+      $.ajax({
+        type:'POST',       // 요청 메서드
+        url: '/product/list?prod_idx='+prod_idx,  // 요청 URI   // /product?prod_idx=1 POST
+        headers : { "content-type": "application/json"}, // 요청 헤더
+        data : JSON.stringify({prod_idx:prod_idx, title:title, ctent:ctent, opub_yn:opub_yn}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
+        success : function(result){
+          alert(result);
+          showList(prod_idx);
+        },
+        error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+      }); // $.ajax()
+
+      //모달을 안보이게 한다.
+      $(".modal").css("display", "none");
+
+      //input란에 있던 정보를 없앤다
+      $("input[id=modal-title]").val("");
+      $("input[id=modal-ctent]").val("");
+      $("input[type=checkbox]").prop("checked", false);
+    });
 
     // 동적으로 생성되는, 문의에 달려있는 "수정" 버튼을 누르면
-    $("#table").on("click", ".modBtn", function(e) {
-      e.stopPropagation();
+    $("#table").on("click", ".modBtn", function() {
       //수정 버튼이 포함되어 있는 tr 라인 안에 들어있는 idx를 가져온다.
       //title과 ctent의 내용들도 가져와서 변수에 담는다.
       let idx = $(this).closest("tr").attr("data-idx");
@@ -968,54 +963,53 @@
       $(".modal").css("display", "block");
 
       //모달 안에 있는 수정버튼을 누르면
-      $(".inqry_button").on("click", "#modBtn", function(e) {
-        e.stopPropagation();
 
-        let thisthis = $(this);
-        console.log($(this));
+      return;
+    });
 
-        //속성 data-idx의 값을 저장한다.
-        let idx = $(this).attr("data-idx");
-        console.log("id 수정 버튼을 눌렀을 때 = "+idx);
-        //동일하게 불러온 정보를 변수에 저장한다.
-        let newTitle = $("input[id=modal-title]").val();
-        let newCtent = $("input[id=modal-ctent]").val();
-        let newOpub_yn = $("input[type=checkbox]").attr("checked");
+    $(".inqry_button").on("click", "#modBtn", function() {
 
-        //등록 버튼을 눌러 새롭게 정보를 저장한다.
-        $.ajax({
-          type:'PATCH',
-          url: '/products/'+idx+'?prod_idx='+prod_idx,
-          headers: {"content-type": "application/json"},
-          data: JSON.stringify({idx:idx, prod_idx:prod_idx, title:newTitle, ctent:newCtent, opub_yn: newOpub_yn}),
-          success: function(result) {
-            alert(result)
-            showList(prod_idx);
-          },
-          error: function() {alert("error")}
-        })
-        //모달을 안보이게 한다.
-        $(".modal").css("display", "none");
+      let thisthis = $(this);
+      console.log($(this));
 
-        //input란에 있던 정보를 없앤다
-        $("input[id=modal-title]").val("");
-        $("input[id=modal-ctent]").val("");
-        $("input[type=checkbox]").prop("checked", false);
+      //속성 data-idx의 값을 저장한다.
+      let idx = $(this).attr("data-idx");
+      console.log("id 수정 버튼을 눌렀을 때 = "+idx);
+      //동일하게 불러온 정보를 변수에 저장한다.
+      let newTitle = $("input[id=modal-title]").val();
+      let newCtent = $("input[id=modal-ctent]").val();
+      let newOpub_yn = $("input[type=checkbox]").attr("checked");
 
-        let inqryButton = $(".inqry_button");
-        inqryButton[0].children[1].remove();
-        //태그 생성
-        let sendBtn = $('<button class="register" id="sendBtn">등록</button>');
-        inqryButton.append(sendBtn);
-        return;
-      });
+      //등록 버튼을 눌러 새롭게 정보를 저장한다.
+      $.ajax({
+        type:'PATCH',
+        url: '/products/'+idx+'?prod_idx='+prod_idx,
+        headers: {"content-type": "application/json"},
+        data: JSON.stringify({idx:idx, prod_idx:prod_idx, title:newTitle, ctent:newCtent, opub_yn: newOpub_yn}),
+        success: function(result) {
+          alert(result)
+          showList(prod_idx);
+        },
+        error: function() {alert("error")}
+      })
+      //모달을 안보이게 한다.
+      $(".modal").css("display", "none");
+
+      //input란에 있던 정보를 없앤다
+      $("input[id=modal-title]").val("");
+      $("input[id=modal-ctent]").val("");
+      $("input[type=checkbox]").prop("checked", false);
+
+      let inqryButton = $(".inqry_button");
+      inqryButton[0].children[1].remove();
+      //태그 생성
+      let sendBtn = $('<button class="register" id="sendBtn">등록</button>');
+      inqryButton.append(sendBtn);
       return;
     });
 
 
-
-    $("#table").on("click", ".delBtn", function(e) { //prodInqryList 안에 있는 delBtn에 click 이벤트를 건다.
-      e.stopPropagation();
+    $("#table").on("click", ".delBtn", function() { //prodInqryList 안에 있는 delBtn에 click 이벤트를 건다.
 
       let idx = $(this).closest("tr").attr("data-idx");
       let prod_idx = $(this).closest("tr").attr("data-prod_idx");
@@ -1095,7 +1089,7 @@
       tmp += '</div>'
       tmp += '<div class="reg_date"><span>' + inqry.ans_write_time + '</span>'
       tmp += '<div class="btnGroup">'
-      tmp += '<button class="modBtn">수정</button>'
+      tmp += '<><button class="modBtn">수정</button>'
       tmp += '<button class="delBtn">삭제</button>'
       tmp += '</div>'
       tmp += '</div>'

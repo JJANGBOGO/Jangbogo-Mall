@@ -23,6 +23,7 @@ public class ProdController {
     //페이지 이동
     @GetMapping("/product")
     public String product() {
+
         return "product";
     }
 
