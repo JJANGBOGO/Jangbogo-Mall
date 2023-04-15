@@ -47,7 +47,7 @@ public class ProdController {
     }
 
     //상품문의 게시물을 등록
-    @PostMapping("/products")  // /product?prod_idx=1 POST
+    @PostMapping("/product/list")  // /product?prod_idx=1 POST
     public ResponseEntity<String> write(@RequestBody ProdInqryDto dto, Integer prod_idx, HttpSession session) {
         Integer user_idx = (Integer)session.getAttribute("idx");
 
