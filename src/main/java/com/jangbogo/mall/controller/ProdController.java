@@ -4,6 +4,7 @@ import com.jangbogo.mall.domain.JoinProdInqryDto;
 import com.jangbogo.mall.domain.ProdInqryDto;
 import com.jangbogo.mall.domain.ProdInqryPageHandler;
 import com.jangbogo.mall.service.ProdInqryService;
+import com.mysql.cj.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,11 @@ public class ProdController {
     ProdInqryService service;
     //페이지 이동
     @GetMapping("/product")
-    public String product() {
-
+    public String product(Model m, ProdInqryDto prodInqryDto, HttpSession session) {
+        Integer user_idx = (Integer)session.getAttribute("idx");
+        System.out.println("prodInqryDto = " + prodInqryDto);
+        m.addAttribute("prodInqryDto", prodInqryDto);
+        m.addAttribute("session_idx", user_idx);
         return "product";
     }
 
@@ -40,7 +44,7 @@ public class ProdController {
             if(service.modify(dto) != 1) {
                 throw new Exception("Write failed");
             }
-            return new ResponseEntity<>("MOD_OK", HttpStatus.OK);
+            return new ResponseEntity<>("수정내용이 등록되었습니다.", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<String>("MOD_ERR", HttpStatus.BAD_REQUEST);
@@ -64,7 +68,7 @@ public class ProdController {
             if(service.write(dto) != 1) {
                 throw new Exception("Write failed");
             }
-            return new ResponseEntity<>("WRT_OK", HttpStatus.OK);
+            return new ResponseEntity<>("문의가 등록되었습니다.", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<String>("WRT_ERR", HttpStatus.BAD_REQUEST);
@@ -82,7 +86,7 @@ public class ProdController {
             if(rowCnt != 1) {
                 throw new Exception("Delete Failed");
             }
-            return new ResponseEntity<>("DEL_OK", HttpStatus.OK);
+            return new ResponseEntity<>("삭제되었습니다.", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("DEL_ERR", HttpStatus.BAD_REQUEST);

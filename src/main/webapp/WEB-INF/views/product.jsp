@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <html>
 <head>
   <title>Title</title>
@@ -16,6 +17,7 @@
       width: 1010px;
       /* background-color: rgb(190, 185, 201); */
       padding-bottom: 148px;
+      margin: 0 auto;
     }
 
     .prodInqry-wrap .prodInqry {
@@ -281,12 +283,24 @@
       color: rgb(102, 102, 102);
       background-color: rgba(102, 102, 102, 0.06);
     }
+
+    /*.prodInqry-wrap .prodInqry .inqry-notice-wrap .inqry-notice .notice-title #notice-title-span{*/
+    /*  background-color: darkgray;*/
+    /*  padding: 4px;*/
+    /*  width: 40px;*/
+    /*  height: 22px;*/
+    /*  text-align: center;*/
+    /*  line-height: 21px;*/
+    /*  border-radius: 5px;*/
+    /*}*/
+
     .prodInqry-wrap .prodInqry .inqry-notice-wrap .inqry-notice .text {
       position: absolute;
       left: 96px;
       padding-top: 3px;
     }
     .prodInqry-wrap .prodInqry .inqry-notice-wrap .inqry-notice .text span {
+      line-height: 14px;
     }
 
     .prodInqry-wrap .prodInqry .inqry-body {
@@ -356,6 +370,35 @@
       line-height: 19px;
       letter-spacing: -0.5px;
     }
+
+    tbody #noticeBlock {
+      postion: relative;
+      height: 64px;
+      border-bottom: 1px solid rgb(244, 244, 244);
+      line-height: 19px;
+      letter-spacing: -0.5px;
+    }
+    tbody #noticeBlock .title #title-text {
+      position: absolute;
+      left: 24px;
+      line-height: 0px;
+    }
+
+    tbody #noticeBlock .name {
+      text-align: center;
+      color: rgb(153, 153, 153);
+    }
+
+    tbody #noticeBlock .reg_date {
+      text-align: center;
+      color: rgb(153, 153, 153);
+    }
+
+    tbody #noticeBlock #res-state-cd {
+      text-align: center;
+      color: rgb(95, 0, 128);
+    }
+
     .prodInqry-wrap
     .prodInqry
     .inqry-body
@@ -799,7 +842,7 @@
       </div>
       <div class="inqry-notice-wrap">
         <div class="inqry-notice">
-          <div class="notice_title">공지</div>
+          <div class="notice_title"><span id="notice-title-span">공지</span></div>
           <div class="text">
             <span>공지내용</span>
           </div>
@@ -829,6 +872,7 @@
       success : function(result){
         $("#table").html(toHtml(result));    // 서버로부터 응답이 도착하면 호출될 함수
         $("#res-state-cd").html(resStateToString(result));
+        // $('.btnGroup').html(checkMyBoard(result));
       },
       error : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
     }); // $.ajax()
@@ -858,6 +902,8 @@
   }
 
   $(document).ready(function(){
+    // console.log("prodInqryDto = "+prodInqryDto);
+    // console.log("session_idx = "+session_idx);
 
     showList(prod_idx);
 
@@ -886,7 +932,7 @@
 
     $("#sendBtn").click(function() {
       let thisthis = $(this);
-      console.log("등록버튼 누르면thisthis="+thisthis);
+      // console.log("등록버튼 누르면thisthis="+thisthis);
       let ctent = $("input[id=modal-ctent]").val();
       let title = $("input[id=modal-title]").val();
       let opub_yn;
@@ -895,6 +941,18 @@
         opub_yn = 'N';
       } else {
         opub_yn = 'Y';
+      }
+
+      if(title.trim()=='') {
+        alert("제목을 입력해주세요");
+        $("input[id=modal-title]").focus();
+        return;
+      }
+
+      if(ctent.trim()=='') {
+        alert("내용을 입력해주세요");
+        $("input[id=modal-ctent]").focus();
+        return;
       }
 
       $.ajax({
@@ -990,7 +1048,7 @@
           alert(result)
           showList(prod_idx);
         },
-        error: function() {alert("error")}
+        error: function() {alert("수정권한이 없습니다")}
       })
       //모달을 안보이게 한다.
       $(".modal").css("display", "none");
@@ -1041,6 +1099,40 @@
     return tmp;
   }
 
+  // let checkMyBoard = (result) => {
+  //   result.forEach(one, () => {
+  //     // 1. 세션에서 저장한 id값(user_idx)과 data-uid를 비교한다.
+  //     // 2.1 둘이 같을 경우, jquery css visibility를 display 처리
+  //     // 2.2 다를 경우, jquery css visibility를 hidden 처리
+  //   })
+  // }
+  // let showList = (user_idx) => {
+  //   // ajax 요청(비동기)
+  //   $.ajax({
+  //     type:'GET',
+  //     url:'/cart/list?user_idx=' + user_idx,
+  //     success: (result) => {  // 성공 응답이 오면, 장바구니 목록, 주문정보, 체크박스 정보를 페이지에 랜더링하기
+  //       $('#cartItems').html(listToHtml(result));       // listToHtml메서드 호출
+  //       checkMyBoard(result)  // :TODO user_idx에 해당하는 회원이 쓴 글의 경우 보기, 수정 버튼을 보여준다.
+  //       $('#cartEstimate').html(estimateToHtml(result));    // estimateToHtml메서드 호출
+  //       $('#totalChkBox').html(checkBoxToHtml(result)); // checkBoxToHtml메서드 호출
+  //     },
+  //     error : function() { alert("comment get error");}   // 실패 응답이 오면, 경고창 띄우기
+  //   });  // $.ajax() end
+  // }
+
+  let checkMyBoard = function(buttons) {
+    let tmp = "";
+    buttons.forEach(function(button) {
+      tmp += '<button data-user_idx='+ button.user_idx + 'class="modBtn">'
+      tmp += '수정</button>'
+      tmp += '<button data-user_idx='+ button.user_idx + 'class="delBtn">'
+      tmp += '삭제</button>'
+    })
+    return tmp;
+  }
+
+
   let toHtml = function(inqrys) {  //GetMapping통해서 정보 들어온다.
 
     let tmp = "<tbody>";
@@ -1056,7 +1148,7 @@
       tmp += ' data-title=' + inqry.title
       tmp += ' data-ctent='+ inqry.ctent
       tmp += ' data-opub_yn='+ inqry.opub_yn + '>'
-      tmp += '<td id="noticeBlock-title" class="title" data-opub_yn=' + inqry.opub_yn + '>' + inqry.title + '</td>'
+      tmp += '<td id="noticeBlock-title" class="title" data-opub_yn=' + inqry.opub_yn + '><span id="title-text">' + inqry.title + '</span></td>'
       tmp += '<td class="name" data-user_idx=' + inqry.user_idx + '>' + inqry.writer + '</td>'
       tmp += '<td class="reg_date" >' + inqry.wrt_tm + '</td>'
       tmp += '<td id="res-state-cd" class="response_state" >'+inqry.res_state_cd+'</td>'
@@ -1089,8 +1181,11 @@
       tmp += '</div>'
       tmp += '<div class="reg_date"><span>' + inqry.ans_write_time + '</span>'
       tmp += '<div class="btnGroup">'
-      tmp += '<><button class="modBtn">수정</button>'
-      tmp += '<button class="delBtn">삭제</button>'
+      tmp += ''
+      <%--tmp += '<c:if test="${idx eq prodInqryDto.user_idx}">'--%>
+      tmp +=    '<button class="modBtn">수정</button>'
+      tmp +=    '<button class="delBtn">삭제</button>'
+      <%--tmp += '</c:if>'--%>
       tmp += '</div>'
       tmp += '</div>'
       tmp += '</div>'
