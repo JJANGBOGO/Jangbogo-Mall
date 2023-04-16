@@ -12,8 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 //@ResponseBody
@@ -23,11 +26,10 @@ public class ProdController {
     ProdInqryService service;
     //페이지 이동
     @GetMapping("/product")
-    public String product(Model m, ProdInqryDto prodInqryDto, HttpSession session) {
-        Integer user_idx = (Integer)session.getAttribute("idx");
-        System.out.println("prodInqryDto = " + prodInqryDto);
-        m.addAttribute("prodInqryDto", prodInqryDto);
-        m.addAttribute("session_idx", user_idx);
+    public String product(HttpSession session, Model m) {
+        Integer session_idx = (Integer)session.getAttribute("idx");
+        System.out.println("session_idx === " + session_idx);
+        m.addAttribute("session_idx", session_idx);
         return "product";
     }
 
@@ -52,7 +54,7 @@ public class ProdController {
     }
 
     //상품문의 게시물을 등록
-    @PostMapping("/product/list")  // /product?prod_idx=1 POST
+    @PostMapping("/product/write")  // /product?prod_idx=1 POST
     public ResponseEntity<String> write(@RequestBody ProdInqryDto dto, Integer prod_idx, HttpSession session) {
         Integer user_idx = (Integer)session.getAttribute("idx");
 
@@ -68,7 +70,7 @@ public class ProdController {
             if(service.write(dto) != 1) {
                 throw new Exception("Write failed");
             }
-            return new ResponseEntity<>("문의가 등록되었습니다.", HttpStatus.OK);
+            return new ResponseEntity<>("WRT_OK", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<String>("WRT_ERR", HttpStatus.BAD_REQUEST);
@@ -94,16 +96,24 @@ public class ProdController {
     }
 
     //상품문의 게시물 가져오기
-    @GetMapping("/products")
-    public ResponseEntity<List<JoinProdInqryDto>> list(Integer prod_idx, HttpSession session) {
+    @GetMapping("/product/list")
+    @ResponseBody
+    public ResponseEntity<List<JoinProdInqryDto>> list(Integer prod_idx, Model m, HttpSession session) {
         List<JoinProdInqryDto> list = null;
+//        Integer session_idx = (Integer)session.getAttribute("idx");
         Integer idx = (Integer)session.getAttribute("idx");
         String email = (String)session.getAttribute("email");
-        System.out.println("user idx = "+idx);
+        System.out.println("[GET]user idx = "+idx);
         System.out.println("user email = "+email);
+
+//        m.addAttribute("session", idx);
+
+//        Map<String, Integer> map = new HashMap<String, Integer>();
+//        map.put("user_idx", idx);
+//        m.addAttribute("map", map);
+
 //        if(page == null) page = 1;
 //        if(pageSize == null) pageSize = 10;
-
         try {
 //            int totalCnt = service.getCount();
 //            ProdInqryPageHandler prodInqryPageHandler = new ProdInqryPageHandler(totalCnt, page, pageSize);
