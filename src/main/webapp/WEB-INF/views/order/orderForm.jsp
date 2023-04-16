@@ -71,7 +71,7 @@
                         컬리 내 개별 판매자가 등록한 오픈마켓 상품의 경우 컬리는 통신판매중개자로서 주문, 품질, 교환/환불 등 의무와 책임을 부담하지 않습니다.
                     </p>
                     <div class="order-button">
-                        <button type="button"></button>
+                        <button type="button" id="paymentBtn"></button>
                     </div>
                 </div>
                 <div class="order-amount__container"></div>
@@ -238,7 +238,6 @@
                 tmp += "</div>"
                 tmp += "</div>"
                 return tmp;
-
             }
 
             // 메서드명 : couponListToHtml
@@ -412,6 +411,21 @@
                     popupCenter(url, 500, 800);
                 });
 
+                // 이벤트 대상 : #paymentBtn 결제하기 버튼
+                // 이벤트 : click
+                // 이벤트 핸들러 기능 : '결제하기' 버튼 클릭 시, 결제 페이지로 이동
+                $(document).on("click", "#paymentBtn", (e) => {
+                    $.ajax({
+                        url:'/payment/kakao/ready',
+                        dataType:'json',
+                        success:function(data) {
+                            location.href=data.next_redirect_pc_url + "?tid=" + data.tid;
+                        },
+                        error:function(error) {
+                            alert(error);
+                        }
+                    })
+                })
             })
         </script>
         <%@ include file="/WEB-INF/views/include/footer.jsp" %>

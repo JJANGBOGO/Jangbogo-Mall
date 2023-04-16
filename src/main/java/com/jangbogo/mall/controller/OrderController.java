@@ -11,8 +11,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -192,4 +197,111 @@ public class OrderController {
         // session에 저장된 idx값이 null이 아니면 true 반환
         return session.getAttribute("idx") != null;
     }
+
+    // 메서드명 : kakaoPaymentReady
+    // 기   능 : 결제 준비 및 요청 처리 후, 결제 승인 메서드 호출
+    // 매개변수 : HttpSession session
+    // 반환타입 : String
+    // POST /v1/payment/ready HTTP/1.1
+    // Host: kapi.kakao.com
+    // Authorization: KakaoAK ${APP_ADMIN_KEY}
+    // Content-type: application/x-www-form-urlencoded;charset=utf-8
+    // TODO: 결제 요청 결과로 받은 tid를 결제 테이블에 저장한다.
+    @GetMapping("/payment/kakao/ready")
+    @ResponseBody
+    public String kakaoPaymentReady(HttpSession session) {
+        try {
+            URL url = new URL("https://kapi.kakao.com/v1/payment/ready");
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "KakaoAK 4319c284b87b726f5f038d839ad6bbd2");
+            conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+            conn.setDoOutput(true);  // doOutput : 연결을 통해 서버에 전달할 데이터가 있는지 여부 conn: 디폴트 doInput : true
+            String params = "";
+            params = "cid=TC0ONETIME&partner_order_id=partner_order_id&partner_user_id=partner_user_id&item_name=초코파이&quantity=1&total_amount=2200&tax_free_amount=0&approval_url=http://localhost:8080/payment/kakao/approve&cancel_url=http://localhost:8080/payment/kakao/cancel&fail_url=http://localhost:8080/payment/kakao/faillure";
+            OutputStream outputStream = conn.getOutputStream();
+            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+            dataOutputStream.writeBytes(params);
+            dataOutputStream.flush();
+            dataOutputStream.close();
+
+            int result = conn.getResponseCode();
+            InputStream inputStream;
+            if(result == 200) {
+                inputStream = conn.getInputStream();
+            } else {
+                inputStream = conn.getErrorStream();
+            }
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);  // bufferedReader : 형변환하는애
+
+            return bufferedReader.readLine();
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "{\"result\":\"NO\"}";
+    }
+
+    // POST /v1/payment/approve HTTP/1.1
+    // Host: kapi.kakao.com
+    // Authorization: KakaoAK ${APP_ADMIN_KEY}
+    // Content-type: application/x-www-form-urlencoded;charset=utf-8
+    // 메서드명 : kakaoPaymentApprove
+    // 기   능 : 결제 승인 처리
+    // 반환타입 : String
+    @GetMapping("/payment/kakao/approve")
+    public String kakaoPaymentApprove(String pg_token) {
+        try {
+            System.out.println("pg_token = " + pg_token);
+            URL url = new URL("https://kapi.kakao.com/v1/payment/approve");
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Authorization", "KakaoAK 4319c284b87b726f5f038d839ad6bbd2");
+            conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+            conn.setDoOutput(true);  // doOutput : 연결을 통해 서버에 전달할 데이터가 있는지 여부 conn: 디폴트 doInput : true
+
+            String params = "cid=TC0ONETIME&tid=T1234567890123456789&partner_order_id=partner_order_id&partner_user_id=partner_user_id&pg_token=" + pg_token;
+
+            OutputStream outputStream = conn.getOutputStream();
+            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+            dataOutputStream.writeBytes(params);
+            dataOutputStream.flush();
+            dataOutputStream.close();
+
+            int result = conn.getResponseCode();
+            InputStream inputStream;
+            if(result == 200) {
+                inputStream = conn.getInputStream();
+            } else {
+                inputStream = conn.getErrorStream();
+            }
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);  // bufferedReader : 형변환하는애
+            return bufferedReader.readLine();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "order/kakaoPayApprove";
+    }
+
+    // POST /payment/kakao/approve HTTP/1.1
+    // Host: kapi.kakao.com
+    // Authorization: KakaoAK ${APP_ADMIN_KEY}
+    // Content-type: application/x-www-form-urlencoded;charset=utf-8
+    // 메서드명 : kakaoPaymentCancel
+    // 기   능 : 결제 취소 처리
+    // 반환타입 : String
+
+    // POST /payment/kakao/failure HTTP/1.1
+    // Host: kapi.kakao.com
+    // Authorization: KakaoAK ${APP_ADMIN_KEY}
+    // Content-type: application/x-www-form-urlencoded;charset=utf-8
+    // 메서드명 : kakaoPaymentFailure
+    // 기   능 : 결제 실패 처리
+    // 반환타입 : String
 }
