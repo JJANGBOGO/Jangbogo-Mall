@@ -23,11 +23,11 @@ public class WishlistController {
 
     // 위시리스트 페이지 이동
     @GetMapping("/wishlist")
-    public String product() {
+    public String wishlistPage() {
         return "wishlistfinal";
     }
 
-    // 지정된 위시리스트 목옥을 가져오는 메서드원
+    // 지정된 위시리스트 목록을 가져오는 메서드
     @GetMapping("/wishlists") // /wishlists GET
     public ResponseEntity<List<ProductDto>> list(HttpSession session){
         List<ProductDto> list = null;
