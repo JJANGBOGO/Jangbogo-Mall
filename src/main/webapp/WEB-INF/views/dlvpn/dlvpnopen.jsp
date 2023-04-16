@@ -78,7 +78,7 @@
 
       var form = document.createElement('form');
       form.setAttribute('method', 'post');
-      form.setAttribute('action', '<c:url value="/mypage/addressremove?idx='+a+'"/>');
+      form.setAttribute('action', '<c:url value="/mypage/addressremove"/>?idx=${address.idx}');
       window.opener.document.body.appendChild(form);
       form.submit();
       <%--opener.parent.location='<c:url value="/mypage/addressremove?idx='+a+'"/>';--%>

@@ -108,6 +108,22 @@ public class AddressController {
 
     }
 
+    @GetMapping ("/dlvpninsert") // 배송지 선택 상태 변경
+    public String dlvpninsert(Address address,HttpServletRequest req, Model m, HttpSession session) {
+
+//        int user_idx = (int) session.getAttribute("idx");
+//        int idx = address.getIdx();
+//
+//        try {
+//            service.resetStateCD(user_idx);
+//            service.AddrStateCD(idx);
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
+        return "/dlvpn/dlvpninsert";
+
+    }
+
     private boolean loginCheck(HttpServletRequest request) {
         // 1. 세션을 얻어서
         HttpSession session = request.getSession();

@@ -170,7 +170,7 @@
         // 모달창 보이게 클레스 이름 변경
         document.querySelector(".background").className = "background show";
 
-        }
+    }
 
     // 모달 취소버튼
     document.querySelector(".cancle-btn").addEventListener("click", close); // document.querySelector("#show").addEventListener("click", show);
@@ -190,31 +190,32 @@
 
     // 모달 카운터 (-)마이너스 버튼
     button1.addEventListener("click", () => {
-        // 버튼 클릭하면 1씩감소
+
         count.innerHTML = --counter;
-        if (counter == 1) {    // counter 이 1이면 마이너스 버튼 못 누르게 한다
-            document.querySelector('.button3').className = "button1";
-        }
-        // 합계 태그 참조를 가저온다
         let price = document.querySelector('.price');
-        // 총금액 = 개수 * 금액(특수문자 제거 + 숫자로 변환)
-        let totalprice = counter * parseInt(document.querySelector(".span22").innerHTML.replace(',', ""));
-        price.innerHTML = totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        let a = counter * parseInt(document.querySelector(".span22").innerHTML.replace(',', ""));
+        price.innerHTML = a.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
 
     })
     // 모달 카운터 (+)플러스 버튼
     button2.addEventListener('click', () => {
-        // 버튼 클릭하면 1씩증가
+
         count.innerHTML = ++counter;
-        if (counter == 2) {    // counter 이 2이면 마이너스 버튼 누를 수 있게 한다
-            document.querySelector('.button1').className = "button3";
-        }
         let price = document.querySelector('.price');
-        let totalprice = counter * parseInt(document.querySelector(".span22").innerHTML.replace(',', ""));
-        price.innerHTML = totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+        // console.log(document.querySelector(".span22").innerHTML.replace(',', ""));
+        // console.log(parseInt(document.querySelector(".span22").innerHTML.replace(',', "")))
+
+        let a = counter * parseInt(document.querySelector(".span22").innerHTML.replace(',', ""));
+        price.innerHTML = a.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        // console.log(count.innerHTML);
+        // console.log(document.querySelector('.hidden_input').value);
 
     })
+
+
 </script>
+</div>
 </body>
-<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </html>

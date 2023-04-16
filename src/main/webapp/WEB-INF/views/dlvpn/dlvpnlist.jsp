@@ -21,7 +21,7 @@
             <span class="dlvpn-notc3">배송지에 따라 상품정보 및 배송유형이 달라질 수 있습니다.</span>
         </div>
         <div class="dlvpn-insert">
-            <button class="insertAddr">새 배송지 추가</button>
+            <button class="insertAddr">+ 새 배송지 추가</button>
         </div>
     </div>
     <div class="dlvpn-column">
@@ -41,7 +41,7 @@
                     <div class="list-name">${addrlist.rcpr_nm}</div>
                     <div class="list-number">${addrlist.rcpr_mobl_no}</div>
                     <div class="list-type"><div><span>샛별배송</span></div></div>
-                    <div class="list-change"><button onclick=update(${addrlist.idx})><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path fill="none" d="M0 0h24v24H0z"></path><path d="m13.83 5.777 4.393 4.393-10.58 10.58H3.25v-4.394l10.58-10.58zm3.204-2.527c.418 0 .837.16 1.157.48l2.08 2.08a1.63 1.63 0 0 1 0 2.314l-2.157 2.156-4.394-4.394 2.157-2.156c.32-.32.738-.48 1.157-.48z" stroke="#ccc" stroke-width="1.5"></path></g></svg></button></div>
+                    <div class="list-change"><button class="update-btn" onclick=update(${addrlist.idx})><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path fill="none" d="M0 0h24v24H0z"></path><path d="m13.83 5.777 4.393 4.393-10.58 10.58H3.25v-4.394l10.58-10.58zm3.204-2.527c.418 0 .837.16 1.157.48l2.08 2.08a1.63 1.63 0 0 1 0 2.314l-2.157 2.156-4.394-4.394 2.157-2.156c.32-.32.738-.48 1.157-.48z" stroke="#ccc" stroke-width="1.5"></path></g></svg></button></div>
                 </div>
             </li>
         </c:forEach>
@@ -82,11 +82,11 @@
     function insertAddr() {
         new daum.Postcode({
             oncomplete: function(data) {
-                let link = '<c:url value="/mypage/wishlist"/>'
+                let link = '<c:url value="/mypage/dlvpninsert"/>';
                 // window.location.href= link;
 
-                var popupWidth = 500;
-                var popupHeight = 500;
+                var popupWidth = 550;
+                var popupHeight = 550;
                 var popupX = (window.screen.width / 2) - (popupWidth / 2);
                 var popupY= (window.screen.height / 2) - (popupHeight / 2);
                 window.open(link, '', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY);

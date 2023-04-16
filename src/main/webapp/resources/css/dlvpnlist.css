@@ -201,3 +201,19 @@ label{
     letter-spacing: -0.3px;
     flex-basis: 60px;
 }
+
+.insertAddr {
+    color: black;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-weight: 500;
+    font-size: 16px;
+}
+.update-btn{
+    border: none;
+    padding: 4px 9px;
+    border-radius: 3px;
+    cursor: pointer;
+}

@@ -1,5 +1,5 @@
 .king{
-    /*width: 1000px;*/
+    width: 1000px;
     margin: auto;
 }
 
@@ -7,7 +7,7 @@ button {
     cursor: pointer;
 }
 
-.css-1h4lltl {
+.delBtn {
 
     display: block;
     padding: 0px 10px;
@@ -23,7 +23,7 @@ button {
     margin-bottom: 4px;
 }
 
-.css-102v0ri {
+.openBtn {
     display: block;
     padding: 0px 10px;
     text-align: center;
@@ -31,7 +31,7 @@ button {
     width: 104px;
     height: 36px;
     border-radius: 4px;
-    color: #f58412;
+    color: white;
     background-color: #f58412;
     border: 1px solid whitesmoke;
 }
