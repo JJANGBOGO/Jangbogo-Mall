@@ -11,7 +11,7 @@
 <html>
 <head>
   <title>Title</title>
-  <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
+
   <style>
     .prodInqry-wrap {
       position: relative;
@@ -858,14 +858,16 @@
         </div>
       </div>
       <div class="paging-container">
-        <button class="button-left"></button>
-        <button class="button-right"></button>
+
+
+<%--        <button class="button-left"></button>--%>
+<%--        <button class="button-right"></button>--%>
       </div>
     </div>
   </div>
   <div id="sessionID" style="display: none">${session_idx}</div>
   <div class="footer"></div>
-
+  <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
   <script src="https://code.jquery.com/jquery-latest.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script>
@@ -877,9 +879,10 @@
       success : function(result){
         $('#table').html(toHtml(result));    // 서버로부터 응답이 도착하면 호출될 함수
         $('.response_state').html(resStateToString(result));
+        $(".paging-container").html();
         // $('#btnGroup').html(checkMyBoard(result));
       },
-      error : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+      error : function() { alert("error") } // 에러가 발생했을 때, 호출될 함수
     }); // $.ajax()
   }
 

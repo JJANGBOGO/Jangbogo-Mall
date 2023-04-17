@@ -26,22 +26,26 @@ public class ProdController {
     ProdInqryService service;
     //페이지 이동
     @GetMapping("/product")
-    public String product(HttpSession session, Model m) {
+    public String product(HttpSession session, Model m, HttpServletRequest request) {
+        if(!loginCheck(request))
+            return "redirect:/user/login?toURL=" + request.getRequestURL();
         Integer session_idx = (Integer)session.getAttribute("idx");
+
+
         m.addAttribute("session_idx", session_idx);
         return "product";
     }
 
     //게시물을 수정
     @PatchMapping("/products/{idx}")
-    public ResponseEntity<String> modify(@PathVariable Integer idx, @RequestBody ProdInqryDto dto, HttpSession session) {
+    public ResponseEntity<String> modify(@PathVariable Integer idx, @RequestBody ProdInqryDto prodInqryDto, HttpSession session) {
         Integer user_idx = (Integer)session.getAttribute("idx");
         String nick_name = (String)session.getAttribute("nickName");
-        dto.setUser_idx(user_idx);
-        dto.setIdx(idx);
+        prodInqryDto.setUser_idx(user_idx);
+        prodInqryDto.setIdx(idx);
         try {
-            dto.setWriter(nick_name);
-            if(service.modify(dto) != 1) {
+            prodInqryDto.setWriter(nick_name);
+            if(service.modify(prodInqryDto) != 1) {
                 throw new Exception("Write failed");
             }
             return new ResponseEntity<>("MOD_OK", HttpStatus.OK);
@@ -55,12 +59,11 @@ public class ProdController {
     @PostMapping("/product/write")  // /product?prod_idx=1 POST
     public ResponseEntity<String> write(@RequestBody ProdInqryDto prodInqryDto, Integer prod_idx, HttpSession session) {
         Integer user_idx = (Integer)session.getAttribute("idx");
-
+        String nick_name = (String)session.getAttribute("nickName");
         prodInqryDto.setUser_idx(user_idx);
         prodInqryDto.setProd_idx(prod_idx);
         try {
-            String nickName = service.getNickName(user_idx);
-            prodInqryDto.setWriter(nickName);
+            prodInqryDto.setWriter(nick_name);
             System.out.println("Post dto ===== " + prodInqryDto);
 
             if(service.write(prodInqryDto) != 1) {
@@ -101,8 +104,6 @@ public class ProdController {
         System.out.println("[GET]user idx = "+idx);
         System.out.println("user email = "+email);
 
-//        m.addAttribute("joinProdInqryDto ===", joinProdInqryDto);
-
 //        if(page == null) page = 1;
 //        if(pageSize == null) pageSize = 10;
         try {
@@ -110,7 +111,6 @@ public class ProdController {
 //            ProdInqryPageHandler prodInqryPageHandler = new ProdInqryPageHandler(totalCnt, page, pageSize);
 
             list = service.getList(prod_idx);
-        System.out.println(joinProdInqryDto);
             return new ResponseEntity<List<JoinProdInqryDto>>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -119,4 +119,10 @@ public class ProdController {
 
 
     }
+
+    private boolean loginCheck(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        return session.getAttribute("idx") != null;
+    }
+
 }
