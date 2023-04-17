@@ -106,30 +106,31 @@ public class AddressController {
             e.printStackTrace();
         }
         return "redirect:/mypage/addresslist";
-//        return "redirect:/addresslists";
+//        return "/dlvpn/dlvpnlistfinal";
 
     }
 //
-//    @PostMapping ("/addressupdate") //배송지 수정창-> 수정
-//    public String myPageAddrUpdate(Address address,HttpServletRequest req, Model m, HttpSession session) {
-//
-//
-//
-//        int user_idx = (int) session.getAttribute("idx");   // 세션에서 회원번호 회득
-//        address.setUser_idx(user_idx);
-//        try {
-//            if (address.getIs_default_yn().equals("true")) {
-//                service.resetDefault_N(user_idx);
-//                service.updateAddr(address);
-//            }else {
-//                service.updateAddr(address);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return "redirect:/mypage/addresslist";
-//
-//    }
+    @PostMapping ("/addressupdate") //배송지 수정창-> 수정
+    public String myPageAddrUpdate(Address address,HttpServletRequest req, Model m, HttpSession session) {
+
+
+
+        int user_idx = (int) session.getAttribute("idx");   // 세션에서 회원번호 회득
+        address.setUser_idx(user_idx);
+        try {
+            if (address.getIs_default_yn().equals("true")) {
+                service.resetDefault_N(user_idx);
+                service.updateAddr(address);
+            }else {
+                service.updateAddr(address);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/mypage/addresslist";
+//        return "/dlvpn/dlvpnlistfinal";
+
+    }
 //
 //    @PostMapping ("/changestate") // 배송지 선택 상태 변경
 //    public String chageState(Address address,HttpServletRequest req, Model m, HttpSession session) {
@@ -147,21 +148,21 @@ public class AddressController {
 //
 //    }
 //
-//    @GetMapping ("/dlvpninsert") // 배송지 선택 상태 변경
-//    public String dlvpninsert(Address address,HttpServletRequest req, Model m, HttpSession session) {
-//
-////        int user_idx = (int) session.getAttribute("idx");
-////        int idx = address.getIdx();
-////
-////        try {
-////            service.resetStateCD(user_idx);
-////            service.AddrStateCD(idx);
-////        } catch(Exception e) {
-////            e.printStackTrace();
-////        }
-//        return "/dlvpn/dlvpninsert";
-//
-//    }
+    @GetMapping ("/dlvpninsert") // 배송지 추가 팝업창 이동
+    public String dlvpninsert(Address address,HttpServletRequest req, Model m, HttpSession session) {
+
+        int user_idx = (int) session.getAttribute("idx");
+        int idx = address.getIdx();
+
+        try {
+            service.resetStateCD(user_idx);
+            service.AddrStateCD(idx);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return "/dlvpn/dlvpninsert";
+
+    }
 
     private boolean loginCheck(HttpServletRequest request) {
         // 1. 세션을 얻어서

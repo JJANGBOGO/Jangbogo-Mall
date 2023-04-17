@@ -47,7 +47,26 @@
     </div>
 </div>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
+<%--다음 카카오 주소 api--%>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+
+    // 배송지 추가 파업창 오픈
+    $(".insertAddr").click(function(){
+        new daum.Postcode({
+            oncomplete: function(data) {
+                let link = '<c:url value="/mypage/dlvpninsert"/>';
+                // window.location.href= link;
+
+                var popupWidth = 550;
+                var popupHeight = 550;
+                var popupX = (window.screen.width / 2) - (popupWidth / 2);
+                var popupY= (window.screen.height / 2) - (popupHeight / 2);
+                window.open(link, '', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY);
+            }
+        }).open();
+    });
+
     // 배송지 수정 파업창 오픈
     $('.dlvpnList').on("click",'.update-btn',function (e){
         let idx = $(this).parent().parent().parent('li').attr('data-idx');
