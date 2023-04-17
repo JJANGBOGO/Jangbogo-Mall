@@ -5,7 +5,9 @@
   Time: 오후 1:21
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <html>
 <head>
   <title>Title</title>
@@ -16,6 +18,7 @@
       width: 1010px;
       /* background-color: rgb(190, 185, 201); */
       padding-bottom: 148px;
+      margin: 0 auto;
     }
 
     .prodInqry-wrap .prodInqry {
@@ -53,9 +56,9 @@
       background-color: rgba(0, 0, 0, 0.4);
     }
 
-    .modal.show {
-      display: block;
-    }
+    /*.modal.show {*/
+    /*  display: block;*/
+    /*}*/
 
     .modal .modal_body {
       position: absolute;
@@ -281,12 +284,24 @@
       color: rgb(102, 102, 102);
       background-color: rgba(102, 102, 102, 0.06);
     }
+
+    /*.prodInqry-wrap .prodInqry .inqry-notice-wrap .inqry-notice .notice-title #notice-title-span{*/
+    /*  background-color: darkgray;*/
+    /*  padding: 4px;*/
+    /*  width: 40px;*/
+    /*  height: 22px;*/
+    /*  text-align: center;*/
+    /*  line-height: 21px;*/
+    /*  border-radius: 5px;*/
+    /*}*/
+
     .prodInqry-wrap .prodInqry .inqry-notice-wrap .inqry-notice .text {
       position: absolute;
       left: 96px;
       padding-top: 3px;
     }
     .prodInqry-wrap .prodInqry .inqry-notice-wrap .inqry-notice .text span {
+      line-height: 14px;
     }
 
     .prodInqry-wrap .prodInqry .inqry-body {
@@ -356,6 +371,35 @@
       line-height: 19px;
       letter-spacing: -0.5px;
     }
+
+    tbody #noticeBlock {
+      postion: relative;
+      height: 64px;
+      border-bottom: 1px solid rgb(244, 244, 244);
+      line-height: 19px;
+      letter-spacing: -0.5px;
+    }
+    tbody #noticeBlock .title #title-text {
+      position: absolute;
+      left: 24px;
+      line-height: 0px;
+    }
+
+    tbody #noticeBlock .name {
+      text-align: center;
+      color: rgb(153, 153, 153);
+    }
+
+    tbody #noticeBlock .reg_date {
+      text-align: center;
+      color: rgb(153, 153, 153);
+    }
+
+    tbody #noticeBlock #res-state-cd {
+      text-align: center;
+      color: rgb(95, 0, 128);
+    }
+
     .prodInqry-wrap
     .prodInqry
     .inqry-body
@@ -760,7 +804,7 @@
               <span>제목</span>
             </div>
             <div class="title_input">
-              <input id="modal-title" type="text" placeholder="제목을 입력해 주세요" />
+              <input id="modal-title" type="text" />
             </div>
           </div>
           <div class="inqry_content">
@@ -768,15 +812,15 @@
               <span>내용</span>
             </div>
             <div class="content_input">
-              <input id="modal-ctent" type="text"/>
+              <input id="modal-ctent" type="text" />
             </div>
           </div>
           <div class="inqry_secret">
             <div class="secret_head"></div>
-            <label for="isSecret">
-              <input id="isSecret" type="checkbox" name="opub_yn"/>
-              <span>비밀글로 문의하기</span>
-            </label>
+<%--            <label for="isSecret">--%>
+<%--              <input id="isSecret" type="checkbox" name="opub_yn"/>--%>
+<%--              <span>비밀글로 문의하기</span>--%>
+<%--            </label>--%>
           </div>
           <div class="inqry_button">
             <button class="closeBtn">취소</button>
@@ -799,7 +843,7 @@
       </div>
       <div class="inqry-notice-wrap">
         <div class="inqry-notice">
-          <div class="notice_title">공지</div>
+          <div class="notice_title"><span id="notice-title-span">공지</span></div>
           <div class="text">
             <span>공지내용</span>
           </div>
@@ -808,6 +852,23 @@
       <div class="inqry-body">
         <div id="prodInqryList">
           <table id="table">
+
+<%--            <c:forEach var="boardDto" items="${list}">--%>
+<%--              <tr>--%>
+<%--                <td class="no">${boardDto.bno}</td>--%>
+<%--                <td class="title"><a href="<c:url value="/board/read${ph.sc.queryString}&bno=${boardDto.bno}"/>"><c:out value="${boardDto.title}"/></a></td>--%>
+<%--                <td class="writer">${boardDto.writer}</td>--%>
+<%--                <c:choose>--%>
+<%--                  <c:when test="${boardDto.reg_date.time >= startOfToday}">--%>
+<%--                    <td class="regdate"><fmt:formatDate value="${boardDto.reg_date}" pattern="HH:mm" type="time"/></td>--%>
+<%--                  </c:when>--%>
+<%--                  <c:otherwise>--%>
+<%--                    <td class="regdate"><fmt:formatDate value="${boardDto.reg_date}" pattern="yyyy-MM-dd" type="date"/></td>--%>
+<%--                  </c:otherwise>--%>
+<%--                </c:choose>--%>
+<%--                <td class="viewcnt">${boardDto.view_cnt}</td>--%>
+<%--              </tr>--%>
+<%--            </c:forEach>--%>
 
           </table>
         </div>
@@ -818,6 +879,7 @@
       </div>
     </div>
   </div>
+  <div id="sessionID" style="display: none">${session_idx}</div>
   <div class="footer"></div>
 
 <script>
@@ -825,126 +887,190 @@
   let showList = function(prod_idx) {
     $.ajax({
       type:'GET',       // 요청 메서드
-      url: '/products?prod_idx='+prod_idx,  // 요청 URI
+      url: '/product/list?prod_idx='+prod_idx,  // 요청 URI
       success : function(result){
-        $("#table").html(toHtml(result));    // 서버로부터 응답이 도착하면 호출될 함수
-        $("#res-state-cd").html(resStateToString(result));
+        $('#table').html(toHtml(result));    // 서버로부터 응답이 도착하면 호출될 함수
+        $('.response_state').html(resStateToString(result));
+        // $('#btnGroup').html(checkMyBoard(result));
       },
       error : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
     }); // $.ajax()
   }
 
+  let xBtn = function() {
+    $(".xBtn").click(function() {
+      $(".modal").css("display", "none");
+
+      $("input[id=modal-title]").val("");
+      $("input[id=modal-ctent]").val("");
+      $("input[type=checkbox]").prop("checked", false);
+
+    })
+  }
+
+  let closeBtn = function() {
+    $(".closeBtn").click(function() {
+      $(".modal").css("display", "none");
+
+      $("input[id=modal-title]").val("");
+      $("input[id=modal-ctent]").val("");
+      $("input[type=checkbox]").prop("checked", false);
+
+
+    })
+  }
+
   $(document).ready(function(){
+    // console.log("prodInqryDto = "+prodInqryDto);
+    // console.log("session_idx = "+session_idx);
+
     showList(prod_idx);
 
-    // $("#modBtn").click(function(){
-    //   let idx = $(this).attr("data-idx");
-    //
-    //   let ctent = $("input[name=ctent]").val();
-    //   let title = $("input[name=title]").val();
-    //   let writer = $("input[name=writer]").val();
-    //   let res_state_cd = $("input[name=res_state_cd]").val();
-    //   let opub_yn = $("input[name=opub_yn]").val();
-    //
-    //
-    //   $.ajax({
-    //     type:'PATCH',       // 요청 메서드
-    //     url: '/products/'+idx,  // 요청 URI   // /product?prod_idx=1 POST
-    //     headers : { "content-type": "application/json"}, // 요청 헤더
-    //     data : JSON.stringify({idx:idx, title:title, ctent:ctent, opub_yn:opub_yn}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
-    //     success : function(result){
-    //       alert(result)
-    //       showList(prod_idx); //갱신된 게시물 보여준다.
-    //     },
-    //     error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
-    //   }); // $.ajax()
-    // });
+    $(".xBtn").click(function() {
+      $(".modal").css("display", "none");
 
-    $("#sendBtn").click(function(){
+      $("input[id=modal-title]").val("");
+      $("input[id=modal-ctent]").val("");
+      $("input[type=checkbox]").prop("checked", false);
+      return;
+    })
+
+    $(".closeBtn").click(function() {
+      $(".modal").css("display", "none");
+
+      $("input[id=modal-title]").val("");
+      $("input[id=modal-ctent]").val("");
+      $("input[type=checkbox]").prop("checked", false);
+
+      return;
+    })
+
+    $(".open-modal").click(function() {
+      let inqryButton = $(".inqry_button");
+      if(inqryButton[0].children[1].textContent == '수정') {
+        // 태그 제거 해줌
+        let inqryButton = $(".inqry_button");
+        inqryButton[0].children[1].remove();
+        //태그 생성
+        let modBtn = $('<button class="register" id="sendBtn">등록</button>');
+        inqryButton.append(modBtn);
+
+      }
+
+      $(".modal").css("display", "block");
+    })
+
+    $("#sendBtn").click(function() {
       let ctent = $("input[id=modal-ctent]").val();
       let title = $("input[id=modal-title]").val();
-      // let writer = $("input[name=writer]").val();
-      // let res_state_cd = $("input[name=res_state_cd]").val();
       let opub_yn;
 
-      if($("input:checkbox[name=opub_yn]").is(":checked")) {
+      if($("input:checkbox[id='isSecret']").is(":checked")) {
         opub_yn = 'N';
       } else {
         opub_yn = 'Y';
       }
 
+      if(title.trim()=='') {
+        alert("제목을 입력해주세요");
+        $("input[id=modal-title]").focus();
+        return;
+      }
+
+      if(ctent.trim()=='') {
+        alert("내용을 입력해주세요");
+        $("input[id=modal-ctent]").focus();
+        return;
+      }
+
       $.ajax({
         type:'POST',       // 요청 메서드
-        url: '/products?prod_idx='+prod_idx,  // 요청 URI   // /product?prod_idx=1 POST
+        url: '/product/write?prod_idx='+prod_idx,  // 요청 URI   // /product?prod_idx=1 POST
         headers : { "content-type": "application/json"}, // 요청 헤더
         data : JSON.stringify({prod_idx:prod_idx, title:title, ctent:ctent, opub_yn:opub_yn}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
         success : function(result){
-          alert(result);
+          alert("문의가 등록되었습니다.");
           showList(prod_idx);
         },
         error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
       }); // $.ajax()
+
+      //모달을 안보이게 한다.
+      $(".modal").css("display", "none");
+
+      //input란에 있던 정보를 없앤다
+      $("input[id=modal-title]").val("");
+      $("input[id=modal-ctent]").val("");
+      $("input:checkbox[id='isSecret']").prop("checked", false);
     });
 
-    // let showModal = function() {
-    //   let modal = document.querySelector(".modal");
-    //   modal.classList.toggle("show");
-    // }
-
-
+    // 동적으로 생성되는, 문의에 달려있는 "수정" 버튼을 누르면
     $("#table").on("click", ".modBtn", function() {
-      let modal = document.querySelector(".modal");
+
+      // console.log("session_idx"+session_idx);
+      // if(session_idx.idx !== )
+      let user_idx = $(this).closest("tr").attr("data-user_idx");
       //수정 버튼이 포함되어 있는 tr 라인 안에 들어있는 idx를 가져온다.
       //title과 ctent의 내용들도 가져와서 변수에 담는다.
-
+      let idx = $(this).closest("tr").attr("data-idx");
       let ctent = $(this).closest("tr").children().children().children().find('div:eq(1)[name=text]').children().text();
       let inquiry_idx = $(this).closest("tr").attr("data-idx");
       let dtoArr = $(".modBtn").closest("tr").siblings("tr[data-idx=" + inquiry_idx + "]");
       let title = dtoArr[0].dataset.title;
-      let opub_yn = dtoArr[0].dataset.opub_yn;
+
+      let opub_yn = $(this).closest("tr").attr("data-opub_yn");
+      console.log("opub_yn="+opub_yn);
+      if(user_idx !== $(sessionID).text()) {
+        alert("수정권한이 없습니다.");
+        return;
+      }
 
       let isChecked = function (yn) {
         if (yn == 'N') {
-          isChecked = true;
-        } else {
-          isChecked = false;
+          return "true";
+        } else if (yn == 'Y'){
+          return "false";
         }
+        return
       }
-      //버튼 자체를 바꾸자
-      //.modBtn을 누르면 #sendBtn 을 #modBtn으로 바꾼다.
-      //"전송" 도 "수정" 이라고 바꾼다.
-      //태그 삭제
-      // $("button.register").remove();
-      // //태그 삽입
-      //
-      // let modBtn = $("<button id='modBtn' class='register'>수정<button>");
-      // $(".inqry_button").append(modBtn);
 
-      // 태그 제거 해줌
       let inqryButton = $(".inqry_button");
-      inqryButton[0].children[1].remove();
-      //태그 생성
-      let modBtn = $('<button class="register" id="modBtn">수정</button>');
-      inqryButton.append(modBtn);
 
+      //버튼을 "수정"으로 변경
+      if(inqryButton[0].children[1].textContent == '등록') {
+        // 태그 제거 해줌
+        let inqryButton = $(".inqry_button");
+        inqryButton[0].children[1].remove();
+        //태그 생성
+        let modBtn = $('<button class="register" id="modBtn">수정</button>');
+        inqryButton.append(modBtn);
+
+      }
+
+      //idx값을 새로 생성한 태그에 사용자 정의 속성으로 전달
+      $("#modBtn")[0].setAttribute("data-idx", idx);
+
+      //게시물에 있던 내용들을 옮겨왔다.
       $("input[id=modal-title]").val(title);
       $("input[id=modal-ctent]").val(ctent);
-      $("input[type=checkbox]").attr("checked", isChecked(opub_yn));
+      $("input:checkbox[id='isSecret']").prop("checked", isChecked(opub_yn));
 
-
-      //모달이 열린다
+      //모달이 열린다.
       $(".modal").css("display", "block");
+
+
+
     });
 
-    $("#modBtn").click( function() {
-      let idx = $(this).closest("tr").attr("data-idx");
+    $(".inqry_button").on("click", "#modBtn", function() {
 
-      let modal = document.querySelector(".modal");
+      //속성 data-idx의 값을 저장한다.
+      let idx = $(this).attr("data-idx");
+      console.log("id 수정 버튼을 눌렀을 때 = "+idx);
       //동일하게 불러온 정보를 변수에 저장한다.
       let newTitle = $("input[id=modal-title]").val();
       let newCtent = $("input[id=modal-ctent]").val();
-      let newOpub_yn = $("input[type=checkbox]").attr("checked")
-
+      let newOpub_yn = $("input[type=checkbox]").attr("checked");
 
       //등록 버튼을 눌러 새롭게 정보를 저장한다.
       $.ajax({
@@ -953,10 +1079,10 @@
         headers: {"content-type": "application/json"},
         data: JSON.stringify({idx:idx, prod_idx:prod_idx, title:newTitle, ctent:newCtent, opub_yn: newOpub_yn}),
         success: function(result) {
-          alert(result)
+          alert("수정되었습니다.")
           showList(prod_idx);
         },
-        error: function() {alert("error")}
+        error: function() {alert("수정권한이 없습니다")}
       })
       //모달을 안보이게 한다.
       $(".modal").css("display", "none");
@@ -966,9 +1092,18 @@
       $("input[id=modal-ctent]").val("");
       $("input[type=checkbox]").prop("checked", false);
 
+      let inqryButton = $(".inqry_button");
+      console.log("inqryButton = "+ inqryButton)
+      inqryButton[0].children[1].remove();
+      //태그 생성
+      let sendBtn = $('<button class="register" id="sendBtn">등록</button>');
+      inqryButton.append(sendBtn);
+      return;
     });
 
+
     $("#table").on("click", ".delBtn", function() { //prodInqryList 안에 있는 delBtn에 click 이벤트를 건다.
+
       let idx = $(this).closest("tr").attr("data-idx");
       let prod_idx = $(this).closest("tr").attr("data-prod_idx");
 
@@ -976,33 +1111,12 @@
         type:'DELETE',       // 요청 메서드
         url: '/products/'+idx+'?prod_idx='+prod_idx,  // 요청 URI
         success : function(result){
-          alert(result);
+          alert("삭제되었습니다.");
           showList(prod_idx);
         },
         error   : function(){ alert("삭제권한이 없습니다.") } // 에러가 발생했을 때, 호출될 함수
       }); // $.ajax()
     })
-  });
-
-  const xBtn = document.querySelector(".xBtn");
-  const openModal = document.querySelector(".open-modal");
-  const modal = document.querySelector(".modal");
-  xBtn.addEventListener("click", function () {});
-
-  openModal.addEventListener("click", function () {
-    modal.classList.toggle("show");
-    if (modal.classList.contains("show")) {
-      body.style.overflow = "hidden";
-    }
-  });
-
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) {
-      modal.classList.toggle("show");
-      if (!modal.classList.contains("show")) {
-        body.style.overflow = "auto";
-      }
-    }
   });
 
   let resStateToString = function(states) {
@@ -1011,12 +1125,48 @@
     states.forEach((state) => {
       if(state.res_state_cd == 1) {
         tmp = "답변대기";
+        return;
       } else if (state.res_state_cd == 2) {
         tmp = "답변완료";
+        return;
       }
     })
     return tmp;
   }
+
+  // let checkMyBoard = (result) => {
+  //   result.forEach(one, () => {
+  //     // 1. 세션에서 저장한 id값(user_idx)과 data-uid를 비교한다.
+  //     // 2.1 둘이 같을 경우, jquery css visibility를 display 처리
+  //     // 2.2 다를 경우, jquery css visibility를 hidden 처리
+  //   })
+  // }
+  // let showList = (user_idx) => {
+  //   // ajax 요청(비동기)
+  //   $.ajax({
+  //     type:'GET',
+  //     url:'/cart/list?user_idx=' + user_idx,
+  //     success: (result) => {  // 성공 응답이 오면, 장바구니 목록, 주문정보, 체크박스 정보를 페이지에 랜더링하기
+  //       $('#cartItems').html(listToHtml(result));       // listToHtml메서드 호출
+  //       checkMyBoard(result)  // :TODO user_idx에 해당하는 회원이 쓴 글의 경우 보기, 수정 버튼을 보여준다.
+  //       $('#cartEstimate').html(estimateToHtml(result));    // estimateToHtml메서드 호출
+  //       $('#totalChkBox').html(checkBoxToHtml(result)); // checkBoxToHtml메서드 호출
+  //     },
+  //     error : function() { alert("comment get error");}   // 실패 응답이 오면, 경고창 띄우기
+  //   });  // $.ajax() end
+  // }
+
+  let checkMyBoard = function(buttons) {
+    let tmp = "";
+    buttons.forEach(function(button) {
+      if($(".according-wrap").attr("data-user_idx") == $("#sessionID").text()) {
+        return tmp += '<button class="modBtn">수정</button><br/><button class="delBtn">삭제</button>'
+      }
+
+    })
+    return tmp;
+  }
+
 
   let toHtml = function(inqrys) {  //GetMapping통해서 정보 들어온다.
 
@@ -1029,17 +1179,20 @@
 
     inqrys.forEach(function(inqry) {
       tmp += '<tr id="noticeBlock" data-idx=' + inqry.idx
+      tmp += ''
       tmp += ' data-prod_idx=' + inqry.prod_idx
       tmp += ' data-title=' + inqry.title
       tmp += ' data-ctent='+ inqry.ctent
       tmp += ' data-opub_yn='+ inqry.opub_yn + '>'
-      tmp += '<td id="noticeBlock-title" class="title" data-opub_yn=' + inqry.opub_yn + '>' + inqry.title + '</td>'
+      tmp += '<td id="noticeBlock-title" class="title" data-opub_yn=' + inqry.opub_yn + '><span id="title-text">' + inqry.title + '</span></td>'
       tmp += '<td class="name" data-user_idx=' + inqry.user_idx + '>' + inqry.writer + '</td>'
       tmp += '<td class="reg_date" >' + inqry.wrt_tm + '</td>'
       tmp += '<td id="res-state-cd" class="response_state" >'+inqry.res_state_cd+'</td>'
       tmp += '</tr>'
       tmp += '<tr class="accordion-wrap" data-idx=' + inqry.idx
-      tmp += ' data-prod_idx='+ inqry.prod_idx +'>'
+      tmp += ' data-prod_idx='+ inqry.prod_idx
+      tmp += ' data-user_idx='+ inqry.user_idx
+      tmp += ' data-opub_yn='+ inqry.opub_yn + '>'
       tmp += '<td class="accordion" colspan="4">'
       tmp += '<div class="request-wrap">'
       tmp += '<div class="request">'
@@ -1065,37 +1218,37 @@
       tmp += '</div>'
       tmp += '</div>'
       tmp += '<div class="reg_date"><span>' + inqry.ans_write_time + '</span>'
-      tmp += '<div class="btnGroup">'
-      tmp += '<button class="modBtn">수정</button>'
-      tmp += '<button class="delBtn">삭제</button>'
+      tmp += '<div class="btnGroup" id="btnGroup">'
+      tmp +=    '<button class="modBtn">수정</button>'
+      tmp +=    '<button class="delBtn">삭제</button>'
       tmp += '</div>'
       tmp += '</div>'
       tmp += '</div>'
       tmp += '</td>'
       tmp += '</tr>'
       // 나의 문의에 답변이 안 달렸을 시
-      tmp += '<tr class="no-answer-a-wrap" data-idx=' + inqry.idx
-      tmp += ' data-prod_idx=' + inqry.prod_idx
-      tmp += ' data-ctent=' + inqry.ctent + '>'
-      tmp += '<td class="accordion" colspan="4">'
-      tmp += '<div class="request-wrap">'
-      tmp += '<div class="request">'
-      tmp += '<div class="img">'
-      tmp += '<span class="glasses"></span>'
-      tmp += '</div>'
-      tmp += '<div class="text">'
-      tmp += '<span>'+inqry.ctent+'</span>'
-      tmp += '</div>'
-      tmp += '</div>'
-      tmp += '<div class="btn-for-Change">'
-      tmp += '<div class="btnGroup">'
-      tmp += '<button>수정</button>'
-      tmp += '<button>삭제</button>'
-      tmp += '</div>'
-      tmp += '</div>'
-      tmp += '</div>'
-      tmp += '</td>'
-      tmp += '</tr>'
+      // tmp +=    '<tr class="no-answer-a-wrap" data-idx=' + inqry.idx
+      // tmp +=    ' data-prod_idx=' + inqry.prod_idx
+      // tmp +=    ' data-ctent=' + inqry.ctent + '>'
+      // tmp +=    '<td class="accordion" colspan="4">'
+      // tmp +=    '<div class="request-wrap">'
+      // tmp +=    '<div class="request">'
+      // tmp +=    '<div class="img">'
+      // tmp +=    '<span class="glasses"></span>'
+      // tmp +=    '</div>'
+      // tmp +=    '<div class="text">'
+      // tmp +=    '<span>'+inqry.ctent+'</span>'
+      // tmp +=    '</div>'
+      // tmp +=    '</div>'
+      // tmp +=    '<div class="btn-for-Change">'
+      // tmp +=    '<div class="btnGroup">'
+      // tmp +=    '<button class="modBtn" >수정</button>'
+      // tmp +=    '<button class="delBtn" >삭제</button>'
+      // tmp +=    '</div>'
+      // tmp +=    '</div>'
+      // tmp +=    '</div>'
+      // tmp +=    '</td>'
+      // tmp +=    '</tr>'
       //나의 문의에 답변이 안 달렸을 시 끝
     })
     return tmp += "</tbody>";
