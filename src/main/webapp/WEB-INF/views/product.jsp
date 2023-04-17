@@ -648,6 +648,7 @@
     .reg_date
     .btnGroup {
       position: absolute;
+      display: block;
       right: 22px;
       top: 5px;
     }
@@ -853,23 +854,6 @@
         <div id="prodInqryList">
           <table id="table">
 
-<%--            <c:forEach var="boardDto" items="${list}">--%>
-<%--              <tr>--%>
-<%--                <td class="no">${boardDto.bno}</td>--%>
-<%--                <td class="title"><a href="<c:url value="/board/read${ph.sc.queryString}&bno=${boardDto.bno}"/>"><c:out value="${boardDto.title}"/></a></td>--%>
-<%--                <td class="writer">${boardDto.writer}</td>--%>
-<%--                <c:choose>--%>
-<%--                  <c:when test="${boardDto.reg_date.time >= startOfToday}">--%>
-<%--                    <td class="regdate"><fmt:formatDate value="${boardDto.reg_date}" pattern="HH:mm" type="time"/></td>--%>
-<%--                  </c:when>--%>
-<%--                  <c:otherwise>--%>
-<%--                    <td class="regdate"><fmt:formatDate value="${boardDto.reg_date}" pattern="yyyy-MM-dd" type="date"/></td>--%>
-<%--                  </c:otherwise>--%>
-<%--                </c:choose>--%>
-<%--                <td class="viewcnt">${boardDto.view_cnt}</td>--%>
-<%--              </tr>--%>
-<%--            </c:forEach>--%>
-
           </table>
         </div>
       </div>
@@ -882,6 +866,8 @@
   <div id="sessionID" style="display: none">${session_idx}</div>
   <div class="footer"></div>
 
+  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script>
   let prod_idx = 12;
   let showList = function(prod_idx) {
@@ -921,8 +907,6 @@
   }
 
   $(document).ready(function(){
-    // console.log("prodInqryDto = "+prodInqryDto);
-    // console.log("session_idx = "+session_idx);
 
     showList(prod_idx);
 
@@ -1178,7 +1162,26 @@
     tmp += "<th>작성일</th>";
     tmp += "<th>답변상태</th></tr>";
 
+
+
     inqrys.forEach(function(inqry) {
+      if(inqry.user_idx === $("#sessionID").text()) {
+         $(".btnGroup").css('display', 'block');
+      } else {
+         $(".btnGroup").css('display', 'none');
+      }
+
+
+      let timeStamp = Date.now();
+      // [2]. 타임 스탬프 >> Date 로 변환
+      let reg_date = new Date(inqry.wrt_tm);
+      let answer_date = new Date(inqry.ans_write_time);
+      // [3]. moment 라이브러리 사용해 24시간 형태 날짜 및 시간 확인
+      let now24Date = moment(reg_date).format("YYYY-MM-DD");
+      let now24Date2 = moment(answer_date).format("YYYY-MM-DD");
+      console.log("?????", now24Date)
+
+
       tmp += '<tr id="noticeBlock" data-idx=' + inqry.idx
       tmp += ''
       tmp += ' data-prod_idx=' + inqry.prod_idx
@@ -1187,7 +1190,7 @@
       tmp += ' data-opub_yn='+ inqry.opub_yn + '>'
       tmp += '<td id="noticeBlock-title" class="title" data-opub_yn=' + inqry.opub_yn + '><span id="title-text">' + inqry.title + '</span></td>'
       tmp += '<td class="name" data-user_idx=' + inqry.user_idx + '>' + inqry.writer + '</td>'
-      tmp += '<td class="reg_date" >' + inqry.wrt_tm + '</td>'
+      tmp += '<td class="reg_date" >' + now24Date+ '</td>'
       tmp += '<td id="res-state-cd" class="response_state" >'+inqry.res_state_cd+'</td>'
       tmp += '</tr>'
       tmp += '<tr class="accordion-wrap" data-idx=' + inqry.idx
@@ -1218,7 +1221,7 @@
       tmp += '</div>'
       tmp += '</div>'
       tmp += '</div>'
-      tmp += '<div class="reg_date"><span>' + inqry.ans_write_time + '</span>'
+      tmp += '<div class="reg_date"><span>' + now24Date2 + '</span>'
       tmp += '<div class="btnGroup" id="btnGroup">'
       tmp +=    '<button class="modBtn">수정</button>'
       tmp +=    '<button class="delBtn">삭제</button>'
@@ -1227,30 +1230,6 @@
       tmp += '</div>'
       tmp += '</td>'
       tmp += '</tr>'
-      // 나의 문의에 답변이 안 달렸을 시
-      // tmp +=    '<tr class="no-answer-a-wrap" data-idx=' + inqry.idx
-      // tmp +=    ' data-prod_idx=' + inqry.prod_idx
-      // tmp +=    ' data-ctent=' + inqry.ctent + '>'
-      // tmp +=    '<td class="accordion" colspan="4">'
-      // tmp +=    '<div class="request-wrap">'
-      // tmp +=    '<div class="request">'
-      // tmp +=    '<div class="img">'
-      // tmp +=    '<span class="glasses"></span>'
-      // tmp +=    '</div>'
-      // tmp +=    '<div class="text">'
-      // tmp +=    '<span>'+inqry.ctent+'</span>'
-      // tmp +=    '</div>'
-      // tmp +=    '</div>'
-      // tmp +=    '<div class="btn-for-Change">'
-      // tmp +=    '<div class="btnGroup">'
-      // tmp +=    '<button class="modBtn" >수정</button>'
-      // tmp +=    '<button class="delBtn" >삭제</button>'
-      // tmp +=    '</div>'
-      // tmp +=    '</div>'
-      // tmp +=    '</div>'
-      // tmp +=    '</td>'
-      // tmp +=    '</tr>'
-      //나의 문의에 답변이 안 달렸을 시 끝
     })
     return tmp += "</tbody>";
   }

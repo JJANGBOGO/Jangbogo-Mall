@@ -16,19 +16,21 @@
     <select id="count" resultType="int">
         SELECT count(*)
         FROM prod_inqry
+        where prod_idx = #{prod_idx}
     </select>
 <!--하나의 상품 게시판 안 상품문의 게시물 한 개 보여주기-->
     <select id="select" parameterType="int" resultType="JoinProdInqryDto">
         select pi.idx as 'idx', pi.prod_idx as 'prod_idx', pi.user_idx as 'user_idx', pi.title as 'title', pi.ctent as 'ctent', pi.writer as 'writer', pi.res_state_cd as 'res_state_cd', pi.opub_yn as 'opub_yn', pi.wrt_tm as 'wrt_tm', pia.ctent as 'ans_content', pia.writer as 'ans_writer', pia.resps_tm as 'ans_write_time'
         from prod_inqry pi left join prod_inqry_ans pia
         on pi.idx = pia.idx
-        WHERE pi.idx = #{idx}
+        WHERE pi.idx = #{idx} and pi.prod_idx = #{prod_idx}
     </select>
 <!--하나의 상품 게시판 안 상품문의 게시물 제한된 개수로 보여주기-->
     <select id="selectPage" parameterType="map" resultType="JoinProdInqryDto">
         select pi.idx as 'idx', pi.prod_idx as 'prod_idx', pi.user_idx as 'user_idx', pi.title as 'title', pi.ctent as 'ctent', pi.writer as 'writer', pi.res_state_cd as 'res_state_cd', pi.opub_yn as 'opub_yn', pi.wrt_tm as 'wrt_tm', pia.ctent as 'ans_content', pia.writer as 'ans_writer', pia.resps_tm as 'ans_write_time'
         from prod_inqry pi left join prod_inqry_ans pia
         on pi.idx = pia.idx
+        where prod_idx = #{prod_idx}
         ORDER BY pi.idx desc
         LIMIT #{offset}, #{pageSize}
     </select>

@@ -36,13 +36,11 @@ public class ProdController {
     @PatchMapping("/products/{idx}")
     public ResponseEntity<String> modify(@PathVariable Integer idx, @RequestBody ProdInqryDto dto, HttpSession session) {
         Integer user_idx = (Integer)session.getAttribute("idx");
+        String nick_name = (String)session.getAttribute("nickName");
         dto.setUser_idx(user_idx);
         dto.setIdx(idx);
-        System.out.println("dto = " + dto);
         try {
-            String nickName = service.getNickName(user_idx);
-            dto.setWriter(nickName);
-            System.out.println("Path dto ===" + dto);
+            dto.setWriter(nick_name);
             if(service.modify(dto) != 1) {
                 throw new Exception("Write failed");
             }
@@ -55,19 +53,17 @@ public class ProdController {
 
     //상품문의 게시물을 등록
     @PostMapping("/product/write")  // /product?prod_idx=1 POST
-    public ResponseEntity<String> write(@RequestBody ProdInqryDto dto, Integer prod_idx, HttpSession session) {
+    public ResponseEntity<String> write(@RequestBody ProdInqryDto prodInqryDto, Integer prod_idx, HttpSession session) {
         Integer user_idx = (Integer)session.getAttribute("idx");
 
-        dto.setUser_idx(user_idx);
-        dto.setProd_idx(prod_idx);
-        System.out.println("user_idx = "+user_idx);
-        System.out.println("dto = " + dto);
+        prodInqryDto.setUser_idx(user_idx);
+        prodInqryDto.setProd_idx(prod_idx);
         try {
             String nickName = service.getNickName(user_idx);
-            dto.setWriter(nickName);
-            System.out.println("Post dto ===== " + dto);
+            prodInqryDto.setWriter(nickName);
+            System.out.println("Post dto ===== " + prodInqryDto);
 
-            if(service.write(dto) != 1) {
+            if(service.write(prodInqryDto) != 1) {
                 throw new Exception("Write failed");
             }
             return new ResponseEntity<>("WRT_OK", HttpStatus.OK);
@@ -98,18 +94,14 @@ public class ProdController {
     //상품문의 게시물 가져오기
     @GetMapping("/product/list")
     @ResponseBody
-    public ResponseEntity<List<JoinProdInqryDto>> list(Integer prod_idx, Model m, HttpSession session) {
+    public ResponseEntity<List<JoinProdInqryDto>> list(Integer prod_idx, Model m, HttpSession session, JoinProdInqryDto joinProdInqryDto) {
         List<JoinProdInqryDto> list = null;
-//        Integer session_idx = (Integer)session.getAttribute("idx");
         Integer idx = (Integer)session.getAttribute("idx");
         String email = (String)session.getAttribute("email");
         System.out.println("[GET]user idx = "+idx);
         System.out.println("user email = "+email);
-//        m.addAttribute("session", idx);
 
-//        Map<String, Integer> map = new HashMap<String, Integer>();
-//        map.put("user_idx", idx);
-//        m.addAttribute("map", map);
+//        m.addAttribute("joinProdInqryDto ===", joinProdInqryDto);
 
 //        if(page == null) page = 1;
 //        if(pageSize == null) pageSize = 10;
@@ -118,6 +110,7 @@ public class ProdController {
 //            ProdInqryPageHandler prodInqryPageHandler = new ProdInqryPageHandler(totalCnt, page, pageSize);
 
             list = service.getList(prod_idx);
+        System.out.println(joinProdInqryDto);
             return new ResponseEntity<List<JoinProdInqryDto>>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
