@@ -48,6 +48,21 @@
 </div>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
+    // 배송지 수정 파업창 오픈
+    $('.dlvpnList').on("click",'.update-btn',function (e){
+        let idx = $(this).parent().parent().parent('li').attr('data-idx');
+        let link = '<c:url value="/mypage/addressopen?idx='+idx+'"/>'
+        var popupWidth = 500;
+        var popupHeight = 500;
+        var popupX = (window.screen.width / 2) - (popupWidth / 2);
+        var popupY= (window.screen.height / 2) - (popupHeight / 2);
+        window.name = "sky";
+        window.open(link, '', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY);
+        // console.log(idx);
+    });
+
+
+    // 배송지 목록 조회
     let showList = function (){
         $.ajax({
             type:'GET',       // 요청 메서드 // 배송지 목록 가저오기
@@ -67,6 +82,7 @@
     $(document).ready(function (){
         showList();
 
+        // 배송지 선택 상태 변경
         $('.dlvpnList').on("click",'.checkbox',function (){
             let idx = $(this).parent().parent().parent().parent().attr('data-idx');
             $.ajax({

@@ -81,33 +81,34 @@ public class AddressController {
 //        return "dlvpn/dlvpnlist";
 //    }
 //
-//    @GetMapping("/addressopen") // 배송지 수정 창(오픈)
-//    public String myPageAddrOpen(Integer idx,HttpServletRequest req, Model m, HttpSession session) {
-////        m.addAttribute("mypageUrl", req.getRequestURI());
-//
-//        try {
-//            Address address = service.selAddr(idx); // 가져온 일련번호로 배송지 정보를 가져온다
-//            m.addAttribute("address", address);
-//        } catch(Exception e) {
-//            e.printStackTrace();
-//        }
-//        return "dlvpn/dlvpnopen";
-//    }
-/////유효성 검사 해야함 ! 번호 체크 !
-//    @PostMapping ("/addressremove") //배송지 수정창-> 삭제
-//    public String myPageAddrRemove(Address address,Integer idx,HttpServletRequest req, Model m, HttpSession session) {
-////        m.addAttribute("mypageUrl", req.getRequestURI());
-//        int user_idx = (int) session.getAttribute("idx"); //세션 얻기
-//
-//        // 회원번호랑, 배송지일련번호를 가져와서 삭제한다
-//        try {
-//            if(service.deleteAddr(idx,user_idx)!=1) throw new Exception("Delete failed.");
-//        } catch(Exception e) {
-//            e.printStackTrace();
-//        }
-//        return "redirect:/mypage/addresslist";
-//
-//    }
+    @GetMapping("/addressopen") // 배송지 수정 창(오픈)
+    public String myPageAddrOpen(Integer idx,HttpServletRequest req, Model m, HttpSession session) {
+//        m.addAttribute("mypageUrl", req.getRequestURI());
+
+        try {
+            Address address = service.selAddr(idx); // 가져온 일련번호로 배송지 정보를 가져온다
+            m.addAttribute("address", address);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return "dlvpn/dlvpnopen";
+    }
+///유효성 검사 해야함 ! 번호 체크 !
+    @PostMapping ("/addressremove") //배송지 수정창-> 삭제
+    public String myPageAddrRemove(Address address,Integer idx,HttpServletRequest req, Model m, HttpSession session) {
+//        m.addAttribute("mypageUrl", req.getRequestURI());
+        int user_idx = (int) session.getAttribute("idx"); //세션 얻기
+
+        // 회원번호랑, 배송지일련번호를 가져와서 삭제한다
+        try {
+            if(service.deleteAddr(idx,user_idx)!=1) throw new Exception("Delete failed.");
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/mypage/addresslist";
+//        return "redirect:/addresslists";
+
+    }
 //
 //    @PostMapping ("/addressupdate") //배송지 수정창-> 수정
 //    public String myPageAddrUpdate(Address address,HttpServletRequest req, Model m, HttpSession session) {
