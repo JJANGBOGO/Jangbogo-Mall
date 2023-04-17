@@ -960,7 +960,8 @@
       $(".modal").css("display", "block");
     })
 
-    $("#sendBtn").click(function() {
+    // $("#sendBtn").click(function() {
+    $(".inqry_button").on("click", "#sendBtn", function() {
       let ctent = $("input[id=modal-ctent]").val();
       let title = $("input[id=modal-title]").val();
       let opub_yn;

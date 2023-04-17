@@ -42,6 +42,7 @@ public class ProdController {
         try {
             String nickName = service.getNickName(user_idx);
             dto.setWriter(nickName);
+            System.out.println("Path dto ===" + dto);
             if(service.modify(dto) != 1) {
                 throw new Exception("Write failed");
             }
@@ -64,7 +65,7 @@ public class ProdController {
         try {
             String nickName = service.getNickName(user_idx);
             dto.setWriter(nickName);
-            System.out.println("dto ===== " + dto);
+            System.out.println("Post dto ===== " + dto);
 
             if(service.write(dto) != 1) {
                 throw new Exception("Write failed");
