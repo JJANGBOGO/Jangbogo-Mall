@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <html>
 <head>
   <title>Title</title>
@@ -803,7 +804,7 @@
               <span>제목</span>
             </div>
             <div class="title_input">
-              <input id="modal-title" type="text" placeholder="제목을 입력해 주세요" />
+              <input id="modal-title" type="text" />
             </div>
           </div>
           <div class="inqry_content">
@@ -811,15 +812,15 @@
               <span>내용</span>
             </div>
             <div class="content_input">
-              <input id="modal-ctent" type="text"/>
+              <input id="modal-ctent" type="text" />
             </div>
           </div>
           <div class="inqry_secret">
             <div class="secret_head"></div>
-            <label for="isSecret">
-              <input id="isSecret" type="checkbox" name="opub_yn"/>
-              <span>비밀글로 문의하기</span>
-            </label>
+<%--            <label for="isSecret">--%>
+<%--              <input id="isSecret" type="checkbox" name="opub_yn"/>--%>
+<%--              <span>비밀글로 문의하기</span>--%>
+<%--            </label>--%>
           </div>
           <div class="inqry_button">
             <button class="closeBtn">취소</button>
@@ -852,6 +853,23 @@
         <div id="prodInqryList">
           <table id="table">
 
+<%--            <c:forEach var="boardDto" items="${list}">--%>
+<%--              <tr>--%>
+<%--                <td class="no">${boardDto.bno}</td>--%>
+<%--                <td class="title"><a href="<c:url value="/board/read${ph.sc.queryString}&bno=${boardDto.bno}"/>"><c:out value="${boardDto.title}"/></a></td>--%>
+<%--                <td class="writer">${boardDto.writer}</td>--%>
+<%--                <c:choose>--%>
+<%--                  <c:when test="${boardDto.reg_date.time >= startOfToday}">--%>
+<%--                    <td class="regdate"><fmt:formatDate value="${boardDto.reg_date}" pattern="HH:mm" type="time"/></td>--%>
+<%--                  </c:when>--%>
+<%--                  <c:otherwise>--%>
+<%--                    <td class="regdate"><fmt:formatDate value="${boardDto.reg_date}" pattern="yyyy-MM-dd" type="date"/></td>--%>
+<%--                  </c:otherwise>--%>
+<%--                </c:choose>--%>
+<%--                <td class="viewcnt">${boardDto.view_cnt}</td>--%>
+<%--              </tr>--%>
+<%--            </c:forEach>--%>
+
           </table>
         </div>
       </div>
@@ -871,9 +889,9 @@
       type:'GET',       // 요청 메서드
       url: '/product/list?prod_idx='+prod_idx,  // 요청 URI
       success : function(result){
-        $("#table").html(toHtml(result));    // 서버로부터 응답이 도착하면 호출될 함수
-        $(".response_state").html(resStateToString(result));
-        // $(".btnGroup").html(checkMyBoard(result));
+        $('#table').html(toHtml(result));    // 서버로부터 응답이 도착하면 호출될 함수
+        $('.response_state').html(resStateToString(result));
+        // $('#btnGroup').html(checkMyBoard(result));
       },
       error : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
     }); // $.ajax()
@@ -886,7 +904,7 @@
       $("input[id=modal-title]").val("");
       $("input[id=modal-ctent]").val("");
       $("input[type=checkbox]").prop("checked", false);
-      return;
+
     })
   }
 
@@ -898,7 +916,7 @@
       $("input[id=modal-ctent]").val("");
       $("input[type=checkbox]").prop("checked", false);
 
-      return;
+
     })
   }
 
@@ -928,6 +946,17 @@
     })
 
     $(".open-modal").click(function() {
+      let inqryButton = $(".inqry_button");
+      if(inqryButton[0].children[1].textContent == '수정') {
+        // 태그 제거 해줌
+        let inqryButton = $(".inqry_button");
+        inqryButton[0].children[1].remove();
+        //태그 생성
+        let modBtn = $('<button class="register" id="sendBtn">등록</button>');
+        inqryButton.append(modBtn);
+
+      }
+
       $(".modal").css("display", "block");
     })
 
@@ -936,7 +965,7 @@
       let title = $("input[id=modal-title]").val();
       let opub_yn;
 
-      if($("input:checkbox[name=opub_yn]").is(":checked")) {
+      if($("input:checkbox[id='isSecret']").is(":checked")) {
         opub_yn = 'N';
       } else {
         opub_yn = 'Y';
@@ -972,7 +1001,7 @@
       //input란에 있던 정보를 없앤다
       $("input[id=modal-title]").val("");
       $("input[id=modal-ctent]").val("");
-      $("input[type=checkbox]").prop("checked", false);
+      $("input:checkbox[id='isSecret']").prop("checked", false);
     });
 
     // 동적으로 생성되는, 문의에 달려있는 "수정" 버튼을 누르면
@@ -989,8 +1018,8 @@
       let dtoArr = $(".modBtn").closest("tr").siblings("tr[data-idx=" + inquiry_idx + "]");
       let title = dtoArr[0].dataset.title;
 
-      let opub_yn = dtoArr[0].dataset.opub_yn;
-
+      let opub_yn = $(this).closest("tr").attr("data-opub_yn");
+      console.log("opub_yn="+opub_yn);
       if(user_idx !== $(sessionID).text()) {
         alert("수정권한이 없습니다.");
         return;
@@ -998,10 +1027,11 @@
 
       let isChecked = function (yn) {
         if (yn == 'N') {
-          isChecked = true;
-        } else {
-          isChecked = false;
+          return "true";
+        } else if (yn == 'Y'){
+          return "false";
         }
+        return
       }
 
       let inqryButton = $(".inqry_button");
@@ -1020,23 +1050,19 @@
       //idx값을 새로 생성한 태그에 사용자 정의 속성으로 전달
       $("#modBtn")[0].setAttribute("data-idx", idx);
 
-      //게시물에 있던 내용들을 옮겨왔담ㅇㄴ
+      //게시물에 있던 내용들을 옮겨왔다.
       $("input[id=modal-title]").val(title);
       $("input[id=modal-ctent]").val(ctent);
-      $("input[type=checkbox]").attr("checked", isChecked(opub_yn));
+      $("input:checkbox[id='isSecret']").prop("checked", isChecked(opub_yn));
 
       //모달이 열린다.
       $(".modal").css("display", "block");
 
-      //모달 안에 있는 수정버튼을 누르면
 
-      return;
+
     });
 
     $(".inqry_button").on("click", "#modBtn", function() {
-
-      let thisthis = $(this);
-      console.log($(this));
 
       //속성 data-idx의 값을 저장한다.
       let idx = $(this).attr("data-idx");
@@ -1053,7 +1079,7 @@
         headers: {"content-type": "application/json"},
         data: JSON.stringify({idx:idx, prod_idx:prod_idx, title:newTitle, ctent:newCtent, opub_yn: newOpub_yn}),
         success: function(result) {
-          alert(result)
+          alert("수정되었습니다.")
           showList(prod_idx);
         },
         error: function() {alert("수정권한이 없습니다")}
@@ -1067,6 +1093,7 @@
       $("input[type=checkbox]").prop("checked", false);
 
       let inqryButton = $(".inqry_button");
+      console.log("inqryButton = "+ inqryButton)
       inqryButton[0].children[1].remove();
       //태그 생성
       let sendBtn = $('<button class="register" id="sendBtn">등록</button>');
@@ -1133,9 +1160,7 @@
     let tmp = "";
     buttons.forEach(function(button) {
       if($(".according-wrap").attr("data-user_idx") == $("#sessionID").text()) {
-        $("btnGroup").css("display", "visibility")
-      } else {
-        $("btnGroup").css("display", "none")
+        return tmp += '<button class="modBtn">수정</button><br/><button class="delBtn">삭제</button>'
       }
 
     })
@@ -1166,7 +1191,8 @@
       tmp += '</tr>'
       tmp += '<tr class="accordion-wrap" data-idx=' + inqry.idx
       tmp += ' data-prod_idx='+ inqry.prod_idx
-      tmp += ' data-user_idx='+ inqry.user_idx + '>'
+      tmp += ' data-user_idx='+ inqry.user_idx
+      tmp += ' data-opub_yn='+ inqry.opub_yn + '>'
       tmp += '<td class="accordion" colspan="4">'
       tmp += '<div class="request-wrap">'
       tmp += '<div class="request">'
@@ -1192,7 +1218,7 @@
       tmp += '</div>'
       tmp += '</div>'
       tmp += '<div class="reg_date"><span>' + inqry.ans_write_time + '</span>'
-      tmp += '<div class="btnGroup">'
+      tmp += '<div class="btnGroup" id="btnGroup">'
       tmp +=    '<button class="modBtn">수정</button>'
       tmp +=    '<button class="delBtn">삭제</button>'
       tmp += '</div>'

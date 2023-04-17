@@ -28,7 +28,6 @@ public class ProdController {
     @GetMapping("/product")
     public String product(HttpSession session, Model m) {
         Integer session_idx = (Integer)session.getAttribute("idx");
-        System.out.println("session_idx === " + session_idx);
         m.addAttribute("session_idx", session_idx);
         return "product";
     }
@@ -46,7 +45,7 @@ public class ProdController {
             if(service.modify(dto) != 1) {
                 throw new Exception("Write failed");
             }
-            return new ResponseEntity<>("수정내용이 등록되었습니다.", HttpStatus.OK);
+            return new ResponseEntity<>("MOD_OK", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<String>("MOD_ERR", HttpStatus.BAD_REQUEST);
@@ -88,7 +87,7 @@ public class ProdController {
             if(rowCnt != 1) {
                 throw new Exception("Delete Failed");
             }
-            return new ResponseEntity<>("삭제되었습니다.", HttpStatus.OK);
+            return new ResponseEntity<>("DEL_OK", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("DEL_ERR", HttpStatus.BAD_REQUEST);
@@ -105,7 +104,6 @@ public class ProdController {
         String email = (String)session.getAttribute("email");
         System.out.println("[GET]user idx = "+idx);
         System.out.println("user email = "+email);
-
 //        m.addAttribute("session", idx);
 
 //        Map<String, Integer> map = new HashMap<String, Integer>();
