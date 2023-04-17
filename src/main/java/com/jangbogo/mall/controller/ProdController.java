@@ -4,6 +4,7 @@ import com.jangbogo.mall.domain.JoinProdInqryDto;
 import com.jangbogo.mall.domain.ProdInqryDto;
 import com.jangbogo.mall.domain.ProdInqryPageHandler;
 import com.jangbogo.mall.service.ProdInqryService;
+import com.mysql.cj.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +12,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 //@ResponseBody
@@ -22,7 +26,9 @@ public class ProdController {
     ProdInqryService service;
     //페이지 이동
     @GetMapping("/product")
-    public String product() {
+    public String product(HttpSession session, Model m) {
+        Integer session_idx = (Integer)session.getAttribute("idx");
+        m.addAttribute("session_idx", session_idx);
         return "product";
     }
 
@@ -47,7 +53,7 @@ public class ProdController {
     }
 
     //상품문의 게시물을 등록
-    @PostMapping("/products")  // /product?prod_idx=1 POST
+    @PostMapping("/product/write")  // /product?prod_idx=1 POST
     public ResponseEntity<String> write(@RequestBody ProdInqryDto dto, Integer prod_idx, HttpSession session) {
         Integer user_idx = (Integer)session.getAttribute("idx");
 
@@ -89,16 +95,23 @@ public class ProdController {
     }
 
     //상품문의 게시물 가져오기
-    @GetMapping("/products")
-    public ResponseEntity<List<JoinProdInqryDto>> list(Integer prod_idx, HttpSession session) {
+    @GetMapping("/product/list")
+    @ResponseBody
+    public ResponseEntity<List<JoinProdInqryDto>> list(Integer prod_idx, Model m, HttpSession session) {
         List<JoinProdInqryDto> list = null;
+//        Integer session_idx = (Integer)session.getAttribute("idx");
         Integer idx = (Integer)session.getAttribute("idx");
         String email = (String)session.getAttribute("email");
-        System.out.println("user idx = "+idx);
+        System.out.println("[GET]user idx = "+idx);
         System.out.println("user email = "+email);
+//        m.addAttribute("session", idx);
+
+//        Map<String, Integer> map = new HashMap<String, Integer>();
+//        map.put("user_idx", idx);
+//        m.addAttribute("map", map);
+
 //        if(page == null) page = 1;
 //        if(pageSize == null) pageSize = 10;
-
         try {
 //            int totalCnt = service.getCount();
 //            ProdInqryPageHandler prodInqryPageHandler = new ProdInqryPageHandler(totalCnt, page, pageSize);
