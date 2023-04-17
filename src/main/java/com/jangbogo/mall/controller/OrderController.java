@@ -100,42 +100,25 @@ public class OrderController {
 
     // 메서드명 : getDeliveryInfo
     // 기   능 : 배송 정보 불러오기
-    // 반환타입 : ResponseEntity<Map>
+    // 반환타입 : ResponseEntity<User>
+    // 매개변수 : HttpSession session
     // 요청URL : order/checkout/delivery?user_idx=1234 GET
     @GetMapping("/order/checkout/delivery")
-    public ResponseEntity<Map> getDeliveryInfo() {
-        Map map = new HashMap();
-        // 1. 하드코딩
-        // 1.1 배송지
-        // 1.2 받는 사람
-        // 1.3 전화번호
-        // 1.4 받으실 장소
-        // 1.5 공동현관 비밀번호
-        // 1.6 배송완료 메시지
+    public ResponseEntity<User> getDeliveryInfo(HttpSession session) {
+        Integer idx = (Integer)(session.getAttribute("idx"));
+
+        User user = null;
         try {
-            String address = "경기 의왕시 원골로 43(모락산현대아파트)118동 202호";
-            String recipient = "정지우";
-            String mpno = "01084354496";
-            String pickUpLocation = "문 앞";
-            boolean hasGatePwd = true;
-            String gatePwd = "#1234#0000";
-            boolean completeMsg = true;
-            map.put("address", address);
-            map.put("recipient", recipient);
-            map.put("mpno", mpno);
-            map.put("pickUpLocation", pickUpLocation);
-            map.put("hasGatePwd", hasGatePwd);
-            map.put("completeMsg", completeMsg);
-            // ResponseEntity<List<CartDto> list값과 상태코드를 함께 반환하기 위한 클래스
+            user = userService.selectUser(idx);
+            // ResponseEntity<User> list값과 상태코드를 함께 반환하기 위한 클래스
             // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
-            return new ResponseEntity<Map>(map, HttpStatus.OK);
-        } catch(Exception e) {
+            return new ResponseEntity<User>(user, HttpStatus.OK);
+        } catch (Exception e) {
             // 에러 발생 시, 에러 내용을 로그에 출력
             e.printStackTrace();
             // 에러 발생 시, list값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
-            return new ResponseEntity<Map>(map, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<User>(user, HttpStatus.BAD_REQUEST);
         }
-        // 2. 소프트 코딩
     }
 
     // 메서드명 : goToRecipientDetails
