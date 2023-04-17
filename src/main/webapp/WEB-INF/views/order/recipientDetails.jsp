@@ -18,7 +18,7 @@
             <div class="recipient-details__title">
                 <h2>배송 정보</h2>
                 <label class="recipient-details__check">
-                    <input type="checkbox" class="recipient-details__checkbox" checked="">
+                    <input type="checkbox" class="recipient-details__checkbox">
                     <span>주문자 정보와 동일</span>
                 </label>
             </div>
@@ -62,11 +62,11 @@
                 $(document).ready(() => {
                     // 주문자와 동일 체크된 경우
                     // 받으실 분 과 휴대전화 번호 input 값을 부모창의 값들로 채운다.
-                    let recipient = opener.$("#deliveryRecipient > span:first-of-type").html();
-                    let mpno      = opener.$("#deliveryRecipient > span:last-of-type").html();
+                    let recipient = opener.$("#ordererName").html();
+                    let mpno      = opener.$("#ordererMpno").html();
 
-                    $("input#receiver-name").val(recipient);
-                    $("input#receiver-phone").val(mpno);
+                    // $("input#receiver-name").val(recipient);
+                    // $("input#receiver-phone").val(mpno);
 
                     // 이벤트 대상 : 받으실 분 input의 '삭제' 버튼
                     // 이벤트 : click
@@ -116,13 +116,14 @@
                     $(".recipient-details__buttons > button:last-of-type").click(() => {
                         let recipient = $("#receiver-name").val();
                         let mpno = $("#receiver-phone").val();
-                        let pickUpLocation = $('.recipient-details__location-main  input:checked').val();
+                        let pickUpLocation = ($('.recipient-details__location-main  input:checked').val() === "DOOR") ? "문 앞" : "경비실";
 
-                        pickUpLocation = (pickUpLocation === "DOOR") ? "문 앞" : "경비실";
+                        // 유효성 검사를 통과하지 못 하면, 경고창 띄우고 아래 코드가 실행되지 않는다.
+                        if(!checkNameLength(recipient) || !checkNameRegex(recipient) || !checkMpnoRegex(mpno) || !checkMpnoLength(mpno)) return;
 
                         // 부모창 값을 자식창 값으로 수정
                         $("#deliveryRecipient", opener.document).html(
-                            "<span>" + recipient + "</span> , <span>" + mpno + "</span>"
+                            "<span>" + recipient + "</span> , <span>" + formatMpnoWithHyphen(mpno) + "</span>"
                         )
                         $("#deliveryLocation", opener.document).html(
                             "<span>받으실 장소 | " + pickUpLocation + "</span>"
@@ -130,6 +131,50 @@
                         // 자식창 닫기
                         window.close();
                     })
+
+                    // 메서드명 : checkNameLength
+                    // 기   능 : 이름의 길이가 0인 경우 이벤트 핸들러 실행을 멈춘다.
+                    const checkNameLength = (name) => {
+                        if(!name.length) {
+                            alert("받는 분 이름을 입력해주세요.")
+                            return false;
+                        }
+                        return true;
+                    }
+
+                    // 메서드명 : checkMpnoLength
+                    // 기   능 : 이름의 길이가 0인 경우 이벤트 핸들러 실행을 멈춘다.
+                    const checkMpnoLength = (mpno) => {
+                        if(!mpno.length) {
+                            alert("휴대폰 번호를 입력해주세요.")
+                            return false;
+                        }
+                        return true;
+                    }
+
+                    // 메서드명 : checkMpnoRegex
+                    // 기   능 : 휴대폰 번호 형식이 아닌 경우, 이벤트 핸들러 실행을 멈춘다.
+                    const checkMpnoRegex = (mpno) => {
+                        // 휴대폰 번호 정규식 체크
+                        mpno = mpno.replace(/-/g, "");  // 하이픈 제거
+                        const regex = /^(?:(010\d{4})|(01[1|6|7|8|9]\d{3,4}))(\d{4})$/;
+                        if(!regex.test(mpno)){
+                            alert("휴대폰번호가 올바르지 않습니다.");
+                            return false;
+                        }
+                        return true;
+                    }
+
+                    // 메서드명 : checkNameRegex
+                    // 기   능 : 주문자명이 10글자 이상이면, 이벤트 핸들러 실행을 멈춘다.
+                    const checkNameRegex = (name) => {
+                        const regex = /^[가-힣]{2,4}$/;
+                        if(!regex.test(name)) {
+                            alert("주문자 이름이 올바르지 않습니다.(한글 2 ~ 4글자)");
+                            return false;
+                        }
+                        return true;
+                    }
                 })
             </script>
         </div>

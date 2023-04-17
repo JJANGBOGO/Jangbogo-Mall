@@ -71,7 +71,7 @@
                         컬리 내 개별 판매자가 등록한 오픈마켓 상품의 경우 컬리는 통신판매중개자로서 주문, 품질, 교환/환불 등 의무와 책임을 부담하지 않습니다.
                     </p>
                     <div class="order-button">
-                        <button type="button"></button>
+                        <button type="button" id="paymentBtn"></button>
                     </div>
                 </div>
                 <div class="order-amount__container"></div>
@@ -179,7 +179,7 @@
                 tmp += "<span>보내는 분</span>"
                 tmp += "</div>"
                 tmp += "<div class='orderer-value'>"
-                tmp += "<span>" + ordererInfo.nick_nm + "</span>"
+                tmp += "<span id='ordererName' >" + ordererInfo.nick_nm + "</span>"
                 tmp += "</div>"
                 tmp += "</div>"
                 tmp += "<div class='orderer-section'>"
@@ -187,7 +187,7 @@
                 tmp += "<span>휴대폰</span>"
                 tmp += "</div>"
                 tmp += "<div class='orderer-value'>"
-                tmp += "<span>" + formatMpnoWithHyphen(ordererInfo.mpno) + "</span>"
+                tmp += "<span id='ordererMpno' >" + formatMpnoWithHyphen(ordererInfo.mpno) + "</span>"
                 tmp += "</div>"
                 tmp += "</div>"
                 tmp += "<div class='orderer-section'>"
@@ -238,7 +238,6 @@
                 tmp += "</div>"
                 tmp += "</div>"
                 return tmp;
-
             }
 
             // 메서드명 : couponListToHtml
@@ -412,6 +411,50 @@
                     popupCenter(url, 500, 800);
                 });
 
+                // 이벤트 대상 : #paymentBtn 결제하기 버튼
+                // 이벤트 : click
+                // 이벤트 핸들러 기능 : '결제하기' 버튼 클릭 시, (1) 주문서 작성 데이터 '주문' 테이블에 저장 (2) tid '결제' 테이블에 저장 (3) 결제 페이지로 이동
+                $(document).on("click", "#paymentBtn", (e) => {
+                    // (1)
+                    $.ajax({
+                        type: 'POST',
+                        url:'/order/checkout/submit',
+                        success:function(data) {
+                            // (2)
+                            $.ajax({
+                                url:'/payment/kakao/ready',
+                                dataType:'json',
+                                success:function(data) {
+                                    saveTid(data.tid);
+                                    // (3)
+                                    location.href=data.next_redirect_pc_url + "?tid=" + data.tid;
+                                },
+                                error:function(error) {
+                                    alert(error);
+                                }
+                            })
+                        },
+                        error:function(error) {
+                            alert(error);
+                        }
+                    })
+
+                })
+
+                // 메서드명 : saveTid
+                // 기   능 : 결제 요청시 받아오는 결제고유번호 tid를 db의 '결제' 테이블에 저장한다.
+                // 매개변수 : tid
+                let saveTid = (tid) => {
+                    $.ajax({
+                        url:'/payment/kakao/save-tid?tid=' + tid,
+                        success:function(data) {
+                            console.log("data saved successfully.")
+                        },
+                        error:function(error) {
+                            alert("data save failure.");
+                        }
+                    })
+                }
             })
         </script>
         <%@ include file="/WEB-INF/views/include/footer.jsp" %>
