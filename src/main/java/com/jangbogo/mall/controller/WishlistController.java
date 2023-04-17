@@ -1,13 +1,11 @@
 package com.jangbogo.mall.controller;
 
-import com.jangbogo.mall.domain.JoinProdInqryDto;
 import com.jangbogo.mall.domain.ProductDto;
 import com.jangbogo.mall.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -24,7 +22,7 @@ public class WishlistController {
     // 위시리스트 페이지 이동
     @GetMapping("/wishlist")
     public String wishlistPage() {
-        return "wishlistfinal";
+        return "wishlist";
     }
 
     // 지정된 위시리스트 목록을 가져오는 메서드
@@ -37,7 +35,7 @@ public class WishlistController {
             return new ResponseEntity<List<ProductDto>>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<List<ProductDto>>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<List<ProductDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
@@ -56,17 +54,17 @@ public class WishlistController {
             return new ResponseEntity<>("DEL_OK", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>("DEL_ERR", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("DEL_ERR", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    // 장바구니에 상품 존재 확인 메서드
     @PostMapping("/wishlists") //wishlists?prod_idx=1&prod_cnt=1 POST
     public ResponseEntity<String> insert(Integer prod_idx, Integer prod_cnt,HttpSession session,RedirectAttributes ratt){
         int user_idx = (int) session.getAttribute("idx");
 
         try {
             int CartCnt = wishlistService.checkCart(prod_idx, user_idx); // 장바구니에 이 상품이 있는지 확인
-            if (CartCnt != 1) {
+            if (CartCnt == 0) { // 0 or 1
                 int cnt = wishlistService.insertCart(prod_idx, user_idx, prod_cnt);    // 2-1 상품번호,회원번호,개수를 넣어주면 장바구니에 담긴다
                 return new ResponseEntity<>("DEL_OK1", HttpStatus.OK);
             } else {
@@ -75,7 +73,7 @@ public class WishlistController {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>("DEL_ERR", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("DEL_ERR", HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
 
@@ -138,10 +136,6 @@ public class WishlistController {
 //        }
 //        return "redirect:/mypage/wishlist";                                       // 3. 장바구니에 담은 뒤에 목록 페이지 새로고침(redirect)
 //    }
-
-
-
-
 
 
 

@@ -168,6 +168,7 @@
 .total1 {
     display: flex;
     justify-content: space-between;
+    padding-top: 25px;
 
 }
 
@@ -193,6 +194,7 @@
     border: 1px solid rgb(221, 221, 221);
     border-radius: 3px;
     height: 56px;
+    font-size: 16px;
 
     cursor: pointer;
 }
@@ -204,6 +206,15 @@
     background-color: #f58412;
     border-radius: 3px;
     height: 56px;
+    font-size: 16px;
 
     cursor: pointer;
+}
+.insert-cartBtn{
+    color: rgb(255, 255, 255);
+}
+.price-won{
+    font-weight: 600 ;
+    vertical-align: 3px;
+    margin-right: 5px;
 }

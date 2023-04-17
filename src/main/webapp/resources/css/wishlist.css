@@ -21,6 +21,9 @@ button {
     border: 1px solid rgb(221, 221, 221);
     cursor: pointer;
     margin-bottom: 4px;
+    /*width:104px ;*/
+    /*height :36px;*/
+    /*radius: 4px;*/
 }
 
 .openBtn {
@@ -34,6 +37,9 @@ button {
     color: white;
     background-color: #f58412;
     border: 1px solid whitesmoke;
+    /*width:104px ;*/
+    /*height :36px;*/
+    /*radius: 4px;*/
 }
 
 .css-102v0ri span {
