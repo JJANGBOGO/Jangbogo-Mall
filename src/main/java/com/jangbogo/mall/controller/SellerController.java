@@ -1,9 +1,11 @@
 package com.jangbogo.mall.controller;
 
 
+import com.jangbogo.mall.domain.ProductDto;
 import com.jangbogo.mall.domain.Seller;
 import com.jangbogo.mall.domain.SellerDtl;
 import com.jangbogo.mall.domain.User;
+import com.jangbogo.mall.service.ProductService;
 import com.jangbogo.mall.service.SellerService;
 import com.jangbogo.mall.utils.RegEx;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -29,7 +32,7 @@ public class SellerController {
     SellerService service;
 
     @Autowired
-    RegEx regEx;
+    ProductService productService;
 
     //로그인화면
     @RequestMapping("/seller/login")
@@ -260,4 +263,23 @@ public class SellerController {
             return "redirect:/find/pwd";
         }
     }
+
+    @GetMapping("/seller/list/product")
+    public String listProductView(Model m, RedirectAttributes rattr) {
+        try {
+            List<ProductDto> list = productService.getListBySeller(1);
+            m.addAttribute("productList", list);
+            return "";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    //판매자 상품 등록
+    @GetMapping("/seller/register/product")
+    public String regProductView() {
+        return "";
+    }
+
 }
