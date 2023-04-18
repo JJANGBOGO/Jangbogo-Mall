@@ -34,7 +34,6 @@ public class OrderService {
     // 매개변수 : Integer idx
     // 반환타입 : String
     public OrderDto getOrderDto(Integer idx) {
-        System.out.println("ord_idx = " + idx);
         return orderDao.getOrderDto(idx);
     }
 
@@ -43,7 +42,6 @@ public class OrderService {
     // 매개변수 : Integer idx
     // 반환타입 : String
     public PaymentDto getPaymentDto(Integer idx) {
-        System.out.println("ord_idx = " + idx);
         return orderDao.getPaymentDto(idx);
     }
 }

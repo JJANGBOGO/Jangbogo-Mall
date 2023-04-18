@@ -293,17 +293,15 @@ public class OrderController {
     // 기   능 : 결제 승인 처리
     // 반환타입 : String
     @GetMapping("/payment/kakao/approve")
-    public String kakaoPaymentApprove(String tid, String pg_token) {
+    public String kakaoPaymentApprove(String pg_token) {
+        String tid = "";
         try {
-            System.out.println("pg_token = " + pg_token);                       // pg_token = 3cec57be9aaa1b1b0d35
-
             // 주문번호(ord_idx) 가져오기
-            OrderDto orderDto = orderService.getOrderDto(1235);             // TODO: 주문번호는 어디서 구하지?
+            OrderDto orderDto = orderService.getOrderDto(1235);             // TODO: 주문번호는 소프트코딩
             // 결제고유번호(tid)  가져오기
-            PaymentDto paymentDto = orderService.getPaymentDto(1);          // TODO : 결제번호는 어디서 구하지?
+            PaymentDto paymentDto = orderService.getPaymentDto(1);          // TODO : 결제번호는 소프트코딩
 
-            tid = paymentDto.getSetl_idx();
-
+            tid = paymentDto.getSetl_idx();                                      // TEST : tid = T43ea2975b8c2c020508
         } catch (Exception e) {
             e.printStackTrace();
         }

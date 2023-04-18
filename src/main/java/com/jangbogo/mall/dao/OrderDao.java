@@ -29,12 +29,10 @@ public class OrderDao {
     }
 
     public OrderDto getOrderDto(Integer idx) {
-        System.out.println("idx = " + idx);
         return session.selectOne(namespace + "selectOrderDto", idx);
     }
 
     public PaymentDto getPaymentDto(Integer idx) {
-        System.out.println("idx = " + idx);
         return session.selectOne(namespace + "selectPaymentDto", idx);
     }
 }
