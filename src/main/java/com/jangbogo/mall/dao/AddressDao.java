@@ -13,6 +13,8 @@ public interface AddressDao {
     Address selAddr(Integer idx) throws Exception;
 
     Integer deleteAddr(Integer idx, Integer user_idx) throws Exception;
+    Integer changeState(Integer user_idx) throws Exception;
+
 
     Integer updateAddr(Address address) throws Exception;
 

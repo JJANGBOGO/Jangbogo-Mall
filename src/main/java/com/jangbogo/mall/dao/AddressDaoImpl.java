@@ -42,6 +42,12 @@ public class AddressDaoImpl implements AddressDao {
         map.put("user_idx", user_idx);
         return session.update(nameSpace+"deleteAddr",map);
     }
+    @Override
+    public Integer changeState( Integer user_idx) throws Exception { // 배송지일련번호, 회원번호로 배송지 삭제
+        Map map = new HashMap();
+        map.put("user_idx", user_idx);
+        return session.update(nameSpace+"changeState",map);
+    }
 
     @Override
     public Integer updateAddr(Address address) throws Exception { // 배송지 수정

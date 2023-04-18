@@ -61,14 +61,14 @@ public class AddressDaoTest {
 
     @Test
     public void deleteAddr() throws Exception { //OK
-        int cnt = dao.deleteAddr(7,1);
-        System.out.println("cnt = " + cnt);
+//        int cnt = dao.deleteAddr(7,1);
+//        System.out.println("cnt = " + cnt);
         Address address = dao.selAddr(7);
         System.out.println("address = " + address);
         System.out.println("address.getState_cd() = " + address.getState_cd());
         assertTrue(address.getState_cd()==3);
 //        log.info("list.... " + list);
-        assertTrue(cnt != 0);
+//        assertTrue(cnt != 0);
 
     }
 

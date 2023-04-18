@@ -13,7 +13,7 @@
         SELECT *
         FROM DLVPN
         WHERE USER_IDX = #{user_idx} AND NOT STATE_CD = 3
-        order by STATE_CD asc, IS_DEFAULT_YN desc , CHG_TM desc ,REG_TM desc;
+        order by STATE_CD asc, IS_DEFAULT_YN desc , CHG_TM desc, REG_TM desc;
     </select>
 <!--배송지 조회-->
     <select id="selAddr" parameterType="map" resultType="Address">
@@ -21,11 +21,17 @@
         FROM DLVPN
         WHERE IDX = #{idx}
     </select>
-<!-- 배송지 삭제-->
+<!-- 배송지 상태코드 삭제-->
     <update id="deleteAddr" parameterType="map">
         UPDATE DLVPN
         SET STATE_CD = 3
         WHERE IDX = #{idx} AND USER_IDX = #{user_idx};
+    </update>
+<!--   기본 배송지의 상태코드 선택으로 변경-->
+    <update id="changeState" parameterType="map">
+        UPDATE DLVPN
+        SET STATE_CD = 1
+        WHERE USER_IDX = #{user_idx} and IS_DEFAULT_YN = 'Y'
     </update>
 
 <!-- 배송지 수정-->

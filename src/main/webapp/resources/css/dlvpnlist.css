@@ -217,3 +217,9 @@ label{
     border-radius: 3px;
     cursor: pointer;
 }
+.checkbox{
+    margin-left: 9px;
+}
+.dlvpn-span-type{
+    color: #f58412;
+}

@@ -34,6 +34,11 @@ public class AddressServiceImpl implements AddressService{
     }
 
     @Override
+    public Integer changeState (Integer user_idx) throws Exception {
+        return dao.changeState(user_idx);
+    }
+
+    @Override
     public Integer updateAddr(Address address) throws Exception { // 배송지 수정
         return dao.updateAddr(address);
     }
