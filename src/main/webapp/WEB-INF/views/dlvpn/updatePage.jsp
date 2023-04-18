@@ -22,15 +22,15 @@
     <div class="dlvpn-box">
       <div class="dlvpn-box1">
         <label class="dlvpn-label1">${address.addr_base}</label>
-        <div><input class="dlvpn-input1" type="text" placeholder="나머지 주소를 입력해 주세요"></div>
+        <div><input class="dlvpn-input1" type="text" placeholder="나머지 주소를 입력해 주세요" value="${address.addr_dtl}"></div>
       </div>
       <div class="dlvpn-box2">
         <label class="dlvpn-label2">받으실 분</label>
-        <div><input class="dlvpn-input2" type="text" placeholder="이름을 입력해 주세요"></div>
+        <div><input class="dlvpn-input2" type="text" placeholder="이름을 입력해 주세요" value="${address.rcpr_nm}"></div>
       </div>
       <div class="dlvpn-box3">
         <label class="dlvpn-label3">휴대폰</label>
-        <div><input class="dlvpn-input3" type="text" placeholder="번호를 입력해 주세요"></div>
+        <div><input class="dlvpn-input3" type="text" placeholder="번호를 입력해 주세요" value="${address.rcpr_mobl_no}"></div>
       </div>
     </div>
 
@@ -60,17 +60,17 @@
 
     // let addr_dtl = document.querySelector('.dlvpn-input1');
     <%--if("${address.addr_dtl}"!=""){--%>
-      document.querySelector('.dlvpn-input1').value = "${address.addr_dtl}";
+    <%--  document.querySelector('.dlvpn-input1').value = "${address.addr_dtl}";--%>
     // }
     <%--if("${address.rcpr_nm}"!=""){--%>
-      document.querySelector('.dlvpn-input2').value = "${address.rcpr_nm}";
+    <%--  document.querySelector('.dlvpn-input2').value = "${address.rcpr_nm}";--%>
     // }
     <%--if("${address.rcpr_mobl_no}"!=""){--%>
-      document.querySelector('.dlvpn-input3').value = "${address.rcpr_mobl_no}"
+    <%--  document.querySelector('.dlvpn-input3').value = "${address.rcpr_mobl_no}"--%>
     // }
 
 
-    // 배송지 상태(삭제) 변경
+    // 배송지 상태 변경      ex).. [사용, 미사용, (삭제)]
     $(".delete-button").click(function(){
       if(!confirm("정말로 삭제하시겠습니까?"))return;
       let idx = ${address.idx}; // 배송지 번호
@@ -83,7 +83,7 @@
         data : JSON.stringify({idx:idx,state_cd:state_cd}), // 서버로 전송할 데이터. stringify()로 직렬화 필요.
         success : function(result){
           // alert(result);
-          opener.parent.location = '<c:url value="/mypage/addresslist"/>';
+          opener.parent.location = '<c:url value="/mypage/address/list"/>';
           self.close();
         },
         error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
@@ -106,7 +106,7 @@
         headers : { "content-type": "application/json"}, // 요청 헤더
         data : JSON.stringify({addr_dtl:addr_dtl,rcpr_nm:rcpr_nm,rcpr_mobl_no:rcpr_mobl_no,is_default_yn:is_default_yn,idx:idx}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
         success : function(result){
-          opener.parent.location = '<c:url value="/mypage/addresslist"/>';
+          opener.parent.location = '<c:url value="/mypage/address/list"/>';
           self.close();
         },
         error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수

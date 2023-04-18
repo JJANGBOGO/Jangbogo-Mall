@@ -48,20 +48,20 @@
         WHERE IDX = #{idx} AND USER_IDX = #{user_idx};
     </update>
 
-<!-- 해당 회원번호의 기본배송지상태 N(해체) 초기화-->
+<!-- 기본배송지상태가 Y인 배송지의 기본배송지상태를 N(해체) 초기화-->
     <update id="resetDefault_N" parameterType="int">
         UPDATE DLVPN
         SET IS_DEFAULT_YN = 'N'
         WHERE USER_IDX = #{user_idx} and IS_DEFAULT_YN = 'Y';
     </update>
 
-
+<!--해당 배송지의 배송지상태를(사용)으로 변경-->
     <update id="AddrStateCD" parameterType="int">
         UPDATE DLVPN
         SET STATE_CD = 1
         WHERE IDX = #{idx}
     </update>
-
+<!--해당 회원의 배송지상태가(사용)인 배송지의 배송지상태를 (미사용)으로 초기회-->
     <update id="resetStateCD" parameterType="int">
         UPDATE DLVPN
         SET STATE_CD = 2

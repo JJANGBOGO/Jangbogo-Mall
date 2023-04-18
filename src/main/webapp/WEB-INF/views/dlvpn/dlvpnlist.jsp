@@ -50,9 +50,8 @@
 <%--다음 카카오 주소 api--%>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-
-    // 배송지 추가 파업창 오픈
-    $(".insertAddr").click(function(){
+    // 카카오 주소 api 함수선언
+    function KaKao_api() {
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -78,6 +77,10 @@
                 window.open(link, '', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY);
             }
         }).open();
+    }
+    // 배송지 추가 파업창 오픈(카카오 api)
+    $(".insertAddr").click(function(){
+        KaKao_api();
     });
 
     // 배송지 수정 파업창 오픈
@@ -88,7 +91,7 @@
         var popupHeight = 500;
         var popupX = (window.screen.width / 2) - (popupWidth / 2);
         var popupY= (window.screen.height / 2) - (popupHeight / 2);
-        window.name = "sky";
+        // window.name = "sky";
         window.open(link, '', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY);
     });
 
@@ -97,7 +100,7 @@
     let showList = function (){
         $.ajax({
             type:'GET',       // 요청 메서드 // 배송지 목록 가저오기
-            url: '/mypage/addresslists',  // 요청 URI
+            url: '/mypage/address/lists',  // 요청 URI
             // headers : { "content-type": "application/json"}, // 요청 헤더
             // dataType : 'text', // 전송받을 데이터의 타입 / 생략하면 기본이 JSON 이다
             // data : JSON.stringify(person),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
@@ -108,7 +111,7 @@
         }); // $.ajax()
     }
 
-
+    // main()
     $(document).ready(function (){
         showList();
 

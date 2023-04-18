@@ -21,7 +21,7 @@
                 </a>
             </li>
             <li>
-                <a href="/mypage/addresslist" class="<c:if test='${mypageUrl eq "/mypage/address"}'>active</c:if> ">
+                <a href="/mypage/address/list" class="<c:if test='${mypageUrl eq "/mypage/address"}'>active</c:if> ">
                     배송지 관리
                 </a>
             </li>

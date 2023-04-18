@@ -5,12 +5,13 @@ button{
     padding: 0px 30px;
 }
 .strong-notice{
-    display: block;
+    display: flex;
     padding: 40px 0px 34px;
     font-size: 24px;
     font-weight: 500;
     line-height: 30px;
     text-align: center;
+    color: #f58412;
 }
 
 .span-notice{
