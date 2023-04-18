@@ -218,7 +218,7 @@
                 tmp += "<span>배송지</span>"
                 tmp += "</div>"
                 tmp += "<div id='deliveryAddress' class='delivery-value' >"
-                tmp += "<span>" + "경기 의왕시 원골로 43(모락산현대아파트)118동 202호(하드코딩)" + "</span>"
+                tmp += "<span>" + "경기 의왕시 원골로 43(모락산현대아파트)118동 202호(하드코)" + "</span>"
                 tmp += "</div>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-section'>"
@@ -415,40 +415,57 @@
                 // 이벤트 : click
                 // 이벤트 핸들러 기능 : '결제하기' 버튼 클릭 시, (1) 주문서 작성 데이터 '주문' 테이블에 저장 (2) tid '결제' 테이블에 저장 (3) 결제 페이지로 이동
                 $(document).on("click", "#paymentBtn", (e) => {
+                    let req = {
+                        ordr_nm : $("#ordererName").text(),
+                        mpno : $("#ordererMpno").text(),
+                        user_idx : ${idx},
+                        idx : 1
+                    }
                     // (1)
                     $.ajax({
                         type: 'POST',
                         url:'/order/checkout/submit',
+                        headers: {"content-type" : "application/json"},
+                        data: JSON.stringify(req),
                         success:function(data) {
-                            // (2)
-                            $.ajax({
-                                url:'/payment/kakao/ready',
-                                dataType:'json',
-                                success:function(data) {
-                                    saveTid(data.tid);
-                                    // (3)
-                                    location.href=data.next_redirect_pc_url + "?tid=" + data.tid;
-                                },
-                                error:function(error) {
-                                    alert(error);
-                                }
-                            })
+                            // alert("(1) success")
+                            // alert("data.user_idx = " + data.user_idx)
+                            handleKakaoPayReady(data.user_idx);
                         },
                         error:function(error) {
                             alert(error);
                         }
                     })
-
                 })
 
+                // 메서드명 : handleKakaoPayReady
+                // 기   능 : 주문 데이터가 테이블에 삽입된 후, 결제 페이지로 이동한다.
+                // 매개변수 : tid
+                let handleKakaoPayReady = () => {
+                    // (2)
+                    $.ajax({
+                        type: 'GET',
+                        url:'/payment/kakao/ready',
+                        dataType:'json',
+                        success:function(data) {
+                            saveTid(data.tid, idx);
+                            // (3)
+                            location.href=data.next_redirect_pc_url + "?tid=" + data.tid;
+                        },
+                        error:function(error) {
+                            alert(error);
+                        }
+                    })
+                }
                 // 메서드명 : saveTid
                 // 기   능 : 결제 요청시 받아오는 결제고유번호 tid를 db의 '결제' 테이블에 저장한다.
                 // 매개변수 : tid
-                let saveTid = (tid) => {
+                let saveTid = (tid, ord_idx) => {
                     $.ajax({
-                        url:'/payment/kakao/save-tid?tid=' + tid,
+                        url:'/payment/kakao/save-tid?tid=' + tid + '&ord_idx=' + ord_idx,
                         success:function(data) {
-                            console.log("data saved successfully.")
+                            // alert("(3) success");
+                            alert("data saved successfully.")
                         },
                         error:function(error) {
                             alert("data save failure.");

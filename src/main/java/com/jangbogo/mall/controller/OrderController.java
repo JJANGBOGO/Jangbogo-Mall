@@ -1,6 +1,8 @@
 package com.jangbogo.mall.controller;
 
 import com.jangbogo.mall.domain.CartDto;
+import com.jangbogo.mall.domain.OrderDto;
+import com.jangbogo.mall.domain.PaymentDto;
 import com.jangbogo.mall.domain.User;
 import com.jangbogo.mall.service.CartService;
 import com.jangbogo.mall.service.OrderService;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -181,6 +184,57 @@ public class OrderController {
         return session.getAttribute("idx") != null;
     }
 
+    // 메서드명 : saveOrderForm
+    // 기   능 : 주문서 작성 내용을 '주문' 데이터에 저장한다.
+    // 반환타입 : ResponseEntity<String>
+    @PostMapping("/order/checkout/submit")
+    public ResponseEntity<OrderDto> saveOrderForm(@RequestBody OrderDto orderDto) {
+        System.out.println(orderDto);  // {idx=1, ordr_nm='정지우', mpno='010-8435-4496', user_idx=1235}
+        String msg = "";
+        int rowCnt = 0;
+        try {
+            // rowCnt가 1일 경우, 성공 응답을 보낸다.
+            // 1이 아닐 경우, 에러 발생 및 리턴
+            // ResponseEntity<String> 성공 메시지 "SAVE_OK"와 상태코드를 함께 반환하기 위한 클래스
+            // 성공 시, 'SAVE_OK'와 OK상태코드를 반환 - 상태코드 : 200
+            rowCnt = orderService.addOrder(orderDto);
+            if(rowCnt == 0) new Exception("insert failure.");
+            msg = "SAVE_OK";
+            return new ResponseEntity<OrderDto>(orderDto, HttpStatus.OK);
+        } catch(Exception e) {
+            // 에러 발생 시, 에러 내용을 로그에 출력
+            e.printStackTrace();
+            // ResponseEntity<String> 실패 메시지 "SAVE_ERR"와 상태코드를 함께 반환하기 위한 클래스
+            // 에러 발생 시, "SAVE_ERR"와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
+            msg = "SAVE_ERR";
+            return new ResponseEntity<OrderDto>(orderDto, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    // 메서드명 : saveTid
+    // 기   능 : 결제 준비 메서드로부터 받은 응답 중 tid를 db에 저장한다.
+    // 매개변수 : String tid
+    // 반환타입 : ResponseEntity<String>
+    @GetMapping("/payment/kakao/save-tid")
+    public ResponseEntity<String> saveTid(String tid, Integer ord_idx) {
+        String msg = "";
+        Integer rowCnt = 0;
+        try {
+            // ResponseEntity<String> 성공 메시지 "SAVE_OK"와 상태코드를 함께 반환하기 위한 클래스
+            // 성공 시, 'SAVE_OK'와 OK상태코드를 반환 - 상태코드 : 200
+            rowCnt = orderService.addCountsaveKakaoPayment(tid, ord_idx);
+            msg = "SAVE_OK";
+            return new ResponseEntity<String>(msg, HttpStatus.OK);
+        } catch(Exception e) {
+            // 에러 발생 시, 에러 내용을 로그에 출력
+            e.printStackTrace();
+            // ResponseEntity<String> 실패 메시지 "SAVE_ERR"와 상태코드를 함께 반환하기 위한 클래스
+            // 에러 발생 시, "SAVE_ERR"와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
+            msg = "SAVE_ERR";
+            return new ResponseEntity<String>(msg, HttpStatus.BAD_REQUEST);
+        }
+    }
+
     // 메서드명 : kakaoPaymentReady
     // 기   능 : 결제 준비 및 요청 처리 후, 결제 승인 메서드 호출
     // 매개변수 : HttpSession session
@@ -194,33 +248,34 @@ public class OrderController {
     @ResponseBody
     public String kakaoPaymentReady(HttpSession session) {
         try {
-            URL url = new URL("https://kapi.kakao.com/v1/payment/ready");
-            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Authorization", "KakaoAK 4319c284b87b726f5f038d839ad6bbd2");
-            conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-            conn.setDoOutput(true);  // doOutput : 연결을 통해 서버에 전달할 데이터가 있는지 여부 conn: 디폴트 doInput : true
+            URL url = new URL("https://kapi.kakao.com/v1/payment/ready");                             // 맵핑 - v1/payment/ready
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();                               // 요청하는 클라이언트(전봇대1) ~ 요청을 받는 카카오페이 서버(전봇대2)를 연결시켜주는 전깃줄
+            conn.setRequestMethod("POST");                                                                  // 요청메서드 - POST 요청
+            conn.setRequestProperty("Authorization", "KakaoAK 4319c284b87b726f5f038d839ad6bbd2");           // Property 설정 - Authorization: KakaoAK ${APP_ADMIN_KEY}
+            conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");     // Property 설정 - Content-type: application/x-www-form-urlencoded;charset=utf-8
+            conn.setDoOutput(true);                                                                         // 커넥션의 doOutput - 연결을 통해 서버에 전달할 데이터 유무(디폴트 - doInput : true)
             String params = "";
             params = "cid=TC0ONETIME&partner_order_id=partner_order_id&partner_user_id=partner_user_id&item_name=초코파이&quantity=1&total_amount=2200&tax_free_amount=0&approval_url=http://localhost:8080/payment/kakao/approve&cancel_url=http://localhost:8080/payment/kakao/cancel&fail_url=http://localhost:8080/payment/kakao/faillure";
-            OutputStream outputStream = conn.getOutputStream();
-            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
-            dataOutputStream.writeBytes(params);
-            dataOutputStream.flush();
-            dataOutputStream.close();
+            OutputStream outputStream = conn.getOutputStream();                                             // 파라미터를 서버에 전달하기 위한 클래스 OutputStream을 받아냄 - 주는 쪽(getOutputStream(), 커넥션로부터 얻어냄), Byte 형식으로 주고받아야 함
+            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);                         // 데이터 주는 쪽 DataOutputStream - 인자로 주는 쪽인 OutputStream 지정, 파라미터를 Byte형식으로 써서 서버에 전달
+            dataOutputStream.writeBytes(params);                                                            // 데이터 주는 쪽 DataOutputStream 클래스 메서드 중 writeBytes() - 인자로 문자열 지정, Byte로 형변환하여 써줌
+                                                                                                            // 데이터를 주는 쪽에서 데이터를 갖고 있지만 아직 전깃줄(커넥션)에 타지는 않았다.
+//          dataOutputStream.flush();                                                                        // 데이터 주는 쪽 DataOutputStream 클래스 메서드 중 flush() - 자기가 가지고 있는 것들을 '전깃줄'에 태워보내며 자기가 갖고 있던 것들을 비워준다
+            dataOutputStream.close();                                                                       // 데이터 주는 쪽 DataOutputStream 클래스 메서드 중 close() - close()메서드를 사용하면 이 안에 flush()가 알아서 호출된다. 따라서, flush() 실행 안 해도 됨(포함)
 
-            int result = conn.getResponseCode();
-            InputStream inputStream;
-            if(result == 200) {
-                inputStream = conn.getInputStream();
+            int result = conn.getResponseCode();                                                            // 통신 결과를 int result에 저장
+            InputStream inputStream;                                                                        // 서버로부터 데이터를 전달받기 위한 클래스 InputStream을 받아냄. '받는 애'
+            if(result == 200) {                                                                             // HTTP 상태 코드가 '200'인 경우
+                inputStream = conn.getInputStream();                                                        // 받는 쪽 - 커넥션으로부터 getInputStream을 받음 - 받는 쪽(getInputStream(), 커넥션으로부터 얻어냄)
             } else {
-                inputStream = conn.getErrorStream();
+                inputStream = conn.getErrorStream();                                                        // 받는 쪽 - 상태코드가 '200'이 아닌 경우 에러를 받는 스트림을 호출 - 에러 받는 쪽(getErrorStream(), 커넥션으로부터 얻어냄)
             }
             System.out.println("inputStream = " + inputStream);
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);                       // InputStreamReader(받는 애) - 받아온 데이터 읽기 가능 클래스, 받는 쪽인 'inputStream'을 인자로 지정하면, 받는 쪽이 받은 데이터를 읽을 수 있다. '읽는 애'
             System.out.println("inputStreamReader = " + inputStreamReader);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);  // bufferedReader : 형변환하는애
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);                          // BufferedReader - InputStream, OutputStream은 Byte 형식으로 데이터를 주고 받는다. 문자열로 형변환해서 받아야 한다.             '형변환 하는 애'
 
-            return bufferedReader.readLine();
+            return bufferedReader.readLine();                                                               // readLine() - 문자열로 형변환을 해준 다음 찍어낸다. 그러면서 본인은 비워지게 된다.
 
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -238,41 +293,23 @@ public class OrderController {
     // 기   능 : 결제 승인 처리
     // 반환타입 : String
     @GetMapping("/payment/kakao/approve")
-    public String kakaoPaymentApprove(String pg_token) {
+    public String kakaoPaymentApprove(String tid, String pg_token) {
         try {
-            System.out.println("pg_token = " + pg_token);
-            URL url = new URL("https://kapi.kakao.com/v1/payment/approve");
-            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Authorization", "KakaoAK 4319c284b87b726f5f038d839ad6bbd2");
-            conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-            conn.setDoOutput(true);  // doOutput : 연결을 통해 서버에 전달할 데이터가 있는지 여부 conn: 디폴트 doInput : true
+            System.out.println("pg_token = " + pg_token);                       // pg_token = 3cec57be9aaa1b1b0d35
 
-            String params = "cid=TC0ONETIME&tid=T1234567890123456789&partner_order_id=partner_order_id&partner_user_id=partner_user_id&pg_token=" + pg_token;
+            // 주문번호(ord_idx) 가져오기
+            OrderDto orderDto = orderService.getOrderDto(1235);             // TODO: 주문번호는 어디서 구하지?
+            // 결제고유번호(tid)  가져오기
+            PaymentDto paymentDto = orderService.getPaymentDto(1);          // TODO : 결제번호는 어디서 구하지?
 
-            OutputStream outputStream = conn.getOutputStream();
-            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
-            dataOutputStream.writeBytes(params);
-            dataOutputStream.flush();
-            dataOutputStream.close();
+            tid = paymentDto.getSetl_idx();
 
-            int result = conn.getResponseCode();
-            InputStream inputStream;
-            if(result == 200) {
-                inputStream = conn.getInputStream();
-            } else {
-                inputStream = conn.getErrorStream();
-            }
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);  // bufferedReader : 형변환하는애
-            return bufferedReader.readLine();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "order/kakaoPayApprove";
     }
+
 
     // POST /payment/kakao/approve HTTP/1.1
     // Host: kapi.kakao.com
@@ -289,55 +326,4 @@ public class OrderController {
     // 메서드명 : kakaoPaymentFailure
     // 기   능 : 결제 실패 처리
     // 반환타입 : String
-
-    // 메서드명 : saveOrderForm
-    // 기   능 : 주문서 작성 내용을 '주문' 데이터에 저장한다.
-    // 반환타입 : ResponseEntity<String>
-    @PostMapping("/order/checkout/submit")
-    public ResponseEntity<String> saveOrderForm() {
-        String msg = "";
-        int rowCnt = 0;
-        try {
-
-            // rowCnt가 1일 경우, 성공 응답을 보낸다.
-            // 1이 아닐 경우, 에러 발생 및 리턴
-            
-            // ResponseEntity<String> 성공 메시지 "SAVE_OK"와 상태코드를 함께 반환하기 위한 클래스
-            // 성공 시, 'SAVE_OK'와 OK상태코드를 반환 - 상태코드 : 200
-
-            msg = "SAVE_OK";
-            return new ResponseEntity<String>(msg, HttpStatus.OK);
-        } catch(Exception e) {
-            // 에러 발생 시, 에러 내용을 로그에 출력
-            e.printStackTrace();
-            // ResponseEntity<String> 실패 메시지 "SAVE_ERR"와 상태코드를 함께 반환하기 위한 클래스
-            // 에러 발생 시, "SAVE_ERR"와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
-            msg = "SAVE_ERR";
-            return new ResponseEntity<String>(msg, HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    // 메서드명 : saveTid
-    // 기   능 : 결제 준비 메서드로부터 받은 응답 중 tid를 db에 저장한다.
-    // 매개변수 : String tid
-    // 반환타입 : ResponseEntity<String>
-    @GetMapping("/payment/kakao/save-tid")
-    public ResponseEntity<String> saveTid(String tid) {
-        String msg = "";
-        Integer rowCnt = 0;
-        try {
-            // ResponseEntity<String> 성공 메시지 "SAVE_OK"와 상태코드를 함께 반환하기 위한 클래스
-            // 성공 시, 'SAVE_OK'와 OK상태코드를 반환 - 상태코드 : 200
-            rowCnt = orderService.addCountsaveKakaoPayment(tid);
-            msg = "SAVE_OK";
-            return new ResponseEntity<String>(msg, HttpStatus.OK);
-        } catch(Exception e) {
-            // 에러 발생 시, 에러 내용을 로그에 출력
-            e.printStackTrace();
-            // ResponseEntity<String> 실패 메시지 "SAVE_ERR"와 상태코드를 함께 반환하기 위한 클래스
-            // 에러 발생 시, "SAVE_ERR"와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
-            msg = "SAVE_ERR";
-            return new ResponseEntity<String>(msg, HttpStatus.BAD_REQUEST);
-        }
-    }
 }
