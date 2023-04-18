@@ -3,29 +3,37 @@ package com.jangbogo.mall.domain;
 public class ProdInqryPageHandler {
 
     private Integer totalCnt;
-    private Integer pageSize;
+    private Integer pageSize = 10;
     private Integer naviSize = 10;
     private Integer totalPage;
-    private Integer page;
+    private Integer page = 1;
     private Integer beginPage;
     private Integer endPage;
     private boolean showPrev;
     private boolean showNext;
 
-    public ProdInqryPageHandler(Integer totalCnt, Integer page) {
-        this(totalCnt, page, 10);
-    }
     public ProdInqryPageHandler(Integer totalCnt, Integer page, Integer pageSize) {
-        this.totalCnt = totalCnt;
+//        this(totalCnt, 1, 10);
         this.page = page;
+        this.totalCnt = totalCnt;
         this.pageSize = pageSize;
-
         totalPage = (int)Math.ceil(totalCnt / (double)pageSize);
         beginPage = (page-1)/ naviSize * naviSize +1;
         endPage = Math.min(beginPage+naviSize-1, totalPage);
         showPrev = beginPage != 1;
         showNext = endPage != totalPage;
     }
+//    public doPaging(Integer totalCnt, Integer page, Integer pageSize) {
+//        this.totalCnt = totalCnt;
+//        this.page = page;
+//        this.pageSize = pageSize;
+//
+//        totalPage = (int)Math.ceil(totalCnt / (double)pageSize);
+//        beginPage = (page-1)/ naviSize * naviSize +1;
+//        endPage = Math.min(beginPage+naviSize-1, totalPage);
+//        showPrev = beginPage != 1;
+//        showNext = endPage != totalPage;
+//    }
 
     public Integer getTotalCnt() {
         return totalCnt;

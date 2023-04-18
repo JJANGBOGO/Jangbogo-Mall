@@ -932,7 +932,16 @@
       return;
     })
 
-    $(".open-modal").click(function() {
+    $(".open-modal").click(function(e) {
+      target = $(e.target);
+      let p = $(target).offset();
+
+      let divTop = p.top + 400;
+      let divLeft = p.left - 500;
+
+      $('#modal-body').css({"z-index": '10', "top": divTop, "left": divLeft, "position": "absolute"}).show();
+
+
       let inqryButton = $(".inqry_button");
       if(inqryButton[0].children[1].textContent == '수정') {
         // 태그 제거 해줌
@@ -993,7 +1002,15 @@
     });
 
     // 동적으로 생성되는, 문의에 달려있는 "수정" 버튼을 누르면
-    $("#table").on("click", ".modBtn", function() {
+    $("#table").on("click", ".modBtn", function(e) {
+
+      target = $(e.target).closest("tr");
+      let p = $(target).offset();
+
+      let divTop = p.top + 0;
+      let divLeft = p.left + 350;
+
+      $('#modal-body').css({"z-index": '10', "top": divTop, "left": divLeft, "position": "absolute"}).show();
 
       // console.log("session_idx"+session_idx);
       // if(session_idx.idx !== )
