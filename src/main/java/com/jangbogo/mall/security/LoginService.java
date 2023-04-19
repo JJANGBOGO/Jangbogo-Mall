@@ -20,18 +20,19 @@ public class LoginService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername (String username) throws UsernameNotFoundException {
 
-        ArrayList<String> authList = new ArrayList<String>();
-        Dao dao = sqlSession.getMapper(Dao.class);
-
-        UserDetailsDto userDetailsDto = dao.selectUser(username);
-        authList = dao.getAuthList(username);
-
-        if (userDetailsDto == null) { //User을 찾지 못했을 경우
-            throw new UsernameNotFoundException(username);
-        }
-        else {
-            userDetailsDto.setAuthority(authList);
-        }
+//        ArrayList<String> authList = new ArrayList<String>();
+//        Dao dao = sqlSession.getMapper(Dao.class);
+//
+//        UserDetailsDto userDetailsDto = dao.selectUser(username);
+        UserDetailsDto userDetailsDto = new UserDetailsDto();
+//        authList = dao.getAuthList(username);
+//
+//        if (userDetailsDto == null) { //User을 찾지 못했을 경우
+//            throw new UsernameNotFoundException(username);
+//        }
+//        else {
+//            userDetailsDto.setAuthority(authList);
+//        }
 
         return userDetailsDto; //완전한 UserDetails 객체
     }

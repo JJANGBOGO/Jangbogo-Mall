@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 @Service("loginAuthenticationProvider")
 public class LoginAuthenticationProvider implements AuthenticationProvider {
 
-    @Autowired
-    UserDetailsService loginService;
+//    @Autowired
+//    UserDetailsService loginService;
 
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
@@ -26,7 +26,9 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
         //디비에서 유저 레코드를 DTO 객체로 가져오기.
         String userId = authentication.getName();
         String userPw = (String) authentication.getCredentials();
-        UserDetailsDto userDetailsDto = (UserDetailsDto) loginService.loadUserByUsername(userId);
+//        UserDetailsDto userDetailsDto = (UserDetailsDto) loginService.loadUserByUsername(userId);
+
+        UserDetailsDto userDetailsDto  = new UserDetailsDto();
 
 
         //loginFailureHandler 오류 던질 때
