@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject; //json.simple이어야 한다.
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -69,22 +70,19 @@ public class UserController {
 
     //회원탈퇴
     @PostMapping("/user/withdraw")
-    @ResponseBody
-    public String withdrawUser(int idx, String email) {
-        String msg = "";
+    public ResponseEntity<String> withdrawUser(int idx, String email, HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
         try {
-            log.info("result= " + idx + email);
-            if (userService.withdrawUser(idx, email) != 0) {
+            if (userService.withdrawUser(idx, email) != 1)
+                throw new Exception("withdraw failed");
 
-                msg = "SUCCESS";
-                //세션 삭제
-                //인가 객체 삭제
-            }
+            session.invalidate();//세션 삭제
+            deleteAuth(req, resp);//인가 객체 삭제
+            return ResponseEntity.ok().body("SUCCESS");
+
         } catch (Exception e) {
             e.printStackTrace();
-            msg = "FAILED";
+            return ResponseEntity.status(500).body("FAILED");
         }
-        return msg;
     }
 
     //로그인뷰
