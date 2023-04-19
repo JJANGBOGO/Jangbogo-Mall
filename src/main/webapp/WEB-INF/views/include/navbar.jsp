@@ -47,7 +47,7 @@
         <div class="header-wrap">
             <div class="header-inner">
                 <div class="logo-container">
-                    <h1 class="header-logo"><a href="/">JungsukMarket</a></h1>
+                    <h1 class="header-logo"><a href="/">Jangbogo</a></h1>
                 </div>
                 <div class="search-box">
                     <form action="">

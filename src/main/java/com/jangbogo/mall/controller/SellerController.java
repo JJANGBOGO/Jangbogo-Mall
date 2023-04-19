@@ -265,11 +265,12 @@ public class SellerController {
     }
 
     @GetMapping("/seller/list/product")
-    public String listProductView(Model m, RedirectAttributes rattr) {
+    public String listProductView (HttpServletRequest req, Model m, RedirectAttributes rattr) {
+        m.addAttribute("mySellerUrl", req.getRequestURI());
         try {
             List<ProductDto> list = productService.getListBySeller(1);
             m.addAttribute("productList", list);
-            return "";
+            return "/seller/productList";
         } catch (Exception e) {
             e.printStackTrace();
             return "";
@@ -278,8 +279,8 @@ public class SellerController {
 
     //판매자 상품 등록
     @GetMapping("/seller/register/product")
-    public String regProductView() {
-        return "";
+    public String regProductView () {
+        return "/seller/registerProduct";
     }
 
 }
