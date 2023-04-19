@@ -76,6 +76,7 @@
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
+<script src="/js/msg.js"></script>
 <script>
     $(document).ready(function () {
         $(".cancel").click(function () {
@@ -109,19 +110,18 @@
         });
 
         $(".confirm").click(function () {
-            //send ajax
             $.ajax({
                 url: "/user/withdraw",
-                data: {idx: ${sessionScope.idx}, email: "${sessionScope.email}"},
+                data: {idx: ${user.idx}, email: "${user.email}"},
                 type: "POST",
-                success: function (result) {
-                    if (result === "SUCCESS") {
-                        alert("탈퇴에 성공했습니다.");
+                success: function (msg) {
+                    if (msg === "SUCCESS") {
+                        alert(withdraw_ok);
                         window.location.href = "/";
                     }
                 },
                 error: function (error) {
-                    alert("요청 도중 문제가 발생하였습니다. 다시 시도해주세요");
+                    alert(error_msg);
                 }
             });
         });

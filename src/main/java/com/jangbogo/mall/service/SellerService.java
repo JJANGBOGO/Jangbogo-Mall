@@ -12,10 +12,9 @@ public interface SellerService {
     Seller getSellerByIdx (Integer idx) throws Exception;
 
     //판매자 수정
-    int updateSeller (Seller seller) throws Exception;
+    int updateSeller (Seller seller, SellerDtl dtl) throws Exception;
 
     //판매자 상세 수정
-    int updateSellerDtl (SellerDtl detail) throws Exception;
 
     //판매자 상세 추가
     int insertSellerDtl (SellerDtl detail) throws Exception;

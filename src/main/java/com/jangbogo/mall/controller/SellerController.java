@@ -155,12 +155,12 @@ public class SellerController {
 
     //판매자수정 뷰
     @GetMapping("/seller/modify")
-    public String chgSellerView(HttpServletRequest req, Model m, RedirectAttributes rattr) {
+    public String chgSellerView(HttpServletRequest req, HttpSession session, Model m, RedirectAttributes rattr) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
         try {
-            // TODO:: 세션에서 idx 받아오기
-            Seller seller = service.getSellerByIdx(14);
-            SellerDtl sellerDtl = service.getSellerDtl(14);
+            Integer idx = (Integer) session.getAttribute("idx");
+            Seller seller = service.getSellerByIdx(idx);
+            SellerDtl sellerDtl = service.getSellerDtl(idx);
 
             m.addAttribute("seller", seller);
             m.addAttribute("sellerDtl", sellerDtl);
@@ -173,26 +173,24 @@ public class SellerController {
     }
 
     @PostMapping("/seller/modify")
-    public String modifySeller(Seller seller, SellerDtl sellerDtl, HttpServletRequest req, RedirectAttributes rattr) {
-        log.info("수정...." + seller + Objects.isNull(sellerDtl));
+    public String modifySeller(Seller seller, SellerDtl sellerDtl, HttpSession session, RedirectAttributes rattr) {
+        String redirectUrl = "redirect:/seller/info";
 
-        // TODO:: 추후 세션에서 가져오기로 수정
-        seller.setIdx(14);
-        seller.setEmail("seller100@naver.com");
-        sellerDtl.setSeler_idx(14);
         try {
-            int result = service.updateSeller(seller);
+            Integer idx = (Integer) session.getAttribute("idx");
+            seller.setIdx(idx);
+            seller.setEmail((String) session.getAttribute("email"));
+            sellerDtl.setSeler_idx(idx);
 
-            int result2 = service.updateSellerDtl(sellerDtl);
-
+            int result = service.updateSeller(seller, sellerDtl);
+//            int result2 = service.updateSellerDtl(sellerDtl);
 
         } catch (Exception e) {
             e.printStackTrace();
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
-            return "redirect:/seller/info";
+            return redirectUrl;
         }
-
-        return "redirect:/seller/info";
+        return redirectUrl;
     }
 
     //판매자탈퇴 뷰
@@ -208,7 +206,7 @@ public class SellerController {
         String email = (String) session.getAttribute("email"); //이메일 얻기
         try {
 //          TODO:: 구현해야 함
-            if(service.withdrawSeller(idx, email) != 1)
+            if (service.withdrawSeller(idx, email) != 1)
                 throw new Exception("withdraw failed");
 
             rattr.addFlashAttribute("msg", "SELLER_NOT_FOUND"); //판매자 존재 X
@@ -264,7 +262,7 @@ public class SellerController {
     }
 
     @GetMapping("/seller/list/product")
-    public String listProductView (HttpServletRequest req, Model m, RedirectAttributes rattr) {
+    public String listProductView(HttpServletRequest req, Model m, RedirectAttributes rattr) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
         try {
             List<ProductDto> list = productService.getListBySeller(1);
@@ -278,7 +276,7 @@ public class SellerController {
 
     //판매자 상품 등록
     @GetMapping("/seller/register/product")
-    public String regProductView () {
+    public String regProductView() {
         return "/seller/registerProduct";
     }
 

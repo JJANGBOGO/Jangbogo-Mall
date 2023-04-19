@@ -54,7 +54,6 @@ public class UserController {
     //회원탈퇴뷰
     @GetMapping("/user/withdraw")
     public String withdrawUserView(HttpSession session, Model m, RedirectAttributes rattr) {
-
         try {
             int idx = (int) session.getAttribute("idx");
             User user = userService.selectUser(idx);
@@ -193,7 +192,7 @@ public class UserController {
                 userService.updateLoginTm(user.getIdx(), user.getEmail()); //ok
             }
 
-//            makeAuth(email); //TODO:: 시큐리티 후 수정
+            makeAuth(email);
             session.setAttribute("loginService", "naver"); // 최종 로그인 서비스. 같은 이메일, 다른 서비스 로그인 구별 목적
             crtSession(session, user);
             return "redirect:/";
