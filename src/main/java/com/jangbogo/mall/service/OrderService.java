@@ -1,9 +1,7 @@
 package com.jangbogo.mall.service;
 
-import com.jangbogo.mall.dao.CartDao;
 import com.jangbogo.mall.dao.OrderDao;
 import com.jangbogo.mall.domain.OrderDto;
-import com.jangbogo.mall.domain.PaymentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,11 +35,4 @@ public class OrderService {
         return orderDao.getOrderDto(idx);
     }
 
-    // 메서드명 : getPaymentDto
-    // 기   능 : OrderDao의 getOrderDto메서드 호출
-    // 매개변수 : Integer idx
-    // 반환타입 : String
-    public PaymentDto getPaymentDto(Integer idx) {
-        return orderDao.getPaymentDto(idx);
-    }
 }

@@ -33,20 +33,10 @@
         반환타입 : String
         매개변수 : Integer user_idx
     -->
-    <select id="selectOrderDto" parameterType="Integer" resultType="PaymentDto">
+    <select id="selectOrderDto" parameterType="Integer" resultType="OrderDto">
         select * from ORD
         where IDX = #{idx};
     </select>
 
-    <!--
-        태   그 : select
-        기   능 : '결제' 테이블 중 특정 결제 행 조회하기
-        아이디명 : selectPaymentDto
-        반환타입 : String
-        매개변수 : Integer user_idx
-    -->
-    <select id="selectPaymentDto" parameterType="Integer" resultType="PaymentDto">
-        select * from SETL
-        where IDX = #{idx};
-    </select>
+
 </mapper>

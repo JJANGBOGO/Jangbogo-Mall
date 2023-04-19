@@ -374,7 +374,6 @@
             }
 
             $(document).ready(() => {
-                // TODO : 세션에서 회원번호를 가져와야 한다. 세션 연동 시, 추후 테스트 필요.
                 // 변수명 : idx
                 // 저장값 : 세션에 저장된 회원번호(user_idx)
                 let idx = `${idx}`;
@@ -428,8 +427,6 @@
                         headers: {"content-type" : "application/json"},
                         data: JSON.stringify(req),
                         success:function(data) {
-                            // alert("(1) success")
-                            // alert("data.user_idx = " + data.user_idx)
                             handleKakaoPayReady(data.user_idx);
                         },
                         error:function(error) {
@@ -442,10 +439,17 @@
                 // 기   능 : 주문 데이터가 테이블에 삽입된 후, 결제 페이지로 이동한다.
                 // 매개변수 : tid
                 let handleKakaoPayReady = () => {
+                    let req = {
+                        ordr_nm : $("#ordererName").text(),
+                        mpno : $("#ordererMpno").text(),
+                        user_idx : ${idx},
+                        idx : 1
+                    }
                     // (2)
                     $.ajax({
-                        type: 'GET',
+                        type: 'POST',
                         url:'/payment/kakao/ready',
+                        data: JSON.stringify(req),
                         dataType:'json',
                         success:function(data) {
                             saveTid(data.tid, idx);
@@ -457,6 +461,7 @@
                         }
                     })
                 }
+
                 // 메서드명 : saveTid
                 // 기   능 : 결제 요청시 받아오는 결제고유번호 tid를 db의 '결제' 테이블에 저장한다.
                 // 매개변수 : tid
@@ -464,7 +469,6 @@
                     $.ajax({
                         url:'/payment/kakao/save-tid?tid=' + tid + '&ord_idx=' + ord_idx,
                         success:function(data) {
-                            // alert("(3) success");
                             alert("data saved successfully.")
                         },
                         error:function(error) {

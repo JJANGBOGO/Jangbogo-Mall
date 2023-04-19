@@ -1,7 +1,6 @@
 package com.jangbogo.mall.dao;
 
 import com.jangbogo.mall.domain.OrderDto;
-import com.jangbogo.mall.domain.PaymentDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -32,8 +31,5 @@ public class OrderDao {
         return session.selectOne(namespace + "selectOrderDto", idx);
     }
 
-    public PaymentDto getPaymentDto(Integer idx) {
-        return session.selectOne(namespace + "selectPaymentDto", idx);
-    }
 }
 
