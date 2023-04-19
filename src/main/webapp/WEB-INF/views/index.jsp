@@ -61,6 +61,7 @@
         <!-- 1번째 탭 -->
         <ul class="thum-list">
             <li>
+                <a href="<c:url value='/product/detail'/>">
                 <a class="img-box">
                     <img
                             src="https://sitem.ssgcdn.com/45/50/86/item/1000492865045_i1_290.jpg"
@@ -78,6 +79,7 @@
                     <div class="review-cnt">후기 999+</div>
                     <div class="point">적립금 130원</div>
                 </div>
+                </a>
             </li>
             <li>
                 <a class="img-box">

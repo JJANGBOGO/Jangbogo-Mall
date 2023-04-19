@@ -12,7 +12,7 @@
                 <ul>
                     <s:authorize access="isAnonymous()">
                         <li>
-                            <a href="/login">로그인</a>
+                            <a href="/user/login">로그인</a>
                         </li>
                         <li>
                             <a href="/register/intro">회원가입</a>
@@ -47,7 +47,7 @@
         <div class="header-wrap">
             <div class="header-inner">
                 <div class="logo-container">
-                    <h1 class="header-logo"><a href="/">JungsukMarket</a></h1>
+                    <h1 class="header-logo"><a href="/">Jangbogo</a></h1>
                 </div>
                 <div class="search-box">
                     <form action="">
@@ -62,11 +62,16 @@
                         <i class="fa-solid fa-cart-shopping"></i>
                         <div class="icon-desc">장바구니</div>
                     </a>
-                    <a href="/mypage/address">
+                    <a href="/mypage/wishlist">
+                        <i class="fa-regular fa-heart"></i>
+                        <div class="icon-desc">위시리스트</div>
+                    </a>
+<%--                    <i class="fa-regular fa-heart"></i>--%>
+                    <a href="/user/info">
                         <i class="fa-regular fa-user"></i>
                         <div class="icon-desc">마이페이지</div>
                     </a>
-                    <a href="/myseller/modify/brnd">
+                    <a href="/seller/info">
                         <i class="fa-regular fa-user"></i>
                         <div class="icon-desc">마이셀러</div>
                     </a>

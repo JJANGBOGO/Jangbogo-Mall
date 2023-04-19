@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jangbogo.mall.dao.SellerMapper">
+
+    <update id="deleteSeller" parameterType="map">
+        UPDATE SELER
+        SET STATE_CD = 3
+        WHERE IDX = #{idx}
+          AND EMAIL = #{email};
+    </update>
+
+    <select id="getSellerByIdx" resultType="Seller">
+        SELECT *
+        FROM SELER
+        WHERE IDX = #{idx};
+    </select>
+
+    <update id="updateSeller" parameterType="Seller">
+        UPDATE SELER
+        SET CPNM    = #{cpnm}
+          , REPR_NM = #{repr_nm}
+          , PWD     = #{pwd}
+          , MPNO    = #{mpno}
+          , CHG_TM  = NOW()
+        WHERE IDX = #{idx}
+          AND EMAIL = #{email};
+    </update>
+
+    <update id="updateSellerDtl" parameterType="SellerDtl">
+        UPDATE SELER_DTL
+        SET GUID_NM    = #{guid_nm},
+            GUID_EMAIL = #{guid_email},
+            CLLR_NM    = #{cllr_nm},
+            CLLR_TELNO = #{cllr_telno}
+        WHERE SELER_IDX = #{seler_idx};
+    </update>
+
+    <insert id="insertSellerDtl" parameterType="SellerDtl">
+        INSERT INTO SELER_DTL (SELER_IDX, GUID_NM, GUID_EMAIL, CLLR_NM, CLLR_TELNO)
+        VALUES (#{seler_idx}, #{guid_nm}, #{guid_email}, #{cllr_nm}, #{cllr_telno});
+    </insert>
+
+    <select id="getSellerDtl" resultType="SellerDtl">
+        SELECT *
+        FROM SELER_DTL
+        WHERE SELER_IDX = #{seler_idx}
+    </select>
+
+    <insert id="insertSeller" parameterType="Seller">
+        INSERT INTO SELER (AUTH_IDX, EMAIL, CPNM, REPR_NM, PWD, MPNO, REPR_TELNO, BIZ_TYPE, BRNO, SLE_BIZ_NO,
+                           BSPLC_ZPCD, BSPLC_BASE, BSPLC_DTL, SELER_AGRE_YN, BRND_BNR_UPLOAD_PATH, BRND_UPLOAD_PATH,
+                           BRND_CN, PWD_UPT_TM)
+        VALUES (2, #{email}, #{cpnm}, #{repr_nm}, #{pwd}, #{mpno}, #{repr_telno}, #{biz_type}, #{brno}, #{sle_biz_no},
+                #{bsplc_zpcd}, #{bsplc_base}, #{bsplc_dtl}, #{seler_agre_yn}, #{brnd_bnr_upload_path},
+                #{brnd_upload_path}, #{brnd_cn}, NOW());
+    </insert>
+
+    <update id="updateSellerBrnd" parameterType="Seller">
+        <![CDATA[
+        UPDATE SELER
+        SET CPNM                 = #{cpnm},
+            BRND_CN              = #{brnd_cn},
+            BRND_BNR_UPLOAD_PATH = #{brnd_bnr_upload_path},
+            BRND_UPLOAD_PATH     = #{brnd_upload_path}
+        WHERE IDX = #{idx}
+          AND EMAIL = #{email};
+        ]]>
+    </update>
+
+    <select id="getSellerByCpnm" resultType="Seller">
+        SELECT * FROM SELER WHERE CPNM = #{cpnm}
+    </select>
+
+    <select id="getSellerByEmail" resultType="Seller">
+        SELECT * FROM SELER WHERE EMAIL = #{email}
+    </select>
+
+    <update id="updatePwd" parameterType="map">
+        UPDATE SELER
+        SET PWD = #{pwd}
+        WHERE CPNM = #{cpnm}
+        AND EMAIL = #{email};
+    </update>
+
+</mapper>
+

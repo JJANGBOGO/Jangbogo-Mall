@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jangbogo.mall.dao.OrderMapper">
+
+    <!--
+        태   그 : insert
+        기   능 : '결제' 테이블에 tid 저장하기
+        아이디명 : saveKakaoPayment
+        반환타입 : String
+    -->
+    <insert id="saveKakaoPayment" parameterType="String">
+        insert into SETL (IDX, SETL_IDX)
+        values (1,#{tid})
+    </insert>
+</mapper>

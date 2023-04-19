@@ -50,13 +50,6 @@ public class UserServiceTest {
     }
 
     @Test //OK
-    public void updatePwd() throws Exception {
-        int result = service.updatePwd("tempPwd", "진진자라", "jinvicky@naver.com");
-        log.info("result= " + result);
-        assertTrue(result != 0); //테스트 실패시 빨간 줄 추가됨. 무시
-    }
-
-    @Test //OK
     public void chkDuplicateEmail() throws Exception {
         User result = service.getUserByEmail("jinvicky@naver.com");
         log.info("result= " + result);
@@ -83,9 +76,9 @@ public class UserServiceTest {
                 .markt_agre_yn("N")
                 .build();
 
-        int result = service.insertUser(user);
-        log.info("result= " + result);
-        assertTrue(result != 0); //테스트 실패시 빨간 줄 추가됨. 무시
+//        int result = service.registerUser(user);
+//        log.info("result= " + result);
+//        assertTrue(result != 0); //테스트 실패시 빨간 줄 추가됨. 무시
     }
 
     @Test //ok

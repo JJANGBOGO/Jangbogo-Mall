@@ -5,7 +5,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class AddressDaoImpl implements AddressDao {
@@ -16,8 +18,11 @@ public class AddressDaoImpl implements AddressDao {
     private static final String nameSpace = "com.jangbogo.mall.dao.AddressMapper.";
 
     @Override
-    public int insertAddr(Address addr) throws Exception {
-        return session.insert(nameSpace + "insertAddr", addr);
+    public int insertAddr(int user_idx, Address addr) throws Exception {
+        Map map = new HashMap();
+        map.put("user_idx", user_idx);
+        map.put("addr", addr);
+        return session.insert(nameSpace + "insertAddr", map);
     }
 
     @Override
