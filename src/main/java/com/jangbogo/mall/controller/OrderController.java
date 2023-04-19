@@ -236,7 +236,7 @@ public class OrderController {
     }
 
     // 메서드명 : kakaoPaymentReady
-    // 기   능 : 결제 준비 및 요청 처리 후, 결제 승인 메서드 호출
+    // 기   능 : 카카오페이 결제를 시작하기 위해 상세 정보를 카카오페이 서버에 전달하고 결제 고유 번호(TID)를 받는 단계
     // 매개변수 : HttpSession session
     // 반환타입 : String
     // POST /v1/payment/ready HTTP/1.1
@@ -294,15 +294,41 @@ public class OrderController {
     // 반환타입 : String
     @GetMapping("/payment/kakao/approve")
     public String kakaoPaymentApprove(String pg_token) {
-        String tid = "";
         try {
-            // 주문번호(ord_idx) 가져오기
-            OrderDto orderDto = orderService.getOrderDto(1235);             // TODO: 주문번호는 소프트코딩
-            // 결제고유번호(tid)  가져오기
-            PaymentDto paymentDto = orderService.getPaymentDto(1);          // TODO : 결제번호는 소프트코딩
+            System.out.println("pg_token = " + pg_token);
+            URL url = new URL("https://kapi.kakao.com/v1/payment/approve");                           // 맵핑 - v1/payment/approve
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();                               // 요청하는 클라이언트(전봇대1) ~ 요청을 받는 카카오페이 서버(전봇대2)를 연결시켜주는 전깃줄
+            conn.setRequestMethod("POST");                                                                  // POST 요청
+            conn.setRequestProperty("Authorization", "KakaoAK 4319c284b87b726f5f038d839ad6bbd2");           // Property 설정 - Authorization: KakaoAK ${APP_ADMIN_KEY}
+            conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");     // Property 설정 - Content-type: application/x-www-form-urlencoded;charset=utf-8
+            conn.setDoOutput(true);                                                                         // 커넥션의 doOutput - 연결을 통해 서버에 전달할 데이터 유무(디폴트 - doInput : true)
 
-            tid = paymentDto.getSetl_idx();                                      // TEST : tid = T43ea2975b8c2c020508
-        } catch (Exception e) {
+            // 주문번호(ord_idx) 가져오기
+            OrderDto orderDto = orderService.getOrderDto(1235);             // TODO: 주문번호는 어디서 구하지?
+            // 결제고유번호(tid)  가져오기
+            PaymentDto paymentDto = orderService.getPaymentDto(1);          // TODO : 결제번호는 어디서 구하지?
+
+            String tid = paymentDto.getSetl_idx();
+            String params = "cid=TC0ONETIME&tid=" + tid +"&partner_order_id=partner_order_id&partner_user_id=partner_user_id&pg_token=" + pg_token;
+
+            OutputStream outputStream = conn.getOutputStream();
+            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+            dataOutputStream.writeBytes(params);
+            dataOutputStream.close();
+
+            int result = conn.getResponseCode();
+            InputStream inputStream;
+            if(result == 200) {
+                inputStream = conn.getInputStream();
+            } else {
+                inputStream = conn.getErrorStream();
+            }
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);  // bufferedReader : 형변환하는애
+            return bufferedReader.readLine();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return "order/kakaoPayApprove";
