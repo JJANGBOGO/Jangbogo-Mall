@@ -144,6 +144,7 @@ a {
 .navbar-2 ul {
     display: flex;
     justify-content: center;
+    margin: 0;
     font-weight: bold;
     color: #666;
 }
