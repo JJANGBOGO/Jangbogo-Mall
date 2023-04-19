@@ -9,9 +9,7 @@ import com.jangbogo.mall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -37,6 +35,7 @@ public class OrderController {
     // 매개변수 : Integer user_idx
     // 요청URL : /order/checkout/list?user_idx=1234 GET
     @GetMapping("/order/checkout/item-list")
+    @ResponseBody
     public ResponseEntity<List<CartDto>> getItemList(Integer user_idx) {
         // 변수명 : list
         // 저장값 : CartDto 저장소 List
@@ -60,6 +59,7 @@ public class OrderController {
     // 반환타입 : ResponseEntity<Map>
     // 요청URL : order/checkout/orderer?user_idx=1234 GET
     @GetMapping("/order/checkout/orderer")
+    @ResponseBody
     public ResponseEntity<Map> getOrderInfo(HttpSession session) {
         // 변수명 : ordererInfo
         // 저장값 : 세션에 저장된 회원번호(idx)
@@ -99,6 +99,7 @@ public class OrderController {
     // 매개변수 : HttpSession session
     // 요청URL : order/checkout/delivery?user_idx=1234 GET
     @GetMapping("/order/checkout/delivery")
+    @ResponseBody
     public ResponseEntity<User> getDeliveryInfo(HttpSession session) {
         Integer idx = (Integer)(session.getAttribute("idx"));
 
@@ -126,11 +127,21 @@ public class OrderController {
         return "/order/recipientDetails";
     }
 
+    // 메서드명 : handleOrderSuccess
+    // 기   능 : 주문완료 처리 메서드
+    // 반환타입 : String
+    // 요청URL : /order/checkout/success?orderNo=2303023110171
+    @GetMapping("/order/checkout/success")
+    public String handleOrderSuccess() {
+        return "/order/orderSuccess";
+    }
+
     // 메서드명 : getCouponList
     // 기   능 : 쿠폰 목록 불러오기
     // 반환타입 :
     // 요청URL : order/checkout/coupons?user_idx=1234 GET
     @GetMapping("/order/checkout/coupons")
+    @ResponseBody
     public ResponseEntity<List<String>> getCouponList() {
         List<String> list = new ArrayList();
         try {
@@ -152,6 +163,7 @@ public class OrderController {
     // 반환타입 : ResponseEntity<List<String>>
     // 요청URL : order/checkout/payment?user_idx=1234 GET
     @GetMapping("/order/checkout/payment")
+    @ResponseBody
     public ResponseEntity<List<String>> getPaymentMethodList() {
         List<String> list = new ArrayList();
         try {

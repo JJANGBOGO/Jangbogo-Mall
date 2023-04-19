@@ -1,17 +1,16 @@
 package com.jangbogo.mall.controller;
 
 import com.jangbogo.mall.domain.KakaoApproveResponseDto;
+import com.jangbogo.mall.domain.KakaoReadyRequestDto;
 import com.jangbogo.mall.domain.KakaoReadyResponseDto;
 import com.jangbogo.mall.service.KakaoPayService;
 import com.jangbogo.mall.service.OrderService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequiredArgsConstructor
+@Controller
 public class KakaoPayController {
 
     @Autowired
@@ -25,33 +24,35 @@ public class KakaoPayController {
     // 반환타입 : KakaoReadyResponseDto
     @PostMapping("/payment/kakao/ready")
     @ResponseBody
-    public KakaoReadyResponseDto readyToKakaoPay() {
-        return kakaoPayService.kakaoPayReady();
+    public KakaoReadyResponseDto readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto) {
+        return kakaoPayService.kakaoPayReady(kakaoReadyRequestDto);
     }
 
     // 메서드명 : afterPayRequest
     // 기   능 : 결제 승인 처리
     // 반환타입 : String
     @GetMapping("/payment/kakao/approve")
-    public ResponseEntity afterPayRequest(@RequestParam("pg_token") String pg_token) {
+    public String afterPayRequest(@RequestParam("pg_token") String pg_token, Model model) {
         KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayService.approveResponse(pg_token);
-
-        return new ResponseEntity<>(kakaoApproveResponseDto, HttpStatus.OK);
+        // 결제 정보 저장
+        System.out.println("kakaoApproveResponseDto = " + kakaoApproveResponseDto);
+        model.addAttribute("model", kakaoApproveResponseDto);
+        return "order/orderSuccess";
     }
 
     // 메서드명 : cancel
     // 기   능 : 결제 진행 중 취소 처리
-    // 반환타입 : void
+    // 반환타입 : String
     @GetMapping("/payment/kakao/cancel")
-    public void cancel() throws Exception {
-        throw new Exception("결제 취소");
+    public String cancel() throws Exception {
+        return "redirect:/cart";
     }
 
     // 메서드명 : fail
     // 기   능 : 결제 실패 처리
-    // 반환타입 : void
+    // 반환타입 : String
     @GetMapping("/payment/kakao/fail")
-    public void fail() throws Exception {
-        throw new Exception("결제 실패");
+    public String fail() throws Exception {
+        return "redirect:/cart";
     }
 }

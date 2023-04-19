@@ -1,6 +1,7 @@
 package com.jangbogo.mall.service;
 
 import com.jangbogo.mall.domain.KakaoApproveResponseDto;
+import com.jangbogo.mall.domain.KakaoReadyRequestDto;
 import com.jangbogo.mall.domain.KakaoReadyResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
@@ -29,16 +30,18 @@ public class KakaoPayService {
     // Host: kapi.kakao.com
     // Authorization: KakaoAK ${APP_ADMIN_KEY}
     // Content-type: application/x-www-form-urlencoded;charset=utf-8
-    public KakaoReadyResponseDto kakaoPayReady() {
-
+    public KakaoReadyResponseDto kakaoPayReady(KakaoReadyRequestDto kakaoReadyRequestDto) {
+        String item_name = kakaoReadyRequestDto.getItem_name();
+        String quantity = kakaoReadyRequestDto.getQuantity().toString();
+        String total_amount = kakaoReadyRequestDto.getTotal_amount().toString();
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();                               // 1. Body 만들기 - 카카오페이 서버에 보낼 요청 양식
 
         params.add("cid", CID);                                                                        // 2. 파라미터(Body)에 값 저장
         params.add("partner_order_id", "partner_order_id");                                             // 가맹점 주문번호, 최대 100자
         params.add("partner_user_id", "partner_user_id");                                               // 가맹점 회원 id, 최대 100자
-        params.add("item_name", "[곰표x콜린스그린] 그래놀라 요거트");                                           // 상품명, 최대 100자
-        params.add("quantity", "1");                                                                    // 상품 수량
-        params.add("total_amount", "2900");                                                             // 상품 총액
+        params.add("item_name", item_name);                                           // 상품명, 최대 100자
+        params.add("quantity", quantity);                                                                    // 상품 수량
+        params.add("total_amount", total_amount);                                                             // 상품 총액
         params.add("tax_free_amount", "0");                                                             // 상품 비과세 금액
         params.add("approval_url", "http://localhost:8080/payment/kakao/approve");                      // 결제 성공 시 redirect url, 최대 255자
         params.add("cancel_url", "http://localhost:8080/payment/kakao/cancel");                         // 결제 취소 시 redirect url, 최대 255자
