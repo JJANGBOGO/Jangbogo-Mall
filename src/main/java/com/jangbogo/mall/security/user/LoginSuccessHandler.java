@@ -26,8 +26,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     UserDao userDao;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
 
         //경우1 : 로그인 인증을 위해 Spring Security가 요청을 가로챈 경우
         RequestCache requestCache = new HttpSessionRequestCache();
@@ -45,20 +44,21 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             //이전 페이지가 존재하면 지운다.
             if (prevPage != null) session.removeAttribute("prevPage");
 
-
         } else redirectUrl = savedRequest.getRedirectUrl();
 
-        //세션에 idx, email, nickname, loginService 넣어야 함....
-        String email =  authentication.getPrincipal().toString();
+        String email = authentication.getPrincipal().toString();
         try {
-            log.info("test..." + email);
+            //회원 조회
             User user = userDao.getUserByEmail(email);
-            log.info("....test...." + user);
-            request.getSession().setAttribute("userInfo", user);
+
+            //세션 생성
+            request.getSession().setAttribute("idx", user.getIdx());
+            request.getSession().setAttribute("email", user.getEmail());
+            request.getSession().setAttribute("nickName", user.getNick_nm());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         response.sendRedirect(redirectUrl);
     }
 }
