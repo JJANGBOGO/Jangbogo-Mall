@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.jangbogo.mall.dao.ProdReviewMapper">
+<!--한 상품의(prod_idx) 상품이름,상품후기 정보 모두 가져오기-->
+    <select id="selectAll" parameterType="int" resultType="ProdReviewDto">
+        SELECT r.*, p.NAME
+        FROM (SELECT * FROM PRODUCT) p, PROD_LATE r
+        WHERE p.IDX = r.PROD_IDX = #{prod_idx} and r.OPUB_YN = 'Y'
+        ORDER BY r.REG_TM;
+    </select>
+
+</mapper>

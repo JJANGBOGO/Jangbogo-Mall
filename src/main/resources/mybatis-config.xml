@@ -15,5 +15,7 @@
         <typeAlias alias="JoinProdInqryDto" type="com.jangbogo.mall.domain.JoinProdInqryDto"/>
         <typeAlias alias="CartDto" type="com.jangbogo.mall.domain.CartDto"/>
         <typeAlias alias="Address" type="com.jangbogo.mall.domain.Address"/>
+
+        <typeAlias alias="ProdReviewDto" type="com.jangbogo.mall.domain.ProdReviewDto"/>
     </typeAliases>
 </configuration>
