@@ -53,7 +53,7 @@ public class UserController {
 
     //회원탈퇴뷰
     @GetMapping("/user/withdraw")
-    public String withdrawUserView(HttpSession session, Model m, Authentication auth, RedirectAttributes rattr) {
+    public String withdrawUserView(HttpSession session, Model m, RedirectAttributes rattr) {
 
         try {
             int idx = (int) session.getAttribute("idx");
@@ -263,43 +263,37 @@ public class UserController {
 
     //이메일 중복 체크
     @PostMapping("/user/duplicate/email")
-    @ResponseBody
-    public String chkDuplicateEmail(String email, String type) {
-        log.info("email...." + email);
-        String msg = "DUPLICATE";
+    public ResponseEntity<String> chkDuplicateEmail(String email, String type) {
         try {
-            if (userService.getUserByEmail(email) == null) msg = "OK";
+            String msg = userService.getUserByEmail(email) == null ? "OK" : "DUPLICATE";
+            return ResponseEntity.ok().body(msg);
         } catch (Exception e) {
             e.printStackTrace();
-            msg = "ERROR";
+            return ResponseEntity.status(500).body("ERROR");
         }
-        return msg;
     }
 
     //닉네임 중복 체크
     @PostMapping("/user/duplicate/nickname")
-    @ResponseBody
-    public String chkDuplicateNick(String nick_nm, String type) {
-        log.info("nick...." + nick_nm);
-        String msg = "DUPLICATE";
+    public ResponseEntity<String> chkDuplicateNick(String nick_nm) {
         try {
-            if (userService.chkDuplicateNick(nick_nm) == null) msg = "OK";
+            String msg = userService.isNickDuplicated(nick_nm) ? "OK" : "DUPLICATE";
+            return ResponseEntity.ok().body(msg);
         } catch (Exception e) {
             e.printStackTrace();
-            msg = "ERROR";
+            return ResponseEntity.status(500).body("ERROR");
         }
-        return msg;
     }
 
     //회원인증뷰
     @GetMapping("/user/info")
     public String verifyUserView(HttpSession session) {
-        log.info("loginService..." + session.getAttribute("loginService"));
-//        if (session.getAttribute("loginService") != "jangbogo")
-//            return "/user/verifySocial";
+
+        String serviceType = (String) session.getAttribute("loginService");
+        if (serviceType == "naver" || serviceType == "kakao")
+            return "/user/verifySocial";
 
         session.setAttribute("modify", "OK");
-
         return "/user/verify";
     }
 
@@ -308,14 +302,8 @@ public class UserController {
     public String verifyUser(String email, String pwd, RedirectAttributes rattr) {
         log.info("pwd..." + email + pwd);
 
-        if (pwd == "") { //비밀번호 입력X
-            rattr.addFlashAttribute("msg", "PWD_EMPTY_ERR");
-            return "redirect:/user/info";
-        }
-
         try {
-            boolean userChk = userService.verifyUser(email, pwd);
-            if (userChk) return "redirect:/user/modify";
+            if (userService.verifyUser(email, pwd)) return "redirect:/user/modify";
             else {
                 //회원 존재X
                 rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
@@ -333,14 +321,13 @@ public class UserController {
     //회원수정뷰
     @GetMapping("/user/modify")
     public String modifyUserView(HttpSession session, Model m, RedirectAttributes rattr) {
-//        if (session.getAttribute("modify") != "OK") {
-//            return "redirect:/user/info";
-//        }
+        if (session.getAttribute("modify") != "OK") {
+            return "redirect:/user/info";
+        }
         try {
-//            int idx = (int) session.getAttribute("idx");
-            User user = userService.selectUser(36);
+            int idx = (int) session.getAttribute("idx");
+            User user = userService.selectUser(idx);
             m.addAttribute("user", user);
-
             return "user/modify";
 
         } catch (Exception e) {

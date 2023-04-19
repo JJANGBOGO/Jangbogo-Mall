@@ -113,8 +113,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User chkDuplicateNick(String nick_nm) throws Exception {
-        return dao.getUserByNick(nick_nm);
+    public boolean isNickDuplicated(String nick_nm) throws Exception {
+        return dao.getUserByNick(nick_nm) != null;
     }
 
     //    이메일과 회원번호가 일치하는 지 확인

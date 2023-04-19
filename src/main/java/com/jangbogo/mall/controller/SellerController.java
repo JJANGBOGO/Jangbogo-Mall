@@ -150,7 +150,6 @@ public class SellerController {
     @GetMapping("/seller/info")
     public String verifySeller(HttpServletRequest req, Model m, RedirectAttributes rattr) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
-        // TODO:: input email 빈 이유가 세션이 없어서 그럼. 추후 해결될 것.
         return "/seller/verify";
     }
 
