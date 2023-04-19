@@ -337,7 +337,7 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label>보관 유형<span>*</span></label>
+                            <label>판매 기간<span>*</span></label>
                         </div>
                         <fieldset>
                             <label>
