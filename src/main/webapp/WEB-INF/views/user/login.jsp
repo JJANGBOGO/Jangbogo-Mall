@@ -24,7 +24,7 @@
                 <button class="tab-button" id="seller_login_link">판매자</button>
             </div>
             <div class="login-form">
-                <form action="/login" method="post">
+                <form action="/user/login_check" method="post">
                     <input
                             name="email"
                             type="text"

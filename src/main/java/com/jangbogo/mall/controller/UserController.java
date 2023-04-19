@@ -84,28 +84,15 @@ public class UserController {
         return msg;
     }
 
-//    //탈퇴 또 다른 방법.
-//    @PostMapping("/user/withdraw")
-//    public String withdrawUser2(HttpSession session, RedirectAttributes rattr) {
-//        int idx = (int) session.getAttribute("idx");
-//        String email = (String) session.getAttribute("email");
-//
-//        try {
-//            if (userService.withdrawUser(idx, email) == 0)
-//                throw new Exception("withdraw failed");
-//
-//            return "redirect:/";
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
-//            return "redirect:/user/withdraw";
-//        }
-//
-//    }
-
     //로그인뷰
     @RequestMapping("/user/login") //꼭 requestMapping
-    public String loginUserView(Model m, HttpSession session) {
+    public String loginUserView(HttpServletRequest req, Model m, HttpSession session, Authentication authentication) {
+
+        String uri = req.getHeader("Referer");
+        if (authentication != null) return "redirect:/";
+
+        if (uri != null && !(uri.contains("/user/login") || uri.contains("/user/login_check")))
+            req.getSession().setAttribute("prevPage", uri);
 
         String kakaoAuthUrl = kakaoLoginBO.getAuthorizationUrl(session);
         m.addAttribute("urlKakao", kakaoAuthUrl);

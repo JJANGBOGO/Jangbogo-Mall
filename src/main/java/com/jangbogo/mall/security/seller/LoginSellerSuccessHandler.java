@@ -1,7 +1,9 @@
-package com.jangbogo.mall.security;
+package com.jangbogo.mall.security.seller;
 
 
+import com.jangbogo.mall.dao.UserDao;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -15,11 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@Service("loginSuccessHandler")
+@Service("loginSellerSuccessHandler")
 @Slf4j
-public class LoginSuccessHandler implements AuthenticationSuccessHandler {
+public class LoginSellerSuccessHandler implements AuthenticationSuccessHandler {
 
-    //아예 여기를 타지를 않고 500에러가 난다.
+    @Autowired
+    UserDao userDao;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
@@ -40,7 +44,19 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             //이전 페이지가 존재하면 지운다.
             if (prevPage != null) session.removeAttribute("prevPage");
 
+
         } else redirectUrl = savedRequest.getRedirectUrl();
+
+        //세션에 idx, email, nickname, loginService 넣어야 함.... TODO:: 회원과 판매자 분기처리
+//        String email =  authentication.getPrincipal().toString();
+//        try {
+//            log.info("test..." + email);
+//            User user = userDao.getUser(email);
+//            log.info("....test...." + user);
+//            request.getSession().setAttribute("userInfo", user);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         response.sendRedirect(redirectUrl);
     }

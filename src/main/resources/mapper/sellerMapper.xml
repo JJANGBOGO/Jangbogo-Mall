@@ -70,19 +70,29 @@
     </update>
 
     <select id="getSellerByCpnm" resultType="Seller">
-        SELECT * FROM SELER WHERE CPNM = #{cpnm}
+        SELECT *
+        FROM SELER
+        WHERE CPNM = #{cpnm}
     </select>
 
     <select id="getSellerByEmail" resultType="Seller">
-        SELECT * FROM SELER WHERE EMAIL = #{email}
+        SELECT *
+        FROM SELER
+        WHERE EMAIL = #{email}
     </select>
 
     <update id="updatePwd" parameterType="map">
         UPDATE SELER
         SET PWD = #{pwd}
         WHERE CPNM = #{cpnm}
-        AND EMAIL = #{email};
+          AND EMAIL = #{email};
     </update>
+
+
+    <!--security-->
+    <select id="getSellerDetailsDto" resultType="UserDetailsDto">
+        SELECT * FROM SELER WHERE EMAIL = #{email}
+    </select>
 
 </mapper>
 

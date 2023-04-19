@@ -2,6 +2,7 @@ package com.jangbogo.mall.dao;
 
 import com.jangbogo.mall.domain.Address;
 import com.jangbogo.mall.domain.User;
+import com.jangbogo.mall.domain.UserDetailsDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -80,6 +81,11 @@ public class UserDaoImpl implements UserDao {
         map.put("idx", idx);
         map.put("email", email);
         return session.update(nameSpace +"updatePwdUptTm", map);
+    }
+
+    @Override
+    public UserDetailsDto getUserDetailsDto (String email) throws Exception {
+        return session.selectOne(nameSpace + "getUserDetailsDto", email);
     }
 }
 
