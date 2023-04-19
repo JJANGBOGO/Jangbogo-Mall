@@ -54,8 +54,8 @@ public class UserController {
     @GetMapping("/user/withdraw")
     public String withdrawUserView(HttpSession session, Model m, Authentication auth, RedirectAttributes rattr) {
 
-        int idx = (int) session.getAttribute("idx");
         try {
+            int idx = (int) session.getAttribute("idx");
             User user = userService.selectUser(idx);
             m.addAttribute("user", user);
             return "/user/withdraw";
@@ -75,7 +75,10 @@ public class UserController {
         try {
             log.info("result= " + idx + email);
             if (userService.withdrawUser(idx, email) != 0) {
+
                 msg = "SUCCESS";
+                //세션 삭제
+                //인가 객체 삭제
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -380,7 +383,7 @@ public class UserController {
 
     //이메일 찾기
     @PostMapping("/user/find/email")
-    public String findUserEmail (String nick_nm, String pwd, RedirectAttributes rattr) {
+    public String findUserEmail(String nick_nm, String pwd, RedirectAttributes rattr) {
         try {
             String email = userService.findUserEmail(nick_nm, pwd);
             if (email == null) {
@@ -399,7 +402,7 @@ public class UserController {
 
     //비번 찾기
     @PostMapping("/user/find/pwd")
-    public String findUserPwd (String nick_nm, String email, RedirectAttributes rattr) {
+    public String findUserPwd(String nick_nm, String email, RedirectAttributes rattr) {
 
         try {
             if (!userService.isUserPresent(nick_nm, email)) {

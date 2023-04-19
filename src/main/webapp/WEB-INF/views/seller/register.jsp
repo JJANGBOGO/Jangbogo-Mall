@@ -712,7 +712,6 @@
             form.append(files); //form에 업로드 파일 정보 추가
             form.submit();
         });
-
     });
 </script>
 </body>

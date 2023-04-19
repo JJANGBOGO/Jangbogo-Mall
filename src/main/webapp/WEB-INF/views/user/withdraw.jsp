@@ -45,9 +45,7 @@
             </c:choose>
         </span>
         </p>
-        <%--        1,2,3에 따라서 분기처리할 것--%>
     </div>
-
     <div class="confirm-input">
         <h4>
             탈퇴 처리 진행을 원하시는 경우, 아래 입력칸에
@@ -60,7 +58,6 @@
                 placeholder="탈퇴처리에 동의합니다"
         />
     </div>
-
     <label for="withdraw_agre" class="input-line" id="chk_label">
         <input type="checkbox" id="withdraw_agre" class="normal" hidden/>
         <img
@@ -72,15 +69,15 @@
         <span
         >위 사항을 모두 숙지하였으며 동의합니다.</span>
     </label>
-
     <div class="btn-container">
         <button class="cancel">취소하기</button>
         <button class="confirm">탈퇴하기</button>
     </div>
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
+<%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
-    $(document).ready(function (e) {
+    $(document).ready(function () {
         $(".cancel").click(function () {
             window.location.href = "/";
         });
@@ -96,7 +93,7 @@
 
         $("#withdraw").keyup(function (e) {
             input_failed = e.target.value != withdraw_msg;
-            validate (input_failed, chked);
+            validate(input_failed, chked);
         });
 
         $("#chk_label").click(function () {
@@ -108,14 +105,14 @@
                     "src",
                     chked ? "/img/checked.png" : "/img/unchecked.png"
                 );
-            validate (input_failed, chked);
+            validate(input_failed, chked);
         });
 
         $(".confirm").click(function () {
             //send ajax
             $.ajax({
-                url: "/withdraw/user",
-                data: {idx: 1, email: "jinvicky@naver.com"},
+                url: "/user/withdraw",
+                data: {idx: ${sessionScope.idx}, email: "${sessionScope.email}"},
                 type: "POST",
                 success: function (result) {
                     if (result === "SUCCESS") {

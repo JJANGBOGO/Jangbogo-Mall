@@ -18,6 +18,7 @@
         <s:intercept-url pattern="/user/info" access="hasRole('ROLE_USER')"/>
         <s:intercept-url pattern="/user/modify" access="hasRole('ROLE_USER')"/>
         <s:intercept-url pattern="/user/withdraw" access="hasRole('ROLE_USER')"/>
+        <s:intercept-url pattern="/order/checkout" access="hasRole('ROLE_USER')"/>
         <s:access-denied-handler ref="accessFailHandler" />
         <s:csrf disabled="true"/>
     </s:http>
