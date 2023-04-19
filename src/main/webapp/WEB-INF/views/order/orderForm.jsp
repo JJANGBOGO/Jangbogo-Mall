@@ -21,7 +21,7 @@
             <section class="order-section">
                 <div class="order-section__title">
                     <h3>주문 상품</h3>
-                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#212529'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>
+                    <!--<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#212529'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg> -->
                 </div>
                 <div class="order-section__content" id="orderItems">
                 </div>
@@ -161,7 +161,8 @@
                 })
                 // 변수명 : cnt
                 // 저장값 : 장바구니에 담긴 모든 품목 개수
-                let cnt = items.length;
+                cnt = items.length;
+                tmp += '<input type="hidden" value="' + cnt + '" id="itemsCnt"/>';
                 return tmp += '</ul>';
             }
 
@@ -403,6 +404,11 @@
                     // 변수명 : url
                     // 저장값 : 새창에 해당하는 url
                     let url = "/order/checkout/recipient-details";
+
+                    // 변수명 : cnt
+                    // 저장값 : 주문 상품 개수
+                    let cnt = 0;
+
                     // 비동기 요청 수정
                     // 1. 수정 페이지 이동 2. 값 입력 후 저장 버튼 클릭 3. result로 값이 오고 deliveryToHtml 호출
                     // location.href(url);
@@ -438,28 +444,38 @@
                 // 메서드명 : handleKakaoPayReady
                 // 기   능 : 주문 데이터가 테이블에 삽입된 후, 결제 페이지로 이동한다.
                 // 매개변수 : tid
-                let handleKakaoPayReady = () => {
-                    let req = {
-                        ordr_nm : $("#ordererName").text(),
-                        mpno : $("#ordererMpno").text(),
-                        user_idx : ${idx},
-                        idx : 1
+                let handleKakaoPayReady = (user_idx) => {
+                    let total_amount = $(".order-amount__section-final .order-amount__section-content span").text();                  // 주문총금액
+                    total_amount = total_amount.slice(0, total_amount.length - 1);                                                   // 주문총금액에서 "원" 삭제 - 43,500원 -> 43,500
+                    total_amount = formatPriceWithoutComma(total_amount);                                                            // 주문총금액에서 "콤마" 삭제 - 43500
+
+                    let quantity = $("#itemsCnt").val();                                                                             // 상품개수
+                    let item_name = $(".order-item:first-child .order-item__title").text() + " 외 " + quantity + "건";                 // 상품명 외 n건
+
+
+                    let kakaoReadyRequest = {                                               // 서버로 전송할 데이터를 저장할 변수 kakaoReadyRequest
+                        "item_name" : item_name,
+                        "quantity" : quantity,
+                        "total_amount" : total_amount
                     }
-                    // (2)
+
+                    let kakaoReadyResponse = {};                                            // 서버로부터 도착한 응답에 담긴 데이터를 저장할 변수 kakaoReadyResponse
                     $.ajax({
-                        type: 'POST',
-                        url:'/payment/kakao/ready',
-                        data: JSON.stringify(req),
-                        dataType:'json',
-                        success:function(data) {
-                            saveTid(data.tid, idx);
-                            // (3)
-                            location.href=data.next_redirect_pc_url + "?tid=" + data.tid;
+                        type: 'POST',                                                       // 요청 메서드
+                        url:'/payment/kakao/ready',                                         // 요청URI
+                        headers: {"content-type" : "application/json"},                     // 요청 헤더 - 적시하지 않으면, 데이터가 서버에서 깨진 채로 전송된다.
+                        dataType:'text',                                                    // 전송할 데이터 타입
+                        data: JSON.stringify(kakaoReadyRequest),                            // 서버로 전송할 데이터. 직렬화 필요.
+                        success:function(data) {                                            // 서버로부터 응답이 도착하면 호출될 함수
+                            kakaoReadyResponse = JSON.parse(data);                          // 직렬화된 JSON객체를 파싱한 객체
+                            saveTid(kakaoReadyResponse.tid, idx);                           // tid를 '결제' 테이블에 저장하는 함수 호출
+                            location.href= kakaoReadyResponse.next_redirect_pc_url +        // 결제 준비 페이지로 리다이렉트
+                                "?tid=" + kakaoReadyResponse.tid;
                         },
-                        error:function(error) {
+                        error:function(error) {                                             // 에러가 발생했을 때 호출될 함수
                             alert(error);
                         }
-                    })
+                    })  // $.ajax()
                 }
 
                 // 메서드명 : saveTid
