@@ -44,19 +44,17 @@ public class SellerServiceImpl implements SellerService {
         final int FAILED = 0;
 
         if (seller.getPwd() == "") { //새 비밀번호가 없는 경우
+            Seller prevSeller = dao.getSellerByEmail(seller.getEmail()); //기존 정보 조회
+            seller.setPwd(prevSeller.getPwd()); //기존 비밀번호를 그대로 set
 
-
-        } else {
-            //새 비밀번호 존재
+        } else {//새 비밀번호 존재
             //비번변경날짜 최신화
+            updatePwdUptTm(seller.getIdx(), seller.getEmail());
             //비번 인코딩
-
+            seller.setPwd(passwordEncoder.encode(seller.getPwd()));
         }
-        Seller prevSeller = dao.getSellerByEmail(seller.getEmail());
 
-
-        return (dao.updateSeller(seller) != 0 && updateSellerDtl(sellerDtl) != 0)
-                ? SUCCESS : FAILED;
+        return (dao.updateSeller(seller) != 0 && updateSellerDtl(sellerDtl) != 0) ? SUCCESS : FAILED;
     }
 
     public int updateSellerDtl(SellerDtl detail) throws Exception {
@@ -128,6 +126,11 @@ public class SellerServiceImpl implements SellerService {
             return 1; //성공
         }
         return 0; //실패.
+    }
+
+    @Override
+    public int updatePwdUptTm(Integer idx, String email) throws Exception {
+        return dao.updatePwdUptTm(idx, email);
     }
 
 

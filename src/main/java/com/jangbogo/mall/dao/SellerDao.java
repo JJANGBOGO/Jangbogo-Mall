@@ -39,6 +39,11 @@ public interface SellerDao {
     //판매자 비번 수정
     int updatePwd (String pwd, String cpnm, String email) throws Exception;
 
+    //비번변경날짜 수정
+    int updatePwdUptTm (Integer idx, String email) throws Exception;
+
     //시큐리티 판매자 조회
     UserDetailsDto getSellerDetailsDto (String email) throws Exception;
+
+
 }

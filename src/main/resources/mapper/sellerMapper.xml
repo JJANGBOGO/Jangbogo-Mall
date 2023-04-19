@@ -94,7 +94,7 @@
         SELECT * FROM SELER WHERE EMAIL = #{email}
     </select>
 
-    <update id="updateSeller" parameterType="map">
+    <update id="updatePwdTime" parameterType="map">
         UPDATE SELER SET PWD_UPT_TM = now() WHERE IDX = #{idx} AND #{email}
     </update>
 

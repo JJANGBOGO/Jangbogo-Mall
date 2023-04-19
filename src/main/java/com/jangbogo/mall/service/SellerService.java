@@ -14,8 +14,6 @@ public interface SellerService {
     //판매자 수정
     int updateSeller (Seller seller, SellerDtl dtl) throws Exception;
 
-    //판매자 상세 수정
-
     //판매자 상세 추가
     int insertSellerDtl (SellerDtl detail) throws Exception;
 
@@ -34,6 +32,7 @@ public interface SellerService {
     //이메일 중복 검사
     boolean isEmailDuplicated (String email) throws Exception;
 
+    //판매자 이메일 찾기
     String findSellerEmail (String cpnm, String pwd) throws Exception;
 
     //비번찾기용 회원 인증
@@ -41,4 +40,7 @@ public interface SellerService {
 
     //임시비번 메일 전송
     int sendPwdEmail (String cpnm, String toEmail) throws Exception;
+
+    //비번변경 날짜 수정
+    int updatePwdUptTm (Integer idx, String email) throws Exception;
 }
