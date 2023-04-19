@@ -418,11 +418,11 @@
                 type: 'POST',
                 success: function (msg) {
                     if (msg == "OK") {
-                        alert(available_cpnm);
+                        alert(available_email);
                         $("#email_duplicate_chk").attr("disabled", true); //버튼 비활성화
                         email_ref.attr("readonly", true); //인풋 비활성화
                     } else {
-                        alert(duplicate_cpnm);
+                        alert(duplicate_email);
                         email_ref.focus();
                     }
                 },
@@ -616,68 +616,68 @@
             let cpnm_ref = $("#cpnm");
             //브랜드명
             if (!validateBrndNameAlert(cpnm_ref)) return false;
-            //
-            // let name_ref = $("#repr_nm");
-            //
-            // if (name_ref.val() == "") {
-            //     alert("대표의 이름을 입력해 주세요");
-            //     name_ref.focus();
-            //     return false;
-            // }
-            //
-            // if (name_ref.val().length > 20) {
-            //     alert("대표의 이름은 20자 미만으로 입력해 주세요");
-            //     name_ref.focus();
-            //     return false;
-            // }
-            //
-            // let pwd_ref = $("#pwd");
-            // if(!validatePwdAlert(pwd_ref)) return false; //비번 검사
-            //
-            // let pwd_confirm_ref = $("#pwd_confirm");
-            // if(!validatePwdConfirmAlert(pwd_ref, pwd_confirm_ref)) return false;
-            //
-            // let mpno_ref = $("#mpno");
-            // let mpno_chk_btn = $("#mpno_chk");
-            // if(!validateMpnoAlert(mpno_ref,mpno_chk_btn)) return false;
-            //
-            // let brno_ref = $("#brno");
-            // let brno_chk_btn = $("#brno_chk");
-            //
-            // if (!validateBrnoAlert(brno_ref)) return false;
-            //
-            // if (!brno_chk_btn.is(":disabled")) {
-            //     alert("사업자 인증을 해 주세요");
-            //     brno_ref.focus();
-            //     return false;
-            // }
 
-            //통신판매업은 숫자+문자 등 fixed가 아니라 ""체크만 한다.
-            // let sle_biz_ref = $("#sle_biz_no");
-            // if (sle_biz_ref.val() =="") {
-            //     alert("통신판매업신고번호를 입력해 주세요");
-            //     sle_biz_ref.focus();
-            //     return false;
-            // }
+            let name_ref = $("#repr_nm");
 
-            // let addr_base_ref = $("#bsplc_base");
-            // let addr_dtl_ref = $("#bsplc_dtl");
-            //
-            // if (!validateAddrAlert(addr_base_ref, addr_dtl_ref)) return false; //주소
+            if (name_ref.val() == "") {
+                alert("대표의 이름을 입력해 주세요");
+                name_ref.focus();
+                return false;
+            }
 
-            // let telno_ref = $("#repr_telno"); //브랜드 공식 연락처
-            // if (telno_ref.val() == "") {
-            //     alert("대표 연락처를 입력해 주세요");
-            //     telno_ref.focus();
-            //     return false;
-            // }
-            //
-            // if (!mpno_reg.test(telno_ref.val())) {
-            //     alert(not_valid_mpno);
-            //     telno_ref.focus();
-            //     return false;
-            // }
-            //
+            if (name_ref.val().length > 20) {
+                alert("대표의 이름은 20자 미만으로 입력해 주세요");
+                name_ref.focus();
+                return false;
+            }
+
+            let pwd_ref = $("#pwd");
+            if(!validatePwdAlert(pwd_ref)) return false; //비번 검사
+
+            let pwd_confirm_ref = $("#pwd_confirm");
+            if(!validatePwdConfirmAlert(pwd_ref, pwd_confirm_ref)) return false;
+
+            let mpno_ref = $("#mpno");
+            let mpno_chk_btn = $("#mpno_chk");
+            if(!validateMpnoAlert(mpno_ref,mpno_chk_btn)) return false;
+
+            let brno_ref = $("#brno");
+            let brno_chk_btn = $("#brno_chk");
+
+            if (!validateBrnoAlert(brno_ref)) return false;
+
+            if (!brno_chk_btn.is(":disabled")) {
+                alert("사업자 인증을 해 주세요");
+                brno_ref.focus();
+                return false;
+            }
+
+            // 통신판매업은 숫자+문자 등 fixed가 아니라 ""체크만 한다.
+            let sle_biz_ref = $("#sle_biz_no");
+            if (sle_biz_ref.val() =="") {
+                alert("통신판매업신고번호를 입력해 주세요");
+                sle_biz_ref.focus();
+                return false;
+            }
+
+            let addr_base_ref = $("#bsplc_base");
+            let addr_dtl_ref = $("#bsplc_dtl");
+
+            if (!validateAddrAlert(addr_base_ref, addr_dtl_ref)) return false; //주소
+
+            let telno_ref = $("#repr_telno"); //브랜드 공식 연락처
+            if (telno_ref.val() == "") {
+                alert("대표 연락처를 입력해 주세요");
+                telno_ref.focus();
+                return false;
+            }
+
+            if (!mpno_reg.test(telno_ref.val())) {
+                alert(not_valid_mpno);
+                telno_ref.focus();
+                return false;
+            }
+
             let brnd_cn_ref = $("#brnd_cn"); //브랜드 내용
             if (!validateBrndCnAlert(brnd_cn_ref)) return false;
 

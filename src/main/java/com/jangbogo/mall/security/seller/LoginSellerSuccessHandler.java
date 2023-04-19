@@ -1,7 +1,9 @@
 package com.jangbogo.mall.security.seller;
 
 
+import com.jangbogo.mall.dao.SellerDao;
 import com.jangbogo.mall.dao.UserDao;
+import com.jangbogo.mall.domain.Seller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,7 +24,7 @@ import java.io.IOException;
 public class LoginSellerSuccessHandler implements AuthenticationSuccessHandler {
 
     @Autowired
-    UserDao userDao;
+    SellerDao sellerDao;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -47,17 +49,16 @@ public class LoginSellerSuccessHandler implements AuthenticationSuccessHandler {
 
         } else redirectUrl = savedRequest.getRedirectUrl();
 
-        //세션에 idx, email, nickname, loginService 넣어야 함.... TODO:: 회원과 판매자 분기처리
-//        String email =  authentication.getPrincipal().toString();
-//        try {
-//            log.info("test..." + email);
-//            User user = userDao.getUser(email);
-//            log.info("....test...." + user);
-//            request.getSession().setAttribute("userInfo", user);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        String email =  authentication.getPrincipal().toString();
+        try {
+            Seller seller = sellerDao.getSellerByEmail(email);
 
+            request.getSession().setAttribute("idx", seller.getIdx());
+            request.getSession().setAttribute("email", seller.getEmail());
+            request.getSession().setAttribute("nickName", seller.getCpnm());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         response.sendRedirect(redirectUrl);
     }
 }
