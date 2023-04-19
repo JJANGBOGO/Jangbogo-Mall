@@ -61,9 +61,6 @@
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script src="/js/starrr.js"></script>
 <script>
-    let msg = "${msg}";
-    if (msg == "EXCEPTION_ERR") alert("오류가 발생했습니다 다시 시도해 주세요");
-
     $(document).ready(function () {
         let grade = 3;
 

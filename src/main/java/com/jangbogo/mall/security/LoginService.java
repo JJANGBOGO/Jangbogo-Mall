@@ -1,7 +1,6 @@
 package com.jangbogo.mall.security;
 
 
-import com.jangbogo.mall.dao.Dao;
 import com.jangbogo.mall.domain.UserDetailsDto;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
