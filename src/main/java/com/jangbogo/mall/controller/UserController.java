@@ -336,8 +336,6 @@ public class UserController {
 
     @PostMapping("/user/modify")
     public String modifyUser(User user, HttpSession session, RedirectAttributes rattr) {
-        log.info("회원수정....." + user);
-
         try {
             user.setIdx((int) session.getAttribute("idx"));
             if (userService.updateUser(user) != 1)
@@ -383,7 +381,6 @@ public class UserController {
     //비번 찾기
     @PostMapping("/user/find/pwd")
     public String findUserPwd(String nick_nm, String email, RedirectAttributes rattr) {
-
         try {
             if (!userService.isUserPresent(nick_nm, email)) {
                 rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
@@ -402,5 +399,4 @@ public class UserController {
             return "redirect:/find/pwd";
         }
     }
-
 }

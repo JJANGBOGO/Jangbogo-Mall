@@ -173,7 +173,8 @@
         });
 
         //수정 취소 버튼
-        $(".info-modify.cancel").click(function() {
+        $(".info-modify.cancel").click(function(e) {
+            e.preventDefault();
             window.location.href="/user/info";
         })
 
