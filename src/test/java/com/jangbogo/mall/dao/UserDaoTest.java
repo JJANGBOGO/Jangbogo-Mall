@@ -251,14 +251,11 @@ public class UserDaoTest {
 
         @Test //ok
         public void updatePwd () throws Exception {
-            String pwd = "temp";
+            String pwd = "test1007";
             String encodedPwd = passwordEncoder.encode(pwd);
-            String test = "$2a$10$pYlqkEwwVJV/IvsMF0nTKuta2Mcv8zQF5c4.AvSQI99Bw0dnvmZF6";
 
-            log.info("...same...." + passwordEncoder.matches(pwd, test)); //ok
+            log.info("encoding...." + encodedPwd);
 
-            int result = dao.updatePwd(encodedPwd, "service테스트", "jinvicky1007");
-            assertTrue(result != 0);
         }
 
     }

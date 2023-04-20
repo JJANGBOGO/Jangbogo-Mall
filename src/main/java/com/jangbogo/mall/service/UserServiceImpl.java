@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional (value ="transactionManager", rollbackFor = Exception.class)
+    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public int registerUser(User user, Address addr) throws Exception {
         final int SUCCESS = 1;
         final int FAILED = 0;
@@ -128,14 +128,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateUser(User user) throws Exception {
-        String email = user.getEmail();
-        User prev_user = getUserByEmail(email);
-
-        if (!passwordEncoder.matches(user.getPwd(), prev_user.getPwd())) {
-            updatePwdUptTm(user.getIdx(), email); //비번변경날짜 수정
+        if (user.getPwd() == "") { //새 비번이 없는 경우
+            User prevUser = getUserByEmail(user.getEmail()); //이메일로 기존 회원 조회
+            user.setPwd(prevUser.getPwd()); //기존 비번 그대로 insert
+        } else { //프론트에서 비번이 같을 경우 비활성화 해서 비번이 != ""일 경우 기존 값과 다른다.
+            updatePwdUptTm(user.getIdx(), user.getEmail());
+            user.setPwd(passwordEncoder.encode(user.getPwd()));
         }
-
-        user.setPwd(passwordEncoder.encode(user.getPwd())); //패스워드 인코딩
         return dao.updateUser(user);
     }
 
