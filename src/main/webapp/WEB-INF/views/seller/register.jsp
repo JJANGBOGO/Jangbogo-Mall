@@ -394,7 +394,7 @@
                 data: {email: email_ref.val()},
                 type: 'POST',
                 success: function (msg) {
-                    if (msg == "OK") {
+                    if (msg === "OK") {
                         alert(available_email);
                         $("#email_duplicate_chk").attr("disabled", true); //버튼 비활성화
                         email_ref.attr("readonly", true); //인풋 비활성화
@@ -421,7 +421,7 @@
                 data: {cpnm: cpnm_ref.val()},
                 type: 'POST',
                 success: function (msg) {
-                    if (msg == "OK") {
+                    if (msg === "OK") {
                         alert(available_cpnm);
                         $("#cpnm_duplicate_chk").attr("disabled", true); //버튼 비활성화
                         cpnm_ref.attr("readonly", true); //인풋 비활성화
@@ -458,10 +458,10 @@
                 accept: "application/json",
                 success: function (result) {
                     let biz_state = result.data[0].b_stt_cd;
-
-                    if (biz_state == "") {
+                    console.log(result);
+                    if (biz_state === "") {
                         alert("국세청에 등록되지 않은 사업자 번호입니다.");
-                    } else if (biz_state != 1) { //계속사업자가 아님
+                    } else if (biz_state !== "01") { //계속사업자가 아님
                         alert("휴/폐업 사업자 번호입니다. 다른 번호를 입력해 주세요");
                     } else {
                         alert("사용가능한 사업자 번호입니다.");
@@ -470,7 +470,7 @@
                     }
                 },
                 error: function (error) {
-                    console.log(error_msg);
+                    alert(error_msg);
                 },
             });
         });
@@ -609,7 +609,7 @@
 
         //휴대전화 인증 keyup
         $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
-            if ($("#mpno_verify").val() == mpno_verify_num) {
+            if ($("#mpno_verify").val() === mpno_verify_num) {
                 $(".error-msg.mpno-verify").html(mpno_verified);
                 $(".error-msg.mpno-verify").css('color', 'green');
                 $("#mpno_chk").attr("disabled", true);
@@ -634,7 +634,7 @@
 
             let name_ref = $("#repr_nm");
 
-            if (name_ref.val() == "") {
+            if (name_ref.val() === "") {
                 alert("대표의 이름을 입력해 주세요");
                 name_ref.focus();
                 return false;
@@ -669,7 +669,7 @@
 
             // 통신판매업은 숫자+문자 등 fixed가 아니라 ""체크만 한다.
             let sle_biz_ref = $("#sle_biz_no");
-            if (sle_biz_ref.val() == "") {
+            if (sle_biz_ref.val() === "") {
                 alert("통신판매업신고번호를 입력해 주세요");
                 sle_biz_ref.focus();
                 return false;
@@ -681,7 +681,7 @@
             if (!validateAddrAlert(addr_base_ref, addr_dtl_ref)) return false; //주소
 
             let telno_ref = $("#repr_telno"); //브랜드 공식 연락처
-            if (telno_ref.val() == "") {
+            if (telno_ref.val() === "") {
                 alert("대표 연락처를 입력해 주세요");
                 telno_ref.focus();
                 return false;
