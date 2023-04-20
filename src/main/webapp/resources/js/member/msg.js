@@ -46,3 +46,6 @@ const mpno_verified = "인증되었습니다";
 //upload
 const bnr_overflow = "브랜드 배너는 1개만 업로드 가능합니다";
 const prof_overflow = "브랜드 프로필은 1개만 업로드 가능합니다";
+
+//withdraw
+const withdraw_ok = "탈퇴에 성공했습니다";

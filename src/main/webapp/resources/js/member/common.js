@@ -271,7 +271,7 @@ function chkNickAlert(nick_ref, nick_chk_btn) {
 }
 
 //비번확인 keyup 에러메세지
-function pwdConfirmErrMsg (pwd, pwd_confirm, err_ref) {
+function pwdConfirmErrMsg(pwd, pwd_confirm, err_ref) {
     if (pwd_confirm === "") {
         err_ref.html(pwd_confirm_empty);
         return false;
@@ -282,3 +282,30 @@ function pwdConfirmErrMsg (pwd, pwd_confirm, err_ref) {
         return false;
     } else err_ref.empty();
 }
+
+//주소 검색 함수
+function addressCallback(callback) {
+
+    new daum.Postcode({
+        oncomplete: function (data) {
+            let addr = "";
+            let extraAddr = ""; //참고항목
+
+            if (data.userSelectedType === "R") {
+                addr = data.roadAddress;
+
+                if (data.bname !== "" && /[동|로|가]$/g.test(data.bname))
+                    extraAddr += data.bname;
+            } else addr = data.jibunAddress;
+
+            if (data.buildingName !== "" && data.apartment === "Y") {
+                extraAddr +=
+                    extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
+            }
+
+            if (extraAddr !== "") extraAddr = " (" + extraAddr + ")";
+
+            callback(data);
+        },
+    }).open();
+};

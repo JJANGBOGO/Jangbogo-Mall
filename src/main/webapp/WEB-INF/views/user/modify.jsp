@@ -158,7 +158,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/js/member/regEx.js"></script>
 <script src="/js/member/common.js"></script>
-<script src="/js/msg.js"></script>
+<script src="/js/member/msg.js"></script>
 <script>
     $(document).ready(function () {
         //인증버튼들 비활성화

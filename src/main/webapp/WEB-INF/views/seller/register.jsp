@@ -372,38 +372,15 @@
 <script src="/js/member/common.js"></script>
 <script src="/js/upload/common.js"></script>
 <script>
-    let msg= "${msg}";
+    let msg = "${msg}";
     if (msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다 다시 시도해 주세요");
 
-    //파일 분리 허용X. val() 때문에
-    let addressCallback = (e) => {
-        e.preventDefault(); //405 이슈 해결.
-
-        new daum.Postcode({
-            oncomplete: function (data) {
-                let addr = "";
-                let extraAddr = ""; //참고항목
-
-                if (data.userSelectedType === "R") {
-                    addr = data.roadAddress;
-
-                    if (data.bname !== "" && /[동|로|가]$/g.test(data.bname))
-                        extraAddr += data.bname;
-                } else addr = data.jibunAddress;
-
-                if (data.buildingName !== "" && data.apartment === "Y") {
-                    extraAddr +=
-                        extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
-                }
-
-                if (extraAddr !== "") extraAddr = " (" + extraAddr + ")";
-
-                $("#bsplc_zpcd").val(data.zonecode);
-                $("#bsplc_base").val(data.address);
-                $("#bsplc_dtl").focus(); //상세주소에 focus
-            },
-        }).open();
-    };
+    //주소 api callback 함수
+    function setAddr (data) {
+        $("#bsplc_zpcd").val(data.zonecode);
+        $("#bsplc_base").val(data.address);
+        $("#bsplc_dtl").focus(); //상세주소에 focus
+    }
 
     $(document).ready(function () {
         $("#email_duplicate_chk").click(function (e) {
@@ -466,8 +443,8 @@
             let brno_ref = $("#brno");
             if (!validateBrnoAlert(brno_ref)) return false;
 
-            let brno = { b_no: [$("#brno").val()]};
-                //-제외 숫자만 입력할 것. 그렇지 않으면 잘못된 조회결과 발생
+            let brno = {b_no: [$("#brno").val()]};
+            //-제외 숫자만 입력할 것. 그렇지 않으면 잘못된 조회결과 발생
 
             let serviceKey = "5RrGC%2BYxMLKxHrcaSzs46HaxE7ye2QKnjkO%2F4uATqcBp9fzXBmyqAqEDY1GFkwqWj4lUxEA8R8nskdqUCJhohQ%3D%3D";
             $.ajax({
@@ -480,7 +457,7 @@
                 contentType: "application/json",
                 accept: "application/json",
                 success: function (result) {
-                    let biz_state= result.data[0].b_stt_cd;
+                    let biz_state = result.data[0].b_stt_cd;
 
                     if (biz_state == "") {
                         alert("국세청에 등록되지 않은 사업자 번호입니다.");
@@ -500,7 +477,8 @@
 
         //주소 검색
         $("#addr-search").click(function (e) {
-            addressCallback(e);
+            e.preventDefault();
+            addressCallback(setAddr);
         });
 
         //체크박스 모두 동의
@@ -610,8 +588,8 @@
             let email_ref = $("#email");
             let email_chk_btn = $("#email_duplicate_chk");
 
-            if(!validateEmailAlert(email_ref)) return false; //이메일 검사
-            if(!chkEmailAlert(email_ref, email_chk_btn)) return false; //이메일 중복 검사
+            if (!validateEmailAlert(email_ref)) return false; //이메일 검사
+            if (!chkEmailAlert(email_ref, email_chk_btn)) return false; //이메일 중복 검사
 
             let cpnm_ref = $("#cpnm");
             //브랜드명
@@ -632,14 +610,14 @@
             }
 
             let pwd_ref = $("#pwd");
-            if(!validatePwdAlert(pwd_ref)) return false; //비번 검사
+            if (!validatePwdAlert(pwd_ref)) return false; //비번 검사
 
             let pwd_confirm_ref = $("#pwd_confirm");
-            if(!validatePwdConfirmAlert(pwd_ref, pwd_confirm_ref)) return false;
+            if (!validatePwdConfirmAlert(pwd_ref, pwd_confirm_ref)) return false;
 
             let mpno_ref = $("#mpno");
             let mpno_chk_btn = $("#mpno_chk");
-            if(!validateMpnoAlert(mpno_ref,mpno_chk_btn)) return false;
+            if (!validateMpnoAlert(mpno_ref, mpno_chk_btn)) return false;
 
             let brno_ref = $("#brno");
             let brno_chk_btn = $("#brno_chk");
@@ -654,7 +632,7 @@
 
             // 통신판매업은 숫자+문자 등 fixed가 아니라 ""체크만 한다.
             let sle_biz_ref = $("#sle_biz_no");
-            if (sle_biz_ref.val() =="") {
+            if (sle_biz_ref.val() == "") {
                 alert("통신판매업신고번호를 입력해 주세요");
                 sle_biz_ref.focus();
                 return false;
@@ -688,9 +666,9 @@
             if (!validateBrndImgAlert(bnr_list, prof_list)) return false;
 
             //필수동의
-            let agre_chk = function chkAgreed () {
+            let agre_chk = function chkAgreed() {
                 let is_Agreed;
-                $(".chk-group-line .input-line input[type=checkbox]").each(function(i, obj) {
+                $(".chk-group-line .input-line input[type=checkbox]").each(function (i, obj) {
                     is_Agreed = (!obj.checked) ? obj.checked : true;
                 });
                 return is_Agreed;

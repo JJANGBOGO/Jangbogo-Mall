@@ -76,7 +76,7 @@
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
-<script src="/js/msg.js"></script>
+<script src="/js/member/msg.js"></script>
 <script>
     $(document).ready(function () {
         $(".cancel").click(function () {
