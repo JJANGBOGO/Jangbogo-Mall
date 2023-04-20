@@ -397,64 +397,21 @@
 
         $("#pwd").keyup(function () {
             let pwd = $("#pwd").val();
-            let pwd_confirm = $("#pwd_confirm").val();
-
-            if (pwd == "") {
-                $(".error-msg.pwd").html("비밀번호를 입력해 주세요");
-                return false;
-            } else {
-                $(".error-msg.pwd").empty();
-            }
-
-            if (!pwd_reg.test(pwd)) {
-                $(".error-msg.pwd").html(
-                    "비밀번호를 6자 이상 16자 이하, 영어와 숫자의 조합으로 입력해 주세요. 특수문자 허용"
-                );
-                return false;
-            } else {
-                $(".error-msg.pwd").empty();
-            }
+            let err_ref = $(".error-msg.pwd");
+            pwdErrMsg(pwd, err_ref);
         });
 
         $("#pwd_confirm").keyup(function () {
             let pwd = $("#pwd").val();
             let pwd_confirm = $("#pwd_confirm").val();
-
-            if (pwd_confirm == "") {
-                $(".error-msg.pwd-confirm").html("비밀번호 확인을 입력해 주세요");
-                return false;
-            } else {
-                $(".error-msg.pwd-confirm").empty();
-            }
-
-            if (pwd_confirm != pwd) {
-                $(".error-msg.pwd-confirm").html(
-                    "비밀번호와 동일한 값을 입력해 주세요"
-                );
-                return false;
-            } else {
-                $(".error-msg.pwd-confirm").empty();
-            }
+            let err_ref = $(".error-msg.pwd-confirm");
+            pwdConfirmErrMsg(pwd, pwd_confirm, err_ref);
         });
 
         $("#mpno").keyup(function () {
             let mpno = $("#mpno").val();
-
-            if (mpno == "") {
-                $(".error-msg.mpno").html("휴대전화를 입력해 주세요");
-                return false;
-            } else {
-                $(".error-msg.mpno").empty();
-            }
-
-            if (!mpno_reg.test(mpno)) {
-                $(".error-msg.mpno").html(
-                    "휴대전화 형식에 맞춰 입력해 주세요 (-제외 숫자만)"
-                );
-                return false;
-            } else {
-                $(".error-msg.mpno").empty();
-            }
+            let err_ref = $(".error-msg.mpno");
+            mpnoErrMsg(mpno, err_ref);
         });
 
         $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
@@ -463,7 +420,6 @@
                 $(".error-msg.mpno-verify").css('color', 'green');
                 $("#mpno_chk").attr("disabled", true);
                 $("#mpno").attr('readonly', true);
-
             }
         });
 
@@ -483,64 +439,25 @@
             if (!validateNickAlert(nick_ref)) return false;
             if (!chkNickAlert(nick_ref, nick_chk_btn)) return false;
 
-
             //비번과 비번확인
-            let pwd = $("#pwd").val();
-            let pwd_confirm = $("#pwd_confirm").val();
+            let pwd_ref = $("#pwd");
+            let pwd_confirm_ref = $("#pwd_confirm");
 
-            if (pwd == "") {
-                alert("비밀번호를 입력해 주세요");
-                $("#pwd").focus();
-                return false;
-            }
-
-            if (!pwd_reg.test(pwd)) {
-                alert("비밀번호를 6자 이상 16자 이하, 영어와 숫자의 조합으로 입력해 주세요. 특수문자 허용");
-                $("#pwd").focus();
-                return false;
-            }
-
-            if (pwd != pwd_confirm) {
-                alert("동일한 비밀번호를 입력해 주세요");
-                $("#pwd_confirm").focus();
-                return false;
-            }
+            if (!validatePwdAlert(pwd_ref)) return false;
+            if (!validatePwdConfirmAlert(pwd_ref,pwd_confirm_ref )) return false;
 
             //휴대전화
-            let mpno = $("#mpno").val();
+            let mpno_ref = $("#mpno");
+            let mpno_chk_btn = $("#mpno_chk");
 
-            if (mpno == "") {
-                alert("휴대전화번호를 입력해주세요");
-                $("#mpno").focus();
-                return false;
-            }
-
-            if (!mpno_reg.test(mpno)) {
-                alert("휴대전화형식을 지켜주세요. -제외 숫자만");
-                $("#mpno").focus();
-                return false;
-            }
-
-            if (!$("#mpno_chk").is(":disabled")) {
-                alert("휴대전화인증을 해주세요.");
-                $("#mpno").focus();
-                return false;
-            }
+            if (!validateMpnoAlert(mpno_ref)) return false;
+            if (!chkMpnoAlert(mpno_ref, mpno_chk_btn)) return false;
 
             //주소
-            let addr_base = $("#addr_base").val();
-            let addr_dtl = $("#addr_dtl").val();
+            let addr_base_ref = $("#addr_base");
+            let addr_dtl_ref = $("#addr_dtl");
 
-            if (addr_base == "") {
-                alert("주소를 검색해 주세요");
-                return false;
-            }
-
-            if (addr_dtl == "") {
-                alert("상세 주소를 입력해 주세요");
-                $("#addr_dtl").focus();
-                return false;
-            }
+            if (!validateAddrAlert(addr_base_ref, addr_dtl_ref)) return false;
 
             //필수동의여부
             let checked_1 = $("#check_1").is(":checked");
@@ -548,7 +465,7 @@
             let checked_3 = $("#check_3").is(":checked");
 
             if (!(checked_1 && checked_2 && checked_3)) {
-                alert("필수 동의 항목에 모두 동의해 주세요");
+                alert(chk_agre_required);
                 return false;
             }
 
