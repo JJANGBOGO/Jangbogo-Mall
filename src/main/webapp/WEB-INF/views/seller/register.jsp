@@ -581,6 +581,43 @@
             });
         });
 
+        //휴대전화 인증
+        $("#mpno_chk").click(function (e) {
+            e.preventDefault();
+            let mpno_ref = $("#mpno");
+
+            if (!validateMpnoAlert(mpno_ref)) return false;
+
+            $.ajax({
+                url: '/chk/mpno',
+                data: JSON.stringify({to: mpno_ref.val()}), // 객체를 전송할때는 stringify() 필요, @RequestBody때문
+                type: 'POST',
+                contentType: "application/json",
+                success: function (result) { // test, 문자열 온다.
+                    alert(mpno_send_ok);
+                    console.log(result, result.numStr);
+                    mpno_verify_num = result.numStr;
+                    $("#mpno").closest(".input-box").append('<div class="input">' +
+                        '<input id="mpno_verify" type="text" placeholder="인증번호를 입력해 주세요">' +
+                        '</div><div class="error-msg mpno-verify"></div>');
+                },
+                error: function (err) {
+                    alert(error_msg); //controller에서 500발생해서 보낼 경우 여기로 온다.
+                }
+            }); //$.ajax
+        });
+
+        //휴대전화 인증 keyup
+        $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
+            if ($("#mpno_verify").val() == mpno_verify_num) {
+                $(".error-msg.mpno-verify").html(mpno_verified);
+                $(".error-msg.mpno-verify").css('color', 'green');
+                $("#mpno_chk").attr("disabled", true);
+                $("#mpno").attr('readonly', true);
+
+            }
+        });
+
         //가입하기 버튼
         $(".reg-confirm").click(function (e) {
             e.preventDefault();

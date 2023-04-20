@@ -309,3 +309,16 @@ function addressCallback(callback) {
         },
     }).open();
 };
+
+// 이메일 keyup 메세지
+function emailErrMsg (email, err_ref) {
+    if (email === "") {
+        err_ref.html(email_empty);
+        return false; //good
+    } else err_ref.empty();
+
+    if (!email_reg.test(email)) {
+        err_ref.html(not_valid_email);
+        return false;
+    } else err_ref.empty();
+}

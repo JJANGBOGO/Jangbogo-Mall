@@ -241,15 +241,15 @@
     </div>
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/js/member/regEx.js"></script>
 <script src="/js/member/common.js"></script>
+<script src="/js/member/msg.js"></script>
 <script>
     let msg = "${msg}";
     if (msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다. 다시 시도해 주세요");
-</script>
-<script>
+
     function setAddr(data) {
         $("#zpcd").val(data.zonecode);
         $("#addr_base").val(data.address);
@@ -305,19 +305,9 @@
         //  이메일 중복 검사 ajax
         $("#email_duplicate_chk").click(function (e) {
             e.preventDefault(); //form 전송 방지
-            let email = $("#email").val();
 
-            if (email == "") {
-                alert("이메일을 입력해 주세요");
-                $("#email").focus();
-                return false;
-            }
-
-            if (!email_reg.test(email)) {
-                alert("이메일 형식에 맞게 입력해 주세요");
-                $("#email").focus();
-                return false;
-            }
+            let email_ref = $("#email");
+            if (!validateEmailAlert(email_ref)) return false;
 
             $.ajax({
                 url: '/user/duplicate/email',
@@ -325,39 +315,26 @@
                 type: 'POST',
                 success: function (result) {
                     if (result == "OK") {
-                        alert("사용 가능한 이메일입니다.");
+                        alert(available_email);
                         $("#email_duplicate_chk").attr("disabled", true); //버튼 비활성화
-                        $("#email").attr("readonly", true); //인풋 비활성화
+                        email_ref.attr("readonly", true); //인풋 비활성화
                     } else {
-                        alert("이미 사용중인 이메일입니다.");
-                        $("#email").focus();
+                        alert(duplicate_email);
+                        email_ref.focus();
                     }
                 },
                 error: function (err) {
-                    alert("error: ", err)
+                    alert(error_msg);
                 }
             }); //$.ajax
         });
 
         //닉네임 중복검사
         $("#nick_duplicate_chk").click(function (e) {
-            e.preventDefault(); //form 전송 방지
-            let nick = $("#nick_nm").val();
+            e.preventDefault();
+            let nick_ref = $("#nick_nm");
 
-            //닉네임
-            if (nick == "") {
-                alert("닉네임을 입력해 주세요");
-                $("#nick_nm").focus();
-                return false;
-            }
-
-            if (!nick_reg.test(nick)) {
-                alert(
-                    "닉네임은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요"
-                );
-                $("#nick_nm").focus();
-                return false;
-            }
+            if (!validateNickAlert(nick_ref)) return false;
 
             $.ajax({
                 url: '/user/duplicate/nickname',
@@ -365,16 +342,16 @@
                 type: 'POST',
                 success: function (result) {
                     if (result == "OK") {
-                        alert("사용 가능한 닉네임입니다.");
+                        alert(available_nick);
                         $("#nick_duplicate_chk").attr("disabled", true); //버튼 비활성화
-                        $("#nick_nm").attr("readonly", true); //인풋 비활성화
+                        nick_ref.attr("readonly", true); //인풋 비활성화
                     } else {
-                        alert("이미 사용중인 닉네임입니다.");
-                        $("#nick_nm").focus();
+                        alert(duplicate_nick);
+                        nick_ref.focus();
                     }
                 },
                 error: function (err) {
-                    alert("error: ", err)
+                    alert(error_msg);
                 }
             }); //$.ajax
         });
@@ -384,17 +361,7 @@
             e.preventDefault();
             let mpno_ref = $("#mpno");
 
-            if (mpno_ref.val() == "") {
-                alert("휴대전화번호를 입력해주세요");
-                mpno_ref.focus();
-                return false;
-            }
-
-            if (!mpno_reg.test(mpno_ref.val())) {
-                alert("휴대전화형식을 지켜주세요. -제외 숫자만");
-                mpno_ref.focus();
-                return false;
-            }
+            if (!validateMpnoAlert(mpno_ref)) return false;
 
             $.ajax({
                 url: '/chk/mpno',
@@ -402,15 +369,14 @@
                 type: 'POST',
                 contentType: "application/json",
                 success: function (result) { // test, 문자열 온다.
-                    alert("인증번호 전송에 성공했습니다");
-                    console.log(result, result.numStr);
+                    alert(mpno_send_ok);
                     mpno_verify_num = result.numStr;
-                    $("#mpno").closest(".input-box").append('<div class="input">' +
+                   mpno_ref.closest(".input-box").append('<div class="input">' +
                         '<input id="mpno_verify" type="text" placeholder="인증번호를 입력해 주세요">' +
                         '</div><div class="error-msg mpno-verify"></div>');
                 },
                 error: function (err) {
-                    alert("오류가 발생했습니다. 다시 시도해 주세요"); //controller에서 500발생해서 보낼 경우 여기로 온다.
+                    alert(error_msg); //controller에서 500발생해서 보낼 경우 여기로 온다.
                 }
             }); //$.ajax
         });
@@ -418,41 +384,15 @@
         //input 아래 에러메세지
         //이메일
         $("#email").keyup(function () {
-            let email = $("#email").val(); //밖으로 빼지 말기
-
-            if (email == "") {
-                $(".error-msg.email").html("이메일을 입력해 주세요");
-                return false; //good
-            } else {
-                $(".error-msg.email").empty();
-            }
-
-            if (!email_reg.test(email)) {
-                $(".error-msg.email").html("이메일 형식에 맞게 입력해 주세요");
-                return false;
-            } else {
-                $(".error-msg.email").empty();
-            }
+            let email = $("#email").val();
+            let err_ref = $(".error-msg.email");
+            emailErrMsg(email, err_ref);
         });
 
         $("#nick_nm").keyup(function () {
             let nick = $("#nick_nm").val();
-
-            //nickname
-            if (nick == "") {
-                $(".error-msg.nick").html("닉네임을 입력해 주세요");
-                return false;
-            } else {
-                $(".error-msg.nick").empty();
-            }
-
-            if (!nick_reg.test(nick)) {
-                $(".error-msg.nick").html(
-                    "닉네임은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요"
-                );
-            } else {
-                $(".error-msg.nick").empty();
-            }
+            let err_ref = $(".error-msg.nick");
+            nickErrMsg(nick, err_ref);
         });
 
         $("#pwd").keyup(function () {
@@ -519,7 +459,7 @@
 
         $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
             if ($("#mpno_verify").val() == mpno_verify_num) {
-                $(".error-msg.mpno-verify").html("인증되었습니다");
+                $(".error-msg.mpno-verify").html(mpno_verified);
                 $(".error-msg.mpno-verify").css('color', 'green');
                 $("#mpno_chk").attr("disabled", true);
                 $("#mpno").attr('readonly', true);
@@ -530,50 +470,19 @@
         //가입하기 버튼 유효성 검사
         $(".reg-confirm").click(function (e) {
             e.preventDefault(); //버튼 기본 이벤트 방지
-            let email = $("#email").val(); //밖으로 빼지 말기
 
-            if (email == "") {
-                alert("이메일을 입력해 주세요");
-                $("#email").focus();
-                return false;
-            }
+            let email_ref = $("#email");
+            let email_chk_btn = $("#email_duplicate_chk");
 
-            if (!email_reg.test(email)) {
-                alert("이메일 형식에 맞게 입력해 주세요");
-                $("#email").focus();
-                return false;
-            }
+            if (!validateEmailAlert(email_ref)) return false;
+            if (!chkEmailAlert(email_ref, email_chk_btn)) return false;
 
-            //중복검사
-            if (!$("#email_duplicate_chk").is(":disabled")) {
-                alert("이메일 중복 검사를 해주세요");
-                $("#email").focus();
-                return false;
-            }
+            let nick_ref = $("#nick_nm");
+            let nick_chk_btn = $("#nick_duplicate_chk");
 
-            let nick = $("#nick_nm").val();
+            if (!validateNickAlert(nick_ref)) return false;
+            if (!chkNickAlert(nick_ref, nick_chk_btn)) return false;
 
-            //닉네임
-            if (nick == "") {
-                alert("닉네임을 입력해 주세요");
-                $("#nick_nm").focus();
-                return false;
-            }
-
-            if (!nick_reg.test(nick)) {
-                alert(
-                    "닉네임은 2-16자 사이의 영문, 숫자, 한글(초성제외)로 입력해주세요"
-                );
-                $("#nick_nm").focus();
-                return false;
-            }
-
-            //닉네임 중복 검사
-            if (!$("#nick_duplicate_chk").is(":disabled")) {
-                alert("닉네임 중복 검사를 해주세요");
-                $("#nick_nm").focus();
-                return false;
-            }
 
             //비번과 비번확인
             let pwd = $("#pwd").val();
