@@ -144,8 +144,8 @@
                         </label>
                     </div>
                     <div class="btn-container">
-                        <button class="info-modify cancel">수정 취소</button>
-                        <button class="info-modify">수정 완료</button>
+                        <button class="info-modify cancel" id="cancel_btn">수정 취소</button>
+                        <button class="info-modify" id="submit_btn">수정 완료</button>
                     </div>
                 </div>
                 <!-- end of center-padding -->
@@ -153,6 +153,7 @@
         </div>
     </div>
 </div>
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/js/member/regEx.js"></script>
@@ -166,7 +167,7 @@
 
         let market_checkbox = $("#markt_agre_yn");
         //초기 마케팅 수신동의 설정
-        market_checkbox.attr("checked", "${user.markt_agre_yn}" == "Y" ? true : false);
+        market_checkbox.attr("checked", "${user.markt_agre_yn}" === "Y" ? true : false);
         $(".agree-checkbox2").attr("src", imgUrl(market_checkbox.is(":checked")));
 
         //커스텀 체크박스 toggle
@@ -175,7 +176,7 @@
         });
 
         //수정 취소 버튼
-        $(".info-modify.cancel").click(function (e) {
+        $("#cancel_btnl").click(function (e) {
             e.preventDefault();
             window.location.href = "/user/info";
         })
@@ -188,7 +189,7 @@
             let prev_nick = "${user.nick_nm}";
 
             nickErrMsg(nick, err_ref);
-            $("#nick_duplicate_chk").attr("disabled", nick == prev_nick ? true : false);
+            $("#nick_duplicate_chk").attr("disabled", nick === prev_nick ? true : false);
         });
 
         //비번
@@ -213,7 +214,7 @@
             let err_ref = $(".error-msg.mpno");
 
             mpnoErrMsg(mpno, err_ref);
-            $("#mpno_chk").attr("disabled", (mpno == "${user.mpno}") ? true : false);
+            $("#mpno_chk").attr("disabled", (mpno === "${user.mpno}") ? true : false);
         });
 
         //닉네임 중복검사
@@ -278,7 +279,7 @@
             }
         })
 
-        $(".info-modify").click(function (e) { //수정버튼 클릭
+        $("#submit_btn").click(function (e) { //수정버튼 클릭
             e.preventDefault();
             let nick_ref = $("#nick_nm");
             let nick_chk_btn = $("#nick_duplicate_chk");
@@ -305,6 +306,5 @@
     });
 </script>
 </body>
-<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </html>
 
