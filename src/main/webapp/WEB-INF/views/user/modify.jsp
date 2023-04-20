@@ -156,8 +156,8 @@
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/js/member/regEx.js"></script>
-<script src="/js/member/msg.js"></script>
 <script src="/js/member/common.js"></script>
+<script src="/js/msg.js"></script>
 <script>
     $(document).ready(function () {
         //인증버튼들 비활성화
@@ -167,11 +167,12 @@
         $("#markt_agre_yn").attr("checked", "${user.markt_agre_yn}" == "Y" ? true : false);
         $(".agree-checkbox2").attr("src", imgUrl($("#markt_agre_yn").is(":checked")));
 
-        //커스텀 체크박스
+        //커스텀 체크박스 toggle
         $("#markt_agre_yn").click(function () {
             $(".agree-checkbox2").attr("src", imgUrl($(this).is(":checked")));
         });
 
+        //수정 취소 버튼
         $(".info-modify.cancel").click(function() {
             window.location.href="/user/info";
         })
@@ -183,35 +184,15 @@
             let err_ref = $(".error-msg.nick");
             let prev_nick = "${user.nick_nm}";
 
-            if (nick == "") {
-                err_ref.html(nick_empty);
-                return false;
-            } else err_ref.empty();
-
-            if (!nick_reg.test(nick)) {
-                err_ref.html(not_valid_nick);
-            } else err_ref.empty();
-
+            nickErrMsg(nick, err_ref);
             $("#nick_duplicate_chk").attr("disabled", nick == prev_nick ? true : false);
         });
 
         //비번
         $("#pwd").keyup(function () {
             let pwd = $("#pwd").val();
-            let pwd_confirm = $("#pwd_confirm").val();
-            let pwd_err_ref = $(".error-msg.pwd");
-
-            console.log("pwd dif....", pwd, pwd_confirm);
-
-            if (pwd == "") {
-                pwd_err_ref.html(pwd_empty);
-                return false;
-            } else pwd_err_ref.empty();
-
-            if (!pwd_reg.test(pwd)) {
-                pwd_err_ref.html(not_valid_pwd);
-                return false;
-            } else pwd_err_ref.empty();
+            let err_ref = $(".error-msg.pwd");
+            pwdErrMsg(pwd, err_ref);
         });
 
         //비번확인
@@ -383,8 +364,6 @@
             }
 
             //통과
-            let prev_pwd = "${user.pwd}";
-            if (pwd_ref.val() == "") pwd_ref.val(prev_pwd); //새 비밀번호를 입력하지 않은 경우 기존 비밀번호를 넣는다.
             $("#modify_user").submit();
         });
     });

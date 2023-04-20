@@ -232,4 +232,16 @@ function mpnoErrMsg (mpno, err_ref) {
     } else err_ref.empty();
 }
 
+//닉네임 keyup 에러메세지
+function nickErrMsg (nick, err_ref) {
+    if (nick == "") {
+        err_ref.html(nick_empty);
+        return false;
+    } else err_ref.empty();
+
+    if (!nick_reg.test(nick)) {
+        err_ref.html(not_valid_nick);
+    } else err_ref.empty();
+}
+
 
