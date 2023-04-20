@@ -193,9 +193,10 @@ public class OrderController {
     // 반환타입 : ResponseEntity<String>
     @PostMapping("/order/checkout/submit")
     public ResponseEntity<OrderDto> saveOrderForm(@RequestBody OrderDto orderDto) {
-        System.out.println(orderDto);  // {idx=1, ordr_nm='정지우', mpno='010-8435-4496', user_idx=1235}
+        System.out.println(orderDto);  // {ordr_nm='정지우', mpno='010-8435-4496', user_idx=1235}
         String msg = "";
         int rowCnt = 0;
+        OrderDto orderDto2 = null;
         try {
             // rowCnt가 1일 경우, 성공 응답을 보낸다.
             // 1이 아닐 경우, 에러 발생 및 리턴
@@ -203,6 +204,8 @@ public class OrderController {
             // 성공 시, 'SAVE_OK'와 OK상태코드를 반환 - 상태코드 : 200
             rowCnt = orderService.addOrder(orderDto);
             if(rowCnt == 0) new Exception("insert failure.");
+            orderDto2 = orderService.getOrderDto(orderDto.getIdx());
+            System.out.println(orderDto);  // {ordr_nm='정지우', mpno='010-8435-4496', user_idx=1235}
             msg = "SAVE_OK";
             return new ResponseEntity<OrderDto>(orderDto, HttpStatus.OK);
         } catch(Exception e) {

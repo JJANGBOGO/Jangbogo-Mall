@@ -39,7 +39,7 @@ public class OrderService {
     // 메서드명 : updateApprovedSetl
     // 기   능 : orderDao의 updateApproveSetl() 호출 - '결제' 테이블에 승인 처리 된 결제 정보 업데이트
     // 반환타입 : int
-    // 매개변수 : KakaoApproveResponseDto kakaoApproveResponseDto
+    //   매개변수 : KakaoApproveResponseDto kakaoApproveResponseDto
     public int updateApprovedSetl(KakaoApproveResponseDto kakaoApproveResponseDto) {
         return orderDao.updateApprovedSetl(kakaoApproveResponseDto);
     }

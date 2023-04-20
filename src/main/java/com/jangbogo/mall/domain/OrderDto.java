@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 public class OrderDto {
     // iv 선언
     Integer idx;                                                                    // 주문번호  IDX
-    String ordr_nm = "";                                                            // 주문자이름 ORDR_NM
-    String mpno = "";                                                               // 주문자휴대전화번호 MPNO
-    Integer user_idx = 0;                                                           // 회원번호  USER_IDX
+    String ordr_nm;                                                            // 주문자이름 ORDR_NM
+    String mpno;                                                               // 주문자휴대전화번호 MPNO
+    Integer user_idx;                                                           // 회원번호  USER_IDX
 
     // Constructor
     public OrderDto() {}                                                            // 기본 생성자

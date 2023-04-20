@@ -10,8 +10,8 @@
         반환타입 : String
     -->
     <insert id="saveKakaoPayment" parameterType="map">
-        insert into SETL(IDX, ORD_IDX, SETL_IDX)
-        values (1, #{ord_idx}, #{tid})
+        insert into SETL(ORD_IDX, SETL_IDX)
+        values (#{ord_idx}, #{tid})
     </insert>
 
     <!--
@@ -21,7 +21,7 @@
         반환타입 : Integer
         매개변수 : OrderDto orderDto
     -->
-    <insert id="addOrder" parameterType="OrderDto">
+    <insert id="addOrder" parameterType="OrderDto" useGeneratedKeys="true" keyProperty="idx">
         insert into ORD(IDX, USER_IDX, ORDR_NM, MPNO)
         values(#{idx}, #{user_idx}, #{ordr_nm}, #{mpno});
     </insert>
