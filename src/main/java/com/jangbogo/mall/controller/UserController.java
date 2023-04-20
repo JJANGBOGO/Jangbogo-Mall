@@ -227,7 +227,7 @@ public class UserController {
     }
 
     // 일반 회원 로그아웃
-    @GetMapping("/security_logout")
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         session.invalidate();
         deleteAuth(request, response);

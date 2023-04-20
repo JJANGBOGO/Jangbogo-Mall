@@ -36,5 +36,4 @@ public interface UserDao {
     //시큐리티 유저 조회
     UserDetailsDto getUserDetailsDto (String email) throws Exception;
 
-
 }

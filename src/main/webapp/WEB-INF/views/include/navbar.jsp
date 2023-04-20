@@ -4,7 +4,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:set var="loginService" value="${sessionScope.loginService}"/>
-<c:set var="nickname" value="${sessionScope.nickName}"/>
 <nav>
     <div class="sticky-wrap">
         <div class="top-navigation">
@@ -20,7 +19,7 @@
                     </s:authorize>
                     <s:authorize access="isAuthenticated()">
                         <li>
-                            <a>${nickname}님</a>
+                            <a>${sessionScope.nickName}님</a>
                         </li>
                         <li>
                             <c:choose>
@@ -36,7 +35,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <%-- 일반 로그아웃--%>
-                                    <a href="/security_logout">로그아웃</a>
+                                    <a href="/logout">로그아웃</a>
                                 </c:otherwise>
                             </c:choose>
                         </li>
@@ -66,15 +65,18 @@
                         <i class="fa-regular fa-heart"></i>
                         <div class="icon-desc">위시리스트</div>
                     </a>
-<%--                    <i class="fa-regular fa-heart"></i>--%>
-                    <a href="/user/info">
-                        <i class="fa-regular fa-user"></i>
-                        <div class="icon-desc">마이페이지</div>
-                    </a>
-                    <a href="/seller/info">
-                        <i class="fa-regular fa-user"></i>
-                        <div class="icon-desc">마이셀러</div>
-                    </a>
+                    <s:authorize access="hasRole('ROLE_USER')">
+                        <a href="/user/info">
+                            <i class="fa-regular fa-user"></i>
+                            <div class="icon-desc">마이페이지</div>
+                        </a>
+                    </s:authorize>
+                    <s:authorize access="hasRole('ROLE_SELLER')">
+                        <a href="/seller/info">
+                            <i class="fa-regular fa-user"></i>
+                            <div class="icon-desc">마이셀러</div>
+                        </a>
+                    </s:authorize>
                 </div>
             </div>
         </div>
@@ -88,15 +90,9 @@
                     <a href="">카테고리</a>
                 </li>
                 <li>
-                    <a href="">알뜰쇼핑</a>
-                </li>
-                <li>
                     <a href="">특가/혜택</a>
                 </li>
                 <li></li>
-                <li>
-                    <a href="">밀키트</a>
-                </li>
                 <li>
                     <a href="">베스트</a>
                 </li>
