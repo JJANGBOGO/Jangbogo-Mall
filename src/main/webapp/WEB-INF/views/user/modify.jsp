@@ -179,7 +179,7 @@
         $("#cancel_btnl").click(function (e) {
             e.preventDefault();
             window.location.href = "/user/info";
-        })
+        });
 
         //keyup
         //닉네임
@@ -277,7 +277,7 @@
                 $("#mpno").attr('readonly', true);
 
             }
-        })
+        });
 
         $("#submit_btn").click(function (e) { //수정버튼 클릭
             e.preventDefault();

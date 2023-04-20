@@ -6,9 +6,9 @@ import com.jangbogo.mall.domain.UserDetailsDto;
 
 public interface UserDao {
 
-    int deleteUser(int idx, String email) throws Exception; //회원탈퇴
+    int deleteUser(Integer idx, String email) throws Exception; //회원탈퇴
 
-    User selectUser(int idx) throws Exception; //회원상세조회
+    User selectUser(Integer idx) throws Exception; //회원상세조회
 
     int updatePwd(String pwd, String nick_nm, String email) throws Exception; //비밀번호 수정
 
@@ -22,7 +22,7 @@ public interface UserDao {
     int insertUser(User user) throws Exception;
 
     //로그인일시 업데이트
-    int updateLoginTm(int idx, String email) throws Exception;
+    int updateLoginTm(Integer idx, String email) throws Exception;
 
     //닉네임으로 유저찾기
     User getUserByNick(String nick_nm) throws Exception;
@@ -31,7 +31,7 @@ public interface UserDao {
     int updateUser(User user) throws Exception;
 
     //비번변경날짜 업데이트
-    int updatePwdUptTm(int idx, String email) throws Exception;
+    int updatePwdUptTm(Integer idx, String email) throws Exception;
 
     //시큐리티 유저 조회
     UserDetailsDto getUserDetailsDto (String email) throws Exception;
