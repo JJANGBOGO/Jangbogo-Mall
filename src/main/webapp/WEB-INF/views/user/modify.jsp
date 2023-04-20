@@ -204,15 +204,7 @@
             let pwd_confirm = $("#pwd_confirm").val();
             let err_ref = $(".error-msg.pwd-confirm");
 
-            if (pwd_confirm == "") {
-                err_ref.html(pwd_confirm_empty);
-                return false;
-            } else err_ref.empty();
-
-            if (pwd_confirm != pwd) {
-                err_ref.html(not_valid_pwd_confirm);
-                return false;
-            } else err_ref.empty();
+            pwdConfirmErrMsg(pwd, pwd_confirm, err_ref);
         });
 
         //휴대전화 keyup

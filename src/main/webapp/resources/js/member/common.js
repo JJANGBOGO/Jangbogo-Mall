@@ -270,3 +270,15 @@ function chkNickAlert(nick_ref, nick_chk_btn) {
     return true;
 }
 
+//비번확인 keyup 에러메세지
+function pwdConfirmErrMsg (pwd, pwd_confirm, err_ref) {
+    if (pwd_confirm == "") {
+        err_ref.html(pwd_confirm_empty);
+        return false;
+    } else err_ref.empty();
+
+    if (pwd_confirm != pwd) {
+        err_ref.html(not_valid_pwd_confirm);
+        return false;
+    } else err_ref.empty();
+}
