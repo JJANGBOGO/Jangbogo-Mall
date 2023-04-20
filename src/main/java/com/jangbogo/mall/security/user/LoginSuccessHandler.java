@@ -50,11 +50,16 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         try {
             //회원 조회
             User user = userDao.getUserByEmail(email);
+            Integer idx = user.getIdx();
+            String userEmail = user.getEmail();
 
             //세션 생성
-            request.getSession().setAttribute("idx", user.getIdx());
-            request.getSession().setAttribute("email", user.getEmail());
+            request.getSession().setAttribute("idx", idx);
+            request.getSession().setAttribute("email", userEmail);
             request.getSession().setAttribute("nickName", user.getNick_nm());
+
+            //최종로그인일자 업데이트
+            userDao.updateLoginTm(idx, userEmail);
 
         } catch (Exception e) {
             e.printStackTrace();
