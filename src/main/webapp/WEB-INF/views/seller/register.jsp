@@ -373,7 +373,7 @@
 <script src="/js/upload/common.js"></script>
 <script>
     let msg = "${msg}";
-    if (msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다 다시 시도해 주세요");
+    if (msg === "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다 다시 시도해 주세요");
 
     //주소 api callback 함수
     function setAddr(data) {
