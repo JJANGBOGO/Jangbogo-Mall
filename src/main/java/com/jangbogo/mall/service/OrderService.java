@@ -1,6 +1,7 @@
 package com.jangbogo.mall.service;
 
 import com.jangbogo.mall.dao.OrderDao;
+import com.jangbogo.mall.domain.KakaoApproveResponseDto;
 import com.jangbogo.mall.domain.OrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class OrderService {
 
     // 메서드명 : addOrder
     // 기   능 : OrderDao의 addOrder메서드 호출
-    // 반환타입 :
+    // 반환타입 : int
     // 매개변수 : OrderDto orderDto
     public int addOrder(OrderDto orderDto) throws Exception {
         return orderDao.addOrder(orderDto);
@@ -29,10 +30,17 @@ public class OrderService {
 
     // 메서드명 : getOrderDto
     // 기   능 : OrderDao의 getPaymentDto메서드 호출
+    // 반환타입 : OrderDto
     // 매개변수 : Integer idx
-    // 반환타입 : String
     public OrderDto getOrderDto(Integer idx) {
         return orderDao.getOrderDto(idx);
     }
 
+    // 메서드명 : updateApprovedSetl
+    // 기   능 : orderDao의 updateApproveSetl() 호출 - '결제' 테이블에 승인 처리 된 결제 정보 업데이트
+    // 반환타입 : int
+    // 매개변수 : KakaoApproveResponseDto kakaoApproveResponseDto
+    public int updateApprovedSetl(KakaoApproveResponseDto kakaoApproveResponseDto) {
+        return orderDao.updateApprovedSetl(kakaoApproveResponseDto);
+    }
 }

@@ -1,5 +1,6 @@
 package com.jangbogo.mall.dao;
 
+import com.jangbogo.mall.domain.KakaoApproveResponseDto;
 import com.jangbogo.mall.domain.OrderDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,8 @@ public class OrderDao {
         return session.selectOne(namespace + "selectOrderDto", idx);
     }
 
+    public int updateApprovedSetl(KakaoApproveResponseDto kakaoApproveResponseDto) {
+        return session.update(namespace + "updateApprovedSetl", kakaoApproveResponseDto);
+    }
 }
 

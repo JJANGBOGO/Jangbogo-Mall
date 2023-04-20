@@ -38,5 +38,23 @@
         where IDX = #{idx};
     </select>
 
+    <!--
+        태   그 : update
+        기   능 : '결제' 테이블에 '승인'처리 된 결제 정보 업데이트하기
+        아이디명 : updateApprovedSetl
+        반환타입 : int
+        매개변수 : KakaoApproveResponseDto kakaoApproveResponseDto
+    -->
+    <update id="updateApprovedSetl" parameterType="KakaoApproveResponseDto">
+        update SETL
+        SET APRV_IDX = #{aid},
+            ORD_TOT_AMT = #{amount.total},
+            AMT = #{amount.total},
+            MN_CD = 1,
+            STATE_CD = 1,
+            DEAL_TM = #{approved_at},
+            UPT_TM = now()
+        WHERE SETL_IDX = #{tid}
+    </update>
 
 </mapper>
