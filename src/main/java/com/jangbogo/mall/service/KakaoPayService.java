@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -82,14 +83,19 @@ public class KakaoPayService {
         // 파라미터, 헤더
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, this.getHeaders());
 
-
         // 외부에 보낼 url
         RestTemplate restTemplate = new RestTemplate();
-
-        kakaoApproveResponseDto = restTemplate.postForObject(
-                "https://kapi.kakao.com/v1/payment/approve",
-                entity,
-                KakaoApproveResponseDto.class);
+        try {
+            kakaoApproveResponseDto = restTemplate.postForObject(
+                    "https://kapi.kakao.com/v1/payment/approve",
+                    entity,
+                    KakaoApproveResponseDto.class);
+        } catch (HttpStatusCodeException e) {
+            e.printStackTrace();
+//            ResponseEntity.status(e.getRawStatusCode())
+//                    .headers(e.getResponseHeaders())
+//                    .body(e.getResponseBodyAsString()); // **** 한글이 안깨진다!
+        }
 
         return kakaoApproveResponseDto;
     }
