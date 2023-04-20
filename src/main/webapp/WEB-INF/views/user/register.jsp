@@ -128,7 +128,13 @@
                         <div class="input-box">
                             <input name="zpcd" id="zpcd" hidden/>
                             <div class="input">
-                                <input name="addr_base" id="addr_base" placeholder="주소를 검색해 주세요" readonly/>
+                                <input
+                                        name="addr_base"
+                                        id="addr_base"
+                                        type="text"
+                                        placeholder="주소를 검색해 주세요"
+                                        readonly
+                                />
                             </div>
                             <div class="input addr-dtl">
                                 <input
@@ -244,40 +250,18 @@
     if (msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다. 다시 시도해 주세요");
 </script>
 <script>
-    let addressCallback = (e) => {
-        e.preventDefault(); //405 이슈 해결.
-
-        new daum.Postcode({
-            oncomplete: function (data) {
-                let addr = "";
-                let extraAddr = ""; //참고항목
-
-                if (data.userSelectedType === "R") {
-                    addr = data.roadAddress;
-
-                    if (data.bname !== "" && /[동|로|가]$/g.test(data.bname))
-                        extraAddr += data.bname;
-                } else addr = data.jibunAddress;
-
-                if (data.buildingName !== "" && data.apartment === "Y") {
-                    extraAddr +=
-                        extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
-                }
-
-                if (extraAddr !== "") extraAddr = " (" + extraAddr + ")";
-
-                $("#zpcd").val(data.zonecode);
-                $("#addr_base").val(data.address);
-            },
-        }).open();
-    };
+    function setAddr(data) {
+        $("#zpcd").val(data.zonecode);
+        $("#addr_base").val(data.address);
+    }
 
     //인증번호 문자열
     let mpno_verify_num = "";
 
     $(document).ready(function () {
         $("#addr-search").click(function (e) {
-            addressCallback(e);
+            e.preventDefault();
+            addressCallback(setAddr);
         });
 
         $(".checkbox-group").on("click", "#check-all", function () {
