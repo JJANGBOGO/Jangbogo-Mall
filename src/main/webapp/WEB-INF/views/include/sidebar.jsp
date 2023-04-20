@@ -19,8 +19,10 @@
                 </a>
             </li>
             <li>
-                <a href="/user/info">
+                <a href="/user/info"
+                   class="<c:if test='${mypageUrl eq "/user/info" || mypageUrl eq "/user/modify"}'>active</c:if> ">
                     개인정보 수정
+
                 </a>
             </li>
         </ul>

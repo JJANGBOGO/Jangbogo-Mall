@@ -286,7 +286,8 @@ public class UserController {
 
     //회원인증뷰
     @GetMapping("/user/info")
-    public String verifyUserView(HttpSession session) {
+    public String verifyUserView(HttpServletRequest req, HttpSession session, Model m) {
+        m.addAttribute("mypageUrl", req.getRequestURI());
 
         String serviceType = (String) session.getAttribute("loginService");
         if (serviceType == "naver" || serviceType == "kakao")
@@ -317,7 +318,9 @@ public class UserController {
 
     //회원수정뷰
     @GetMapping("/user/modify")
-    public String modifyUserView(HttpSession session, Model m, RedirectAttributes rattr) {
+    public String modifyUserView(HttpServletRequest req, HttpSession session, Model m, RedirectAttributes rattr) {
+        m.addAttribute("mypageUrl", req.getRequestURI());
+
         if (session.getAttribute("modify") != "OK") {
             return "redirect:/user/info";
         }

@@ -176,7 +176,7 @@
         });
 
         //수정 취소 버튼
-        $("#cancel_btnl").click(function (e) {
+        $("#cancel_btn").click(function (e) {
             e.preventDefault();
             window.location.href = "/user/info";
         });

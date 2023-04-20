@@ -4,7 +4,7 @@
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
     <link rel="stylesheet" href="/css/myPage/baseLayout.css"/>
     <link rel="stylesheet" href="/css/myPage/sidebar.css"/>
-    <link rel="stylesheet" href="/css/myPage/validateUser.css"/>
+    <link rel="stylesheet" href="/css/myPage/validateUser.css?v=2"/>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
@@ -37,7 +37,7 @@
                             </label>
                         </div>
                         <div class="input">
-                            <input name="pwd" type="password" />
+                            <input name="pwd" type="password" class="test" />
                         </div>
                     </div>
                 </div>
