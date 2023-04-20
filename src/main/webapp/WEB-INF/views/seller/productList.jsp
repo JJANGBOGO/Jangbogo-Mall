@@ -68,7 +68,11 @@
             rating: grade,
         });
 
-        $(".starrr a").css("color", "rgb(243, 61, 61)");
+        $(".starrr a").css("color", "rgb(243, 61, 61)"); //start color
+
+        $(".product-reg-btn").click(function() {
+            window.location.href = "/seller/register/product";
+        });
     });
 </script>
 </body>

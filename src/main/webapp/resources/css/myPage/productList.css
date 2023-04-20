@@ -36,11 +36,11 @@
 
 .seller-products .product-item .product-center .product-desc .product-title,
 .seller-products .product-item .product-right .product-price {
+    max-height: 42px;
     font-size: 16px;
     font-weight: 700;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-height: 42px;
     cursor: pointer;
 }
 
@@ -57,10 +57,13 @@
 .mypage-content .product-reg-btn {
     float: right;
     margin-top: 20px;
+
     border: 1px solid var(--primary-color);
     border-radius: 4px;
     padding: 15px;
     color: var(--primary-color);
+
     background-color: white;
     cursor: pointer;
+    outline: none;
 }
