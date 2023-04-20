@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.jangbogo.mall.dao.ProductDetailMapper">
+<!--    상품 번호에 해당하는 상품 하나 가져오기-->
+    <select id="select" parameterType="Integer" resultType="ProductDetailDto">
+        select p.prc as 'price', p.name as 'name', p.ctent as 'content', p.UPLOAD_PATH as 'upload_path', p.DC_RATE as 'dc_rate', p.DC_STATE_CD as 'dc_state', pd.prod_idx as 'productNum', pd.ORPLC as 'origin', pd.SLE_UNIT as 'unit', pd.WEIGHT as 'weight', pd.WARN as 'warn', pd.SFKP_TP_STATE_CD as 'packingType'
+        from product p inner join prod_dtl pd
+        on p.idx = pd.prod_idx
+        where pd.prod_idx = #{prod_idx};
+    </select>
+</mapper>

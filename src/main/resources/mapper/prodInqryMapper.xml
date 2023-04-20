@@ -38,9 +38,9 @@
 <!--하나의 상품 게시판 안 상품문의 게시물 한 개 올리기-->
     <insert id="insert" parameterType="ProdInqryDto">
         INSERT INTO prod_inqry
-            (prod_idx, user_idx, title, ctent, writer, opub_yn)
+            (prod_idx, user_idx, title, ctent, writer)
         VALUES
-            (#{prod_idx}, #{user_idx}, #{title}, #{ctent}, #{writer}, #{opub_yn})
+            (#{prod_idx}, #{user_idx}, #{title}, #{ctent}, #{writer})
     </insert>
 <!--하나의 상품 게시판 안 상품문의 게시물 한 개 지우기-->
     <update id="delete" parameterType="map">
@@ -59,7 +59,6 @@
         UPDATE prod_inqry
         SET title = #{title},
             ctent = #{ctent},
-            opub_yn = #{opub_yn},
             wrt_tm = now(),
             writer = (select nick_nm from user where idx = #{user_idx})
         WHERE idx = #{idx} AND user_idx = #{user_idx} and prod_idx = #{prod_idx}
