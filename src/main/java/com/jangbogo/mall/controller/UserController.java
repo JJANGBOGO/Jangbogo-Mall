@@ -299,8 +299,6 @@ public class UserController {
     //회원수정전 인증
     @PostMapping("/user/info")
     public String verifyUser(String email, String pwd, RedirectAttributes rattr) {
-        log.info("pwd..." + email + pwd);
-
         try {
             if (userService.verifyUser(email, pwd)) return "redirect:/user/modify";
             else {
@@ -341,15 +339,13 @@ public class UserController {
         log.info("회원수정....." + user);
 
         try {
-//            user.setIdx((int) session.getAttribute("idx"));
-            user.setIdx(36);
+            user.setIdx((int) session.getAttribute("idx"));
             if (userService.updateUser(user) != 1)
                 throw new Exception("modify failed");
 
             session.removeAttribute("modify"); //수정 성공시 해당 세션도 삭제
             rattr.addFlashAttribute("msg", "MOD_OK"); // 수정완료 메세지
             return "redirect:/user/info";
-            //loginService가 null이면
 
         } catch (Exception e) {
             e.printStackTrace();
