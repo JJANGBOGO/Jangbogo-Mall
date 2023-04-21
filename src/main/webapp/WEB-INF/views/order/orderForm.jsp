@@ -439,7 +439,7 @@
                         data: JSON.stringify(kakaoReadyRequest),                                                        // 서버로 전송할 데이터. 직렬화 필요.
                         success:function(data) {                                                                        // 서버로부터 응답이 도착하면 호출될 함수
                             kakaoReadyResponse = JSON.parse(data);                                                      // 직렬화된 JSON객체를 파싱한 객체
-                            saveTid(kakaoReadyResponse.tid, ord_idx);                                                   // tid를 '결제' 테이블에 저장하는 함수 호출
+                            saveTid(kakaoReadyResponse.tid, ord_idx, total_amount);                                     // tid를 '결제' 테이블에 저장하는 함수 호출
                             location.href= kakaoReadyResponse.next_redirect_pc_url +                                    // 결제 준비 페이지로 리다이렉트
                                 "?tid=" + kakaoReadyResponse.tid;
                         },
@@ -451,10 +451,11 @@
 
                 // 메서드명 : saveTid
                 // 기   능 : 결제 요청시 받아오는 결제고유번호 tid를 db의 '결제' 테이블에 저장한다.
-                // 매개변수 : tid, ord_idx
-                let saveTid = (tid, ord_idx) => {
+                // 매개변수 : tid, ord_idx, total_amount
+                let saveTid = (tid, ord_idx, total_amount) => {
                     $.ajax({                                                                                            // $.ajax() start
-                        url:'/payment/kakao/save-tid?tid=' + tid + '&ord_idx=' + ord_idx,                               // 요청URI
+                        url:'/payment/kakao/save-tid?tid=' + tid + '&ord_idx=' + ord_idx +                              // 요청URIa
+                            "&total_amount=" + total_amount,
                         success:function(data) {                                                                        // 서버로부터 응답이 도착하면 호출될 함수
                             console.log(data)
                         },

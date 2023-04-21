@@ -1,9 +1,9 @@
 package com.jangbogo.mall.service;
 
-import com.jangbogo.mall.domain.KakaoApproveResponseDto;
-import com.jangbogo.mall.domain.KakaoReadyRequestDto;
-import com.jangbogo.mall.domain.KakaoReadyResponseDto;
+import com.jangbogo.mall.dao.OrderDao;
+import com.jangbogo.mall.domain.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,12 +16,15 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 @Transactional
 public class KakaoPayService {
-
+    // 빈 자동 주입
+    @Autowired
+    OrderDao orderDao;
     // iv, cv
     static final String CID = "TC0ONETIME"; // 가맹점 테스트 코드
     static final String ADMIN_KEY = "4319c284b87b726f5f038d839ad6bbd2"; // 공개 조심! 본인 애플리케이션의 어드민 키를 넣어주세요
     private KakaoReadyResponseDto kakaoReadyResponseDto;
     private KakaoApproveResponseDto kakaoApproveResponseDto;
+    private KakaoCancelResponseDto kakaoCancelResponseDto;
 
     // 메서드명 : kakaoPayReady
     // 기   능 : 결제 준비 승인 - 카카오페이 결제를 시작하기 위해 상세 정보를 카카오페이 서버에 전달하고 결제 고유 번호(TID)를 받는 단계
@@ -35,34 +38,38 @@ public class KakaoPayService {
         String item_name = kakaoReadyRequestDto.getItem_name();
         String quantity = kakaoReadyRequestDto.getQuantity().toString();
         String total_amount = kakaoReadyRequestDto.getTotal_amount().toString();
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();                               // 1. Body 만들기 - 카카오페이 서버에 보낼 요청 양식
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();                                             // 1. Body 만들기 - 카카오페이 서버에 보낼 요청 양식
+                                                                                                                        // 2. 파라미터(Body)에 값 저장
+        params.add("cid", CID);                                                                                      // 가맹점 코드, 10자
+        params.add("partner_order_id", "partner_order_id");                                                       // 가맹점 주문번호, 최대 100자
+        params.add("partner_user_id", "partner_user_id");                                                         // 가맹점 회원 id, 최대 100자
+        params.add("item_name", item_name);                                                                          // 상품명, 최대 100자
+        params.add("quantity", quantity);                                                                            // 상품 수량
+        params.add("total_amount", total_amount);                                                                    // 상품 총액
+        params.add("tax_free_amount", "0");                                                                       // 상품 비과세 금액
+        params.add("approval_url", "http://localhost:8080/payment/kakao/approve");                                // 결제 성공 시 redirect url, 최대 255자
+        params.add("cancel_url", "http://localhost:8080/payment/kakao/cancel");                                   // 결제 취소 시 redirect url, 최대 255자
+        params.add("fail_url", "http://localhost:8080/payment/kakao/fail");                                       // 결제 실패 시 redirect url, 최대 255자
 
-        params.add("cid", CID);                                                                        // 2. 파라미터(Body)에 값 저장
-        params.add("partner_order_id", "partner_order_id");                                             // 가맹점 주문번호, 최대 100자
-        params.add("partner_user_id", "partner_user_id");                                               // 가맹점 회원 id, 최대 100자
-        params.add("item_name", item_name);                                           // 상품명, 최대 100자
-        params.add("quantity", quantity);                                                                    // 상품 수량
-        params.add("total_amount", total_amount);                                                             // 상품 총액
-        params.add("tax_free_amount", "0");                                                             // 상품 비과세 금액
-        params.add("approval_url", "http://localhost:8080/payment/kakao/approve");                      // 결제 성공 시 redirect url, 최대 255자
-        params.add("cancel_url", "http://localhost:8080/payment/kakao/cancel");                         // 결제 취소 시 redirect url, 최대 255자
-        params.add("fail_url", "http://localhost:8080/payment/kakao/fail");                             // 결제 실패 시 redirect url, 최대 255자
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, this.getHeaders());                 // 3. 요청하기 위해 헤더(Header)와 데이터(Body)를 엔티티(Entity)에 합치기
 
-        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, this.getHeaders());   // 3. 요청하기 위해 헤더(Header)와 데이터(Body)를 엔티티(Entity)에 합치기
-
-        RestTemplate rt = new RestTemplate();                                                             // 4. POST 요청하기
-
-        kakaoReadyResponseDto = rt.postForObject(
-                "https://kapi.kakao.com/v1/payment/ready",                                                // 요청할 서버 주소
-                entity,                                                                                       // 요청할 때 보낼 데이터
-                KakaoReadyResponseDto.class                                                                   // 요청시 반환되는 데이터 타입
-        );
+        RestTemplate restTemplate = new RestTemplate();                                                                 // 4. POST 요청하기
+        try {
+            kakaoReadyResponseDto = restTemplate.postForObject(
+                    "https://kapi.kakao.com/v1/payment/ready",                                                      // 요청할 서버 주소
+                    entity,                                                                                             // 요청할 때 보낼 데이터
+                    KakaoReadyResponseDto.class                                                                         // 요청시 반환되는 데이터 타입
+            );
+        } catch(HttpStatusCodeException e) {
+            e.printStackTrace();
+        }
+        System.out.println("kakaoReadyResponseDto = " + kakaoReadyResponseDto);
         return kakaoReadyResponseDto;
 
     }
 
     // 메서드명 : approveResponse
-    // 기   능 : 결제 완료 승인
+    // 기   능 : 결제 승인 처리
     // 매개변수 : String pg_token
     // 반환타입 : KakaoApproveResponseDto
     // POST /v1/payment/approve HTTP/1.1
@@ -71,8 +78,8 @@ public class KakaoPayService {
     // Content-type: application/x-www-form-urlencoded;charset=utf-8
     public KakaoApproveResponseDto approveResponse(String pg_token) {
         // 카카오페이 요청 양식
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();                               // 1. Body 만들기
-
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();                                             // 1. Body 만들기
+        String tid = kakaoReadyResponseDto.getTid();
         // 파라미터
         params.add("cid", CID);
         params.add("tid", kakaoReadyResponseDto.getTid());
@@ -92,14 +99,50 @@ public class KakaoPayService {
                     KakaoApproveResponseDto.class);
         } catch (HttpStatusCodeException e) {
             e.printStackTrace();
-//            ResponseEntity.status(e.getRawStatusCode())
-//                    .headers(e.getResponseHeaders())
-//                    .body(e.getResponseBodyAsString()); // **** 한글이 안깨진다!
+            ResponseEntity.status(e.getRawStatusCode())
+                    .headers(e.getResponseHeaders())
+                    .body(e.getResponseBodyAsString()); // **** 한글이 안깨진다!
         }
-
+        System.out.println("kakaoApproveResponseDto = " + kakaoApproveResponseDto);
         return kakaoApproveResponseDto;
     }
 
+    // 메서드명 : refundResponse
+    // 기   능 : 결제 취소 처리
+    // 반환타입 : KakaoCancelResponseDto
+    // POST /v1/payment/cancel HTTP/1.1
+    // Host: kapi.kakao.com
+    // Authorization: KakaoAK ${APP_ADMIN_KEY}
+    // Content-type: application/x-www-form-urlencoded;charset=utf-8
+    public KakaoCancelResponseDto refundResponse() {
+                                                                                                                        // 카카오페이 요청 양식
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();                                             // 1. Body 만들기
+        String tid = kakaoReadyResponseDto.getTid();
+        PaymentDto paymentDto = orderDao.getPayment(tid);
+        String cancel_amount = paymentDto.getOrd_tot_amt().toString();
+                                                                                                                        // 2. 파라미터에 K/V값 담기
+        params.add("cid", CID);                                                                                      // 파라미터에 가맹점 코드("cid", CID) K/V 값 저장
+        params.add("tid", tid);                                                                                      // 파라미터에 결제 고유 번호("tid", tid) K/V 값 저장
+        params.add("cancel_amount", cancel_amount);                                                                  // 파라미터에 취소 금액("cancel_amount", cancel_amount) K/V 값 저장
+        params.add("cancel_tax_free_amount", "0");                                                                // 파라미터에 취소 비과세 금액("cancel_tax_free_amount", "0") K/V 값 저장
+
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, this.getHeaders());                 // 3. 요청하기 위해 헤더(Header)와 데이터(Body)를 엔티티(Entity)에 합치기
+        RestTemplate restTemplate = new RestTemplate();                                                                 // 4. POST 요청하기
+
+        try {
+            kakaoCancelResponseDto = restTemplate.postForObject(
+                    "https://kapi.kakao.com/v1/payment/cancel",                                                     // 요청할 서버 주소
+                    entity,                                                                                             // 요청할 때 보낼 데이터
+                    KakaoCancelResponseDto.class);                                                                      // 요청시 반환되는 데이터 타입
+        } catch (HttpStatusCodeException e) {
+            e.printStackTrace();
+            ResponseEntity.status(e.getRawStatusCode())
+                    .headers(e.getResponseHeaders())
+                    .body(e.getResponseBodyAsString()); // **** 한글이 안깨진다!
+        }
+        return kakaoCancelResponseDto;
+    }
+    
     // 메서드명 : getHeaders
     // 기   능 : 카카오페이 API가 요구하는 헤더값 저장
     // 반환타입 : HttpHeaders

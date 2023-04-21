@@ -12,12 +12,12 @@ public class OrderService {
     @Autowired
     OrderDao orderDao;
 
-    // 메서드명 : saveKakaoPayment
+    // 메서드명 : addPayment
     // 기   능 : OrderDao의 saveKakaoPayment메서드 호출
-    // 반환타입 :
-    // 매개변수 : String tid
-    public int addCountsaveKakaoPayment(String tid, Integer ord_idx) throws Exception {
-        return orderDao.saveKakaoPayment(tid, ord_idx);
+    // 반환타입 : int
+    // 매개변수 : String tid, Integer ord_idx, Integer total_amount
+    public int addPayment(String tid, Integer ord_idx, Integer total_amount) throws Exception {
+        return orderDao.insertPayment(tid, ord_idx, total_amount);
     }
 
     // 메서드명 : addOrder
@@ -25,7 +25,7 @@ public class OrderService {
     // 반환타입 : int
     // 매개변수 : OrderDto orderDto
     public int addOrder(OrderDto orderDto) throws Exception {
-        return orderDao.addOrder(orderDto);
+        return orderDao.insertOrder(orderDto);
     }
 
     // 메서드명 : getOrderDto
@@ -39,7 +39,7 @@ public class OrderService {
     // 메서드명 : updateApprovedSetl
     // 기   능 : orderDao의 updateApproveSetl() 호출 - '결제' 테이블에 승인 처리 된 결제 정보 업데이트
     // 반환타입 : int
-    //   매개변수 : KakaoApproveResponseDto kakaoApproveResponseDto
+    // 매개변수 : KakaoApproveResponseDto kakaoApproveResponseDto
     public int updateApprovedSetl(KakaoApproveResponseDto kakaoApproveResponseDto) {
         return orderDao.updateApprovedSetl(kakaoApproveResponseDto);
     }

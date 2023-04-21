@@ -5,23 +5,23 @@
 
     <!--
         태   그 : insert
-        기   능 : '결제' 테이블에 결제고유번호(tid), 주문번호(ord_idx) 포함한 데이터 저장하기
-        아이디명 : saveKakaoPayment
+        기   능 : '결제' 테이블에 결제고유번호(tid), 주문번호(ord_idx), 주문총금액(total_amount) 포함한 데이터 저장하기
+        아이디명 : insertPayment
         반환타입 : String
     -->
-    <insert id="saveKakaoPayment" parameterType="map">
-        insert into SETL(ORD_IDX, SETL_IDX)
-        values (#{ord_idx}, #{tid})
+    <insert id="insertPayment" parameterType="map">
+        insert into SETL(ORD_IDX, SETL_IDX, ORD_TOT_AMT, AMT)
+        values (#{ord_idx}, #{tid}, #{total_amount}, #{total_amount})
     </insert>
 
     <!--
         태   그 : insert
-        기   능 : '주문' 테이블에 행 추가하기
+        기   능 : '주문' 테이블에 주문번호(idx), 회원번호(user_idx), 주문자명(ordr_nm), 주문자휴대폰번호(mpno) 포함한 데이터 저장하기
         아이디명 : addOrder
         반환타입 : Integer
         매개변수 : OrderDto orderDto
     -->
-    <insert id="addOrder" parameterType="OrderDto" useGeneratedKeys="true" keyProperty="idx">
+    <insert id="insertOrder" parameterType="OrderDto" useGeneratedKeys="true" keyProperty="idx">
         insert into ORD(IDX, USER_IDX, ORDR_NM, MPNO)
         values(#{idx}, #{user_idx}, #{ordr_nm}, #{mpno});
     </insert>
@@ -29,14 +29,25 @@
     <!--
         태   그 : select
         기   능 : '주문' 테이블 중 특정 주문 행 조회하기
-        아이디명 : selectOrderDto
+        아이디명 : selectOrder
         반환타입 : String
         매개변수 : Integer user_idx
     -->
-    <select id="selectOrderDto" parameterType="Integer" resultType="OrderDto">
+    <select id="selectOrder" parameterType="Integer" resultType="OrderDto">
         select * from ORD
         where IDX = #{idx};
     </select>
+    <!--
+        태   그 : select
+        기   능 : '결제' 테이블 중 특정 주문 행 조회하기
+        아이디명 : selectPayment
+        반환타입 : PaymentDto
+        매개변수 : String tid
+    -->
+    <select id="selectPayment" parameterType="String" resultType="PaymentDto">
+        SELECT * FROM SETL WHERE SETL_IDX = #{tid};
+    </select>
+
 
     <!--
         태   그 : update
@@ -47,11 +58,23 @@
     -->
     <update id="updateApprovedSetl" parameterType="KakaoApproveResponseDto">
         update SETL
-        SET APRV_IDX = #{aid},
-            ORD_TOT_AMT = #{amount.total},
-            AMT = #{amount.total},
+        SET
             MN_CD = 1,
             STATE_CD = 1,
+            DEAL_TM = #{approved_at},
+            UPT_TM = now()
+        WHERE SETL_IDX = #{tid}
+    </update>
+    <!--
+        태   그 : update
+        기   능 : '결제' 테이블에 '취소'처리 된 결제 정보 업데이트하기
+        아이디명 : updateCanceledSetl
+        반환타입 : int
+        매개변수 : String tid
+    -->
+    <update id="updateCanceledSetl" parameterType="String">
+        update SETL
+        SET STATE_CD = 2,
             DEAL_TM = #{approved_at},
             UPT_TM = now()
         WHERE SETL_IDX = #{tid}

@@ -192,11 +192,10 @@ public class OrderController {
     // 기   능 : 주문서 작성 내용을 '주문' 데이터에 저장한다.
     // 반환타입 : ResponseEntity<String>
     @PostMapping("/order/checkout/submit")
-    public ResponseEntity<OrderDto> saveOrderForm(@RequestBody OrderDto orderDto) {
-        System.out.println(orderDto);  // {ordr_nm='정지우', mpno='010-8435-4496', user_idx=1235}
+    public ResponseEntity<OrderDto> saveOrderForm(@RequestBody OrderDto orderDto) {                                     // 변수명 : OrderDto - 저장값 : 주문번호(IDX, PK)가 null인 OrderDto - OrderDto{idx=null, ordr_nm='정지우', mpno='010-8435-4496', user_idx=1235}
         String msg = "";
         int rowCnt = 0;
-        OrderDto orderDto2 = null;
+        OrderDto orderDtoWithIdx = null;                                                                                // 변수명 : orderDtoWithIdx - 저장값 : 주문번호(IDX, PK)가 저장된 OrderDto
         try {
             // rowCnt가 1일 경우, 성공 응답을 보낸다.
             // 1이 아닐 경우, 에러 발생 및 리턴
@@ -204,8 +203,7 @@ public class OrderController {
             // 성공 시, 'SAVE_OK'와 OK상태코드를 반환 - 상태코드 : 200
             rowCnt = orderService.addOrder(orderDto);
             if(rowCnt == 0) new Exception("insert failure.");
-            orderDto2 = orderService.getOrderDto(orderDto.getIdx());
-            System.out.println(orderDto);  // {ordr_nm='정지우', mpno='010-8435-4496', user_idx=1235}
+            orderDtoWithIdx = orderService.getOrderDto(orderDto.getIdx());                                              // OrderDto{idx=41, ordr_nm='정지우', mpno='010-8435-4496', user_idx=1235}
             msg = "SAVE_OK";
             return new ResponseEntity<OrderDto>(orderDto, HttpStatus.OK);
         } catch(Exception e) {
@@ -223,13 +221,13 @@ public class OrderController {
     // 매개변수 : String tid
     // 반환타입 : ResponseEntity<String>
     @GetMapping("/payment/kakao/save-tid")
-    public ResponseEntity<String> saveTid(String tid, Integer ord_idx) {
+    public ResponseEntity<String> saveTid(String tid, Integer ord_idx, Integer total_amount) {
         String msg = "";
         Integer rowCnt = 0;
         try {
             // ResponseEntity<String> 성공 메시지 "SAVE_OK"와 상태코드를 함께 반환하기 위한 클래스
             // 성공 시, 'SAVE_OK'와 OK상태코드를 반환 - 상태코드 : 200
-            rowCnt = orderService.addCountsaveKakaoPayment(tid, ord_idx);
+            rowCnt = orderService.addPayment(tid, ord_idx, total_amount);
             msg = "SAVE_OK";
             return new ResponseEntity<String>(msg, HttpStatus.OK);
         } catch(Exception e) {
