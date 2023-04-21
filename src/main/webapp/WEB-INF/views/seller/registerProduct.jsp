@@ -3,9 +3,8 @@
 <head>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
     <link rel="stylesheet" href="/css/radioBtn.css"/>
-    <link rel="stylesheet" href="/css/include/registerForm.css"/>
-    <%--    /include/registerForm.css == css/user/signupForm.css--%>
-    <link rel="stylesheet" href="/css/seller/registerProduct.css"/>
+    <link rel="stylesheet" href="/css/seller/registerForm.css"/>
+    <link rel="stylesheet" href="/css/seller/registerProduct.css?v2"/>
     <link rel="stylesheet" href="/css/upload.css"/>
 </head>
 <body>
@@ -137,15 +136,15 @@
                         <fieldset>
                             <label>
                                 <input type="radio" name="dc_state_cd" value="1" checked/>
-                                <span>할인 적용</span>
+                                <span>할인</span>
                             </label>
                             <label>
                                 <input type="radio" name="dc_state_cd" value="2"/>
                                 <span>할인 미적용</span>
                             </label>
                         </fieldset>
+                        <div class="btn-space"></div>
                     </div>
-                    <%--                    할인 적용일 때만 보이게할--%>
                     <div class="input-line dc-rate">
                         <div class="input-label">
                             <label>할인율<span>*</span></label>
@@ -178,6 +177,7 @@
                                 <span>비전시</span>
                             </label>
                         </fieldset>
+                        <div class="btn-space"></div>
                     </div>
                     <h3 class="section-header">상품 상세 정보</h3>
                     <div class="input-line">
@@ -199,17 +199,11 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label for="ORPLC">판매단위<span>*</span></label>
+                            <label>판매단위<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
-                                <%--                                <input--%>
-                                <%--                                        name="ORPLC"--%>
-                                <%--                                        id="ORPLC"--%>
-                                <%--                                        type="text"--%>
-                                <%--                                        placeholder="원산지를 입력해 주세요"--%>
-                                <%--                                />--%>
-                                <select name="sale_unit">
+                                <select name="sle_unit">
                                     <option>개</option>
                                     <option>봉</option>
                                     <option>박스</option>
@@ -227,8 +221,8 @@
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="brnd_cn"
-                                        id="brnd_cn"
+                                        name="weight"
+                                        id="weight"
                                         type="text"
                                         placeholder="판매 단위 당 중량을 입력해 주세요"
                                 />
@@ -244,13 +238,12 @@
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="brnd_cn"
-                                        id="prod_date"
+                                        name="mft_tm"
+                                        id="mft_tm"
                                         type="date"
-                                        placeholder="상품의 제조일자를 입력해 주세요"
                                 />
                             </div>
-                            <div class="error-msg brnd-cn"></div>
+                            <div class="error-msg mft-tm"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -261,13 +254,12 @@
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="brnd_cn"
-                                        id="prod_d"
+                                        name="distb_tlmt"
+                                        id="distb_tlmt"
                                         type="date"
-                                        placeholder="상품의 유통기한을 입력해 주세요"
                                 />
                             </div>
-                            <div class="error-msg brnd-cn"></div>
+                            <div class="error-msg distb-tlmt"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -295,12 +287,13 @@
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        id="max_prod"
-                                        name="email"
+                                        id="max_sle_quty"
+                                        name="max_sle_quty"
                                         type="number"
+                                        placeholder="1회 최대 구매수량을 입력해 주세요"
                                 />
                             </div>
-                            <div class="error-msg email"></div>
+                            <div class="error-msg max-ale-quty"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -308,7 +301,7 @@
                         <div class="input-label">
                             <label>보관 유형<span>*</span></label>
                         </div>
-                        <fieldset>
+                        <fieldset class="sfkp-type">
                             <label>
                                 <input type="radio" name="state" value="1" checked/>
                                 <span>상온</span>
@@ -322,10 +315,11 @@
                                 <span>냉동</span>
                             </label>
                         </fieldset>
+                        <div class="btn-space"></div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label ">상품 재고 수량<span>*</span></label>
+                            <label>상품 재고 수량<span>*</span></label>
                         </div>
                         <div class="input-box">
                             <div class="input">
@@ -333,6 +327,7 @@
                                         id="invent"
                                         name="email"
                                         type="number"
+                                        placeholder="최소 1 이상의 수량을 입력해 주세요"
                                 />
                             </div>
                             <div class="error-msg email"></div>
@@ -349,6 +344,7 @@
                                         id="text"
                                         name="email"
                                         type="text"
+                                        placeholder="상품 안내 사항을 입력해 주세요"
                                 />
                             </div>
                             <div class="error-msg email"></div>
@@ -361,68 +357,47 @@
                         </div>
                         <fieldset>
                             <label>
-                                <input type="radio" name="state" value="1" checked/>
+                                <input type="radio" name="sle_date_type" value="1" checked/>
                                 <span>기간 없음</span>
                             </label>
                             <label>
-                                <input type="radio" name="state" value="2"/>
+                                <input type="radio" name="sle_date_type" value="2"/>
                                 <span>한정 판매</span>
                             </label>
                         </fieldset>
+                        <div class="btn-space"></div>
                     </div>
-                    <%--                    한정 판매 checked일 때만 보여주기--%>
-                    <%--                    <div class="input-line">--%>
-                    <%--                        <div class="input-label">--%>
-                    <%--                            <label>판매 시작일자</label>--%>
-                    <%--                        </div>--%>
-                    <%--                        <div class="input-box">--%>
-                    <%--                            <div class="input">--%>
-                    <%--                                <input--%>
-                    <%--                                        name="brnd_cn"--%>
-                    <%--                                        id="start_date"--%>
-                    <%--                                        type="date"--%>
-                    <%--                                />--%>
-                    <%--                            </div>--%>
-                    <%--                            <div class="error-msg brnd-cn"></div>--%>
-                    <%--                        </div>--%>
-                    <%--                        <div class="btn-space"></div>--%>
-                    <%--                    </div>--%>
-                    <%--                    <div class="input-line">--%>
-                    <%--                        <div class="input-label">--%>
-                    <%--                            <label>판매 종료일자</label>--%>
-                    <%--                        </div>--%>
-                    <%--                        <div class="input-box">--%>
-                    <%--                            <div class="input">--%>
-                    <%--                                <input--%>
-                    <%--                                        name="brnd_cn"--%>
-                    <%--                                        id="end_date"--%>
-                    <%--                                        type="date"--%>
-                    <%--                                />--%>
-                    <%--                            </div>--%>
-                    <%--                            <div class="error-msg brnd-cn"></div>--%>
-                    <%--                        </div>--%>
-                    <%--                        <div class="btn-space"></div>--%>
-                    <%--                    </div>--%>
-                    <div class="input-line">
+                    <div class="input-line sle-date-type">
                         <div class="input-label">
-                            <label>대표 이미지<span>*</span></label>
+                            <label>판매 시작일자</label>
                         </div>
                         <div class="input-box">
                             <div class="input">
-                                <label class="upload-label" for="upload_bnr">상품 대표 이미지 선택<img src="/img/upload_dir.png"></label>
-                                <div class="upload-input bnr">
-                                    <input type="file" name="upload_bnr" id="upload_bnr">
-                                </div>
+                                <input
+                                        name="sle_start_tm"
+                                        id="sle_start_tm"
+                                        type="date"
+                                />
                             </div>
+                            <div class="error-msg sle-start-tm"></div>
                         </div>
-                        <div class="btn-space">
-                            <button id="bnr_upload_btn">업로드</button>
-                        </div>
+                        <div class="btn-space"></div>
                     </div>
-                    <div class="upload-result bnr">
-                        <ul>
-
-                        </ul>
+                    <div class="input-line sle-date-type">
+                        <div class="input-label">
+                            <label>판매 종료일자</label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name="sle_end_tm"
+                                        id="sle_end_tm"
+                                        type="date"
+                                />
+                            </div>
+                            <div class="error-msg sle-end-tm"></div>
+                        </div>
+                        <div class="btn-space"></div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
@@ -442,9 +417,7 @@
                         </div>
                     </div>
                     <div class="upload-result profile">
-                        <ul>
-
-                        </ul>
+                        <ul></ul>
                     </div>
                     <div class="btn-container">
                         <button class="reg-confirm">가입하기</button>
@@ -456,7 +429,6 @@
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/js/member/regEx.js"></script>
 <script src="/js/member/msg.js"></script>
 <script src="/js/member/common.js"></script>
@@ -465,20 +437,33 @@
     let msg = "${msg}";
     if (msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다 다시 시도해 주세요");
 
-    const dc_applied = "1"; //string
+    const dc_applied = "1"; //할인 적용 여부
+    const limit_sle = "2"; //기간한정판매
 
     $(document).ready(function () {
+        //초기 판매 기간 hide 기본값은 영구 판매
+        $(".input-line.sle-date-type").hide();
 
-
+        //할인율 입력칸 toggle
         $("input[name=dc_state_cd]").click(function () {
-
             let dc_state = $("input[name=dc_state_cd]:checked").val();
             if (dc_state === dc_applied) $(".input-line.dc-rate").show();
             else $(".input-line.dc-rate").hide();
-
         });
 
-        //     추후 개발 예정
+        //판매 기간 입력칸 toggle
+        $("input[name=sle_date_type]").click(function () {
+            let sle_date_type = $("input[name=sle_date_type]:checked").val();
+            if (sle_date_type === limit_sle) $(".input-line.sle-date-type").show();
+            else $(".input-line.sle-date-type").hide();
+        });
+
+
+        //가입하기 버튼 클릭
+        $(".reg-confirm").click(function(e) {
+            e.preventDefault();
+        });
+
     });
 </script>
 </body>

@@ -2,3 +2,11 @@
     display: flex;
 }
 
+.input-line fieldset.sfkp-type {
+    gap: 60px;
+}
+
+.reg-form .center-padding .input-line fieldset.sfkp-type label {
+    display: block;
+    margin: 0;
+}
