@@ -38,7 +38,6 @@ public class KakaoReadyResponseDto {
     }
 
     // toString
-
     @Override
     public String toString() {
         return "{" +
