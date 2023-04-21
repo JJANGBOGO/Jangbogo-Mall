@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <html>
 <head>
     <link rel="stylesheet" href="/css/productReview.css"/>
@@ -93,6 +95,7 @@
                     <div class="footerBtn">
                         <button class="cancleBtn" onclick="return false;">취소</button>
                         <button class="updateBtn" onclick="return false;">수정</button>
+                        <button class="insertBtn" onclick="return false;">등록</button>
                         <input class="hidden-idx" type="hidden" value="">
                     </div>
                 </form>
@@ -131,12 +134,14 @@
 
     // main() 처음 페이지 이동시 실행 함수
     $(document).ready(function (){
+        <%--console.log("${sessionScope.nickName}");--%>
         <%--console.log(${idx});--%>
         <%--console.log(${sessionScope.idx})--%>
         <%--console.log("${sessionScope.email}");--%>
         <%--console.log("${email}")--%>
-        <%--console.log("${nickname}")--%>
+        <%--console.log("${nickName}")--%>
         <%--console.log()--%>
+        <%--console.log("${pd}");--%>
 
         // 상품후기 조회 함수 호출
         showList();
@@ -154,17 +159,19 @@
                 return;
             }
 
-            $(".insertBtn").attr("class","updateBtn");
-            $('.review-title').children('h2').text('후기 수정'); // 작성 모달창에 타이틀  -> '후기 수정'으로 변경
-            $('.updateBtn').text('수정');                       // 작성 모달창에 버튼이름 -> '등록'으로 변경
+            $('.review-title').children('h2').text('후기 수정'); // 수정 모달창에 타이틀  -> '후기 수정'으로 변경
 
-            $('.body-footer').css("display","flex");            // 수정 모달창에 비공개체크박스 보이게하기
+            $('.body-footer').css("display","flex");           // 수정 모달창에 비공개체크박스 보이게 하기
+            $('.insertBtn').css("display","none");              // 수정 모달창에 '등록' 버튼 안 보이게 하기
+            $('.updateBtn').css("display","block");             // 수정 모달창에 '수정' 버튼 보이게 하기
+
             $('.img-name').text(name);                          // 수정 모달창에 상품이름 추가
             $('.title-img').children().attr("src",upload_path); // 수정 모달창에 이미지 추가
-            $('.content').text(content);                        // 수정 모달창에 후기 내용 추가
+            // $('.content').text(content);                        // 수정 모달창에 후기 내용 추가
+            $('.content').val(content);                         // 수정 모달창에 후기 내용 추가
             $('.hidden-idx').attr("value",idx);                 // 수정 모달창에(input) 후기 일련번호 추가
 
-            openModal();
+            openModal();                                        // 수정 모달창 오픈
         })
 
         // 수정창 (X버튼) 클릭
@@ -177,7 +184,7 @@
             closeModal();
         })
 
-        // 수정창 수정(실행) 버튼 클릭
+        // 수정 모달창 (수정) 버튼 클릭
         $(".updateBtn").click(function(){
             if(!confirm("수정하신 내용으로 후기 내용을 변경하시겠습니까?"))return;
             let ctent = $('.content').val();
@@ -189,9 +196,10 @@
                 headers : { "content-type": "application/json"}, // 요청 헤더
                 data : JSON.stringify({ctent:ctent,opub_yn:opub_yn}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
                 success : function(result){
-                    alert(result);
+                    // alert(result);
                     closeModal();
                     showList();
+
                 },
                 error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
             }); // $.ajax()
@@ -201,15 +209,40 @@
 
         // 작성하기 버튼 클릭 시(작성 모달창 오픈)
         $(".review-button").click(function(){
-            $('.review-title').children('h2').text('후기 작성'); // 작성 모달창에 타이틀  -> '후기 작성'으로 변경
-            $('.updateBtn').text('등록');                       // 작성 모달창에 버튼이름 -> '등록'으로 변경
-            $('.body-footer').css("display","none");           // 작성 모달창에 비공개체크박스 보이게하기
-            $(".updateBtn").attr("class","insertBtn");   // 클래스이름 변경 -> 'class = "insertBtn" '
-            $('.content').text("");                      // 작성 내용 빈칸으로 초기화
 
-            openModal(); // 모달 오픈하기
+            $('.review-title').children('h2').text('후기 작성'); // 작성 모달창에 타이틀  -> '후기 작성'으로 변경
+
+            $('.updateBtn').css("display","none");               // 작성 모달창에 '수정' 버튼 안 보이게 하기
+            $('.insertBtn').css("display","block");              // 작성 모달창에 '등록' 버튼 보이게 하기
+            $('.body-footer').css("display","none");             // 작성 모달창에 비공개체크박스 안 보이게 하기
+            // $('.content').val("");                      // 작성 내용 빈칸으로 초기화
+
+            openModal(); // 작성 모달창 오픈하기
 
         });
+
+        // 작성 모달창 (등록) 버튼 클릭
+        $(".insertBtn").click(function(){
+            if(!confirm("작성하신 내용으로 후기 등록하시겠습니까?"))return;
+            let ctent = $('.content').val(); // 후기내용
+                                             // 상품번호
+                                             // 주문번호???
+            $.ajax({
+                type:'POST',       // 요청 메서드 //
+                url: '/product/review' ,  // 요청 URI
+                headers : { "content-type": "application/json"}, // 요청 헤더
+                data : JSON.stringify({ctent:ctent,prod_idx:prod_idx}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
+                success : function(result){
+                    alert(result);
+                    closeModal();
+                    showList();
+
+                },
+                error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+            }); // $.ajax()
+
+        });
+
 
     });
 
@@ -263,7 +296,7 @@
 
     // 함수 모음
     let closeModal = function (){ // 모달 닫기 함수선언
-        $('.content').text("");                      // 작성 내용 빈칸으로 초기화
+        $('.content').val("");                      // 작성 내용 빈칸으로 초기화
         $(".reviewUpdate-container").css("display", "none");
         $("body").css("overflow","visible");
     }

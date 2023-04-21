@@ -7,4 +7,5 @@ import java.util.List;
 public interface ProdReviewDao {
     List<ProdReviewDto> selectAll(Integer prod_idx) throws Exception;
     Integer update(ProdReviewDto prodReviewDto) throws Exception;
+    Integer insert(ProdReviewDto prodReviewDto) throws Exception;
 }

@@ -24,6 +24,11 @@ public class ProdReviewDaoImpl implements ProdReviewDao {
         return session.update(namespace + "update", prodReviewDto);
     }
 
+    @Override
+    public Integer insert(ProdReviewDto prodReviewDto) throws Exception {
+        return session.insert(namespace + "insert", prodReviewDto);
+    }
+
 
 
 }

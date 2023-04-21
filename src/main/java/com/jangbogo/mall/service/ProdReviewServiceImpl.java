@@ -22,6 +22,10 @@ public class ProdReviewServiceImpl implements ProdReviewService {
     public Integer update(ProdReviewDto prodReviewDto) throws Exception{
         return prodReviewDao.update(prodReviewDto);
     }
+    @Override
+    public Integer insert(ProdReviewDto prodReviewDto) throws Exception{
+        return prodReviewDao.insert(prodReviewDto);
+    }
 
 
 

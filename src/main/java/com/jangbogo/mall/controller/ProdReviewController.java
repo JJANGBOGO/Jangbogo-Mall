@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Enumeration;
 import java.util.List;
 
 @Controller
@@ -24,8 +25,10 @@ public class ProdReviewController {
     @GetMapping("/product/review")
     public String productReviewPage(HttpSession session, Model m,Integer prod_idx){ // 상품 후기는 세션에서 그 회원의 회원번호를 가진 사람만 후기를 수정할 수 있어야 한다
         Integer user_idx = (int)session.getAttribute("idx"); // 세션에서 회원번호를 가져온다
+        Integer pd = 3;
 //        m.addAttribute(user_idx); // 회원번호를 jsp 로 넘겨준다
 //        m.addAttribute(prod_idx); // 상품번호를 jsp 로 넘겨준다
+        m.addAttribute(pd);
         return "productReview";
     }
 
@@ -68,6 +71,30 @@ public class ProdReviewController {
             e.printStackTrace();
             return new ResponseEntity<String>("Update_ERR",HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+
+
+    // 상품 후기를 등록하는 메서드
+    @PostMapping("/product/review")   // /product/review  POST
+    public ResponseEntity<String> write(@RequestBody ProdReviewDto prodReviewDto, HttpSession session) {
+        Integer user_idx = (int)session.getAttribute("idx"); // 세션에서 회원번호를 가져온다
+        String nickName = (String) session.getAttribute("nickName"); // 세션에서 닉네임(작성자)를 가져온다
+        String n3 = (String) session.getAttribute("email"); // 이메일
+
+        prodReviewDto.setUser_idx(user_idx);
+        prodReviewDto.setWriter(nickName);
+        System.out.println("prodReviewDto = " + prodReviewDto); // 주문번호,상품번호,회원번호,후기내용,작성자
+
+        try {
+            if(prodReviewService.insert(prodReviewDto)!=1) throw new Exception("Write failed");
+            return new ResponseEntity<>("WRT_OK", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>("WRT_ERR", HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 
