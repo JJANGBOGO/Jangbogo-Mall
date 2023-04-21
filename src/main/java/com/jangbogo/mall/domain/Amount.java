@@ -1,5 +1,8 @@
 package com.jangbogo.mall.domain;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class Amount {
     // iv
     private int total;                          // 총 결제 금액
