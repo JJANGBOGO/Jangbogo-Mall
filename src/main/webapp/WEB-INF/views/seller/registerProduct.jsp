@@ -15,7 +15,6 @@
         <div class="section-line"></div>
         <div class="reg-form-box">
             <form
-                    id="seller_register"
                     class="reg-form"
                     action="/seller/register"
                     method="post"
@@ -45,12 +44,23 @@
                         <div class="input-box category">
                             <div class="input">
                                 <select name="cate_idx">
+                                    <option selected>선택</option>
                                     <option value="1">과일</option>
+                                    <option value="2">채소</option>
+                                    <option value="3">수산물</option>
+                                    <option value="4">축산/계란</option>
+                                    <option value="5">생수/음료</option>
+                                    <option value="6">간편요리</option>
+                                    <option value="7">유제품/아이스크림</option>
+                                    <option value="8">장/소스/드레싱</option>
+                                    <option value="9">간식/디저트</option>
+                                    <option value="10">주류</option>
+                                    <option value="11">건강</option>
                                 </select>
                             </div>
                             <div class="input">
                                 <select name="cate_idx">
-                                    <option value="1">건조과일</option>
+                                    <option selected>선택</option>
                                 </select>
                             </div>
                             <div class="error-msg cate-idx"></div>
@@ -265,36 +275,18 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label>주의사항<span>*</span></label>
+                            <label>판매 기간<span>*</span></label>
                         </div>
-                        <div class="input-box">
-                            <div class="input">
-                                <input
-                                        name="brnd_cn"
-                                        id="warn"
-                                        type="text"
-                                        placeholder="상품 관련 주의사항을 입력해 주세요"
-                                />
-                            </div>
-                            <div class="error-msg brnd-cn"></div>
-                        </div>
-                        <div class="btn-space"></div>
-                    </div>
-                    <div class="input-line">
-                        <div class="input-label">
-                            <label>1회 최대 구매수량<span>*</span></label>
-                        </div>
-                        <div class="input-box">
-                            <div class="input">
-                                <input
-                                        id="max_sle_quty"
-                                        name="max_sle_quty"
-                                        type="number"
-                                        placeholder="1회 최대 구매수량을 입력해 주세요"
-                                />
-                            </div>
-                            <div class="error-msg max-ale-quty"></div>
-                        </div>
+                        <fieldset>
+                            <label>
+                                <input type="radio" name="sle_date_type" value="1" checked/>
+                                <span>기간 없음</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="sle_date_type" value="2"/>
+                                <span>한정 판매</span>
+                            </label>
+                        </fieldset>
                         <div class="btn-space"></div>
                     </div>
                     <div class="input-line">
@@ -319,6 +311,23 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
+                            <label>1회 최대 구매수량<span>*</span></label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        id="max_sle_quty"
+                                        name="max_sle_quty"
+                                        type="number"
+                                        placeholder="1회 최대 구매수량을 입력해 주세요"
+                                />
+                            </div>
+                            <div class="error-msg max-ale-quty"></div>
+                        </div>
+                        <div class="btn-space"></div>
+                    </div>
+                    <div class="input-line">
+                        <div class="input-label">
                             <label>상품 재고 수량<span>*</span></label>
                         </div>
                         <div class="input-box">
@@ -336,35 +345,36 @@
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label>상품 안내 사항<span>*</span></label>
+                            <label>주의사항<span>*</span></label>
                         </div>
-                        <div class="input-box">
-                            <div class="input">
-                                <input
-                                        id="text"
-                                        name="email"
+                        <div class="input-box textarea">
+                            <div class="input textarea">
+                                <textarea
+                                        name="warn"
+                                        id="warn"
                                         type="text"
-                                        placeholder="상품 안내 사항을 입력해 주세요"
-                                />
+                                        placeholder="상품 관련 주의사항을 입력해 주세요"
+                                ></textarea>
                             </div>
-                            <div class="error-msg email"></div>
+                            <div class="error-msg warn"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
-                            <label>판매 기간<span>*</span></label>
+                            <label>상품 안내 사항<span>*</span></label>
                         </div>
-                        <fieldset>
-                            <label>
-                                <input type="radio" name="sle_date_type" value="1" checked/>
-                                <span>기간 없음</span>
-                            </label>
-                            <label>
-                                <input type="radio" name="sle_date_type" value="2"/>
-                                <span>한정 판매</span>
-                            </label>
-                        </fieldset>
+                        <div class="input-box textarea">
+                            <div class="input textarea">
+                                <textarea
+                                        id="guid"
+                                        name="guid"
+                                        type="text"
+                                        placeholder="상품 안내 사항을 입력해 주세요"
+                                ></textarea>
+                            </div>
+                            <div class="error-msg guid"></div>
+                        </div>
                         <div class="btn-space"></div>
                     </div>
                     <div class="input-line sle-date-type">
@@ -458,10 +468,14 @@
             else $(".input-line.sle-date-type").hide();
         });
 
+        //upload
+
 
         //가입하기 버튼 클릭
-        $(".reg-confirm").click(function(e) {
+        $(".reg-confirm").click(function (e) {
             e.preventDefault();
+
+            $(".reg-form").submit();
         });
 
     });

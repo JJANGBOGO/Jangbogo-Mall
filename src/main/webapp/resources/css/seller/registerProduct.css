@@ -2,8 +2,22 @@
     display: flex;
 }
 
+.input-box.category .input:first-child {
+    margin-right: 5px;
+}
+
 .input-line fieldset.sfkp-type {
     gap: 60px;
+}
+
+.input-line fieldset {
+    padding: 12px 20px;
+}
+
+.input-line select {
+    width: 100%;
+    font-size: 16px;
+    color: var(--input-placeholder);
 }
 
 .reg-form .center-padding .input-line fieldset.sfkp-type label {
