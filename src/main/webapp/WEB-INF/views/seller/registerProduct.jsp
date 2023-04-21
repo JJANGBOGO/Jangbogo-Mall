@@ -16,7 +16,7 @@
         <div class="reg-form-box">
             <form
                     class="reg-form"
-                    action="/seller/register"
+                    action="/seller/register/product"
                     method="post"
             >
                 <div class="center-padding">
@@ -136,7 +136,7 @@
                             <button id="upload_path_btn">업로드</button>
                         </div>
                     </div>
-                    <div class="upload-result bnr">
+                    <div class="upload-result upload-path">
                         <ul></ul>
                     </div>
                     <div class="input-line">
@@ -415,18 +415,20 @@
                         </div>
                         <div class="input-box">
                             <div class="input">
-                                <label class="upload-label" for="upload_profile">상세 이미지 선택<img
-                                        src="/img/upload_dir.png"></label>
-                                <div class="upload-input profile">
-                                    <input type="file" name="upload_profile" id="upload_profile" multiple>
+                                <label class="upload-label" for="products">
+                                    상세 이미지 선택
+                                    <img src="/img/upload_dir.png">
+                                </label>
+                                <div class="upload-input products">
+                                    <input type="file" name="products" id="products" multiple>
                                 </div>
                             </div>
                         </div>
                         <div class="btn-space">
-                            <button id="profile_upload_btn">업로드</button>
+                            <button id="upload_products">업로드</button>
                         </div>
                     </div>
-                    <div class="upload-result profile">
+                    <div class="upload-result products">
                         <ul></ul>
                     </div>
                     <div class="btn-container">
@@ -457,19 +459,80 @@
         //할인율 입력칸 toggle
         $("input[name=dc_state_cd]").click(function () {
             let dc_state = $("input[name=dc_state_cd]:checked").val();
-            if (dc_state === dc_applied) $(".input-line.dc-rate").show();
-            else $(".input-line.dc-rate").hide();
+            const dc_input = $(".input-line.dc-rate");
+
+            if (dc_state === dc_applied) dc_input.show();
+            else dc_input.hide();
         });
 
         //판매 기간 입력칸 toggle
         $("input[name=sle_date_type]").click(function () {
-            let sle_date_type = $("input[name=sle_date_type]:checked").val();
-            if (sle_date_type === limit_sle) $(".input-line.sle-date-type").show();
-            else $(".input-line.sle-date-type").hide();
+            const sle_date_type = $("input[name=sle_date_type]:checked").val();
+            const sle_input = $(".input-line.sle-date-type");
+
+            if (sle_date_type === limit_sle) sle_input.show();
+            else sle_input.hide();
         });
 
-        //upload
+        //파일 업로드
+        let clone_upload_path = $("upload-input.upload-path").clone();
+        let clone_prod_path = $(".upload-input.profile").clone();
 
+        //.uploadResult ul의 참조를 얻어온다.
+        let upload_path_list = $(".upload-result.upload-path ul");
+        let upload_products_list = $(".upload-result.products ul");
+
+        //상품 대표이미지 업로드
+        $("#upload_path_btn").on("click", function (e) { //업로드 버튼을 눌렀을 때 이벤트를 연결한다.
+            e.preventDefault();
+            const formData = new FormData();
+            const inputFile = $("input[name='upload_path']");
+
+            if (inputFile[0].files.length < 1) { //파일 선택 안 한 경우
+                alert("상품 대표이미지를 업로드 해주세요");
+                return false;
+            }
+            checkFileList(inputFile[0].files, formData);
+
+            $.ajax({
+                url: '/uploadAjaxAction',
+                processData: false,
+                contentType: false,
+                data: formData,
+                type: 'POST',
+                dataType: "json",
+                success: function (result) {
+                    upload_path_list.append(showUploadedFile(result));
+                    $(".upload_path_btn.bnr").html(clone_upload_path.html());
+                }
+            });
+        });
+
+        //상세 이미지 업로드
+        $("#upload_products").on("click", function (e) {
+            e.preventDefault();
+            const formData = new FormData();
+            const inputFile = $("input[name='products']");
+
+            if (inputFile[0].files.length < 1) { //파일 선택 안 한 경우
+                alert("최소 3장 이상의 상세 이미지를 업로드 해주세요");
+                return false;
+            }
+            checkFileList(inputFile[0].files, formData);
+
+            $.ajax({
+                url: '/uploadAjaxAction',
+                processData: false,
+                contentType: false,
+                data: formData,
+                type: 'POST',
+                dataType: "json",
+                success: function (result) {
+                    upload_products_list.append(showUploadedFile(result));
+                    $(".upload-input.profile").html(clone_prod_path.html()); //파일 초기화
+                }
+            });
+        });
 
         //가입하기 버튼 클릭
         $(".reg-confirm").click(function (e) {
