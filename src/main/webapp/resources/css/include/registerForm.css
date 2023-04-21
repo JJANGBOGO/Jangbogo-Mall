@@ -1,0 +1,172 @@
+.section-line {
+    padding: 10px 0;
+    border-top: 1px solid var(--text-dark);
+}
+
+.section-line.bottom {
+    border-top: none;
+    border-bottom: 1px solid var(--text-dark);
+}
+
+.register-page {
+    min-width: 1050px;
+    margin: 50px 0 60px 0;
+    background-color: rgb(255, 255, 255);
+}
+
+.register-page .reg-page-center{
+    width: 640px;
+    margin: 0 auto;
+}
+
+.register-page .reg-page-center .reg-header {
+    margin-bottom: 50px;
+    font-size: 28px;
+    text-align: center;
+}
+
+/* reg form start */
+.reg-form .center-padding .section-header {
+    margin: 40px 0 10px 0;
+}
+
+.reg-form .center-padding .input-line {
+    width: 100%;
+    display: inline-flex;
+    padding: 10px 20px;
+}
+.reg-form .center-padding .input-line fieldset label:last-child {
+    margin-left: 77px;
+}
+.reg-form .center-padding .input-line .input-label {
+    width: 139px;
+    padding-top: 12px;
+
+    font-weight: 500;
+    color:var(--text-dark);
+    line-height: 20px;
+}
+
+.reg-form .center-padding .input-label label {
+    font-size: 16px;
+}
+
+.reg-form .center-padding .input-label span {
+    color: var(--text-danger);
+}
+
+.reg-form .input-box {
+    flex: 1 1 0%;
+    width: 100%;
+}
+
+.reg-form .input-box.textarea,
+.reg-form .input-box .input.textarea{
+    height: 190px;
+}
+
+.reg-form .input-box .input {
+    width: 100%;
+    height: 46px;
+    padding: 0px 11px 1px 15px;
+    border-radius: 4px;
+    border: 1px solid rgb(221, 221, 221);
+    line-height: 1.5;
+
+    display: flex;
+    align-items: center;
+}
+
+.reg-form .input-box .input input,
+.reg-form .input-box .input textarea
+{
+    width: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-dark);
+}
+
+.reg-form .input-box .input.textarea textarea {
+    height:100%;
+    padding: 20px 0;
+    resize: none;
+}
+
+.reg-form .input-box .input.addr-dtl {
+    margin-top: 10px;
+}
+
+.reg-form .input-box .input label i {
+    color: rgb(117, 117, 117)
+}
+
+.reg-form .input-box .error-msg {
+    padding: 6px 0 10px 0;
+    font-size: 13px;
+    color: var(--text-danger);
+}
+
+.reg-form .input-line .btn-space {
+    width: 120px;
+    margin-left: 8px;
+}
+.reg-form .input-line .btn-space button {
+    width: 100%;
+    height: 44px;
+    display: block;
+    padding: 0px 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 3px;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--primary-color);
+
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+    text-align: center;
+}
+
+.reg-form .input-line .btn-space button  * {
+    color: var(--primary-color);
+}
+
+/* 중복 검사 통과 후 input, button 비활성화 css 추가 */
+.reg-form .input-line .btn-space button:disabled,
+.reg-form .input-line .input-box .input input[type=text]:read-only {
+    opacity: 0.4;
+}
+
+.checkbox-group .input-line span {
+    margin-left: 10px;
+    color: var(--text-dark);
+}
+
+.checkbox-group .chk-group-line {
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 가입하기 버튼 영역 */
+.reg-form .btn-container {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    margin-top: 20px;
+    padding-top: 40px;
+}
+
+.reg-form .btn-container .reg-confirm{
+    height: 56px;
+    width: 240px;
+    display: block;
+    margin: 0px 3px;
+    padding: 0px 10px;
+    border-radius: 4px;
+
+    font-size: 16px;
+    color: rgb(255, 255, 255);
+    background-color: var(--primary-color);
+    text-align: center;
+    overflow: hidden;
+}
