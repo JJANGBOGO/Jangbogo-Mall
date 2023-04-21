@@ -37,13 +37,37 @@ public class ProdReviewController {
         Integer user_idx = (Integer)session.getAttribute("idx");        // 세션에서 회원번호를 가져온다
         try {
             list = prodReviewService.getList(prod_idx);                       // 상품번호를 가지고 상품후기 목록을 가져온다
-            System.out.println("list = " + list);
+//            System.out.println("list = " + list);
             return new ResponseEntity<List<ProdReviewDto>>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<List<ProdReviewDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @PatchMapping("/product/review/{idx}") // /product/review/1  PATCH
+    public ResponseEntity<String> update(@PathVariable Integer idx, @RequestBody ProdReviewDto prodReviewDto,HttpSession session){
+        System.out.println("prodReviewDto = " + prodReviewDto);
+
+        Integer user_idx = (int)session.getAttribute("idx"); // 세션에서 회원번호를 가져온다
+        String opub_yn = prodReviewDto.getOpub_yn();  // 공개여부 변수 선언
+
+        prodReviewDto.setUser_idx(user_idx);          // prodReviewDto 에 회원번호를 담는다
+        prodReviewDto.setIdx(idx);                    // prodReviewDto 에 상품 후기 일련번호를 담는다
+        System.out.println("prodReviewDto1 = " + prodReviewDto);
+        try {
+            if(opub_yn.equals("true")){               // 공개여부 확인(후기 비공개하기 Yes or No)
+                prodReviewDto.setOpub_yn("N");        // 공개여부 N(no)
+            }else {
+                prodReviewDto.setOpub_yn("Y");        // 공개여부 Y(yes)
+            }
+            prodReviewService.update(prodReviewDto); // 수정할 상품 후기 정보를 담아준다( 수정내용, 공개여부..)
+            return new ResponseEntity<String>("Update_OK",HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>("Update_ERR",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 

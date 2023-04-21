@@ -18,6 +18,11 @@ public class ProdReviewServiceImpl implements ProdReviewService {
         return prodReviewDao.selectAll(prod_idx);
     }
 
+    @Override
+    public Integer update(ProdReviewDto prodReviewDto) throws Exception{
+        return prodReviewDao.update(prodReviewDto);
+    }
+
 
 
 

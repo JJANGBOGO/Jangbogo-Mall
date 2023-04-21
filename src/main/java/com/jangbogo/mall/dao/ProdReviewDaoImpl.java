@@ -19,6 +19,11 @@ public class ProdReviewDaoImpl implements ProdReviewDao {
         return session.selectList(namespace + "selectAll", prod_idx);
     }
 
+    @Override
+    public Integer update(ProdReviewDto prodReviewDto) throws Exception {
+        return session.update(namespace + "update", prodReviewDto);
+    }
+
 
 
 }
