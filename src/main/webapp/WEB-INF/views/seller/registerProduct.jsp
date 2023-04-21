@@ -145,12 +145,12 @@
                         </div>
                         <fieldset>
                             <label>
-                                <input type="radio" name="dc_state_cd" value="1" checked/>
-                                <span>할인</span>
+                                <input type="radio" name="dc_state_cd" value="2" checked/>
+                                <span>할인 미적용</span>
                             </label>
                             <label>
-                                <input type="radio" name="dc_state_cd" value="2"/>
-                                <span>할인 미적용</span>
+                                <input type="radio" name="dc_state_cd" value="1"/>
+                                <span>할인</span>
                             </label>
                         </fieldset>
                         <div class="btn-space"></div>
@@ -178,12 +178,12 @@
                         </div>
                         <fieldset>
                             <label>
-                                <input type="radio" name="dsply_state_cd" value="1" checked/>
+                                <input type="radio" name="dsply_state_cd" value="2" checked/>
                                 <span>전시</span>
                             </label>
 
                             <label>
-                                <input type="radio" name="dsply_state_cd" value="2"/>
+                                <input type="radio" name="dsply_state_cd" value="1"/>
                                 <span>비전시</span>
                             </label>
                         </fieldset>
@@ -289,6 +289,38 @@
                         </fieldset>
                         <div class="btn-space"></div>
                     </div>
+                    <div class="input-line sle-date-type">
+                        <div class="input-label">
+                            <label>판매 시작일자</label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name="sle_start_tm"
+                                        id="sle_start_tm"
+                                        type="date"
+                                />
+                            </div>
+                            <div class="error-msg sle-start-tm"></div>
+                        </div>
+                        <div class="btn-space"></div>
+                    </div>
+                    <div class="input-line sle-date-type">
+                        <div class="input-label">
+                            <label>판매 종료일자</label>
+                        </div>
+                        <div class="input-box">
+                            <div class="input">
+                                <input
+                                        name="sle_end_tm"
+                                        id="sle_end_tm"
+                                        type="date"
+                                />
+                            </div>
+                            <div class="error-msg sle-end-tm"></div>
+                        </div>
+                        <div class="btn-space"></div>
+                    </div>
                     <div class="input-line">
                         <div class="input-label">
                             <label>보관 유형<span>*</span></label>
@@ -377,38 +409,6 @@
                         </div>
                         <div class="btn-space"></div>
                     </div>
-                    <div class="input-line sle-date-type">
-                        <div class="input-label">
-                            <label>판매 시작일자</label>
-                        </div>
-                        <div class="input-box">
-                            <div class="input">
-                                <input
-                                        name="sle_start_tm"
-                                        id="sle_start_tm"
-                                        type="date"
-                                />
-                            </div>
-                            <div class="error-msg sle-start-tm"></div>
-                        </div>
-                        <div class="btn-space"></div>
-                    </div>
-                    <div class="input-line sle-date-type">
-                        <div class="input-label">
-                            <label>판매 종료일자</label>
-                        </div>
-                        <div class="input-box">
-                            <div class="input">
-                                <input
-                                        name="sle_end_tm"
-                                        id="sle_end_tm"
-                                        type="date"
-                                />
-                            </div>
-                            <div class="error-msg sle-end-tm"></div>
-                        </div>
-                        <div class="btn-space"></div>
-                    </div>
                     <div class="input-line">
                         <div class="input-label">
                             <label>상품 상세이미지들<span>*</span></label>
@@ -452,26 +452,36 @@
     const dc_applied = "1"; //할인 적용 여부
     const limit_sle = "2"; //기간한정판매
 
+    //할인율 input display toggle
+    function toggleDcInput() {
+        let dc_state = $("input[name=dc_state_cd]:checked").val();
+        const dc_input = $(".input-line.dc-rate");
+
+        if (dc_state === dc_applied) dc_input.show();
+        else dc_input.hide();
+    }
+
+    //판매기간 input display toggle
+    function toggleSleDateInput() {
+        const sle_date_type = $("input[name=sle_date_type]:checked").val();
+        const sle_input = $(".input-line.sle-date-type");
+
+        if (sle_date_type === limit_sle) sle_input.show();
+        else sle_input.hide();
+    }
+
     $(document).ready(function () {
-        //초기 판매 기간 hide 기본값은 영구 판매
-        $(".input-line.sle-date-type").hide();
+        toggleDcInput();
+        toggleSleDateInput();
 
         //할인율 입력칸 toggle
         $("input[name=dc_state_cd]").click(function () {
-            let dc_state = $("input[name=dc_state_cd]:checked").val();
-            const dc_input = $(".input-line.dc-rate");
-
-            if (dc_state === dc_applied) dc_input.show();
-            else dc_input.hide();
+            toggleDcInput();
         });
 
         //판매 기간 입력칸 toggle
         $("input[name=sle_date_type]").click(function () {
-            const sle_date_type = $("input[name=sle_date_type]:checked").val();
-            const sle_input = $(".input-line.sle-date-type");
-
-            if (sle_date_type === limit_sle) sle_input.show();
-            else sle_input.hide();
+            toggleSleDateInput();
         });
 
         //파일 업로드
