@@ -202,10 +202,10 @@ public class SellerController {
     @PostMapping("/seller/withdraw")
     public String withdrawSeller(String pwd, RedirectAttributes rattr, HttpSession session) {
 //        TODO:: 세션에서 얻어오기로 변경
-        int idx = (int) session.getAttribute("idx");
-        String email = (String) session.getAttribute("email"); //이메일 얻기
         try {
 //          TODO:: 구현해야 함
+            int idx = (int) session.getAttribute("idx");
+            String email = (String) session.getAttribute("email"); //이메일 얻기
             if (service.withdrawSeller(idx, email) != 1)
                 throw new Exception("withdraw failed");
 
@@ -274,10 +274,22 @@ public class SellerController {
         }
     }
 
-    //판매자 상품 등록
+    //판매자 상품 등록 화면
     @GetMapping("/seller/register/product")
     public String regProductView() {
         return "/seller/registerProduct";
+    }
+
+    @PostMapping("/seller/register/product")
+    public String regProduct(ProductDto product, RedirectAttributes rattr) {
+        try {
+            //if (service.registerProduct(...) != 1)
+
+            return "redirect:/seller/list/product";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "redirect:/seller/register/product";
+        }
     }
 
 }
