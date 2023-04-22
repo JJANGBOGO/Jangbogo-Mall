@@ -138,13 +138,9 @@
               </div>
             </div>
             <div class="cart-wrap">
-              <button class="wishlistBtn">
+              <button class="wishlistBtn" data-heart="empty">
                   <span class="btn-wrap">
-                    <img
-                            class="btn-img"
-                            src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhl…vZGQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K"
-                            alt=""
-                    />
+                    <i class="fa-regular fa-heart"></i>
                   </span>
               </button>
               <div class="cartBtn-wrap">
@@ -252,6 +248,7 @@
   <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
   <script src="https://code.jquery.com/jquery-latest.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="https://kit.fontawesome.com/cc28ed1241.js" crossorigin="anonymous"></script>
 <script>
 
   let showInqryList = function(prod_idx) {
@@ -298,13 +295,9 @@
   let packingTypeToString = function() {
     let packingType = $('.packing-name').text();
     // let packingType = "Hello,miso"
-    console.log("packing name="+$('.packing-name').text()) //1(배송유형코드),2(배송포장코드)
-    console.log(typeof packingType);
     // , 콤마를 기준으로 문자열을 잘라서
     //첫 번째 요소가 1이면 냉장/ 2이면 냉동/ 3이면 상온
-    console.log("콤마 구분자로 자름 첫 번째"+packingType.split(',', 1));
     let first = packingType.split(',')[0];
-    console.log("first="+first);
     let dlvryType = "";
     let packageType = "";
     if(first == 1) {
@@ -314,20 +307,18 @@
     } else if(first == 3) {
       dlvryType = "상온";
     }
-    console.log("dlvryType="+dlvryType)
     //두 번째 요소가 1이면 종이박스 / 2이면 아이스박스
     let second = packingType.split(',')[1];
-    console.log("second="+second)
     if(second == 1) {
       packageType = "종이박스"
     } else if(second == 2) {
       packageType = "아이스박스";
     }
-    console.log("packageType="+packageType)
     //변경해서
     //return 첫 번째 요소 + "(" + 두 번째 요소 + ")";
      $('.packing-name').text(dlvryType + "(" + packageType + ")");
   }
+
 
 
 
@@ -336,6 +327,22 @@
     showInqryList(prod_idx);
     showProdDetailList(prod_idx);
     packingTypeToString();
+    $('.wishlistBtn').click(function(e) {
+      let value = $('.wishlistBtn').data('heart');
+      console.log("value="+value);
+      let changedVal = "";
+      if(value == "empty") {
+        let classi = $('.wishlistBtn').find('i').attr('class', 'fa-solid fa-heart'); //클래스 이름을 변경해줘 //이미지를 바꿔줘
+        console.log("classi="+classi);
+        $('.wishlistBtn').data('heart', "full"); //dataset 값을 변경해줘
+        // value = $('.wishlistBtn').data('heart');
+      } else if (value == "full" ){
+        $('.wishlistBtn').find('i').attr('class', 'fa-regular fa-heart'); //이미지를 바꿔줘
+        $('.wishlistBtn').data('heart', "empty");
+        // changedVal = $('.wishlistBtn').data('heart');
+      }
+    })
+
     $('.price').text($('.m-price-dc-span').text());
 
     $('.upCount').on("click", function() {
@@ -365,7 +372,6 @@
     $('.downCount').click(function() {
       //.num 내부의 텍스트를 가져와서 변수에 저장
       let num = $('.num').text();
-      console.log("- 누르면 num="+num);
       if(!(num-1 <= 0)){
         $('.num').text(num-1);
         let de = $('.num').text();
