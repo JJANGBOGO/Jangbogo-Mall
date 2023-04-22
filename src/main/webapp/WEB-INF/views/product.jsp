@@ -22,11 +22,11 @@
 
     <div class="body-wrap" >
       <div id="main" class="main">
-        <div id="prod-img"></div>
+        <div id="prod-img" class="prod-img" data-imgUrl=${list.image_path}></div>
         <section class="info-block">
           <div id="prod-title-wrap">
             <div id="prod-title">
-              <h1>${list.name}fff</h1>
+              <h1>${list.name}</h1>
             </div>
             <h2 class="prod-ctent">${list.content}</h2>
           </div>
@@ -39,16 +39,6 @@
               <span class="defore-dc-span"></span>원
             </span>
           <div id="info-table" class="css-iqoq9n e6qx2kx2">
-<%--            <div class="delivery">--%>
-<%--              <div class="delColumn">배송</div>--%>
-<%--              <div class="del-info">--%>
-<%--                <p class="del-name">샛별배송</p>--%>
-<%--                <p class="del-content">--%>
-<%--                  23시 전 주문 시 내일 아침 7시 전 도착 (대구·부산·울산--%>
-<%--                  샛별배송 운영시간 별도 확인)--%>
-<%--                </p>--%>
-<%--              </div>--%>
-<%--            </div>--%>
             <div class="seller">
               <div class="sellerColumn">판매자</div>
               <div class="seller-info">
@@ -271,10 +261,24 @@
         $(".m-price-dc-span").html(dcNumberToPrice(result));
         $(".m-price-origin-span").html(numberToPrice(result));
         $(".defore-dc-span").html(numberToPrice(result));
-        $(".price").html(dcNumberToPrice(result))
+        $(".price").html(dcNumberToPrice(result));
       },
       error: function() {alert("error")}
     })
+  }
+
+  let showImage = function() {
+    //태그안에 들어가있는 주소를 불러와
+    let imgAddress = $('.prod-img').data("imgurl");
+    // console.log($('.prod-img').dataset['imgurl']);
+    $('#prod-img').css({"background-image":"url("+imgAddress+")"});
+    // console.log("image주소="+imgAddress);
+    // $('#prod-img').css("background-image","url()");
+  }
+
+  let prodInqryImage = function() {
+    let imgAddress = $('.prod-img').data("imgurl");
+    $('.inqry_sub').find('img').attr('src', imgAddress);
   }
 
   let numberToPrice = function(info) {
@@ -327,6 +331,9 @@
     showInqryList(prod_idx);
     showProdDetailList(prod_idx);
     packingTypeToString();
+    showImage();
+    prodInqryImage();
+
     $('.wishlistBtn').click(function(e) {
       let value = $('.wishlistBtn').data('heart');
       console.log("value="+value);

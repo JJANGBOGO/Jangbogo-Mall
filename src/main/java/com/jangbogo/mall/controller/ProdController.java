@@ -136,7 +136,7 @@ public class ProdController {
     public ResponseEntity<ProductDetailDto> prodDetailList(Integer prod_idx) {
         try {
             ProductDetailDto info = productDetailService.read(prod_idx);
-            System.out.println("info???"+info);
+
             return new ResponseEntity<ProductDetailDto>(info, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

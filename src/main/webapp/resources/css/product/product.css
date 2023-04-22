@@ -19,10 +19,10 @@
 #prod-img {
     width: 430px;
     height: 552px;
-    background: url(https://img-cf.kurly.com/shop/data/goods/1653037954138l0.jpeg)
-    0% 0% / cover,
-    url(https://res.kurly.com/_next/static/images/noimg-150x195-2c819ff….svg)
-    50% 50% / contain no-repeat rgb(245, 245, 245);
+    /*background-image: url(https://img-cf.kurly.com/shop/data/goods/1653037954138l0.jpeg);*/
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: rgb(245, 245, 245);
 }
 
 #main .info-block {
