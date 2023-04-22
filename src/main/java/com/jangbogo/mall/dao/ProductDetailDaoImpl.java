@@ -13,7 +13,16 @@ public class ProductDetailDaoImpl implements ProductDetailDao {
     String namespace = "com.jangbogo.mall.dao.ProductDetailMapper.";
 
     @Override
-    public ProductDetailDto select(Integer prod_idx) throws Exception {
-        return session.selectOne(namespace + "select", prod_idx);
+    public ProductDetailDto selectProd(Integer prod_idx) throws Exception {
+        return session.selectOne(namespace + "selectProd", prod_idx);
     }
+
+    public Integer findDlvry(Integer cate_idx) throws Exception {
+        return session.selectOne(namespace + "findDlvry", cate_idx);
+    }
+
+    public ProductDetailDto dlvryInfo(Integer dlvry_method) throws Exception {
+        return session.selectOne(namespace + "dlvryInfo", dlvry_method);
+    }
+
 }

@@ -31,13 +31,16 @@ public class ProdController {
         Integer session_idx = (Integer)session.getAttribute("idx");
         try {
             ProductDetailDto list = productDetailService.read(prod_idx);
+            Integer cate_idx = productDetailService.findDlvry(list.getCate_idx());
+            ProductDetailDto dlvryMethod = productDetailService.dlvryInfo(cate_idx);
             m.addAttribute("prod_idx", prod_idx);
-            m.addAttribute("list",list);
+            m.addAttribute("session_idx", session_idx);
+            m.addAttribute("list", list);
+            m.addAttribute("dlvryMethod", dlvryMethod);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        m.addAttribute("session_idx", session_idx);
         return "product";
     }
 

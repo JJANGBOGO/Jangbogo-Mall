@@ -13,6 +13,14 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 
     @Override
     public ProductDetailDto read(Integer prod_idx) throws Exception {
-        return productDetailDao.select(prod_idx);
+        return productDetailDao.selectProd(prod_idx);
+    }
+
+    public Integer findDlvry(Integer cate_idx) throws Exception {
+        return productDetailDao.findDlvry(cate_idx);
+    }
+
+    public ProductDetailDto dlvryInfo(Integer dlvry_method) throws Exception {
+        return productDetailDao.dlvryInfo(dlvry_method);
     }
 }

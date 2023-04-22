@@ -7,42 +7,86 @@ public class ProductDetailDto {
     private Integer price;
     private String name;
     private String content;
+    private Integer cate_idx; //상품 - 카테고리아이디
     private String upload_path;
     private Integer dc_rate;
     private Integer dc_state;
-    private Integer productNum;
+    private Integer prod_idx;
     private String guid;
     private String origin;
     private String unit;
     private String weight;
-    private String warn;
-    private Integer packingType;
+    private String warn; //상품상세 - 상품주의사항
+    private Integer keepingType;  //상품상세 - 보관유형 상태코드
+    private Integer dlvry_method; //카테고리 - 배송방식번호
+    private Integer idx; // 배송방식 - 배송방식번호
+    private Integer dlvry_type; //배송방식 - 배송유형코드
+    private Integer packing_type; //배송방식 - 배송포장코드
+    private String dlvry_warn; //배송방식 - 배송주의사항
+
 
     // constructor
 
     public ProductDetailDto() {}  // 기본 생성자
-    public ProductDetailDto(String guid, Integer price, String name, String content, String upload_path, Integer dc_rate, Integer dc_state, Integer productNum, String origin, String unit, String weight, String warn, Integer packingType) {
-        this.guid = guid;
+
+    public ProductDetailDto(Integer price, String name, String content, String upload_path, Integer dc_rate, Integer dc_state, Integer prod_idx, String guid, String origin, String unit, String weight, String warn, Integer keepingType, Integer cate_idx, Integer dlvry_method, Integer idx, Integer dlvry_type, Integer packing_type, String dlvry_warn) {
         this.price = price;
         this.name = name;
         this.content = content;
         this.upload_path = upload_path;
         this.dc_rate = dc_rate;
         this.dc_state = dc_state;
-        this.productNum = productNum;
+        this.prod_idx = prod_idx;
+        this.guid = guid;
         this.origin = origin;
         this.unit = unit;
         this.weight = weight;
         this.warn = warn;
-        this.packingType = packingType;
-    }
-    // getter & setter
-    public String getGuid() {
-        return guid;
+        this.keepingType = keepingType;
+        this.cate_idx = cate_idx;
+        this.dlvry_method = dlvry_method;
+        this.idx = idx;
+        this.dlvry_type = dlvry_type;
+        this.packing_type = packing_type;
+        this.dlvry_warn = dlvry_warn;
     }
 
-    public void setGuid(String guid) {
-        this.guid = guid;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductDetailDto that = (ProductDetailDto) o;
+        return Objects.equals(price, that.price) && Objects.equals(name, that.name) && Objects.equals(content, that.content) && Objects.equals(upload_path, that.upload_path) && Objects.equals(dc_rate, that.dc_rate) && Objects.equals(dc_state, that.dc_state) && Objects.equals(prod_idx, that.prod_idx) && Objects.equals(guid, that.guid) && Objects.equals(origin, that.origin) && Objects.equals(unit, that.unit) && Objects.equals(weight, that.weight) && Objects.equals(warn, that.warn) && Objects.equals(keepingType, that.keepingType) && Objects.equals(cate_idx, that.cate_idx) && Objects.equals(dlvry_method, that.dlvry_method) && Objects.equals(idx, that.idx) && Objects.equals(dlvry_type, that.dlvry_type) && Objects.equals(packing_type, that.packing_type) && Objects.equals(dlvry_warn, that.dlvry_warn);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(price, name, content, upload_path, dc_rate, dc_state, prod_idx, guid, origin, unit, weight, warn, keepingType, cate_idx, dlvry_method, idx, dlvry_type, packing_type, dlvry_warn);
+    }
+
+    @Override
+    public String toString() {
+        return "ProductDetailDto = {" +
+                "price=" + price +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", upload_path='" + upload_path + '\'' +
+                ", dc_rate=" + dc_rate +
+                ", dc_state=" + dc_state +
+                ", prod_idx=" + prod_idx +
+                ", guid='" + guid + '\'' +
+                ", origin='" + origin + '\'' +
+                ", unit='" + unit + '\'' +
+                ", weight='" + weight + '\'' +
+                ", warn='" + warn + '\'' +
+                ", keepingType=" + keepingType +
+                ", cate_idx=" + cate_idx +
+                ", dlvry_method=" + dlvry_method +
+                ", idx=" + idx +
+                ", dlvry_type=" + dlvry_type +
+                ", packing_type=" + packing_type +
+                ", dlvry_warn='" + dlvry_warn + '\'' +
+                '}';
     }
 
     public Integer getPrice() {
@@ -93,12 +137,20 @@ public class ProductDetailDto {
         this.dc_state = dc_state;
     }
 
-    public Integer getProductNum() {
-        return productNum;
+    public Integer getProd_idx() {
+        return prod_idx;
     }
 
-    public void setProductNum(Integer productNum) {
-        this.productNum = productNum;
+    public void setProd_idx(Integer prod_idx) {
+        this.prod_idx = prod_idx;
+    }
+
+    public String getGuid() {
+        return guid;
+    }
+
+    public void setGuid(String guid) {
+        this.guid = guid;
     }
 
     public String getOrigin() {
@@ -133,47 +185,59 @@ public class ProductDetailDto {
         this.warn = warn;
     }
 
-    public Integer getPackingType() {
-        return packingType;
+    public Integer getKeepingType() {
+        return keepingType;
     }
 
-    public void setPackingType(Integer packingType) {
-        this.packingType = packingType;
-    }
-    // toString
-
-    @Override
-    public String toString() {
-        return "{" +
-                "price=" + price +
-                ", name='" + name + '\'' +
-                ", content='" + content + '\'' +
-                ", upload_path='" + upload_path + '\'' +
-                ", dc_rate=" + dc_rate +
-                ", dc_state=" + dc_state +
-                ", productNum=" + productNum +
-                ", guid='" + guid + '\'' +
-                ", origin='" + origin + '\'' +
-                ", unit='" + unit + '\'' +
-                ", weight='" + weight + '\'' +
-                ", warn='" + warn + '\'' +
-                ", packingType=" + packingType +
-                '}';
+    public void setKeepingType(Integer keepingType) {
+        this.keepingType = keepingType;
     }
 
-    // equals & hashCode
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProductDetailDto that = (ProductDetailDto) o;
-        return Objects.equals(price, that.price) && Objects.equals(name, that.name) && Objects.equals(content, that.content) && Objects.equals(upload_path, that.upload_path) && Objects.equals(dc_rate, that.dc_rate) && Objects.equals(dc_state, that.dc_state) && Objects.equals(productNum, that.productNum) && Objects.equals(origin, that.origin) && Objects.equals(unit, that.unit) && Objects.equals(weight, that.weight) && Objects.equals(warn, that.warn) && Objects.equals(packingType, that.packingType);
+    public Integer getCate_idx() {
+        return cate_idx;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(price, name, content, upload_path, dc_rate, dc_state, productNum, origin, unit, weight, warn, packingType);
+    public void setCate_idx(Integer cate_idx) {
+        this.cate_idx = cate_idx;
     }
 
+    public Integer getDlvry_method() {
+        return dlvry_method;
+    }
 
+    public void setDlvry_method(Integer dlvry_method) {
+        this.dlvry_method = dlvry_method;
+    }
+
+    public Integer getIdx() {
+        return idx;
+    }
+
+    public void setIdx(Integer idx) {
+        this.idx = idx;
+    }
+
+    public Integer getDlvry_type() {
+        return dlvry_type;
+    }
+
+    public void setDlvry_type(Integer dlvry_type) {
+        this.dlvry_type = dlvry_type;
+    }
+
+    public Integer getPacking_type() {
+        return packing_type;
+    }
+
+    public void setPacking_type(Integer packing_type) {
+        this.packing_type = packing_type;
+    }
+
+    public String getDlvry_warn() {
+        return dlvry_warn;
+    }
+
+    public void setDlvry_warn(String dlvry_warn) {
+        this.dlvry_warn = dlvry_warn;
+    }
 }
