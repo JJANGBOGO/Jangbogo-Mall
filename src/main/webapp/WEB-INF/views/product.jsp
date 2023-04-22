@@ -295,41 +295,66 @@
     return withComma;
   }
 
+  let packingTypeToString = function() {
+    let packingType = $('.packing-name').text();
+    // let packingType = "Hello,miso"
+    console.log("packing name="+$('.packing-name').text()) //1(배송유형코드),2(배송포장코드)
+    console.log(typeof packingType);
+    // , 콤마를 기준으로 문자열을 잘라서
+    //첫 번째 요소가 1이면 냉장/ 2이면 냉동/ 3이면 상온
+    console.log("콤마 구분자로 자름 첫 번째"+packingType.split(',', 1));
+    let first = packingType.split(',')[0];
+    console.log("first="+first);
+    let dlvryType = "";
+    let packageType = "";
+    if(first == 1) {
+      dlvryType = "냉장"
+    } else if(first == 2) {
+      dlvryType = "냉동";
+    } else if(first == 3) {
+      dlvryType = "상온";
+    }
+    console.log("dlvryType="+dlvryType)
+    //두 번째 요소가 1이면 종이박스 / 2이면 아이스박스
+    let second = packingType.split(',')[1];
+    console.log("second="+second)
+    if(second == 1) {
+      packageType = "종이박스"
+    } else if(second == 2) {
+      packageType = "아이스박스";
+    }
+    console.log("packageType="+packageType)
+    //변경해서
+    //return 첫 번째 요소 + "(" + 두 번째 요소 + ")";
+     $('.packing-name').text(dlvryType + "(" + packageType + ")");
+  }
+
 
 
   $(document).ready(function(){
     let prod_idx = $('#prod_idx').text();
     showInqryList(prod_idx);
     showProdDetailList(prod_idx);
+    packingTypeToString();
     $('.price').text($('.m-price-dc-span').text());
 
     $('.upCount').on("click", function() {
       //초기 숫자 1에
       let init = $('.num').data('min');
-      console.log(init);
       //+1을 해줘 -> 2가 됐어
       if(init+ 1 <= 10){
         $('.num').data('min', init+1); //init +1 해서 숫자는 올라가는데, 태그안에 보이는 것에는 반영이 안돼
         let modnum = $('.num').data('min');
-        console.log("modnum="+modnum);
         $('.num').text(modnum);
-        // console.log($('.num').data('num'));
-        // console.log("두번째="+init)
         //기존에 태그에 들어가 있는 문자열을 가져와서
-        console.log("기존 태그에 들어가있던 값"+$('.price').text())
         //콤마를 뺀 숫자만을 구하고
         let regex = /[^0-9]/g;
         let numPrice = ($('.m-price-dc-span').text()).replace(regex, "");
-        console.log(typeof numPrice);
         //콤마를 뺀 숫자에 늘어난 숫자 2를 곱해줘
         let calcPrice = modnum * parseInt(numPrice);
-        console.log("calcPrice="+calcPrice);
         //곱해준 값에 콤마를 붙이고
         let withComma = calcPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-        console.log("withComma="+withComma);
         //.price 공간에 넣어줘
-        console.log("원래 들어가 있던값="+$('.price').text())
-
         // $('.price').text("");
         $('.price').text(withComma);
         //최대 숫자 10이 되기 전까지 올려줘
@@ -344,7 +369,6 @@
       if(!(num-1 <= 0)){
         $('.num').text(num-1);
         let de = $('.num').text();
-        console.log("줄어든 num 값"+ de);
         let regex = /[^0-9]/g;
         let origin = ($('.m-price-dc-span').text()).replace(regex, "");
         //num * origin 계산후 콤마 찍어서 변수에 저장
