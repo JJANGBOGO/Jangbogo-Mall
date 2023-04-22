@@ -444,6 +444,7 @@
 <script src="/js/member/regEx.js"></script>
 <script src="/js/member/msg.js"></script>
 <script src="/js/member/common.js"></script>
+<script src="/js/member/regProduct.js"></script>
 <script src="/js/upload/common.js"></script>
 <script>
     let msg = "${msg}";
@@ -547,6 +548,8 @@
         //가입하기 버튼 클릭
         $(".reg-confirm").click(function (e) {
             e.preventDefault();
+
+            if (!validateProduct()) return false;
 
             $(".reg-form").submit();
         });
