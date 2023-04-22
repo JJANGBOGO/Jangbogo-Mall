@@ -1,7 +1,10 @@
 package com.jangbogo.mall.domain;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.Date;
 
+@Repository
 public class PaymentDto {                                                                                               // 결제(SETL) - TABLE NAME
     // iv
     private Integer idx;                                                                                                // 결제일련번호(IDX) - PK
@@ -22,6 +25,14 @@ public class PaymentDto {                                                       
 
     // constructor
     public PaymentDto() {}                                                                                              // 기본 생성자
+
+    public PaymentDto(String setl_idx, Integer ord_tot_amt, Integer amt, String aprv_idx, Integer ord_idx) {
+        this.setl_idx = setl_idx;
+        this.ord_tot_amt = ord_tot_amt;
+        this.amt = amt;
+        this.aprv_idx = aprv_idx;
+        this.ord_idx = ord_idx;
+    }
 
     // getter & setter
     public Integer getIdx() {

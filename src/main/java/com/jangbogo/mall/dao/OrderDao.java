@@ -18,12 +18,8 @@ public class OrderDao {
 
     private static String namespace="com.jangbogo.mall.dao.OrderMapper."; // 대소문자 구분X
 
-    public int insertPayment(String tid, Integer ord_idx, Integer total_amount) {
-        Map map = new HashMap();
-        map.put("tid", tid);
-        map.put("ord_idx", ord_idx);
-        map.put("total_amount", total_amount);
-        return session.insert(namespace + "insertPayment", map);
+    public int insertPayment(PaymentDto paymentDto) {
+        return session.insert(namespace + "insertPayment", paymentDto);
     }
 
     public PaymentDto getPayment(String tid) {

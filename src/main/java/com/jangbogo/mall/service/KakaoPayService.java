@@ -63,9 +63,7 @@ public class KakaoPayService {
         } catch(HttpStatusCodeException e) {
             e.printStackTrace();
         }
-        System.out.println("kakaoReadyResponseDto = " + kakaoReadyResponseDto);
         return kakaoReadyResponseDto;
-
     }
 
     // 메서드명 : approveResponse
@@ -77,33 +75,29 @@ public class KakaoPayService {
     // Authorization: KakaoAK ${APP_ADMIN_KEY}
     // Content-type: application/x-www-form-urlencoded;charset=utf-8
     public KakaoApproveResponseDto approveResponse(String pg_token) {
-        // 카카오페이 요청 양식
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();                                             // 1. Body 만들기
-        String tid = kakaoReadyResponseDto.getTid();
-        // 파라미터
-        params.add("cid", CID);
-        params.add("tid", kakaoReadyResponseDto.getTid());
-        params.add("partner_order_id", "partner_order_id");
-        params.add("partner_user_id", "partner_user_id");
-        params.add("pg_token", pg_token);
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();                                             // 1. Body 만들기 - 카카오페이 서버에 보낼 요청 양식
+        String tid = kakaoReadyResponseDto.getTid();                                                                    // 2. 파라미터(Body)에 값 저장
+        params.add("cid", CID);                                                                                      // 가맹점 코드, 10자
+        params.add("tid", kakaoReadyResponseDto.getTid());                                                           // 결제 고유 번호
+        params.add("partner_order_id", "partner_order_id");                                                       // 가맹점 주문번호, 최대 100자
+        params.add("partner_user_id", "partner_user_id");                                                         // 가맹점 회원 id, 최대 100자
+        params.add("pg_token", pg_token);                                                                            // 결제승인 요청을 인증하는 토큰 - 사용자 결제 수단 선택 완료 시, approval_url로 redirection해줄 때 pg_token을 query string으로 전달
 
-        // 파라미터, 헤더
-        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, this.getHeaders());
+        HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, this.getHeaders());                 // 3. 요청하기 위해 헤더(Header)와 데이터(Body)를 엔티티(Entity)에 합치기
 
         // 외부에 보낼 url
-        RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplate();                                                                 // 4. POST 요청하기
         try {
             kakaoApproveResponseDto = restTemplate.postForObject(
-                    "https://kapi.kakao.com/v1/payment/approve",
-                    entity,
-                    KakaoApproveResponseDto.class);
+                    "https://kapi.kakao.com/v1/payment/approve",                                                    // 요청할 서버 주소
+                    entity,                                                                                             // 요청할 때 보낼 데이터
+                    KakaoApproveResponseDto.class);                                                                     // 요청시 반환되는 데이터 타입
         } catch (HttpStatusCodeException e) {
             e.printStackTrace();
             ResponseEntity.status(e.getRawStatusCode())
                     .headers(e.getResponseHeaders())
                     .body(e.getResponseBodyAsString()); // **** 한글이 안깨진다!
         }
-        System.out.println("kakaoApproveResponseDto = " + kakaoApproveResponseDto);
         return kakaoApproveResponseDto;
     }
 

@@ -1,9 +1,6 @@
 package com.jangbogo.mall.controller;
 
-import com.jangbogo.mall.domain.KakaoApproveResponseDto;
-import com.jangbogo.mall.domain.KakaoCancelResponseDto;
-import com.jangbogo.mall.domain.KakaoReadyRequestDto;
-import com.jangbogo.mall.domain.KakaoReadyResponseDto;
+import com.jangbogo.mall.domain.*;
 import com.jangbogo.mall.service.CartService;
 import com.jangbogo.mall.service.KakaoPayService;
 import com.jangbogo.mall.service.OrderService;
@@ -13,20 +10,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @Controller
 public class KakaoPayController {
 
-    @Autowired
-    KakaoPayService kakaoPayService;
+    @Autowired KakaoPayService kakaoPayService;                                                                         // Bean 자동 주입 - KakaoPayService
+    @Autowired OrderService orderService;                                                                               // Bean 자동 주입 - OrderService
+    @Autowired CartService cartService;                                                                                 // Bean 자동 주입 - CartService
 
-    @Autowired
-    OrderService orderService;
-
-    @Autowired
-    CartService cartService;
-
-    private KakaoCancelResponseDto kakaoCancelResponseDto;
+    private KakaoReadyRequestDto kakaoReadyRequestDto;                                                                  // 저장값 : 요청URL(/payment/kakao/ready)에 POST요청 시 전달되는 Request Body 데이터
+    private KakaoReadyResponseDto kakaoReadyResponseDto;                                                                // 저장값 : 카카오페이 서버에 '준비' 요청 시, 서버로부터 받을 응답 데이터
+    private KakaoApproveResponseDto kakaoApproveResponseDto;                                                            // 저장값 : 카카오페이 서버에 '승인' 요청 시, 서버로부터 받을 응답 데이터
+    private KakaoCancelResponseDto kakaoCancelResponseDto;                                                              // 저장값 : 카카오페이 서버에 '취소' 요청 시, 서버로부터 받을 응답 데이터
 
     // 메서드명 : readyToKakaoPay
     // 기   능 : 카카오페이 결제 준비 요청 처리
@@ -34,37 +30,48 @@ public class KakaoPayController {
     // 매개변수 : KakaoReadyRequestDto kakaoReadyRequestDto
     @PostMapping("/payment/kakao/ready")
     @ResponseBody
-    public KakaoReadyResponseDto readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto) {
-        return kakaoPayService.kakaoPayReady(kakaoReadyRequestDto);
+    public KakaoReadyResponseDto readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, HttpSession session) {
+        session.setAttribute("orderDto", kakaoReadyRequestDto.getOrderDto());                                     // 1. 세션에 주문 데이터 객체(orderDto) 저장
+        kakaoReadyResponseDto = kakaoPayService.kakaoPayReady(kakaoReadyRequestDto);                                    // 2. 카카오페이 서버로부터 받은 KakaoReadyResponseDto 형식의 응답 데이터를 변수에 저장
+        return kakaoReadyResponseDto;                                                                                   // 3. 응답 데이터 반환
     }
 
-    // 메서드명 : afterPayRequest
+    // 메서드명 : approveKakaoPayRequest
     // 기   능 : 카카오페이 결제 승인 요청 처리
     // 반환타입 : String
     // 매개변수 : String pg_token, Model model
     @GetMapping("/payment/kakao/approve")
-    public String afterPayRequest(@RequestParam("pg_token") String pg_token, Model model, HttpSession session) throws Exception {
-        Integer user_idx = (Integer)session.getAttribute("idx");
-        KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayService.approveResponse(pg_token);                    // 카카오페이 서버로부터 받은 응답 데이터 KakaoApproveResponseDto를 변수에 저장
+    public String approveKakaoPayRequest(@RequestParam("pg_token") String pg_token, Model model, HttpSession session) throws Exception {
+        OrderDto orderDto = (OrderDto)session.getAttribute("orderDto");                                           // 변수명 : orderDto - 저장값 : 세션에 저장되어 있는 주문 데이터 객체(orderDto)
+        int insertOrderDtoRowCnt = 0;                                                                                   // 변수명 : insertOrderDtoRowCnt - 저장값 : '주문' 테이블에 데이터 저장
+        int insertPaymentDtoRowCnt = 0;                                                                                 // 변수명 : insertPaymentDtoRowCnt - 저장값 : '결제' 테이블에 데이터 저장
 
-        int updateRowCnt = 0;                                                                                           // 변수명 : rowCnt - update처리된 '결제' 테이블의 특정 행의 개수를 저장
-        int deleteRowCnt = 0;                                                                                           // 변수명 : rowCnt - update처리된 '결제' 테이블의 특정 행의 개수를 저장
-        // 결제 정보 저장
+        PaymentDto paymentDto = null;                                                                                   // 변수명 : paymentDto - 저장값 : 생성된 PaymentDto 객체
+
         try {
-            updateRowCnt = orderService.updateApprovedSetl(kakaoApproveResponseDto);                                    // 변수 rowCnt에 update처리된 '결제' 테이블의 특정 행의 개수를 저장
-            if(updateRowCnt == 0) {                                                                                     // 변수 rowCnt에 0이 저장된 경우, 즉 update처리가 실패한 경우
-                throw new Exception("update Approved Setl data failure");                                               // 예외 발생시키기 - "update Approved Setl data failure"
-            }
-            model.addAttribute("model", kakaoApproveResponseDto);                                          // update에 성공한 경우 모델에 KakaoApproveResponseDto를 저장 - 뷰에서 출력하기 위함
-            deleteRowCnt = cartService.removeAll(user_idx);                                                             // 장바구니 목록 비우기
-            if(updateRowCnt == 0) {                                                                                     // 변수 rowCnt에 0이 저장된 경우, 즉 update처리가 실패한 경우
-                throw new Exception("update Approved Setl data failure");                                               // 예외 발생시키기 - "update Approved Setl data failure"
-            }
-            return "order/orderSuccess";                                                                                // 뷰 이름 반환 - order/orderSuccess.jsp
-        } catch(Exception e) {                                                                                          // 에러가 발생한 경우,
-            e.printStackTrace();                                                                                        // e.printStackTrace() - 예외발생 당시의 호출스택(Call Stack)에 있었던 메서드의 정보와 예외 메시지를 화면에 출력
-            throw new Exception("update Error");                                                                        // 예외 발생시키기 - "update Error"
+
+            KakaoApproveResponseDto kakaoApproveResponseDto = kakaoPayService.approveResponse(pg_token);                // 카카오페이 서버로부터 받은 응답 데이터 KakaoApproveResponseDto를 변수에 저장
+
+            insertOrderDtoRowCnt = orderService.addOrder(orderDto);                                                     // '주문완료' 처리된 주문 데이터를 '주문' 테이블에 저장(C)
+            if(insertOrderDtoRowCnt == 0) throw new Exception("insert orderDto to 'ORD' Table failed!");                // 데이터 저장 실패 시, 예외 발생
+
+            paymentDto = new PaymentDto(kakaoApproveResponseDto.getTid(),                                               // PaymentDto 매개변수 있는 생성자
+                    kakaoApproveResponseDto.getAmount().getTotal(), kakaoApproveResponseDto.getAmount().getTotal(),     // 매개변수    - 결제고유번호(SETL_IDX), 주문총금액(ORD_TOT_AMT), 실결제금액(AMT),
+                    kakaoApproveResponseDto.getAid(), orderDto.getIdx()                                                 // 매개변수(2) - 카드사승인번호(APRV_IDX), 주문번호(ORD_IDX) - FK
+            );
+            insertPaymentDtoRowCnt = orderService.addPayment(paymentDto);                                               // '결제승인' 처리된 결제 데이터를 '결제' 테이블에 저장(C)
+            if(insertPaymentDtoRowCnt == 0) throw new Exception("insert PaymentDto to 'SETL' Table failed!");           // 데이터 저장 실패 시, 예외 발생
+            cartService.removeAll(orderDto.getUser_idx());                                                              // '주문완료' 처리 시, 장바구니 목록 초기화
+
+            model.addAttribute("model", kakaoApproveResponseDto);                                          // 뷰에 전달할 데이터를 모델(model)에 저장
+            session.removeAttribute("orderDto");                                                                  // 세션에 저장되어 있는 주문 데이터 객체(orderDto) 삭제
+            session.removeAttribute("paymentDto");                                                                // 세션에 저장되어 있는 결제 데이터 객체(paymentDto) 삭제
+        } catch (Exception e) {                                                                                         // 예외 처리
+            e.printStackTrace();
+            throw new Exception("approve KakaoPay request failed!");                                                    // 결제 승인 처리 실패 시, 예외 발생
         }
+        return "order/orderSuccess";                                                                                    // 뷰 이동
+
     }
 
     // 메서드명 : cancel

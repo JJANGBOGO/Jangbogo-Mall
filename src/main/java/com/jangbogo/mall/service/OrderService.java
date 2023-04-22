@@ -3,6 +3,7 @@ package com.jangbogo.mall.service;
 import com.jangbogo.mall.dao.OrderDao;
 import com.jangbogo.mall.domain.KakaoApproveResponseDto;
 import com.jangbogo.mall.domain.OrderDto;
+import com.jangbogo.mall.domain.PaymentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +16,9 @@ public class OrderService {
     // 메서드명 : addPayment
     // 기   능 : OrderDao의 saveKakaoPayment메서드 호출
     // 반환타입 : int
-    // 매개변수 : String tid, Integer ord_idx, Integer total_amount
-    public int addPayment(String tid, Integer ord_idx, Integer total_amount) throws Exception {
-        return orderDao.insertPayment(tid, ord_idx, total_amount);
+    // 매개변수 : PaymentDto paymentDto{String tid, Integer ord_idx, Integer total_amount}
+    public int addPayment(PaymentDto paymentDto) throws Exception {
+        return orderDao.insertPayment(paymentDto);
     }
 
     // 메서드명 : addOrder

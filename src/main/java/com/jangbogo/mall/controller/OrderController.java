@@ -191,52 +191,52 @@ public class OrderController {
     // 메서드명 : saveOrderForm
     // 기   능 : 주문서 작성 내용을 '주문' 데이터에 저장한다.
     // 반환타입 : ResponseEntity<String>
-    @PostMapping("/order/checkout/submit")
-    public ResponseEntity<OrderDto> saveOrderForm(@RequestBody OrderDto orderDto) {                                     // 변수명 : OrderDto - 저장값 : 주문번호(IDX, PK)가 null인 OrderDto - OrderDto{idx=null, ordr_nm='정지우', mpno='010-8435-4496', user_idx=1235}
-        String msg = "";
-        int rowCnt = 0;
-        OrderDto orderDtoWithIdx = null;                                                                                // 변수명 : orderDtoWithIdx - 저장값 : 주문번호(IDX, PK)가 저장된 OrderDto
-        try {
-            // rowCnt가 1일 경우, 성공 응답을 보낸다.
-            // 1이 아닐 경우, 에러 발생 및 리턴
-            // ResponseEntity<String> 성공 메시지 "SAVE_OK"와 상태코드를 함께 반환하기 위한 클래스
-            // 성공 시, 'SAVE_OK'와 OK상태코드를 반환 - 상태코드 : 200
-            rowCnt = orderService.addOrder(orderDto);
-            if(rowCnt == 0) new Exception("insert failure.");
-            orderDtoWithIdx = orderService.getOrderDto(orderDto.getIdx());                                              // OrderDto{idx=41, ordr_nm='정지우', mpno='010-8435-4496', user_idx=1235}
-            msg = "SAVE_OK";
-            return new ResponseEntity<OrderDto>(orderDto, HttpStatus.OK);
-        } catch(Exception e) {
-            // 에러 발생 시, 에러 내용을 로그에 출력
-            e.printStackTrace();
-            // ResponseEntity<String> 실패 메시지 "SAVE_ERR"와 상태코드를 함께 반환하기 위한 클래스
-            // 에러 발생 시, "SAVE_ERR"와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
-            msg = "SAVE_ERR";
-            return new ResponseEntity<OrderDto>(orderDto, HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @PostMapping("/order/checkout/submit")
+//    public ResponseEntity<OrderDto> saveOrderForm(@RequestBody OrderDto orderDto) {                                     // 변수명 : OrderDto - 저장값 : 주문번호(IDX, PK)가 null인 OrderDto - OrderDto{idx=null, ordr_nm='정지우', mpno='010-8435-4496', user_idx=1235}
+//        String msg = "";
+//        int rowCnt = 0;
+//        OrderDto orderDtoWithIdx = null;                                                                                // 변수명 : orderDtoWithIdx - 저장값 : 주문번호(IDX, PK)가 저장된 OrderDto
+//        try {
+//            // rowCnt가 1일 경우, 성공 응답을 보낸다.
+//            // 1이 아닐 경우, 에러 발생 및 리턴
+//            // ResponseEntity<String> 성공 메시지 "SAVE_OK"와 상태코드를 함께 반환하기 위한 클래스
+//            // 성공 시, 'SAVE_OK'와 OK상태코드를 반환 - 상태코드 : 200
+//            rowCnt = orderService.addOrder(orderDto);
+//            if(rowCnt == 0) new Exception("insert failure.");
+//            orderDtoWithIdx = orderService.getOrderDto(orderDto.getIdx());                                              // OrderDto{idx=41, ordr_nm='정지우', mpno='010-8435-4496', user_idx=1235}
+//            msg = "SAVE_OK";
+//            return new ResponseEntity<OrderDto>(orderDto, HttpStatus.OK);
+//        } catch(Exception e) {
+//            // 에러 발생 시, 에러 내용을 로그에 출력
+//            e.printStackTrace();
+//            // ResponseEntity<String> 실패 메시지 "SAVE_ERR"와 상태코드를 함께 반환하기 위한 클래스
+//            // 에러 발생 시, "SAVE_ERR"와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
+//            msg = "SAVE_ERR";
+//            return new ResponseEntity<OrderDto>(orderDto, HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     // 메서드명 : saveTid
     // 기   능 : 결제 준비 메서드로부터 받은 응답 중 tid를 db에 저장한다.
     // 매개변수 : String tid
     // 반환타입 : ResponseEntity<String>
-    @GetMapping("/payment/kakao/save-tid")
-    public ResponseEntity<String> saveTid(String tid, Integer ord_idx, Integer total_amount) {
-        String msg = "";
-        Integer rowCnt = 0;
-        try {
-            // ResponseEntity<String> 성공 메시지 "SAVE_OK"와 상태코드를 함께 반환하기 위한 클래스
-            // 성공 시, 'SAVE_OK'와 OK상태코드를 반환 - 상태코드 : 200
-            rowCnt = orderService.addPayment(tid, ord_idx, total_amount);
-            msg = "SAVE_OK";
-            return new ResponseEntity<String>(msg, HttpStatus.OK);
-        } catch(Exception e) {
-            // 에러 발생 시, 에러 내용을 로그에 출력
-            e.printStackTrace();
-            // ResponseEntity<String> 실패 메시지 "SAVE_ERR"와 상태코드를 함께 반환하기 위한 클래스
-            // 에러 발생 시, "SAVE_ERR"와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
-            msg = "SAVE_ERR";
-            return new ResponseEntity<String>(msg, HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @GetMapping("/payment/kakao/save-tid")
+//    public ResponseEntity<String> saveTid(String tid, Integer ord_idx, Integer total_amount) {
+//        String msg = "";
+//        Integer rowCnt = 0;
+//        try {
+//            // ResponseEntity<String> 성공 메시지 "SAVE_OK"와 상태코드를 함께 반환하기 위한 클래스
+//            // 성공 시, 'SAVE_OK'와 OK상태코드를 반환 - 상태코드 : 200
+//            rowCnt = orderService.addPayment(tid, ord_idx, total_amount);
+//            msg = "SAVE_OK";
+//            return new ResponseEntity<String>(msg, HttpStatus.OK);
+//        } catch(Exception e) {
+//            // 에러 발생 시, 에러 내용을 로그에 출력
+//            e.printStackTrace();
+//            // ResponseEntity<String> 실패 메시지 "SAVE_ERR"와 상태코드를 함께 반환하기 위한 클래스
+//            // 에러 발생 시, "SAVE_ERR"와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
+//            msg = "SAVE_ERR";
+//            return new ResponseEntity<String>(msg, HttpStatus.BAD_REQUEST);
+//        }
+//    }
 }

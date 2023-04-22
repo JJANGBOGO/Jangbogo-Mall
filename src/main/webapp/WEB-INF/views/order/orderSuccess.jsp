@@ -50,13 +50,13 @@
         <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
         <script>
             $(document).ready(() => {
-                let total_amount = Number($("#orderSuccessTotal").text());                  // 변수명 : total_amount - 카카오페이 서버로부터 응답 받은 결제금액에 해당하는 값
-                $("#orderSuccessTotal").text(formatPriceWithComma(total_amount));           // formatPriceWithComma 함수 - 금액에 해당하는 값에 comma를 삽입
+                let total_amount = Number($("#orderSuccessTotal").text());                                              // 변수명 : total_amount - 카카오페이 서버로부터 응답 받은 결제금액에 해당하는 값
+                $("#orderSuccessTotal").text(formatPriceWithComma(total_amount) + "원");                                 // formatPriceWithComma 함수 - 금액에 해당하는 값에 comma를 삽입
 
-                let quantity = $("#orderSuccessQuantity").text();                           // 변수명 : quantity - 카카오페이 서버로부터 응답 받은 주문수량에 해당하는 값
-                $("#orderSuccessQuantity").text(quantity + "개");                            // quantity에 해당하는 수량에 "개"라는 문자열을 붙여서 화면에 랜더링한다.
-                let payment_method = $("#orderSuccessMethod").text();                       // 변수명 : payment_method - 카카오페이 서버로부터 응답 받은 결제수단에 해당하는 값
-                payment_method = (payment_method === "MONEY") ? "카카오페이머니결제" : "카드결제"; // MONEY이면 "카카오페이머니" || CARD면 "카드결제"를 화면에 랜더링한다.
+                let quantity = $("#orderSuccessQuantity").text();                                                       // 변수명 : quantity - 카카오페이 서버로부터 응답 받은 주문수량에 해당하는 값
+                $("#orderSuccessQuantity").text(quantity + "개");                                                        // quantity에 해당하는 수량에 "개"라는 문자열을 붙여서 화면에 랜더링한다.
+                let payment_method = $("#orderSuccessMethod").text();                                                   // 변수명 : payment_method - 카카오페이 서버로부터 응답 받은 결제수단에 해당하는 값
+                payment_method = (payment_method === "MONEY") ? "카카오페이머니결제" : "카드결제";                             // MONEY이면 "카카오페이머니" || CARD면 "카드결제"를 화면에 랜더링한다.
                 $("#orderSuccessMethod").text(payment_method);
                 // 이벤트 대상 : .order-success__btn-home '홈으로 이동' 버튼
                 // 이벤트 : click
@@ -69,7 +69,7 @@
                 // 이벤트 : click
                 // 이벤트 핸들러 기능 : '주문 상세보기'으로 이동
                 $(document).on("click", ".order-success__btn-order-details", () => {
-                    // location.href="http://localhost:8080/"
+
                 })
             })
         </script>

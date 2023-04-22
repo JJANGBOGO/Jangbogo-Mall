@@ -144,6 +144,8 @@
             // 매개변수 : items - cartDto
             // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
             let listToHtml = (items) => {
+                let itemCnt = items.length;                                                                             // 변수명 : itemCnt - 저장값 : 장바구니에 담긴 모든 품목 개수
+                let itemsQuantity = 0;                                                                                  // 변수명 : itemsQuantity - 저장값 : 장바구니에 담긴 모든 품목 개수의 합
                 let tmp = "<ul>";                                                                                       // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
 
                 // 메서드명 : forEach
@@ -159,11 +161,10 @@
                     tmp += "<div class='order-item__price'>" + formatPriceWithComma(item.prod_price * item.prod_cnt) + "<span>원</span></div>";
                     tmp += '</div>';
                     tmp += '</li>';
+                    itemsQuantity += item.prod_cnt;                                                                     // 변수 itemsQuantity에 각 품목의 개수만큼 추가한다.
                 })
-                // 변수명 : cnt
-                // 저장값 : 장바구니에 담긴 모든 품목 개수
-                cnt = items.length;
-                tmp += '<input type="hidden" value="' + cnt + '" id="itemsCnt"/>';
+                tmp += '<input type="hidden" value="' + itemCnt + '" id="itemsCnt"/>';
+                tmp += '<input type="hidden" value="' + itemsQuantity + '" id="itemsQuantity"/>';
                 return tmp += '</ul>';
             }
 
@@ -390,56 +391,46 @@
 
                 // 이벤트 대상 : #paymentBtn 결제하기 버튼
                 // 이벤트 : click
-                // 이벤트 핸들러 기능 : '결제하기' 버튼 클릭 시,                                                                  (1) 주문서 작성 데이터 '주문' 테이블에 저장 (2) tid '결제' 테이블에 저장 (3) 결제 페이지로 이동
+                // 이벤트 핸들러 기능 : '결제하기' 버튼 클릭 시,                                                                  (3) 결제 페이지로 이동
                 $(document).on("click", "#paymentBtn", (e) => {
-                    let req = {                                                                                         // 서버로 전송할 데이터. (1) 주문자이름 (2) 주문자전화번호 (3) 회원번호
-                        ordr_nm : $("#ordererName").text(),
-                        mpno : $("#ordererMpno").text(),
-                        user_idx : ${idx},
+                    let ordr_name = $("#ordererName").text();                                                           // 변수명 : orderer_name - 저장값 : 주문자이름를 저장한 요소 참조
+                    let ordr_mpno = $("#ordererMpno").text();                                                           // 변수명 : orderer_mpno - 저장값 : 주문자휴대폰번호를 저장한 요소 참조
+                    ordr_mpno =formatMpnoWitoutHyphen(ordr_mpno);                                                       // 주문자휴대전화번호에서 하이픈 삭제(010-8888-9999 -> 01088889999)
+
+                    let total_amount = $(".order-amount__section-final .order-amount__section-content span").text();     // 변수명 : total_amojunt - 저장값 : 주문총금액
+                    total_amount = total_amount.slice(0, total_amount.length - 1);                                      // 주문총금액에서 "원" 삭제(예. 43,500원 -> 43,500)
+                    total_amount = formatPriceWithoutComma(total_amount);                                               // 주문총금액에서 "콤마" 삭제(예. 43500)
+
+                    let itemsCnt = $("#itemsCnt").val();                                                                // 변수명 : itemCnt - 저장값 : 장바구니에 담긴 모든 품목 개수를 저장한 요소의 value 참조
+                    let itemsQuantity = $("#itemsQuantity").val();                                                      // 변수명 : itemsQuantity - 저장값 : 장바구니에 담긴 모든 품목 개수의 합을 저장한 요소의 value 참조
+                    let item_name = $(".order-item:first-child .order-item__title").text();                              // 변수명 : item_name - 저장값 : 주문상품명을 저장한 요소 참조
+                    item_name = (itemsCnt < 2) ? item_name : (item_name+ " 외 " + (itemsCnt - 1) + "건");                // 주문상품의 품목 개수가 2개 이상일 경우, item_name의 저장값은 '상품명 외 (n-1)건'로 수정
+
+                    let orderDto = {                                                                                    // 변수명 : orderDto - 저장값 : KakaoReadyRequestDto 객체에 K/V로 담아 전송할 OrderDto 객체
+                        "user_idx" : idx,
+                        "ordr_nm" : ordr_name,
+                        "mpno" : ordr_mpno,
+                        "tot_amt" : total_amount,
+                        "gtot" : itemsQuantity,
+                        "plist_tot" : itemsCnt,
                     }
-                    // (1)
-                    $.ajax({                                                                                            // $.ajax() start
-                        type: 'POST',                                                                                   // 요청 메서드
-                        url:'/order/checkout/submit',                                                                   // 요청URI
-                        headers: {"content-type" : "application/json"},                                                 // 요청 헤더 - 적시하지 않으면, 데이터가 서버에서 깨진 채로 전송된다.
-                        data: JSON.stringify(req),                                                                      // 서버로 전송할 데이터. 직렬화 필요.
-                        success:function(data) {                                                                        // 서버로부터 응답이 도착하면 호출될 함수
-                            handleKakaoPayReady(data.user_idx, data.idx);                                               // 결제 '준비' 페이지 이동 함수 호출
-                        },
-                        error:function(error) {                                                                         // 에러가 발생했을 때 호출될 함수
-                            alert(error);
-                        }
-                    })                                                                                                  // $.ajax() end
-                })
 
-                // 메서드명 : handleKakaoPayReady
-                // 기   능 : 주문 데이터가 테이블에 삽입된 후, '준비' 페이지 이동
-                // 매개변수 : user_idx, ord_idx
-                let handleKakaoPayReady = (user_idx, ord_idx) => {
-                    let total_amount = $(".order-amount__section-final .order-amount__section-content span").text();     // 주문총금액
-                    total_amount = total_amount.slice(0, total_amount.length - 1);                                      // 주문총금액에서 "원" 삭제 - 43,500원 -> 43,500
-                    total_amount = formatPriceWithoutComma(total_amount);                                               // 주문총금액에서 "콤마" 삭제 - 43500
-
-                    let quantity = $("#itemsCnt").val();                                                                // 상품개수
-                    let item_name = $(".order-item:first-child .order-item__title").text() + " 외 " + quantity + "건";    // 상품명 외 n건
-
-
-                    let kakaoReadyRequest = {                                                                           // 변수명 : kakaoReadyRequest - 서버로 전송할 데이터를 저장할 변수
-                        "item_name" : item_name,                                                                        // 저장값 : (1) 주문상품명(item_name), (2) 주문상품개수(quantity), (3) 주문총금액(total_amount)
-                        "quantity" : quantity,
-                        "total_amount" : total_amount
+                    let kakaoReadyRequest = {                                                                           // 변수명 : kakaoReadyRequest - 저장값 : 서버로 전송할 데이터
+                        "item_name" : item_name,                                                                        // 값목록 : (1) 주문상품명(item_name), (2) 주문상품개수(quantity), (3) 주문총금액(total_amount)
+                        "quantity" : itemsQuantity,
+                        "total_amount" : total_amount,
+                        "orderDto" : orderDto
                     }
 
                     let kakaoReadyResponse = {};                                                                        // 서버로부터 도착한 응답에 담긴 데이터를 저장할 변수 kakaoReadyResponse
                     $.ajax({                                                                                            // $.ajax() start
                         type: 'POST',                                                                                   // 요청 메서드
                         url:'/payment/kakao/ready',                                                                     // 요청URI
-                        headers: {"content-type" : "application/json"},                                                 // 요청 헤더 - 적시하지 않으면, 데이터가 서버에서 깨진 채로 전송된다.
+                        headers: {"content-type" : "application/json; charset=UTF-8"},                                  // 요청 헤더 - 적시하지 않으면, 데이터가 서버에서 깨진 채로 전송된다.
                         dataType:'text',                                                                                // 전송할 데이터 타입
-                        data: JSON.stringify(kakaoReadyRequest),                                                        // 서버로 전송할 데이터. 직렬화 필요.
+                        data: JSON.stringify(kakaoReadyRequest),                                                                                             // 서버로 전송할 데이터. 직렬화 필요.
                         success:function(data) {                                                                        // 서버로부터 응답이 도착하면 호출될 함수
                             kakaoReadyResponse = JSON.parse(data);                                                      // 직렬화된 JSON객체를 파싱한 객체
-                            saveTid(kakaoReadyResponse.tid, ord_idx, total_amount);                                     // tid를 '결제' 테이블에 저장하는 함수 호출
                             location.href= kakaoReadyResponse.next_redirect_pc_url +                                    // 결제 준비 페이지로 리다이렉트
                                 "?tid=" + kakaoReadyResponse.tid;
                         },
@@ -447,7 +438,7 @@
                             alert(error);
                         }
                     })                                                                                                  // $.ajax() end
-                }
+                })
 
                 // 메서드명 : saveTid
                 // 기   능 : 결제 요청시 받아오는 결제고유번호 tid를 db의 '결제' 테이블에 저장한다.
