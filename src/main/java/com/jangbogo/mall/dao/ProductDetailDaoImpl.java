@@ -25,4 +25,8 @@ public class ProductDetailDaoImpl implements ProductDetailDao {
         return session.selectOne(namespace + "dlvryInfo", dlvry_method);
     }
 
+    public ProductDetailDto selectBrand(Integer prod_idx) throws Exception {
+        return session.selectOne(namespace + "selectBrand", prod_idx);
+    }
+
 }

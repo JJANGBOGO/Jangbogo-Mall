@@ -8,4 +8,6 @@ public interface ProductDetailDao {
     Integer findDlvry(Integer cate_idx) throws Exception;
 
     ProductDetailDto dlvryInfo(Integer dlvry_method) throws Exception;
+
+    ProductDetailDto selectBrand(Integer prod_idx) throws Exception;
 }

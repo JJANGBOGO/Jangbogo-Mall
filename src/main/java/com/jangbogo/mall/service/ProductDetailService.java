@@ -8,4 +8,5 @@ public interface ProductDetailService {
     Integer findDlvry(Integer cate_idx) throws Exception;
 
     ProductDetailDto dlvryInfo(Integer dlvry_method) throws Exception;
+    ProductDetailDto findBrand(Integer prod_idx) throws Exception;
 }

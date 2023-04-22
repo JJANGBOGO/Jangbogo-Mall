@@ -26,7 +26,7 @@
         <section class="info-block">
           <div id="prod-title-wrap">
             <div id="prod-title">
-              <h1>${list.name}</h1>
+              <h1>[${findBrand.brandName}]${list.name}</h1>
             </div>
             <h2 class="prod-ctent">${list.content}</h2>
           </div>

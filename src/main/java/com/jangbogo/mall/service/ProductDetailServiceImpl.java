@@ -23,4 +23,8 @@ public class ProductDetailServiceImpl implements ProductDetailService {
     public ProductDetailDto dlvryInfo(Integer dlvry_method) throws Exception {
         return productDetailDao.dlvryInfo(dlvry_method);
     }
+
+    public ProductDetailDto findBrand(Integer prod_idx) throws Exception {
+        return productDetailDao.selectBrand(prod_idx);
+    }
 }

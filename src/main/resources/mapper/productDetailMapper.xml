@@ -25,4 +25,11 @@
         from dlvry_mthd
         where idx = #{dlvry_method};
     </select>
+<!--    service의 findBrand-->
+    <select id="selectBrand" parameterType="Integer" resultType="ProductDetailDto">
+        select s.cpnm as 'brandName'
+        from product p left join seler s
+        on p.seler_idx = s.idx
+        where p.idx = #{prod_idx};
+    </select>
 </mapper>

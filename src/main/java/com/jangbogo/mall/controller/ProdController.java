@@ -33,10 +33,12 @@ public class ProdController {
             ProductDetailDto list = productDetailService.read(prod_idx);
             Integer cate_idx = productDetailService.findDlvry(list.getCate_idx());
             ProductDetailDto dlvryMethod = productDetailService.dlvryInfo(cate_idx);
+            ProductDetailDto findBrand = productDetailService.findBrand(prod_idx);
             m.addAttribute("prod_idx", prod_idx);
             m.addAttribute("session_idx", session_idx);
             m.addAttribute("list", list);
             m.addAttribute("dlvryMethod", dlvryMethod);
+            m.addAttribute("findBrand", findBrand);
         } catch (Exception e) {
             e.printStackTrace();
         }
