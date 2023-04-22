@@ -62,7 +62,6 @@ public class SellerServiceImpl implements SellerService {
         if (selerDtl == null) return insertSellerDtl(detail); //정보가 없을 경우 새로 insert
         return dao.updateSellerDtl(detail); //수정
     }
-    // updateSeller랑 updateSellerDtl 합쳐야 함. 한 쪽이 다른 쪽으로 들어가든가.
 
     @Override
     public int insertSellerDtl(SellerDtl detail) throws Exception {
