@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.jangbogo.mall.dao.ProductDetailMapper">
+<!--    상품 번호에 해당하는 상품 하나 가져오기-->
+<!--    service의 read-->
+    <select id="selectProd" parameterType="Integer" resultType="ProductDetailDto">
+        select p.prc as 'price', p.name as 'name', p.upload_path as 'image_path', p.ctent as 'content', p.cate_idx as 'cate_idx', p.UPLOAD_PATH as 'upload_path', p.DC_RATE as 'dc_rate', p.DC_STATE_CD as 'dc_state', pd.prod_idx as 'prod_idx', pd.GUID as 'guid', pd.warn as 'warn', pd.ORPLC as 'origin', pd.SLE_UNIT as 'unit', pd.WEIGHT as 'weight', pd.SFKP_TP_STATE_CD as 'keepingType'
+        from product p inner join prod_dtl pd
+        on p.idx = pd.prod_idx
+        where pd.prod_idx = #{prod_idx};
+    </select>
+
+    <select id="findDlvry" parameterType="Integer" resultType="Integer">
+        select c.DLVRY_EDI_IDX as 'dlvry_method'
+        from product p inner join category c
+        on p.cate_idx = c.id
+        where c.id = #{cate_idx};
+    </select>
+
+    <select id="dlvryInfo" parameterType="Integer" resultType="ProductDetailDto">
+        select dlvry_mthd.idx, dlvry_mthd.DLVRY_TYPE_CD as 'dlvry_type', dlvry_mthd.PACK_STATE_CD as 'packing_type', dlvry_mthd.warn as 'dlvry_warn'
+        from dlvry_mthd
+        where idx = #{dlvry_method};
+    </select>
+</mapper>

@@ -8,12 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public interface ProdInqryService {
-    int getCount() throws Exception;
+    int getCount(Integer prod_idx) throws Exception;
 
     @Transactional(rollbackFor = Exception.class)
     int remove(Integer idx, Integer prod_idx, Integer user_idx) throws Exception;
-
-    String getNickName(Integer user_idx) throws Exception;
 
     @Transactional(rollbackFor = Exception.class)
     int write(ProdInqryDto prodInqryDto) throws Exception;
@@ -22,7 +20,7 @@ public interface ProdInqryService {
 
     List<JoinProdInqryDto> getPage(Map map) throws Exception;
 
-    JoinProdInqryDto read(Integer idx) throws Exception;
+    JoinProdInqryDto read(Integer idx, Integer prod_idx) throws Exception;
 
     int removeAll(Integer prod_idx) throws Exception;
 

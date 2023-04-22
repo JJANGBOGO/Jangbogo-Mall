@@ -17,8 +17,8 @@ public class ProdInqryServiceImpl implements ProdInqryService {
     ProdInqryDao prodInqryDao;
 
     @Override
-    public int getCount() throws Exception{
-        return prodInqryDao.count();
+    public int getCount(Integer prod_idx) throws Exception{
+        return prodInqryDao.count(prod_idx);
     }
 
     @Override
@@ -27,10 +27,6 @@ public class ProdInqryServiceImpl implements ProdInqryService {
         int rowCnt = prodInqryDao.delete(idx, prod_idx, user_idx );
 
         return rowCnt;
-    }
-
-    public String getNickName(Integer user_idx) throws Exception {
-        return prodInqryDao.selectNickName(user_idx);
     }
 
     @Override
@@ -50,8 +46,8 @@ public class ProdInqryServiceImpl implements ProdInqryService {
     }
 
     @Override
-    public JoinProdInqryDto read(Integer idx) throws Exception {
-        return prodInqryDao.select(idx);
+    public JoinProdInqryDto read(Integer idx, Integer prod_idx) throws Exception {
+        return prodInqryDao.select(idx, prod_idx);
     }
 
     @Override

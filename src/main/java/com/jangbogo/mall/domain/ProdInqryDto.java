@@ -1,5 +1,8 @@
 package com.jangbogo.mall.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -13,6 +16,8 @@ public class ProdInqryDto {
     private String writer;
     private Integer res_state_cd;
     private String opub_yn;
+
+
     private Date wrt_tm;
     private String nick_nm;
     public ProdInqryDto() {}

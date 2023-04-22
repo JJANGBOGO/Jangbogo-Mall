@@ -24,22 +24,21 @@ public class ProdInqryDaoImpl implements ProdInqryDao {
     }
 
     @Override
-    public int count() throws Exception {
-        return session.selectOne(namespace + "count");
+    public int count(Integer prod_idx) throws Exception {
+        return session.selectOne(namespace + "count", prod_idx);
     }
 // 게시물 한 개 보여주기
     @Override
-    public JoinProdInqryDto select(Integer idx) throws Exception {
-        return session.selectOne(namespace + "select", idx);
+    public JoinProdInqryDto select(Integer idx, Integer prod_idx) throws Exception {
+        Map map = new HashMap();
+        map.put("idx", idx);
+        map.put("prod_idx", prod_idx);
+        return session.selectOne(namespace + "select", map);
     }
 // 게시물 페이지 단위로 보여주기
     @Override
     public List<JoinProdInqryDto> selectPage(Map map) throws Exception {
         return session.selectList(namespace + "selectPage", map);
-    }
-
-    public String selectNickName(Integer user_idx) throws Exception {
-        return session.selectOne(namespace + "selectNickName", user_idx);
     }
 
     @Override
