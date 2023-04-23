@@ -46,18 +46,22 @@ public class LoginSellerSuccessHandler implements AuthenticationSuccessHandler {
             //이전 페이지가 존재하면 지운다.
             if (prevPage != null) session.removeAttribute("prevPage");
 
-
         } else redirectUrl = savedRequest.getRedirectUrl();
 
         String email =  authentication.getPrincipal().toString();
         try {
             Seller seller = sellerDao.getSellerByEmail(email);
+            Integer idx = seller.getIdx();
+            String sellerEmail = seller.getEmail();
 
             request.getSession().setAttribute("idx", seller.getIdx());
             request.getSession().setAttribute("email", seller.getEmail());
             request.getSession().setAttribute("nickName", seller.getCpnm());
+
+            sellerDao.updateLoginTm(idx, email); //로그인일자 최신화
         } catch (Exception e){
             e.printStackTrace();
+            redirectUrl = "/seller/login";  //에러 발생시 다시 로그인 페이지로 이동
         }
         response.sendRedirect(redirectUrl);
     }

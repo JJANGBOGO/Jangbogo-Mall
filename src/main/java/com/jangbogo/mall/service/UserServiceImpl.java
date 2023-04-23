@@ -93,12 +93,8 @@ public class UserServiceImpl implements UserService {
         user.setPwd(passwordEncoder.encode(user.getPwd()));
 
         try {
-            if (dao.insertUser(user) == 0) //회원 insert 실패
-                throw new Exception("insert user failed");
-
-            if (addrDao.insertAddr(user.getIdx(), addr) != 1)
-                throw new Exception("insert address failed");
-
+            dao.insertUser(user); //회원 insert
+            addrDao.insertAddr(user.getIdx(), addr); // 배송지 insert
             return SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();

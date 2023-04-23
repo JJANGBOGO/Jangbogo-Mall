@@ -93,5 +93,13 @@ public class SellerDaoImpl implements SellerDao {
         return session.update(nameSpace + "updatePwdUptTm", map);
     }
 
+    @Override
+    public int updateLoginTm (Integer idx, String email) throws Exception {
+        Map map = new HashMap();
+        map.put("idx", idx);
+        map.put("email", email);
+        return session.update(nameSpace +"updateLoginTm", map);
+    }
+
 
 }

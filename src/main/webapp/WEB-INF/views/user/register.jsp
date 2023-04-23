@@ -365,7 +365,7 @@
 
             $.ajax({
                 url: '/chk/mpno',
-                data: JSON.stringify({to: mpno_ref.val()}), // 객체를 전송할때는 stringify() 필요, @RequestBody때문
+                data: JSON.stringify({to: mpno_ref.val()}),
                 type: 'POST',
                 contentType: "application/json",
                 success: function (result) {

@@ -45,5 +45,8 @@ public interface SellerDao {
     //시큐리티 판매자 조회
     UserDetailsDto getSellerDetailsDto (String email) throws Exception;
 
+    //로그인일자 최신화
+    int updateLoginTm (Integer idx, String email) throws Exception;
+
 
 }

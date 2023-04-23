@@ -48,7 +48,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         String email = authentication.getPrincipal().toString();
         try {
-            //회원 조회
+            //회원 그조회
             User user = userDao.getUserByEmail(email);
             Integer idx = user.getIdx();
             String userEmail = user.getEmail();

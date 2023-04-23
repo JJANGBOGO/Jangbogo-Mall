@@ -98,5 +98,12 @@
         UPDATE SELER SET PWD_UPT_TM = now() WHERE IDX = #{idx} AND #{email}
     </update>
 
+    <update id="updateLoginTm" parameterType="map">
+        UPDATE SELER
+        SET LAST_LOGIN_TM = NOW()
+        WHERE IDX = #{idx}
+          AND EMAIL = #{email};
+    </update>
+
 </mapper>
 
