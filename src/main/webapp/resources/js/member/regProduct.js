@@ -61,7 +61,69 @@ function validateProduct() {
         return false;
     }
 
-    let origin = $(); //원산지
+    let origin = $("#orplc"); //원산지
+
+    if ($.trim(origin.val()) === "") {
+        alert("원산지를 입력해 주세요");
+        origin.focus();
+        return false;
+    }
+
+    //판매단위 select
+
+    let weight = $("#weight");
+
+    if ($.trim(weight.val()) === "") {
+        alert("중량을 입력해 주세요(단위 포함)");
+        weight.focus();
+        return false;
+    }
+
+    let mft_tm = $("#mft_tm");
+
+    if (mft_tm.val() === "") {
+        alert("제조 일자를 선택해 주세요");
+        return false;
+    }
+
+    let distb_tlmt = $("#distb_tlmt");
+
+    if (distb_tlmt.val() === "") {
+        alert("유통기한을 선택해 주세요");
+        return false;
+    }
+
+    //판매기간
+    let sle_date_type = $("input[name=sle_date_type]:checked").val();
+    let start_tm = $("#sle_start_tm").val();
+    let end_tm = $("#sle_end_tm").val();
+
+    if (sle_date_type === "2" && start_tm === "" && end_tm === "") { //판매기간이 기간인데 날짜 입력 안한경우
+        alert("판매 시작날짜와 종료날짜를 선택해 주세요");
+        return false;
+    }
+
+    //보관 유형 (radio)
+    let sfkp_type = $("");
+
+    if (sfkp_type === "") {
+        alert("보관 유형을 선택해 주세요");
+        return false;
+    }
+
+    //1인 최대 구매수량
+    let max_quty = $("#max_sle_quty");
+    if (max_quty.val() === "" || max_quty.val() > 10) {
+        alert("최대 구매 수량을 10개 이하로 입력해 주세요");
+        return false;
+    }
+
+    //상품 재고 수량
+    // let
+
+
+
+
 
     return true;
 }

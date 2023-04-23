@@ -197,13 +197,13 @@
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        name="ORPLC"
-                                        id="ORPLC"
+                                        name="orplc"
+                                        id="orplc"
                                         type="text"
                                         placeholder="원산지를 입력해 주세요"
                                 />
                             </div>
-                            <div class="error-msg bsplc-dtl"></div>
+                            <div class="error-msg orplc"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -237,7 +237,7 @@
                                         placeholder="판매 단위 당 중량을 입력해 주세요"
                                 />
                             </div>
-                            <div class="error-msg brnd-cn"></div>
+                            <div class="error-msg weight"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -365,13 +365,13 @@
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        id="invent"
-                                        name="email"
+                                        id="inv_quty"
+                                        name="inv_quty"
                                         type="number"
                                         placeholder="최소 1 이상의 수량을 입력해 주세요"
                                 />
                             </div>
-                            <div class="error-msg email"></div>
+                            <div class="error-msg inv_quty"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>

@@ -1,5 +1,6 @@
 package com.jangbogo.mall.domain;
 
+import java.util.List;
 import java.util.Objects;
 
 public class ProductDetailDto {
@@ -13,7 +14,12 @@ public class ProductDetailDto {
     private Integer dc_rate;
     private Integer dc_state;
     private Integer prod_idx;
-    private String guid;
+    private String guid; //상품 안내사항
+
+    private int max_sle_quty; //1회 최대 구매 수량
+
+    private int inv_quty; //상품 재고 수량
+
     private String origin;
     private String unit;
     private String weight;
@@ -24,6 +30,8 @@ public class ProductDetailDto {
     private Integer dlvry_type; //배송방식 - 배송유형코드
     private Integer packing_type; //배송방식 - 배송포장코드
     private String dlvry_warn; //배송방식 - 배송주의사항
+
+    private List<ProductFile> file_list; //상세첨부파일 리스트
 
 
     // constructor
