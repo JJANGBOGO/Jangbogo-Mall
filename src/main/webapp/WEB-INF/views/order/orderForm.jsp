@@ -242,27 +242,27 @@
             // 기   능 : 주문자가 소유한 쿠폰 목록을 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
             // 매개변수 : items - CouponDto
             // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
-            function couponListToHtml(couponList) {
-                let tmp = "";                                                                                           // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
-                tmp += "<div class='order__coupon-section'>";
-                tmp += "<div class='order__coupon-inform'>"
-                tmp += "<span>쿠폰</span>"
-                tmp += "</div>"
-                tmp += "<div class='order__coupon-value'>"
-                tmp += "<select name='coupons' id='coupons'>"
-                tmp += "<option value='default'>" + "사용가능 쿠폰 2장 / 전체 2장" + "</option>"
-                // 메서드명 : forEach
-                // 기   능 : 복수의 CouponDto값들을 저장한 list에서 각각의 CouponDto에 저장된 iv들을 적절한 태그의 속성값 또는 내용에 위치시키는 메서드
-                // 사용대상 : items - Array : List<CouponDto>, 주문자가 소유한 쿠폰 목록
-                // 매개변수 : item - Object : CouponDto, 주문자가 소유한 개별 쿠폰
-                couponList.forEach((coupon) => {
-                    tmp += "<option value=" + coupon +  ">" + coupon + "</option>"
-                })
-                tmp += "</select>"
-                tmp += "</div>";
-                tmp += "</div>";
-                return tmp;
-            }
+            // function couponListToHtml(couponList) {
+            //     let tmp = "";                                                                                        // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
+            //     tmp += "<div class='order__coupon-section'>";
+            //     tmp += "<div class='order__coupon-inform'>"
+            //     tmp += "<span>쿠폰</span>"
+            //     tmp += "</div>"
+            //     tmp += "<div class='order__coupon-value'>"
+            //     tmp += "<select name='coupons' id='coupons'>"
+            //     tmp += "<option value='default'>" + "사용가능 쿠폰 2장 / 전체 2장" + "</option>"
+            //     // 메서드명 : forEach
+            //     // 기   능 : 복수의 CouponDto값들을 저장한 list에서 각각의 CouponDto에 저장된 iv들을 적절한 태그의 속성값 또는 내용에 위치시키는 메서드
+            //     // 사용대상 : items - Array : List<CouponDto>, 주문자가 소유한 쿠폰 목록
+            //     // 매개변수 : item - Object : CouponDto, 주문자가 소유한 개별 쿠폰
+            //     couponList.forEach((coupon) => {
+            //         tmp += "<option value=" + coupon +  ">" + coupon + "</option>"
+            //     })
+            //     tmp += "</select>"
+            //     tmp += "</div>";
+            //     tmp += "</div>";
+            //     return tmp;
+            // }
 
             // 메서드명 : paymentMethodsToHtml
             // 기   능 : 결제수단 목록을 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
@@ -296,9 +296,20 @@
                         $('#orderItems').html(listToHtml(result));                                                      // listToHtml메서드 호출
                         $('.order-amount__container').html(invoiceToHtml(result));                                      // invoiceToHtml 메서드 호출
                         $('.order-button > button').html(orderBtnToHtml(result));                                       // orderBtnToHtml 메서드 호출
+                        checkItemQuantity(result);                                                                      // checkItemQuantity 호출
                     },
                     error : function() { alert("showItemList 실패 응답 : 회원번호 누락");}                                    // 실패 응답이 오면, 경고창 띄우기
                 });                                                                                                     // $.ajax() end
+            }
+
+            // 메서드명 : checkItemQuantity
+            // 기   능 : 장바구니 목록 개수가 0개인 경우, 장바구니 페이지로 이동
+            // 매개변수 : items - Object
+            let checkItemQuantity = (items) => {
+                if (!items.length) {
+                    alert("장바구니에 상품을 담아주세요.")
+                    location.href = "/cart";
+                }
             }
 
             // 메서드명 : showOrdererInfo
@@ -315,7 +326,7 @@
                 });                                                                                                     // $.ajax() end
             }
 
-            // 메서드명 : showDeliveryInfo
+            // 메서드명 : showDeliveryInfo                                                                                // TODO:3차 개발
             // 기   능 : orderController에 ajax요청하여 배송 정보를 가져온다.
             // 매개변수 : user_idx - 회원번호
             let showDeliveryInfo = (user_idx) => {
@@ -329,7 +340,7 @@
                 });                                                                                                     // $.ajax() end
             }
 
-            // 메서드명 : showCouponList                                                                                  // TODO:3차 개발
+            // 메서드명 : showCouponList                                                                                   // TODO:3차 개발
             // 기   능 : orderController에 ajax요청하여 주문자가 소유한 쿠폰 목록을 가져온다.
             // 매개변수 : user_idx - 회원번호
             let showCouponList = (user_idx) => {
@@ -356,7 +367,7 @@
                 });                                                                                                     // $.ajax() end
             }
 
-            // 메서드명 : showPersonalInfoAgreement(3차 개발)
+            // 메서드명 : showPersonalInfoAgreement                                                                       // TODO:3차 개발
             // 기   능 : 개인정보 수집/제공을 가져온다.
             // function showPersonalInfoAgreement(idx) {
             //
@@ -365,10 +376,10 @@
             $(document).ready(() => {                                                                                   // 즉시 실행 함수 start - js의 window.onload(() => {...})
                 let idx = `${idx}`;                                                                                     // 변수명 : idx - 저장값 : 세션에 저장된 회원번호(user_idx)
 
-                showItemList(idx);                                                                                      // 메서드 호출 start
+                showItemList(idx);                                                                                      // 메서드 호출 start - TODO: showCouponList(idx); 3차 개발
                 showOrdererInfo(idx);
                 showDeliveryInfo(idx);
-                showPaymentMethods(idx);                                                                                // 메서드 호출 end - TODO: showCouponList(idx); 3차 개발
+                showPaymentMethods(idx);                                                                                // 메서드 호출 end
 
                 // 메서드명 : popupCenter
                 // 기   능 : 자식창을 열고, 스크린 가운데로 위치시키기
@@ -428,7 +439,7 @@
                         url:'/payment/kakao/ready',                                                                     // 요청URI
                         headers: {"content-type" : "application/json; charset=UTF-8"},                                  // 요청 헤더 - 적시하지 않으면, 데이터가 서버에서 깨진 채로 전송된다.
                         dataType:'text',                                                                                // 전송할 데이터 타입
-                        data: JSON.stringify(kakaoReadyRequest),                                                                                             // 서버로 전송할 데이터. 직렬화 필요.
+                        data: JSON.stringify(kakaoReadyRequest),                                                        // 서버로 전송할 데이터. 직렬화 필요.
                         success:function(data) {                                                                        // 서버로부터 응답이 도착하면 호출될 함수
                             kakaoReadyResponse = JSON.parse(data);                                                      // 직렬화된 JSON객체를 파싱한 객체
                             location.href= kakaoReadyResponse.next_redirect_pc_url +                                    // 결제 준비 페이지로 리다이렉트
@@ -445,7 +456,7 @@
                 // 매개변수 : tid, ord_idx, total_amount
                 let saveTid = (tid, ord_idx, total_amount) => {
                     $.ajax({                                                                                            // $.ajax() start
-                        url:'/payment/kakao/save-tid?tid=' + tid + '&ord_idx=' + ord_idx +                              // 요청URIa
+                        url:'/payment/kakao/save-tid?tid=' + tid + '&ord_idx=' + ord_idx +                              // 요청URI
                             "&total_amount=" + total_amount,
                         success:function(data) {                                                                        // 서버로부터 응답이 도착하면 호출될 함수
                             console.log(data)
