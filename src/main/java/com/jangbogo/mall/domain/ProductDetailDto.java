@@ -5,24 +5,20 @@ import java.util.Objects;
 
 public class ProductDetailDto {
     // iv
-    private Integer price;
-    private String name;
+    private Integer price; //상품 가격
+    private String name; //상품 이름
     private String image_path; //상품 - UPLOAD_PATH
-    private String content;
+    private String content; //상품 내용
     private Integer cate_idx; //상품 - CATE_IDX
-    private String upload_path;
-    private Integer dc_rate;
-    private Integer dc_state;
-    private Integer prod_idx;
+    private String upload_path;//상품 섬네일
+    private Integer dc_rate; //할인율
+    private Integer dc_state; //할인상태코드
+    private Integer prod_idx; //상품번호
     private String guid; //상품 안내사항
-
-    private int max_sle_quty; //1회 최대 구매 수량
-
-    private int inv_quty; //상품 재고 수량
 
     private String origin;
     private String unit;
-    private String weight;
+    private String weight; //중량
     private String warn; //상품상세 - 상품주의사항
     private Integer keepingType;  //상품상세 - 보관유형 상태코드
     private Integer dlvry_method; //카테고리 - 배송방식번호
@@ -30,9 +26,6 @@ public class ProductDetailDto {
     private Integer dlvry_type; //배송방식 - 배송유형코드
     private Integer packing_type; //배송방식 - 배송포장코드
     private String dlvry_warn; //배송방식 - 배송주의사항
-
-    private List<ProductFile> file_list; //상세첨부파일 리스트
-
 
     // constructor
 

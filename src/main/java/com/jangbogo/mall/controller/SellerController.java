@@ -1,10 +1,7 @@
 package com.jangbogo.mall.controller;
 
 
-import com.jangbogo.mall.domain.ProductDto;
-import com.jangbogo.mall.domain.Seller;
-import com.jangbogo.mall.domain.SellerDtl;
-import com.jangbogo.mall.domain.User;
+import com.jangbogo.mall.domain.*;
 import com.jangbogo.mall.service.ProductService;
 import com.jangbogo.mall.service.SellerService;
 import com.jangbogo.mall.utils.RegEx;
@@ -281,9 +278,10 @@ public class SellerController {
     }
 
     @PostMapping("/seller/register/product")
-    public String regProduct(ProductDto product, RedirectAttributes rattr) {
+    public String regProduct(ProductDto product, ProductDetailDto dtl, RedirectAttributes rattr) {
         try {
-            //if (service.registerProduct(...) != 1)
+            log.info("product...." + product);
+            log.info("dtl...." + dtl);
 
             return "redirect:/seller/list/product";
         } catch (Exception e) {

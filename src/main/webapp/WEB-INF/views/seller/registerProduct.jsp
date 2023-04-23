@@ -91,12 +91,12 @@
                         <div class="input-box textarea">
                             <div class="input textarea">
                                 <textarea
-                                        id="ctent"
-                                        name="ctent"
+                                        id="content"
+                                        name="content"
                                         placeholder="상품에 대한 설명을 입력해주세요"
                                 ></textarea>
                             </div>
-                            <div class="error-msg ctent"></div>
+                            <div class="error-msg content"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
@@ -107,13 +107,13 @@
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        id="prc"
-                                        name="prc"
+                                        id="price"
+                                        name="price"
                                         type="number"
                                         placeholder="가격을 입력해주세요"
                                 />
                             </div>
-                            <div class="error-msg prc"></div>
+                            <div class="error-msg price"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>
