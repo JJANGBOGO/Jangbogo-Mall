@@ -19,4 +19,10 @@ public class ProductDaoImpl implements ProductDao{
     public List<ProductDto> getListBySeller (Integer user_idx) throws Exception {
         return session.selectList(nameSpace + "getListBySeller", user_idx);
     }
+
+    @Override
+    public int insertProduct (ProductDto productDto) throws Exception{
+        return session.insert(nameSpace + "insertProduct", productDto);
+    }
+
 }

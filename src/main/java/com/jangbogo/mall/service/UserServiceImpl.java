@@ -145,7 +145,7 @@ public class UserServiceImpl implements UserService {
         User user = dao.getUserByNick(nick_nm);
 
         if (user == null || !passwordEncoder.matches(pwd, user.getPwd())) return null;
-        if (user.getState_cd() == 3) return null;
+        if (user.getState_cd() == 3) return null; //탈퇴회원일경우 null
         return user.getEmail();
     }
 

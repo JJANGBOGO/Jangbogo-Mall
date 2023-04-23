@@ -48,7 +48,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         String email = authentication.getPrincipal().toString();
         try {
-            //회원 그조회
+            //회원 조회
             User user = userDao.getUserByEmail(email);
             Integer idx = user.getIdx();
             String userEmail = user.getEmail();
@@ -63,6 +63,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         } catch (Exception e) {
             e.printStackTrace();
+            redirectUrl = "/user/login";
         }
         response.sendRedirect(redirectUrl);
     }

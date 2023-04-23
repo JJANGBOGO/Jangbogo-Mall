@@ -27,9 +27,28 @@ public class ProductDaoTest {
     ProductDao dao;
 
     @Test
-    public void test1() throws Exception {
+    public void getListBySeller() throws Exception {
         List<ProductDto> list = dao.getListBySeller(1);
         log.info("....list..." + list);
+    }
+
+    @Test //ok
+    public void insertProduct() throws Exception { //상품 insert
+        ProductDto productDto = ProductDto.builder()
+                .seler_idx(1)
+                .cate_idx(11)
+                .seler_prod_cd(1)
+                .upload_path("default_banner.jpeg")
+                .name("상품 이름")
+                .ctent("상품 내용")
+                .prc(8000)
+                .dc_state_cd(1)
+                .dc_rate(0)
+                .dsply_state_cd(1)
+                .build();
+
+        int result = dao.insertProduct(productDto);
+        assertTrue(result != 0);
     }
 
 }
