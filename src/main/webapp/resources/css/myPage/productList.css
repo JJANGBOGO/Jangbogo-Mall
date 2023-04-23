@@ -44,6 +44,13 @@
     cursor: pointer;
 }
 
+.seller-products .product-item .product-center .product-desc .product-content {
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 290px;
+    text-overflow: ellipsis;
+}
+
 .seller-products .product-item .product-center .product-desc .star-grade {
     padding-top: 10px;
 }
@@ -52,6 +59,13 @@
     display: flex;
     margin-left: auto;
     gap: 30px;
+}
+
+.seller-products .product-item .product-right .product-price {
+    width: 95px;
+}
+.seller-products .product-item .product-right .product-status {
+    width: 60px;
 }
 
 .mypage-content .product-reg-btn {

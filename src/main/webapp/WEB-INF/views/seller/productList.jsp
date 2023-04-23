@@ -16,7 +16,7 @@
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
     <link rel="stylesheet" href="/css/myPage/sidebar.css"/>
     <link rel="stylesheet" href="/css/myPage/baseLayout.css"/>
-    <link rel="stylesheet" href="/css/myPage/productList.css"/>
+    <link rel="stylesheet" href="/css/myPage/productList.css?v=2"/>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
@@ -28,31 +28,54 @@
             <h2>상품 리스트</h2>
         </div>
         <ul class="seller-products">
-            <li class="product-item">
-                <div class="product-code">B1007</div>
-                <div class="product-center">
-                    <div class="product-img">
-                        <img
-                                src="https://image.idus.com/image/files/18b85d3431994eb28a247543ca2119a3_320.jpg"
-                                alt="product"
-                        />
-                    </div>
-                    <div class="product-desc">
-                        <div class="product-title">
-                            3일전 선주문순 순차배송! 줄서서먹는 찹쌀약과
+            <c:forEach var="product" items="${productList}">
+                <li class="product-item">
+                    <div class="product-code">${product.seler_prod_cd}</div>
+                    <div class="product-center">
+                        <div class="product-img">
+                            <img
+                                    src="${pageContext.request.contextPath}/display?fileName=${product.upload_path}"
+                                    alt="product"
+                            />
                         </div>
-                        <div class="product-content">주문시 제작</div>
-                        <div class="star-grade">
-                            <div class="starrr"></div>
+                        <div class="product-desc">
+                            <div class="product-title">
+                                ${product.name}
+                            </div>
+                            <div class="product-content">${product.ctent}</div>
+                            <div class="star-grade">
+                                <div class="starrr"></div>
+<%--                                ???--%>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="product-right">
-                    <div class="product-price">8000원</div>
-                    <div class="product-status">승인 대기</div>
-                    <div class="product-status">재고 있음</div>
-                </div>
-            </li>
+                    <div class="product-right">
+                        <div class="product-price">${product.prc}</div>
+                        <div class="product-status">
+                            <c:choose>
+                                <c:when test="${product.reg_state_cd == 1}">
+                                    승인 대기
+                                </c:when>
+                                <c:when test="${product.reg_state_cd == 2}">
+                                    승인
+                                </c:when>
+                                <c:when test="${product.reg_state_cd == 3}">
+                                    거절
+                                </c:when>
+                            </c:choose>
+                        </div>
+                        <div class="product-status">
+                            <c:if test="${product.dsply_state_cd == 1}">
+                                전시
+                            </c:if>
+                            <c:if test="${product.dsply_state_cd == 0}">
+                                비전시
+                            </c:if>
+                        </div>
+                    </div>
+                </li>
+            </c:forEach>
+
         </ul>
         <button class="product-reg-btn">상품 등록하기</button>
     </div>
@@ -70,7 +93,7 @@
 
         $(".starrr a").css("color", "rgb(243, 61, 61)"); //start color
 
-        $(".product-reg-btn").click(function() {
+        $(".product-reg-btn").click(function () {
             window.location.href = "/seller/register/product";
         });
     });

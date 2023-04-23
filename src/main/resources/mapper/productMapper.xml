@@ -5,7 +5,8 @@
 <mapper namespace="com.jangbogo.mall.dao.ProductMapper">
 
     <select id="getListBySeller" resultType="ProductDto">
-        SELECT * FROM PRODUCT WHERE SELER_IDX = #{seler_idx}
+        SELECT P.SELER_PROD_CD, P.UPLOAD_PATH, P.NAME, P.CTENT, P.PRC, P.DSPLY_STATE_CD, P.ASCR, D.REG_STATE_CD
+        FROM PRODUCT AS P INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND P.SELER_IDX = #{seler_idx};
     </select>
 
 </mapper>
