@@ -36,10 +36,8 @@
         // 기   능 : 장바구니 목록 및 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
         // 매개변수 : items - cartDto
         // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
-        let listToHtml = (items) => {
-            // 변수명 : tmp
-            // 저장값 : 동적으로 생성할 html 태그(문자열)
-            let tmp = "<ul>";
+        const listToHtml = (items) => {
+            let tmp = "<ul>";                                                                                           // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
 
             // 메서드명 : forEach
             // 기   능 : 복수의 CartDto값들을 저장한 list에서 각각의 CartDto에 저장된 iv들을 적절한 태그의 속성값 또는 내용에 위치시키는 메서드
@@ -62,20 +60,16 @@
                 tmp += '</li>';
             })
             let cnt = items.length;                                                                                     // 변수명 : cnt - 저장값 : 장바구니에 담긴 모든 품목 개수
-            return tmp += '</ul>';
+            return tmp += '</ul>';                                                                                      // 동적으로 생성한 요소 반환
         }
 
         // 메서드명 : estimateToHtml
         // 기   능 : 배송지와 주문금액 관련 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
         // 매개변수 : items - cartDto
         // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
-        let estimateToHtml = (items) => {
-            // 변수명 : price
-            // 저장값 : 모든 상품 가격 x 담은 개수
-            let price = 0;
-            // 변수명 : tmp
-            // 저장값 : 동적으로 생성할 html 태그(문자열)
-            let tmp = "";
+        const estimateToHtml = (items) => {
+            let price = 0;                                                                                              // 변수명 : price - 저장값 : 주문총금액
+            let tmp = "";                                                                                               // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
 
             // 메서드명 : forEach
             // 기   능 : 복수의 CartDto값들을 저장한 list에서 각각의 CartDto에 저장된 iv들을 적절한 태그의 속성값 또는 내용에 위치시키는 메서드
@@ -104,25 +98,23 @@
             tmp += '</section>'
             tmp += '<input type="button" name="order" value= "주문하기" />'
             tmp += '<input type="button" name="sold-out" value= "상품을 담아주세요" />'
-            return tmp;
+            return tmp;                                                                                                 // 동적으로 생성한 요소 반환
         }
 
         // 메서드명 : checkBoxToHtml
         // 기   능 : 전체선택 체크박스와 전체상품개수, 체크된 상품개수 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
         // 매개변수 : items - cartDto
         // 반환타입 : tmp - 동적으로 생성한 html 태그
-        let checkBoxToHtml = (items) => {
-            // 변수명 : tmp
-            // 저장값 : 동적으로 생성할 html 태그(문자열)
-            let tmp = "";
+        const checkBoxToHtml = (items) => {
+            let tmp = "";                                                                                               // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
             tmp = '<input type="checkbox" name="chk-all" class="input-all" /> 전체선택(<span id="checked">0</span>/' + items.length+') &nbsp; | &nbsp;  <span id="checkedDelBtn">선택삭제</span>';
-            return tmp;
+            return tmp;                                                                                                 // 동적으로 생성한 요소 반환
         }
 
         // 메서드명 : showList
         // 기   능 : 장바구니 목록 관련 랜더링하는 메서드들을 전부 호출하는 메서드
         // 매개변수 : user_idx - 회원번호
-        let showList = (user_idx) => {
+        const showList = (user_idx) => {
             $.ajax({                                                                                                    // $.ajax() start
                 type:'GET',                                                                                             // 요청 메서드
                 url:'/cart/list?user_idx=' + user_idx,                                                                  // 요청URI
@@ -138,7 +130,7 @@
         // 메서드명 : handleOrderbtns
         // 기   능 : 장바구니 목록 개수가 0개인 경우, '상품을 담아주세요' 버튼을 화면에 보이게 하고 반대의 경우, '주문하기' 버튼을 보이게 만드는 토글 함수
         // 매개변수 : items - 장바구니 목록
-        let handleOrderBtns = (items) => {
+        const handleOrderBtns = (items) => {
             if(!items.length) {                                                                                         // case 1. 장바구니 목록 개수가 0개인 경우
                 $("input[name='order']").css('display', 'none');                                                        // '주문하기' 버튼 문서에서 없애기
                 $("input[name='sold-out']").css('display', 'block');                                                    // '상품을 담아주세요' 버튼 문서에 보이기
@@ -223,7 +215,7 @@
                 // 2. 메서드 정의
                 // 메서드명 : checkAnyBoxChecked
                 // 기   능 : (1) 각 자식 요소들의 체크드 여부를 확인 (2) 하나라도 체크드 상태면 isAnyBoxChecked에 true 저장
-                let checkAnyBoxChecked = () => {
+                const checkAnyBoxChecked = () => {
                     for(let cartItem of cartItems) {                                                                    // 변수명 : cartItem - 저장값 : 배열 cartItems의 자식 요소
                         let input = cartItem.children[0];                                                               // 변수명 : input - 저장값 : cartItem의 첫 번째 자식 요소인 input[type="checkbox"]
                         if(input.checked) {                                                                             // cartItem에 있는 input의 checked 속성이 true('체크'상태)인 경우
@@ -232,7 +224,7 @@
                     }
                 }
 
-                let handleSelectedDelBtn = () => {
+                const handleSelectedDelBtn = () => {
                     for(let cartItem of cartItems) {                                                                    // 변수명 : child - 저장값 : ul 태그의 i번쨰 자식 요소인 Li 태그의 참조
                         let input = cartItem.children[0];                                                               // 변수명 : input - 저장값 : child의 0번째 자식 요소인 input 태그의 참조
                         let checked = input.checked;                                                                    // 변수명 : checked - 저장값 : 체크박스(input)의 "checked"속성값(true || false)
