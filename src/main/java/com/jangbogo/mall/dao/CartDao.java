@@ -18,12 +18,6 @@ public interface CartDao {
     // 매개변수 : Integer prod_idx, Integer user_idx
     int delete(Integer prod_idx, Integer user_idx) throws Exception;
 
-    // 메서드명 : addCount
-    // 기   능 : 개수조절버튼 중 '+' 버튼을 눌렀을 때, 장바구니상품 개수를 #{prod_cnt} + 1 처리하는 메서드
-    // 반환타입 : int
-    // 매개변수 : Integer prod_idx, Integer user_idx
-//    int addCount(Integer prod_idx, Integer user_idx) throws Exception;
-
     // 메서드명 : updateCount
     // 기   능 : 개수조절버튼을 눌렀을 때, 장바구니상품 개수를 수정하는 메서드
     // 반환타입 : int

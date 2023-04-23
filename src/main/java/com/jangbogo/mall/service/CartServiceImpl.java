@@ -31,16 +31,8 @@ public class CartServiceImpl implements CartService {
         return cartDao.delete(prod_idx, user_idx);
     }
 
-    // 메서드명 : addCount
-    // 기   능 : cartDao의 addCount메서드 호출
-    // 반환타입 : int
-    // 매개변수 : Integer prod_idx, Integer user_idx
-//    @Override
-//    public int addCount(Integer prod_idx, Integer user_idx) throws Exception {
-//        return cartDao.addCount(prod_idx, user_idx);
-//    }
     // 메서드명 : updateCount
-    // 기   능 : cartDao의 subtractCount메서드 호출
+    // 기   능 : cartDao의 updateCount메서드 호출
     // 반환타입 : int
     // 매개변수 : Integer prod_idx, Integer user_idx, Integer prod_cnt, Integer upt_cnt
     @Override
@@ -57,5 +49,4 @@ public class CartServiceImpl implements CartService {
     public int removeAll(Integer user_idx) throws Exception {
         return cartDao.removeAll(user_idx);
     }
-
 }

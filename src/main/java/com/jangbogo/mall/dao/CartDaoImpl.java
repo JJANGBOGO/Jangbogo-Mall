@@ -38,18 +38,6 @@ public class CartDaoImpl implements CartDao {
         return session.delete(namespace + "delete", map);                                                            // 4. SqlSession의 delete메서드 호출(namespace, 아이디명, map 인자로 지정)
     }
 
-    // 메서드명 : addCount
-    // 기   능 : 개수조절버튼 중 '+' 버튼을 눌렀을 때, 장바구니상품 개수를 #{prod_cnt} + 1 처리하는 메서드
-    // 반환타입 : int
-    // 매개변수 : Integer prod_idx, Integer user_idx
-//    @Override
-//    public int addCount(Integer prod_idx, Integer user_idx) throws Exception {
-//        Map map = new HashMap();                                                                                        // 1. 매개변수로 받은 두 개의 값을 저장할 객체 저장소 map 선언 및 HashMap 할당
-//        map.put("prod_idx", prod_idx);                                                                                  // 2. HashMap에 prod_idx를 k/v로 저장
-//        map.put("user_idx", user_idx);                                                                                  // 3. HashMap에 user_idx를 k/v로 저장
-//        return session.update(namespace + "addCount", map);                                                          // 4. SqlSession의 update메서드 호출(namespace, 아이디명, map 인자로 지정)
-//    }
-
     // 메서드명 : updateCount
     // 기   능 : 개수조절버튼을 눌렀을 때, 장바구니상품 개수를 수정하는 메서드
     // 반환타입 : int

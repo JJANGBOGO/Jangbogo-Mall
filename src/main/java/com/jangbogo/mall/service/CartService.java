@@ -18,14 +18,8 @@ public interface CartService {
     // 매개변수 : Integer prod_idx, Integer user_idx
     int remove(Integer prod_idx, Integer user_idx) throws Exception;
 
-    // 메서드명 : addCount
-    // 기   능 : cartDao의 addCount메서드 호출
-    // 반환타입 : int
-    // 매개변수 : Integer prod_idx, Integer user_idx
-//    int addCount(Integer prod_idx, Integer user_idx) throws Exception;
-
-    // 메서드명 : subtractCount
-    // 기   능 : cartDao의 subtractCount메서드 호출
+    // 메서드명 : updateCount
+    // 기   능 : cartDao의 updateCount메서드 호출
     // 반환타입 : int
     // 매개변수 : Integer prod_idx, Integer user_idx, Integer prod_cnt, Integer upt_cnt
     int updateCount(Integer prod_idx, Integer user_idx, Integer prod_cnt, Integer upt_cnt) throws Exception;
