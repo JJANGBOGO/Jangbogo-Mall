@@ -121,7 +121,7 @@
 
         // 메서드명 : showList
         // 기   능 : 장바구니 목록 관련 랜더링하는 메서드들을 전부 호출하는 메서드
-        // 매개변수 : user_idx - Number
+        // 매개변수 : user_idx - 회원번호
         let showList = (user_idx) => {
             $.ajax({                                                                                                    // $.ajax() start
                 type:'GET',                                                                                             // 요청 메서드
@@ -137,7 +137,7 @@
         }
         // 메서드명 : handleOrderbtns
         // 기   능 : 장바구니 목록 개수가 0개인 경우, '상품을 담아주세요' 버튼을 화면에 보이게 하고 반대의 경우, '주문하기' 버튼을 보이게 만드는 토글 함수
-        // 매개변수 : items - Object
+        // 매개변수 : items - 장바구니 목록
         let handleOrderBtns = (items) => {
             if(!items.length) {                                                                                         // case 1. 장바구니 목록 개수가 0개인 경우
                 $("input[name='order']").css('display', 'none');                                                        // '주문하기' 버튼 문서에서 없애기
@@ -146,6 +146,23 @@
                 $("input[name='order']").css('display', 'block');                                                       // '주문하기' 버튼 문서에 보이기
                 $("input[name='sold-out']").css('display', 'none');                                                     // '상품을 담아주세요' 버튼 문서에서 없애기
             }
+        }
+
+        // 메서드명 : handleProductCnt
+        // 기   능 : 클릭한 버튼 종류에 따라, 다른 ajax요청을 통해 상품개수를 조절하는 메서드
+        // 매개변수 : prod_idx, user_idx, prod_cnt, upt_cnt - 상품번호, 회원번호, 변경 전 상품개수, 변경 후 상품개수
+        const handleProductCnt = (prod_idx, user_idx, prod_cnt, upt_cnt) => {
+            $.ajax({                                                                                                    // $.ajax() start
+                type:'GET',                                                                                             // 1. 요청 메서드
+                url: '/cart/updateCnt?prod_idx=' + prod_idx + '&user_idx=' + user_idx + "&prod_cnt=" + prod_cnt         // 2. 요청 URI, 상품번호(prod_idx), 회원번호(user_idx), 연산자(operator) 변수 처리
+                    + "&upt_cnt=" + upt_cnt,
+                success : (result) => {                                                                                 // 3. 서버로부터 성공 응답이 도착하면 호출될 함수.
+                    showList(user_idx);
+                },
+                error   : () => {                                                                                       // 4. 서버로부터 실패 응답이 도착하면 호출될 함수.
+                    alert("error");
+                }
+            });                                                                                                         // $.ajax() end
         }
 
         $(document).ready(function() {                                                                                  // 문서가 준비된 상황 이후에 자바스크립트 코드 실행 === (JS) window.onload = () => { ... }
@@ -246,41 +263,28 @@
             // 이벤트 : click
             // 이벤트 핸들러 기능 : '-' 버튼 클릭 시, 해당 상품의 개수를 -1 처리
             $(document).on("click", "#subtractBtn", (e) => {                                                            // 회원번호와 상품번호, 그리고 상품개수를 html태그의 data속성에서 가져와야 한다.
+                                                                                                                        // 1. 변수 선언
                 let prod_idx = $(e.target).closest("li").data("pid");                                                   // 변수명 : prod_idx - 저장값 : '-'버튼이 클릭된 상품의 정보 중 상품번호의 참조값(data-pid="...")
                 let user_idx = $(e.target).closest("li").data("uid");                                                   // 변수명 : user_idx - 저장값 : '-'버튼이 클릭된 상품의 정보 중 상품번호의 참조값(data-uid="...")
-                let prod_cnt = parseInt($(e.target).next("div").text());                                                // 변수명 : prod_cnt - 저장값 : '-'버튼이 클릭된 상품의 정보 중 상품개수의 참조값
-
+                let prod_cnt = parseInt($(e.target).next("div").text());                                                // 변수명 : prod_cnt - 저장값 : '-'버튼이 클릭된 상품의 정보 중 상품개수의 참조값(next - 버튼 다음 요소)
+                let upt_cnt = prod_cnt - 1;                                                                             // 변수명 : upt_cnt - 저장값  : '-'버튼이 클릭된 경우, 상품개수(prod_cnt) - 1에 해당하는 값
+                                                                                                                        // 2. 유효성 검사
                 if(prod_cnt < 2) return;                                                                                // 상품 개수가 2보다 작은 경우 요청을 보내지 않는다.
-
-                $.ajax({                                                                                                // $.ajax() start
-                    type:'GET',                                                                                         // 1. 요청 메서드
-                    url: '/cart/subtractCnt?prod_idx=' + prod_idx + '&user_idx=' + user_idx + "&prod_cnt=" + prod_cnt,  // 2. 요청 URI, 상품번호(prod_idx), 회원번호(user_idx), 상품개수(prod_cnt) 변수 처리
-                    success : (result) => {
-                        showList(user_idx);                                                                             // 3. 서버로부터 성공 응답이 도착하면 호출될 함수.
-                    },
-                    error   : () => {
-                        alert("error");                                                                                 // 4. 서버로부터 실패 응답이 도착하면 호출될 함수.
-                    }
-                });                                                                                                     // $.ajax() end
+                                                                                                                        // 3. 메서드 호출
+                handleProductCnt(prod_idx, user_idx, prod_cnt, upt_cnt);                                                // handleProductCnt메서드
             });
 
             // 이벤트 대상 : #addBtn 상품개수조절 '+' 버튼
             // 이벤트 : click
             // 이벤트 핸들러 기능 : '+' 버튼 클릭 시, 해당 상품의 개수를 +1 처리
             $(document).on("click", "#addBtn", (e) => {                                                                 // 회원번호와 상품번호, 그리고 상품개수를 html태그의 data속성에서 가져와야 한다.
+                                                                                                                        // 1. 변수 선언
                 let prod_idx = $(e.target).closest("li").data("pid");                                                   // 변수명 : prod_idx - 저장값 : '+'버튼이 클릭된 상품의 정보 중 상품번호의 참조값(data-pid="...")
                 let user_idx = $(e.target).closest("li").data("uid");                                                   // 변수명 : user_idx - 저장값 : '+'버튼이 클릭된 상품의 정보 중 상품번호의 참조값(data-uid="...")
-
-                $.ajax({                                                                                                // $.ajax() start
-                    type:'GET',                                                                                         // 1. 요청 메서드
-                    url: '/cart/addCnt?prod_idx=' + prod_idx + '&user_idx=' + user_idx,                                 // 2. 요청 URI, 상품번호(prod_idx), 회원번호(user_idx) 변수 처리
-                    success : (result) => {                                                                             // 3. 서버로부터 성공 응답이 도착하면 호출될 함수.
-                        showList(user_idx);
-                    },
-                    error   : () => {                                                                                   // 4. 서버로부터 실패 응답이 도착하면 호출될 함수.
-                        alert("error");
-                    }
-                });                                                                                                     // $.ajax() end
+                let prod_cnt = parseInt($(e.target).prev("div").text());                                                // 변수명 : prod_cnt - 저장값 : '+'버튼이 클릭된 상품의 정보 중 상품개수의 참조값(prev - 버튼 이전 요소)
+                let upt_cnt = prod_cnt + 1;                                                                             // 변수명 : upt_cnt - 저장값  : '+'버튼이 클릭된 경우, 상품개수(prod_cnt) + 1에 해당하는 값
+                                                                                                                        // 2. 메서드 호출
+                handleProductCnt(prod_idx, user_idx, prod_cnt, upt_cnt);                                                // handleProductCnt메서드 호출
             });
 
             // 이벤트 대상 : input[name=order] 주문 버튼

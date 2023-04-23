@@ -22,13 +22,13 @@ public interface CartService {
     // 기   능 : cartDao의 addCount메서드 호출
     // 반환타입 : int
     // 매개변수 : Integer prod_idx, Integer user_idx
-    int addCount(Integer prod_idx, Integer user_idx) throws Exception;
+//    int addCount(Integer prod_idx, Integer user_idx) throws Exception;
 
     // 메서드명 : subtractCount
     // 기   능 : cartDao의 subtractCount메서드 호출
     // 반환타입 : int
-    // 매개변수 : Integer prod_idx, Integer user_idx, Integer prod_cnt
-    int subtractCount(Integer prod_idx, Integer user_idx, Integer prod_cnt) throws Exception;
+    // 매개변수 : Integer prod_idx, Integer user_idx, Integer prod_cnt, Integer upt_cnt
+    int updateCount(Integer prod_idx, Integer user_idx, Integer prod_cnt, Integer upt_cnt) throws Exception;
 
     // 메서드명 : removeAll
     // 기   능 : cartDao의 deleteAll메서드 호출

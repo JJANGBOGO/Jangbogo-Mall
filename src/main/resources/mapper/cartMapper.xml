@@ -44,18 +44,19 @@
         아이디명 : addCount
         매개변수타입 : map(Integer, Integer)
     -->
-    <update id="addCount" parameterType="map">
-        UPDATE CART SET prod_cnt = prod_cnt + 1
-        WHERE prod_idx = #{prod_idx} AND user_idx = #{user_idx};
-    </update>
+<!--    <update id="addCount" parameterType="map">-->
+<!--        UPDATE CART SET prod_cnt = prod_cnt + 1-->
+<!--        WHERE prod_idx = #{prod_idx} AND user_idx = #{user_idx};-->
+<!--    </update>-->
     <!--
         태   그 : update
         기   능 : 회원번호가 #{user_idx}인 회원이 장바구니에 담은 상품(#{prod_idx}) 개수를 1 감소시킨다.
-        아이디명 : subtractCount
+        아이디명 : updateCount
         매개변수타입 : map(Integer, Integer)
     -->
-    <update id="subtractCount" parameterType="map">
-        UPDATE CART SET prod_cnt = #{prod_cnt} - 1
+    <update id="updateCount" parameterType="map">
+        UPDATE CART
+        SET PROD_CNT = #{upt_cnt}
         WHERE prod_idx = #{prod_idx} AND user_idx = #{user_idx};
     </update>
 

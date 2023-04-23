@@ -81,24 +81,18 @@ public class CartController {
         }
     }
 
-    // 메서드명 : subtractProductCnt
-    // 기   능 : 장바구니 상품 개수를 1 감소시킨다.
+    // 메서드명 : updateProductCnt
+    // 기   능 : 장바구니 상품 개수를 1만큼 증가 또는 감소시킨다.
     // 반환타입 : String
-    // 요청URL : /cart/subtractCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}&prod_cnt=${prod_cnt} GET
-    @GetMapping("/cart/subtractCnt")
-    public String subtractProductCnt(Integer prod_idx, Integer user_idx, Integer prod_cnt) {
-        // 변수명 : rowCnt
-        // 저장값 : 쿼리문 실행 결과, 영향 받은 테이블 행의 개수, 0으로 초기화
-        int rowCnt = 0;
+    // 요청URL : /cart/updateCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx}&prod_cnt=${prod_cnt} GET
+    @GetMapping("/cart/updateCnt")
+    public String updateProductCnt(Integer prod_idx, Integer user_idx, Integer prod_cnt, Integer upt_cnt) {
+        int rowCnt = 0;                                                                                                 // 변수명 : rowCnt - 저장값 : 쿼리문 실행 결과, 영향 받은 테이블 행의 개수, 0으로 초기화
         try {
-            // 삼품 개수가 1보다 큰 경우
-            if(prod_cnt > 1) {
-                // cartService의 subtractCount메서드에 인자로 회원번호와 상품번호, 그리고 상품개수 지정하여 호출, 반환값을 rowCnt에 저장
-                rowCnt = cartService.subtractCount(prod_idx, user_idx, prod_cnt);
-
-                // 행의 개수가 1이 아닐 경우, 예외를 던진다.
-                if (rowCnt != 1) {
-                    throw new Exception("subtract failed - prod_cnt = 1");
+            if(!((prod_cnt - 1 == upt_cnt) && prod_cnt < 2)) {                                                          // 상품 개수가 2보다 작고, '-'버튼을 눌렀을 경우
+                rowCnt = cartService.updateCount(prod_idx, user_idx, prod_cnt, upt_cnt);                               // cartService의 updateCount메서드에 인자로 회원번호와 상품번호, 그리고 상품개수, 변경개수를 지정하여 호출, 반환값을 rowCnt에 저장
+                if (rowCnt != 1) {                                                                                      // 행의 개수가 1이 아닐 경우, 예외를 던진다.
+                    throw new Exception("operation failed");
                 }
             }
         } catch (Exception e) {
@@ -113,30 +107,30 @@ public class CartController {
     // 기   능 : 장바구니 상품 개수를 1 증가시킨다.
     // 반환타입 : String
     // 요청URL : /cart/addCnt?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx} GET
-    @GetMapping("/cart/addCnt")
-    public ResponseEntity<String> addProductCnt(Integer prod_idx, Integer user_idx) throws Exception {
-        // 변수명 : rowCnt
-        // 저장값 : 쿼리문 실행 결과, 영향 받은 테이블 행의 개수, 0으로 초기화
-        int rowCnt = 0;
-        try {
-            // cartService의 remove메서드에 인자로 회원번호와 상품번호를 지정하여 호출, 반환값을 rowCnt에 저장
-            rowCnt = cartService.addCount(prod_idx, user_idx);
-
-            // 행의 개수가 1이 아닐 경우, 예외를 던진다.
-            if(rowCnt != 1) {
-                throw new Exception("add failed");
-            }
-            // 성공 시, 엔티티로 "DEL_OK"라는 상태 메시지와 OK 상태코드를 반환 - 상태코드 : 200
-            return new ResponseEntity<>("ADD_OK", HttpStatus.OK);
-        }
-        catch (Exception e) {
-            // 에러 발생 시, 에러 내용을 로그에 출력
-            e.printStackTrace();
-            // 에러 발생 시, "ADD_ERR"라는 상태 메시지와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
-            return new ResponseEntity<>("ADD_ERR", HttpStatus.OK);
-        }
-
-    }
+//    @GetMapping("/cart/addCnt")
+//    public ResponseEntity<String> addProductCnt(Integer prod_idx, Integer user_idx) throws Exception {
+//        // 변수명 : rowCnt
+//        // 저장값 : 쿼리문 실행 결과, 영향 받은 테이블 행의 개수, 0으로 초기화
+//        int rowCnt = 0;
+//        try {
+//            // cartService의 remove메서드에 인자로 회원번호와 상품번호를 지정하여 호출, 반환값을 rowCnt에 저장
+//            rowCnt = cartService.addCount(prod_idx, user_idx);
+//
+//            // 행의 개수가 1이 아닐 경우, 예외를 던진다.
+//            if(rowCnt != 1) {
+//                throw new Exception("add failed");
+//            }
+//            // 성공 시, 엔티티로 "DEL_OK"라는 상태 메시지와 OK 상태코드를 반환 - 상태코드 : 200
+//            return new ResponseEntity<>("ADD_OK", HttpStatus.OK);
+//        }
+//        catch (Exception e) {
+//            // 에러 발생 시, 에러 내용을 로그에 출력
+//            e.printStackTrace();
+//            // 에러 발생 시, "ADD_ERR"라는 상태 메시지와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
+//            return new ResponseEntity<>("ADD_ERR", HttpStatus.OK);
+//        }
+//
+//    }
 
     // 메서드명 : goToOrderForm
     // 기   능 : 주문서 작성 페이지로 이동한다.
