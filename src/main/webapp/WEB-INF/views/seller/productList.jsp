@@ -75,7 +75,6 @@
                     </div>
                 </li>
             </c:forEach>
-
         </ul>
         <button class="product-reg-btn">상품 등록하기</button>
     </div>
@@ -84,6 +83,9 @@
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script src="/js/starrr.js"></script>
 <script>
+    let msg = "${msg}";
+    if (msg === "REG_PROD_OK") alert("상품 등록을 성공했습니다");
+
     $(document).ready(function () {
         let grade = 3;
 

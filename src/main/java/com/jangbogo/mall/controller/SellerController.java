@@ -278,16 +278,23 @@ public class SellerController {
     }
 
     @PostMapping("/seller/register/product")
-    public String regProduct(ProductDto product, ProductDtl dtl, RedirectAttributes rattr) {
+    public String regProduct(ProductDto productDto, ProductDtl productDtl, HttpSession session, RedirectAttributes rattr) {
         try {
-            log.info("product...." + product);
-            log.info("dtl...." + dtl);
+            log.info("productDto...." + productDto);
+            log.info("productDtl...." + productDtl);
 
-            //가입
+            //판매자 idx 적용
+            Integer idx = (Integer) session.getAttribute("idx");
+            productDto.setSeler_idx(idx);
 
+            if (productService.registerProduct(productDto, productDtl) != 1)
+                throw new Exception("register product failed");
+
+            rattr.addFlashAttribute("msg", "REG_PROD_OK");
             return "redirect:/seller/list/product";
         } catch (Exception e) {
             e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return "redirect:/seller/register/product";
         }
     }
