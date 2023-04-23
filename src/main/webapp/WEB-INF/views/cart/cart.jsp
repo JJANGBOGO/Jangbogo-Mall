@@ -16,7 +16,6 @@
     <title>장보고 | 장바구니</title>
 </head>
 <body>
-    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <div class="cart-container">
     <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
         <div class="cart-title">
@@ -31,6 +30,7 @@
         </div>
         <%@ include file="/WEB-INF/views/include/footer.jsp" %>
     </div>
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <script>
         // 메서드명 : listToHtml
         // 기   능 : 장바구니 목록 및 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
