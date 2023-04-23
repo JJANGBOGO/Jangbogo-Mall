@@ -129,11 +129,19 @@ public class ProdController {
     }
 
     //상세 이미지들 가져오기
-//    @GetMapping("/product/productDetail/description")
-//    @ResponseBody
-//    public ResponseEntity<ProductDetailDto> showDescriptionList(Integer prod_idx) {
-//
-//    }
+    @GetMapping("/product/productDetail/description")
+    @ResponseBody
+    public ResponseEntity<List<ProductFileDto>> showDescriptionList(Integer prod_idx) {
+        List<ProductFileDto> fileList = null;
+        try {
+            fileList = productDetailService.findProdFile(prod_idx);
+
+            return new ResponseEntity<List<ProductFileDto>>(fileList, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @GetMapping("/product/productDetail/detail")
     @ResponseBody

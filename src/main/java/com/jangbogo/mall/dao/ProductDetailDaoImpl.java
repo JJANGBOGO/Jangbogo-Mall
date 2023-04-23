@@ -1,9 +1,12 @@
 package com.jangbogo.mall.dao;
 
 import com.jangbogo.mall.domain.ProductDetailDto;
+import com.jangbogo.mall.domain.ProductFileDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class ProductDetailDaoImpl implements ProductDetailDao {
@@ -27,6 +30,10 @@ public class ProductDetailDaoImpl implements ProductDetailDao {
 
     public ProductDetailDto selectBrand(Integer prod_idx) throws Exception {
         return session.selectOne(namespace + "selectBrand", prod_idx);
+    }
+
+    public List<ProductFileDto> selectProdFile(Integer prod_idx) throws Exception {
+        return session.selectList(namespace + "selectProdFile", prod_idx);
     }
 
 }

@@ -2,8 +2,11 @@ package com.jangbogo.mall.service;
 
 import com.jangbogo.mall.dao.ProductDetailDao;
 import com.jangbogo.mall.domain.ProductDetailDto;
+import com.jangbogo.mall.domain.ProductFileDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ProductDetailServiceImpl implements ProductDetailService {
@@ -26,5 +29,9 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 
     public ProductDetailDto findBrand(Integer prod_idx) throws Exception {
         return productDetailDao.selectBrand(prod_idx);
+    }
+
+    public List<ProductFileDto> findProdFile(Integer prod_idx) throws Exception {
+        return productDetailDao.selectProdFile(prod_idx);
     }
 }
