@@ -5,7 +5,7 @@
 
     <!--
         태   그 : insert
-        기   능 : '결제' 테이블에 결제고유번호(tid), 주문번호(ord_idx), 주문총금액(total_amount) 포함한 데이터 저장하기
+        기   능 : '결제' 테이블에 주문번호(ord_idx), 카드사승인번호(aprv_idx), 결제고유번호(setl_idx), 주문총금액(amt), 실결제금액(amt) 포함한 데이터 저장하기
         아이디명 : insertPayment
         반환타입 : String
     -->
@@ -16,7 +16,7 @@
 
     <!--
         태   그 : insert
-        기   능 : '주문' 테이블에 회원번호(user_idx), 주문자명(ordr_nm), 주문자휴대폰번호(mpno) 포함한 데이터 저장하기
+        기   능 : '주문' 테이블에 회원번호(user_idx), 주문자명(ordr_nm), 주문자휴대폰번호(mpno), 주문총금액(tot_amt), 주문상품개수(gtot), 주문상품품목수(plist_tot) 포함한 데이터 저장하기
         아이디명 : addOrder
         반환타입 : Integer
         매개변수 : OrderDto orderDto
