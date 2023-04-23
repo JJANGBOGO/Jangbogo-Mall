@@ -40,12 +40,11 @@
                         </div>
                         <div class="product-desc">
                             <div class="product-title">
-                                ${product.name}
+                                    ${product.name}
                             </div>
                             <div class="product-content">${product.ctent}</div>
                             <div class="star-grade">
-                                <div class="starrr"></div>
-<%--                                ???--%>
+                                <div class="starrr ${product.ascr}" data-ascr="${product.ascr}"></div>
                             </div>
                         </div>
                     </div>
@@ -87,13 +86,14 @@
     if (msg === "REG_PROD_OK") alert("상품 등록을 성공했습니다");
 
     $(document).ready(function () {
-        let grade = 3;
+        $(".product-item").each(function () {
+                let star_ref = $(this).find(".starrr")
 
-        $(".starrr").starrr({
-            rating: grade,
-        });
+                star_ref.starrr({rating: star_ref.data("ascr")});
+            }
+        );
+        $(".starrr a").css("color", "rgb(243, 61, 61)"); //평점 색깔 변경
 
-        $(".starrr a").css("color", "rgb(243, 61, 61)"); //start color
 
         $(".product-reg-btn").click(function () {
             window.location.href = "/seller/register/product";
