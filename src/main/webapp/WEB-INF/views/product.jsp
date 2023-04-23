@@ -352,24 +352,21 @@
 
     $('.price').text($('.m-price-dc-span').text());
 
-    $('.upCount').on("click", function() {
+    $('.upCount').click(function() {
       //초기 숫자 1에
-      let init = $('.num').data('min');
-      //+1을 해줘 -> 2가 됐어
-      if(init+ 1 <= 10){
-        $('.num').data('min', init+1); //init +1 해서 숫자는 올라가는데, 태그안에 보이는 것에는 반영이 안돼
-        let modnum = $('.num').data('min');
-        $('.num').text(modnum);
+      let init = parseInt($('.num').text());
+      if(init <= 9){
+        let plusNum = init + 1;
+        $('.num').text(plusNum);
         //기존에 태그에 들어가 있는 문자열을 가져와서
         //콤마를 뺀 숫자만을 구하고
         let regex = /[^0-9]/g;
         let numPrice = ($('.m-price-dc-span').text()).replace(regex, "");
         //콤마를 뺀 숫자에 늘어난 숫자 2를 곱해줘
-        let calcPrice = modnum * parseInt(numPrice);
+        let calcPrice = plusNum * parseInt(numPrice);
         //곱해준 값에 콤마를 붙이고
         let withComma = calcPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         //.price 공간에 넣어줘
-        // $('.price').text("");
         $('.price').text(withComma);
         //최대 숫자 10이 되기 전까지 올려줘
       }
@@ -378,14 +375,19 @@
 
     $('.downCount').click(function() {
       //.num 내부의 텍스트를 가져와서 변수에 저장
-      let num = $('.num').text();
-      if(!(num-1 <= 0)){
-        $('.num').text(num-1);
-        let de = $('.num').text();
+      let num = parseInt($('.num').text());
+      console.log(num);
+      if(!(num < 2)){
+        let minusNum = num - 1;
+        console.log("minusNum="+minusNum)
+        console.log(typeof minusNum);
+        $('.num').text(minusNum);
+        console.log("typeof=="+typeof $('.num').text());
+        let textNum = $('.num').text();
         let regex = /[^0-9]/g;
         let origin = ($('.m-price-dc-span').text()).replace(regex, "");
         //num * origin 계산후 콤마 찍어서 변수에 저장
-        let calcPrice = (de * origin).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        let calcPrice = (textNum * origin).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         //.price 내부에 입력
         $('.price').text(calcPrice);
         //num의 값이 num <= 1 일때까지만
