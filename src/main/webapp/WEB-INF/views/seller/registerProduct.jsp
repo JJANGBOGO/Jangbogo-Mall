@@ -107,13 +107,13 @@
                         <div class="input-box">
                             <div class="input">
                                 <input
-                                        id="price"
-                                        name="price"
+                                        id="prc"
+                                        name="prc"
                                         type="number"
                                         placeholder="가격을 입력해주세요"
                                 />
                             </div>
-                            <div class="error-msg price"></div>
+                            <div class="error-msg prc"></div>
                         </div>
                         <div class="btn-space"></div>
                     </div>

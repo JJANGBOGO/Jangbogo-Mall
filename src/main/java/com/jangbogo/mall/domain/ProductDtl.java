@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -39,4 +40,6 @@ public class ProductDtl {
     private int inv_quty; //상품 재고수
 
     private String guid; //상품 안내사항
+
+    private List<ProductFile> file_list; //상품 상세첨부파일 리스트
 }

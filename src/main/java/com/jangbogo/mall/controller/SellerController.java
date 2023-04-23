@@ -278,7 +278,7 @@ public class SellerController {
     }
 
     @PostMapping("/seller/register/product")
-    public String regProduct(ProductDto product, ProductDetailDto dtl, RedirectAttributes rattr) {
+    public String regProduct(ProductDto product, ProductDtl dtl, RedirectAttributes rattr) {
         try {
             log.info("product...." + product);
             log.info("dtl...." + dtl);
