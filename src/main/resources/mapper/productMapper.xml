@@ -18,18 +18,61 @@
     </select>
 
     <insert id="insertProduct" parameterType="ProductDto">
-        insert into PRODUCT (SELER_IDX, CATE_IDX, SELER_PROD_CD, UPLOAD_PATH, NAME, CTENT, PRC, DC_STATE_CD, DC_RATE,
-                             DSPLY_STATE_CD, RESV_PHOTO_UPLOAD_PATH)
-        values (#{seler_idx},
-                #{cate_idx},
-                #{seler_prod_cd},
-                #{upload_path},
-                #{name},
-                #{ctent},
-                #{prc},
-                #{dc_state_cd},
-                #{dc_rate},
-                #{dsply_state_cd},
-                #{upload_path});
+        INSERT INTO PRODUCT (SELER_IDX,
+        CATE_IDX,
+        SELER_PROD_CD,
+        UPLOAD_PATH,
+        NAME,
+        CTENT,
+        PRC,
+        DC_STATE_CD,
+        DC_RATE,
+        DSPLY_STATE_CD,
+        RESV_PHOTO_UPLOAD_PATH)
+        VALUES (#{seler_idx},
+        #{cate_idx},
+        #{seler_prod_cd},
+        #{upload_path},
+        #{name},
+        #{ctent},
+        #{prc},
+        #{dc_state_cd},
+        #{dc_rate},
+        #{dsply_state_cd},
+        #{upload_path});
+        <selectKey resultType="int" keyProperty="idx" order="AFTER">
+            SELECT LAST_INSERT_ID() AS IDX
+        </selectKey>
+    </insert>
+
+    <insert id="insertProductDtl" parameterType="ProductDtl">
+        INSERT INTO PROD_DTL (PROD_IDX,
+                              ORPLC,
+                              SLE_UNIT,
+                              WEIGHT,
+                              MFT_TM,
+                              DISTB_TLMT,
+                              WARN,
+                              MAX_SLE_QUTY,
+                              SFKP_TP_STATE_CD,
+                              SLE_START_TM,
+                              SLE_END_TM,
+                              CREATE_TM,
+                              INV_QUTY,
+                              GUID)
+        values (#{prod_idx},
+                #{orplc},
+                #{sle_unit},
+                #{weight},
+                #{mft_tm},
+                #{distb_tlmt},
+                #{warn},
+                #{max_sle_quty},
+                #{sfkp_tp_state_cd},
+                #{sle_start_tm},
+                #{sle_end_tm},
+                now(),
+                #{inv_quty},
+                #{guid});
     </insert>
 </mapper>

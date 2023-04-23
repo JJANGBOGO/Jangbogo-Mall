@@ -1,5 +1,6 @@
 package com.jangbogo.mall.dao;
 
+import com.jangbogo.mall.domain.ProductDtl;
 import com.jangbogo.mall.domain.ProductDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,11 @@ public class ProductDaoImpl implements ProductDao{
     @Override
     public int insertProduct (ProductDto productDto) throws Exception{
         return session.insert(nameSpace + "insertProduct", productDto);
+    }
+
+    @Override
+    public int insertProductDtl (ProductDtl productDtl) throws Exception {
+        return session.insert(nameSpace + "insertProductDtl", productDtl);
     }
 
 }

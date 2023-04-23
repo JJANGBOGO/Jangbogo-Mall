@@ -78,7 +78,7 @@ public class UserDaoTest {
                 .build();
         int result = dao.insertUser(user);
         int idx = user.getIdx();
-        log.info("result=" + idx);
+        log.info("result=" + idx + result); //idx => return idx , result => return idx ??
         assertTrue(result != 0);
     }
 

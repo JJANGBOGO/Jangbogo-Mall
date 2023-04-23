@@ -8,9 +8,9 @@
         <typeAlias alias="Seller" type="com.jangbogo.mall.domain.Seller"/>
         <typeAlias alias="SellerDtl" type="com.jangbogo.mall.domain.SellerDtl"/>
         <typeAlias alias="UserDetailsDto" type="com.jangbogo.mall.domain.UserDetailsDto"/>
-        <!--        <typeAlias alias="Attach" type="com.jangbogo.mall.domain.User"/>-->
         <typeAlias alias="WishlistDto" type="com.jangbogo.mall.domain.WishlistDto"/>
         <typeAlias alias="ProductDto" type="com.jangbogo.mall.domain.ProductDto"/>
+        <typeAlias alias="ProductDtl" type="com.jangbogo.mall.domain.ProductDtl"/>
 
         <typeAlias alias="ProdInqryDto" type="com.jangbogo.mall.domain.ProdInqryDto"/>
         <typeAlias alias="JoinProdInqryDto" type="com.jangbogo.mall.domain.JoinProdInqryDto"/>
