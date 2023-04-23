@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProductDetailServiceImpl implements ProductDetailService {
@@ -33,5 +34,17 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 
     public List<ProductFileDto> findProdFile(Integer prod_idx) throws Exception {
         return productDetailDao.selectProdFile(prod_idx);
+    }
+
+    public Integer checkWishlist(Integer prod_idx, Integer user_idx) throws Exception {
+        return productDetailDao.checkWishlist(prod_idx, user_idx);
+    }
+
+    public Integer insertWishlist(Integer prod_idx, Integer user_idx) throws Exception {
+        return productDetailDao.insertWishlist(prod_idx, user_idx);
+    }
+
+    public Integer deleteWishList(Integer prod_idx, Integer user_idx) throws Exception {
+        return productDetailDao.deleteWishList(prod_idx, user_idx);
     }
 }

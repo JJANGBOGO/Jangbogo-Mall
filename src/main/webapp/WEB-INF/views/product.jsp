@@ -144,7 +144,9 @@
       </div>
       <div id="product-desc">
         <div id="description">
+          <div class="description-wrap">
 
+          </div>
         </div>
         <div id="detail">
 
@@ -250,9 +252,16 @@
       type: 'GET',
       url: '/product/productDetail/description?prod_idx='+prod_idx,
       success: function(result) {
-
+        $('.description-wrap').html(DescriptionToList(result));
       },
       error: function() { alert("GET description Error") }
+    })
+  }
+
+  let DescriptionToList = function(fileLists) {
+    let tmp = "";
+    fileLists.forEach(function(fileList){
+      tmp += ''
     })
   }
 
@@ -261,7 +270,7 @@
       type: 'GET',
       url: '/product/productDetail/detail?prod_idx='+prod_idx,
       success: function(infoList) {
-        $('#detail').html(DetailToList(infoList))
+        $('#detail').html(DetailToList(infoList));
       },
       error: function() { alert("GET detail Error") }
     })
@@ -369,12 +378,26 @@
     showProdDetailList(prod_idx);
     packingTypeToString();
     showImage();
+    showDescription(prod_idx);
     showDetail(prod_idx);
     prodInqryImage();
 
+    $('.cartBtn').click(function() {
+      let prod_cnt = $('.num').text();
+
+      $.ajax({
+        type: 'POST',
+        url: '/cart?prod_idx='+prod_idx+'&prod_cnt='+prod_cnt,
+        success: function(result) {
+          alert(result);
+        },
+        error: function() {alert("수정권한이 없습니다")}
+      })
+    })
+
     $('.wishlistBtn').click(function(e) {
       let value = $('.wishlistBtn').data('heart');
-      console.log("value="+value);
+      // console.log("value="+value);
       let changedVal = "";
       if(value == "empty") {
         let classi = $('.wishlistBtn').find('i').attr('class', 'fa-solid fa-heart'); //클래스 이름을 변경해줘 //이미지를 바꿔줘
@@ -386,6 +409,16 @@
         $('.wishlistBtn').data('heart', "empty");
         // changedVal = $('.wishlistBtn').data('heart');
       }
+
+      $.ajax({
+        type: 'POST',
+        url: '/wishlist?prod_idx='+prod_idx,
+        success: function(result) {
+          alert(result);
+        },
+        error: function() {alert("수정권한이 없습니다")}
+      })
+
     })
 
     $('.price').text($('.m-price-dc-span').text());
@@ -636,7 +669,7 @@
 
 
     inqrys.forEach(function(inqry) {
-      console.log(inqry.res_state_cd);
+      // console.log(inqry.res_state_cd);
       let res_state_cd = "";
       if(inqry.res_state_cd == 1) {
         res_state_cd = "답변대기";

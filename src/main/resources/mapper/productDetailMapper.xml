@@ -39,4 +39,21 @@
         on pd.prod_idx = pf.prod_idx
         where pd.prod_idx = #{prod_idx};
     </select>
+
+    <select id="checkWishlist" parameterType="map" resultType="Integer">
+        select count(*)
+        from WISHLIST
+        where PROD_IDX = #{prod_idx} and USER_IDX = #{user_idx}
+    </select>
+
+    <insert id="insertWishlist" parameterType="map">
+        insert into wishlist (PROD_IDX, USER_IDX)
+        values (#{prod_idx},#{user_idx})
+    </insert>
+
+    <delete id="deleteWishList" parameterType="map">
+        delete
+        from WISHLIST
+        where USER_IDX = #{user_idx} and PROD_IDX = #{prod_idx};
+    </delete>
 </mapper>

@@ -15,4 +15,8 @@ public interface ProductDetailDao {
     ProductDetailDto selectBrand(Integer prod_idx) throws Exception;
 
     List<ProductFileDto> selectProdFile(Integer prod_idx) throws Exception;
+    Integer checkWishlist(Integer prod_idx, Integer user_idx) throws Exception;
+
+    Integer insertWishlist(Integer prod_idx, Integer user_idx) throws Exception;
+    Integer deleteWishList(Integer prod_idx, Integer user_idx) throws Exception;
 }
