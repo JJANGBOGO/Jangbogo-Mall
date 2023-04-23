@@ -19,7 +19,7 @@ public class UserDaoImpl implements UserDao {
     private static final String nameSpace = "com.jangbogo.mall.dao.UserMapper.";
 
     @Override
-    public int deleteUser(Integer idx, String email) throws Exception {
+    public int withdrawUser(Integer idx, String email) throws Exception {
         Map map = new HashMap();
         map.put("idx", idx);
         map.put("email", email);
@@ -86,6 +86,14 @@ public class UserDaoImpl implements UserDao {
     @Override
     public UserDetailsDto getUserDetailsDto (String email) throws Exception {
         return session.selectOne(nameSpace + "getUserDetailsDto", email);
+    }
+
+    @Override
+    public int deleteUser (Integer idx, String email) throws Exception {
+        Map map = new HashMap();
+        map.put("idx", idx);
+        map.put("email", email);
+        return session.delete(nameSpace + "deleteUser", map);
     }
 }
 

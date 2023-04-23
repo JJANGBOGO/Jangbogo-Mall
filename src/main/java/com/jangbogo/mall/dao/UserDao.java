@@ -6,7 +6,7 @@ import com.jangbogo.mall.domain.UserDetailsDto;
 
 public interface UserDao {
 
-    int deleteUser(Integer idx, String email) throws Exception; //회원탈퇴
+    int withdrawUser(Integer idx, String email) throws Exception; //회원탈퇴
 
     User selectUser(Integer idx) throws Exception; //회원상세조회
 
@@ -35,5 +35,8 @@ public interface UserDao {
 
     //시큐리티 유저 조회
     UserDetailsDto getUserDetailsDto (String email) throws Exception;
+
+    //회원 인스턴스 삭제
+    int deleteUser (Integer idx, String email) throws Exception;
 
 }

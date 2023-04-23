@@ -82,7 +82,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional(value = "transactionManager", rollbackFor = Exception.class)
     public int registerUser(User user, Address addr) throws Exception {
         final int SUCCESS = 1;
         final int FAILED = 0;
@@ -94,17 +93,19 @@ public class UserServiceImpl implements UserService {
         user.setPwd(passwordEncoder.encode(user.getPwd()));
 
         try {
-//            int userResult = dao.insertUser(user); //성공시 idx 리턴
-//            int addrResult = addrDao.insertAddr(user.getIdx(), addr); //성공시 1
-            dao.insertUser(user);
-            addrDao.insertAddr(user.getIdx(), addr);
+            if (dao.insertUser(user) == 0) //회원 insert 실패
+                throw new Exception("insert user failed");
+
+            if (addrDao.insertAddr(user.getIdx(), addr) != 1)
+                throw new Exception("insert address failed");
+
             return SUCCESS;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("register failed");
-//            return FAILED;
+            if (user.getIdx() != 0)  //회원이 이미 insert된 경우 회원도 삭제
+                dao.deleteUser(user.getIdx(), user.getEmail());
+            return FAILED;
         }
-//        return (userResult != 0 && addrResult != 0) ? SUCCESS : FAILED;
     }
 
     @Override

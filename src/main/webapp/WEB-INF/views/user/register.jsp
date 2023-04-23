@@ -311,7 +311,7 @@
 
             $.ajax({
                 url: '/user/duplicate/email',
-                data: {email: email},
+                data: {email: email_ref.val()},
                 type: 'POST',
                 success: function (result) {
                     if (result == "OK") {
@@ -338,10 +338,10 @@
 
             $.ajax({
                 url: '/user/duplicate/nickname',
-                data: {nick_nm: nick},
+                data: {nick_nm: nick_ref.val()},
                 type: 'POST',
                 success: function (result) {
-                    if (result == "OK") {
+                    if (result === "OK") {
                         alert(available_nick);
                         $("#nick_duplicate_chk").attr("disabled", true); //버튼 비활성화
                         nick_ref.attr("readonly", true); //인풋 비활성화
@@ -370,8 +370,9 @@
                 contentType: "application/json",
                 success: function (result) { // test, 문자열 온다.
                     alert(mpno_send_ok);
+                    console.log(result.numStr);
                     mpno_verify_num = result.numStr;
-                   mpno_ref.closest(".input-box").append('<div class="input">' +
+                    mpno_ref.closest(".input-box").append('<div class="input">' +
                         '<input id="mpno_verify" type="text" placeholder="인증번호를 입력해 주세요">' +
                         '</div><div class="error-msg mpno-verify"></div>');
                 },
@@ -444,7 +445,7 @@
             let pwd_confirm_ref = $("#pwd_confirm");
 
             if (!validatePwdAlert(pwd_ref)) return false;
-            if (!validatePwdConfirmAlert(pwd_ref,pwd_confirm_ref )) return false;
+            if (!validatePwdConfirmAlert(pwd_ref, pwd_confirm_ref)) return false;
 
             //휴대전화
             let mpno_ref = $("#mpno");

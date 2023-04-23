@@ -276,7 +276,7 @@ public class UserController {
     @PostMapping("/user/duplicate/nickname")
     public ResponseEntity<String> chkDuplicateNick(String nick_nm) {
         try {
-            String msg = userService.isNickDuplicated(nick_nm) ? "OK" : "DUPLICATE";
+            String msg = !userService.isNickDuplicated(nick_nm) ? "OK" : "DUPLICATE";
             return ResponseEntity.ok().body(msg);
         } catch (Exception e) {
             e.printStackTrace();

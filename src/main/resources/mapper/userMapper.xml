@@ -4,7 +4,7 @@
 
 <mapper namespace="com.jangbogo.mall.dao.UserMapper">
 
-    <update id="deleteUser" parameterType="map">
+    <update id="withdrawUser" parameterType="map">
         UPDATE USER
         SET STATE_CD = 3
         WHERE IDX = #{idx}
@@ -89,6 +89,10 @@
     <select id="getUserDetailsDto" resultType="UserDetailsDto">
         SELECT * FROM USER WHERE EMAIL = #{email}
     </select>
+
+    <delete id="deleteUser" parameterType="map">
+        DELETE FROM USER WHERE IDX = #{idx} AND EMAIL = #{email}
+    </delete>
 
 </mapper>
 
