@@ -44,7 +44,7 @@
                             </div>
                             <div class="product-content">${product.ctent}</div>
                             <div class="star-grade">
-                                <div class="starrr ${product.ascr}" data-ascr="${product.ascr}"></div>
+                                <div class="starrr" data-ascr="${product.ascr}"></div>
                             </div>
                         </div>
                     </div>
@@ -87,8 +87,7 @@
 
     $(document).ready(function () {
         $(".product-item").each(function () {
-                let star_ref = $(this).find(".starrr")
-
+                let star_ref = $(this).find(".starrr");
                 star_ref.starrr({rating: star_ref.data("ascr")});
             }
         );
