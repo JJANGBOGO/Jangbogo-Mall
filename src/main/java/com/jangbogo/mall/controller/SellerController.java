@@ -283,6 +283,8 @@ public class SellerController {
             log.info("product...." + product);
             log.info("dtl...." + dtl);
 
+            //가입
+
             return "redirect:/seller/list/product";
         } catch (Exception e) {
             e.printStackTrace();

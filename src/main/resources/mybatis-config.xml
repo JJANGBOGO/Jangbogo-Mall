@@ -11,6 +11,7 @@
         <typeAlias alias="WishlistDto" type="com.jangbogo.mall.domain.WishlistDto"/>
         <typeAlias alias="ProductDto" type="com.jangbogo.mall.domain.ProductDto"/>
         <typeAlias alias="ProductDtl" type="com.jangbogo.mall.domain.ProductDtl"/>
+        <typeAlias alias="ProductFile" type="com.jangbogo.mall.domain.ProductFile"/>
 
         <typeAlias alias="ProdInqryDto" type="com.jangbogo.mall.domain.ProdInqryDto"/>
         <typeAlias alias="JoinProdInqryDto" type="com.jangbogo.mall.domain.JoinProdInqryDto"/>

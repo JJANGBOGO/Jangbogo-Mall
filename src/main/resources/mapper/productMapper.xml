@@ -75,4 +75,19 @@
                 #{inv_quty},
                 #{guid});
     </insert>
+
+    <insert id="insertProductFiles" parameterType="ProductFile">
+        INSERT INTO PROD_FILE (UUID,
+                               PROD_IDX,
+                               NAME,
+                               UPLOAD_PATH,
+                               TYPE,
+                               SORT_ODR)
+        VALUES (#{uuid},
+                #{prod_idx},
+                #{name},
+                #{upload_path},
+                #{type},
+                #{sort_odr});
+    </insert>
 </mapper>

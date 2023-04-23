@@ -3,6 +3,7 @@ package com.jangbogo.mall.dao;
 
 import com.jangbogo.mall.domain.ProductDtl;
 import com.jangbogo.mall.domain.ProductDto;
+import com.jangbogo.mall.domain.ProductFile;
 
 import java.util.List;
 
@@ -16,5 +17,8 @@ public interface ProductDao {
 
     //상품 상세 insert
     int insertProductDtl (ProductDtl productDtl) throws Exception;
+
+    //상품 상세 첨부파일 insert
+    int insertProductFiles (ProductFile productFiles) throws Exception;
 }
 

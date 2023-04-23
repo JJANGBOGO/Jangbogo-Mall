@@ -11,8 +11,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertTrue;
 
@@ -69,6 +71,33 @@ public class ProductDaoTest {
 
         int result = dao.insertProductDtl(productDtl);
         assertTrue(result != 0);
+    }
+
+    @Test
+    public void insertProductFiles () throws Exception {
+        List<ProductFile> fileList = new ArrayList<>();
+
+        ProductFile file = ProductFile.builder()
+                .uuid(UUID.randomUUID().toString())
+                .prod_idx(1)
+                .name("default_banner.jpeg")
+                .upload_path("default_banner.jpeg")
+                .type(1)
+                .sort_odr(1)
+                .build();
+        fileList.add(file);
+        fileList.add(file);
+        fileList.add(file);
+        fileList.add(file);
+
+
+        log.info(file.getUuid());
+        //service에서 아래와 같이 메서드 작성
+        for (ProductFile item : fileList) {
+            dao.insertProductFiles(item);
+            item.setUuid(UUID.randomUUID().toString());
+        }
+
     }
 
 }
