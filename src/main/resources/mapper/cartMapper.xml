@@ -12,7 +12,8 @@
     <select id="selectAll" resultType="CartDto">
         SELECT CART.PROD_IDX, CART.USER_IDX, PRODUCT.NAME as prod_name , PRODUCT.PRC as prod_price, PRODUCT.RESV_PHOTO_UPLOAD_PATH as prod_rpath,CART.REG_TM, CART.PROD_CNT as prod_cnt, CART.REG_TM, CART.CRT_TM, CART.UPT_TM
         FROM CART, PRODUCT, USER
-        WHERE CART.PROD_IDX = PRODUCT.IDX AND CART.USER_IDX = USER.IDX AND CART.USER_IDX = #{user_idx};
+        WHERE CART.PROD_IDX = PRODUCT.IDX AND CART.USER_IDX = USER.IDX AND CART.USER_IDX = #{user_idx}
+        ORDER BY CRT_TM;
     </select>
 
     <!--

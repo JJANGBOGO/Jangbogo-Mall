@@ -26,8 +26,7 @@ public class CartController {
     // 요청URL : /cart/cart GET
     @GetMapping("/cart")
     public String goToCart(HttpSession session, Model model) {
-        // 1. 로그인 확인 - loginCheck메서드가 false를 반환하는 경우, 로그인 페이지로 리다이렉트
-        if(!loginCheck(session)) return "redirect:/user/login";
+        if(!loginCheck(session)) return "redirect:/user/login";                                                         // 1. 로그인 확인 - loginCheck메서드가 false를 반환하는 경우, 로그인 페이지로 리다이렉트
         return "cart/cart";
     }
 

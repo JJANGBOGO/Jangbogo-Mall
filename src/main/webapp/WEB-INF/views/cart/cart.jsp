@@ -149,19 +149,18 @@
         }
 
         $(document).ready(function() {                                                                                  // 문서가 준비된 상황 이후에 자바스크립트 코드 실행 === (JS) window.onload = () => { ... }
-            let idx = `${idx}`;                                                                                         // 변수명 : idx - 저장값 : 세션에 저장된 회원번호(user_idx)
+            let idx = "${idx}";                                                                                         // 변수명 : idx - 저장값 : 세션에 저장된 회원번호(user_idx)
             showList(idx);                                                                                              // showList메서드 호출 - 장바구니 전체 목록 랜더링
 
             // 이벤트 대상 : .input-all 전체선택 체크박스
             // 이벤트 : click
             // 이벤트 핸들러 기능 : 전체 선택 시, 모든 상품의 체크박스 체크드 처리
             $(document).on("click", ".input-all", (e) => {
-                if($(".input-all").is(":checked")) $("input[name=chk]").prop("checked", true);                          // 전체선택 체크박스가 체크되는 경우, 개별 선택 체크박스 전부 체크드 처리
-                else $("input[name=chk]").prop("checked", false);                                                       // 전체선택 체크박스가 체크해제되는 경우, 개별 선택 체크박스 전부 체크해제 처리
+                let checked = $(".input-all").is(":checked");                                                           // 변수명 : checked - 저장값 : 전체선택 체크박스의 체크상태 여부
+                $("input[name=chk]").prop("checked", checked);                                                          // 동적 요소 속성 변경 1. checked변수의 값이 true이면 전체선택 체크박스를 '체크'처리하고, false이면 '체크해제'처리한다.
 
-                let checked = $("input[name=chk]:checked").length;                                                      // 변수명 : checked - 저장값 : 개별 체크박스들 중 체크드 처리된 것들의 개수를 저장
-
-                $("#checked").prop("innerHTML", checked);                                                               // 이벤트 발생 결과, 체크드 처리된 체크박스 개수를 화면에서 보여준다.
+                let checkedCount = $("input[name=chk]:checked").length;                                                 // 변수명 : checkedCount - 저장값 : 개별 체크박스들 중 체크드 처리된 것들의 개수를 저장
+                $("#checked").prop("innerHTML", checkedCount);                                                          // 동적 요소 속성 변경 2. 이벤트 발생 결과, '체크'처리된 체크박스 개수를 화면에서 보여준다.
             });
 
             // 이벤트 대상 : input[name=chk] 개별선택 체크박스
@@ -169,12 +168,11 @@
             // 이벤트 핸들러 기능 : 개별 상품 선택 시, 해당 상품의 체크박스 체크드 처리, 모든 상품 선택 시, 전체선택 체크박스도 체크드 처리
             $(document).on("click", "input[name=chk]", (e) => {
                 let total = $("input[name=chk]").length;                                                                // 변수명 : total - 저장값 : 개별 체크박스 개수
-                let checked = $("input[name=chk]:checked").length;                                                      // 변수명 : checked - 저장값 : 개별 체크박스 중 체크드 처리된 체크박스 개수
+                let checkedCnt = $("input[name=chk]:checked").length;                                                   // 변수명 : checked - 저장값 : 개별 체크박스 중 체크드 처리된 체크박스 개수
 
-                $("#checked").prop("innerHTML", checked);                                                               // 이벤트 발생 결과, 체크드 처리된 체크박스 개수를 화면에서 보여준다.
-
-                if(total !== checked) $(".input-all").prop("checked", false);                                           // 모든 개별 체크박스가 체크드 상태가 아니라면, 전체선택 체크박스를 체크해제 처리한다.
-                else $(".input-all").prop("checked", true);                                                             // 모든 개별 체크박스가 체크드 상태라면, 전체선택 체크박스를 체크드 처리한다.
+                $("#checked").prop("innerHTML", checkedCnt);                                                            // 1. 이벤트 발생 결과, 체크드 처리된 체크박스 개수를 화면에서 보여준다.
+                if(total !== checkedCnt) $(".input-all").prop("checked", false);                                        // 2.1 모든 개별 체크박스가 체크드 상태가 아니라면, 전체선택 체크박스를 체크해제 처리한다.
+                else $(".input-all").prop("checked", true);                                                             // 2.2 모든 개별 체크박스가 체크드 상태라면, 전체선택 체크박스를 체크드 처리한다.
             });
 
             // 이벤트 대상 : .cart_item__close 장바구니 개별 상품의 삭제 버튼
@@ -199,34 +197,34 @@
 
             // 이벤트 대상 : #checkedDelBtn                                                                                // To Do List
             // 이벤트 : click                                                                                             // 1. '선택 체크' 버튼를 눌렀을 때
-            // 이벤트 핸들러 기능 : '선택삭제' 버튼 클릭 시, 체크박스가 체크드 처리된 상품들을 삭제 처리                                     // 2. ul 태그의 자식 요소들을 순휘하며, 체크드 상태인지 확인
-            $(document).on("click", "#checkedDelBtn", (e) => {                                                          // 3. 체크드 상태인 모든 li 태그에 대해 삭제 요청을 보낸다.
+            // 이벤트 핸들러 기능 : '선택삭제' 버튼 클릭 시, 체크박스가 체크드 처리된 상품들을 삭제 처리                                     // 2. ul 태그의 자식 요소인 li들을 순회하며, '체크'상태인지 확인
+            $(document).on("click", "#checkedDelBtn", (e) => {                                                          // 3. '체크'상태인 모든 li 태그에 대해 삭제 요청을 보낸다.
                 // 1. 변수 선언
-                let children = $('#cartItems > ul').children();                                                         // 변수명 : children - 저장값 : ul 태그의 자식 요소인 모든 li태그를 참조하는 값
-                let isAnyBoxChecked = false;                                                                            // 변수명 : isAnyBoxChecked - 저장값 : 전체 체크박스 중 하나라도 체크드 상태인지 여부를 boolean값으로 저장
+                let cartItems = Array.from($('#cartItems > ul').children());                                            // 변수명 : cartItems - 저장값 : HTMLCollection(유사배열객체, 이터러블)에 저장되어 있는 모든 li태그들에 대해 Array.from으로 배열로 변환한 값
+                let isAnyBoxChecked = false;                                                                            // 변수명 : isAnyBoxChecked - 저장값 : 전체 체크박스 중 하나라도 체크드 상태인지 여부
 
                 // 2. 메서드 정의
                 // 메서드명 : checkAnyBoxChecked
-                // 기   능 : (1) 각 자식 요소들의 체크드 여부를 확인 (2) 하나라도 체크드 상태면 break; (3) 모두 체크 해제 상태이면 return;
+                // 기   능 : (1) 각 자식 요소들의 체크드 여부를 확인 (2) 하나라도 체크드 상태면 isAnyBoxChecked에 true 저장
                 let checkAnyBoxChecked = () => {
-                    for(let i = 0; i < children.length; i++) {
-                        if(children[i].children[0].checked) {
-                            return isAnyBoxChecked = true;
+                    for(let cartItem of cartItems) {                                                                    // 변수명 : cartItem - 저장값 : 배열 cartItems의 자식 요소
+                        let input = cartItem.children[0];                                                               // 변수명 : input - 저장값 : cartItem의 첫 번째 자식 요소인 input[type="checkbox"]
+                        if(input.checked) {                                                                             // cartItem에 있는 input의 checked 속성이 true('체크'상태)인 경우
+                            isAnyBoxChecked = true;                                                                     // isAnyBoxChecked에 true 저장
                         }
-                        if( i === children[children.length - 1] && isAnyBoxChecked === false ) return;
                     }
                 }
 
                 let handleSelectedDelBtn = () => {
-                    for(let i = 0; i < children.length; i++) {
-                        let child = children[i];                                                                        // 변수명 : child - 저장값 : ul 태그의 i번쨰 자식 요소인 Li 태그의 참조
-                        let checked = child.children[0].checked;                                                        // 변수명 : checked - 저장값 : ul 태그의 i번째 자식 요소인 li 태그의 체크박스의 상태가 체크드인지 여부
-                        if(checked) {
+                    for(let cartItem of cartItems) {                                                                    // 변수명 : child - 저장값 : ul 태그의 i번쨰 자식 요소인 Li 태그의 참조
+                        let input = cartItem.children[0];                                                               // 변수명 : input - 저장값 : child의 0번째 자식 요소인 input 태그의 참조
+                        let checked = input.checked;                                                                    // 변수명 : checked - 저장값 : 체크박스(input)의 "checked"속성값(true || false)
+                        if(checked) {                                                                                   // 체크박스(input)가 '체크'상태인 경우
                             $.ajax({                                                                                    // $.ajax() start
                                 type:'DELETE',                                                                          // 요청 메서드
-                                url: '/cart/remove?prod_idx=' + child.dataset["pid"] + '&user_idx=' + child.dataset["uid"],  // 요청 URI, 상품번호(prod_idx), 회원번호(user_idx) 변수 처리
+                                url: '/cart/remove?prod_idx=' +cartItem.dataset["pid"] + '&user_idx=' + cartItem.dataset["uid"],  // 요청 URI, 상품번호(prod_idx), 회원번호(user_idx) 파라미터에 담아 요청
                                 success : (result) => {                                                                 // 서버로부터 성공 응답이 도착하면 호출될 함수.
-                                    showList(child.dataset["uid"]);
+                                    showList(cartItem.dataset["uid"]);
                                 },
                                 error : () => {                                                                         // 서버로부터 실패 응답이 도착하면 호출될 함수
                                     alert("error");
