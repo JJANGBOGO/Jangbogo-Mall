@@ -143,8 +143,12 @@
         </section>
       </div>
       <div id="product-desc">
-        <div id="description"></div>
-        <div id="detail"></div>
+        <div id="description">
+
+        </div>
+        <div id="detail">
+
+        </div>
         <div id="review"></div>
         <div id="inquiry">
           <div class="prodInqry-wrap">
@@ -241,6 +245,42 @@
   <script src="https://kit.fontawesome.com/cc28ed1241.js" crossorigin="anonymous"></script>
 <script>
 
+  let showDescription = function(prod_idx) {
+    $.ajax({
+      type: 'GET',
+      url: '/product/productDetail/description?prod_idx='+prod_idx,
+      success: function(result) {
+
+      },
+      error: function() { alert("GET description Error") }
+    })
+  }
+
+  let showDetail = function(prod_idx) {
+    $.ajax({
+      type: 'GET',
+      url: '/product/productDetail/detail?prod_idx='+prod_idx,
+      success: function(infoList) {
+        $('#detail').html(DetailToList(infoList))
+      },
+      error: function() { alert("GET detail Error") }
+    })
+  }
+
+  let DetailToList = function(infoList) {
+
+    let tmp = '<div class="detail-wrap">';
+    tmp += '<h3>상품고시정보</h3>';
+    tmp += '<ul class="detail-product-ul">';
+    tmp += '<li class="prod-warn">주의사항</li>';
+    tmp += '<li class="prod-warn-text">'+ infoList.warn +'</li>';
+    tmp += '<li class="prod-info">상품 안내사항</li>';
+    tmp += '<li class="prod-info-text">'+ infoList.guid +'</li>';
+    tmp += '</ul></div>';
+
+    return tmp;
+  }
+
   let showInqryList = function(prod_idx) {
     $.ajax({
       type:'GET',       // 요청 메서드
@@ -270,10 +310,7 @@
   let showImage = function() {
     //태그안에 들어가있는 주소를 불러와
     let imgAddress = $('.prod-img').data("imgurl");
-    // console.log($('.prod-img').dataset['imgurl']);
     $('#prod-img').css({"background-image":"url("+imgAddress+")"});
-    // console.log("image주소="+imgAddress);
-    // $('#prod-img').css("background-image","url()");
   }
 
   let prodInqryImage = function() {
@@ -332,6 +369,7 @@
     showProdDetailList(prod_idx);
     packingTypeToString();
     showImage();
+    showDetail(prod_idx);
     prodInqryImage();
 
     $('.wishlistBtn').click(function(e) {
@@ -614,7 +652,7 @@
       // [3]. moment 라이브러리 사용해 24시간 형태 날짜 및 시간 확인
       let now24Date = moment(reg_date).format("YYYY-MM-DD");
       let now24Date2 = moment(answer_date).format("YYYY-MM-DD");
-      console.log("?????", now24Date)
+      // console.log("?????", now24Date)
 
 
       tmp += '<tr id="noticeBlock" data-idx=' + inqry.idx

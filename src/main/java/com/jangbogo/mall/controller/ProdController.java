@@ -128,11 +128,27 @@ public class ProdController {
         }
     }
 
-    //상품문의 게시물 가져오기
+    //상세 이미지들 가져오기
+//    @GetMapping("/product/productDetail/description")
+//    @ResponseBody
+//    public ResponseEntity<ProductDetailDto> showDescriptionList(Integer prod_idx) {
+//
+//    }
+
+    @GetMapping("/product/productDetail/detail")
+    @ResponseBody
+    public ResponseEntity<ProductDetailDto> showDetailList(Integer prod_idx) {
+        try {
+            ProductDetailDto infoList = productDetailService.read(prod_idx);
+            return new ResponseEntity<>(infoList, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
-
-    //상세 이미지들을 보여주는 요청
+    //상품상세 정보 가져오기
     @GetMapping("/product/productDetail/list")
     @ResponseBody
     public ResponseEntity<ProductDetailDto> prodDetailList(Integer prod_idx) {
