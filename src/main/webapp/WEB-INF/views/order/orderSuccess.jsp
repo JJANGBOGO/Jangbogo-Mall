@@ -63,7 +63,7 @@
                 let quantity = sessionStorage.getItem("quantity");                                                      // 변수명 : quantity - 카카오페이 서버로부터 응답 받은 주문수량에 해당하는 값
                 let total = sessionStorage.getItem("total");                                                            // 변수명 : total - 카카오페이 서버로부터 응답 받은 결제금액에 해당하는 값
                 let payment_method_type = sessionStorage.getItem("payment_method_type");                                // 변수명 : payment_method - 카카오페이 서버로부터 응답 받은 결제수단에 해당하는 값
-                payment_method_type = (model.payment_method === "MONEY") ? "카카오페이머니결제" : "카드결제";                   // MONEY이면 "카카오페이머니" || CARD면 "카드결제"를 화면에 랜더링한다.
+                payment_method_type = (payment_method_type === "MONEY") ? "카카오페이머니결제" : "카드결제";                   // MONEY이면 "카카오페이머니" || CARD면 "카드결제"를 화면에 랜더링한다.
 
 
                 $("#orderSuccessApprovedAt").text(approved_at);                                                         // '결제승인시각' 특정 위치에 랜더링

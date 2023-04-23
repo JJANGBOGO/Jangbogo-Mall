@@ -48,26 +48,9 @@
         SELECT * FROM SETL WHERE SETL_IDX = #{tid};
     </select>
 
-
     <!--
         태   그 : update
-        기   능 : '결제' 테이블에 '승인'처리 된 결제 정보 업데이트하기
-        아이디명 : updateApprovedSetl
-        반환타입 : int
-        매개변수 : KakaoApproveResponseDto kakaoApproveResponseDto
-    -->
-    <update id="updateApprovedSetl" parameterType="KakaoApproveResponseDto">
-        update SETL
-        SET
-            MN_CD = 1,
-            STATE_CD = 1,
-            DEAL_TM = #{approved_at},
-            UPT_TM = now()
-        WHERE SETL_IDX = #{tid}
-    </update>
-    <!--
-        태   그 : update
-        기   능 : '결제' 테이블에 '취소'처리 된 결제 정보 업데이트하기
+        기   능 : '결제' 테이블에 '취소'처리 된 결제 데이터 업데이트하기                                                              // TODO : 주문 내역 구현 이후 기능 구현
         아이디명 : updateCanceledSetl
         반환타입 : int
         매개변수 : String tid

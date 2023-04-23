@@ -108,7 +108,7 @@ public class KakaoPayService {
     // Host: kapi.kakao.com
     // Authorization: KakaoAK ${APP_ADMIN_KEY}
     // Content-type: application/x-www-form-urlencoded;charset=utf-8
-    public KakaoCancelResponseDto refundResponse() {
+    public KakaoCancelResponseDto refundResponse() {                                                                    // TODO : 주문 내역 구현 이후 기능 구현
                                                                                                                         // 카카오페이 요청 양식
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();                                             // 1. Body 만들기
         String tid = kakaoReadyResponseDto.getTid();
@@ -128,11 +128,11 @@ public class KakaoPayService {
                     "https://kapi.kakao.com/v1/payment/cancel",                                                     // 요청할 서버 주소
                     entity,                                                                                             // 요청할 때 보낼 데이터
                     KakaoCancelResponseDto.class);                                                                      // 요청시 반환되는 데이터 타입
-        } catch (HttpStatusCodeException e) {
-            e.printStackTrace();
-            ResponseEntity.status(e.getRawStatusCode())
+        } catch (HttpStatusCodeException e) {                                                                           // 예외가 발생할 경우,
+            e.printStackTrace();                                                                                        // 1) 예외 정보 출력
+            ResponseEntity.status(e.getRawStatusCode())                                                                 // 2)
                     .headers(e.getResponseHeaders())
-                    .body(e.getResponseBodyAsString()); // **** 한글이 안깨진다!
+                    .body(e.getResponseBodyAsString());                                                                 // 한글이 안깨진다!
         }
         return kakaoCancelResponseDto;
     }

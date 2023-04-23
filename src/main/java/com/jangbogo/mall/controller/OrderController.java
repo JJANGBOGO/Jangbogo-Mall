@@ -31,89 +31,66 @@ public class OrderController {
 
     // 메서드명 : getItemList
     // 기   능 : 주문상품 목록을 불러오는 ajax요청을 처리한다.
-    // 반환타입 : ResponseEntity<List<CartDto>>
+    // 반환타입 : ResponseEntity<List<CartDto>> - list값과 상태코드를 함께 반환하기 위한 클래스
     // 매개변수 : Integer user_idx
     // 요청URL : /order/checkout/list?user_idx=1234 GET
     @GetMapping("/order/checkout/item-list")
     @ResponseBody
     public ResponseEntity<List<CartDto>> getItemList(Integer user_idx) {
-        // 변수명 : list
-        // 저장값 : CartDto 저장소 List
-        List<CartDto> list = null;
+        List<CartDto> list = null;                                                                                      // 변수명 : list - 저장값 : CartDto 저장소 List
         try {
-            // cartService의 getList메서드에 인자로 회원번호를 지정하여 호출, 반환값을 list에 저장
-            list = cartService.getList(user_idx);
-            // ResponseEntity<List<CartDto> list값과 상태코드를 함께 반환하기 위한 클래스
-            // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
-            return new ResponseEntity<List<CartDto>>(list, HttpStatus.OK);
-        } catch (Exception e) {
-            // 에러 발생 시, 에러 내용을 로그에 출력
-            e.printStackTrace();
-            // 에러 발생 시, list값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
-            return new ResponseEntity<List<CartDto>>(list, HttpStatus.BAD_REQUEST);
+            list = cartService.getList(user_idx);                                                                       // cartService의 getList메서드에 인자로 회원번호를 지정하여 호출, 반환값을 list에 저장
+            return new ResponseEntity<List<CartDto>>(list, HttpStatus.OK);                                              // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
+        } catch (Exception e) {                                                                                         // 에러 발생 시
+            e.printStackTrace();                                                                                        // 1) 에러 내용을 로그에 출력
+            return new ResponseEntity<List<CartDto>>(list, HttpStatus.BAD_REQUEST);                                     // 2) list값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
         }
     }
 
     // 메서드명 : getOrdererInfo
     // 기   능 : 주문자 정보 불러오기
-    // 반환타입 : ResponseEntity<Map>
+    // 반환타입 : ResponseEntity<Map> - list값과 상태코드를 함께 반환하기 위한 클래스
     // 요청URL : order/checkout/orderer?user_idx=1234 GET
     @GetMapping("/order/checkout/orderer")
     @ResponseBody
     public ResponseEntity<Map> getOrderInfo(HttpSession session) {
-        // 변수명 : ordererInfo
-        // 저장값 : 세션에 저장된 회원번호(idx)
-        Integer idx = (Integer)(session.getAttribute("idx"));
-
-        User user = null;
-        String mpno = "";
-        String nick_nm = "";
-        String email = "";
-
-        Map map = new HashMap();
+        Integer idx = (Integer)(session.getAttribute("idx"));                                                     // 변수명 : ordererInfo - 저장값 : 세션에 저장된 회원번호(idx)
+        User user = null;                                                                                               // 변수명 : user - 저장값 : userDto
+        String mpno = "";                                                                                               // 변수명 : mpno - 저장값 : 휴대폰번호
+        String nick_nm = "";                                                                                            // 변수명 : nick_nm - 저장값 : 닉네임
+        String email = "";                                                                                              // 변수명 : email - 저장값 : 이메일
+        Map map = new HashMap();                                                                                        // 변수명 : map - 저장값 : 주문자 정보를 K/V로 저장할 저장소
         try {
-            // cartService의 getList메서드에 인자로 회원번호를 지정하여 호출, 반환값을 list에 저장
-//            list = cartService.getList(user_idx);
-//            ordererInfo = "{ username : 정지우, ph : 01084354496, email : djdu4496@gmail.com}";
-            user = userService.selectUser(idx);
-            mpno = user.getMpno();
-            nick_nm = user.getNick_nm();
-            email = user.getEmail();
-            map.put("nick_nm", nick_nm);
-            map.put("email", email);
-            map.put("mpno", mpno);
-            // ResponseEntity<List<CartDto> list값과 상태코드를 함께 반환하기 위한 클래스
-            // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
-            return new ResponseEntity<Map>(map, HttpStatus.OK);
-        } catch (Exception e) {
-            // 에러 발생 시, 에러 내용을 로그에 출력
-            e.printStackTrace();
-            // 에러 발생 시, list값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
-            return new ResponseEntity<Map>(map, HttpStatus.BAD_REQUEST);
+            user = userService.selectUser(idx);                                                                         // 회원의 UserDto 저장
+            mpno = user.getMpno();                                                                                      // 회원의 '휴대폰번호' 저장
+            nick_nm = user.getNick_nm();                                                                                // 회원의 '닉네임' 저장
+            email = user.getEmail();                                                                                    // 회원의 '이메일' 저장
+            map.put("nick_nm", nick_nm);                                                                                // 회원의 '휴대폰번호' map에 K/V로 저장
+            map.put("email", email);                                                                                    // 회원의 '닉네임' map에 K/V로 저장
+            map.put("mpno", mpno);                                                                                      // 회원의 '이메일' map에 K/V로 저장
+            return new ResponseEntity<Map>(map, HttpStatus.OK);                                                         // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
+        } catch (Exception e) {                                                                                         // 에러 발생 시,
+            e.printStackTrace();                                                                                        // 1) 에러 내용을 로그에 출력
+            return new ResponseEntity<Map>(map, HttpStatus.BAD_REQUEST);                                                // 2) list값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
         }
     }
 
     // 메서드명 : getDeliveryInfo
     // 기   능 : 배송 정보 불러오기
-    // 반환타입 : ResponseEntity<User>
+    // 반환타입 : ResponseEntity<User> - user값과 상태코드를 함께 반환하기 위한 클래스
     // 매개변수 : HttpSession session
     // 요청URL : order/checkout/delivery?user_idx=1234 GET
     @GetMapping("/order/checkout/delivery")
     @ResponseBody
     public ResponseEntity<User> getDeliveryInfo(HttpSession session) {
-        Integer idx = (Integer)(session.getAttribute("idx"));
-
-        User user = null;
+        Integer idx = (Integer)(session.getAttribute("idx"));                                                     // 변수명 : ordererInfo - 저장값 : 세션에 저장된 회원번호(idx)
+        User user = null;                                                                                               // 변수명 : user - 저장값 : userDto
         try {
             user = userService.selectUser(idx);
-            // ResponseEntity<User> list값과 상태코드를 함께 반환하기 위한 클래스
-            // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
-            return new ResponseEntity<User>(user, HttpStatus.OK);
-        } catch (Exception e) {
-            // 에러 발생 시, 에러 내용을 로그에 출력
-            e.printStackTrace();
-            // 에러 발생 시, list값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
-            return new ResponseEntity<User>(user, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<User>(user, HttpStatus.OK);                                                       // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
+        } catch (Exception e) {                                                                                         // 에러 발생 시,
+            e.printStackTrace();                                                                                        // 1) 에러 내용을 로그에 출력
+            return new ResponseEntity<User>(user, HttpStatus.BAD_REQUEST);                                              // 2) user값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
         }
     }
 
@@ -136,31 +113,10 @@ public class OrderController {
         return "/order/orderSuccess";
     }
 
-    // 메서드명 : getCouponList
-    // 기   능 : 쿠폰 목록 불러오기
-    // 반환타입 :
-    // 요청URL : order/checkout/coupons?user_idx=1234 GET
-    @GetMapping("/order/checkout/coupons")
-    @ResponseBody
-    public ResponseEntity<List<String>> getCouponList() {
-        List<String> list = new ArrayList();
-        try {
-            list.add("첫주문 감사 5천원 할인쿠폰(3만원 이상 주문시)");
-            list.add("배송비 무료 쿠폰");
-            // ResponseEntity<List<CouponDto> list값과 상태코드를 함께 반환하기 위한 클래스
-            // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
-            return new ResponseEntity<List<String>>(list, HttpStatus.OK);
-        } catch(Exception e) {
-            // 에러 발생 시, 에러 내용을 로그에 출력
-            e.printStackTrace();
-            // 에러 발생 시, list값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
-            return new ResponseEntity<List<String>>(list, HttpStatus.BAD_REQUEST);
-        }
-    }
 
     // 메서드명 : getPaymentMethodList
     // 기   능 : 결제수단 목록 불러오기
-    // 반환타입 : ResponseEntity<List<String>>
+    // 반환타입 : ResponseEntity<List<String>> - list값과 상태코드를 함께 반환하기 위한 클래스
     // 요청URL : order/checkout/payment?user_idx=1234 GET
     @GetMapping("/order/checkout/payment")
     @ResponseBody
@@ -168,14 +124,10 @@ public class OrderController {
         List<String> list = new ArrayList();
         try {
             list.add("카카오페이");
-            // ResponseEntity<List<CouponDto> list값과 상태코드를 함께 반환하기 위한 클래스
-            // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
-            return new ResponseEntity<List<String>>(list, HttpStatus.OK);
-        } catch(Exception e) {
-            // 에러 발생 시, 에러 내용을 로그에 출력
-            e.printStackTrace();
-            // 에러 발생 시, list값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
-            return new ResponseEntity<List<String>>(list, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<List<String>>(list, HttpStatus.OK);                                               // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
+        } catch(Exception e) {                                                                                          // 에러 발생 시,
+            e.printStackTrace();                                                                                        // 1) 에러 내용을 로그에 출력
+            return new ResponseEntity<List<String>>(list, HttpStatus.BAD_REQUEST);                                      // 2) list값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
         }
     }
 
@@ -184,59 +136,11 @@ public class OrderController {
     // 매개변수 : HttpSession session
     // 반환타입 : boolean
     private static boolean loginCheck(HttpSession session) {
-        // session에 저장된 idx값이 null이 아니면 true 반환
-        return session.getAttribute("idx") != null;
+        return session.getAttribute("idx") != null;                                                               // session에 저장된 idx값이 null이 아니면 true 반환
     }
 
-    // 메서드명 : saveOrderForm
-    // 기   능 : 주문서 작성 내용을 '주문' 데이터에 저장한다.
-    // 반환타입 : ResponseEntity<String>
-//    @PostMapping("/order/checkout/submit")
-//    public ResponseEntity<OrderDto> saveOrderForm(@RequestBody OrderDto orderDto) {                                     // 변수명 : OrderDto - 저장값 : 주문번호(IDX, PK)가 null인 OrderDto - OrderDto{idx=null, ordr_nm='정지우', mpno='010-8435-4496', user_idx=1235}
-//        String msg = "";
-//        int rowCnt = 0;
-//        OrderDto orderDtoWithIdx = null;                                                                                // 변수명 : orderDtoWithIdx - 저장값 : 주문번호(IDX, PK)가 저장된 OrderDto
-//        try {
-//            // rowCnt가 1일 경우, 성공 응답을 보낸다.
-//            // 1이 아닐 경우, 에러 발생 및 리턴
-//            // ResponseEntity<String> 성공 메시지 "SAVE_OK"와 상태코드를 함께 반환하기 위한 클래스
-//            // 성공 시, 'SAVE_OK'와 OK상태코드를 반환 - 상태코드 : 200
-//            rowCnt = orderService.addOrder(orderDto);
-//            if(rowCnt == 0) new Exception("insert failure.");
-//            orderDtoWithIdx = orderService.getOrderDto(orderDto.getIdx());                                              // OrderDto{idx=41, ordr_nm='정지우', mpno='010-8435-4496', user_idx=1235}
-//            msg = "SAVE_OK";
-//            return new ResponseEntity<OrderDto>(orderDto, HttpStatus.OK);
-//        } catch(Exception e) {
-//            // 에러 발생 시, 에러 내용을 로그에 출력
-//            e.printStackTrace();
-//            // ResponseEntity<String> 실패 메시지 "SAVE_ERR"와 상태코드를 함께 반환하기 위한 클래스
-//            // 에러 발생 시, "SAVE_ERR"와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
-//            msg = "SAVE_ERR";
-//            return new ResponseEntity<OrderDto>(orderDto, HttpStatus.BAD_REQUEST);
-//        }
-//    }
-
-    // 메서드명 : saveTid
-    // 기   능 : 결제 준비 메서드로부터 받은 응답 중 tid를 db에 저장한다.
-    // 매개변수 : String tid
-    // 반환타입 : ResponseEntity<String>
-//    @GetMapping("/payment/kakao/save-tid")
-//    public ResponseEntity<String> saveTid(String tid, Integer ord_idx, Integer total_amount) {
-//        String msg = "";
-//        Integer rowCnt = 0;
-//        try {
-//            // ResponseEntity<String> 성공 메시지 "SAVE_OK"와 상태코드를 함께 반환하기 위한 클래스
-//            // 성공 시, 'SAVE_OK'와 OK상태코드를 반환 - 상태코드 : 200
-//            rowCnt = orderService.addPayment(tid, ord_idx, total_amount);
-//            msg = "SAVE_OK";
-//            return new ResponseEntity<String>(msg, HttpStatus.OK);
-//        } catch(Exception e) {
-//            // 에러 발생 시, 에러 내용을 로그에 출력
-//            e.printStackTrace();
-//            // ResponseEntity<String> 실패 메시지 "SAVE_ERR"와 상태코드를 함께 반환하기 위한 클래스
-//            // 에러 발생 시, "SAVE_ERR"와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
-//            msg = "SAVE_ERR";
-//            return new ResponseEntity<String>(msg, HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    // 메서드명 : getCouponList                                                                                            // TODO : 3차 개발 예정
+    // 기   능 : 쿠폰 목록 불러오기
+    // 반환타입 : ResponseEntity<List<CouponDto> - list값과 상태코드를 함께 반환하기 위한 클래스
+    // 요청URL : order/checkout/coupons?user_idx=1234 GET
 }

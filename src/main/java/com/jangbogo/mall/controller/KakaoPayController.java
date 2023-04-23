@@ -64,18 +64,15 @@ public class KakaoPayController {
             if(insertPaymentDtoRowCnt == 0) throw new Exception("insert PaymentDto to 'SETL' Table failed!");           // 데이터 저장 실패 시, 예외 발생
             cartService.removeAll(orderDto.getUser_idx());                                                              // '주문완료' 처리 시, 장바구니 목록 초기화
 
-//          model.addAttribute("model", kakaoApproveResponseDto);                                                       // 뷰에 전달할 데이터를 모델(model)에 저장
-            rattr.addFlashAttribute("model", kakaoApproveResponseDto);
+            rattr.addFlashAttribute("model", kakaoApproveResponseDto);                                     // 뷰에 전달할 데이터를 RedirectAttributes 객체에 저장
             session.removeAttribute("orderDto");                                                                  // 세션에 저장되어 있는 주문 데이터 객체(orderDto) 삭제
             session.removeAttribute("paymentDto");                                                                // 세션에 저장되어 있는 결제 데이터 객체(paymentDto) 삭제
-            return "redirect:/order/checkout/success";
-        } catch (Exception e) {                                                                                         // 예외 처리
-            e.printStackTrace();
-//          throw new Exception("approve KakaoPay request failed!");                                                    // 결제 승인 처리 실패 시, 예외 발생
-            return "redirect:/order/checkout";
-        }
-//      return "order/orderSuccess";                                                                                    // 뷰 이동
 
+            return "redirect:/order/checkout/success";                                                                  // 주문 성공 페이지 이동 메서드의 매핑 경로로 리다이렉트
+        } catch (Exception e) {                                                                                         // 예외 처리
+            e.printStackTrace();                                                                                        // 예외 정보 출력
+            return "redirect:/order/checkout";                                                                          // 주문 실패 시, 주문서 작성 페이지 이동 메서드의 매핑 경로로 리다이렉트
+        }
     }
 
     // 메서드명 : cancel
@@ -94,7 +91,7 @@ public class KakaoPayController {
         return "order/orderFailure";
     }
 
-    // 메서드명 : refund
+    // 메서드명 : refund                                                                                                  // TODO : 주문 내역 및 상세 구현 이후 개발 예정
     // 기   능 : 결제 승인 처리 이후 결제 취소 요청 처리
 //    @GetMapping("/payment/kakao/refund")
 //    public String refund() throws Exception {
