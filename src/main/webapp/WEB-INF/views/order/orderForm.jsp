@@ -81,7 +81,7 @@
             // 기   능 : '결제하기' 버튼을 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
             // 매개변수 : items
             // 반환타입 : String
-            let orderBtnToHtml = (items) => {
+            const orderBtnToHtml = (items) => {
                 let price = 0;                                                                                          // 변수명 : price - 저장값 : 결제 총 금액
                 items.forEach((item) => {
                     price += item.prod_price * item.prod_cnt;
@@ -97,7 +97,7 @@
             // 기   능 : 결제 금액 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
             // 매개변수 : items
             // 반환타입 : String
-            let invoiceToHtml = (items) => {
+            const invoiceToHtml = (items) => {
                 let price = 0;                                                                                          // 변수명 : price - 저장값 : 결제 총 금액
                 items.forEach((item) => {
                     price += item.prod_price * item.prod_cnt;
@@ -143,7 +143,7 @@
             // 기   능 : 주문 상품 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
             // 매개변수 : items - cartDto
             // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
-            let listToHtml = (items) => {
+            const listToHtml = (items) => {
                 let itemCnt = items.length;                                                                             // 변수명 : itemCnt - 저장값 : 장바구니에 담긴 모든 품목 개수
                 let itemsQuantity = 0;                                                                                  // 변수명 : itemsQuantity - 저장값 : 장바구니에 담긴 모든 품목 개수의 합
                 let tmp = "<ul>";                                                                                       // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
@@ -170,9 +170,9 @@
 
             // 메서드명 : ordererToHtml
             // 기   능 : 주문자 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
-            // 매개변수 : ordererInfo - Object(User)
+            // 매개변수 : ordererInfo - 주문자정보(user)
             // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
-            let ordererToHtml = (ordererInfo) => {
+            const ordererToHtml = (ordererInfo) => {
                 let tmp = "";                                                                                           // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
                 tmp += "<div class='orderer-section'>"
                 tmp += "<div class='orderer-inform'>"
@@ -209,7 +209,7 @@
             // 기   능 : 배송 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
             // 매개변수 : items - deliveryDto
             // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
-            let deliveryToHtml = (deliveryInfo) => {
+            const deliveryToHtml = (deliveryInfo) => {
                 let tmp = "";                                                                                           // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
                 tmp += "<div class='delivery-section'>"
                 tmp += "<div class='delivery-inform'>"
@@ -266,9 +266,9 @@
 
             // 메서드명 : paymentMethodsToHtml
             // 기   능 : 결제수단 목록을 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
-            // 매개변수 : items - CouponDto
+            // 매개변수 : paymentMethods - 결제수단
             // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
-            let paymentMethodsToHtml = (paymentMethods) => {
+            const paymentMethodsToHtml = (paymentMethods) => {
                 let tmp = "";                                                                                           // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
                 tmp += "<div class='order__payment-section'>";
                 tmp +=      "<div class='order__payment-inform'>"
@@ -288,7 +288,7 @@
             // 메서드명 : showItemList
             // 기   능 : orderController에 ajax요청하여 주문 상품 목록을 가져온다.
             // 매개변수 : user_idx - 회원번호
-            let showItemList = (user_idx) => {
+            const showItemList = (user_idx) => {
                 $.ajax({                                                                                                // $.ajax() start
                     type:'GET',                                                                                         // 요청 메서드
                     url:'/order/checkout/item-list?user_idx=' + user_idx,                                               // 요청URI
@@ -305,7 +305,7 @@
             // 메서드명 : checkItemQuantity
             // 기   능 : 장바구니 목록 개수가 0개인 경우, 장바구니 페이지로 이동
             // 매개변수 : items - Object
-            let checkItemQuantity = (items) => {
+            const checkItemQuantity = (items) => {
                 if (!items.length) {
                     alert("장바구니에 상품을 담아주세요.")
                     location.href = "/cart";
@@ -315,7 +315,7 @@
             // 메서드명 : showOrdererInfo
             // 기   능 : orderController에 ajax요청하여 주문자 정보를 가져온다.
             // 매개변수 : user_idx - 회원번호
-            let showOrdererInfo = (user_idx) => {
+            const showOrdererInfo = (user_idx) => {
                 $.ajax({                                                                                                // $.ajax() start
                     type:'GET',                                                                                         // 요청 메서드
                     url:'/order/checkout/orderer?user_idx=' + user_idx,                                                 // 요청URI
@@ -326,10 +326,10 @@
                 });                                                                                                     // $.ajax() end
             }
 
-            // 메서드명 : showDeliveryInfo                                                                                // TODO:3차 개발
+            // 메서드명 : showDeliveryInfo
             // 기   능 : orderController에 ajax요청하여 배송 정보를 가져온다.
             // 매개변수 : user_idx - 회원번호
-            let showDeliveryInfo = (user_idx) => {
+            const showDeliveryInfo = (user_idx) => {
                 $.ajax({                                                                                                // $.ajax() start
                     type:'GET',                                                                                         // 요청 메서드
                     url:'/order/checkout/delivery?user_idx=' + user_idx,                                                // 요청URI
@@ -343,7 +343,7 @@
             // 메서드명 : showCouponList                                                                                   // TODO:3차 개발
             // 기   능 : orderController에 ajax요청하여 주문자가 소유한 쿠폰 목록을 가져온다.
             // 매개변수 : user_idx - 회원번호
-            let showCouponList = (user_idx) => {
+            const showCouponList = (user_idx) => {
                 $.ajax({                                                                                                // $.ajax() start
                     type:'GET',                                                                                         // 요청 메서드
                     url:'/order/checkout/coupons?user_idx=' + user_idx,                                                 // 요청URI
@@ -356,7 +356,8 @@
 
             // 메서드명 : showPaymentMethod
             // 기   능 : 결제수단 목록을 가져온다.
-            let showPaymentMethods = (user_idx) => {
+            // 매개변수 : user_idx - 회원번호
+            const showPaymentMethods = (user_idx) => {
                 $.ajax({                                                                                                // $.ajax() start
                     type:'GET',
                     url:'/order/checkout/payment?user_idx=' + user_idx,
@@ -384,7 +385,7 @@
                 // 메서드명 : popupCenter
                 // 기   능 : 자식창을 열고, 스크린 가운데로 위치시키기
                 // 매개변수 : String url, Integer width, Integer height
-                function popupCenter(url, width, height) {
+                const popupCenter = (url, width, height) => {
                     let xPos = (document.body.offsetWidth/2) - (width/2);                                               // 수평 정렬
                     let yPos = (document.body.offsetHeight/2) - (height/2);                                             // 수직 정렬
                     xPos += window.screenLeft;                                                                          // 듀얼 모니터일 때
@@ -454,7 +455,7 @@
                 // 메서드명 : saveTid
                 // 기   능 : 결제 요청시 받아오는 결제고유번호 tid를 db의 '결제' 테이블에 저장한다.
                 // 매개변수 : tid, ord_idx, total_amount
-                let saveTid = (tid, ord_idx, total_amount) => {
+                const saveTid = (tid, ord_idx, total_amount) => {
                     $.ajax({                                                                                            // $.ajax() start
                         url:'/payment/kakao/save-tid?tid=' + tid + '&ord_idx=' + ord_idx +                              // 요청URI
                             "&total_amount=" + total_amount,
