@@ -59,26 +59,26 @@ button {
     vertical-align: middle;
 }
 
-.a {
+.wishlist-box {
     display: flex;
     padding: 24px 20px;
     border-top: 1px solid rgb(244, 244, 244);
 
 }
 
-.b {
+.wishlist-middle {
     display: flex;
     padding-left: 16px;
     width: 650px;
     justify-content: space-between;
 }
 
-.c {
+.wishlist-contentbox {
     padding: 0px 20px;
 
 }
 
-.d {
+.wishlist-prices {
     margin-top: 6px;
 }
 
@@ -88,14 +88,14 @@ a {
     color: inherit;
 }
 
-.span1 {
+.wishlist-dc_rate {
     margin-right: 4px;
     font-size: 16px;
     color: rgb(250, 98, 47);
     font-weight: bold;
 }
 
-.span2 {
+.wishlist-dc_prc {
     margin-right: 4px;
     font-size: 16px;
     color: rgb(51, 51, 51);
@@ -103,7 +103,7 @@ a {
 
 }
 
-.span3 {
+.wishlist-prc {
     margin-right: 4px;
     color: rgb(181, 181, 181);
     font-size: 14px;

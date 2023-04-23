@@ -23,4 +23,13 @@
         values (#{ord_idx}, #{prod_idx}, #{user_idx}, #{ctent}, #{writer});
     </insert>
 
+<!--&lt;!&ndash;    상품후기 작성 조건 (주문번호 회득)&ndash;&gt;-->
+<!--    <select id="get_ord_idx" parameterType="Map" resultType="OrderDto">-->
+<!--        select o.IDX-->
+<!--        from (select *-->
+<!--              from ORD-->
+<!--              where USER_IDX = #{user_idx})as o, ORD_DTL as d-->
+<!--        where o.IDX = d.ORD_IDX and d.PROD_IDX = #{prod_idx} and o.STATE_CD=4;-->
+<!--    </select>-->
+
 </mapper>

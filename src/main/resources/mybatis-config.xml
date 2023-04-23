@@ -17,5 +17,8 @@
         <typeAlias alias="Address" type="com.jangbogo.mall.domain.Address"/>
 
         <typeAlias alias="ProdReviewDto" type="com.jangbogo.mall.domain.ProdReviewDto"/>
+
+        <typeAlias alias="OrderDetailDto" type="com.jangbogo.mall.domain.OrderDetailDto"/>
+        <typeAlias alias="OrderDto" type="com.jangbogo.mall.domain.OrderDto"/>
     </typeAliases>
 </configuration>

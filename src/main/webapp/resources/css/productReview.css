@@ -57,15 +57,15 @@
     flex: 0 0 225px;
 }
 .side-headerbox{
-    display: flex;
+    /*display: flex;*/
     -webkit-box-align: center;
     align-items: center;
-    margin: 15px 0px 7px;
+    margin: 0px 0px 7px;
 }
 .rank{
     display: inline-block;
     /*height: 18px;*/
-    border: 1px solid #f58412;
+    border: 1px solid black;
     border-radius: 3px;
     padding: 3px 4px 3px 5px;
     margin-right: 4px;
@@ -75,7 +75,7 @@
     /*text-align: center;*/
     /*word-break: keep-all;*/
     background-color: rgb(255, 255, 255);
-    color: #f58412;
+    color: black;
 }
 .rank2{
     display: inline-block;
@@ -91,6 +91,25 @@
     /* word-break: keep-all; */
     background-color: #f58412;
     color: rgb(255, 255, 255);
+}
+.rank3{
+    display: inline-block;
+    /*height: 18px;*/
+    border: 1px solid #f58412;
+    border-radius: 3px;
+    padding: 3px 4px 3px 5px;
+    margin-right: 4px;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 10px;
+    /*text-align: center;*/
+    /*word-break: keep-all;*/
+    background-color: rgb(255, 255, 255);
+    color: #f58412;
+
+}
+.my-review{
+    margin-bottom: 5px;
 }
 .name{
     font-weight: 400;
@@ -430,190 +449,7 @@ display: block; */
     cursor: pointer;
 }
 
-/*.modal {*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 0;*/
-
-/*    width: 100%;*/
-/*    height: 100%;*/
-
-/*    display: none;*/
-
-/*    background-color: rgba(0, 0, 0, 0.4);*/
-/*}*/
-
-/*!*.modal.show {*!*/
-/*!*  display: block;*!*/
-/*!*}*!*/
-
-/*.modal .modal_body {*/
-/*    position: absolute;*/
-/*    top: 50%;*/
-/*    left: 50%;*/
-
-/*    width: 600px;*/
-/*    height: 600px;*/
-
-/*    padding: 40px;*/
-
-/*    text-align: center;*/
-
-/*    background-color: rgb(246, 246, 246);*/
-/*    border-radius: 10px;*/
-/*    box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);*/
-
-/*    transform: translateX(-50%) translateY(-50%);*/
-/*    z-index: 1;*/
-/*}*/
-/*.modal_body .inqry_head {*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    justify-content: space-between;*/
-/*}*/
-/*.modal_body .inqry_head .xBtn {*/
-/*    position: relative;*/
-/*    width: 50px;*/
-/*    height: 50px;*/
-/*    border: none;*/
-/*    display: inline-block;*/
-/*    padding: 25px;*/
-/*    margin: 10px;*/
-/*    text-align: center;*/
-/*    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZmlsbD0ibm9uZSIgZD0iTTAgMGgzMnYzMkgweiIvPgogICAgICAgIDxnIHN0cm9rZT0iIzk5OSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIj4KICAgICAgICAgICAgPHBhdGggZD0iTTI2IDI2IDYgNk02IDI2IDI2IDYiLz4KICAgICAgICA8L2c+CiAgICAgICAgPHBhdGggZD0ibTYuMjg0IDUuNTg5LjA3LjA1N0wxNiAxNS4yOTNsOS42NDYtOS42NDdhLjUuNSAwIDAgMSAuNzY1LjYzOGwtLjA1Ny4wN0wxNi43MDcgMTZsOS42NDcgOS42NDZhLjUuNSAwIDAgMS0uNjM4Ljc2NWwtLjA3LS4wNTdMMTYgMTYuNzA3bC05LjY0NiA5LjY0N2EuNS41IDAgMCAxLS43NjUtLjYzOGwuMDU3LS4wN0wxNS4yOTMgMTYgNS42NDYgNi4zNTRhLjUuNSAwIDAgMSAuNjM4LS43NjV6IiBmaWxsPSIjOTk5Ii8+CiAgICA8L2c+Cjwvc3ZnPgo=");*/
-/*    background-size: cover;*/
-/*    background-position: center center;*/
-/*    cursor: pointer;*/
-/*}*/
-/*.modal .modal_body .xBtn span {*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    !* line-height: 0px; *!*/
-/*}*/
-
-/*.modal_body .inqry_head h4 {*/
-/*    font-size: 30px;*/
-/*    line-height: 0;*/
-/*}*/
-
-/*.modal_body .inqry_sub {*/
-/*    display: flex;*/
-/*    position: relative;*/
-/*    left: 12px;*/
-/*}*/
-
-/*.modal_body .inqry_sub img {*/
-/*    position: absolute;*/
-/*    width: 72px;*/
-/*    height: 72px;*/
-/*    object-fit: cover;*/
-/*    border-radius: 5px;*/
-/*    background-color: white;*/
-/*    background-position: 50% 50%;*/
-/*    background-size: cover;*/
-/*    background-repeat: no-repeat;*/
-/*    display: flex;*/
-/*    justify-content: flex-start;*/
-/*    flex-basis: 0;*/
-/*    flex-shrink: 1;*/
-/*    flex-grow: 1;*/
-/*}*/
-
-/*.modal_body .inqry_sub div {*/
-/*    display: flex;*/
-/*    flex-basis: 0;*/
-/*    flex-grow: 6.5;*/
-/*    align-items: center;*/
-/*    padding: 30px;*/
-/*}*/
-
-/*.modal_body .inqry_sub div span {*/
-/*    position: relative;*/
-/*    left: 80px;*/
-/*}*/
-
-/*.modal_body .inqry_title {*/
-/*    display: flex;*/
-/*    margin-top: 16px;*/
-/*    justify-content: space-between;*/
-/*}*/
-/*.modal_body .inqry_title .title {*/
-/*    width: 100px;*/
-/*    padding-top: 12px;*/
-/*}*/
-
-/*.modal_body .inqry_title .title span {*/
-/*}*/
-/*.modal_body .inqry_title .title_input {*/
-/*    height: 44px;*/
-/*    flex-grow: 6.5;*/
-/*    flex-shrink: 1;*/
-/*    flex-basis: 0;*/
-/*}*/
-/*.modal_body .inqry_title .title_input input {*/
-/*    height: 44px;*/
-/*    width: 444px;*/
-/*    padding: 0px 11px 0px 15px;*/
-/*    font-size: 14px;*/
-/*}*/
-/*.modal_body .inqry_content {*/
-/*    display: flex;*/
-/*    margin-top: 16px;*/
-/*    justify-content: space-between;*/
-/*}*/
-/*.modal_body .inqry_content .content {*/
-/*    width: 100px;*/
-/*    padding-top: 12px;*/
-/*}*/
-/*.modal_body .inqry_content .content span {*/
-/*}*/
-/*.modal_body .inqry_content .content_input {*/
-/*    height: 44px;*/
-/*    flex-grow: 6.5;*/
-/*    flex-shrink: 1;*/
-/*    flex-basis: 0;*/
-/*}*/
-/*.modal_body .inqry_content .content_input input {*/
-/*    height: 265px;*/
-/*    width: 444px;*/
-/*    padding: 0px 11px 0px 15px;*/
-/*    font-size: 14px;*/
-/*}*/
-
-/*.modal_body .inqry_secret {*/
-/*    display: flex;*/
-/*    position: absolute;*/
-/*    bottom: 93px;*/
-/*    margin: 0;*/
-/*}*/
-/*.modal_body .inqry_secret .secret_head {*/
-/*    width: 100px;*/
-/*    padding-top: 12px;*/
-/*}*/
-/*.modal_body .inqry_secret label {*/
-/*    position: relative;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    font-size: 14px;*/
-/*    line-height: 30px;*/
-/*    margin-left: 10px;*/
-/*}*/
-/*.modal_body .inqry_secret label input {*/
-/*}*/
-/*.modal_body .inqry_secret label span {*/
-/*}*/
-
-/*.modal_body .inqry_button {*/
-/*    position: absolute;*/
-/*    bottom: 40px;*/
-/*    left: 153px;*/
-/*}*/
-/*.modal_body .inqry_button .closeBtn {*/
-/*    width: 115px;*/
-/*    height: 42px;*/
-/*}*/
-/*.modal_body .inqry_button .register {*/
-/*    width: 115px;*/
-/*    height: 42px;*/
-/*}*/
+.warning-ul li {
+    color: rgb(153, 153, 153);
+    margin-top: 15px;
+}

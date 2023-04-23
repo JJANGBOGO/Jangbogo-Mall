@@ -55,14 +55,14 @@
     /* display: flex; */
 }
 
-.d1 {
+.prd-priceAndcount {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-top: 6px;
 }
 
-.f1 {
+.count-box {
     display: flex;
     border: 1px solid rgb(221, 223, 225);
     justify-content: center;
@@ -77,14 +77,14 @@
     font-size: 16px;
 }
 
-.span22 {
+.prd-priceOrigin {
     font-weight: bold;
     font-size: 16px;
 
 
 }
 
-.span33 {
+.prd-priceDC {
     margin-left: 4px;
     color: rgb(181, 181, 181);
     text-decoration: line-through;

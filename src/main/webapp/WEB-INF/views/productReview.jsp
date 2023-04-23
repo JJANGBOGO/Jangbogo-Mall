@@ -24,7 +24,7 @@
     <section class="review-section">
         <header class="review-header">
             <h2 class="header">상품 후기</h2>
-            <div class="">
+            <div class="reviewBtn-box">
                 <button class="review-button" type="button">작성하기</button>
             </div>
         </header>
@@ -77,8 +77,8 @@
                     <div class="body-warning">
                         <label class="warning-side"></label>
                         <ul class="warning-ul">
-                            <li style="color: rgb(153, 153, 153); margin-top: 15px"> *  상품과 무관하거나 반복되는 동일 단어/문장을 사용하여 후기로 볼 수 없는 글, 판매자와 고객의 후기 이용을 방해한다고 판단되는 경우, 배송 박스, 구매 상품을 구분할 수 없는 전체 사진, 화면캡쳐, 음란 및 부적절하거나 불법적인 내용은 통보없이 삭제 및 적립금 회수될 수 있습니다.</li>
-                            <li style="color: rgb(153, 153, 153); margin-top: 15px"> *  전화번호, 이메일, 주소, 계좌번호 등 개인정보가 노출되지 않도록 주의해주세요.</li>
+                            <li> *  상품과 무관하거나 반복되는 동일 단어/문장을 사용하여 후기로 볼 수 없는 글, 판매자와 고객의 후기 이용을 방해한다고 판단되는 경우, 배송 박스, 구매 상품을 구분할 수 없는 전체 사진, 화면캡쳐, 음란 및 부적절하거나 불법적인 내용은 통보없이 삭제 및 적립금 회수될 수 있습니다.</li>
+                            <li> *  전화번호, 이메일, 주소, 계좌번호 등 개인정보가 노출되지 않도록 주의해주세요.</li>
                         </ul>
                     </div>
                     <div class="body-footer">
@@ -115,22 +115,6 @@
 
     let prod_idx = 1 // 상품번호
 
-    // 상품후기 목록 조회 함수
-    let showList = function (){
-        $.ajax({
-            type:'GET',       // 요청 메서드 // 상품후기 목록 가저오기
-            url: '/product/review/list?prod_idx='+prod_idx,  // 요청 URI
-            // headers : { "content-type": "application/json"}, // 요청 헤더
-            // dataType : 'text', // 전송받을 데이터의 타입 / 생략하면 기본이 JSON 이다
-            // data : JSON.stringify(person),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
-            success : function(result){
-                $(".review-lists").html(ReviewListToHtml(result));    // 서버로부터 응답이 도착하면 호출될 함수
-                $(".count").html(result.length);
-            },
-            error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
-        }); // $.ajax()
-
-    }
 
     // main() 처음 페이지 이동시 실행 함수
     $(document).ready(function (){
@@ -140,7 +124,6 @@
         <%--console.log("${sessionScope.email}");--%>
         <%--console.log("${email}")--%>
         <%--console.log("${nickName}")--%>
-        <%--console.log()--%>
         <%--console.log("${pd}");--%>
 
         // 상품후기 조회 함수 호출
@@ -159,19 +142,19 @@
                 return;
             }
 
-            $('.review-title').children('h2').text('후기 수정'); // 수정 모달창에 타이틀  -> '후기 수정'으로 변경
+            $('.review-title').children('h2').text('후기 수정');       // 수정 모달창에 타이틀  -> '후기 수정'으로 변경
 
-            $('.body-footer').css("display","flex");           // 수정 모달창에 비공개체크박스 보이게 하기
-            $('.insertBtn').css("display","none");              // 수정 모달창에 '등록' 버튼 안 보이게 하기
-            $('.updateBtn').css("display","block");             // 수정 모달창에 '수정' 버튼 보이게 하기
+            $('.body-footer').css("display","flex");                // 수정 모달창에 비공개체크박스 보이게 하기
+            $('.insertBtn').css("display","none");                  // 수정 모달창에 '등록' 버튼 안 보이게 하기
+            $('.updateBtn').css("display","block");                 // 수정 모달창에 '수정' 버튼 보이게 하기
 
-            $('.img-name').text(name);                          // 수정 모달창에 상품이름 추가
-            $('.title-img').children().attr("src",upload_path); // 수정 모달창에 이미지 추가
-            // $('.content').text(content);                        // 수정 모달창에 후기 내용 추가
-            $('.content').val(content);                         // 수정 모달창에 후기 내용 추가
-            $('.hidden-idx').attr("value",idx);                 // 수정 모달창에(input) 후기 일련번호 추가
+            $('.img-name').text(name);                              // 수정 모달창에 상품이름 추가
+            $('.title-img').children().attr("src",upload_path);     // 수정 모달창에 이미지 추가
+            // $('.content').text(content);                         // 수정 모달창에 후기 내용 추가
+            $('.content').val(content);                             // 수정 모달창에 후기 내용 추가
+            $('.hidden-idx').attr("value",idx);                     // 수정 모달창에(input) 후기 일련번호 추가
 
-            openModal();                                        // 수정 모달창 오픈
+            openModal();                                            // 수정 모달창 오픈
         })
 
         // 수정창 (X버튼) 클릭
@@ -184,24 +167,24 @@
             closeModal();
         })
 
-        // 수정 모달창 (수정) 버튼 클릭
+        // 수정 모달창 (수정) 버튼 클릭 시
         $(".updateBtn").click(function(){
             if(!confirm("수정하신 내용으로 후기 내용을 변경하시겠습니까?"))return;
             let ctent = $('.content').val();
             let opub_yn = $('.opubCheckbox').is(':checked');
             let idx = $('.hidden-idx').val();
             $.ajax({
-                type:'PATCH',       // 요청 메서드 //
-                url: '/product/review/'+idx,  // 요청 URI
-                headers : { "content-type": "application/json"}, // 요청 헤더
-                data : JSON.stringify({ctent:ctent,opub_yn:opub_yn}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
+                type:'PATCH',                                           // 요청 메서드 //
+                url: '/product/review/'+idx,                            // 요청 URI
+                headers : { "content-type": "application/json"},        // 요청 헤더
+                data : JSON.stringify({ctent:ctent,opub_yn:opub_yn}),   // 서버로 전송할 데이터. stringify()로 직렬화 필요.
                 success : function(result){
                     // alert(result);
                     closeModal();
                     showList();
 
                 },
-                error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+                error   : function(){ alert("error") }                  // 에러가 발생했을 때, 호출될 함수
             }); // $.ajax()
 
         });
@@ -210,12 +193,12 @@
         // 작성하기 버튼 클릭 시(작성 모달창 오픈)
         $(".review-button").click(function(){
 
-            $('.review-title').children('h2').text('후기 작성'); // 작성 모달창에 타이틀  -> '후기 작성'으로 변경
+            $('.review-title').children('h2').text('후기 작성');    // 작성 모달창에 타이틀  -> '후기 작성'으로 변경
 
             $('.updateBtn').css("display","none");               // 작성 모달창에 '수정' 버튼 안 보이게 하기
             $('.insertBtn').css("display","block");              // 작성 모달창에 '등록' 버튼 보이게 하기
             $('.body-footer').css("display","none");             // 작성 모달창에 비공개체크박스 안 보이게 하기
-            // $('.content').val("");                      // 작성 내용 빈칸으로 초기화
+            // $('.content').val("");                            // 작성 내용 빈칸으로 초기화
 
             openModal(); // 작성 모달창 오픈하기
 
@@ -260,8 +243,18 @@
                 tmp += '<div class="review-list">'
                 tmp += '<div class="list-side">'
                 tmp += '<div class="side-headerbox">'
+                if(review.user_idx==${idx}){
+                    tmp += '<div class="my-review">'
+                    tmp += '<span class="rank2">나의 후기</span>'
+                    if(review.opub_yn=='Y'){
+                        tmp += '<span class="rank3">공개</span>'
+                    }else if(review.opub_yn=='N'){
+                        tmp += '<span class="rank3">비공개</span>'
+                    }
+                    tmp += '</div>'
+                }
                 if(review.rnk_cd==2){   // 등급코드(2) 베스트
-                    tmp += '<span class="rank2">베스트</span>'
+                    // tmp += '<span class="rank2">베스트</span>'
                 }else {                 // 등급코드(1) 일반
                     tmp += '<span class="rank">일반</span>'
                 }
@@ -277,10 +270,10 @@
                 tmp += '<div class="article-footer">'
                 tmp += '<div class="footer-box">'
                 tmp += '<span class="article-date">'+moment(review.reg_tm).format("YYYY-MM-DD")+'</span>'
-                tmp += '<button class="thumbsUpBtn">'
-                tmp += '<span class="thumbsUp"></span>'
-                tmp += '<span>좋아요 '+review.like_cnt+'</span>'
-                tmp += '</button>'
+                // tmp += '<button class="thumbsUpBtn">'
+                // tmp += '<span class="thumbsUp"></span>'
+                // tmp += '<span>좋아요 '+review.like_cnt+'</span>'
+                // tmp += '</button>'
                 tmp += '</div>'
                 tmp += '<button class="article-updateBtn" data-upload_path='+review.resv_photo_upload_path+' data-idx='+review.idx+' data-user_idx='+review.user_idx+'>후기수정</button>'
                 tmp += '</div>'
@@ -294,12 +287,30 @@
         return tmp;
     }
 
-    // 함수 모음
-    let closeModal = function (){ // 모달 닫기 함수선언
-        $('.content').val("");                      // 작성 내용 빈칸으로 초기화
+    // 상품후기 목록 조회 함수
+    let showList = function (){
+        $.ajax({
+            type:'GET',                                                 // 요청 메서드 // 상품후기 목록 가저오기
+            url: '/product/review/list?prod_idx='+prod_idx,             // 요청 URI
+            // headers : { "content-type": "application/json"},         // 요청 헤더
+            // dataType : 'text',                                       // 전송받을 데이터의 타입 / 생략하면 기본이 JSON 이다
+            // data : JSON.stringify(person),                           // 서버로 전송할 데이터. stringify()로 직렬화 필요.
+            success : function(result){
+                $(".review-lists").html(ReviewListToHtml(result));      // 서버로부터 응답이 도착하면 호출될 함수
+                $(".count").html(result.length);
+            },
+            error   : function(){ alert("error") }                      // 에러가 발생했을 때, 호출될 함수
+        }); // $.ajax()
+
+    }
+
+    // 모달 닫기 함수
+    let closeModal = function (){
+        $('.content').val("");    // 작성 내용 빈칸으로 초기화
         $(".reviewUpdate-container").css("display", "none");
         $("body").css("overflow","visible");
     }
+    // 모달 오픈 함수
     let openModal = function (){
         $(".reviewUpdate-container").css("display", "block");
         $("body").css("overflow","hidden");

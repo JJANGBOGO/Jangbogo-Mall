@@ -1,5 +1,6 @@
 package com.jangbogo.mall.controller;
 
+import com.jangbogo.mall.domain.OrderDto;
 import com.jangbogo.mall.domain.ProductDto;
 import com.jangbogo.mall.domain.ProdReviewDto;
 import com.jangbogo.mall.service.ProdReviewService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class ProdReviewController {
     // 상품후기 처음에 필요한 것  1.상품번호(조회) 2.회원번호(수정,삭제,추가)
     // 상품후기 목록을 가져오는 메서드
     @GetMapping("/product/review/list") // /product/review/list?prod_idx=1  GET
-    public ResponseEntity<List<ProdReviewDto>> list(Integer prod_idx, HttpSession session){
+    public ResponseEntity<List<ProdReviewDto>> list(Integer prod_idx, HttpSession session){ // 상품번호, 회원번호 보유중
         List<ProdReviewDto> list = null;
         Integer user_idx = (Integer)session.getAttribute("idx");        // 세션에서 회원번호를 가져온다
         try {
@@ -49,6 +51,8 @@ public class ProdReviewController {
 
     }
 
+
+    // 상품후기 내용을 수정하는 메서드
     @PatchMapping("/product/review/{idx}") // /product/review/1  PATCH
     public ResponseEntity<String> update(@PathVariable Integer idx, @RequestBody ProdReviewDto prodReviewDto,HttpSession session){
         System.out.println("prodReviewDto = " + prodReviewDto);
