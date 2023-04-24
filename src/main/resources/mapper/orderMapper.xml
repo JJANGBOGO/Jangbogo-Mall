@@ -5,12 +5,62 @@
 
     <!--
         태   그 : insert
-        기   능 : '결제' 테이블에 tid 저장하기
-        아이디명 : saveKakaoPayment
+        기   능 : '결제' 테이블에 주문번호(ord_idx), 카드사승인번호(aprv_idx), 결제고유번호(setl_idx), 주문총금액(amt), 실결제금액(amt) 포함한 데이터 저장하기
+        아이디명 : insertPayment
         반환타입 : String
     -->
-    <insert id="saveKakaoPayment" parameterType="String">
-        insert into SETL (IDX, SETL_IDX)
-        values (1,#{tid})
+    <insert id="insertPayment" parameterType="PaymentDto">
+        insert into SETL(ORD_IDX, APRV_IDX, SETL_IDX, ORD_TOT_AMT, AMT)
+        values (#{ord_idx}, #{aprv_idx}, #{setl_idx}, #{amt}, #{amt})
     </insert>
+
+    <!--
+        태   그 : insert
+        기   능 : '주문' 테이블에 회원번호(user_idx), 주문자명(ordr_nm), 주문자휴대폰번호(mpno), 주문총금액(tot_amt), 주문상품개수(gtot), 주문상품품목수(plist_tot) 포함한 데이터 저장하기
+        아이디명 : addOrder
+        반환타입 : Integer
+        매개변수 : OrderDto orderDto
+    -->
+    <insert id="insertOrder" parameterType="OrderDto" useGeneratedKeys="true" keyProperty="idx">
+        insert into ORD(USER_IDX, ORDR_NM, MPNO, TOT_AMT, GTOT, PLIST_TOT)
+        values(#{user_idx}, #{ordr_nm}, #{mpno}, #{tot_amt}, #{gtot}, #{plist_tot});
+    </insert>
+
+    <!--
+        태   그 : select
+        기   능 : '주문' 테이블 중 특정 주문 행 조회하기
+        아이디명 : selectOrder
+        반환타입 : String
+        매개변수 : Integer user_idx
+    -->
+    <select id="selectOrder" parameterType="Integer" resultType="OrderDto">
+        select * from ORD
+        where IDX = #{idx};
+    </select>
+    <!--
+        태   그 : select
+        기   능 : '결제' 테이블 중 특정 주문 행 조회하기
+        아이디명 : selectPayment
+        반환타입 : PaymentDto
+        매개변수 : String tid
+    -->
+    <select id="selectPayment" parameterType="String" resultType="PaymentDto">
+        SELECT * FROM SETL WHERE SETL_IDX = #{tid};
+    </select>
+
+    <!--
+        태   그 : update
+        기   능 : '결제' 테이블에 '취소'처리 된 결제 데이터 업데이트하기                                                              // TODO : 주문 내역 구현 이후 기능 구현
+        아이디명 : updateCanceledSetl
+        반환타입 : int
+        매개변수 : String tid
+    -->
+    <update id="updateCanceledSetl" parameterType="String">
+        update SETL
+        SET STATE_CD = 2,
+            DEAL_TM = #{approved_at},
+            UPT_TM = now()
+        WHERE SETL_IDX = #{tid}
+    </update>
+
 </mapper>

@@ -251,7 +251,9 @@ select[name="coupons"] {
     background: rgb(250, 250, 250);
     color: rgb(204, 204, 204);
 }
-
+#orderSectionCoupon { /* TODO : 3차 개발 */
+    display: none;
+}
 /* 주문서 관련 주석 */
 .paragraph {
     padding-left: 16px;
