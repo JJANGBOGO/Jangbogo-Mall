@@ -11,7 +11,7 @@
         <div class="header">마이장보고</div>
         <ul>
             <li>
-                <a href="">
+                <a href="/mypage/order/list">
                     주문 내역
                 </a>
             </li>

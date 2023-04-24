@@ -21,7 +21,8 @@ public class WishlistController {
 
     // 위시리스트 페이지 이동
     @GetMapping("/wishlist")
-    public String wishlistPage() {
+    public String wishlistPage(HttpServletRequest request) {
+        if(!loginCheck(request)) return "redirect:/user/login?toURL="+request.getRequestURL();
         return "wishlist";
     }
 
@@ -57,7 +58,7 @@ public class WishlistController {
             return new ResponseEntity<>("DEL_ERR", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    // 장바구니에 상품 존재 확인 메서드
+    // 장바구니에 상품 존재 확인 하고 추가하는 메서드
     @PostMapping("/wishlists") //wishlists?prod_idx=1&prod_cnt=1 POST
     public ResponseEntity<String> insert(Integer prod_idx, Integer prod_cnt,HttpSession session,RedirectAttributes ratt){
         int user_idx = (int) session.getAttribute("idx");
