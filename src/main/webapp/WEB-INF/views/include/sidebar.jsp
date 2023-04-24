@@ -4,7 +4,7 @@
         <div class="header">마이장보고</div>
         <ul>
             <li>
-                <a href="">
+                <a href="/mypage/order/list">
                     주문 내역
                 </a>
             </li>
@@ -14,7 +14,7 @@
                 </a>
             </li>
             <li>
-                <a href="/mypage/address" class="<c:if test='${mypageUrl eq "/mypage/address"}'>active</c:if> ">
+                <a href="/mypage/address/list" class="<c:if test='${mypageUrl eq "/mypage/address"}'>active</c:if> ">
                     배송지 관리
                 </a>
             </li>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.jangbogo.mall.dao.MyOrderMapper">
+    <select id="selectAll" parameterType="int">
+        select p.*
+        from (select * from PRODUCT) p, WISHLIST w
+        where p.IDX = w.PROD_IDX and w.USER_IDX= #{user_idx}
+        order by w.REG_TM;
+    </select>
+
+</mapper>
