@@ -1,7 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <html>
 <head>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
@@ -17,66 +15,31 @@
 <div class="mypage-banner"></div>
 <div class="mypage-base">
     <%@ include file="/WEB-INF/views/include/sidebar.jsp" %>
-    <div class="mypage-content">
-
+    <div class="wishlist">
         <div class="king">
             <div class="title">
                 <h2 class="h2">
-                    찜한 상품(${totalCnt})
+                    <span>찜한 상품(</span><span class="prdcnt"></span><span>)</span>
                 </h2>
-                <span class="titlespan">
-          찜한 상품은 최대 200개까지 저장됩니다
-        </span>
+                <span class="titlespan">찜한 상품은 최대 200개까지 저장됩니다</span>
             </div>
+            <div class="wishlist-list">
 
-            <c:forEach var="product" items="${list}" varStatus="i">
-                <div class="a">
-                    <a href="">
-                        <img src="${product.resv_photo_upload_path}" alt="">
-                    </a>
-
-                    <div class="b">
-                        <div class="c">
-                            <a href="" id="name${product.idx}">${product.name}</a>
-                            <div class="d">
-                                    <%--만약 상품 할인율이 0이면 --%>
-                                <c:choose>
-                                    <c:when test="${product.dc_rate != 0}">
-                                        <span class="span1" id="dc_rate${product.idx}">${product.dc_rate}%</span>
-                                        <span class="span2" id="dc_prc${product.idx}"><fmt:formatNumber value="${product.prc - (product.prc / 100 * product.dc_rate)}" pattern="#,###"/>원</span>
-                                        <span class="span3" id="prc${product.idx}"><fmt:formatNumber value="${product.prc}" pattern="#,###"/>원</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span class="span2" id="dc_prc${product.idx}"><fmt:formatNumber value="${product.prc}" pattern="#,###"/>원</span>
-                                        <span class="span3" id="prc${product.idx}"></span>
-                                    </c:otherwise>
-                                </c:choose>
-
-                            </div>
-                        </div>
-
-                        <div class="e">
-                            <button class="css-1h4lltl e4nu7ef3" type="button" width="104" height="36" radius="4"
-                                    onclick=remove(${product.idx})>삭제
-                            </button>
-                            <button class="css-102v0ri e4nu7ef3" type="button" width="104" height="36" radius="4"
-                                    onclick=show(${product.idx})><span class="css-ymwvow e4nu7ef1">담기</span></button>
-                        </div>
-                    </div>
-                </div>
-            </c:forEach>
+            </div>
         </div>
+
+
         <div class="background">
             <div class="popup">
-                <div class="b1">
-                    <div class="c1">
-                        <span class="c3">1</span>
+                <div>
+                    <div>
+                        <span class="prd-name">1</span>
                     </div>
-                    <div class="d1">
-                        <div class="e1">
-                            <span class="span22">2</span><span class="span33">3</span>
+                    <div class="prd-priceAndcount">
+                        <div class="prd-price">
+                            <span class="prd-priceOrigin">2</span><span class="prd-priceDC">3</span>
                         </div>
-                        <div class="f1">
+                        <div class="count-box">
                             <button class="button1" type="button"></button>
                             <%--                        <button class="button3" type="button"></button>--%>
 
@@ -92,24 +55,20 @@
                         <p class="total2">
                             합계
                         </p>
-                        <div style="padding-top: 15px">
-                  <span class="price">
-                    66,000
-                  </span>
-                            <span style="font-weight: 600 ;vertical-align: 3px; margin-right: 5px">
-                     원
-                  </span>
+                        <div>
+                  <span class="price"></span>
+                            <span class="price-won">원</span>
                         </div>
                     </div>
                 </div>
                 <div id="close" class="btn-container">
                     <button class="cancle-btn">
-                        <span style="font-size: 16px;">취소</span>
+                        <span class="cancle-cartBtn">취소</span>
                     </button>
                     <button class="insert-btn">
-                        <span style="font-size: 16px; color: rgb(255, 255, 255);">장바구니 담기</span>
+                        <span class="insert-cartBtn">장바구니 담기</span>
                     </button>
-                    <input class="hidden_input" type="hidden" value="">
+                    <input class="hidden_input" name="hidden_input" type="hidden" value="">
                 </div>
             </div>
         </div>
@@ -118,102 +77,154 @@
 </div>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
-    let msg = "${msg}"
-    if(msg=="add") alert("장바구니에 상품이 담겼습니다");
-    if(msg=="addmore") alert("장바구니에 상품이 담겼습니다\n이미 담은 상품의 수량을 추가했습니다");
-    function remove(prod_idx) {
-        if (!confirm("정말로 삭제하시겠습니까")) return;
-        let form = document.createElement("form");
-        form.setAttribute("action", '<c:url value="/mypage/removeWishlist?prod_idx='+prod_idx+'"/>')
-        form.setAttribute("method", "post");
-        document.body.appendChild(form);
-        form.submit();
-        <%--location.href='<c:url value="/mypage/removeWishlist?prod_idx='+prod_idx+'"/>'--%>
-    }
 
-
-    // 최종 담기 버튼 클릭시 insertCart 함수 실행
-    document.querySelector('.insert-btn').addEventListener('click',insertCart);
-    // 최종 장바구니에 담기 클릭 시
-    function insertCart() {
-
-        let form = document.createElement("form");
-        let prod_idx = document.querySelector('.hidden_input').value;
-        let prod_cnt = document.querySelector('.count').innerHTML;
-
-        let obj = document.createElement('input');
-        obj.setAttribute('type', 'hidden');
-        // obj.setAttribute('name', 'userid');
-        // obj.setAttribute('value', prod_idx);
-        form.appendChild(obj);
-        form.setAttribute('method', 'post');
-        form.setAttribute("action", '<c:url value="/mypage/insertCart?prod_idx='+prod_idx+'&prod_cnt='+prod_cnt+'"/>')
-        document.body.appendChild(form);
-        form.submit();
-    }
-
-
-    // 담기 버튼(모달창 오픈)
-    function show(ioo) {
-
-        let name = document.getElementById("name" + ioo).innerText;  // ex) 홈런볼
-        let prc = document.getElementById("prc" + ioo).innerText;    // ex) 1,200원
-        let dc_prc = document.getElementById("dc_prc" + ioo).textContent; // ex) 1,100원
-
-        // 상품이름, 상품 할인가격, 상품 가격, 상품번호 값을 모달에 넣어준다
-        document.querySelector(".c3").innerHTML = name; // 상품이름 ex)
-        // document.querySelector(".span11").innerHTML = dc_rate; // 할인율
-        document.querySelector(".span22").innerHTML = dc_prc; // 할인된 가격
-        document.querySelector(".span33").innerHTML = prc; // 원래 가격
-        document.querySelector('.price').innerHTML = parseInt(dc_prc.replace(',', "")).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 정규식으로 숫자만
-        document.querySelector('.hidden_input').value = ioo;
-        // 모달창 보이게 클레스 이름 변경
-        document.querySelector(".background").className = "background show";
+    // 위시리스트 목록 조회
+    let showList = function (){
+        $.ajax({
+            type:'GET',       // 요청 메서드 // 위시리스트 목록 가저오기
+            url: '/mypage/wishlists',  // 요청 URI
+            // headers : { "content-type": "application/json"}, // 요청 헤더
+            // dataType : 'text', // 전송받을 데이터의 타입 / 생략하면 기본이 JSON 이다
+            // data : JSON.stringify(person),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
+            success : function(result){
+                $(".wishlist-list").html(listToHtml(result));    // 서버로부터 응답이 도착하면 호출될 함수
+                $(".prdcnt").html(result.length);
+            },
+            error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+        }); // $.ajax()
 
     }
+    // main()
+    $(document).ready(function (){
+        showList();
 
-    // 모달 취소버튼
-    document.querySelector(".cancle-btn").addEventListener("click", close); // document.querySelector("#show").addEventListener("click", show);
-    function close() {
-        document.querySelector(".background").className = "background";
-        counter = 1;
-        count.innerHTML = counter;
-        document.querySelector(".button3").className = "button1";
+        // 위시리스트 장바구니 담기(추가)
+        $(".insert-btn").click(function(){
+            let prod_idx = $('input[name=hidden_input]').text(); // 상품번호
+            let prod_cnt = $('.count').text();       // 장바구니에 담을 상품개수
+            $.ajax({
+                type:'POST',       // 요청 메서드 // 위시리스트에서 장바구니에 담기
+                url: '/mypage/wishlists?prod_idx='+prod_idx+'&prod_cnt=' + prod_cnt,  // 요청 URI
+                success : function(result){
+                    document.querySelector(".background").className = "background";
+                    $('.count').text(counter=1); // 카운터 1로 리셋
+                    $('.button3').attr('class',"button1"); // 버튼 클래스이름 변경
+                    if(result=="DEL_OK1") alert("장바구니에 상품이 담겼습니다");
+                    if(result=="DEL_OK2") alert("장바구니에 상품이 담겼습니다\n이미 담은 상품의 수량을 추가했습니다");
+                    showList(); // 서버로부터 응답이 도착하면 호출될 함수
+                },
+                error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+            }); // $.ajax()
+        });
+
+        // 위시리시트 삭제
+        $('.wishlist-list').on("click",'.delBtn', function (){ //
+            if(!confirm("정말로 삭제하시겠습니까?"))return;
+            // let prod_idx = $(this).closest(".a").attr("data-idx");  // 이거 나중에 할거 다 하고 여쭤보기 (강의랑 조금 다름)
+            let prod_idx = $(this).attr("data-idx");  // 이거 나중에 할거 다 하고 여쭤보기 (강의랑 조금 다름)
+
+            $.ajax({
+                type:'DELETE',       // 요청 메서드 // 삭제 버튼 클릭 시, 해당 위시리스트 상품 삭제 처리
+                url: '/mypage/wishlists/'+prod_idx,  // 요청 URI
+                success : function(result){
+                    showList();
+                },
+                error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+            }); // $.ajax()
+        });
+
+
+        // 위시리스트 담기 버튼 클릭 (모달 창 오픈)
+        $('.wishlist-list').on("click",'.openBtn',function (e){
+            let name = $(this).parent().siblings('.wishlist-contentbox').children('.name').text(); // 요소 선택자 나중에 더 이해하기
+            let dc_price = $(this).parent().siblings('.wishlist-contentbox').children('.wishlist-prices').children('.wishlist-dc_prc').text(); // 요소 선택자 나중에 더 이해하기
+            let price = $(this).parent().siblings('.wishlist-contentbox').children('.wishlist-prices').children('.wishlist-prc').text(); // 요소 선택자 나중에 더 이해하기
+            let prod_idx = $(this).parent().parent().parent().attr('data-idx'); // 요소 선택자 나중에 더 이해하기
+
+            // let name = $(this).attr("data-name");  // 이거 나중에 할거 다 하고 여쭤보기 (강의랑 조금 다름)
+            // let dc_price = $(this).attr("data-dc-price");
+            // let price = $(this).attr("data-price");  // 이거 나중에 할거 다 하고 여쭤보기 (강의랑 조금 다름)
+            // let prod_idx = $(this).attr("data-idx");  // 이거 나중에 할거 다 하고 여쭤보기 (강의랑 조금 다름)
+
+
+            // 상품이름, 상품 할인가격, 상품 가격, 상품번호 값을 모달에 넣어준다
+            $('.prd-name').text(name); // 상품이름 ex) 홈런볼
+            $('.prd-priceOrigin').text(dc_price); // 할인된 가격 ex) 1,500원
+            $('.prd-priceDC').text(price); // 원래 가격 ex) 1,700원
+            $('.price').text(parseInt(dc_price.replace(',', "")).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")); // 기본 1개 가격 ex) 1,500원
+            $('.hidden_input').text(prod_idx); // 상품 번호 ex) 1
+            document.querySelector(".background").className = "background show"; // 모달창 오픈
+            $('.count').text(counter=1); // 기본 장바구니 담는 개수 1개(default)
+        });
+
+        // 모달 창 취소 버튼
+        var close1 = $('.background').on("click",'.cancle-btn',function (){
+            document.querySelector(".background").className = "background";
+            $('.count').text(counter=1); // 카운터 1로 리셋
+            $('.button3').attr('class',"button1"); // 버튼 클래스이름 변경
+        });
+
+
+        let counter = 1;  // 장바구니 담기 카운터  // 처음 기본(default) 개수
+        // 카운터 상품개수조절(-)버튼
+        $('.button1').on('click',function (){
+            $('.count').text(--counter);
+            let price = counter * parseInt($('.prd-priceOrigin').text().replace(',', ""));  // 콤마(,)제거 및 숫자 변환
+            $('.price').text(formatPriceWithComma(price)); // 다시 콤마(,) 추가
+            if(counter<2){                                  // 숫자 2보다 작으면(+) 버튼 비활성화
+                $('.button3').attr('class',"button1");
+            }
+        });
+
+        // 카운터 상품개수조절(+)버튼
+        $('.button2').on('click',function (){
+            $('.count').text(++counter);
+            let price = counter * parseInt($('.prd-priceOrigin').text().replace(',', ""));  // 콤마(,)제거 및 숫자 변환
+            $('.price').text(formatPriceWithComma(price)); // 다시 콤마(,) 추가
+            if(counter>1){                                 // 숫자 1보다 크면 마이너스(-) 버튼 활성화
+                $('.button1').attr('class',"button3");
+            }
+        });
+
+
+    });
+
+    let listToHtml = function (wishlists){
+        let tmp = "<div>";
+<%--// ${"${msg}"}--%>
+        wishlists.forEach(function (product){
+            tmp += '<div class="wishlist-box" data-idx = '+product.idx+'>'
+            tmp +=      '<a href="">'
+            tmp +=          '<img src='+product.resv_photo_upload_path+' alt="">'
+            tmp +=      '</a>'
+            tmp +=      '<div class="wishlist-middle">'
+            tmp +=          '<div class="wishlist-contentbox">'
+            tmp +=              '<a href="" class="name">'+product.name+'</a>'
+            tmp +=                  '<div class="wishlist-prices">'
+            if(product.dc_rate!=0){
+                tmp += '<span class="wishlist-dc_rate" id="dc_rate">'+product.dc_rate+'%</span>'
+                tmp += '<span class="wishlist-dc_prc" id="dc_prc">' +formatPriceWithComma(product.prc - (product.prc / 100 * product.dc_rate))+ '원</span>'
+                tmp += '<span class="wishlist-prc" id="prc">'+formatPriceWithComma(product.prc)+'원</span>'
+            }else {
+                tmp += '<span class="wishlist-dc_prc" id="prc">'+formatPriceWithComma(product.prc)+'원</span>'
+            }
+            tmp += '</div>'
+            tmp += '</div>'
+            tmp += '<div class="e">'
+            tmp += '<button class="delBtn" type="button" data-idx = '+product.idx+'>삭제</button>'
+            tmp += '<button class="openBtn" type="button" data-idx = '+product.idx+' data-name = '+product.name+' data-price = '+formatPriceWithComma(product.prc)+'원 data-name = '+product.name+' data-price = '+formatPriceWithComma(product.prc)+'원 data-dc-price = ' +formatPriceWithComma(product.prc - (product.prc / 100 * product.dc_rate))+ '원>담기</button>'
+            tmp += '</div>'
+            tmp += '</div>'
+            tmp += '</div>'
+
+        })
+        return tmp + "</div>";
     }
 
-    // 모달 카운터
-    let counter = 1;
-    const button1 = document.querySelector('.button1');
-    const button2 = document.querySelector('.button2');
-    const count = document.querySelector('.count');
-    count.innerHTML = counter;
-
-    // 모달 카운터 (-)마이너스 버튼
-    button1.addEventListener("click", () => {
-        // 버튼 클릭하면 1씩감소
-        count.innerHTML = --counter;
-        if (counter == 1) {    // counter 이 1이면 마이너스 버튼 못 누르게 한다
-            document.querySelector('.button3').className = "button1";
-        }
-        // 합계 태그 참조를 가저온다
-        let price = document.querySelector('.price');
-        // 총금액 = 개수 * 금액(특수문자 제거 + 숫자로 변환)
-        let totalprice = counter * parseInt(document.querySelector(".span22").innerHTML.replace(',', ""));
-        price.innerHTML = totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-    })
-    // 모달 카운터 (+)플러스 버튼
-    button2.addEventListener('click', () => {
-        // 버튼 클릭하면 1씩증가
-        count.innerHTML = ++counter;
-        if (counter == 2) {    // counter 이 2이면 마이너스 버튼 누를 수 있게 한다
-            document.querySelector('.button1').className = "button3";
-        }
-        let price = document.querySelector('.price');
-        let totalprice = counter * parseInt(document.querySelector(".span22").innerHTML.replace(',', ""));
-        price.innerHTML = totalprice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-    })
+    // 정규식 함수화
+    let formatPriceWithComma = (price) => {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
 </script>
 </body>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
