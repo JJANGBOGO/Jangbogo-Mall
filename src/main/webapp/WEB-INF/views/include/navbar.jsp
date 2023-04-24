@@ -6,7 +6,6 @@
 <c:set var="loginService" value="${sessionScope.loginService}"/>
 <nav>
     <div class="sticky-wrap">
-
         <div class="top-navigation">
             <div class="base-margin">
                 <ul>
