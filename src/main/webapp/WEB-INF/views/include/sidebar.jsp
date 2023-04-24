@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: namgungjin
-  Date: 2023/02/26
-  Time: 12:06 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <nav>
     <div class="sidebar">
@@ -26,8 +19,10 @@
                 </a>
             </li>
             <li>
-                <a href="/user/info">
+                <a href="/user/info"
+                   class="<c:if test='${mypageUrl eq "/user/info" || mypageUrl eq "/user/modify"}'>active</c:if> ">
                     개인정보 수정
+
                 </a>
             </li>
         </ul>

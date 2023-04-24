@@ -1,9 +1,8 @@
-package com.jangbogo.mall.security;
+package com.jangbogo.mall.security.seller;
 
 
 import com.jangbogo.mall.domain.UserDetailsDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -11,14 +10,22 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Service("loginAuthenticationProvider")
-public class LoginAuthenticationProvider implements AuthenticationProvider {
+@Service("LoginSellerAuthenticationProvider")
+public class LoginSellerAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    UserDetailsService loginService;
+    UserDetailsService sellerLoginService;
 
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
+
+    //판매자 정보 얻기 메서드 분리 테스트
+    public UserDetailsDto getSellerDetails (Authentication authentication) {
+        String userId = authentication.getName();
+        String userPw = (String) authentication.getCredentials();
+        UserDetailsDto userDetailsDto = (UserDetailsDto) sellerLoginService.loadUserByUsername(userId);
+        return userDetailsDto;
+    }
 
     @Override
     public Authentication authenticate (Authentication authentication) throws AuthenticationException {
@@ -26,13 +33,11 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
         //디비에서 유저 레코드를 DTO 객체로 가져오기.
         String userId = authentication.getName();
         String userPw = (String) authentication.getCredentials();
-        UserDetailsDto userDetailsDto = (UserDetailsDto) loginService.loadUserByUsername(userId);
+        UserDetailsDto userDetailsDto = (UserDetailsDto) sellerLoginService.loadUserByUsername(userId);
 
 
         //loginFailureHandler 오류 던질 때
-        if(userDetailsDto == null || !userId.equals(userDetailsDto.getUsername())
-              ||  !passwordEncoder.matches(userPw, userDetailsDto.getPassword())
-        ) {
+        if(userDetailsDto == null || !userId.equals(userDetailsDto.getUsername())|| !passwordEncoder.matches(userPw, userDetailsDto.getPassword())) {
             throw new BadCredentialsException(userId); // 아이디랑 비번이 불일치.
         } else if (!userDetailsDto.isEnabled()) {
             throw new DisabledException(userId); //계정 비활성화

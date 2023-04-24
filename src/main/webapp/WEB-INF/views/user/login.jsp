@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" %>
-<%--<%@ taglib prefix="s" uri="http://www.springframework.org/security/tags"  %>--%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
@@ -9,13 +8,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
-<c:if test="${param.ng!=null}">
-    <p> error : <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/></p>
-</c:if>
 <div class="login-container">
-    <c:if test="${LoginFailMessage!=null}">
-        <p> Error : <c:out value="${LoginFailMessage}"/></p>
-    </c:if>
     <div class="contents">
         <div class="login-wrap">
             <h2 class="page-title">로그인</h2>
@@ -24,7 +17,12 @@
                 <button class="tab-button" id="seller_login_link">판매자</button>
             </div>
             <div class="login-form">
-                <form action="/login" method="post">
+                <p class="login-err">
+                    <c:if test="${LoginFailMessage!=null}">
+                        Error : <c:out value="${LoginFailMessage}"/>
+                    </c:if>
+                </p>
+                <form action="/user/login_check" method="post">
                     <input
                             name="email"
                             type="text"
@@ -75,16 +73,16 @@
                     </div>
                     <div class="join-buttons">
                         <a
-                                href="${urlKakao}"
-                                class="login-social kakao"
+                            href="${urlKakao}"
+                            class="login-social kakao"
                         >
                         <span>
                           <strong>카카오</strong>
                         </span>로 로그인
                         </a>
                         <a
-                                href="${urlNaver}"
-                                class="login-social naver"
+                            href="${urlNaver}"
+                            class="login-social naver"
                         >
                         <span>
                           <strong>네이버</strong>
@@ -101,9 +99,9 @@
 <script>
     let msg = "${msg}";
     if (msg == "REG_OK") alert("회원 가입에 성공했습니다.");
-    if (msg == "LOGIN_ERR") alert("로그인 도중 오류가 발생하였습니다. 다시 시도해 주세요.");
+    if (msg == "LOGIN_ERR") alert("로그인 도중 오류가 발생하였습니다. 다시 시도해 주세요."); //소셜
 
-    $("#seller_login_link").click(function() {
+    $("#seller_login_link").click(function () {
         window.location.href = "/seller/login";
     });
 

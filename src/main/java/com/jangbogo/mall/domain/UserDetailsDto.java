@@ -10,12 +10,9 @@ import java.util.Collection;
 
 public class UserDetailsDto implements UserDetails {
 
-    private String ID;
-
-    private String PASSWORD;
-    private String EMAIL;
-
-    private boolean ENABLED;
+    private String email;
+    private String pwd;
+    private boolean enabled;
     private ArrayList<GrantedAuthority> authority;
 
     @Override
@@ -34,17 +31,19 @@ public class UserDetailsDto implements UserDetails {
     @Override
     public String getPassword() {
         // TODO Auto-generated method stub
-        return PASSWORD;
+        return pwd;
     }
 
     public void setPassword(String password) {
-        PASSWORD = password;
+        pwd = password;
     }
+
+    public void setEnabled(boolean isEnabled) { enabled = isEnabled; }
 
     @Override
     public String getUsername() {
         // TODO Auto-generated method stub
-        return ID;
+        return email;
     }
 
     @Override
@@ -68,6 +67,6 @@ public class UserDetailsDto implements UserDetails {
     @Override
     public boolean isEnabled() {
         // TODO Auto-generated method stub
-        return ENABLED;
+        return enabled;
     }
 }

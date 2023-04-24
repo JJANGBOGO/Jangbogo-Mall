@@ -2,6 +2,7 @@ package com.jangbogo.mall.dao;
 
 import com.jangbogo.mall.domain.Address;
 import com.jangbogo.mall.domain.User;
+import com.jangbogo.mall.domain.UserDetailsDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -18,7 +19,7 @@ public class UserDaoImpl implements UserDao {
     private static final String nameSpace = "com.jangbogo.mall.dao.UserMapper.";
 
     @Override
-    public int deleteUser(int idx, String email) throws Exception {
+    public int withdrawUser(Integer idx, String email) throws Exception {
         Map map = new HashMap();
         map.put("idx", idx);
         map.put("email", email);
@@ -26,7 +27,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User selectUser(int idx) throws Exception {
+    public User selectUser(Integer idx) throws Exception {
         return session.selectOne(nameSpace + "selectUser", idx);
     }
 
@@ -57,7 +58,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int updateLoginTm(int idx, String email) throws Exception {
+    public int updateLoginTm(Integer idx, String email) throws Exception {
         Map map = new HashMap();
         map.put("idx", idx);
         map.put("email", email);
@@ -75,11 +76,24 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public int updatePwdUptTm (int idx, String email) throws Exception  {
+    public int updatePwdUptTm (Integer idx, String email) throws Exception  {
         Map map = new HashMap();
         map.put("idx", idx);
         map.put("email", email);
         return session.update(nameSpace +"updatePwdUptTm", map);
+    }
+
+    @Override
+    public UserDetailsDto getUserDetailsDto (String email) throws Exception {
+        return session.selectOne(nameSpace + "getUserDetailsDto", email);
+    }
+
+    @Override
+    public int deleteUser (Integer idx, String email) throws Exception {
+        Map map = new HashMap();
+        map.put("idx", idx);
+        map.put("email", email);
+        return session.delete(nameSpace + "deleteUser", map);
     }
 }
 

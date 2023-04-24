@@ -8,6 +8,7 @@
 
 .mypage-base {
     display: flex;
+    gap: 70px;
     width: 1050px;
     padding: 50px 0px 80px;
     margin: 0px auto;

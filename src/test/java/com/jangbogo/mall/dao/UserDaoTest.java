@@ -1,21 +1,17 @@
-package com.jangbogo.mall;
+package com.jangbogo.mall.dao;
 
 
-import com.jangbogo.mall.dao.UserDao;
-import com.jangbogo.mall.domain.Address;
+import com.jangbogo.mall.domain.Seller;
+import com.jangbogo.mall.domain.SellerDtl;
 import com.jangbogo.mall.domain.User;
-import com.jangbogo.mall.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -82,7 +78,7 @@ public class UserDaoTest {
                 .build();
         int result = dao.insertUser(user);
         int idx = user.getIdx();
-        log.info("result=" + idx);
+        log.info("result=" + idx + result); //idx => return idx , result => return idx ??
         assertTrue(result != 0);
     }
 
@@ -126,6 +122,13 @@ public class UserDaoTest {
     @Test
     public void updatePwdUptTm () throws Exception  { //ok
         int result = dao.updatePwdUptTm(22, "2@naver.com");
+        log.info("result=" + result);
+        assertTrue(result != 0);
+    }
+
+    @Test
+    public void deleteUser () throws Exception  { //ok
+        int result = dao.deleteUser(2, "jinvicky17@gmail.com");
         log.info("result=" + result);
         assertTrue(result != 0);
     }
