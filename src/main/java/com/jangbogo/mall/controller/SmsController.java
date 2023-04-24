@@ -40,8 +40,8 @@ public class SmsController {
 
 
         try {
-//            SmsResponse resp = smsService.sendSms(msg.getTo(), "verify number: " + msg.getContent());
-            SmsResponse resp = new SmsResponse();
+            SmsResponse resp = smsService.sendSms(msg.getTo(), "verify number: " + msg.getContent());
+//            SmsResponse resp = new SmsResponse();
             resp.setNumStr(msg.getContent());
             return ResponseEntity.ok().body(resp);
 
