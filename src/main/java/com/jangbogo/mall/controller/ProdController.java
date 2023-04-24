@@ -3,6 +3,7 @@ package com.jangbogo.mall.controller;
 import com.jangbogo.mall.domain.*;
 import com.jangbogo.mall.service.ProdInqryService;
 import com.jangbogo.mall.service.ProductDetailService;
+import com.jangbogo.mall.service.WishlistService;
 import com.mysql.cj.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,8 @@ public class ProdController {
     ProdInqryService prodInqryService;
     @Autowired
     ProductDetailService productDetailService;
+    @Autowired
+    WishlistService wishlistService;
     //페이지 이동
     @GetMapping("/product/{prod_idx}")
     public String product(@PathVariable Integer prod_idx, HttpSession session, Model m, HttpServletRequest request) {
@@ -33,10 +36,12 @@ public class ProdController {
             ProductDetailDto list = productDetailService.read(prod_idx);
             Integer cate_idx = productDetailService.findDlvry(list.getCate_idx());
             ProductDetailDto dlvryMethod = productDetailService.dlvryInfo(cate_idx);
+            ProductDetailDto findBrand = productDetailService.findBrand(prod_idx);
             m.addAttribute("prod_idx", prod_idx);
             m.addAttribute("session_idx", session_idx);
             m.addAttribute("list", list);
             m.addAttribute("dlvryMethod", dlvryMethod);
+            m.addAttribute("findBrand", findBrand);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -125,12 +130,74 @@ public class ProdController {
             return new ResponseEntity<>("DEL_ERR", HttpStatus.BAD_REQUEST);
         }
     }
+    @PostMapping("/wishlist")
+    @ResponseBody
+    public ResponseEntity<String> insertWishList(Integer prod_idx, HttpSession session) {
+        Integer user_idx = (Integer)session.getAttribute("idx");
+        System.out.println("prod_idx="+prod_idx);
+        try {
+            if(productDetailService.checkWishlist(prod_idx, user_idx) == 0) {
+                productDetailService.insertWishlist(prod_idx, user_idx);
+                return new ResponseEntity<String>("INSERT_OK", HttpStatus.OK);
+            } else {
+                productDetailService.deleteWishList(prod_idx, user_idx);
+                return new ResponseEntity<String>("DELETE_OK", HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>("INSERT_ERR", HttpStatus.BAD_REQUEST);
+        }
+    }
 
-    //상품문의 게시물 가져오기
+    @PostMapping("/cart")
+    @ResponseBody
+    public ResponseEntity<String> insertCart(Integer prod_idx, Integer prod_cnt, HttpSession session) {
+        Integer user_idx = (Integer)session.getAttribute("idx");
+//        System.out.println("prod_idx="+prod_idx);
+        try {
+            if(wishlistService.checkCart(prod_idx, user_idx)==0) {
+                wishlistService.insertCart(prod_idx, user_idx, prod_cnt);
+                return new ResponseEntity<String>("INSERT_OK", HttpStatus.OK);
+            } else {
+                wishlistService.updateCartCnt(prod_idx, user_idx, prod_cnt);
+                return new ResponseEntity<String>("UPDATE_OK", HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<String>("INSERT_ERR", HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
+    //상세 이미지들 가져오기
+    @GetMapping("/product/productDetail/description")
+    @ResponseBody
+    public ResponseEntity<List<ProductFileDto>> showDescriptionList(Integer prod_idx) {
+        List<ProductFileDto> fileList = null;
+        try {
+            fileList = productDetailService.findProdFile(prod_idx);
 
-    //상세 이미지들을 보여주는 요청
+            return new ResponseEntity<List<ProductFileDto>>(fileList, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/product/productDetail/detail")
+    @ResponseBody
+    public ResponseEntity<ProductDetailDto> showDetailList(Integer prod_idx) {
+        try {
+            ProductDetailDto infoList = productDetailService.read(prod_idx);
+            return new ResponseEntity<>(infoList, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    //상품상세 정보 가져오기
     @GetMapping("/product/productDetail/list")
     @ResponseBody
     public ResponseEntity<ProductDetailDto> prodDetailList(Integer prod_idx) {

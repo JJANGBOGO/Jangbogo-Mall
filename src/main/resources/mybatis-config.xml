@@ -16,6 +16,7 @@
         <typeAlias alias="ProdInqryDto" type="com.jangbogo.mall.domain.ProdInqryDto"/>
         <typeAlias alias="JoinProdInqryDto" type="com.jangbogo.mall.domain.JoinProdInqryDto"/>
         <typeAlias alias="ProductDetailDto" type="com.jangbogo.mall.domain.ProductDetailDto"/>
+        <typeAlias alias="ProductFileDto" type="com.jangbogo.mall.domain.ProductFileDto"/>
         <typeAlias alias="CartDto" type="com.jangbogo.mall.domain.CartDto"/>
         <typeAlias alias="Address" type="com.jangbogo.mall.domain.Address"/>
         <typeAlias alias="OrderDto" type="com.jangbogo.mall.domain.OrderDto"/>

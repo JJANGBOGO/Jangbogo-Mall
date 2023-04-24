@@ -26,7 +26,7 @@
         <section class="info-block">
           <div id="prod-title-wrap">
             <div id="prod-title">
-              <h1>${list.name}</h1>
+              <h1>[${findBrand.brandName}]${list.name}</h1>
             </div>
             <h2 class="prod-ctent">${list.content}</h2>
           </div>
@@ -143,8 +143,14 @@
         </section>
       </div>
       <div id="product-desc">
-        <div id="description"></div>
-        <div id="detail"></div>
+        <div id="description">
+          <div class="description-wrap">
+
+          </div>
+        </div>
+        <div id="detail">
+
+        </div>
         <div id="review"></div>
         <div id="inquiry">
           <div class="prodInqry-wrap">
@@ -241,6 +247,49 @@
   <script src="https://kit.fontawesome.com/cc28ed1241.js" crossorigin="anonymous"></script>
 <script>
 
+  let showDescription = function(prod_idx) {
+    $.ajax({
+      type: 'GET',
+      url: '/product/productDetail/description?prod_idx='+prod_idx,
+      success: function(result) {
+        $('.description-wrap').html(DescriptionToList(result));
+      },
+      error: function() { alert("GET description Error") }
+    })
+  }
+
+  let DescriptionToList = function(fileLists) {
+    let tmp = "";
+    fileLists.forEach(function(fileList){
+      tmp += ''
+    })
+  }
+
+  let showDetail = function(prod_idx) {
+    $.ajax({
+      type: 'GET',
+      url: '/product/productDetail/detail?prod_idx='+prod_idx,
+      success: function(infoList) {
+        $('#detail').html(DetailToList(infoList));
+      },
+      error: function() { alert("GET detail Error") }
+    })
+  }
+
+  let DetailToList = function(infoList) {
+
+    let tmp = '<div class="detail-wrap">';
+    tmp += '<h3>상품고시정보</h3>';
+    tmp += '<ul class="detail-product-ul">';
+    tmp += '<li class="prod-warn">주의사항</li>';
+    tmp += '<li class="prod-warn-text">'+ infoList.warn +'</li>';
+    tmp += '<li class="prod-info">상품 안내사항</li>';
+    tmp += '<li class="prod-info-text">'+ infoList.guid +'</li>';
+    tmp += '</ul></div>';
+
+    return tmp;
+  }
+
   let showInqryList = function(prod_idx) {
     $.ajax({
       type:'GET',       // 요청 메서드
@@ -270,10 +319,7 @@
   let showImage = function() {
     //태그안에 들어가있는 주소를 불러와
     let imgAddress = $('.prod-img').data("imgurl");
-    // console.log($('.prod-img').dataset['imgurl']);
     $('#prod-img').css({"background-image":"url("+imgAddress+")"});
-    // console.log("image주소="+imgAddress);
-    // $('#prod-img').css("background-image","url()");
   }
 
   let prodInqryImage = function() {
@@ -332,11 +378,26 @@
     showProdDetailList(prod_idx);
     packingTypeToString();
     showImage();
+    showDescription(prod_idx);
+    showDetail(prod_idx);
     prodInqryImage();
+
+    $('.cartBtn').click(function() {
+      let prod_cnt = $('.num').text();
+
+      $.ajax({
+        type: 'POST',
+        url: '/cart?prod_idx='+prod_idx+'&prod_cnt='+prod_cnt,
+        success: function(result) {
+          alert(result);
+        },
+        error: function() {alert("수정권한이 없습니다")}
+      })
+    })
 
     $('.wishlistBtn').click(function(e) {
       let value = $('.wishlistBtn').data('heart');
-      console.log("value="+value);
+      // console.log("value="+value);
       let changedVal = "";
       if(value == "empty") {
         let classi = $('.wishlistBtn').find('i').attr('class', 'fa-solid fa-heart'); //클래스 이름을 변경해줘 //이미지를 바꿔줘
@@ -348,28 +409,35 @@
         $('.wishlistBtn').data('heart', "empty");
         // changedVal = $('.wishlistBtn').data('heart');
       }
+
+      $.ajax({
+        type: 'POST',
+        url: '/wishlist?prod_idx='+prod_idx,
+        success: function(result) {
+          alert(result);
+        },
+        error: function() {alert("수정권한이 없습니다")}
+      })
+
     })
 
     $('.price').text($('.m-price-dc-span').text());
 
-    $('.upCount').on("click", function() {
+    $('.upCount').click(function() {
       //초기 숫자 1에
-      let init = $('.num').data('min');
-      //+1을 해줘 -> 2가 됐어
-      if(init+ 1 <= 10){
-        $('.num').data('min', init+1); //init +1 해서 숫자는 올라가는데, 태그안에 보이는 것에는 반영이 안돼
-        let modnum = $('.num').data('min');
-        $('.num').text(modnum);
+      let init = parseInt($('.num').text());
+      if(init <= 9){
+        let plusNum = init + 1;
+        $('.num').text(plusNum);
         //기존에 태그에 들어가 있는 문자열을 가져와서
         //콤마를 뺀 숫자만을 구하고
         let regex = /[^0-9]/g;
         let numPrice = ($('.m-price-dc-span').text()).replace(regex, "");
         //콤마를 뺀 숫자에 늘어난 숫자 2를 곱해줘
-        let calcPrice = modnum * parseInt(numPrice);
+        let calcPrice = plusNum * parseInt(numPrice);
         //곱해준 값에 콤마를 붙이고
         let withComma = calcPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         //.price 공간에 넣어줘
-        // $('.price').text("");
         $('.price').text(withComma);
         //최대 숫자 10이 되기 전까지 올려줘
       }
@@ -378,14 +446,19 @@
 
     $('.downCount').click(function() {
       //.num 내부의 텍스트를 가져와서 변수에 저장
-      let num = $('.num').text();
-      if(!(num-1 <= 0)){
-        $('.num').text(num-1);
-        let de = $('.num').text();
+      let num = parseInt($('.num').text());
+      console.log(num);
+      if(!(num < 2)){
+        let minusNum = num - 1;
+        console.log("minusNum="+minusNum)
+        console.log(typeof minusNum);
+        $('.num').text(minusNum);
+        console.log("typeof=="+typeof $('.num').text());
+        let textNum = $('.num').text();
         let regex = /[^0-9]/g;
         let origin = ($('.m-price-dc-span').text()).replace(regex, "");
         //num * origin 계산후 콤마 찍어서 변수에 저장
-        let calcPrice = (de * origin).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        let calcPrice = (textNum * origin).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         //.price 내부에 입력
         $('.price').text(calcPrice);
         //num의 값이 num <= 1 일때까지만
@@ -596,7 +669,7 @@
 
 
     inqrys.forEach(function(inqry) {
-      console.log(inqry.res_state_cd);
+      // console.log(inqry.res_state_cd);
       let res_state_cd = "";
       if(inqry.res_state_cd == 1) {
         res_state_cd = "답변대기";
@@ -612,7 +685,7 @@
       // [3]. moment 라이브러리 사용해 24시간 형태 날짜 및 시간 확인
       let now24Date = moment(reg_date).format("YYYY-MM-DD");
       let now24Date2 = moment(answer_date).format("YYYY-MM-DD");
-      console.log("?????", now24Date)
+      // console.log("?????", now24Date)
 
 
       tmp += '<tr id="noticeBlock" data-idx=' + inqry.idx
