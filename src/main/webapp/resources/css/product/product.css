@@ -633,6 +633,99 @@ button:disabled {
     font-size: 16px;
     font-weight: 500;
 }
+
+/* description */
+#description {
+    padding-top: 40px;
+    position: relative;
+    width: 1010px;
+    padding-bottom: 100px;
+}
+#description .description-wrap {
+    width: 1010px;
+    margin: 0 auto;
+    font-family: "Noto Sans";
+    font-weight: 300;
+    letter-spacing: 0;
+}
+#description .description-wrap img {
+    border: 0;
+    vertical-align: top;
+    max-width: 100%;
+}
+#description .division-line {
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    max-width: 1010px;
+    padding: 0 10px;
+    margin: 0 auto;
+}
+
+/* detail */
+#detail {
+    position: relative;
+    width: 1010px;
+    padding-bottom: 100px;
+}
+#detail .detail-wrap {
+    padding: 72px 0;
+    border-top: 1px solid #eee;
+    font-family: Noto Sans;
+}
+#detail .detail-wrap h3 {
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 41px;
+    text-align: center;
+    letter-spacing: -0.5px;
+    color: #666;
+}
+#detail .detail-wrap .detail-product-ul {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding-top: 36px;
+    font-size: 13px;
+    color: #333;
+    line-height: 18px;
+    letter-spacing: -0.5px;
+    list-style-type: none;
+}
+#detail .detail-wrap .detail-product-ul .prod-warn {
+    padding-top: 18px;
+    width: 180px;
+    padding: 0 18px 18px;
+    background-color: #f7f7f7;
+    word-break: break-all;
+    white-space: pre-line;
+}
+#detail .detail-wrap .detail-product-ul .prod-warn-text {
+    padding-top: 18px;
+    display: flex;
+    width: 325px;
+    padding: 0 18px 18px;
+    color: #666;
+    white-space: pre-line;
+}
+#detail .detail-wrap .detail-product-ul .prod-info {
+    padding-top: 18px;
+    width: 180px;
+    padding: 0 18px 18px;
+    background-color: #f7f7f7;
+    word-break: break-all;
+    white-space: pre-line;
+}
+#detail .detail-wrap .detail-product-ul .prod-info-text {
+    padding-top: 18px;
+    display: flex;
+    width: 325px;
+    padding: 0 18px 18px;
+    color: #666;
+    white-space: pre-line;
+}
+
 #product-desc #inquiry .prodInqry-wrap {
     position: relative;
     width: 1010px;

@@ -26,12 +26,13 @@ public class ProductDetailDto {
     private Integer dlvry_type; //배송방식 - 배송유형코드
     private Integer packing_type; //배송방식 - 배송포장코드
     private String dlvry_warn; //배송방식 - 배송주의사항
+    private String brandName; // seler - cpnm - 판매자
 
     // constructor
 
     public ProductDetailDto() {}  // 기본 생성자
 
-    public ProductDetailDto(Integer price, String name, String image_path, String content, String upload_path, Integer dc_rate, Integer dc_state, Integer prod_idx, String guid, String origin, String unit, String weight, String warn, Integer keepingType, Integer cate_idx, Integer dlvry_method, Integer idx, Integer dlvry_type, Integer packing_type, String dlvry_warn) {
+    public ProductDetailDto(Integer price, String name, String image_path, String content, String upload_path, Integer dc_rate, Integer dc_state, Integer prod_idx, String guid, String origin, String unit, String weight, String warn, Integer keepingType, Integer cate_idx, Integer dlvry_method, Integer idx, Integer dlvry_type, Integer packing_type, String dlvry_warn, String brandName) {
         this.price = price;
         this.name = name;
         this.image_path = image_path;
@@ -52,6 +53,7 @@ public class ProductDetailDto {
         this.dlvry_type = dlvry_type;
         this.packing_type = packing_type;
         this.dlvry_warn = dlvry_warn;
+        this.brandName = brandName;
     }
 
     @Override
@@ -59,12 +61,12 @@ public class ProductDetailDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductDetailDto that = (ProductDetailDto) o;
-        return Objects.equals(price, that.price) && Objects.equals(name, that.name) && Objects.equals(image_path, that.image_path) && Objects.equals(content, that.content) && Objects.equals(cate_idx, that.cate_idx) && Objects.equals(upload_path, that.upload_path) && Objects.equals(dc_rate, that.dc_rate) && Objects.equals(dc_state, that.dc_state) && Objects.equals(prod_idx, that.prod_idx) && Objects.equals(guid, that.guid) && Objects.equals(origin, that.origin) && Objects.equals(unit, that.unit) && Objects.equals(weight, that.weight) && Objects.equals(warn, that.warn) && Objects.equals(keepingType, that.keepingType) && Objects.equals(dlvry_method, that.dlvry_method) && Objects.equals(idx, that.idx) && Objects.equals(dlvry_type, that.dlvry_type) && Objects.equals(packing_type, that.packing_type) && Objects.equals(dlvry_warn, that.dlvry_warn);
+        return Objects.equals(price, that.price) && Objects.equals(name, that.name) && Objects.equals(image_path, that.image_path) && Objects.equals(content, that.content) && Objects.equals(cate_idx, that.cate_idx) && Objects.equals(upload_path, that.upload_path) && Objects.equals(dc_rate, that.dc_rate) && Objects.equals(dc_state, that.dc_state) && Objects.equals(prod_idx, that.prod_idx) && Objects.equals(guid, that.guid) && Objects.equals(origin, that.origin) && Objects.equals(unit, that.unit) && Objects.equals(weight, that.weight) && Objects.equals(warn, that.warn) && Objects.equals(keepingType, that.keepingType) && Objects.equals(dlvry_method, that.dlvry_method) && Objects.equals(idx, that.idx) && Objects.equals(dlvry_type, that.dlvry_type) && Objects.equals(packing_type, that.packing_type) && Objects.equals(dlvry_warn, that.dlvry_warn) && Objects.equals(brandName, that.brandName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(price, name, image_path, content, cate_idx, upload_path, dc_rate, dc_state, prod_idx, guid, origin, unit, weight, warn, keepingType, dlvry_method, idx, dlvry_type, packing_type, dlvry_warn);
+        return Objects.hash(price, name, image_path, content, cate_idx, upload_path, dc_rate, dc_state, prod_idx, guid, origin, unit, weight, warn, keepingType, dlvry_method, idx, dlvry_type, packing_type, dlvry_warn, brandName);
     }
 
     @Override
@@ -90,6 +92,7 @@ public class ProductDetailDto {
                 ", dlvry_type=" + dlvry_type +
                 ", packing_type=" + packing_type +
                 ", dlvry_warn='" + dlvry_warn + '\'' +
+                ", brandName='" + brandName + '\'' +
                 '}';
     }
 
@@ -251,5 +254,13 @@ public class ProductDetailDto {
 
     public void setDlvry_warn(String dlvry_warn) {
         this.dlvry_warn = dlvry_warn;
+    }
+
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 }
