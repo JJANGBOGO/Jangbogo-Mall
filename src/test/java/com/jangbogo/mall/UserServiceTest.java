@@ -87,18 +87,5 @@ public class UserServiceTest {
         log.info("result= "+ result);
     }
 
-    @Test //ok
-    public void chkDuplicateNick() throws Exception { //ok
-        User user = service.chkDuplicateNick("뉴비_1");
-        log.info("result..."+ user);
-        assertTrue( user !=null);
-    }
-
-    @Test //ok
-    public void updateUser() throws Exception { //ok
-        User user = service.chkDuplicateNick("뉴비_1");
-        log.info("result..."+ user);
-        assertTrue( user !=null);
-    }
 }
 

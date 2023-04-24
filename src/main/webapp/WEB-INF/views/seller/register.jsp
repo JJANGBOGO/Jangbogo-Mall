@@ -372,38 +372,15 @@
 <script src="/js/member/common.js"></script>
 <script src="/js/upload/common.js"></script>
 <script>
-    let msg= "${msg}";
-    if (msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다 다시 시도해 주세요");
+    let msg = "${msg}";
+    if (msg === "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다 다시 시도해 주세요");
 
-    //파일 분리 허용X. val() 때문에
-    let addressCallback = (e) => {
-        e.preventDefault(); //405 이슈 해결.
-
-        new daum.Postcode({
-            oncomplete: function (data) {
-                let addr = "";
-                let extraAddr = ""; //참고항목
-
-                if (data.userSelectedType === "R") {
-                    addr = data.roadAddress;
-
-                    if (data.bname !== "" && /[동|로|가]$/g.test(data.bname))
-                        extraAddr += data.bname;
-                } else addr = data.jibunAddress;
-
-                if (data.buildingName !== "" && data.apartment === "Y") {
-                    extraAddr +=
-                        extraAddr !== "" ? ", " + data.buildingName : data.buildingName;
-                }
-
-                if (extraAddr !== "") extraAddr = " (" + extraAddr + ")";
-
-                $("#bsplc_zpcd").val(data.zonecode);
-                $("#bsplc_base").val(data.address);
-                $("#bsplc_dtl").focus(); //상세주소에 focus
-            },
-        }).open();
-    };
+    //주소 api callback 함수
+    function setAddr(data) {
+        $("#bsplc_zpcd").val(data.zonecode);
+        $("#bsplc_base").val(data.address);
+        $("#bsplc_dtl").focus(); //상세주소에 focus
+    }
 
     $(document).ready(function () {
         $("#email_duplicate_chk").click(function (e) {
@@ -417,12 +394,12 @@
                 data: {email: email_ref.val()},
                 type: 'POST',
                 success: function (msg) {
-                    if (msg == "OK") {
-                        alert(available_cpnm);
+                    if (msg === "OK") {
+                        alert(available_email);
                         $("#email_duplicate_chk").attr("disabled", true); //버튼 비활성화
                         email_ref.attr("readonly", true); //인풋 비활성화
                     } else {
-                        alert(duplicate_cpnm);
+                        alert(duplicate_email);
                         email_ref.focus();
                     }
                 },
@@ -444,7 +421,7 @@
                 data: {cpnm: cpnm_ref.val()},
                 type: 'POST',
                 success: function (msg) {
-                    if (msg == "OK") {
+                    if (msg === "OK") {
                         alert(available_cpnm);
                         $("#cpnm_duplicate_chk").attr("disabled", true); //버튼 비활성화
                         cpnm_ref.attr("readonly", true); //인풋 비활성화
@@ -466,8 +443,8 @@
             let brno_ref = $("#brno");
             if (!validateBrnoAlert(brno_ref)) return false;
 
-            let brno = { b_no: [$("#brno").val()]};
-                //-제외 숫자만 입력할 것. 그렇지 않으면 잘못된 조회결과 발생
+            let brno = {b_no: [$("#brno").val()]};
+            //-제외 숫자만 입력할 것. 그렇지 않으면 잘못된 조회결과 발생
 
             let serviceKey = "5RrGC%2BYxMLKxHrcaSzs46HaxE7ye2QKnjkO%2F4uATqcBp9fzXBmyqAqEDY1GFkwqWj4lUxEA8R8nskdqUCJhohQ%3D%3D";
             $.ajax({
@@ -480,11 +457,11 @@
                 contentType: "application/json",
                 accept: "application/json",
                 success: function (result) {
-                    let biz_state= result.data[0].b_stt_cd;
-
-                    if (biz_state == "") {
+                    let biz_state = result.data[0].b_stt_cd;
+                    console.log(result);
+                    if (biz_state === "") {
                         alert("국세청에 등록되지 않은 사업자 번호입니다.");
-                    } else if (biz_state != 1) { //계속사업자가 아님
+                    } else if (biz_state !== "01") { //계속사업자가 아님
                         alert("휴/폐업 사업자 번호입니다. 다른 번호를 입력해 주세요");
                     } else {
                         alert("사용가능한 사업자 번호입니다.");
@@ -493,14 +470,15 @@
                     }
                 },
                 error: function (error) {
-                    console.log("오류가 발생했습니다. 다시 시도해 주세요");
+                    alert(error_msg);
                 },
             });
         });
 
         //주소 검색
         $("#addr-search").click(function (e) {
-            addressCallback(e);
+            e.preventDefault();
+            addressCallback(setAddr);
         });
 
         //체크박스 모두 동의
@@ -603,6 +581,49 @@
             });
         });
 
+        //휴대전화 인증
+        $("#mpno_chk").click(function (e) {
+            e.preventDefault();
+            let mpno_ref = $("#mpno");
+
+            if (!validateMpnoAlert(mpno_ref)) return false;
+
+            $.ajax({
+                url: '/chk/mpno',
+                data: JSON.stringify({to: mpno_ref.val()}), // 객체를 전송할때는 stringify() 필요, @RequestBody때문
+                type: 'POST',
+                contentType: "application/json",
+                success: function (result) { // test, 문자열 온다.
+                    alert(mpno_send_ok);
+                    console.log(result, result.numStr);
+                    mpno_verify_num = result.numStr;
+                    // $("#mpno").closest(".input-box").append('<div class="input">' +
+                    //     '<input id="mpno_verify" type="text" placeholder="인증번호를 입력해 주세요">' +
+                    //     '</div><div class="error-msg mpno-verify"></div>');
+
+                    if (mpno_ref.closest(".input-box").find("#mpno_verify").length == 0) {
+                        mpno_ref.closest(".input-box").append('<div class="input">' +
+                            '<input id="mpno_verify" type="text" placeholder="인증번호를 입력해 주세요">' +
+                            '</div><div class="error-msg mpno-verify"></div>');
+                    }
+                },
+                error: function (err) {
+                    alert(error_msg); //controller에서 500발생해서 보낼 경우 여기로 온다.
+                }
+            }); //$.ajax
+        });
+
+        //휴대전화 인증 keyup
+        $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
+            if ($("#mpno_verify").val() === mpno_verify_num) {
+                $(".error-msg.mpno-verify").html(mpno_verified);
+                $(".error-msg.mpno-verify").css('color', 'green');
+                $("#mpno_chk").attr("disabled", true);
+                $("#mpno").attr('readonly', true);
+
+            }
+        });
+
         //가입하기 버튼
         $(".reg-confirm").click(function (e) {
             e.preventDefault();
@@ -610,74 +631,74 @@
             let email_ref = $("#email");
             let email_chk_btn = $("#email_duplicate_chk");
 
-            if(!validateEmailAlert(email_ref)) return false; //이메일 검사
-            if(!chkEmailAlert(email_ref, email_chk_btn)) return false; //이메일 중복 검사
+            if (!validateEmailAlert(email_ref)) return false; //이메일 검사
+            if (!chkEmailAlert(email_ref, email_chk_btn)) return false; //이메일 중복 검사
 
             let cpnm_ref = $("#cpnm");
             //브랜드명
             if (!validateBrndNameAlert(cpnm_ref)) return false;
-            //
-            // let name_ref = $("#repr_nm");
-            //
-            // if (name_ref.val() == "") {
-            //     alert("대표의 이름을 입력해 주세요");
-            //     name_ref.focus();
-            //     return false;
-            // }
-            //
-            // if (name_ref.val().length > 20) {
-            //     alert("대표의 이름은 20자 미만으로 입력해 주세요");
-            //     name_ref.focus();
-            //     return false;
-            // }
-            //
-            // let pwd_ref = $("#pwd");
-            // if(!validatePwdAlert(pwd_ref)) return false; //비번 검사
-            //
-            // let pwd_confirm_ref = $("#pwd_confirm");
-            // if(!validatePwdConfirmAlert(pwd_ref, pwd_confirm_ref)) return false;
-            //
-            // let mpno_ref = $("#mpno");
-            // let mpno_chk_btn = $("#mpno_chk");
-            // if(!validateMpnoAlert(mpno_ref,mpno_chk_btn)) return false;
-            //
-            // let brno_ref = $("#brno");
-            // let brno_chk_btn = $("#brno_chk");
-            //
-            // if (!validateBrnoAlert(brno_ref)) return false;
-            //
-            // if (!brno_chk_btn.is(":disabled")) {
-            //     alert("사업자 인증을 해 주세요");
-            //     brno_ref.focus();
-            //     return false;
-            // }
 
-            //통신판매업은 숫자+문자 등 fixed가 아니라 ""체크만 한다.
-            // let sle_biz_ref = $("#sle_biz_no");
-            // if (sle_biz_ref.val() =="") {
-            //     alert("통신판매업신고번호를 입력해 주세요");
-            //     sle_biz_ref.focus();
-            //     return false;
-            // }
+            let name_ref = $("#repr_nm");
 
-            // let addr_base_ref = $("#bsplc_base");
-            // let addr_dtl_ref = $("#bsplc_dtl");
-            //
-            // if (!validateAddrAlert(addr_base_ref, addr_dtl_ref)) return false; //주소
+            if (name_ref.val() === "") {
+                alert("대표의 이름을 입력해 주세요");
+                name_ref.focus();
+                return false;
+            }
 
-            // let telno_ref = $("#repr_telno"); //브랜드 공식 연락처
-            // if (telno_ref.val() == "") {
-            //     alert("대표 연락처를 입력해 주세요");
-            //     telno_ref.focus();
-            //     return false;
-            // }
-            //
-            // if (!mpno_reg.test(telno_ref.val())) {
-            //     alert(not_valid_mpno);
-            //     telno_ref.focus();
-            //     return false;
-            // }
-            //
+            if (name_ref.val().length > 20) {
+                alert("대표의 이름은 20자 미만으로 입력해 주세요");
+                name_ref.focus();
+                return false;
+            }
+
+            let pwd_ref = $("#pwd");
+            if (!validatePwdAlert(pwd_ref)) return false; //비번 검사
+
+            let pwd_confirm_ref = $("#pwd_confirm");
+            if (!validatePwdConfirmAlert(pwd_ref, pwd_confirm_ref)) return false;
+
+            let mpno_ref = $("#mpno");
+            let mpno_chk_btn = $("#mpno_chk");
+            if (!validateMpnoAlert(mpno_ref, mpno_chk_btn)) return false;
+
+            let brno_ref = $("#brno");
+            let brno_chk_btn = $("#brno_chk");
+
+            if (!validateBrnoAlert(brno_ref)) return false; //두 번 이상 사용해서 함수 처리
+
+            if (!brno_chk_btn.is(":disabled")) {
+                alert("사업자 인증을 해 주세요");
+                brno_ref.focus();
+                return false;
+            }
+
+            // 통신판매업은 숫자+문자 등 fixed가 아니라 ""체크만 한다.
+            let sle_biz_ref = $("#sle_biz_no");
+            if (sle_biz_ref.val() === "") {
+                alert("통신판매업신고번호를 입력해 주세요");
+                sle_biz_ref.focus();
+                return false;
+            }
+
+            let addr_base_ref = $("#bsplc_base");
+            let addr_dtl_ref = $("#bsplc_dtl");
+
+            if (!validateAddrAlert(addr_base_ref, addr_dtl_ref)) return false; //주소
+
+            let telno_ref = $("#repr_telno"); //브랜드 공식 연락처
+            if (telno_ref.val() === "") {
+                alert("대표 연락처를 입력해 주세요");
+                telno_ref.focus();
+                return false;
+            }
+
+            if (!mpno_reg.test(telno_ref.val())) {
+                alert(not_valid_mpno);
+                telno_ref.focus();
+                return false;
+            }
+
             let brnd_cn_ref = $("#brnd_cn"); //브랜드 내용
             if (!validateBrndCnAlert(brnd_cn_ref)) return false;
 
@@ -688,9 +709,9 @@
             if (!validateBrndImgAlert(bnr_list, prof_list)) return false;
 
             //필수동의
-            let agre_chk = function chkAgreed () {
+            let agre_chk = function chkAgreed() {
                 let is_Agreed;
-                $(".chk-group-line .input-line input[type=checkbox]").each(function(i, obj) {
+                $(".chk-group-line .input-line input[type=checkbox]").each(function (i, obj) {
                     is_Agreed = (!obj.checked) ? obj.checked : true;
                 });
                 return is_Agreed;
@@ -712,7 +733,6 @@
             form.append(files); //form에 업로드 파일 정보 추가
             form.submit();
         });
-
     });
 </script>
 </body>

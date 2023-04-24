@@ -13,9 +13,6 @@
     <p> error : <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/></p>
 </c:if>
 <div class="login-container">
-    <c:if test="${LoginFailMessage!=null}">
-        <p> Error : <c:out value="${LoginFailMessage}"/></p>
-    </c:if>
     <div class="contents">
         <div class="login-wrap">
             <h2 class="page-title">로그인</h2>
@@ -24,6 +21,11 @@
                 <button class="tab-button on">판매자</button>
             </div>
             <div class="login-form">
+                <p class="login-err">
+                    <c:if test="${LoginFailMessage!=null}">
+                        Error : <c:out value="${LoginFailMessage}"/>
+                    </c:if>
+                </p>
                 <form action="/seller/login_check" method="post">
                     <input
                             name="email"

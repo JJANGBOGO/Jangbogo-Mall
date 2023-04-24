@@ -5,7 +5,7 @@
     padding-bottom: 20px;
     -webkit-box-pack: justify;
     justify-content: space-between;
-    border-bottom: 2px solid rgb(51, 51, 51);
+    border-bottom: 2px solid #f58412;
 }
 .dlvpn-notc{
     display: flex;
@@ -32,7 +32,7 @@
 .dlvpn-column{
     display: flex;
     padding: 20px 0px;
-    border-bottom: 1px solid rgb(51, 51, 51);
+    border-bottom: 2px solid #f58412;
     color: #333;
     font-size: 14px;
 }
@@ -78,6 +78,10 @@
     color: rgb(51, 51, 51);
     flex-basis: 60px;
 }
+ul{
+    padding: 0;
+}
+
 li{
     list-style-type: none;
     border-bottom: 1px solid rgb(244, 244, 244);
@@ -101,6 +105,7 @@ li{
 
 }
 label{
+    margin-left: 15px;
     padding: 0;
     margin-right: 52px;
     vertical-align: middle;
@@ -119,6 +124,7 @@ label{
     justify-content: start;
     font-size: 16px;
     text-align: left;
+    margin-left: 20px;
 }
 .base{
     display: block;
@@ -126,13 +132,14 @@ label{
     height: 22px;
     margin-bottom: 7px;
     border-radius: 11px;
-    background-color: rgb(247, 247, 247);
+    background-color: #f58412;
     font-weight: 700;
     font-size: 12px;
-    color: rgb(102, 102, 102);
+    color: white;
     line-height: 22px;
     letter-spacing: 0px;
     text-align: center;
+    border-color: #c14a4a;
 }
 .list-name{
     display: flex;
@@ -177,7 +184,7 @@ label{
     flex-basis: 100px;
 
 
-    color: rgb(95, 0, 128);
+    color: #f58412;
     font-size: 14px;
 }
 .list-change{
@@ -193,4 +200,26 @@ label{
     color: rgb(51, 51, 51);
     letter-spacing: -0.3px;
     flex-basis: 60px;
+}
+
+.insertAddr {
+    color: black;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-weight: 500;
+    font-size: 16px;
+}
+.update-btn{
+    border: none;
+    padding: 4px 9px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.checkbox{
+    margin-left: 9px;
+}
+.dlvpn-span-type{
+    color: #f58412;
 }

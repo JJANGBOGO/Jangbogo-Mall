@@ -13,7 +13,6 @@
 
 .check-pwd-content .check-pwd-form .center-padding {
     padding: 20px 80px;
-    /*border-top: 2px solid rgb(51, 51, 51);*/
     border-top: 1px solid rgb(221, 221, 221);
     border-bottom: 1px solid rgb(221, 221, 221);
 }
@@ -45,6 +44,10 @@
 
     display: flex;
     color: #333333;
+}
+
+.check-pwd-form .center-padding .input-line .input input {
+    width: 100%;
 }
 
 .check-pwd-form .button-box {

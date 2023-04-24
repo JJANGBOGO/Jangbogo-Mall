@@ -6,25 +6,53 @@
                 http://www.springframework.org/schema/beans/spring-beans.xsd
                 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
-
-    <s:http auto-config="true" use-expressions="true">
+    <s:http auto-config="true" use-expressions="true" pattern="/user/**" authentication-manager-ref="userAuthMgr">
         <s:form-login
-                username-parameter="user_id"
-                password-parameter="user_pw"
-                login-processing-url="/login_check"
+                username-parameter="email"
+                password-parameter="pwd"
+                login-processing-url="/user/login_check"
                 login-page="/user/login"
-                authentication-failure-url="/user/login?ng"
                 authentication-failure-handler-ref="loginFailHandler"
                 authentication-success-handler-ref="loginSuccessHandler"
         />
-        <s:intercept-url pattern="/mypage" access="hasRole('ROLE_USER')"/>
-        <s:intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')"/>
+        <s:intercept-url pattern="/user/info" access="hasRole('ROLE_USER')"/>
+        <s:intercept-url pattern="/user/modify" access="hasRole('ROLE_USER')"/>
+        <s:intercept-url pattern="/user/withdraw" access="hasRole('ROLE_USER')"/>
+        <s:intercept-url pattern="/order/checkout" access="hasRole('ROLE_USER')"/>
+        <s:intercept-url pattern="/cart/**" access="hasRole('ROLE_USER')"/>
         <s:access-denied-handler ref="accessFailHandler" />
         <s:csrf disabled="true"/>
     </s:http>
 
-    <s:authentication-manager>
+    <s:http auto-config="true" use-expressions="true" pattern="/seller/**" authentication-manager-ref="sellerAuthMgr">
+        <s:form-login
+                username-parameter="email"
+                password-parameter="pwd"
+                login-processing-url="/seller/login_check"
+                login-page="/seller/login"
+                authentication-failure-handler-ref="loginSellerFailHandler"
+                authentication-success-handler-ref="loginSellerSuccessHandler"
+        />
+        <s:intercept-url pattern="/seller/info" access="hasRole('ROLE_SELLER')"/>
+        <s:intercept-url pattern="/seller/modify" access="hasRole('ROLE_SELLER')"/>
+        <s:intercept-url pattern="/seller/read/brnd" access="hasRole('ROLE_SELLER')"/>
+        <s:intercept-url pattern="/seller/modify/brnd" access="hasRole('ROLE_SELLER')"/>
+        <s:intercept-url pattern="/seller/withdraw" access="hasRole('ROLE_SELLER')"/>
+        <s:access-denied-handler ref="accessSellerFailHandler" />
+        <s:csrf disabled="true"/>
+    </s:http>
+
+    <s:authentication-manager id="userAuthMgr">
         <s:authentication-provider ref="loginAuthenticationProvider" />
     </s:authentication-manager>
+
+    <s:authentication-manager id="sellerAuthMgr">
+        <s:authentication-provider ref="LoginSellerAuthenticationProvider" />
+    </s:authentication-manager>
+
+    <!--    메인페이지 -->
+    <s:http use-expressions="true" auto-config="true" pattern="/" />
+    <s:http use-expressions="true" auto-config="true" pattern="/find/**" />
+    <s:http use-expressions="true" auto-config="true" pattern="/cart/**" />
+
 </beans>

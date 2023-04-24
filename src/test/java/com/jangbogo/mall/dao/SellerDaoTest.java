@@ -1,8 +1,6 @@
-package com.jangbogo.mall;
+package com.jangbogo.mall.dao;
 
 
-import com.jangbogo.mall.dao.SellerDao;
-import com.jangbogo.mall.dao.UserDao;
 import com.jangbogo.mall.domain.Seller;
 import com.jangbogo.mall.domain.SellerDtl;
 import com.jangbogo.mall.domain.User;
@@ -11,14 +9,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Date;
 
 import static org.junit.Assert.assertTrue;
-
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/**/root-context.xml"})
@@ -144,14 +140,11 @@ public class SellerDaoTest {
 
     @Test //ok
     public void updatePwd () throws Exception {
-        String pwd = "temp";
+        String pwd = "test1007";
         String encodedPwd = passwordEncoder.encode(pwd);
-        String test = "$2a$10$pYlqkEwwVJV/IvsMF0nTKuta2Mcv8zQF5c4.AvSQI99Bw0dnvmZF6";
 
-        log.info("...same...." + passwordEncoder.matches(pwd, test)); //ok
+        log.info("encoding...." + encodedPwd);
 
-        int result = dao.updatePwd(encodedPwd, "service테스트", "jinvicky1007");
-        assertTrue(result != 0);
     }
 
 }

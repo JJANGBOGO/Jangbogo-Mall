@@ -81,8 +81,8 @@ public class UserServiceImpl implements UserService {
         return dao.insertSocialUser(user);
     }
 
+//    @Transactional //auto_increment는 @Transactional이 캐치 못한다.
     @Override
-    @Transactional
     public int registerUser(User user, Address addr) throws Exception {
         final int SUCCESS = 1;
         final int FAILED = 0;
@@ -93,10 +93,16 @@ public class UserServiceImpl implements UserService {
 
         user.setPwd(passwordEncoder.encode(user.getPwd()));
 
-        int userResult = dao.insertUser(user); //성공시 idx 리턴
-        int addrResult = addrDao.insertAddr(user.getIdx(), addr); //성공시 1
-
-        return (userResult != 0 && addrResult != 0) ? SUCCESS : FAILED;
+        try {
+            dao.insertUser(user); //회원 insert
+            addrDao.insertAddr(user.getIdx(), addr); // 배송지 insert
+            return SUCCESS;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (user.getIdx() != 0)  //회원이 이미 insert된 경우 회원도 삭제
+                dao.deleteUser(user.getIdx(), user.getEmail());
+            return FAILED;
+        }
     }
 
     @Override
@@ -105,8 +111,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User chkDuplicateNick(String nick_nm) throws Exception {
-        return dao.getUserByNick(nick_nm);
+    public boolean isNickDuplicated(String nick_nm) throws Exception {
+        return dao.getUserByNick(nick_nm) != null;
     }
 
     //    이메일과 회원번호가 일치하는 지 확인
@@ -120,14 +126,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int updateUser(User user) throws Exception {
-        String email = user.getEmail();
-        User prev_user = getUserByEmail(email);
-
-        if (!passwordEncoder.matches(user.getPwd(), prev_user.getPwd())) {
-            updatePwdUptTm(user.getIdx(), email); //비번변경날짜 수정
+        if (user.getPwd() == "") { //새 비번이 없는 경우
+            User prevUser = getUserByEmail(user.getEmail()); //이메일로 기존 회원 조회
+            user.setPwd(prevUser.getPwd()); //기존 비번 그대로 insert
+        } else { //프론트에서 비번이 같을 경우 비활성화 해서 비번이 != ""일 경우 기존 값과 다른다.
+            updatePwdUptTm(user.getIdx(), user.getEmail());
+            user.setPwd(passwordEncoder.encode(user.getPwd()));
         }
-
-        user.setPwd(passwordEncoder.encode(user.getPwd())); //패스워드 인코딩
         return dao.updateUser(user);
     }
 
@@ -141,7 +146,7 @@ public class UserServiceImpl implements UserService {
         User user = dao.getUserByNick(nick_nm);
 
         if (user == null || !passwordEncoder.matches(pwd, user.getPwd())) return null;
-        if (user.getState_cd() == 3) return null;
+        if (user.getState_cd() == 3) return null; //탈퇴회원일경우 null
         return user.getEmail();
     }
 
