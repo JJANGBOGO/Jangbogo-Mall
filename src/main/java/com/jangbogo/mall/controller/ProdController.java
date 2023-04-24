@@ -4,7 +4,6 @@ import com.jangbogo.mall.domain.*;
 import com.jangbogo.mall.service.ProdInqryService;
 import com.jangbogo.mall.service.ProductDetailService;
 import com.jangbogo.mall.service.WishlistService;
-import com.mysql.cj.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +45,7 @@ public class ProdController {
             e.printStackTrace();
         }
 
-        return "product";
+        return "product/product";
     }
 
     @GetMapping("/product/inqry/list")
