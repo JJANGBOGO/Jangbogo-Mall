@@ -597,9 +597,15 @@
                     alert(mpno_send_ok);
                     console.log(result, result.numStr);
                     mpno_verify_num = result.numStr;
-                    $("#mpno").closest(".input-box").append('<div class="input">' +
-                        '<input id="mpno_verify" type="text" placeholder="인증번호를 입력해 주세요">' +
-                        '</div><div class="error-msg mpno-verify"></div>');
+                    // $("#mpno").closest(".input-box").append('<div class="input">' +
+                    //     '<input id="mpno_verify" type="text" placeholder="인증번호를 입력해 주세요">' +
+                    //     '</div><div class="error-msg mpno-verify"></div>');
+
+                    if (mpno_ref.closest(".input-box").find("#mpno_verify").length == 0) {
+                        mpno_ref.closest(".input-box").append('<div class="input">' +
+                            '<input id="mpno_verify" type="text" placeholder="인증번호를 입력해 주세요">' +
+                            '</div><div class="error-msg mpno-verify"></div>');
+                    }
                 },
                 error: function (err) {
                     alert(error_msg); //controller에서 500발생해서 보낼 경우 여기로 온다.
