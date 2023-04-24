@@ -50,9 +50,7 @@
         <s:authentication-provider ref="LoginSellerAuthenticationProvider" />
     </s:authentication-manager>
 
-    <!--    메인페이지 -->
-    <s:http use-expressions="true" auto-config="true" pattern="/" />
-    <s:http use-expressions="true" auto-config="true" pattern="/find/**" />
-    <s:http use-expressions="true" auto-config="true" pattern="/cart/**" />
+    <!--  모든 경로에 s:태그 반영 -->
+    <s:http use-expressions="true" auto-config="true" pattern="/**" />
 
 </beans>

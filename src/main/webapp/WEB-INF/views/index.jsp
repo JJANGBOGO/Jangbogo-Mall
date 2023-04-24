@@ -1,13 +1,5 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: namgungjin
-  Date: 2023/02/05
-  Time: 11:11 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
 <%@page session="true" %>
-
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
 <html>
@@ -32,7 +24,6 @@
     <img class="mySlides"
          src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"/>
 </div>
-<%--남궁진 탭--%>
 <div class="category-header">
     <h2>놓치면 후회하는 특가 상품</h2>
 </div>
