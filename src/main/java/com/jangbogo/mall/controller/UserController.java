@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject; //json.simple이어야 한다.
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -52,10 +53,9 @@ public class UserController {
 
     //회원탈퇴뷰
     @GetMapping("/user/withdraw")
-    public String withdrawUserView(HttpSession session, Model m, Authentication auth, RedirectAttributes rattr) {
-
-        int idx = (int) session.getAttribute("idx");
+    public String withdrawUserView(HttpSession session, Model m, RedirectAttributes rattr) {
         try {
+            int idx = (int) session.getAttribute("idx");
             User user = userService.selectUser(idx);
             m.addAttribute("user", user);
             return "/user/withdraw";
@@ -69,43 +69,30 @@ public class UserController {
 
     //회원탈퇴
     @PostMapping("/user/withdraw")
-    @ResponseBody
-    public String withdrawUser(int idx, String email) {
-        String msg = "";
+    public ResponseEntity<String> withdrawUser(int idx, String email, HttpSession session, HttpServletRequest req, HttpServletResponse resp) {
         try {
-            log.info("result= " + idx + email);
-            if (userService.withdrawUser(idx, email) != 0) {
-                msg = "SUCCESS";
-            }
+            if (userService.withdrawUser(idx, email) != 1)
+                throw new Exception("withdraw failed");
+
+            session.invalidate();//세션 삭제
+            deleteAuth(req, resp);//인가 객체 삭제
+            return ResponseEntity.ok().body("SUCCESS");
+
         } catch (Exception e) {
             e.printStackTrace();
-            msg = "FAILED";
+            return ResponseEntity.status(500).body("FAILED");
         }
-        return msg;
     }
-
-//    //탈퇴 또 다른 방법.
-//    @PostMapping("/user/withdraw")
-//    public String withdrawUser2(HttpSession session, RedirectAttributes rattr) {
-//        int idx = (int) session.getAttribute("idx");
-//        String email = (String) session.getAttribute("email");
-//
-//        try {
-//            if (userService.withdrawUser(idx, email) == 0)
-//                throw new Exception("withdraw failed");
-//
-//            return "redirect:/";
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
-//            return "redirect:/user/withdraw";
-//        }
-//
-//    }
 
     //로그인뷰
     @RequestMapping("/user/login") //꼭 requestMapping
-    public String loginUserView(Model m, HttpSession session) {
+    public String loginUserView(HttpServletRequest req, Model m, HttpSession session, Authentication authentication) {
+
+        String uri = req.getHeader("Referer");
+        if (authentication != null) return "redirect:/";
+
+        if (uri != null && !(uri.contains("/user/login") || uri.contains("/user/login_check")))
+            req.getSession().setAttribute("prevPage", uri);
 
         String kakaoAuthUrl = kakaoLoginBO.getAuthorizationUrl(session);
         m.addAttribute("urlKakao", kakaoAuthUrl);
@@ -205,7 +192,7 @@ public class UserController {
                 userService.updateLoginTm(user.getIdx(), user.getEmail()); //ok
             }
 
-//            makeAuth(email); //TODO:: 시큐리티 후 수정
+            makeAuth(email);
             session.setAttribute("loginService", "naver"); // 최종 로그인 서비스. 같은 이메일, 다른 서비스 로그인 구별 목적
             crtSession(session, user);
             return "redirect:/";
@@ -240,7 +227,7 @@ public class UserController {
     }
 
     // 일반 회원 로그아웃
-    @GetMapping("/security_logout")
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         session.invalidate();
         deleteAuth(request, response);
@@ -275,59 +262,46 @@ public class UserController {
 
     //이메일 중복 체크
     @PostMapping("/user/duplicate/email")
-    @ResponseBody
-    public String chkDuplicateEmail(String email, String type) {
-        log.info("email...." + email);
-        String msg = "DUPLICATE";
+    public ResponseEntity<String> chkDuplicateEmail(String email, String type) {
         try {
-            if (userService.getUserByEmail(email) == null) msg = "OK";
+            String msg = userService.getUserByEmail(email) == null ? "OK" : "DUPLICATE";
+            return ResponseEntity.ok().body(msg);
         } catch (Exception e) {
             e.printStackTrace();
-            msg = "ERROR";
+            return ResponseEntity.status(500).body("ERROR");
         }
-        return msg;
     }
 
     //닉네임 중복 체크
     @PostMapping("/user/duplicate/nickname")
-    @ResponseBody
-    public String chkDuplicateNick(String nick_nm, String type) {
-        log.info("nick...." + nick_nm);
-        String msg = "DUPLICATE";
+    public ResponseEntity<String> chkDuplicateNick(String nick_nm) {
         try {
-            if (userService.chkDuplicateNick(nick_nm) == null) msg = "OK";
+            String msg = !userService.isNickDuplicated(nick_nm) ? "OK" : "DUPLICATE";
+            return ResponseEntity.ok().body(msg);
         } catch (Exception e) {
             e.printStackTrace();
-            msg = "ERROR";
+            return ResponseEntity.status(500).body("ERROR");
         }
-        return msg;
     }
 
     //회원인증뷰
     @GetMapping("/user/info")
-    public String verifyUserView(HttpSession session) {
-        log.info("loginService..." + session.getAttribute("loginService"));
-//        if (session.getAttribute("loginService") != "jangbogo")
-//            return "/user/verifySocial";
+    public String verifyUserView(HttpServletRequest req, HttpSession session, Model m) {
+        m.addAttribute("mypageUrl", req.getRequestURI());
+
+        String serviceType = (String) session.getAttribute("loginService");
+        if (serviceType == "naver" || serviceType == "kakao")
+            return "/user/verifySocial";
 
         session.setAttribute("modify", "OK");
-
         return "/user/verify";
     }
 
     //회원수정전 인증
     @PostMapping("/user/info")
     public String verifyUser(String email, String pwd, RedirectAttributes rattr) {
-        log.info("pwd..." + email + pwd);
-
-        if (pwd == "") { //비밀번호 입력X
-            rattr.addFlashAttribute("msg", "PWD_EMPTY_ERR");
-            return "redirect:/user/info";
-        }
-
         try {
-            boolean userChk = userService.verifyUser(email, pwd);
-            if (userChk) return "redirect:/user/modify";
+            if (userService.verifyUser(email, pwd)) return "redirect:/user/modify";
             else {
                 //회원 존재X
                 rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
@@ -344,15 +318,16 @@ public class UserController {
 
     //회원수정뷰
     @GetMapping("/user/modify")
-    public String modifyUserView(HttpSession session, Model m, RedirectAttributes rattr) {
-//        if (session.getAttribute("modify") != "OK") {
-//            return "redirect:/user/info";
-//        }
-        try {
-//            int idx = (int) session.getAttribute("idx");
-            User user = userService.selectUser(36);
-            m.addAttribute("user", user);
+    public String modifyUserView(HttpServletRequest req, HttpSession session, Model m, RedirectAttributes rattr) {
+        m.addAttribute("mypageUrl", req.getRequestURI());
 
+        if (session.getAttribute("modify") != "OK") {
+            return "redirect:/user/info";
+        }
+        try {
+            int idx = (int) session.getAttribute("idx");
+            User user = userService.selectUser(idx);
+            m.addAttribute("user", user);
             return "user/modify";
 
         } catch (Exception e) {
@@ -364,18 +339,14 @@ public class UserController {
 
     @PostMapping("/user/modify")
     public String modifyUser(User user, HttpSession session, RedirectAttributes rattr) {
-        log.info("회원수정....." + user);
-
         try {
-//            user.setIdx((int) session.getAttribute("idx"));
-            user.setIdx(36);
+            user.setIdx((int) session.getAttribute("idx"));
             if (userService.updateUser(user) != 1)
                 throw new Exception("modify failed");
 
             session.removeAttribute("modify"); //수정 성공시 해당 세션도 삭제
             rattr.addFlashAttribute("msg", "MOD_OK"); // 수정완료 메세지
             return "redirect:/user/info";
-            //loginService가 null이면
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -393,7 +364,7 @@ public class UserController {
 
     //이메일 찾기
     @PostMapping("/user/find/email")
-    public String findUserEmail (String nick_nm, String pwd, RedirectAttributes rattr) {
+    public String findUserEmail(String nick_nm, String pwd, RedirectAttributes rattr) {
         try {
             String email = userService.findUserEmail(nick_nm, pwd);
             if (email == null) {
@@ -412,8 +383,7 @@ public class UserController {
 
     //비번 찾기
     @PostMapping("/user/find/pwd")
-    public String findUserPwd (String nick_nm, String email, RedirectAttributes rattr) {
-
+    public String findUserPwd(String nick_nm, String email, RedirectAttributes rattr) {
         try {
             if (!userService.isUserPresent(nick_nm, email)) {
                 rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
@@ -432,5 +402,4 @@ public class UserController {
             return "redirect:/find/pwd";
         }
     }
-
 }

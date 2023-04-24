@@ -46,8 +46,8 @@
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
     let msg = "${msg}";
-    if (msg == "MODIFY_BRND_OK") alert("브랜드 수정에 성공했습니다");
-    if (msg == "EXCEPTION_ERR") alert("오류가 발생했습니다 다시 시도해 주세요");
+    if (msg === "MODIFY_BRND_OK") alert("브랜드 수정에 성공했습니다");
+    if (msg === "EXCEPTION_ERR") alert("오류가 발생했습니다 다시 시도해 주세요");
 
     $(document).ready(function () {
         $(".modify-brnd").click(function () {

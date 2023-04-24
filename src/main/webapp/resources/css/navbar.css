@@ -7,10 +7,13 @@
     border: none;
     outline: none;
     color: var(--text-dark);
+    font-family: "Spoqa-Regular", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", Arial, sans-serif;
+
 }
 
 a {
     cursor: pointer;
+    text-decoration: none;
     color: var(--text-dark);
 }
 
@@ -67,6 +70,8 @@ a {
 }
 
 .header-inner .logo-container .header-logo a {
+    font-size: 30px;
+    font-weight: bold;
     line-height: 1.5;
 }
 
@@ -139,6 +144,7 @@ a {
 .navbar-2 ul {
     display: flex;
     justify-content: center;
+    margin: 0;
     font-weight: bold;
     color: #666;
 }

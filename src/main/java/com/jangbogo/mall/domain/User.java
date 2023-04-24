@@ -14,7 +14,7 @@ public class User {
 
     }
 
-    private int idx; // 번호
+    private Integer idx; // 번호
     private int auth_idx; //권한번호
     private int rnk_idx; //등급번호
 

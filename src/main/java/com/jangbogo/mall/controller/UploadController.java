@@ -63,7 +63,6 @@ public class UploadController {
     @PostMapping(value = "/uploadAjaxAction", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public ResponseEntity<List<AttachFileDto>> uploadAjaxPost(MultipartFile[] uploadFile) {
-        log.info("wjy....?" + uploadFile);
 
         //새로운 ArrList를 생성한다.
         List<AttachFileDto> list = new ArrayList<>();
@@ -101,15 +100,13 @@ public class UploadController {
             uploadFileName = uuid.toString() + "_" + uploadFileName;
 
             //새로운 File 객체를 생성해서 업로드할 폴더 경로와 업로드할 파일 이름(가공완)을 넣는다.
-//            File saveFile = new File(uploadFolder, uploadFileName);
             //기존에 temp 폴더에 업로드를 하는 게 아니라 폴더에 날짜를 섞어서 만든 파일 객체 uploadPath를 넣는다.
 
             try {
                 File saveFile = new File(uploadPath, uploadFileName);
                 //만든 파일 객체를 내 upload 폴더에 저장한다.
-                multipartFile.transferTo(saveFile); //예외 발생 가능한 메서드라서 catch안 하면 빨간줄이 뜬다.
+                multipartFile.transferTo(saveFile); // try-catch 필요
 
-                //uuid랑 uploadPath 까먹지 말고 해라! 안 그러면 아젝스가 Null 나옴~~~
                 attachDTO.setUuid(uuid.toString());
                 attachDTO.setUploadPath(uploadFolderPath);
 

@@ -16,7 +16,7 @@
                 </a>
             </li>
             <li>
-                <a href="/seller/info" class="<c:if test='${mySellerUrl eq "/seller/info" || mySellerUrl eq "/seller/modify"}'>active</c:if> ">
+                <a href="/seller/list/product" class="<c:if test='${mySellerUrl eq "/seller/list/product" || mySellerUrl eq "/seller/register/product"}'>active</c:if> ">
                     내 상품들
                 </a>
             </li>

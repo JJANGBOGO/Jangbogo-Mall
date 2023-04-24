@@ -2,6 +2,7 @@ package com.jangbogo.mall.dao;
 
 import com.jangbogo.mall.domain.Seller;
 import com.jangbogo.mall.domain.SellerDtl;
+import com.jangbogo.mall.domain.UserDetailsDto;
 
 public interface SellerDao {
 
@@ -37,4 +38,15 @@ public interface SellerDao {
 
     //판매자 비번 수정
     int updatePwd (String pwd, String cpnm, String email) throws Exception;
+
+    //비번변경날짜 수정
+    int updatePwdUptTm (Integer idx, String email) throws Exception;
+
+    //시큐리티 판매자 조회
+    UserDetailsDto getSellerDetailsDto (String email) throws Exception;
+
+    //로그인일자 최신화
+    int updateLoginTm (Integer idx, String email) throws Exception;
+
+
 }

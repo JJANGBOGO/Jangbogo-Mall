@@ -1,4 +1,3 @@
-
 .login-form form .login-button,
 #showPwdToggle {
     cursor: pointer;
@@ -31,7 +30,6 @@
     text-align: center;
 }
 
-
 .login-container .contents .login-wrap .tab-box button {
     display: block;
     -webkit-box-flex: 1;
@@ -63,6 +61,10 @@
 }
 
 /* form start  */
+.login-err {
+    color: var(--text-danger);
+}
+
 .login-wrap .login-form .input-control {
     width: 100%;
     height: 48px;

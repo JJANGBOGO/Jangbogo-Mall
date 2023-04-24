@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jangbogo.mall.dao.ProductMapper">
+
+    <select id="getListBySeller" resultType="ProductDto">
+        SELECT P.SELER_PROD_CD,
+               P.UPLOAD_PATH,
+               P.NAME,
+               P.CTENT,
+               P.PRC,
+               P.DSPLY_STATE_CD,
+               P.ASCR,
+               D.REG_STATE_CD
+        FROM PRODUCT AS P
+                 INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND P.SELER_IDX = #{seler_idx};
+    </select>
+
+    <insert id="insertProduct" parameterType="ProductDto">
+        INSERT INTO PRODUCT (SELER_IDX,
+        CATE_IDX,
+        SELER_PROD_CD,
+        UPLOAD_PATH,
+        NAME,
+        CTENT,
+        PRC,
+        DC_STATE_CD,
+        DC_RATE,
+        DSPLY_STATE_CD,
+        RESV_PHOTO_UPLOAD_PATH)
+        VALUES (#{seler_idx},
+        #{cate_idx},
+        #{seler_prod_cd},
+        #{upload_path},
+        #{name},
+        #{ctent},
+        #{prc},
+        #{dc_state_cd},
+        #{dc_rate},
+        #{dsply_state_cd},
+        #{upload_path});
+        <selectKey resultType="int" keyProperty="idx" order="AFTER">
+            SELECT LAST_INSERT_ID() AS IDX
+        </selectKey>
+    </insert>
+
+    <insert id="insertProductDtl" parameterType="ProductDtl">
+        INSERT INTO PROD_DTL (PROD_IDX,
+                              ORPLC,
+                              SLE_UNIT,
+                              WEIGHT,
+                              MFT_TM,
+                              DISTB_TLMT,
+                              WARN,
+                              MAX_SLE_QUTY,
+                              SFKP_TP_STATE_CD,
+                              SLE_START_TM,
+                              SLE_END_TM,
+                              CREATE_TM,
+                              INV_QUTY,
+                              GUID)
+        values (#{prod_idx},
+                #{orplc},
+                #{sle_unit},
+                #{weight},
+                #{mft_tm},
+                #{distb_tlmt},
+                #{warn},
+                #{max_sle_quty},
+                #{sfkp_tp_state_cd},
+                #{sle_start_tm},
+                #{sle_end_tm},
+                now(),
+                #{inv_quty},
+                #{guid});
+    </insert>
+
+    <insert id="insertProductFiles" parameterType="ProductFile">
+        INSERT INTO PROD_FILE (UUID,
+                               PROD_IDX,
+                               NAME,
+                               UPLOAD_PATH,
+                               TYPE,
+                               SORT_ODR)
+        VALUES (#{uuid},
+                #{prod_idx},
+                #{name},
+                #{upload_path},
+                #{type},
+                #{sort_odr});
+    </insert>
+</mapper>

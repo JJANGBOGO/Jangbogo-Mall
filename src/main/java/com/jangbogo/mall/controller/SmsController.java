@@ -36,7 +36,8 @@ public class SmsController {
     @ResponseBody
     public ResponseEntity<SmsResponse> checkMpno(@RequestBody Message msg) throws Exception {
         msg.setContent(crtVerifyNum());
-        log.info("mpno..." + msg.getTo());
+        log.info("mpno..." + msg.getTo() + "....." + msg.getContent());
+
 
         try {
 //            SmsResponse resp = smsService.sendSms(msg.getTo(), "verify number: " + msg.getContent());
