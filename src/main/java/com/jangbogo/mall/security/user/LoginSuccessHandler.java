@@ -1,7 +1,10 @@
-package com.jangbogo.mall.security;
+package com.jangbogo.mall.security.user;
 
 
+import com.jangbogo.mall.dao.UserDao;
+import com.jangbogo.mall.domain.User;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
@@ -19,10 +22,11 @@ import java.io.IOException;
 @Slf4j
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
-    //아예 여기를 타지를 않고 500에러가 난다.
+    @Autowired
+    UserDao userDao;
+
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
 
         //경우1 : 로그인 인증을 위해 Spring Security가 요청을 가로챈 경우
         RequestCache requestCache = new HttpSessionRequestCache();
@@ -42,6 +46,25 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
         } else redirectUrl = savedRequest.getRedirectUrl();
 
+        String email = authentication.getPrincipal().toString();
+        try {
+            //회원 조회
+            User user = userDao.getUserByEmail(email);
+            Integer idx = user.getIdx();
+            String userEmail = user.getEmail();
+
+            //세션 생성
+            request.getSession().setAttribute("idx", idx);
+            request.getSession().setAttribute("email", userEmail);
+            request.getSession().setAttribute("nickName", user.getNick_nm());
+
+            //최종로그인일자 업데이트
+            userDao.updateLoginTm(idx, userEmail);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            redirectUrl = "/user/login";
+        }
         response.sendRedirect(redirectUrl);
     }
 }

@@ -2,6 +2,7 @@ package com.jangbogo.mall.dao;
 
 import com.jangbogo.mall.domain.Seller;
 import com.jangbogo.mall.domain.SellerDtl;
+import com.jangbogo.mall.domain.UserDetailsDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -77,6 +78,27 @@ public class SellerDaoImpl implements SellerDao {
         map.put("cpnm", cpnm);
         map.put("email", email);
         return session.update(nameSpace + "updatePwd", map);
+    }
+
+    @Override
+    public UserDetailsDto getSellerDetailsDto(String email) throws Exception{
+        return session.selectOne(nameSpace + "getSellerDetailsDto", email);
+    }
+
+    @Override
+    public int updatePwdUptTm (Integer idx, String email) throws Exception {
+        Map map = new HashMap();
+        map.put("idx", idx);
+        map.put("email" ,email);
+        return session.update(nameSpace + "updatePwdUptTm", map);
+    }
+
+    @Override
+    public int updateLoginTm (Integer idx, String email) throws Exception {
+        Map map = new HashMap();
+        map.put("idx", idx);
+        map.put("email", email);
+        return session.update(nameSpace +"updateLoginTm", map);
     }
 
 

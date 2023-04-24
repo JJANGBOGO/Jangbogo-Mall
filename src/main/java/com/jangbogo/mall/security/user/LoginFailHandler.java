@@ -1,5 +1,6 @@
-package com.jangbogo.mall.security;
+package com.jangbogo.mall.security.user;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -12,12 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
+@Slf4j
 @Service("loginFailHandler")
 public class LoginFailHandler implements AuthenticationFailureHandler {
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
+            log.info("fail....jinvicky");
         // TODO Auto-generated method stub
         if(exception instanceof AuthenticationServiceException) {
             request.setAttribute("LoginFailMessage", "죄송합니다. 시스템에 오류가 발생했습니다.");
@@ -39,6 +42,6 @@ public class LoginFailHandler implements AuthenticationFailureHandler {
         }
         else request.setAttribute("LoginFailMessage", "계정을 찾을 수 없습니다.");
         RequestDispatcher dispatcher = request.getRequestDispatcher("/user/login");
-        dispatcher.forward(request, response);
+        dispatcher.forward(request, response); //forward 요청으로 경로는 그대로
     }
 }

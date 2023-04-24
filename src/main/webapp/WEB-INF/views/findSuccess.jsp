@@ -37,9 +37,16 @@
                 </p>
             </c:if>
             <div class="btn-box">
-                <a href="/login">
-                    <button class="login">로그인하기</button>
-                </a>
+                <c:if test="${member eq 'seller'}">
+                    <a href="/seller/login">
+                        <button class="login">로그인하기</button>
+                    </a>
+                </c:if>
+                <c:if test="${member eq 'user'}">
+                    <a href="/user/login">
+                        <button class="login">로그인하기</button>
+                    </a>
+                </c:if>
                 <a href="/find/pwd">
                     <button class="find-pwd">비밀번호 찾기</button>
                 </a>

@@ -144,8 +144,8 @@
                         </label>
                     </div>
                     <div class="btn-container">
-                        <button class="info-modify cancel">수정 취소</button>
-                        <button class="info-modify">수정 완료</button>
+                        <button class="info-modify cancel" id="cancel_btn">수정 취소</button>
+                        <button class="info-modify" id="submit_btn">수정 완료</button>
                     </div>
                 </div>
                 <!-- end of center-padding -->
@@ -153,28 +153,33 @@
         </div>
     </div>
 </div>
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/js/member/regEx.js"></script>
-<script src="/js/member/msg.js"></script>
 <script src="/js/member/common.js"></script>
+<script src="/js/member/msg.js"></script>
 <script>
     $(document).ready(function () {
         //인증버튼들 비활성화
         $("#nick_duplicate_chk").attr("disabled", true);
         $("#mpno_chk").attr("disabled", true);
-        //초기 마케팅 수신동의 상태
-        $("#markt_agre_yn").attr("checked", "${user.markt_agre_yn}" == "Y" ? true : false);
-        $(".agree-checkbox2").attr("src", imgUrl($("#markt_agre_yn").is(":checked")));
 
-        //커스텀 체크박스
-        $("#markt_agre_yn").click(function () {
+        let market_checkbox = $("#markt_agre_yn");
+        //초기 마케팅 수신동의 설정
+        market_checkbox.attr("checked", "${user.markt_agre_yn}" === "Y" ? true : false);
+        $(".agree-checkbox2").attr("src", imgUrl(market_checkbox.is(":checked")));
+
+        //커스텀 체크박스 toggle
+        market_checkbox.click(function () {
             $(".agree-checkbox2").attr("src", imgUrl($(this).is(":checked")));
         });
 
-        $(".info-modify.cancel").click(function() {
-            window.location.href="/user/info";
-        })
+        //수정 취소 버튼
+        $("#cancel_btn").click(function (e) {
+            e.preventDefault();
+            window.location.href = "/user/info";
+        });
 
         //keyup
         //닉네임
@@ -183,35 +188,15 @@
             let err_ref = $(".error-msg.nick");
             let prev_nick = "${user.nick_nm}";
 
-            if (nick == "") {
-                err_ref.html(nick_empty);
-                return false;
-            } else err_ref.empty();
-
-            if (!nick_reg.test(nick)) {
-                err_ref.html(not_valid_nick);
-            } else err_ref.empty();
-
-            $("#nick_duplicate_chk").attr("disabled", nick == prev_nick ? true : false);
+            nickErrMsg(nick, err_ref);
+            $("#nick_duplicate_chk").attr("disabled", nick === prev_nick ? true : false);
         });
 
         //비번
         $("#pwd").keyup(function () {
             let pwd = $("#pwd").val();
-            let pwd_confirm = $("#pwd_confirm").val();
-            let pwd_err_ref = $(".error-msg.pwd");
-
-            console.log("pwd dif....", pwd, pwd_confirm);
-
-            if (pwd == "") {
-                pwd_err_ref.html(pwd_empty);
-                return false;
-            } else pwd_err_ref.empty();
-
-            if (!pwd_reg.test(pwd)) {
-                pwd_err_ref.html(not_valid_pwd);
-                return false;
-            } else pwd_err_ref.empty();
+            let err_ref = $(".error-msg.pwd");
+            pwdErrMsg(pwd, err_ref);
         });
 
         //비번확인
@@ -220,15 +205,7 @@
             let pwd_confirm = $("#pwd_confirm").val();
             let err_ref = $(".error-msg.pwd-confirm");
 
-            if (pwd_confirm == "") {
-                err_ref.html(pwd_confirm_empty);
-                return false;
-            } else err_ref.empty();
-
-            if (pwd_confirm != pwd) {
-                err_ref.html(not_valid_pwd_confirm);
-                return false;
-            } else err_ref.empty();
+            pwdConfirmErrMsg(pwd, pwd_confirm, err_ref);
         });
 
         //휴대전화 keyup
@@ -237,33 +214,21 @@
             let err_ref = $(".error-msg.mpno");
 
             mpnoErrMsg(mpno, err_ref);
-            $("#mpno_chk").attr("disabled", (mpno == "${user.mpno}") ? true : false);
+            $("#mpno_chk").attr("disabled", (mpno === "${user.mpno}") ? true : false);
         });
 
         //닉네임 중복검사
         $("#nick_duplicate_chk").click(function (e) {
             e.preventDefault(); //form 전송 방지
             let nick_ref = $("#nick_nm");
-
-            //닉네임
-            if (nick_ref.val() == "") {
-                alert(nick_empty);
-                nick_ref.focus();
-                return false;
-            }
-
-            if (!nick_reg.test(nick_ref.val())) {
-                alert(not_valid_nick);
-                nick_ref.focus();
-                return false;
-            }
+            if (!validateNickAlert(nick_ref)) return false;
 
             $.ajax({
                 url: '/user/duplicate/nickname',
                 data: {nick_nm: nick_ref.val()},
                 type: 'POST',
                 success: function (result) {
-                    if (result == "OK") {
+                    if (result === "OK") {
                         alert(available_nick);
                         $("#nick_duplicate_chk").attr("disabled", true); //버튼 비활성화
                         nick_ref.attr("readonly", true); //인풋 비활성화
@@ -283,17 +248,7 @@
             e.preventDefault();
             let mpno_ref = $("#mpno");
 
-            if (mpno_ref.val() == "") {
-                alert(mpno_empty);
-                mpno_ref.focus();
-                return false;
-            }
-
-            if (!mpno_reg.test(mpno_ref.val())) {
-                alert(not_valid_mpno);
-                mpno_ref.focus();
-                return false;
-            }
+            if (!validateMpnoAlert(mpno_ref)) return false;
 
             $.ajax({
                 url: '/chk/mpno',
@@ -304,9 +259,15 @@
                     alert(mpno_send_ok);
                     console.log(result, result.numStr);
                     mpno_verify_num = result.numStr;
-                    $("#mpno").closest(".input-box").append('<div class="input">' +
-                        '<input id="mpno_verify" type="text" placeholder="인증번호를 입력해 주세요">' +
-                        '</div><div class="error-msg mpno-verify"></div>');
+                    // $("#mpno").closest(".input-box").append('<div class="input">' +
+                    //     '<input id="mpno_verify" type="text" placeholder="인증번호를 입력해 주세요">' +
+                    //     '</div><div class="error-msg mpno-verify"></div>');
+
+                    if (mpno_ref.closest(".input-box").find("#mpno_verify").length == 0) {
+                        mpno_ref.closest(".input-box").append('<div class="input">' +
+                            '<input id="mpno_verify" type="text" placeholder="인증번호를 입력해 주세요">' +
+                            '</div><div class="error-msg mpno-verify"></div>');
+                    }
                 },
                 error: function (err) {
                     alert(error_msg);
@@ -315,81 +276,41 @@
         });
 
         $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
-            if ($("#mpno_verify").val() == mpno_verify_num) {
+            if ($("#mpno_verify").val() === mpno_verify_num) {
                 $(".error-msg.mpno-verify").html(mpno_verified);
                 $(".error-msg.mpno-verify").css('color', 'green');
                 $("#mpno_chk").attr("disabled", true);
                 $("#mpno").attr('readonly', true);
 
             }
-        })
+        });
 
-        $(".info-modify").click(function (e) { //수정버튼 클릭
+        $("#submit_btn").click(function (e) { //수정버튼 클릭
             e.preventDefault();
             let nick_ref = $("#nick_nm");
+            let nick_chk_btn = $("#nick_duplicate_chk");
 
-            if (nick_ref.val() == "") {
-                alert(nick_empty);
-                nick_ref.focus();
-                return false;
-            }
-
-            if (!nick_reg.test(nick_ref.val())) {
-                alert(not_valid_nick);
-                nick_ref.focus();
-                return false;
-            }
-
-            if (!$("#nick_duplicate_chk").is(":disabled")) {
-                alert(chk_nick_required);
-                nick_ref.focus();
-                return false;
-            }
+            if (!validateNickAlert(nick_ref)) return false;
+            if (!chkNickAlert(nick_ref, nick_chk_btn)) return false;
 
             let pwd_ref = $("#pwd");
-            //비번
-            if (pwd_ref.val() != "" && !pwd_reg.test(pwd_ref.val())) {
-                alert(not_valid_pwd);
-                pwd_ref.focus();
-                return false;
-            }
-
             let pwd_confirm_ref = $("#pwd_confirm");
-
-            //비번 확인
-            if (pwd_ref.val() != pwd_confirm_ref.val()) {
-                alert(not_valid_pwd_confirm);
-                pwd_confirm_ref.focus();
-                return false;
-            }
+            //새 비번
+            if (!validateNewPwdAlert(pwd_ref)) return false;
+            //새 비번 확인
+            if (!validatePwdConfirmAlert(pwd_ref, pwd_confirm_ref)) return false;
 
             //휴대전화 인증
             let mpno_ref = $("#mpno");
-            if (mpno_ref.val() == "") {
-                alert(mpno_empty);
-                mpno_ref.focus();
-                return false;
-            }
+            let mpno_chk_btn = $("#mpno_chk");
 
-            if (!mpno_reg.test(mpno_ref.val())) {
-                alert(not_valid_mpno);
-                mpno_ref.focus();
-                return false;
-            }
-
-            if (!$("#mpno_chk").is(":disabled")) {
-                alert(chk_mpno_required);
-                return false;
-            }
-
+            if (!validateMpnoAlert(mpno_ref)) return false;
+            if (!chkMpnoAlert(mpno_ref, mpno_chk_btn)) return false;
             //통과
-            let prev_pwd = "${user.pwd}";
-            if (pwd_ref.val() == "") pwd_ref.val(prev_pwd); //새 비밀번호를 입력하지 않은 경우 기존 비밀번호를 넣는다.
             $("#modify_user").submit();
         });
     });
 </script>
 </body>
-<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </html>
 
