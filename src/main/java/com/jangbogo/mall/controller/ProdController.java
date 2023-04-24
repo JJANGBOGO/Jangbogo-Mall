@@ -29,8 +29,8 @@ public class ProdController {
     //페이지 이동
     @GetMapping("/product/{prod_idx}")
     public String product(@PathVariable Integer prod_idx, HttpSession session, Model m, HttpServletRequest request) {
-        if(!loginCheck(request))
-            return "redirect:/user/login?toURL=" + request.getRequestURL();
+//        if(!loginCheck(request))
+//            return "redirect:/user/login?toURL=" + request.getRequestURL();
         Integer session_idx = (Integer)session.getAttribute("idx");
         try {
             ProductDetailDto list = productDetailService.read(prod_idx);

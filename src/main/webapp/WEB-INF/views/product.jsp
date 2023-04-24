@@ -259,10 +259,15 @@
   }
 
   let DescriptionToList = function(fileLists) {
+    alert("check!")
     let tmp = "";
     fileLists.forEach(function(fileList){
-      tmp += ''
+      console.log("fileList="+fileList);
+      tmp += '<div class="pic">'
+      tmp += '<img src='+fileList.upload_path
+      tmp += ' alt="productImg" />'
     })
+    return tmp += '</div>';
   }
 
   let showDetail = function(prod_idx) {
@@ -368,9 +373,6 @@
     //return 첫 번째 요소 + "(" + 두 번째 요소 + ")";
      $('.packing-name').text(dlvryType + "(" + packageType + ")");
   }
-
-
-
 
   $(document).ready(function(){
     let prod_idx = $('#prod_idx').text();
