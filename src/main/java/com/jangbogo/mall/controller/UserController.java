@@ -1,11 +1,10 @@
 package com.jangbogo.mall.controller;
 
 
-import com.jangbogo.mall.domain.Address;
-import com.jangbogo.mall.domain.KakaoLoginBo;
-import com.jangbogo.mall.domain.NaverLoginBo;
+import com.jangbogo.mall.dao.AuthDao;
+import com.jangbogo.mall.dao.UserDao;
+import com.jangbogo.mall.domain.*;
 import com.github.scribejava.core.model.OAuth2AccessToken;
-import com.jangbogo.mall.domain.User;
 import com.jangbogo.mall.service.UserService;
 import com.jangbogo.mall.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +26,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -50,6 +51,12 @@ public class UserController {
 
     @Autowired
     Utils utils;
+
+    @Autowired
+    AuthDao authDao;
+
+    @Autowired
+    UserDao userDao;
 
     //회원탈퇴뷰
     @GetMapping("/user/withdraw")
@@ -129,7 +136,7 @@ public class UserController {
                         .login_tp_cd(KAKAO)
                         .build();
 
-                log.info("뉴비...." + user);
+//                log.info("뉴비...." + user);
                 int idx = userService.regSocialUser(user);
                 user = userService.selectUser(idx);
             } else {
@@ -137,7 +144,7 @@ public class UserController {
                 userService.updateLoginTm(user.getIdx(), user.getEmail());
             }
 
-            makeAuth(email);
+            makeAuth(user);
             session.setAttribute("loginService", "kakao"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
             crtSession(session, user);
             return "redirect:/";
@@ -192,7 +199,7 @@ public class UserController {
                 userService.updateLoginTm(user.getIdx(), user.getEmail()); //ok
             }
 
-            makeAuth(email);
+            makeAuth(user);
             session.setAttribute("loginService", "naver"); // 최종 로그인 서비스. 같은 이메일, 다른 서비스 로그인 구별 목적
             crtSession(session, user);
             return "redirect:/";
@@ -211,11 +218,20 @@ public class UserController {
     }
 
     // 인증 생성
-    public void makeAuth(Object obj) {
-        Authentication authentication =
-                new UsernamePasswordAuthenticationToken(obj, null);
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        securityContext.setAuthentication(authentication);
+    public void makeAuth(User user) throws Exception {
+        UserDetailsDto dto = userDao.getUserDetailsDto(user.getEmail());
+        if (dto != null) {
+            User user1 = userDao.getUserByEmail(user.getEmail());
+            dto.setAuthority((ArrayList<String>) authDao.getAuthList(user1.getAuth_idx()));
+            log.info("....dto..." + dto.getAuthorities());
+            Authentication authentication =
+                    new UsernamePasswordAuthenticationToken(user, null, dto.getAuthorities()); //userDetailsDto.getAuthorities()식으로 권한을 추가해야 함
+
+            log.info("..." + authentication + "...." + dto.getAuthorities());
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+            securityContext.setAuthentication(authentication);
+        }
+
     }
 
     // 로그아웃시 인증 삭제
