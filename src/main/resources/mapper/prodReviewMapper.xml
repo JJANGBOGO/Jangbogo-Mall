@@ -14,7 +14,7 @@
     
     <update id="update" parameterType="ProdReviewDto">
         update PROD_LATE
-        set CTENT = #{ctent}, OPUB_YN = #{opub_yn}, USER_IDX = #{user_idx}, STATE_CD = 2 ,CHG_TM = now()
+        set CTENT = #{ctent}, OPUB_YN = #{opub_yn}, USER_IDX = #{user_idx} ,CHG_TM = now()
         where idx = #{idx};
     </update>
 
