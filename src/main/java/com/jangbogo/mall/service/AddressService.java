@@ -8,6 +8,20 @@ public interface AddressService {
 
     int insertAddr (int user_idx , Address addr) throws Exception;
 
-    List<Address> selAddrList (int user_idx) throws Exception;
+    List<Address> selAddrList (Integer user_idx) throws Exception;
 
+    Address selAddr (Integer idx) throws Exception;
+
+    Integer deleteAddr (Integer idx, Integer user_idx) throws Exception;
+
+    Integer changeState (Integer user_idx) throws Exception;
+
+
+    Integer updateAddr(Address address) throws Exception;
+
+    Integer resetDefault_N ( Integer idx) throws Exception;
+
+    Integer AddrStateCD ( Integer idx) throws Exception;
+
+    Integer resetStateCD ( Integer user_idx) throws Exception;
 }
