@@ -1,22 +1,37 @@
 package com.jangbogo.mall.domain;
 
-import javax.xml.crypto.Data;
+import org.springframework.stereotype.Repository;
+
 import java.util.Date;
 
+@Repository
 public class OrderDto {
-    private Integer idx;
-    private Integer user_idx;
-    private String ordr_nm;
-    private String mpno;
-    private Integer tot_amt;
-    private Integer gtot;
-    private Integer plist_tot;
-    private Date ord_tml;
-    private Integer state_cd;
-    private Date crt_tm;
-    private Integer crt_idx;
-    private Date upt_tm;
-    private Integer utp_idx;
+    // iv 선언
+    Integer idx;                                                                                                        // 주문번호  IDX
+    String ordr_nm;                                                                                                     // 주문자이름 ORDR_NM
+    String mpno;                                                                                                        // 주문자휴대전화번호 MPNO
+    Integer user_idx;                                                                                                   // 회원번호  USER_IDX
+    Integer tot_amt;                                                                                                    // 주문총금액 TOT_AMT
+    Integer gtot;                                                                                                       // 주문총수량 GTOT
+    Integer plist_tot;                                                                                                  // 주문품목총계 PLIST_TOT
+    Date ord_tm;                                                                                                        // 주문날짜 ORD_TM
+    Date state_cd;                                                                                                      // 주문상태코드 STATE_CD
+    Date crt_tm;                                                                                                        // 최초등록일자 CRT_TM
+    Integer crt_idx;                                                                                                    // 최초등록자식별번호 CRT_IDX
+    Date upt_tm;                                                                                                        // 최종수정일자 UPT_TM
+    Integer upt_idx;                                                                                                    // 최종수정자식별번호 UPT_IDX
+
+    // Constructor
+    public OrderDto() {}                                                                                                // 기본 생성자
+
+    public OrderDto(String ordr_nm, String mpno, Integer user_idx) {                                                    // 매개변수 있는 생성자
+        this.ordr_nm = ordr_nm;
+        this.mpno = mpno;
+        this.user_idx = user_idx;
+    }
+
+    // Getter & Setter
+
 
     public Integer getIdx() {
         return idx;
@@ -24,14 +39,6 @@ public class OrderDto {
 
     public void setIdx(Integer idx) {
         this.idx = idx;
-    }
-
-    public Integer getUser_idx() {
-        return user_idx;
-    }
-
-    public void setUser_idx(Integer user_idx) {
-        this.user_idx = user_idx;
     }
 
     public String getOrdr_nm() {
@@ -48,6 +55,14 @@ public class OrderDto {
 
     public void setMpno(String mpno) {
         this.mpno = mpno;
+    }
+
+    public Integer getUser_idx() {
+        return user_idx;
+    }
+
+    public void setUser_idx(Integer user_idx) {
+        this.user_idx = user_idx;
     }
 
     public Integer getTot_amt() {
@@ -74,19 +89,19 @@ public class OrderDto {
         this.plist_tot = plist_tot;
     }
 
-    public Date getOrd_tml() {
-        return ord_tml;
+    public Date getOrd_tm() {
+        return ord_tm;
     }
 
-    public void setOrd_tml(Date ord_tml) {
-        this.ord_tml = ord_tml;
+    public void setOrd_tm(Date ord_tm) {
+        this.ord_tm = ord_tm;
     }
 
-    public Integer getState_cd() {
+    public Date getState_cd() {
         return state_cd;
     }
 
-    public void setState_cd(Integer state_cd) {
+    public void setState_cd(Date state_cd) {
         this.state_cd = state_cd;
     }
 
@@ -114,30 +129,31 @@ public class OrderDto {
         this.upt_tm = upt_tm;
     }
 
-    public Integer getUtp_idx() {
-        return utp_idx;
+    public Integer getUpt_idx() {
+        return upt_idx;
     }
 
-    public void setUtp_idx(Integer utp_idx) {
-        this.utp_idx = utp_idx;
+    public void setUpt_idx(Integer upt_idx) {
+        this.upt_idx = upt_idx;
     }
 
+    // toString()
     @Override
     public String toString() {
         return "OrderDto{" +
                 "idx=" + idx +
-                ", user_idx=" + user_idx +
                 ", ordr_nm='" + ordr_nm + '\'' +
                 ", mpno='" + mpno + '\'' +
+                ", user_idx=" + user_idx +
                 ", tot_amt=" + tot_amt +
                 ", gtot=" + gtot +
                 ", plist_tot=" + plist_tot +
-                ", ord_tml=" + ord_tml +
+                ", ord_tm=" + ord_tm +
                 ", state_cd=" + state_cd +
                 ", crt_tm=" + crt_tm +
                 ", crt_idx=" + crt_idx +
                 ", upt_tm=" + upt_tm +
-                ", utp_idx=" + utp_idx +
+                ", upt_idx=" + upt_idx +
                 '}';
     }
 }

@@ -195,7 +195,7 @@
         wishlists.forEach(function (product){
             tmp += '<div class="wishlist-box" data-idx = '+product.idx+'>'
             tmp +=      '<a href="">'
-            tmp +=          '<img src='+product.resv_photo_upload_path+' alt="">'
+            tmp +=          '<img src='+product.upload_path+' alt="">'
             tmp +=      '</a>'
             tmp +=      '<div class="wishlist-middle">'
             tmp +=          '<div class="wishlist-contentbox">'
