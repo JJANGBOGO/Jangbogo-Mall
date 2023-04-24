@@ -104,7 +104,7 @@ public class OrderController {
         return "/order/recipientDetails";
     }
 
-    // 메서드명 : handleOrderSuccess
+    // 메서드명 : handleOrderSucceㅁss
     // 기   능 : 주문완료 처리 메서드
     // 반환타입 : String
     // 요청URL : /order/checkout/success?orderNo=2303023110171

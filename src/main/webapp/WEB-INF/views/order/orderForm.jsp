@@ -14,7 +14,6 @@
         <script src = "/js/order/format.js"></script>
     </head>
     <body>
-        <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
         <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
         <div class="order-container">
             <h1 class="order-title">주문서</h1>
@@ -76,6 +75,7 @@
                 <div class="order-amount__container"></div>
             </div>
         </div>
+        <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
         <script>
             // 메서드명 : orderBtnToHtml
             // 기   능 : '결제하기' 버튼을 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
