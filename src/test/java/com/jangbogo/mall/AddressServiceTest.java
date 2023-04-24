@@ -43,9 +43,30 @@ public class AddressServiceTest {
 
     @Test
     public void selAddrList () throws Exception { //OK
-        List<Address> list = service.selAddrList(25);
+        List<Address> list = service.selAddrList(1);
         log.info("list.... " + list);
         assertTrue(list != null);
+    }
+
+    @Test
+    public void selAddr () throws Exception { //OK
+        Address address = service.selAddr(7);
+        System.out.println("address = " + address);
+//        log.info("list.... " + list);
+        assertTrue(address != null);
+    }
+
+    @Test
+    public void deleteAddr() throws Exception { //OK
+//        int cnt = service.deleteAddr(4,1);
+//        System.out.println("cnt = " + cnt);
+        Address address = service.selAddr(4);
+        System.out.println("address = " + address);
+        System.out.println("address.getState_cd() = " + address.getState_cd());
+        assertTrue(address.getState_cd()==3);
+//        log.info("list.... " + list);
+//        assertTrue(cnt != 0);
+
     }
 
 }
