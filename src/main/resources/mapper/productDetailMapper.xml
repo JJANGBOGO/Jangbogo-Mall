@@ -25,4 +25,35 @@
         from dlvry_mthd
         where idx = #{dlvry_method};
     </select>
+<!--    service의 findBrand-->
+    <select id="selectBrand" parameterType="Integer" resultType="ProductDetailDto">
+        select s.cpnm as 'brandName'
+        from product p left join seler s
+        on p.seler_idx = s.idx
+        where p.idx = #{prod_idx};
+    </select>
+<!-- service의 findProdFile-->
+    <select id="selectProdFile" parameterType="Integer" resultType="ProductFileDto">
+        select pd.PROD_IDX, pf.UUID, pf.name, pf.UPLOAD_PATH, pf.TYPE, pf.STATE_CD, pf.SORT_ODR, pf.CRT_TM, pf.CRT_IDX, pf.UPT_TM, pf.UPT_IDX
+        from prod_dtl pd inner join prod_file pf
+        on pd.prod_idx = pf.prod_idx
+        where pd.prod_idx = #{prod_idx};
+    </select>
+
+    <select id="checkWishlist" parameterType="map" resultType="Integer">
+        select count(*)
+        from WISHLIST
+        where PROD_IDX = #{prod_idx} and USER_IDX = #{user_idx}
+    </select>
+
+    <insert id="insertWishlist" parameterType="map">
+        insert into wishlist (PROD_IDX, USER_IDX)
+        values (#{prod_idx},#{user_idx})
+    </insert>
+
+    <delete id="deleteWishList" parameterType="map">
+        delete
+        from WISHLIST
+        where USER_IDX = #{user_idx} and PROD_IDX = #{prod_idx};
+    </delete>
 </mapper>
