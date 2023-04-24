@@ -4,7 +4,7 @@
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
     <link rel="stylesheet" href="/css/myPage/sidebar.css"/>
     <link rel="stylesheet" href="/css/myPage/baseLayout.css"/>
-    <link rel="stylesheet" href="/css/myPage/readBrnd.css"/>
+    <link rel="stylesheet" href="/css/myPage/readBrnd.css?v=2"/>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
@@ -28,9 +28,13 @@
                 </div>
                 <div>
                     <div class="brnd-title">${seller.cpnm}</div>
-                    <div class="follower-cnt">
+                    <div class="desc-flex">
                         <p>팔로워</p>
-                        <p class="cnt-num">${seller.subs_cnt}</p>
+                        <p class="ctent">${seller.subs_cnt}</p>
+                    </div>
+                    <div class="desc-flex">
+                        <p>대표 연락처</p>
+                        <p class="ctent">${seller.repr_telno}</p>
                     </div>
                 </div>
             </div>
