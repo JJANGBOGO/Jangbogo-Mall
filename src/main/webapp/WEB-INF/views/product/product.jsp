@@ -238,6 +238,7 @@
   </div>
 
 </div>
+<%--  <div>${urlPath}</div>--%>
   <div id="prod_idx">${prod_idx}</div>
   <div id="sessionID" style="display: none">${session_idx}</div>
   <div class="footer"></div>
@@ -262,9 +263,9 @@
     alert("check!")
     let tmp = "";
     fileLists.forEach(function(fileList){
-      console.log("fileList="+fileList);
       tmp += '<div class="pic">'
-      tmp += '<img src='+fileList.upload_path
+      // 이미지 업로드 해결하기 ~~~~~~~~~~~~~~~~~~~~~
+      // tmp += '<img src="/display?fileName='+ fileList.UPLOAD_PATH +'"'
       tmp += ' alt="productImg" />'
     })
     return tmp += '</div>';
@@ -375,6 +376,10 @@
   }
 
   $(document).ready(function(){
+    // let urlPath = $('#urlPath');
+    // console.log("urlPath="+urlPath);
+    <%--let url = "${pageContext.request.contextPath}"--%>
+    <%--console.log("url="+url)--%>
     let prod_idx = $('#prod_idx').text();
     showInqryList(prod_idx);
     showProdDetailList(prod_idx);

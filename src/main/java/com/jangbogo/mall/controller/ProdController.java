@@ -30,12 +30,16 @@ public class ProdController {
     public String product(@PathVariable Integer prod_idx, HttpSession session, Model m, HttpServletRequest request) {
 //        if(!loginCheck(request))
 //            return "redirect:/user/login?toURL=" + request.getRequestURL();
+
+
         Integer session_idx = (Integer)session.getAttribute("idx");
         try {
+            String urlPath = request.getContextPath();
             ProductDetailDto list = productDetailService.read(prod_idx);
             Integer cate_idx = productDetailService.findDlvry(list.getCate_idx());
             ProductDetailDto dlvryMethod = productDetailService.dlvryInfo(cate_idx);
             ProductDetailDto findBrand = productDetailService.findBrand(prod_idx);
+            m.addAttribute("urlPath", urlPath);
             m.addAttribute("prod_idx", prod_idx);
             m.addAttribute("session_idx", session_idx);
             m.addAttribute("list", list);
