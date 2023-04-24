@@ -89,11 +89,12 @@ public class SellerController {
 
     //마이셀러 브랜드조회 뷰
     @GetMapping("/seller/read/brnd")
-    public String readBrandView(HttpServletRequest req, Model m, RedirectAttributes rattr) {
+    public String readBrandView(HttpSession session, HttpServletRequest req, Model m, RedirectAttributes rattr) {
         m.addAttribute("mySellerUrl", req.getRequestURI()); //sidebar css
 
         try {
-            Seller seller = service.getSellerByIdx(14); // TODO:: 추후 세션에서 받아오는 걸로 수정
+            Integer idx = (Integer) session.getAttribute("idx");
+            Seller seller = service.getSellerByIdx(idx);
             m.addAttribute("seller", seller);
             return "/seller/readBrnd";
         } catch (Exception e) {
@@ -105,12 +106,12 @@ public class SellerController {
 
     //브랜드수정화면
     @GetMapping("/seller/modify/brnd")
-    public String modifyBrandView(HttpServletRequest req, Model m, RedirectAttributes rattr) {
+    public String modifyBrandView(HttpSession session, HttpServletRequest req, Model m, RedirectAttributes rattr) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
 
         try {
-            // TODO:: 세션에서 idx 얻어서 판매자 정보 뿌리는걸로 추후 수정
-            Seller seller = service.getSellerByIdx(14);
+            Integer idx = (int) session.getAttribute("idx");
+            Seller seller = service.getSellerByIdx(idx);
             m.addAttribute("seller", seller);
             return "/seller/modifyBrnd";
         } catch (Exception e) {
@@ -122,12 +123,13 @@ public class SellerController {
 
     //브랜드 수정
     @PostMapping("/seller/modify/brnd")
-    public String modifyBrand(Seller seller, RedirectAttributes rattr) {
+    public String modifyBrand(HttpSession session, Seller seller, RedirectAttributes rattr) {
         log.info("brnd...." + seller);
 
-        //TODO:: set idx, email from session => security이후 세션에서 받아오기로 수정
-        seller.setIdx(14);
-        seller.setEmail("seller100@naver.com");
+        Integer idx = (Integer) session.getAttribute("idx");
+        String email = (String) session.getAttribute("email");
+        seller.setIdx(idx);
+        seller.setEmail(email);
 
         try {
             if (service.updateSellerBrnd(seller) != 1)
@@ -179,8 +181,8 @@ public class SellerController {
             seller.setEmail((String) session.getAttribute("email"));
             sellerDtl.setSeler_idx(idx);
 
-            int result = service.updateSeller(seller, sellerDtl);
-//            int result2 = service.updateSellerDtl(sellerDtl);
+            if (service.updateSeller(seller, sellerDtl) != 1)
+                throw new Exception("modify failed");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -198,9 +200,7 @@ public class SellerController {
 
     @PostMapping("/seller/withdraw")
     public String withdrawSeller(String pwd, RedirectAttributes rattr, HttpSession session) {
-//        TODO:: 세션에서 얻어오기로 변경
         try {
-//          TODO:: 구현해야 함
             int idx = (int) session.getAttribute("idx");
             String email = (String) session.getAttribute("email"); //이메일 얻기
             if (service.withdrawSeller(idx, email) != 1)
@@ -259,15 +259,16 @@ public class SellerController {
     }
 
     @GetMapping("/seller/list/product")
-    public String listProductView(HttpServletRequest req, Model m, RedirectAttributes rattr) {
+    public String listProductView(HttpSession session, HttpServletRequest req, Model m, RedirectAttributes rattr) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
         try {
-            List<ProductDto> list = productService.getListBySeller(1);
+            Integer idx = (Integer) session.getAttribute("idx");
+            List<ProductDto> list = productService.getListBySeller(idx);
             m.addAttribute("productList", list);
             return "/seller/productList";
         } catch (Exception e) {
             e.printStackTrace();
-            return "";
+            return "redirect:/";
         }
     }
 
@@ -298,5 +299,6 @@ public class SellerController {
             return "redirect:/seller/register/product";
         }
     }
+
 
 }

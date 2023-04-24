@@ -52,7 +52,7 @@
 
     <!--    메인페이지 -->
     <s:http use-expressions="true" auto-config="true" pattern="/" />
-    <s:http use-expressions="true" auto-config="true" pattern="/find/**" />
-    <s:http use-expressions="true" auto-config="true" pattern="/cart/**" />
+<!--    <s:http use-expressions="true" auto-config="true" pattern="/find/**" />-->
+<!--    <s:http use-expressions="true" auto-config="true" pattern="/cart/**" />-->
 
 </beans>
