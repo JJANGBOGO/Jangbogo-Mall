@@ -210,13 +210,14 @@
             // 매개변수 : items - deliveryDto
             // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
             const deliveryToHtml = (deliveryInfo) => {
+                let defaultLocation = "문 앞";                                                                           // 변수명 : defaultLocation - 저장값 : 받으실 장소의 기본 값 "문 앞"
                 let tmp = "";                                                                                           // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
                 tmp += "<div class='delivery-section'>"
                 tmp += "<div class='delivery-inform'>"
                 tmp += "<span>배송지</span>"
                 tmp += "</div>"
                 tmp += "<div id='deliveryAddress' class='delivery-value' >"
-                tmp += "<span>" + "경기 의왕시 원골로 43(모락산현대아파트)118동 202호(하드코)" + "</span>"
+                tmp += "<span>" + "경기 의왕시 원골로 43(모락산현대아파트)118동 202호(하드코딩)" + "</span>"
                 tmp += "</div>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-section'>"
@@ -228,7 +229,7 @@
                 tmp += "<span>" + deliveryInfo.nick_nm + "</span> , <span>" + formatMpnoWithHyphen(deliveryInfo.mpno) + "</span>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-value__column' id='deliveryLocation'>"
-                tmp += "<span>받으실 장소 | " + "</span>"
+                tmp += "<span>받으실 장소 | " + defaultLocation + "</span>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-value__column'>"
                 tmp += "<button type='button' id='deliveryModBtn'>수정</button>"
@@ -337,7 +338,7 @@
                         $('#deliveryInform').html(deliveryToHtml(result));                                              // deliveryToHtml메서드 호출
                     },
                     error : function() { alert("showDeliveryInfo 실패 응답 : 회원번호 누락");}                                // 실패 응답이 오면, 경고창 띄우기
-                });                                                                                                     // $.ajax() end
+                });                                                                                                     // $.ajax() end                 //
             }
 
             // 메서드명 : showCouponList                                                                                   // TODO:3차 개발
@@ -451,22 +452,6 @@
                         }
                     })                                                                                                  // $.ajax() end
                 })
-
-                // 메서드명 : saveTid
-                // 기   능 : 결제 요청시 받아오는 결제고유번호 tid를 db의 '결제' 테이블에 저장한다.
-                // 매개변수 : tid, ord_idx, total_amount
-                const saveTid = (tid, ord_idx, total_amount) => {
-                    $.ajax({                                                                                            // $.ajax() start
-                        url:'/payment/kakao/save-tid?tid=' + tid + '&ord_idx=' + ord_idx +                              // 요청URI
-                            "&total_amount=" + total_amount,
-                        success:function(data) {                                                                        // 서버로부터 응답이 도착하면 호출될 함수
-                            console.log(data)
-                        },
-                        error:function(error) {
-                            alert("data save failure.");                                                                // 에러가 발생했을 때 호출될 함수
-                        }
-                    })                                                                                                  // $.ajax() end
-                }
             })                                                                                                          // $(document).ready(() => {}) end
         </script>
         <%@ include file="/WEB-INF/views/include/footer.jsp" %>                                                          <!-- include 액션 태그 - footer -->
