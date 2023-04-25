@@ -11,22 +11,23 @@ public class CartDto {
     String prod_name;
     Integer prod_price;
     Integer prod_cnt;
-    String prod_rpath;
+    String upload_path;
     Date reg_tm;
     Date crt_tm;
     Date upt_tm;
 
     public CartDto() {}
 
-    public CartDto(Integer prod_idx, Integer user_idx, String prod_name, Integer prod_price, Integer prod_cnt, String prod_rpath) {
+    public CartDto(Integer prod_idx, Integer user_idx, String prod_name, Integer prod_price, Integer prod_cnt, String upload_path) {
         this.prod_idx = prod_idx;
         this.user_idx = user_idx;
         this.prod_name = prod_name;
         this.prod_price = prod_price;
         this.prod_cnt = prod_cnt;
-        this.prod_rpath = prod_rpath;
+        this.upload_path = upload_path;
     }
 
+    // getter and setter
     public Integer getProd_idx() {
         return prod_idx;
     }
@@ -67,12 +68,12 @@ public class CartDto {
         this.prod_cnt = prod_cnt;
     }
 
-    public String getProd_rpath() {
-        return prod_rpath;
+    public String getUpload_path() {
+        return upload_path;
     }
 
-    public void setProd_rpath(String prod_rpath) {
-        this.prod_rpath = prod_rpath;
+    public void setUpload_path(String upload_path) {
+        this.upload_path = upload_path;
     }
 
     public Date getReg_tm() {
@@ -99,6 +100,7 @@ public class CartDto {
         this.upt_tm = upt_tm;
     }
 
+    // toString
     @Override
     public String toString() {
         return "{" +
@@ -107,7 +109,7 @@ public class CartDto {
                 ", prod_name='" + prod_name + '\'' +
                 ", prod_price=" + prod_price +
                 ", prod_cnt=" + prod_cnt +
-                ", prod_rpath='" + prod_rpath + '\'' +
+                ", upload_path='" + upload_path + '\'' +
                 ", reg_tm=" + reg_tm +
                 ", crt_tm=" + crt_tm +
                 ", upt_tm=" + upt_tm +
