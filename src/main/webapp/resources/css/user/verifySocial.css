@@ -18,7 +18,7 @@
     width: 200px;
     height: 56px;
     border: 1px solid var(--primary-color);
-    border-radius: var(--border-radius);
+    border-radius: var(--btn-border-radius);
     padding: 0px 10px;
 
     overflow: hidden;
