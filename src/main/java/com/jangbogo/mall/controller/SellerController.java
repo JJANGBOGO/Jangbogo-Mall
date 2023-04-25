@@ -258,46 +258,4 @@ public class SellerController {
         }
     }
 
-    @GetMapping("/seller/list/product")
-    public String listProductView(HttpSession session, HttpServletRequest req, Model m, RedirectAttributes rattr) {
-        m.addAttribute("mySellerUrl", req.getRequestURI());
-        try {
-            Integer idx = (Integer) session.getAttribute("idx");
-            List<ProductDto> list = productService.getListBySeller(idx);
-            m.addAttribute("productList", list);
-            return "/seller/productList";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "redirect:/";
-        }
-    }
-
-    //판매자 상품 등록 화면
-    @GetMapping("/seller/register/product")
-    public String regProductView() {
-        return "/seller/registerProduct";
-    }
-
-    @PostMapping("/seller/register/product")
-    public String regProduct(ProductDto productDto, ProductDtl productDtl, HttpSession session, RedirectAttributes rattr) {
-        try {
-            log.info("productDto...." + productDto);
-            log.info("productDtl...." + productDtl);
-
-            //판매자 idx 적용
-            Integer idx = (Integer) session.getAttribute("idx");
-            productDto.setSeler_idx(idx);
-
-            if (productService.registerProduct(productDto, productDtl) != 1)
-                throw new Exception("register product failed");
-
-            rattr.addFlashAttribute("msg", "REG_PROD_OK");
-            return "redirect:/seller/list/product";
-        } catch (Exception e) {
-            e.printStackTrace();
-            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
-            return "redirect:/seller/register/product";
-        }
-    }
-
 }
