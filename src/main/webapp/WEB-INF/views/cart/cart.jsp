@@ -46,7 +46,7 @@
             items.forEach((item) => {
                 tmp += '<li class="cart_item" data-pid=' + item.prod_idx + ' data-uid=' + item.user_idx +' >';
                 tmp += '<input type="checkbox" name="chk"  />';
-                tmp += '<img src=' + item.prod_rpath + " alt='' />";
+                tmp += '<img src=' + item.upload_path + " alt='' />";
                 tmp += "<div class='cart_item__title'>" + item.prod_name + "</div>";
                 tmp += '<div class="cart_item__contents">';
                 tmp += '<div class="cart_item__cnt">';

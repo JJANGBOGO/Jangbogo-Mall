@@ -154,7 +154,7 @@
                 // 매개변수 : item - Object : CartDto, 장바구니 개별 품목
                 items.forEach((item) => {
                     tmp += '<li class="order-item" data-pid=' + item.prod_idx + ' data-uid=' + item.user_idx +' >';
-                    tmp += '<img src=' + item.prod_rpath + " alt='' />";
+                    tmp += '<img src=' + item.upload_path + " alt='' />";
                     tmp += "<div class='order-item__title'>" + item.prod_name + "</div>";
                     tmp += '<div class="order-item__contents">';
                     tmp += '<div class="order-item__count">' + item.prod_cnt + "<span>개</span></div>";
