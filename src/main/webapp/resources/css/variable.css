@@ -11,6 +11,4 @@
     /* rgb(51,51,51)과 동일*/
     --text-dark: #333333;
     --text-danger: rgb(240, 63, 64);
-
-    --border-radius: 4px;
 }
