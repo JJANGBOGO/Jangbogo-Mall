@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
@@ -30,7 +31,7 @@
         <h4>가입 정보</h4>
         <p>이메일: <span>${user.email}</span></p>
         <p>닉네임: <span>${user.nick_nm}</span></p>
-        <p>가입날짜: <span>${user.reg_tm}</span></p>
+        <p>가입날짜: <span><fmt:formatDate value="${user.reg_tm}" pattern="yyyy.MM.dd" type="date"/></span></p>
         <p>로그인타입: <span>
             <c:choose>
                 <c:when test="${loginService eq 'kakao'}">
