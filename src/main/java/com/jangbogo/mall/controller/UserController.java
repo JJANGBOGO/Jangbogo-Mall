@@ -221,8 +221,7 @@ public class UserController {
     public void makeAuth(User user) throws Exception {
         UserDetailsDto dto = userDao.getUserDetailsDto(user.getEmail());
         if (dto != null) {
-            User user1 = userDao.getUserByEmail(user.getEmail());
-            dto.setAuthority((ArrayList<String>) authDao.getAuthList(user1.getAuth_idx()));
+            dto.setAuthority((ArrayList<String>) authDao.getAuthList(user.getAuth_idx()));
             log.info("....dto..." + dto.getAuthorities());
             Authentication authentication =
                     new UsernamePasswordAuthenticationToken(user, null, dto.getAuthorities()); //userDetailsDto.getAuthorities()식으로 권한을 추가해야 함
@@ -231,7 +230,6 @@ public class UserController {
             SecurityContext securityContext = SecurityContextHolder.getContext();
             securityContext.setAuthentication(authentication);
         }
-
     }
 
     // 로그아웃시 인증 삭제
