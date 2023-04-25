@@ -42,4 +42,18 @@ public class ProductDtl {
     private String guid; //상품 안내사항
 
     private List<ProductFile> file_list; //상품 상세첨부파일 리스트
+
+    //타 테이블
+    private Integer dlvry_edi_idx; //카테고리 - 배송방식번호
+
+    private Integer idx; // 배송방식 - 배송방식번호
+
+    private Integer dlvry_type_cd; //배송방식 - 배송유형코드
+
+    private Integer pack_state_cd; //배송방식 - 배송포장코드
+
+    private String dlvry_warn; //배송방식 - 배송주의사항
+
+    private String cpnm; // seler - cpnm - 판매자
+
 }

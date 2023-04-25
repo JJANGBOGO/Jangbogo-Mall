@@ -38,8 +38,14 @@
     font-weight: bold;
 }
 
-.brnd-content .brnd-profile div .follower-cnt {
+.brnd-content .brnd-profile div .desc-flex {
+    display: flex;
     margin-top: 10px;
+}
+
+.brnd-content .brnd-profile div .ctent {
+    margin-left: 5px;
+    color: var(--input-placeholder);
 }
 
 .brnd-content .brnd-profile div .follower-cnt .cnt-num {
