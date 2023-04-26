@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.*;
 
 @Controller
 public class KakaoPayController {
@@ -47,6 +48,7 @@ public class KakaoPayController {
         int insertPaymentDtoRowCnt = 0;                                                                                 // 변수명 : insertPaymentDtoRowCnt - 저장값 : '결제' 테이블에 데이터 저장
 
         PaymentDto paymentDto = null;                                                                                   // 변수명 : paymentDto - 저장값 : 생성된 PaymentDto 객체
+        OrderDetailDto orderDetailDto = null;                                                                           // 변수명 : orderDetailDto - 저장값 : '주문상세' 테이블 데이터 저장
 
         try {
 
@@ -59,8 +61,18 @@ public class KakaoPayController {
                     kakaoApproveResponseDto.getAmount().getTotal(), kakaoApproveResponseDto.getAmount().getTotal(),     // 매개변수    - 결제고유번호(SETL_IDX), 주문총금액(ORD_TOT_AMT), 실결제금액(AMT),
                     kakaoApproveResponseDto.getAid(), orderDto.getIdx()                                                 // 매개변수(2) - 카드사승인번호(APRV_IDX), 주문번호(ORD_IDX) - FK
             );
+
             insertPaymentDtoRowCnt = orderService.addPayment(paymentDto);                                               // '결제승인' 처리된 결제 데이터를 '결제' 테이블에 저장(C)
             if(insertPaymentDtoRowCnt == 0) throw new Exception("insert PaymentDto to 'SETL' Table failed!");           // 데이터 저장 실패 시, 예외 발생
+
+            List list = cartService.getList(orderDto.getUser_idx());                                                    // 변수명 : list - 저장값 : 특정 회원번호를 가지는 회원의 주문상품목록
+            Iterator it = list.iterator();                                                                              // 변수명 : it - 저장값 : list에 저장된 CartDto들을 읽어오는 Iterator 구현한 객체
+            while(it.hasNext()) {                                                                                       // 다음 CartDto가 존재하는 경우,
+                CartDto cartDto = (CartDto)it.next();                                                                   // 변수명: cartDto - 저장값 : list에 저장된 cartDto
+                orderDto = orderService.getOrderDto(orderDto.getIdx());                                                 // '주문' 테이블에 저장된 OrderDto 중 특정 #{idx}에 해당하는 orderDto에 재할당
+                orderService.addOrderDetail(orderDto, cartDto);                                                         // '주문상세' 테이블에 새로운 데이터 삽입
+            }
+
             cartService.removeAll(orderDto.getUser_idx());                                                              // '주문완료' 처리 시, 장바구니 목록 초기화
 
             rattr.addFlashAttribute("model", kakaoApproveResponseDto);                                     // 뷰에 전달할 데이터를 RedirectAttributes 객체에 저장

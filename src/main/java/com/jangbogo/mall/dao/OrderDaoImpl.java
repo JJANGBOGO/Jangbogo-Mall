@@ -1,10 +1,15 @@
 package com.jangbogo.mall.dao;
 
+import com.jangbogo.mall.domain.CartDto;
 import com.jangbogo.mall.domain.OrderDto;
 import com.jangbogo.mall.domain.PaymentDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Repository
 public class OrderDaoImpl implements OrderDao {
@@ -53,6 +58,18 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public int updateCanceledSetl(String tid) {
         return session.update(namespace + "updateCanceledSetl", tid);
+    }
+
+    // 메서드명 : addOrderDetail
+    // 기   능 : '주문상세'(ORD_DTL) 테이블에 데이터를 삽입(insert)하는 메서드
+    // 반환타입 : int
+    // 매개변수 : OrderDto orderDto, CartDto cartDto
+    @Override
+    public int insertOrderDetail(OrderDto orderDto, CartDto cartDto) {
+        Map map = new HashMap();                                                                                        // 변수명 : map - 저장값 : 메서드의 두 매개변수 저장소
+        map.put("orderDto", orderDto);                                                                                  // 매개변수 orderDto를 K/V로 저장
+        map.put("cartDto", cartDto);                                                                                    // 매개변수 cartDto를 K/V로 저장
+        return session.insert(namespace + "insertOrderDetail", map);                                                 // session.insert메서드 반환값 리턴g
     }
 }
 

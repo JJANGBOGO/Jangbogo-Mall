@@ -49,6 +49,18 @@
     </select>
 
     <!--
+        태   그 : insert
+        기   능 : '주문상세' 테이블에 '취소'처리 된 결제 데이터 업데이트하기                                                              // TODO : 주문 내역 구현 이후 기능 구현
+        아이디명 : insertOrderDetail
+        반환타입 : int
+        매개변수 :
+    -->
+    <insert id="insertOrderDetail" parameterType="map">
+        INSERT INTO ORD_DTL(ORD_IDX, PROD_IDX, PROD_NM, PROD_PRC, PROD_QTY, PROD_TOT_AMT, ORD_TM)
+        VALUES(#{orderDto.idx}, #{cartDto.prod_idx}, #{cartDto.prod_name}, #{cartDto.prod_price}, #{cartDto.prod_cnt}, #{cartDto.prod_price} * #{cartDto.prod_cnt}, #{orderDto.ord_tm})
+    </insert>
+
+    <!--
         태   그 : update
         기   능 : '결제' 테이블에 '취소'처리 된 결제 데이터 업데이트하기                                                              // TODO : 주문 내역 구현 이후 기능 구현
         아이디명 : updateCanceledSetl
@@ -62,5 +74,4 @@
             UPT_TM = now()
         WHERE SETL_IDX = #{tid}
     </update>
-
 </mapper>

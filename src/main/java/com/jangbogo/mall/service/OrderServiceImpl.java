@@ -1,10 +1,13 @@
 package com.jangbogo.mall.service;
 
 import com.jangbogo.mall.dao.OrderDao;
+import com.jangbogo.mall.domain.CartDto;
 import com.jangbogo.mall.domain.OrderDto;
 import com.jangbogo.mall.domain.PaymentDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -36,5 +39,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto getOrderDto(Integer idx) {
         return orderDao.getOrder(idx);
+    }
+
+
+    // 메서드명 : addOrderDetail
+    // 기   능 : OrderDao의 addOrderDetail메서드 호출
+    // 반환타입 : int
+    // 매개변수 : OrderDto orderDto, CartDto cartDto
+    @Override
+    public int addOrderDetail(OrderDto orderDto, CartDto cartDto) {
+        return orderDao.insertOrderDetail(orderDto, cartDto);
     }
 }
