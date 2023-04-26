@@ -98,7 +98,10 @@ public class ProdController {
     //상품문의 게시물을 등록
     @PostMapping("/product/inqry/write")  // /product?prod_idx=1 POST
     public ResponseEntity<String> write(@RequestBody ProdInqryDto prodInqryDto, Integer prod_idx, HttpSession session) {
+//        session객체가 안 찾아지고 있습니다.
         Integer user_idx = (Integer)session.getAttribute("idx");
+        System.out.println("user_idx=???"+user_idx); //null
+
         String nick_name = (String)session.getAttribute("nickName");
         prodInqryDto.setUser_idx(user_idx);
         prodInqryDto.setProd_idx(prod_idx);

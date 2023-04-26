@@ -42,25 +42,26 @@
                             <label>카테고리<span>*</span></label>
                         </div>
                         <div class="input-box category">
-                            <div class="input">
-                                <select name="cate_idx">
+                            <div class="input" id="input2">
+                                <select name="cate_idx" id="First_cate_idx">
                                     <option selected>선택</option>
-                                    <option value="1">과일</option>
-                                    <option value="2">채소</option>
-                                    <option value="3">수산물</option>
-                                    <option value="4">축산/계란</option>
-                                    <option value="5">생수/음료</option>
-                                    <option value="6">간편요리</option>
-                                    <option value="7">유제품/아이스크림</option>
-                                    <option value="8">장/소스/드레싱</option>
-                                    <option value="9">간식/디저트</option>
+                                    <option name="F" value="01" id="01">과일</option>
+                                    <option value="02">채소</option>
+                                    <option value="03">수산물</option>
+                                    <option value="04">축산/계란</option>
+                                    <option value="05">생수/음료</option>
+                                    <option value="06">간편요리</option>
+                                    <option value="07">유제품/아이스크림</option>
+                                    <option value="08">장/소스/드레싱</option>
+                                    <option value="09">간식/디저트</option>
                                     <option value="10">주류</option>
                                     <option value="11">건강</option>
                                 </select>
                             </div>
-                            <div class="input">
-                                <select name="cate_idx">
-                                    <option selected>선택</option>
+                            <div class="input" id="input3">
+                                <select name="cate_idx" id="Second_cate_idx">
+                                    <option>선택</option>
+<%--                                    <option value=""></option>--%>
                                 </select>
                             </div>
                             <div class="error-msg cate-idx"></div>
@@ -471,9 +472,211 @@
         else sle_input.hide();
     }
 
+    function S_fruit() {
+        let tmp = "<option>선택</option>";
+        tmp += "<option value='0101' id='0101'>딸기/블루베리/베리류</option>";
+        tmp += "<option value='0102' id='0102'>사과/배</option>";
+        tmp += "<option value='0103' id='0103'>자두/복숭아/포도</option>";
+        tmp += "<option value='0104' id='0104'>귤/한라봉</option>";
+        tmp += "<option value='0105' id='0105'>키위/망고</option>";
+        tmp += "<option value='0106' id='0106'>수박/메론/참외</option>";
+        tmp += "<option value='0107' id='0107'>바나나/오렌지/파인애플</option>";
+        tmp += "<option value='0108' id='0108'>냉동과일/간편과일</option>";
+        return tmp;
+    }
+
+    function S_vege() {
+        let tmp = "<option>선택</option>";
+        tmp += "<option value='0201' id='0201'>쌈채소</option>";
+        tmp += "<option value='0202' id='0202'>샐러드/손질채소</option>";
+        tmp += "<option value='0203' id='0203'>두부</option>";
+        tmp += "<option value='0204' id='0204'>버섯류</option>";
+        tmp += "<option value='0205' id='0205'>시금치/나물</option>";
+        tmp += "<option value='0206' id='0206'>감자/고구마/당근/뿌리식품</option>";
+        tmp += "<option value='0207' id='0207'>오이/고추/열매</option>";
+        tmp += "<option value='0208' id='0208'>양파/마늘/파</option>";
+        return tmp;
+    }
+
+    function S_seafood() {
+        let tmp = "<option>선택</option>";
+        tmp += "<option value='0301' id='0301'>생선</option>";
+        tmp += "<option value='0302' id='0301'>조개</option>";
+        tmp += "<option value='0303' id='0301'>새우/게/갑각류</option>";
+        tmp += "<option value='0304' id='0301'>오징어/낙지</option>";
+        tmp += "<option value='0305' id='0301'>김/미역</option>";
+        tmp += "<option value='0306' id='0301'>건수산물</option>";
+        return tmp;
+    }
+
+    function S_livestock() {
+        let tmp = "<option>선택</option>";
+        tmp += "<option value='0401' id='0401'>소고기</option>";
+        tmp += "<option value='0402' id='0402'>돼지고기</option>";
+        tmp += "<option value='0403' id='0403'>닭고기</option>";
+        tmp += "<option value='0404' id='0404'>계란</option>";
+        return tmp;
+    }
+
+    function S_drink() {
+        let tmp = "<option>선택</option>";
+        tmp += "<option value='0501' id='0501'>생수/탄산수</option>";
+        tmp += "<option value='0502' id='0502'>차/커피/주스</option>";
+        tmp += "<option value='0503' id='0503'>탄산/음료</option>";
+        return tmp;
+    }
+
+    function S_retort() {
+        let tmp = "<option>선택</option>";
+        tmp += "<option value='0601' id='0601'>라면/면류</option>";
+        tmp += "<option value='0602' id='0602'>즉석밥/즉석국</option>";
+        tmp += "<option value='0603' id='0603'>참치/햄/통조림</option>";
+        tmp += "<option value='0604' id='0604'>밀키트</option>";
+        return tmp;
+    }
+
+    function S_dairy() {
+        let tmp = "<option>선택</option>";
+        tmp += "<option value='0701' id='0701'>우유/두유</option>";
+        tmp += "<option value='0702' id='0702'>치즈/버터/마가린</option>";
+        tmp += "<option value='0703' id='0703'>아이스크림</option>";
+        tmp += "<option value='0704' id='0704'>요구르트/요거트</option>";
+        tmp += "<option value='0705' id='0705'>생크림/휘핑크림</option>";
+        return tmp;
+    }
+
+    function S_source() {
+        let tmp = "<option>선택</option>";
+        tmp += "<option value='0801' id='0801'>육수/액젓</option>";
+        tmp += "<option value='0802' id='0802'>장류/식초</option>";
+        tmp += "<option value='0803' id='0803'>소스/드레싱</option>";
+        tmp += "<option value='0804' id='0804'>물엿/조청</option>";
+        return tmp;
+    }
+
+    function S_dessert() {
+        let tmp = "<option>선택</option>";
+        tmp += "<option value='0901' id='0901'>과자/초콜릿/쿠키</option>";
+        tmp += "<option value='0902' id='0902'>베이커리/잼</option>";
+        tmp += "<option value='0903' id='0903'>사탕/젤리/껌</option>";
+        tmp += "<option value='0904' id='0904'>전통과자,떡</option>";
+        tmp += "<option value='0905' id='0905'>시리얼</option>";
+        return tmp;
+    }
+
+    function S_alcohol() {
+        let tmp = "<option>선택</option>";
+        tmp += "<option value='1001' id='1001'>소주/맥주</option>";
+        tmp += "<option value='1002' id='1002'>수입주류</option>";
+        tmp += "<option value='1003' id='1003'>전통주류</option>";
+        return tmp;
+    }
+
+    function S_healthy() {
+        let tmp = "<option>선택</option>";
+        tmp += "<option value='1101' id='1101'>영양식/선식</option>";
+        tmp += "<option value='1102' id='1102'>유산균</option>";
+        tmp += "<option value='1103' id='1103'>홍삼/인삼</option>";
+        tmp += "<option value='1104' id='1104'>건강즙/음료</option>";
+        tmp += "<option value='1105' id='1105'>건강분만</option>";
+        tmp += "<option value='1106' id='1106'>다이어트식품</option>";
+        return tmp;
+    }
+
     $(document).ready(function () {
         toggleDcInput();
         toggleSleDateInput();
+
+        $("#input2").on("click", function(e) {
+            // alert("click")
+            e.preventDefault();
+            let val = $("#First_cate_idx option:selected").val(); //value값 출력됨 //"01"
+            console.log("val=??"+val);
+            let id;
+            if(val == "01") {
+                $("#Second_cate_idx").html(S_fruit).on("click", function(e) {
+                    //선택된 요소의 id값
+                    id = $("#Second_cate_idx option:selected").attr("id"); //0101
+                })
+            }
+            if(val == "02") {
+                $("#Second_cate_idx").html(S_vege).on("click", function(e) {
+                    //선택된 요소의 id값
+                    id = $("#Second_cate_idx option:selected").attr("id");
+                })
+            }
+            if(val == "03") {
+                $("#Second_cate_idx").html(S_seafood).on("click", function(e) {
+                    //선택된 요소의 id값
+                    id = $("#Second_cate_idx option:selected").attr("id");
+                })
+            }
+            if(val == "04") {
+                $("#Second_cate_idx").html(S_livestock).on("click", function(e) {
+                    //선택된 요소의 id값
+                    id = $("#Second_cate_idx option:selected").attr("id");
+                })
+            }
+            if(val == "05") {
+                $("#Second_cate_idx").html(S_drink).on("click", function(e) {
+                    //선택된 요소의 id값
+                    id = $("#Second_cate_idx option:selected").attr("id");
+                })
+            }
+            if(val == "06") {
+                $("#Second_cate_idx").html(S_retort).on("click", function(e) {
+                    //선택된 요소의 id값
+                    id = $("#Second_cate_idx option:selected").attr("id");
+                })
+            }
+            if(val == "07") {
+                $("#Second_cate_idx").html(S_dairy).on("click", function(e) {
+                    //선택된 요소의 id값
+                    id = $("#Second_cate_idx option:selected").attr("id");
+                })
+            }
+            if(val == "08") {
+                $("#Second_cate_idx").html(S_source).on("click", function(e) {
+                    //선택된 요소의 id값
+                    id = $("#Second_cate_idx option:selected").attr("id");
+                })
+            }
+            if(val == "09") {
+                $("#Second_cate_idx").html(S_dessert).on("click", function(e) {
+                    //선택된 요소의 id값
+                    id = $("#Second_cate_idx option:selected").attr("id");
+                })
+            }
+            if(val == "10") {
+                $("#Second_cate_idx").html(S_alcohol).on("click", function(e) {
+                    //선택된 요소의 id값
+                    id = $("#Second_cate_idx option:selected").attr("id");
+                })
+            }
+            if(val == "11") {
+                $("#Second_cate_idx").html(S_healthy).on("click", function(e) {
+                    //선택된 요소의 id값
+                    id = $("#Second_cate_idx option:selected").attr("id");
+                })
+            }
+
+        })
+
+
+
+        //등록하기 버튼을 눌렀을 때
+        $(".reg-confirm").click(function() {
+            let prod_cd_val = $("input[name=seler_prod_cd]").val();
+
+            $.ajax({
+                type: 'POST',
+                url: '/seller/register/product',
+                headers : { "content-type": "application/json"},
+                data : JSON.stringify({}),
+                success: function() {},
+                error: function() {}
+            })
+        })
 
         //할인율 입력칸 toggle
         $("input[name=dc_state_cd]").click(function () {
@@ -498,7 +701,7 @@
             e.preventDefault();
             const formData = new FormData();
             const inputFile = $("input[name='upload_path']");
-
+            console.log("inputFile[0].files=="+inputFile[0].files);
             if (inputFile[0].files.length < 1) { //파일 선택 안 한 경우
                 alert("상품 대표이미지를 업로드 해주세요");
                 return false;
