@@ -187,7 +187,7 @@
                 tmp += "<span>휴대폰</span>";
                 tmp += "</div>";
                 tmp += "<div class='orderer-value'>";
-                tmp += "<span id='ordererMpno' >" + ordererInfo.mpno + "</span>";
+                tmp += "<span id='ordererMpno' >" + formatMpnoWithHyphen(ordererInfo.mpno) + "</span>";
                 tmp += "</div>";
                 tmp += "</div>";
                 tmp += "<div class='orderer-section'>";

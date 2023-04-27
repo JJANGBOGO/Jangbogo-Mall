@@ -63,7 +63,7 @@
                     // 주문자와 동일 체크된 경우
                     // 받으실 분 과 휴대전화 번호 input 값을 부모창의 값들로 채운다.
                     let recipient = opener.$("#ordererName").html();
-                    let mpno      = opener.$("#ordererMpno").html();
+                    let mpno      = formatMpnoWitoutHyphen(opener.$("#ordererMpno").html());
 
                     // $("input#receiver-name").val(recipient);
                     // $("input#receiver-phone").val(mpno);
