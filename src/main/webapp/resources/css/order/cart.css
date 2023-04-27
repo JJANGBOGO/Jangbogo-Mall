@@ -199,3 +199,18 @@ input[name="sold-out"] {
     font-weight: 500;
     margin-top: 20px;
 }
+
+#cartAddressModBtn {
+    margin-top: 30px;
+    display: block;
+    padding: 0px 10px;
+    text-align: center;
+    overflow: hidden;
+    width: 100%;
+    height: 36px;
+    border-radius: 3px;
+    color: #f58412;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #f58412;
+    cursor: pointer;
+}

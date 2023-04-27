@@ -81,6 +81,7 @@
             tmp += '<section class="dilvp">'
             tmp += '<h3 class="dilvp-title">배송지</h3>'
             tmp += '<span class="dilvp-content">'+ items[0].addr_base + ' ' + items[0].addr_dtl + '</span>'
+            tmp += '<button type="button" id="cartAddressModBtn">배송지 변경</button>'
             tmp += '</section>'
             tmp += '<section class="cart-estimate">'
             tmp += '<section class="prod-price">'
@@ -284,6 +285,13 @@
             // 이벤트 핸들러 기능 : '주문' 버튼 클릭 시, 주문서 작성 페이지로 이동
             $(document).on("click", "input[name=order]", () => {
                 location.href= "/order/checkout";                                                                       // 주문서 작성 페이지로 이동
+            });
+
+            // 이벤트 대상 : #cartAddressModBtn 배송지 변경 버튼
+            // 이벤트 : click
+            // 이벤트 핸들러 기능 : '배송지 변경' 버튼 클릭 시, 배송지 관리 페이지로 이동
+            $(document).on("click", "#cartAddressModBtn", () => {
+                location.href= "/mypage/address/list";                                                                       // 주문서 작성 페이지로 이동
             });
         })
     </script>
