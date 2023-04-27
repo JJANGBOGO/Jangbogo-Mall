@@ -2,7 +2,7 @@ package com.jangbogo.mall.domain;
 
 import java.util.Date;
 
-public class OrderDetailDto {
+public class MyOrderDetailDto {
     private Integer idx;
     private Integer ord_idx;
     private Integer prod_idx;
@@ -32,6 +32,8 @@ public class OrderDetailDto {
     private Integer crt_idx;
     private Date upt_tm;
     private Integer upt_idx;
+
+    public MyOrderDetailDto(){}
 
 
     public Integer getIdx() {

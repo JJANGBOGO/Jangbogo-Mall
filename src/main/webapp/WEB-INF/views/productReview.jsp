@@ -275,7 +275,7 @@
                 // tmp += '<span>좋아요 '+review.like_cnt+'</span>'
                 // tmp += '</button>'
                 tmp += '</div>'
-                tmp += '<button class="article-updateBtn" data-upload_path='+review.resv_photo_upload_path+' data-idx='+review.idx+' data-user_idx='+review.user_idx+'>후기수정</button>'
+                tmp += '<button class="article-updateBtn" data-upload_path='+review.upload_path+' data-idx='+review.idx+' data-user_idx='+review.user_idx+'>후기수정</button>'
                 tmp += '</div>'
                 tmp += '</div>'
                 tmp += '</article>'

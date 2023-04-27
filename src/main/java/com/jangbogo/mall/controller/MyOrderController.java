@@ -1,14 +1,15 @@
 package com.jangbogo.mall.controller;
 
+import com.jangbogo.mall.domain.MyOrderDto;
+import com.jangbogo.mall.domain.MyOrderDetailDto;
 import com.jangbogo.mall.domain.OrderDto;
 import com.jangbogo.mall.domain.ProductDto;
-import com.jangbogo.mall.service.WishlistService;
+import com.jangbogo.mall.service.MyOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,29 +19,36 @@ import java.util.List;
 @RequestMapping("/mypage")
 public class MyOrderController {
     @Autowired
-    WishlistService wishlistService;
+    MyOrderService myOrderService;
 
     // 주문내역 페이지 이동
     @GetMapping("/order/list")
-    public String wishlistPage(HttpServletRequest request) {
+    public String wishlistPage(HttpServletRequest request, HttpSession session) {
         if(!loginCheck(request)) return "redirect:/user/login?toURL="+request.getRequestURL();
+        Integer user_idx = (Integer)session.getAttribute("idx");
+        try {
+            List<MyOrderDto> list = myOrderService.getlist(user_idx);
+            System.out.println("ㅇㄴㅇㅁㄴㅇ = " + list);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return "myOrderList";
     }
 
-//    // 지정된 위시리스트 목록을 가져오는 메서드
-//    @GetMapping("/order/lists") // /wishlists GET
-//    public ResponseEntity<List<OrderDto>> list(HttpSession session){
-//        List<OrderDto> list = null;
-//        Integer user_idx = (Integer)session.getAttribute("idx");
-//        try {
-//            list = wishlistService.getlist(user_idx);
-//            return new ResponseEntity<List<ProductDto>>(list, HttpStatus.OK);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResponseEntity<List<ProductDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//
-//    }
+    // 지정된 위시리스트 목록을 가져오는 메서드
+    @GetMapping("/order/lists") // /order/lists  GET
+    public ResponseEntity<List<MyOrderDto>> list(HttpSession session){
+        List<MyOrderDto> list = null;
+        Integer user_idx = (Integer)session.getAttribute("idx");
+        try {
+            list = myOrderService.getlist(user_idx);
+            return new ResponseEntity<List<MyOrderDto>>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<List<MyOrderDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 //
 //    @DeleteMapping("/wishlists/{prod_idx}") // DELETE /wishlists/1  <-- 삭제할 상품 번호
 //    public ResponseEntity<String> remove(@PathVariable Integer prod_idx, HttpSession session){

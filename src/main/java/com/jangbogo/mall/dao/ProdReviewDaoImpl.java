@@ -1,15 +1,11 @@
 package com.jangbogo.mall.dao;
 
-import com.jangbogo.mall.domain.OrderDetailDto;
-import com.jangbogo.mall.domain.OrderDto;
 import com.jangbogo.mall.domain.ProdReviewDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public class ProdReviewDaoImpl implements ProdReviewDao {

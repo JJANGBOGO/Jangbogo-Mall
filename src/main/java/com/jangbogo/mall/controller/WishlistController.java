@@ -34,7 +34,6 @@ public class WishlistController {
         try {
             list = wishlistService.getlist(user_idx);
 
-            System.out.println("list = " + list);
             return new ResponseEntity<List<ProductDto>>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
