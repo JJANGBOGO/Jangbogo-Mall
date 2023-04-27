@@ -80,7 +80,7 @@
             })
             tmp += '<section class="dilvp">'
             tmp += '<h3 class="dilvp-title">배송지</h3>'
-            tmp += '<span class="dilvp-content">경기 의왕시 원골로 43(모락산현대아파트)118동 202호</span>'
+            tmp += '<span class="dilvp-content">'+ items[0].addr_base + ' ' + items[0].addr_dtl + '</span>'
             tmp += '</section>'
             tmp += '<section class="cart-estimate">'
             tmp += '<section class="prod-price">'
@@ -122,9 +122,9 @@
                     $('#cartItems').html(listToHtml(result));                                                           // listToHtml메서드 호출
                     $('#cartEstimate').html(estimateToHtml(result));                                                    // estimateToHtml메서드 호출
                     $('#totalChkBox').html(checkBoxToHtml(result));                                                     // checkBoxToHtml메서드 호출
-                    handleOrderBtns(result);                                                                             // handleOrderbtn메서드 호출
+                    handleOrderBtns(result);                                                                            // handleOrderbtn메서드 호출
                 },
-                error : function() { alert("comment get error");}                                                       // 실패 응답이 오면, 경고창 띄우기
+                error : function() { alert("get list get error");}                                                      // 실패 응답이 오면, 경고창 띄우기
             });                                                                                                         // $.ajax() end
         }
         // 메서드명 : handleOrderbtns

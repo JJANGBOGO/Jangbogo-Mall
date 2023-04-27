@@ -1,6 +1,8 @@
 package com.jangbogo.mall.controller;
 
+import com.jangbogo.mall.domain.Address;
 import com.jangbogo.mall.domain.CartDto;
+import com.jangbogo.mall.service.AddressService;
 import com.jangbogo.mall.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,9 +17,9 @@ import java.util.List;
 
 @Controller
 public class CartController {
-    // CartService 자동 주입
-    @Autowired
-    CartService cartService;
+
+    @Autowired CartService cartService;                                                                                 // CartService 자동 주입
+    @Autowired AddressService addressService;                                                                           // AddressService 자동 주입
 
     // 메서드명 : goToCard
     // 기   능 : 장바구니 페이지로 이동한다.
@@ -103,5 +105,14 @@ public class CartController {
     // 반환타입 : boolean
     private static boolean loginCheck(HttpSession session) {
         return session.getAttribute("idx") != null;                                                               // session에 저장된 idx값이 null이 아니면 true 반환
+    }
+
+    // 메서드명 : getAddressSelected
+    // 기   능 : 선택된 배송지 정보 조회
+    // 매개변수 : HttpSession session
+    // 반환타입 : Address
+    public Address getAddressSelected(HttpSession session) throws Exception {
+        Integer user_idx = (Integer)session.getAttribute("idx");
+        return addressService.selAddrSelected(user_idx);
     }
 }

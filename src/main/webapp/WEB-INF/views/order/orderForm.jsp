@@ -187,7 +187,7 @@
                 tmp += "<span>휴대폰</span>";
                 tmp += "</div>";
                 tmp += "<div class='orderer-value'>";
-                tmp += "<span id='ordererMpno' >" + "${ordererInfo.mpno == null ? "휴대폰 번호를 입력해주세요." : ordererInfo.mpno}" + "</span>";
+                tmp += "<span id='ordererMpno' >" + ordererInfo.mpno + "</span>";
                 tmp += "</div>";
                 tmp += "</div>";
                 tmp += "<div class='orderer-section'>";
@@ -216,7 +216,7 @@
                 tmp += "<span>배송지</span>"
                 tmp += "</div>"
                 tmp += "<div id='deliveryAddress' class='delivery-value' >"
-                tmp += "<span>" + "경기 의왕시 원골로 43(모락산현대아파트)118동 202호(하드코딩)" + "</span>"
+                tmp += "<span>" + deliveryInfo[0].addr_base + ' ' + deliveryInfo[0].addr_dtl + "</span>"
                 tmp += "</div>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-section'>"
@@ -410,7 +410,7 @@
                         // display:none -> display: block으로 바꿔야 한다.
                         $('div#orderFormSubmitFailModal').css('display', 'block');
                         $(document).on("click", "#orderFormSubmitFailureBtn", () => {
-                            location.href="http://localhost:8080/order/checkout";
+                            $('div#orderFormSubmitFailModal').css('display', 'none');
                         })
                         return
                     }

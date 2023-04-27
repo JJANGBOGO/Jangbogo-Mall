@@ -4,17 +4,18 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 
-@Repository
 public class CartDto {
-    Integer prod_idx;
-    Integer user_idx;
-    String prod_name;
-    Integer prod_price;
-    Integer prod_cnt;
-    String upload_path;
-    Date reg_tm;
-    Date crt_tm;
-    Date upt_tm;
+    private Integer prod_idx;
+    private Integer user_idx;
+    private String prod_name;
+    private Integer prod_price;
+    private Integer prod_cnt;
+    private String upload_path;
+    private Date reg_tm;
+    private Date crt_tm;
+    private Date upt_tm;
+    private String addr_base;                                                                                           // 기본주소
+    private String addr_dtl;                                                                                            // 상세주소
 
     public CartDto() {}
 
@@ -100,7 +101,26 @@ public class CartDto {
         this.upt_tm = upt_tm;
     }
 
+    public String getAddr_base() {
+        return addr_base;
+    }
+
+    public void setAddr_base(String addr_base) {
+        this.addr_base = addr_base;
+    }
+
+    public String getAddr_dtl() {
+        return addr_dtl;
+    }
+
+    public void setAddr_dtl(String addr_dtl) {
+        this.addr_dtl = addr_dtl;
+    }
+
+
     // toString
+
+
     @Override
     public String toString() {
         return "{" +
@@ -113,6 +133,8 @@ public class CartDto {
                 ", reg_tm=" + reg_tm +
                 ", crt_tm=" + crt_tm +
                 ", upt_tm=" + upt_tm +
+                ", addr_base='" + addr_base + '\'' +
+                ", addr_dtl='" + addr_dtl + '\'' +
                 '}';
     }
 }

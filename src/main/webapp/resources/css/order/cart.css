@@ -192,3 +192,10 @@ input[name="sold-out"] {
     font-weight: 500;
     font-size: 18px;
 }
+
+.dilvp-content {
+    display: inline-block;
+    font-size: 17px;
+    font-weight: 500;
+    margin-top: 20px;
+}
