@@ -8,7 +8,7 @@ import java.util.List;
 public interface ProductDetailService {
     ProductDetailDto read(Integer prod_idx) throws Exception;
 
-    Integer findDlvry(Integer cate_idx) throws Exception;
+    Integer findDlvry(Integer cate_idx, Integer prod_idx) throws Exception;
 
     ProductDetailDto dlvryInfo(Integer dlvry_method) throws Exception;
     ProductDetailDto findBrand(Integer prod_idx) throws Exception;

@@ -13,11 +13,11 @@
         where pd.prod_idx = #{prod_idx};
     </select>
 
-    <select id="findDlvry" parameterType="Integer" resultType="Integer">
+    <select id="findDlvry" parameterType="map" resultType="Integer">
         select c.DLVRY_EDI_IDX as 'dlvry_method'
         from product p inner join category c
         on p.cate_idx = c.id
-        where c.id = #{cate_idx};
+        where c.id = #{cate_idx} and p.idx = #{prod_idx};
     </select>
 
     <select id="dlvryInfo" parameterType="Integer" resultType="ProductDetailDto">
@@ -39,6 +39,9 @@
         on pd.prod_idx = pf.prod_idx
         where pd.prod_idx = #{prod_idx};
     </select>
+
+
+
 
     <select id="checkWishlist" parameterType="map" resultType="Integer">
         select count(*)

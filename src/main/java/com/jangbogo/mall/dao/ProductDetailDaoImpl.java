@@ -22,8 +22,11 @@ public class ProductDetailDaoImpl implements ProductDetailDao {
         return session.selectOne(namespace + "selectProd", prod_idx);
     }
 
-    public Integer findDlvry(Integer cate_idx) throws Exception {
-        return session.selectOne(namespace + "findDlvry", cate_idx);
+    public Integer findDlvry(Integer cate_idx, Integer prod_idx) throws Exception {
+        Map map = new HashMap();
+        map.put("cate_idx", cate_idx);
+        map.put("prod_idx", prod_idx);
+        return session.selectOne(namespace + "findDlvry", map);
     }
 
     public ProductDetailDto dlvryInfo(Integer dlvry_method) throws Exception {

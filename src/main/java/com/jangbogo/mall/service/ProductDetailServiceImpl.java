@@ -20,8 +20,8 @@ public class ProductDetailServiceImpl implements ProductDetailService {
         return productDetailDao.selectProd(prod_idx);
     }
 
-    public Integer findDlvry(Integer cate_idx) throws Exception {
-        return productDetailDao.findDlvry(cate_idx);
+    public Integer findDlvry(Integer cate_idx, Integer prod_idx) throws Exception {
+        return productDetailDao.findDlvry(cate_idx, prod_idx);
     }
 
     public ProductDetailDto dlvryInfo(Integer dlvry_method) throws Exception {

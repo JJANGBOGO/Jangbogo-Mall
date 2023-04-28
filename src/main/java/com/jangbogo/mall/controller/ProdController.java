@@ -36,8 +36,14 @@ public class ProdController {
         try {
             String urlPath = request.getContextPath();
             ProductDetailDto list = productDetailService.read(prod_idx);
-            Integer cate_idx = productDetailService.findDlvry(list.getCate_idx());
+
+            //카테고리 아이디를 찾아서
+            Integer cate_idx = productDetailService.findDlvry(list.getCate_idx(), prod_idx);
+            System.out.println("cate_idx="+cate_idx);
+            //배송방식 검색
             ProductDetailDto dlvryMethod = productDetailService.dlvryInfo(cate_idx);
+            System.out.println("dlvryMethod="+dlvryMethod);
+
             ProductDetailDto findBrand = productDetailService.findBrand(prod_idx);
             m.addAttribute("urlPath", urlPath);
             m.addAttribute("prod_idx", prod_idx);
