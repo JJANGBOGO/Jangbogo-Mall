@@ -24,7 +24,8 @@
         <div class="cart">
             <div class="cart-content">
                 <div id="totalChkBox"></div>
-                <div id="cartItems"></div>
+                <div id="cartItems">
+                </div>
             </div>
             <div id="cartEstimate"></div>
         </div>
@@ -32,6 +33,18 @@
     </div>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <script>
+        // 메서드명 : dilvpToHtml
+        // 기   능 : 선택된 배송지 및 배송지 변경 버튼을 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
+        // 매개변수 : address - Address
+        // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
+        const dilvpToHtml = (address) => {
+            let tmp = "";                                                                                               // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
+            tmp += '<h3 class="dilvp-title">배송지</h3>'
+            tmp += '<span class="dilvp-content">'+ address.addr_base + ' ' + address.addr_dtl + '</span>';
+            tmp += '<button type="button" id="cartAddressModBtn">배송지 변경</button>';
+            return tmp;
+        }
+
         // 메서드명 : listToHtml
         // 기   능 : 장바구니 목록 및 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
         // 매개변수 : items - cartDto
@@ -60,7 +73,10 @@
                 tmp += '</li>';
             })
             let cnt = items.length;                                                                                     // 변수명 : cnt - 저장값 : 장바구니에 담긴 모든 품목 개수
-            return tmp += '</ul>';                                                                                      // 동적으로 생성한 요소 반환
+            tmp += '</ul>';
+            tmp += '<div id="emptyItems">';
+            tmp += '<h2>장바구니에 담긴 상품이 없습니다</h2>';
+            return tmp += '</div>';                                                                                     // 동적으로 생성한 요소 반환
         }
 
         // 메서드명 : estimateToHtml
@@ -79,9 +95,6 @@
                 price += item.prod_price * item.prod_cnt;
             })
             tmp += '<section class="dilvp">'
-            tmp += '<h3 class="dilvp-title">배송지</h3>'
-            tmp += '<span class="dilvp-content">'+ items[0].addr_base + ' ' + items[0].addr_dtl + '</span>'
-            tmp += '<button type="button" id="cartAddressModBtn">배송지 변경</button>'
             tmp += '</section>'
             tmp += '<section class="cart-estimate">'
             tmp += '<section class="prod-price">'
@@ -124,8 +137,22 @@
                     $('#cartEstimate').html(estimateToHtml(result));                                                    // estimateToHtml메서드 호출
                     $('#totalChkBox').html(checkBoxToHtml(result));                                                     // checkBoxToHtml메서드 호출
                     handleOrderBtns(result);                                                                            // handleOrderbtn메서드 호출
+                    showAddress(user_idx);                                                                              // showAddress메서드 호출 - 선택된 배송지 랜더링
                 },
-                error : function() { alert("get list get error");}                                                      // 실패 응답이 오면, 경고창 띄우기
+                error : function() { alert("showList get error");}                                                      // 실패 응답이 오면, 경고창 띄우기
+            });                                                                                                         // $.ajax() end
+        }
+        // 메서드명 : showAddress
+        // 기   능 : 선택된 배송지를 렌더링하는 메서드를 호출하는 메서드
+        // 매개변수 : user_idx - 회원번호
+        const showAddress = (user_idx) => {
+            $.ajax({                                                                                                    // $.ajax() start
+                type:'GET',                                                                                             // 요청 메서드
+                url:'/cart/address?user_idx=' + user_idx,                                                               // 요청URI
+                success: (result) => {                                                                                  // 성공 응답이 오면, 장바구니 목록, 주문정보, 체크박스 정보를 페이지에 랜더링하기
+                    $('.dilvp').html(dilvpToHtml(result));
+                },
+                error : function() { alert("showAddress get error");}                                                      // 실패 응답이 오면, 경고창 띄우기
             });                                                                                                         // $.ajax() end
         }
         // 메서드명 : handleOrderbtns

@@ -23,4 +23,6 @@ public interface AddressDao {
     Integer AddrStateCD(Integer idx) throws Exception;
 
     Integer resetStateCD(Integer user_idx) throws Exception;
+
+    Address selAddrSelected(Integer user_idx);
 }

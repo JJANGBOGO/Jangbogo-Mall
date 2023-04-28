@@ -214,3 +214,7 @@ input[name="sold-out"] {
     border: 1px solid #f58412;
     cursor: pointer;
 }
+
+#emptyItems {
+    display: none;
+}

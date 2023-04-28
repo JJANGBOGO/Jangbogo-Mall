@@ -57,4 +57,10 @@ public class AddressServiceImpl implements AddressService{
     public Integer resetStateCD ( Integer user_idx) throws Exception {
         return dao.resetStateCD(user_idx);
     }
+
+    @Override
+    public Address selAddrSelected(Integer user_idx) {
+        return dao.selAddrSelected(user_idx);
+    }
+
 }

@@ -111,8 +111,16 @@ public class CartController {
     // 기   능 : 선택된 배송지 정보 조회
     // 매개변수 : HttpSession session
     // 반환타입 : Address
-    public Address getAddressSelected(HttpSession session) throws Exception {
+    @GetMapping("/cart/address")
+    public ResponseEntity<Address> getAddressSelected(HttpSession session) throws Exception {
         Integer user_idx = (Integer)session.getAttribute("idx");
-        return addressService.selAddrSelected(user_idx);
+        Address address = null;
+        try {
+            address =  addressService.selAddrSelected(user_idx);
+            System.out.println("address = " + address);
+            return new ResponseEntity<Address>(address, HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<Address>(address, HttpStatus.OK);
+        }
     }
 }
