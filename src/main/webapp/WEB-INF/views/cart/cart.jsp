@@ -75,7 +75,7 @@
             let cnt = items.length;                                                                                     // 변수명 : cnt - 저장값 : 장바구니에 담긴 모든 품목 개수
             tmp += '</ul>';
             tmp += '<div id="emptyItems">';
-            tmp += '<h2>장바구니에 담긴 상품이 없습니다</h2>';
+            tmp += '<h3>장바구니에 담긴 상품이 없습니다</h3>';
             return tmp += '</div>';                                                                                     // 동적으로 생성한 요소 반환
         }
 
@@ -137,11 +137,24 @@
                     $('#cartEstimate').html(estimateToHtml(result));                                                    // estimateToHtml메서드 호출
                     $('#totalChkBox').html(checkBoxToHtml(result));                                                     // checkBoxToHtml메서드 호출
                     handleOrderBtns(result);                                                                            // handleOrderbtn메서드 호출
+                    handleEmptyItems(result);                                                                           // handleEmptyItems 호출
                     showAddress(user_idx);                                                                              // showAddress메서드 호출 - 선택된 배송지 랜더링
                 },
                 error : function() { alert("showList get error");}                                                      // 실패 응답이 오면, 경고창 띄우기
             });                                                                                                         // $.ajax() end
         }
+        // 메서드명 : handleEmptyItems
+        // 기   능 : 장바구니 목록 개수가 0인 경우, '장바구니에 담긴 상품이 없습니다' 메시지를 렌더링하는 함수
+        // 매개변수 : result - List<CartDto>
+        const handleEmptyItems = (result) => {
+            if(!result.length) {
+                $('#emptyItems').css('display', 'block');
+            } else {
+                $('#emptyItems').css('display', 'none');
+            }
+        }
+
+
         // 메서드명 : showAddress
         // 기   능 : 선택된 배송지를 렌더링하는 메서드를 호출하는 메서드
         // 매개변수 : user_idx - 회원번호
