@@ -45,7 +45,7 @@
                             <div class="input" id="input2">
                                 <select name="cate_idx" id="First_cate_idx">
                                     <option selected>선택</option>
-                                    <option name="F" value="01" id="01">과일</option>
+                                    <option value="01">과일</option>
                                     <option value="02">채소</option>
                                     <option value="03">수산물</option>
                                     <option value="04">축산/계란</option>
@@ -61,7 +61,6 @@
                             <div class="input" id="input3">
                                 <select name="cate_idx" id="Second_cate_idx">
                                     <option>선택</option>
-<%--                                    <option value=""></option>--%>
                                 </select>
                             </div>
                             <div class="error-msg cate-idx"></div>
@@ -92,7 +91,7 @@
                         <div class="input-box textarea">
                             <div class="input textarea">
                                 <textarea
-                                        id="content"
+                                        id="ctent"
                                         name="content"
                                         placeholder="상품에 대한 설명을 입력해주세요"
                                 ></textarea>
@@ -179,12 +178,12 @@
                         </div>
                         <fieldset>
                             <label>
-                                <input type="radio" name="dsply_state_cd" value="2" checked/>
+                                <input type="radio" name="dsply_state_cd" value="1" checked/>
                                 <span>전시</span>
                             </label>
 
                             <label>
-                                <input type="radio" name="dsply_state_cd" value="1"/>
+                                <input type="radio" name="dsply_state_cd" value="0"/>
                                 <span>비전시</span>
                             </label>
                         </fieldset>
@@ -214,12 +213,12 @@
                         </div>
                         <div class="input-box">
                             <div class="input">
-                                <select name="sle_unit">
-                                    <option>개</option>
-                                    <option>봉</option>
-                                    <option>박스</option>
-                                    <option>리터</option>
-                                </select>
+                                <input
+                                        name="sle_unit"
+                                        id="sle_unit"
+                                        type="text"
+                                        placeholder="판매단위를 입력해 주세요"
+                                />
                             </div>
                             <div class="error-msg bsplc-dtl"></div>
                         </div>
@@ -328,11 +327,11 @@
                         </div>
                         <fieldset class="sfkp-type">
                             <label>
-                                <input type="radio" name="state" value="1" checked/>
+                                <input type="radio" name="state" value="2" checked/>
                                 <span>상온</span>
                             </label>
                             <label>
-                                <input type="radio" name="state" value="2"/>
+                                <input type="radio" name="state" value="1"/>
                                 <span>냉장</span>
                             </label>
                             <label>
@@ -353,6 +352,8 @@
                                         name="max_sle_quty"
                                         type="number"
                                         placeholder="1회 최대 구매수량을 입력해 주세요"
+                                        max="10"
+                                        min="1"
                                 />
                             </div>
                             <div class="error-msg max-ale-quty"></div>
@@ -370,6 +371,7 @@
                                         name="inv_quty"
                                         type="number"
                                         placeholder="최소 1 이상의 수량을 입력해 주세요"
+                                        min="1"
                                 />
                             </div>
                             <div class="error-msg inv_quty"></div>
@@ -588,94 +590,176 @@
         toggleSleDateInput();
 
         $("#input2").on("click", function(e) {
-            // alert("click")
             e.preventDefault();
+
+            //val은 대분류에만 해당하며, 카테고리 테이블의 id값과 일치함 //카테고리 아이디 받아서 배송방식 엮어오기
             let val = $("#First_cate_idx option:selected").val(); //value값 출력됨 //"01"
-            console.log("val=??"+val);
+
+            //id는 개별 상품의 카테고리 아이디
             let id;
             if(val == "01") {
                 $("#Second_cate_idx").html(S_fruit).on("click", function(e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id"); //0101
+                    $(".input-box.category").data("cateID", id);
                 })
             }
+            console.log("밖에서 id값 가져온다면??"+ id);
             if(val == "02") {
                 $("#Second_cate_idx").html(S_vege).on("click", function(e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
+                    $(".input-box.category").data("cateID", id);
+
                 })
             }
             if(val == "03") {
                 $("#Second_cate_idx").html(S_seafood).on("click", function(e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
+                    $(".input-box.category").data("cateID", id);
+
                 })
             }
             if(val == "04") {
                 $("#Second_cate_idx").html(S_livestock).on("click", function(e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
+                    $(".input-box.category").data("cateID", id);
+
                 })
             }
             if(val == "05") {
                 $("#Second_cate_idx").html(S_drink).on("click", function(e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
+                    $(".input-box.category").data("cateID", id);
+
                 })
             }
             if(val == "06") {
                 $("#Second_cate_idx").html(S_retort).on("click", function(e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
+                    $(".input-box.category").data("cateID", id);
+
                 })
             }
             if(val == "07") {
                 $("#Second_cate_idx").html(S_dairy).on("click", function(e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
+                    $(".input-box.category").data("cateID", id);
+
                 })
             }
             if(val == "08") {
                 $("#Second_cate_idx").html(S_source).on("click", function(e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
+                    $(".input-box.category").data("cateID", id);
+
                 })
             }
             if(val == "09") {
                 $("#Second_cate_idx").html(S_dessert).on("click", function(e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
+                    $(".input-box.category").data("cateID", id);
+
                 })
             }
             if(val == "10") {
                 $("#Second_cate_idx").html(S_alcohol).on("click", function(e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
+                    $(".input-box.category").data("cateID", id);
+
                 })
             }
             if(val == "11") {
                 $("#Second_cate_idx").html(S_healthy).on("click", function(e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
+                    $(".input-box.category").data("cateID", id);
+
                 })
             }
-
+            $(".input-box.category").data("Ffloor", val);
         })
+
+
 
 
 
         //등록하기 버튼을 눌렀을 때
         $(".reg-confirm").click(function() {
-            let prod_cd_val = $("input[name=seler_prod_cd]").val();
+            let prod_cd_val = $("input[name=seler_prod_cd]").val(); //상품 - SELER_PROD_CD 판매자상품코드
+            let f_floor = $(".input-box.category").data("Ffloor"); //카테고리 - id 카테고리아이디 // 카테고리의 대분류를 의미
+            let cateID = $(".input-box.category").data("cateID"); // 상품 - cate_idx 카테고리아이디
+            let name = $("input[name=name]").val(); //상품 - name 이름
+            let prod_ctent = $("textarea[name=content]").val(); //상품 - ctent 상품설명
+            let price = $("input[name=prc]").val(); //상품 - prc 가격
+            let r_img = $("input[name=upload_path]").val(); //상품 - upload_path
+            let isDc = $("input[type=radio][name=dc_state_cd]:checked").val(); //상품 - dc_state_cd 할인상태코드
+            let dc_rate = $("input[name=dc_rate]").val(); //상품 - dc_rate 할인률
+            if(isDc == 2) {
+                dc_rate = 0;
+            }
+            let isShow = $("input[type=radio][name=dsply_state_cd]:checked").val(); //상품 - dsply_state_cd 0:비전시 , 1:전시
+            let origin = $("input[name=orplc]").val(); //상세 - orplc 원산지
+            let sle_unit = $("input[name=sle_unit]").val(); //상세 - slc_unit 판매단위
+            let weight = $("input[name=weight]").val(); //상세 - weight 중량
+            let mft_tm = $("input[name=mft_tm]").val(); //상세 - mft_tm 제조일자
+            let delivery_tm = $("input[name=distb_tlmt]").val(); //상세 - DISTB_TLMT 유통기한
+            let sle_start_tm = $("input[name=sle_start_tm]").val(); //상세 - SLE_START_TM 상품판매시작일
+            let sle_end_tm = $("input[name=sle_end_tm]").val(); //상세 - SLE_END_TM 상품판매종료일
+            let keepingType = $("input[type=radio][name=state]:checked").val(); //상세 - SFKP_TP_STATE_CD 보관유형상태코드
+            let selling_quantity = $("input[name=max_sle_quty]").val(); //상세 - MAX_SLE_QUTY 1회상품최대구매수량
+            let stock_quantity = $("input[name=inv_quty]").val(); //상세 - INV_QUTY 상품재고수량
+            let warn = $("textarea[name=warn]").val(); //상세 - WARN 주의사항
+            let guid = $("textarea[name=guid]").val(); //상세 - guid 안내사항
+            let detail_img = $("input[name=products]").val(); //상품상세첨부파일 - UPLOAD_PATH 파일업로드경로
+
+            // R_img, detail_img 는 넘어오는 값을 일정부분으로 잘라서 배열 형식으로 넘겨줘야 할것같다.
+            // 넘어오는 정보에 대한 후처리는 잠시...
 
             $.ajax({
                 type: 'POST',
-                url: '/seller/register/product',
+                url: '/seller/register/productInfo',
                 headers : { "content-type": "application/json"},
-                data : JSON.stringify({}),
-                success: function() {},
-                error: function() {}
+                data : JSON.stringify({
+                    prod_cd_val: prod_cd_val,
+                    cate_idx: f_floor,
+                    cateID: cateID,
+                    name: name,
+                    content: prod_ctent,
+                    price: price,
+                    // r_img: r_img,
+                    dc_state: isDc,
+                    dc_rate: dc_rate,
+                    isShow: isShow,
+                    origin: origin,
+                    unit: sle_unit,
+                    weight: weight,
+                    mft_tm: mft_tm,
+                    delivery_tm: delivery_tm,
+                    sle_start_tm: sle_start_tm,
+                    sle_end_tm: sle_end_tm,
+                    keepingType: keepingType,
+                    selling_quantity: selling_quantity,
+                    stock_quantity: stock_quantity,
+                    warn: warn,
+                    guid: guid
+                }),
+                success: function() {
+                    alert("상품등록이 완료되었습니다. 상품 승인을 기다려주세요")
+                },
+                error: function() {
+                    alert("상품등록이 취소되었습니다")
+                }
             })
+
         })
 
         //할인율 입력칸 toggle

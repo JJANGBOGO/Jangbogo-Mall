@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jangbogo.mall.dao.RegistProductMapper">
+
+    <!--    판매자 상품코드를 가지고 상품 번호 가져오기-->
+    <select id="getProdIdx" parameterType="Integer" resultType="int">
+        select IDX as 'prod_idx'
+        from product
+        where SELER_PROD_CD = #{prod_cd_val};
+    </select>
+            <!--    상품테이블에 추가하기-->
+    <insert id="insertProduct" parameterType="RegistProductDto">
+        insert into product
+        (SELER_IDX, CATE_IDX, SELER_PROD_CD, UPLOAD_PATH, NAME, CTENT, PRC, DC_STATE_CD, DC_RATE, DSPLY_STATE_CD)
+        values
+        (#{seler_idx}, #{cate_idx}, #{prod_cd_val}, #{r_img}, #{name}, #{content}, #{price}, #{dc_state}, #{dc_rate}, #{isShow});
+    </insert>
+            <!--    상품상세테이블에 추가하기-->
+    <insert id="insertProductDetail" parameterType="RegistProductDto">
+    insert into prod_dtl
+    (PROD_IDX, ORPLC, SLE_UNIT, WEIGHT, MFT_TM, DISTB_TLMT, WARN, MAX_SLE_QUTY, SFKP_TP_STATE_CD, SLE_START_TM, SLE_END_TM, INV_QUTY, GUID)
+    values
+    (#{prod_idx}, #{origin}, #{unit}, #{weight}, #{mft_tm}, #{delivery_tm}, #{warn}, #{selling_quantity}, #{keepingType}, #{sle_start_tm}, #{sle_end_tm}, #{stock_quantity}, #{guid});
+    </insert>
+            <!--    상품상세첨부파일에 추가하기-->
+    <insert id="insertProductFile" parameterType="RegistProductDto">
+        insert into prod_file
+        (UUID, PROD_IDX, NAME, UPLOAD_PATH, TYPE, STATE_CD, SORT_ODR)
+        values
+        (#{UUID}, #{prod_idx}, #{file_NAME}, #{UPLOAD_PATH}, #{TYPE}, #{STATE_CD}, #{SORT_ODR});
+    </insert>
+</mapper>
+

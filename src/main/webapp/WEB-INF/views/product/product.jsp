@@ -457,10 +457,7 @@
       console.log(num);
       if(!(num < 2)){
         let minusNum = num - 1;
-        console.log("minusNum="+minusNum)
-        console.log(typeof minusNum);
         $('.num').text(minusNum);
-        console.log("typeof=="+typeof $('.num').text());
         let textNum = $('.num').text();
         let regex = /[^0-9]/g;
         let origin = ($('.m-price-dc-span').text()).replace(regex, "");
