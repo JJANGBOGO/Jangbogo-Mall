@@ -1,10 +1,9 @@
 package com.jangbogo.mall.service;
 
-import com.jangbogo.mall.domain.CartDto;
-import com.jangbogo.mall.domain.OrderDto;
-import com.jangbogo.mall.domain.PaymentDto;
+import com.jangbogo.mall.domain.*;
 
 import java.util.Date;
+import java.util.List;
 
 public interface OrderService {
     // 메서드명 : addPayment
@@ -30,4 +29,22 @@ public interface OrderService {
     // 반환타입 : int
     // 매개변수 : OrderDto orderDto, CartDto cartDto
     public int addOrderDetail(OrderDto orderDto, CartDto cartDto);
+
+    // 메서드명 : getOrderDetail
+    // 기   능 : OrderDao의 getOrderDetailDto메서드 호출
+    // 반환타입 : OrderDetailDto
+    // 매개변수 : OrderDto orderDto
+    public List<OrderDetailDto> getOrderDetail(OrderDto orderDto);
+
+    // 메서드명 : addOrderHistory
+    // 기   능 : OrderDao의 addOrderHistory메서드 호출
+    // 반환타입 : int
+    // 매개변수 : List<OrderDetailDto> orderDetails
+    public int addOrderHistory(List<OrderDetailDto> orderDetails);
+
+    // 메서드명 : getOrderHistory
+    // 기   능 : OrderDao의 getOrderHistoryDto메서드 호출
+    // 반환타입 : int
+    // 매개변수 : List<OrderDetailDto> orderDetails
+    List<OrderHistoryDto> getOrderHistory(List<OrderDetailDto> orderDetails);
 }

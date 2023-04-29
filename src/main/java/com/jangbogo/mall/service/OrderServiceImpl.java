@@ -1,13 +1,12 @@
 package com.jangbogo.mall.service;
 
 import com.jangbogo.mall.dao.OrderDao;
-import com.jangbogo.mall.domain.CartDto;
-import com.jangbogo.mall.domain.OrderDto;
-import com.jangbogo.mall.domain.PaymentDto;
+import com.jangbogo.mall.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -49,5 +48,33 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public int addOrderDetail(OrderDto orderDto, CartDto cartDto) {
         return orderDao.insertOrderDetail(orderDto, cartDto);
+    }
+
+    // 메서드명 : getOrderDetail
+    // 기   능 : OrderDao의 getOrderDetailDto메서드 호출
+    // 반환타입 : OrderDetailDto
+    // 매개변수 : OrderDto orderDto
+    @Override
+    public List<OrderDetailDto> getOrderDetail(OrderDto orderDto) {
+        return orderDao.getOrderDetailDto(orderDto);
+    }
+
+    // 메서드명 : addOrderHistory
+    // 기   능 : OrderDao의 addOrderDetail메서드 호출
+    // 반환타입 : int
+    // 매개변수 : OrderDetailDto orderDetailDto
+    @Override
+    public int addOrderHistory(List<OrderDetailDto> orderDetails) {
+        return orderDao.insertOrderHistory(orderDetails);
+    }
+
+
+    // 메서드명 : getOrderHistory
+    // 기   능 : OrderDao의 getOrderHistoryDto메서드 호출
+    // 반환타입 : int
+    // 매개변수 : List<OrderDetailDto> orderDetails
+    @Override
+    public List<OrderHistoryDto> getOrderHistory(List<OrderDetailDto> orderDetails) {
+        return orderDao.getOrderHistoryDto(orderDetails);
     }
 }

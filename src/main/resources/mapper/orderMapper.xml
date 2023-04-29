@@ -39,7 +39,7 @@
     </select>
     <!--
         태   그 : select
-        기   능 : '결제' 테이블 중 특정 주문 행 조회하기
+        기   능 : '결제' 테이블 중 특정 결제 행 조회하기
         아이디명 : selectPayment
         반환타입 : PaymentDto
         매개변수 : String tid
@@ -50,16 +50,69 @@
 
     <!--
         태   그 : insert
-        기   능 : '주문상세' 테이블에 '취소'처리 된 결제 데이터 업데이트하기                                                              // TODO : 주문 내역 구현 이후 기능 구현
+        기   능 : '주문상세' 테이블에 '승인'처리 된 주문 데이터의 '주문상세' 데이터 삽입하기
         아이디명 : insertOrderDetail
         반환타입 : int
         매개변수 :
     -->
     <insert id="insertOrderDetail" parameterType="map">
-        INSERT INTO ORD_DTL(ORD_IDX, PROD_IDX, PROD_NM, PROD_PRC, PROD_QTY, PROD_TOT_AMT, ORD_TM)
-        VALUES(#{orderDto.idx}, #{cartDto.prod_idx}, #{cartDto.prod_name}, #{cartDto.prod_price}, #{cartDto.prod_cnt}, #{cartDto.prod_price} * #{cartDto.prod_cnt}, #{orderDto.ord_tm})
+        INSERT INTO ORD_DTL(ORD_IDX, PROD_IDX, PROD_NM, PROD_PRC, PROD_QTY, PROD_TOT_AMT, ORD_TM, ORD_STATE_CD)
+        VALUES(#{orderDto.idx}, #{cartDto.prod_idx}, #{cartDto.prod_name}, #{cartDto.prod_price}, #{cartDto.prod_cnt}, #{cartDto.prod_price} * #{cartDto.prod_cnt}, #{orderDto.ord_tm}, 1)
     </insert>
 
+    <!--
+        태   그 : select
+        기   능 : '주문상세' 테이블 중 특정 주문상세 행 조회하기
+        아이디명 : selectOrderDetail
+        반환타입 :
+        매개변수 :
+    -->
+    <select id="selectOrderDetail" resultType="OrderDetailDto">
+        SELECT IDX, ORD_IDX, PROD_IDX, PROD_NM, PROD_PRC, PROD_QTY, PROD_TOT_AMT, ORD_TM
+        FROM ORD_DTL
+        WHERE ORD_IDX = #{idx};
+    </select>
+
+    <!--
+        태   그 : insert
+        기   능 : '주문이력' 테이블에 데이터 삽입하기
+        아이디명 : insertOrderHistory
+        반환타입 :
+        매개변수 :
+    -->
+    <insert id="insertOrderHistory" parameterType="java.util.List">
+        INSERT INTO ORD_HIST(CHG_TM, ORD_DTL_IDX, ORD_IDX, PROD_IDX, PROD_NM)
+        VALUES
+        <foreach item="item" index="index" collection="list" separator=" , ">
+            (
+               #{item.ord_tm}, #{item.idx}, #{item.ord_idx}, #{item.prod_idx}, #{item.prod_nm}
+            )
+        </foreach>
+    </insert>
+
+    <!--
+        태   그 : select
+        기   능 : '주문이력' 테이블 중 특정 주문상세 행 조회하기
+        아이디명 : selectOrderHistory
+        반환타입 :
+        매개변수 :
+    -->
+    <select id="selectOrderHistory" parameterType="java.util.List" resultType="OrderHistoryDto">
+        SELECT IDX,
+               ORD_DTL_IDX,
+               ORD_IDX,
+               PROD_IDX,
+               PROD_NM,
+               ORD_STATE_CD,
+               CHG_TM
+        FROM ORD_HIST
+        WHERE ORD_IDX IN
+        <foreach item="item" index="index" collection="list" open="(" close=")" separator=" , ">
+            (
+                #{item.ord_idx}
+            )
+        </foreach>
+    </select>
     <!--
         태   그 : update
         기   능 : '결제' 테이블에 '취소'처리 된 결제 데이터 업데이트하기                                                              // TODO : 주문 내역 구현 이후 기능 구현

@@ -1,10 +1,9 @@
 package com.jangbogo.mall.dao;
 
-import com.jangbogo.mall.domain.CartDto;
-import com.jangbogo.mall.domain.OrderDto;
-import com.jangbogo.mall.domain.PaymentDto;
+import com.jangbogo.mall.domain.*;
 
 import java.util.Date;
+import java.util.List;
 
 public interface OrderDao {
     // 메서드명 : insertPayment
@@ -42,4 +41,22 @@ public interface OrderDao {
     // 반환타입 : int
     // 매개변수 : OrderDto orderDto, CartDto cartDto
     public int insertOrderDetail(OrderDto orderDto, CartDto cartDto);
+
+    // 메서드명 : getOrderDetailDto
+    // 기   능 : 주문번호가 #{idx}인 주문의 '주문상세' 데이터를 조회하는 메서드
+    // 반환타입 : OrderDetailDto orderDetailDto
+    // 매개변수 : OrderDto orderDto, CartDto cartDto
+    public List<OrderDetailDto> getOrderDetailDto(OrderDto orderDto);
+
+    // 메서드명 : insertOrderHistory
+    // 기   능 : '주문이력'(ORD_HIST)
+    // 반환타입 : int
+    // 매개변수 : List<OrderDetailDto> orderDetails
+    public int insertOrderHistory(List<OrderDetailDto> orderDetails);
+
+    // 메서드명 : getOrderHistoryDto
+    // 기   능 : '주문이력' 데이터를 조회하는 메서드
+    // 반환타입 : List<OrderHistoryDto>
+    // 매개변수 : List<OrderDetailDto> orderDetails
+    public List<OrderHistoryDto> getOrderHistoryDto(List<OrderDetailDto> orderDetails);
 }

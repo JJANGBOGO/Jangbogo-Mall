@@ -1,14 +1,13 @@
 package com.jangbogo.mall.dao;
 
-import com.jangbogo.mall.domain.CartDto;
-import com.jangbogo.mall.domain.OrderDto;
-import com.jangbogo.mall.domain.PaymentDto;
+import com.jangbogo.mall.domain.*;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -70,6 +69,33 @@ public class OrderDaoImpl implements OrderDao {
         map.put("orderDto", orderDto);                                                                                  // 매개변수 orderDto를 K/V로 저장
         map.put("cartDto", cartDto);                                                                                    // 매개변수 cartDto를 K/V로 저장
         return session.insert(namespace + "insertOrderDetail", map);                                                 // session.insert메서드 반환값 리턴g
+    }
+
+    // 메서드명 : getOrderDetailDto
+    // 기   능 : 주문번호가 #{idx}인 주문의 '주문상세' 데이터를 조회하는 메서드
+    // 반환타입 : OrderDetailDto orderDetailDto
+    // 매개변수 : OrderDto orderDto, CartDto cartDto
+    @Override
+    public List<OrderDetailDto> getOrderDetailDto(OrderDto orderDto) {
+        return session.selectList(namespace + "selectOrderDetail", orderDto);
+    }
+
+    // 메서드명 : insertOrderHistory
+    // 기   능 : '주문이력'(ORD_HIST) 테이블에 데이터를 삽입(insert)하는 메서드
+    // 반환타입 : int
+    // 매개변수 : List<OrderDetailDto> orderDetails
+    @Override
+    public int insertOrderHistory(List<OrderDetailDto> orderDetails) {
+        return session.insert(namespace + "insertOrderHistory", orderDetails);
+    }
+
+    // 메서드명 : getOrderHistoryDto
+    // 기   능 : '주문이력' 데이터를 조회하는 메서드
+    // 반환타입 : List<OrderHistoryDto>
+    // 매개변수 : List<OrderDetailDto> orderDetails
+    @Override
+    public List<OrderHistoryDto> getOrderHistoryDto(List<OrderDetailDto> orderDetails) {
+        return session.selectList(namespace + "selectOrderHistory", orderDetails);
     }
 }
 

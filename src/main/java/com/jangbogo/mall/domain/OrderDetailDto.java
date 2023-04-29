@@ -271,7 +271,7 @@ public class OrderDetailDto {
     // toString
     @Override
     public String toString() {
-        return "OrderDetailDto{" +
+        return "{" +
                 "idx=" + idx +
                 ", ord_idx=" + ord_idx +
                 ", prod_idx=" + prod_idx +

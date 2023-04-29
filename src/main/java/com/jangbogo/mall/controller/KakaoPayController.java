@@ -44,11 +44,14 @@ public class KakaoPayController {
     @GetMapping("/payment/kakao/approve")
     public String approveKakaoPayRequest(@RequestParam("pg_token") String pg_token, RedirectAttributes rattr, HttpSession session) throws Exception {
         OrderDto orderDto = (OrderDto)session.getAttribute("orderDto");                                           // 변수명 : orderDto - 저장값 : 세션에 저장되어 있는 주문 데이터 객체(orderDto)
-        int insertOrderDtoRowCnt = 0;                                                                                   // 변수명 : insertOrderDtoRowCnt - 저장값 : '주문' 테이블에 데이터 저장
-        int insertPaymentDtoRowCnt = 0;                                                                                 // 변수명 : insertPaymentDtoRowCnt - 저장값 : '결제' 테이블에 데이터 저장
+        int insertOrderDtoRowCnt = 0;                                                                                   // 변수명 : insertOrderDtoRowCnt - 저장값 : '주문' 테이블 데이터
+        int insertPaymentDtoRowCnt = 0;                                                                                 // 변수명 : insertPaymentDtoRowCnt - 저장값 : '결제' 테이블 데이터
+        int insertDeliveryDtoRowCnt = 0;                                                                                // 변수명 : insertDeliveryDtoRowCnt - 저장값 : '배송' 테이블 데이터
+        int insertOrderHistoryRowCnt = 0;                                                                               // 변수명 : insertOrderHistoryRowCnt - 저장값: '주문이력' 테이블 데이터
 
         PaymentDto paymentDto = null;                                                                                   // 변수명 : paymentDto - 저장값 : 생성된 PaymentDto 객체
-        OrderDetailDto orderDetailDto = null;                                                                           // 변수명 : orderDetailDto - 저장값 : '주문상세' 테이블 데이터 저장
+        List<OrderDetailDto> orderDetails = null;                                                                       // 변수명 : orderDetails - 저장값 : '주문상세' 테이블에 데이터 리스트 저장
+        List<OrderHistoryDto> orderHistories = null;                                                                    // 변수명 : orderHistories - 저장값 : '주문이력' 테이블에 데이터 저장
 
         try {
 
@@ -70,8 +73,13 @@ public class KakaoPayController {
             while(it.hasNext()) {                                                                                       // 다음 CartDto가 존재하는 경우,
                 CartDto cartDto = (CartDto)it.next();                                                                   // 변수명: cartDto - 저장값 : list에 저장된 cartDto
                 orderDto = orderService.getOrderDto(orderDto.getIdx());                                                 // '주문' 테이블에 저장된 OrderDto 중 특정 #{idx}에 해당하는 orderDto에 재할당
-                orderService.addOrderDetail(orderDto, cartDto);                                                         // '주문상세' 테이블에 새로운 데이터 삽입
+                orderService.addOrderDetail(orderDto, cartDto);                                                         // '주문상세' 데이터를 '주문상세' 테이블에 저장(C)
+                orderDetails = orderService.getOrderDetail(orderDto);
             }
+            insertOrderHistoryRowCnt = orderService.addOrderHistory(orderDetails);                                      // '주문이력' 데이터를 '주문이력' 테이블에 저장(C)
+            if(insertOrderHistoryRowCnt == 0) throw new Exception("insert OrderHistoryDto to 'ORD_HIST' Table failed!");// 데이터 저장 실패 시, 예외 발생
+            orderHistories = orderService.getOrderHistory(orderDetails);                                                // 변수명 : orderHistories - 저장값 : 주문이력 데이터
+                                                                                                                        // '배송' 데이터를 '배송' 테이블에 저장(C)
 
             cartService.removeAll(orderDto.getUser_idx());                                                              // '주문완료' 처리 시, 장바구니 목록 초기화
 
