@@ -117,7 +117,6 @@ public class CartController {
         Address address = null;
         try {
             address =  addressService.selAddrSelected(user_idx);
-            System.out.println("address = " + address);
             return new ResponseEntity<Address>(address, HttpStatus.OK);
         } catch(Exception e) {
             return new ResponseEntity<Address>(address, HttpStatus.OK);
