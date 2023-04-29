@@ -91,6 +91,7 @@ public class KakaoPayController {
             rattr.addFlashAttribute("model", kakaoApproveResponseDto);                                     // 뷰에 전달할 데이터를 RedirectAttributes 객체에 저장
             session.removeAttribute("orderDto");                                                                  // 세션에 저장되어 있는 주문 데이터 객체(orderDto) 삭제
             session.removeAttribute("paymentDto");                                                                // 세션에 저장되어 있는 결제 데이터 객체(paymentDto) 삭제
+            session.removeAttribute("deliveryDto");                                                               // 세션에 저장되어 있는 결제 데이터 객체(deliveryDto) 삭제
 
             return "redirect:/order/checkout/success";                                                                  // 주문 성공 페이지 이동 메서드의 매핑 경로로 리다이렉트
         } catch (Exception e) {                                                                                         // 예외 처리

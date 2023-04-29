@@ -53,7 +53,7 @@
         기   능 : '주문상세' 테이블에 '승인'처리 된 주문 데이터의 '주문상세' 데이터 삽입하기
         아이디명 : insertOrderDetail
         반환타입 : int
-        매개변수 :
+        매개변수 : Map map
     -->
     <insert id="insertOrderDetail" parameterType="map">
         INSERT INTO ORD_DTL(ORD_IDX, PROD_IDX, PROD_NM, PROD_PRC, PROD_QTY, PROD_TOT_AMT, ORD_TM, ORD_STATE_CD)
@@ -64,8 +64,8 @@
         태   그 : select
         기   능 : '주문상세' 테이블 중 특정 주문상세 행 조회하기
         아이디명 : selectOrderDetail
-        반환타입 :
-        매개변수 :
+        반환타입 : OrderDetailDto
+        매개변수 : OrderDto orderDto
     -->
     <select id="selectOrderDetail" resultType="OrderDetailDto">
         SELECT IDX, ORD_IDX, PROD_IDX, PROD_NM, PROD_PRC, PROD_QTY, PROD_TOT_AMT, ORD_TM
@@ -77,25 +77,25 @@
         태   그 : insert
         기   능 : '주문이력' 테이블에 데이터 삽입하기
         아이디명 : insertOrderHistory
-        반환타입 :
-        매개변수 :
+        반환타입 : int
+        매개변수 : java.util.List
     -->
     <insert id="insertOrderHistory" parameterType="java.util.List">
         INSERT INTO ORD_HIST(CHG_TM, ORD_DTL_IDX, ORD_IDX, PROD_IDX, PROD_NM)
         VALUES
-        <foreach item="item" index="index" collection="list" separator=" , ">
+            <foreach item="item" index="index" collection="list" separator=" , ">
             (
                #{item.ord_tm}, #{item.idx}, #{item.ord_idx}, #{item.prod_idx}, #{item.prod_nm}
             )
-        </foreach>
+            </foreach>
     </insert>
 
     <!--
         태   그 : select
         기   능 : '주문이력' 테이블 중 특정 주문상세 행 조회하기
         아이디명 : selectOrderHistory
-        반환타입 :
-        매개변수 :
+        반환타입 : OrderHistoryDto
+        매개변수 : java.util.List
     -->
     <select id="selectOrderHistory" parameterType="java.util.List" resultType="OrderHistoryDto">
         SELECT IDX,
@@ -118,8 +118,8 @@
         태   그 : insert
         기   능 : '배송' 테이블에 데이터 삽입하기
         아이디명 : insertDelivery
-        반환타입 :
-        매개변수 :
+        반환타입 : int
+        매개변수 : DeliveryDto
     -->
     <insert id="insertDelivery" parameterType="DeliveryDto">
         INSERT INTO DLVRY(ORD_IDX, RCPR_NM, RCPR_MPNO, RCPR_ADDR_BASE, RCPR_ADDR_DTL, PLRCV)
