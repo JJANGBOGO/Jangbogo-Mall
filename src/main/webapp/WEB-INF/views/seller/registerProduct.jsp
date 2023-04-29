@@ -16,7 +16,7 @@
         <div class="reg-form-box">
             <form
                     class="reg-form"
-                    action="/seller/register/product"
+                    action="/seller/register/productInfo"
                     method="post"
             >
                 <div class="center-padding">
@@ -43,7 +43,7 @@
                         </div>
                         <div class="input-box category">
                             <div class="input" id="input2">
-                                <select name="cate_idx" id="First_cate_idx">
+                                <select name="cate_idx" id="First_cate_idx" >
                                     <option selected>선택</option>
                                     <option value="01">과일</option>
                                     <option value="02">채소</option>
@@ -59,7 +59,7 @@
                                 </select>
                             </div>
                             <div class="input" id="input3">
-                                <select name="cate_idx" id="Second_cate_idx">
+                                <select name="cate_idx2" id="Second_cate_idx">
                                     <option>선택</option>
                                 </select>
                             </div>
@@ -452,7 +452,7 @@
 <script>
     let msg = "${msg}";
     if (msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다 다시 시도해 주세요");
-
+    if (msg == "REG_PROD_OK") alert("상품이 등록되었습니다. 승인 대기중입니다.")
     const dc_applied = "1"; //할인 적용 여부
     const limit_sle = "2"; //기간한정판매
 
@@ -604,7 +604,6 @@
                     $(".input-box.category").data("cateID", id);
                 })
             }
-            console.log("밖에서 id값 가져온다면??"+ id);
             if(val == "02") {
                 $("#Second_cate_idx").html(S_vege).on("click", function(e) {
                     //선택된 요소의 id값
@@ -688,79 +687,6 @@
             $(".input-box.category").data("Ffloor", val);
         })
 
-
-
-
-
-        //등록하기 버튼을 눌렀을 때
-        $(".reg-confirm").click(function() {
-            let prod_cd_val = $("input[name=seler_prod_cd]").val(); //상품 - SELER_PROD_CD 판매자상품코드
-            let f_floor = $(".input-box.category").data("Ffloor"); //카테고리 - id 카테고리아이디 // 카테고리의 대분류를 의미
-            let cateID = $(".input-box.category").data("cateID"); // 상품 - cate_idx 카테고리아이디
-            let name = $("input[name=name]").val(); //상품 - name 이름
-            let prod_ctent = $("textarea[name=content]").val(); //상품 - ctent 상품설명
-            let price = $("input[name=prc]").val(); //상품 - prc 가격
-            let r_img = $("input[name=upload_path]").val(); //상품 - upload_path
-            let isDc = $("input[type=radio][name=dc_state_cd]:checked").val(); //상품 - dc_state_cd 할인상태코드
-            let dc_rate = $("input[name=dc_rate]").val(); //상품 - dc_rate 할인률
-            if(isDc == 2) {
-                dc_rate = 0;
-            }
-            let isShow = $("input[type=radio][name=dsply_state_cd]:checked").val(); //상품 - dsply_state_cd 0:비전시 , 1:전시
-            let origin = $("input[name=orplc]").val(); //상세 - orplc 원산지
-            let sle_unit = $("input[name=sle_unit]").val(); //상세 - slc_unit 판매단위
-            let weight = $("input[name=weight]").val(); //상세 - weight 중량
-            let mft_tm = $("input[name=mft_tm]").val(); //상세 - mft_tm 제조일자
-            let delivery_tm = $("input[name=distb_tlmt]").val(); //상세 - DISTB_TLMT 유통기한
-            let sle_start_tm = $("input[name=sle_start_tm]").val(); //상세 - SLE_START_TM 상품판매시작일
-            let sle_end_tm = $("input[name=sle_end_tm]").val(); //상세 - SLE_END_TM 상품판매종료일
-            let keepingType = $("input[type=radio][name=state]:checked").val(); //상세 - SFKP_TP_STATE_CD 보관유형상태코드
-            let selling_quantity = $("input[name=max_sle_quty]").val(); //상세 - MAX_SLE_QUTY 1회상품최대구매수량
-            let stock_quantity = $("input[name=inv_quty]").val(); //상세 - INV_QUTY 상품재고수량
-            let warn = $("textarea[name=warn]").val(); //상세 - WARN 주의사항
-            let guid = $("textarea[name=guid]").val(); //상세 - guid 안내사항
-            let detail_img = $("input[name=products]").val(); //상품상세첨부파일 - UPLOAD_PATH 파일업로드경로
-
-            // R_img, detail_img 는 넘어오는 값을 일정부분으로 잘라서 배열 형식으로 넘겨줘야 할것같다.
-            // 넘어오는 정보에 대한 후처리는 잠시...
-
-            $.ajax({
-                type: 'POST',
-                url: '/seller/register/productInfo',
-                headers : { "content-type": "application/json"},
-                data : JSON.stringify({
-                    prod_cd_val: prod_cd_val,
-                    cate_idx: f_floor,
-                    cateID: cateID,
-                    name: name,
-                    content: prod_ctent,
-                    price: price,
-                    // r_img: r_img,
-                    dc_state: isDc,
-                    dc_rate: dc_rate,
-                    isShow: isShow,
-                    origin: origin,
-                    unit: sle_unit,
-                    weight: weight,
-                    mft_tm: mft_tm,
-                    delivery_tm: delivery_tm,
-                    sle_start_tm: sle_start_tm,
-                    sle_end_tm: sle_end_tm,
-                    keepingType: keepingType,
-                    selling_quantity: selling_quantity,
-                    stock_quantity: stock_quantity,
-                    warn: warn,
-                    guid: guid
-                }),
-                success: function() {
-                    alert("상품등록이 완료되었습니다. 상품 승인을 기다려주세요")
-                },
-                error: function() {
-                    alert("상품등록이 취소되었습니다")
-                }
-            })
-
-        })
 
         //할인율 입력칸 toggle
         $("input[name=dc_state_cd]").click(function () {

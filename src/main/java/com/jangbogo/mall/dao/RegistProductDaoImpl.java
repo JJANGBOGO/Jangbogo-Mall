@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -17,8 +18,8 @@ public class RegistProductDaoImpl implements RegistProductDao {
     String namespace = "com.jangbogo.mall.dao.RegistProductMapper.";
 
     @Override
-    public int getProdIdx(Integer prod_cd_val) throws Exception {
-        return session.selectOne(namespace + "getProdIdx", prod_cd_val);
+    public int getProdIdx(RegistProductDto registProductDto) throws Exception {
+        return session.selectOne(namespace + "getProdIdx", registProductDto);
     }
 
     @Override
@@ -34,5 +35,13 @@ public class RegistProductDaoImpl implements RegistProductDao {
     @Override
     public int insertProductFile(RegistProductDto registProductDto) throws Exception {
         return session.insert(namespace + "insertProductFile", registProductDto);
+    }
+
+    public int checkSellerProdCd(RegistProductDto registProductDto) throws Exception {
+        return session.selectOne(namespace+ "checkSellerProdCd", registProductDto);
+    }
+
+    public List<RegistProductDto> getProductList(Integer seler_idx) throws Exception {
+        return session.selectList(namespace + "getProductList", seler_idx);
     }
 }

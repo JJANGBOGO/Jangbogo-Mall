@@ -1,80 +1,85 @@
 package com.jangbogo.mall.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import java.util.Objects;
 
 public class RegistProductDto {
     //상품테이블
-    private Integer prod_idx; //IDX
-    private Integer seler_idx; //SELER_IDX
-    private String cate_idx; //CATE_IDX
-    private Integer prod_cd_val; //SELER_PROD_CD //판매자상품코드
-    private String r_img; //UPLOAD_PATH
+    private Integer prod_idx; //IDX //상품번호
+    private Integer seler_idx; //SELER_IDX //판매자번호, session에서 가져옴
+    private String cate_idx2; //CATE_IDX
+    private Integer seler_prod_cd; //SELER_PROD_CD
     private String name; //NAME
     private String content; //CTENT
-    private Integer price; //PRC
-    private Integer dc_state; //DC_STATE_CD
+    private Integer prc; //PRC
+    private String upload_path; //UPLOAD_PATH
+    private Integer dc_state_cd; //DC_STATE_CD
     private Integer dc_rate; //DC_RATE
-    private Integer isShow; //DSPLY_STATE_CD
+    private Integer dsply_state_cd; //DSPLY_STATE_CD
+    private float ascr;
 
     // 상품상세테이블
-    private String origin; //ORPLC
-    private String unit; //SLE_UNIT
+    private String orplc; //ORPLC
+    private String sle_unit; //SLE_UNIT
     private String weight; //WEIGHT
+    private Integer sle_date_type; //판매시작일자와 종료일자에 null값이 들어가야 하느냐 마느냐 결정
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date mft_tm; //MFT_TM
-    private Date delivery_tm; //DISTB_TLMT
-    private String warn; //WARN
-    private Integer selling_quantity; //MAX_SLE_QUTY
-    private Integer keepingType; //SFKP_TP_STATE_CD
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date distb_tlmt; //DISTB_TLMT
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date sle_start_tm; //SLE_START_TM
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date sle_end_tm; //SLE_END_TM
-    private Integer stock_quantity; //INV_QUTY
+
+    private Integer state; //SFKP_TP_STATE_CD
+    private Integer max_sle_quty; //MAX_SLE_QUTY
+    private Integer inv_quty; //INV_QUTY
+    private String warn; //WARN
     private String guid; //GUID
+    private Integer reg_state_cd; //REG_STATE_CD
+    //상품상세첨부파일
+    private String products; //UPLOAD_PATH
+    private String UUID; //UUID //파일일련번호
+    private String NAME; //NAME //파일이름
+    private Integer TYPE; //TYPE //파일유형
+    private Integer STATE_CD; //STATE_CD //파일상태코드
+    private Integer SORT_ODR; //SORT_ODR //파일정렬순서
 
-    //상품상세첨부테이블
-    private String UUID; //UUID
-    private String file_NAME; //NAME
-    private String UPLOAD_PATH; //UPLOAD_PATH
-    private Integer TYPE; //TYPE
-    private Integer STATE_CD; //STATE_CD
-    private Integer SORT_ODR; //SORT_ODR
-
-
-
-    //constructor
     public RegistProductDto() {}
 
-    public RegistProductDto(Integer prod_idx, Integer seler_idx, String cate_idx, Integer prod_cd_val, String r_img, String name, String content, Integer price, Integer dc_state, Integer dc_rate, Integer isShow, String origin, String unit, String weight, Date mft_tm, Date delivery_tm, String warn, Integer selling_quantity, Integer keepingType, Date sle_start_tm, Date sle_end_tm, Integer stock_quantity, String guid) {
+    public RegistProductDto(Integer prod_idx, Integer seler_idx, String cate_idx2, Integer seler_prod_cd, String name, String content, Integer prc, String upload_path, Integer dc_state_cd, Integer dc_rate, Integer dsply_state_cd, float ascr, String orplc, String sle_unit, String weight, Integer sle_date_type, Date mft_tm, Date distb_tlmt, Date sle_start_tm, Date sle_end_tm, Integer state, Integer max_sle_quty, Integer inv_quty, String warn, String guid, Integer reg_state_cd, String products, String UUID, String NAME, Integer TYPE, Integer STATE_CD, Integer SORT_ODR) {
         this.prod_idx = prod_idx;
         this.seler_idx = seler_idx;
-        this.cate_idx = cate_idx;
-        this.prod_cd_val = prod_cd_val;
-        this.r_img = r_img;
+        this.cate_idx2 = cate_idx2;
+        this.seler_prod_cd = seler_prod_cd;
         this.name = name;
         this.content = content;
-        this.price = price;
-        this.dc_state = dc_state;
+        this.prc = prc;
+        this.upload_path = upload_path;
+        this.dc_state_cd = dc_state_cd;
         this.dc_rate = dc_rate;
-        this.isShow = isShow;
-        this.origin = origin;
-        this.unit = unit;
+        this.dsply_state_cd = dsply_state_cd;
+        this.ascr = ascr;
+        this.orplc = orplc;
+        this.sle_unit = sle_unit;
         this.weight = weight;
+        this.sle_date_type = sle_date_type;
         this.mft_tm = mft_tm;
-        this.delivery_tm = delivery_tm;
-        this.warn = warn;
-        this.selling_quantity = selling_quantity;
-        this.keepingType = keepingType;
+        this.distb_tlmt = distb_tlmt;
         this.sle_start_tm = sle_start_tm;
         this.sle_end_tm = sle_end_tm;
-        this.stock_quantity = stock_quantity;
+        this.state = state;
+        this.max_sle_quty = max_sle_quty;
+        this.inv_quty = inv_quty;
+        this.warn = warn;
         this.guid = guid;
-    }
-
-    public RegistProductDto(String UUID, String file_NAME, String UPLOAD_PATH, Integer TYPE, Integer STATE_CD, Integer SORT_ODR) {
-
+        this.reg_state_cd = reg_state_cd;
+        this.products = products;
         this.UUID = UUID;
-        this.file_NAME = file_NAME;
-        this.UPLOAD_PATH = UPLOAD_PATH;
+        this.NAME = NAME;
         this.TYPE = TYPE;
         this.STATE_CD = STATE_CD;
         this.SORT_ODR = SORT_ODR;
@@ -82,50 +87,40 @@ public class RegistProductDto {
 
     @Override
     public String toString() {
-        return "RegistProductDto = {" +
+        return "RegistProductDto{" +
                 "prod_idx=" + prod_idx +
                 ", seler_idx=" + seler_idx +
-                ", cate_idx='" + cate_idx + '\'' +
-                ", prod_cd_val=" + prod_cd_val +
-                ", r_img='" + r_img + '\'' +
+                ", cate_idx2='" + cate_idx2 + '\'' +
+                ", seler_prod_cd=" + seler_prod_cd +
                 ", name='" + name + '\'' +
                 ", content='" + content + '\'' +
-                ", price=" + price +
-                ", dc_state=" + dc_state +
+                ", prc=" + prc +
+                ", upload_path='" + upload_path + '\'' +
+                ", dc_state_cd=" + dc_state_cd +
                 ", dc_rate=" + dc_rate +
-                ", isShow=" + isShow +
-                ", origin='" + origin + '\'' +
-                ", unit='" + unit + '\'' +
+                ", dsply_state_cd=" + dsply_state_cd +
+                ", ascr=" + ascr +
+                ", orplc='" + orplc + '\'' +
+                ", sle_unit='" + sle_unit + '\'' +
                 ", weight='" + weight + '\'' +
+                ", sle_date_type=" + sle_date_type +
                 ", mft_tm=" + mft_tm +
-                ", delivery_tm=" + delivery_tm +
-                ", warn='" + warn + '\'' +
-                ", selling_quantity=" + selling_quantity +
-                ", keepingType=" + keepingType +
+                ", distb_tlmt=" + distb_tlmt +
                 ", sle_start_tm=" + sle_start_tm +
                 ", sle_end_tm=" + sle_end_tm +
-                ", stock_quantity=" + stock_quantity +
+                ", state=" + state +
+                ", max_sle_quty=" + max_sle_quty +
+                ", inv_quty=" + inv_quty +
+                ", warn='" + warn + '\'' +
                 ", guid='" + guid + '\'' +
+                ", reg_state_cd=" + reg_state_cd +
+                ", products='" + products + '\'' +
                 ", UUID='" + UUID + '\'' +
-                ", file_NAME='" + file_NAME + '\'' +
-                ", UPLOAD_PATH='" + UPLOAD_PATH + '\'' +
+                ", NAME='" + NAME + '\'' +
                 ", TYPE=" + TYPE +
                 ", STATE_CD=" + STATE_CD +
                 ", SORT_ODR=" + SORT_ODR +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        RegistProductDto that = (RegistProductDto) o;
-        return Objects.equals(prod_idx, that.prod_idx) && Objects.equals(seler_idx, that.seler_idx) && Objects.equals(cate_idx, that.cate_idx) && Objects.equals(prod_cd_val, that.prod_cd_val) && Objects.equals(r_img, that.r_img) && Objects.equals(name, that.name) && Objects.equals(content, that.content) && Objects.equals(price, that.price) && Objects.equals(dc_state, that.dc_state) && Objects.equals(dc_rate, that.dc_rate) && Objects.equals(isShow, that.isShow) && Objects.equals(origin, that.origin) && Objects.equals(unit, that.unit) && Objects.equals(weight, that.weight) && Objects.equals(mft_tm, that.mft_tm) && Objects.equals(delivery_tm, that.delivery_tm) && Objects.equals(warn, that.warn) && Objects.equals(selling_quantity, that.selling_quantity) && Objects.equals(keepingType, that.keepingType) && Objects.equals(sle_start_tm, that.sle_start_tm) && Objects.equals(sle_end_tm, that.sle_end_tm) && Objects.equals(stock_quantity, that.stock_quantity) && Objects.equals(guid, that.guid) && Objects.equals(UUID, that.UUID) && Objects.equals(file_NAME, that.file_NAME) && Objects.equals(UPLOAD_PATH, that.UPLOAD_PATH) && Objects.equals(TYPE, that.TYPE) && Objects.equals(STATE_CD, that.STATE_CD) && Objects.equals(SORT_ODR, that.SORT_ODR);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(prod_idx, seler_idx, cate_idx, prod_cd_val, r_img, name, content, price, dc_state, dc_rate, isShow, origin, unit, weight, mft_tm, delivery_tm, warn, selling_quantity, keepingType, sle_start_tm, sle_end_tm, stock_quantity, guid, UUID, file_NAME, UPLOAD_PATH, TYPE, STATE_CD, SORT_ODR);
     }
 
     public Integer getProd_idx() {
@@ -143,31 +138,22 @@ public class RegistProductDto {
     public void setSeler_idx(Integer seler_idx) {
         this.seler_idx = seler_idx;
     }
-    public String getR_img() {
-        return r_img;
+
+    public String getCate_idx2() {
+        return cate_idx2;
     }
 
-    public void setR_img(String r_img) {
-        this.r_img = r_img;
+    public void setCate_idx2(String cate_idx2) {
+        this.cate_idx2 = cate_idx2;
     }
 
-    public String getCate_idx() {
-        return cate_idx;
+    public Integer getSeler_prod_cd() {
+        return seler_prod_cd;
     }
 
-    public void setCate_idx(String cate_idx) {
-        this.cate_idx = cate_idx;
+    public void setSeler_prod_cd(Integer seler_prod_cd) {
+        this.seler_prod_cd = seler_prod_cd;
     }
-
-    public Integer getProd_cd_val() {
-        return prod_cd_val;
-    }
-
-    public void setProd_cd_val(Integer prod_cd_val) {
-        this.prod_cd_val = prod_cd_val;
-    }
-
-
 
     public String getName() {
         return name;
@@ -185,20 +171,28 @@ public class RegistProductDto {
         this.content = content;
     }
 
-    public Integer getPrice() {
-        return price;
+    public Integer getPrc() {
+        return prc;
     }
 
-    public void setPrice(Integer price) {
-        this.price = price;
+    public void setPrc(Integer prc) {
+        this.prc = prc;
     }
 
-    public Integer getDc_state() {
-        return dc_state;
+    public String getUpload_path() {
+        return upload_path;
     }
 
-    public void setDc_state(Integer dc_state) {
-        this.dc_state = dc_state;
+    public void setUpload_path(String upload_path) {
+        this.upload_path = upload_path;
+    }
+
+    public Integer getDc_state_cd() {
+        return dc_state_cd;
+    }
+
+    public void setDc_state_cd(Integer dc_state_cd) {
+        this.dc_state_cd = dc_state_cd;
     }
 
     public Integer getDc_rate() {
@@ -209,28 +203,36 @@ public class RegistProductDto {
         this.dc_rate = dc_rate;
     }
 
-    public Integer getIsShow() {
-        return isShow;
+    public Integer getDsply_state_cd() {
+        return dsply_state_cd;
     }
 
-    public void setIsShow(Integer isShow) {
-        this.isShow = isShow;
+    public void setDsply_state_cd(Integer dsply_state_cd) {
+        this.dsply_state_cd = dsply_state_cd;
     }
 
-    public String getOrigin() {
-        return origin;
+    public float getAscr() {
+        return ascr;
     }
 
-    public void setOrigin(String origin) {
-        this.origin = origin;
+    public void setAscr(float ascr) {
+        this.ascr = ascr;
     }
 
-    public String getUnit() {
-        return unit;
+    public String getOrplc() {
+        return orplc;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
+    public void setOrplc(String orplc) {
+        this.orplc = orplc;
+    }
+
+    public String getSle_unit() {
+        return sle_unit;
+    }
+
+    public void setSle_unit(String sle_unit) {
+        this.sle_unit = sle_unit;
     }
 
     public String getWeight() {
@@ -241,6 +243,14 @@ public class RegistProductDto {
         this.weight = weight;
     }
 
+    public Integer getSle_date_type() {
+        return sle_date_type;
+    }
+
+    public void setSle_date_type(Integer sle_date_type) {
+        this.sle_date_type = sle_date_type;
+    }
+
     public Date getMft_tm() {
         return mft_tm;
     }
@@ -249,36 +259,12 @@ public class RegistProductDto {
         this.mft_tm = mft_tm;
     }
 
-    public Date getDelivery_tm() {
-        return delivery_tm;
+    public Date getDistb_tlmt() {
+        return distb_tlmt;
     }
 
-    public void setDelivery_tm(Date delivery_tm) {
-        this.delivery_tm = delivery_tm;
-    }
-
-    public String getWarn() {
-        return warn;
-    }
-
-    public void setWarn(String warn) {
-        this.warn = warn;
-    }
-
-    public Integer getSelling_quantity() {
-        return selling_quantity;
-    }
-
-    public void setSelling_quantity(Integer selling_quantity) {
-        this.selling_quantity = selling_quantity;
-    }
-
-    public Integer getKeepingType() {
-        return keepingType;
-    }
-
-    public void setKeepingType(Integer keepingType) {
-        this.keepingType = keepingType;
+    public void setDistb_tlmt(Date distb_tlmt) {
+        this.distb_tlmt = distb_tlmt;
     }
 
     public Date getSle_start_tm() {
@@ -297,12 +283,36 @@ public class RegistProductDto {
         this.sle_end_tm = sle_end_tm;
     }
 
-    public Integer getStock_quantity() {
-        return stock_quantity;
+    public Integer getState() {
+        return state;
     }
 
-    public void setStock_quantity(Integer stock_quantity) {
-        this.stock_quantity = stock_quantity;
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public Integer getMax_sle_quty() {
+        return max_sle_quty;
+    }
+
+    public void setMax_sle_quty(Integer max_sle_quty) {
+        this.max_sle_quty = max_sle_quty;
+    }
+
+    public Integer getInv_quty() {
+        return inv_quty;
+    }
+
+    public void setInv_quty(Integer inv_quty) {
+        this.inv_quty = inv_quty;
+    }
+
+    public String getWarn() {
+        return warn;
+    }
+
+    public void setWarn(String warn) {
+        this.warn = warn;
     }
 
     public String getGuid() {
@@ -313,6 +323,22 @@ public class RegistProductDto {
         this.guid = guid;
     }
 
+    public Integer getReg_state_cd() {
+        return reg_state_cd;
+    }
+
+    public void setReg_state_cd(Integer reg_state_cd) {
+        this.reg_state_cd = reg_state_cd;
+    }
+
+    public String getProducts() {
+        return products;
+    }
+
+    public void setProducts(String products) {
+        this.products = products;
+    }
+
     public String getUUID() {
         return UUID;
     }
@@ -321,20 +347,12 @@ public class RegistProductDto {
         this.UUID = UUID;
     }
 
-    public String getFile_NAME() {
-        return file_NAME;
+    public String getNAME() {
+        return NAME;
     }
 
-    public void setFile_NAME(String file_NAME) {
-        this.file_NAME = file_NAME;
-    }
-
-    public String getUPLOAD_PATH() {
-        return UPLOAD_PATH;
-    }
-
-    public void setUPLOAD_PATH(String UPLOAD_PATH) {
-        this.UPLOAD_PATH = UPLOAD_PATH;
+    public void setNAME(String NAME) {
+        this.NAME = NAME;
     }
 
     public Integer getTYPE() {
@@ -360,6 +378,4 @@ public class RegistProductDto {
     public void setSORT_ODR(Integer SORT_ODR) {
         this.SORT_ODR = SORT_ODR;
     }
-
-    //getter, setter
 }
