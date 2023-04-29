@@ -8,9 +8,9 @@ public class OrderHistoryDto {
     private Integer ord_dtl_idx;                                                                                        // 주문상세정보 ORD_DTL_IDX(FK)
     private Integer ord_idx;                                                                                            // 주문번호 ORD_IDX(FK)
     private Integer prod_idx;                                                                                           // 상품번호 PROD_IDX
-    private String prod_nm;                                                                                            // 주문상품이름 PROD_NM
+    private String prod_nm;                                                                                             // 주문상품이름 PROD_NM
     private Integer ord_state_cd;                                                                                       // 주문상태코드 ORD_STATE_CD
-    private Date chg_tm;                                                                                             // 주문이력변경일시 CHG_TM
+    private Date chg_tm;                                                                                                // 주문이력변경일시 CHG_TM
     private Date crt_tm;                                                                                                // 최초등록일자 CRT_TM
     private Integer crt_idx;                                                                                            // 최초등록자식별번호 CRT_IDX
     private Date upt_tm;                                                                                                // 최종수정일자 UPT_TM

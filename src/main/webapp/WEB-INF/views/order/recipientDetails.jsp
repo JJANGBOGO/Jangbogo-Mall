@@ -126,7 +126,7 @@
                             "<span>" + recipient + "</span> , <span>" + formatMpnoWithHyphen(mpno) + "</span>"
                         )
                         $("#deliveryLocation", opener.document).html(
-                            "<span>받으실 장소 | " + pickUpLocation + "</span>"
+                            "<span>받으실 장소 | </span>" + "<span>" + pickUpLocation + "</span>"
                         )
                         $("#deliveryModBtn", opener.document).text('수정');
                         // 자식창 닫기

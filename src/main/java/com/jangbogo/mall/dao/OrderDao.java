@@ -49,7 +49,7 @@ public interface OrderDao {
     public List<OrderDetailDto> getOrderDetailDto(OrderDto orderDto);
 
     // 메서드명 : insertOrderHistory
-    // 기   능 : '주문이력'(ORD_HIST)
+    // 기   능 : '주문이력'(ORD_HIST) 테이블에 데이터를 삽입(insert)하는 메서드
     // 반환타입 : int
     // 매개변수 : List<OrderDetailDto> orderDetails
     public int insertOrderHistory(List<OrderDetailDto> orderDetails);
@@ -59,4 +59,10 @@ public interface OrderDao {
     // 반환타입 : List<OrderHistoryDto>
     // 매개변수 : List<OrderDetailDto> orderDetails
     public List<OrderHistoryDto> getOrderHistoryDto(List<OrderDetailDto> orderDetails);
+
+    // 메서드명 : insertDelivery
+    // 기   능 : '배송'(DLVRY) 테이블에 데이터를 삽입(insert)하는 메서드
+    // 반환타입 : int
+    // 매개변수 : DeliveryDto deliveryDto
+    public int insertDelivery(DeliveryDto deliveryDto);
 }

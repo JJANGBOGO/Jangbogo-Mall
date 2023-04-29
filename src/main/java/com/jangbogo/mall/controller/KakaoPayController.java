@@ -33,6 +33,7 @@ public class KakaoPayController {
     @ResponseBody
     public KakaoReadyResponseDto readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, HttpSession session) {
         session.setAttribute("orderDto", kakaoReadyRequestDto.getOrderDto());                                     // 1. 세션에 주문 데이터 객체(orderDto) 저장
+        session.setAttribute("deliveryDto", kakaoReadyRequestDto.getDeliveryDto());
         kakaoReadyResponseDto = kakaoPayService.kakaoPayReady(kakaoReadyRequestDto);                                    // 2. 카카오페이 서버로부터 받은 KakaoReadyResponseDto 형식의 응답 데이터를 변수에 저장
         return kakaoReadyResponseDto;                                                                                   // 3. 응답 데이터 반환
     }
@@ -44,6 +45,8 @@ public class KakaoPayController {
     @GetMapping("/payment/kakao/approve")
     public String approveKakaoPayRequest(@RequestParam("pg_token") String pg_token, RedirectAttributes rattr, HttpSession session) throws Exception {
         OrderDto orderDto = (OrderDto)session.getAttribute("orderDto");                                           // 변수명 : orderDto - 저장값 : 세션에 저장되어 있는 주문 데이터 객체(orderDto)
+        DeliveryDto deliveryDto = (DeliveryDto)session.getAttribute("deliveryDto");
+
         int insertOrderDtoRowCnt = 0;                                                                                   // 변수명 : insertOrderDtoRowCnt - 저장값 : '주문' 테이블 데이터
         int insertPaymentDtoRowCnt = 0;                                                                                 // 변수명 : insertPaymentDtoRowCnt - 저장값 : '결제' 테이블 데이터
         int insertDeliveryDtoRowCnt = 0;                                                                                // 변수명 : insertDeliveryDtoRowCnt - 저장값 : '배송' 테이블 데이터
@@ -79,7 +82,9 @@ public class KakaoPayController {
             insertOrderHistoryRowCnt = orderService.addOrderHistory(orderDetails);                                      // '주문이력' 데이터를 '주문이력' 테이블에 저장(C)
             if(insertOrderHistoryRowCnt == 0) throw new Exception("insert OrderHistoryDto to 'ORD_HIST' Table failed!");// 데이터 저장 실패 시, 예외 발생
             orderHistories = orderService.getOrderHistory(orderDetails);                                                // 변수명 : orderHistories - 저장값 : 주문이력 데이터
-                                                                                                                        // '배송' 데이터를 '배송' 테이블에 저장(C)
+            deliveryDto.setOrd_idx(orderDto.getIdx());
+            insertDeliveryDtoRowCnt = orderService.addDelivery(deliveryDto);                                            // '배송' 데이터를 '배송' 테이블에 저장(C)
+            if(insertDeliveryDtoRowCnt == 0) throw new Exception("insert DeliveryDto to 'DLVRY' Table failed!");        // 데이터 저장 실패 시, 예외 발생
 
             cartService.removeAll(orderDto.getUser_idx());                                                              // '주문완료' 처리 시, 장바구니 목록 초기화
 

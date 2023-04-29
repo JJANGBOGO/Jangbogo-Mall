@@ -216,7 +216,8 @@
                 tmp += "<span>배송지</span>"
                 tmp += "</div>"
                 tmp += "<div id='deliveryAddress' class='delivery-value' >"
-                tmp += "<span>" + deliveryInfo[0].addr_base + ' ' + deliveryInfo[0].addr_dtl + "</span>"
+                tmp += "<span>" + deliveryInfo[0].addr_base + " </span>"
+                tmp += "<span>" + deliveryInfo[0].addr_dtl + "</span>"
                 tmp += "</div>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-section'>"
@@ -412,7 +413,7 @@
                         $(document).on("click", "#orderFormSubmitFailureBtn", () => {
                             $('div#orderFormSubmitFailModal').css('display', 'none');
                         })
-                        return
+                        return;
                     }
                     let ordr_name = $("#ordererName").text();                                                           // 변수명 : orderer_name - 저장값 : 주문자이름를 저장한 요소 참조
                     let ordr_mpno = $("#ordererMpno").text();                                                           // 변수명 : orderer_mpno - 저장값 : 주문자휴대폰번호를 저장한 요소 참조
@@ -427,6 +428,20 @@
                     let item_name = $(".order-item:first-child .order-item__title").text();                              // 변수명 : item_name - 저장값 : 주문상품명을 저장한 요소 참조
                     item_name = (itemsCnt < 2) ? item_name : (item_name+ " 외 " + (itemsCnt - 1) + "건");                // 주문상품의 품목 개수가 2개 이상일 경우, item_name의 저장값은 '상품명 외 (n-1)건'로 수정
 
+                    let addr_base = $("#deliveryAddress > span:first-of-type").text();
+                    let addr_dtl = $("#deliveryAddress > span:last-of-type").text();
+                    let plrcv = $("#deliveryLocation > span:last-of-type").text();
+                    let rcpr_nm = $("#deliveryRecipient > span:first-of-type").text();
+                    let rcpr_mpno = $("#deliveryRecipient > span:last-of-type").text();
+
+                    let delivery = {
+                        "rcpr_nm" : rcpr_nm,
+                        "rcpr_mpno" : rcpr_mpno,
+                        "rcpr_addr_base" : addr_base,
+                        "rcpr_addr_dtl" : addr_dtl,
+                        "plrcv" : plrcv,
+                    }
+
                     let orderDto = {                                                                                    // 변수명 : orderDto - 저장값 : KakaoReadyRequestDto 객체에 K/V로 담아 전송할 OrderDto 객체
                         "user_idx" : idx,
                         "ordr_nm" : ordr_name,
@@ -440,7 +455,8 @@
                         "item_name" : item_name,                                                                        // 값목록 : (1) 주문상품명(item_name), (2) 주문상품개수(quantity), (3) 주문총금액(total_amount)
                         "quantity" : itemsQuantity,
                         "total_amount" : total_amount,
-                        "orderDto" : orderDto
+                        "orderDto" : orderDto,
+                        "deliveryDto" : delivery
                     }
 
                     let kakaoReadyResponse = {};                                                                        // 서버로부터 도착한 응답에 담긴 데이터를 저장할 변수 kakaoReadyResponse

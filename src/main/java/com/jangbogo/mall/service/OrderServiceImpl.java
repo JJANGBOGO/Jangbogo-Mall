@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     // 메서드명 : addOrderHistory
-    // 기   능 : OrderDao의 addOrderDetail메서드 호출
+    // 기   능 : OrderDao의 insertOrderHistory메서드 호출
     // 반환타입 : int
     // 매개변수 : OrderDetailDto orderDetailDto
     @Override
@@ -76,5 +76,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderHistoryDto> getOrderHistory(List<OrderDetailDto> orderDetails) {
         return orderDao.getOrderHistoryDto(orderDetails);
+    }
+
+    // 메서드명 : addDelivery
+    // 기   능 : OrderDao의 addDeliveryDto메서드 호출
+    // 반환타입 : int
+    // 매개변수 : DeliveryDto deliveryDto
+    @Override
+    public int addDelivery(DeliveryDto deliveryDto) {
+        return orderDao.insertDelivery(deliveryDto);
     }
 }

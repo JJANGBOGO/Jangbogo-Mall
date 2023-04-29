@@ -113,6 +113,18 @@
             )
         </foreach>
     </select>
+
+    <!--
+        태   그 : insert
+        기   능 : '배송' 테이블에 데이터 삽입하기
+        아이디명 : insertDelivery
+        반환타입 :
+        매개변수 :
+    -->
+    <insert id="insertDelivery" parameterType="DeliveryDto">
+        INSERT INTO DLVRY(ORD_IDX, RCPR_NM, RCPR_MPNO, RCPR_ADDR_BASE, RCPR_ADDR_DTL, PLRCV)
+        VALUES(#{ord_idx} , #{rcpr_nm}, #{rcpr_mpno}, #{rcpr_addr_base}, #{rcpr_addr_dtl}, #{plrcv});
+    </insert>
     <!--
         태   그 : update
         기   능 : '결제' 테이블에 '취소'처리 된 결제 데이터 업데이트하기                                                              // TODO : 주문 내역 구현 이후 기능 구현

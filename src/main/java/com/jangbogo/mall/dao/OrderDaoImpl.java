@@ -97,5 +97,14 @@ public class OrderDaoImpl implements OrderDao {
     public List<OrderHistoryDto> getOrderHistoryDto(List<OrderDetailDto> orderDetails) {
         return session.selectList(namespace + "selectOrderHistory", orderDetails);
     }
+
+    // 메서드명 : insertDelivery
+    // 기   능 : '배송'(DLVRY) 테이블에 데이터를 삽입(insert)하는 메서드
+    // 반환타입 : int
+    // 매개변수 : DeliveryDto deliveryDto
+    @Override
+    public int insertDelivery(DeliveryDto deliveryDto) {
+        return session.insert(namespace + "insertDelivery", deliveryDto);
+    }
 }
 

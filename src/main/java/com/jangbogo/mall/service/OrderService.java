@@ -46,5 +46,11 @@ public interface OrderService {
     // 기   능 : OrderDao의 getOrderHistoryDto메서드 호출
     // 반환타입 : int
     // 매개변수 : List<OrderDetailDto> orderDetails
-    List<OrderHistoryDto> getOrderHistory(List<OrderDetailDto> orderDetails);
+    public List<OrderHistoryDto> getOrderHistory(List<OrderDetailDto> orderDetails);
+
+    // 메서드명 : addDelivery
+    // 기   능 : OrderDao의 addDeliveryDto메서드 호출
+    // 반환타입 : int
+    // 매개변수 : DeliveryDto deliveryDto
+    public int addDelivery(DeliveryDto deliveryDto);
 }
