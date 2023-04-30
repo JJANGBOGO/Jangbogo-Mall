@@ -5,39 +5,45 @@ import java.util.Objects;
 
 public class ProductDetailDto {
     // iv
-    private Integer price; //상품 가격
-    private String name; //상품 이름
-    private String image_path; //상품 - UPLOAD_PATH
-    private String content; //상품 내용
-    private Integer cate_idx; //상품 - CATE_IDX
-    private String upload_path;//상품 섬네일
-    private Integer dc_rate; //할인율
-    private Integer dc_state; //할인상태코드
-    private Integer prod_idx; //상품번호
-    private String guid; //상품 안내사항
+    //상품테이블
+    private Integer price; //PRC
+    private String name; //NAME
+    private String image_path; //UPLOAD_PATH
+    private String content; //CTENT
+    private String cate_idx; //CATE_IDX
+    private Integer dc_rate; //DC_RATE
+    private Integer dc_state; //DC_STATE_CD
 
-    private String origin;
-    private String unit;
-    private String weight; //중량
-    private String warn; //상품상세 - 상품주의사항
-    private Integer keepingType;  //상품상세 - 보관유형 상태코드
-    private Integer dlvry_method; //카테고리 - 배송방식번호
-    private Integer idx; // 배송방식 - 배송방식번호
-    private Integer dlvry_type; //배송방식 - 배송유형코드
-    private Integer packing_type; //배송방식 - 배송포장코드
-    private String dlvry_warn; //배송방식 - 배송주의사항
-    private String brandName; // seler - cpnm - 판매자
+    //상품상세테이블
+    private Integer prod_idx; //PROD_IDX
+    private String guid; //GUID
+    private String origin; //ORPLC
+    private String unit; //SLE_UNIT
+    private String weight; //WEIGHT
+    private String warn; //WARN
+    private Integer keepingType;  //SFKP_TP_STATE_CD
+
+    //카테고리테이블
+    private Integer dlvry_method; //DLVRY_EDI_IDX
+
+    // 배송방식테이블
+    private Integer idx; // IDX
+    private Integer dlvry_type; //DLVRY_TYPE_CD
+    private Integer packing_type; //PACK_STATE_CD
+    private String dlvry_warn; //WARN
+    //판매자테이블
+    private String brandName; // CPNM
 
     // constructor
 
     public ProductDetailDto() {}  // 기본 생성자
 
-    public ProductDetailDto(Integer price, String name, String image_path, String content, String upload_path, Integer dc_rate, Integer dc_state, Integer prod_idx, String guid, String origin, String unit, String weight, String warn, Integer keepingType, Integer cate_idx, Integer dlvry_method, Integer idx, Integer dlvry_type, Integer packing_type, String dlvry_warn, String brandName) {
+    public ProductDetailDto(Integer price, String name, String image_path, String content, String cate_idx, Integer dc_rate, Integer dc_state, Integer prod_idx, String guid, String origin, String unit, String weight, String warn, Integer keepingType, Integer dlvry_method, Integer idx, Integer dlvry_type, Integer packing_type, String dlvry_warn, String brandName) {
         this.price = price;
         this.name = name;
         this.image_path = image_path;
         this.content = content;
-        this.upload_path = upload_path;
+        this.cate_idx = cate_idx;
         this.dc_rate = dc_rate;
         this.dc_state = dc_state;
         this.prod_idx = prod_idx;
@@ -47,7 +53,6 @@ public class ProductDetailDto {
         this.weight = weight;
         this.warn = warn;
         this.keepingType = keepingType;
-        this.cate_idx = cate_idx;
         this.dlvry_method = dlvry_method;
         this.idx = idx;
         this.dlvry_type = dlvry_type;
@@ -61,23 +66,22 @@ public class ProductDetailDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductDetailDto that = (ProductDetailDto) o;
-        return Objects.equals(price, that.price) && Objects.equals(name, that.name) && Objects.equals(image_path, that.image_path) && Objects.equals(content, that.content) && Objects.equals(cate_idx, that.cate_idx) && Objects.equals(upload_path, that.upload_path) && Objects.equals(dc_rate, that.dc_rate) && Objects.equals(dc_state, that.dc_state) && Objects.equals(prod_idx, that.prod_idx) && Objects.equals(guid, that.guid) && Objects.equals(origin, that.origin) && Objects.equals(unit, that.unit) && Objects.equals(weight, that.weight) && Objects.equals(warn, that.warn) && Objects.equals(keepingType, that.keepingType) && Objects.equals(dlvry_method, that.dlvry_method) && Objects.equals(idx, that.idx) && Objects.equals(dlvry_type, that.dlvry_type) && Objects.equals(packing_type, that.packing_type) && Objects.equals(dlvry_warn, that.dlvry_warn) && Objects.equals(brandName, that.brandName);
+        return Objects.equals(price, that.price) && Objects.equals(name, that.name) && Objects.equals(image_path, that.image_path) && Objects.equals(content, that.content) && Objects.equals(cate_idx, that.cate_idx) && Objects.equals(dc_rate, that.dc_rate) && Objects.equals(dc_state, that.dc_state) && Objects.equals(prod_idx, that.prod_idx) && Objects.equals(guid, that.guid) && Objects.equals(origin, that.origin) && Objects.equals(unit, that.unit) && Objects.equals(weight, that.weight) && Objects.equals(warn, that.warn) && Objects.equals(keepingType, that.keepingType) && Objects.equals(dlvry_method, that.dlvry_method) && Objects.equals(idx, that.idx) && Objects.equals(dlvry_type, that.dlvry_type) && Objects.equals(packing_type, that.packing_type) && Objects.equals(dlvry_warn, that.dlvry_warn) && Objects.equals(brandName, that.brandName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(price, name, image_path, content, cate_idx, upload_path, dc_rate, dc_state, prod_idx, guid, origin, unit, weight, warn, keepingType, dlvry_method, idx, dlvry_type, packing_type, dlvry_warn, brandName);
+        return Objects.hash(price, name, image_path, content, cate_idx, dc_rate, dc_state, prod_idx, guid, origin, unit, weight, warn, keepingType, dlvry_method, idx, dlvry_type, packing_type, dlvry_warn, brandName);
     }
 
     @Override
     public String toString() {
-        return "ProductDetailDto = {" +
+        return "ProductDetailDto{" +
                 "price=" + price +
                 ", name='" + name + '\'' +
                 ", image_path='" + image_path + '\'' +
                 ", content='" + content + '\'' +
-                ", cate_idx=" + cate_idx +
-                ", upload_path='" + upload_path + '\'' +
+                ", cate_idx='" + cate_idx + '\'' +
                 ", dc_rate=" + dc_rate +
                 ", dc_state=" + dc_state +
                 ", prod_idx=" + prod_idx +
@@ -128,12 +132,12 @@ public class ProductDetailDto {
         this.content = content;
     }
 
-    public String getUpload_path() {
-        return upload_path;
+    public String getCate_idx() {
+        return cate_idx;
     }
 
-    public void setUpload_path(String upload_path) {
-        this.upload_path = upload_path;
+    public void setCate_idx(String cate_idx) {
+        this.cate_idx = cate_idx;
     }
 
     public Integer getDc_rate() {
@@ -206,14 +210,6 @@ public class ProductDetailDto {
 
     public void setKeepingType(Integer keepingType) {
         this.keepingType = keepingType;
-    }
-
-    public Integer getCate_idx() {
-        return cate_idx;
-    }
-
-    public void setCate_idx(Integer cate_idx) {
-        this.cate_idx = cate_idx;
     }
 
     public Integer getDlvry_method() {
