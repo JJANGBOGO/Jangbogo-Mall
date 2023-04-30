@@ -11,17 +11,23 @@
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
 <div class="mySlides_container">
     <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"/>
+         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"
+    />
     <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"/>
+         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"
+    />
     <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"/>
+         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"
+    />
     <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"/>
+         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"
+    />
     <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"/>
+         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"
+    />
     <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"/>
+         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"
+    />
 </div>
 <div class="category-header">
     <h2>놓치면 후회하는 특별 상품들</h2>
@@ -165,6 +171,7 @@
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="/js/member/msg.js"></script>
 <script>
     let msg = "${msg}";
     if (msg == "EXCEPTION_ERR") alert("예상치 못한 오류가 발생했습니다. 불편을 끼쳐드려 죄송합니다.");
@@ -174,6 +181,7 @@
     let renderPdList = (list, tab_id) => {
         let list_ref = $(".thum-list").eq(tab_id); //0,1,2,3,4,5
         let str = "";
+        if (tab_id === 0) list.sort(()=> Math.random() - 0.5); //전체 탭인 경우 list 랜덤돌리기
         list.forEach((obj, i) => {
             if (i > 3) return; //카테고리당 4개만 보여줌
             str += '<li>'
@@ -184,7 +192,7 @@
                 + '<div class="thum-desc">'
                 + '<a class="title"><h3>' + obj.name + '</h3></a>'
                 + '<div class="price">' + obj.prc + '원</div>'
-                + '<div class="review-cnt">' + obj.review_cnt + '</div>' //아직 dto에 추가 안함
+                + '<div class="review-cnt">리뷰 수: ' + obj.review_cnt + '</div>' //아직 dto에 추가 안함
                 + '</div>'
                 + '</li>';
         });
@@ -197,14 +205,12 @@
             data: {category: cate_idx},
             type: 'GET',
             success: function (list) {
-                console.log(list);
                 renderPdList(list, tab_id);
             },
             error: function (err) {
                 alert(error_msg);
             }
         }); //$.ajax
-
     };
 
     $(document).ready(function () {
@@ -212,14 +218,13 @@
         $(".tab-button").eq(0).addClass("on");
         $(".thum-list").eq(0).addClass("show");
 
-        //ajax로 5개 카테고리 상품리스트 + 전체 리스트 출력 (8개씩 보여줌)
+        //ajax로 5개 카테고리 상품리스트 + 전체 리스트 출력 (4개씩 출력)
         reqPdList("00", 0); //전체, tab_id
         reqPdList("01", 1); //과일, tab_id
         reqPdList("02", 2); //채소, tab_id
         reqPdList("03", 3); //생선, tab_id
         reqPdList("04", 4); //육류, tab_id
         reqPdList("06", 5); //간식과 디저트, tab_id
-
 
         // 탭 클릭 함수
         $(".tab-list").click(function (e) {
@@ -231,7 +236,6 @@
             $(".tab-button").eq(data_id).addClass("on");
             $(".thum-list").eq(data_id).addClass("show");
         });
-
 
         //slideshow
         var myIndex = 0;
