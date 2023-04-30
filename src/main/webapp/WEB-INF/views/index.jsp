@@ -5,11 +5,10 @@
 <html>
 <head>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
-    <link rel="stylesheet" href="/css/main.css"/>
+    <link rel="stylesheet" href="/css/index.css"/>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
-<%--지우팀장님 슬라이드쇼--%>
 <div class="mySlides_container">
     <img class="mySlides"
          src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"/>
@@ -25,7 +24,7 @@
          src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"/>
 </div>
 <div class="category-header">
-    <h2>놓치면 후회하는 특가 상품</h2>
+    <h2>놓치면 후회하는 특별 상품들</h2>
 </div>
 <div class="category-section">
     <ul class="tab-list">
@@ -33,38 +32,36 @@
             <button class="tab-button" data-a="0">전체보기</button>
         </li>
         <li>
-            <button class="tab-button" data-a="1">1</button>
+            <button class="tab-button" data-a="1">과일</button>
         </li>
         <li>
-            <button class="tab-button" data-a="2">2</button>
+            <button class="tab-button" data-a="2">채소</button>
         </li>
         <li>
-            <button class="tab-button" data-a="3">3</button>
+            <button class="tab-button" data-a="3">수산물</button>
         </li>
         <li>
-            <button class="tab-button" data-a="4">4</button>
+            <button class="tab-button" data-a="4">간식과 디저트</button>
         </li>
         <li>
-            <button class="tab-button" data-a="5">5</button>
+            <button class="tab-button" data-a="5">간편요리</button>
         </li>
     </ul>
     <div class="tab-content">
-        <!-- 1번째 탭 -->
         <ul class="thum-list">
             <li>
-                <a href="<c:url value='/product/detail'/>">
                 <a class="img-box">
                     <img
-                            src="https://sitem.ssgcdn.com/45/50/86/item/1000492865045_i1_290.jpg"
-                            alt=""
+                            src="//thumbnail8.coupangcdn.com/thumbnails/remote/492x492ex/image/vendor_inventory/ad27/9eebf7b02da8a2ccc3a2bf52f2264246340066faf259669ae8566d313a41.jpg"
+                            alt="apple"
                     />
                     <div class="cart-btn">
-                        <i></i>
+                        <i class="fa-solid fa-cart-shopping"></i>
                     </div>
                 </a>
                 <div class="thum-desc">
                     <a class="title">
-                        <h3>스타벅스 커피 전품목 세일</h3>
+                        <h3>껍질째 먹는 사과</h3>
                     </a>
                     <div class="price">5000원~</div>
                     <div class="review-cnt">후기 999+</div>

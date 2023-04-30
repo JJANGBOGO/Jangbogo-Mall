@@ -1,4 +1,3 @@
-/*슬라이드쇼*/
 img.mySlides {
     display: inline-block;
     width: 100%;
@@ -8,7 +7,6 @@ img.mySlides {
     width: 100%;
 }
 
-/*카테고리 탭*/
 .category-header {
     position: relative;
     width: 1280px;
@@ -34,11 +32,10 @@ img.mySlides {
 
 .category-section {
     width: 1280px;
-
     margin: 0 auto;
 }
 
-.category-section .tab-list{
+.category-section .tab-list {
     display: table;
     table-layout: fixed;
     width: 100%;
@@ -47,7 +44,6 @@ img.mySlides {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
-
 
 .category-section .tab-list li {
     position: relative;
@@ -71,7 +67,6 @@ img.mySlides {
     background-color: transparent;
 }
 
-/* tab active */
 .category-section .tab-list li .tab-button.on {
     background-color: #000;
     color: #fff;
@@ -90,10 +85,7 @@ img.mySlides {
 }
 
 .category-section .tab-content .thum-list li {
-    margin-right: 40px;
     width: 290px;
-    /* border: 1px solid  gray; */
-
     display: inline-block;
     vertical-align: top;
     padding-top: 30px;
@@ -109,10 +101,32 @@ img.mySlides {
     position: relative;
 }
 
-
-.thum-list li .thum-desc {
-    padding: 14px 10px 0px 0px;
+.thum-list li .img-box img {
+    width: 100%;
 }
+
+.thum-list li .cart-btn i {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 55px;
+    height: 55px;
+    right: 15px;
+    bottom: 20px;
+    border: 1px solid white;
+    border-radius: 50%;
+    font-size: 27px;
+    color: white;
+}
+
+.thum-list li .cart-btn i:hover {
+    color: var(--text-dark);
+    background: #ffffff;
+    border-color: var(--text-dark);
+    transition: all ease-in-out 0.3s;
+}
+
 
 .thum-list li .thum-desc .price {
     font-size: 18px;
