@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -44,6 +45,20 @@ public class ProductController {
             e.printStackTrace();
             rattr.addFlashAttribute("msg" ,"EXCEPTION_ERR");
             return "redirect:/";
+        }
+    }
+
+
+    //필터링 기능 구현 예정
+    @GetMapping("/filter/product")
+    public ResponseEntity<List<ProductDto>> filterPdList (Arrays filterCpnm) {
+        List<ProductDto> list = new ArrayList<>();
+        try {
+            //list = service.filterPdList(filterCpnm);
+            return ResponseEntity.ok().body(list);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(list);
         }
     }
 }
