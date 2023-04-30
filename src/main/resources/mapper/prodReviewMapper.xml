@@ -8,7 +8,7 @@
     <select id="selectAll" parameterType="int" resultType="ProdReviewDto">
         SELECT r.*, p.NAME,p.UPLOAD_PATH
         FROM (SELECT * FROM PRODUCT) p, PROD_LATE r
-        WHERE p.IDX = r.PROD_IDX = #{prod_idx}
+        WHERE p.IDX = #{prod_idx} and  r.PROD_IDX = #{prod_idx}
         ORDER BY r.REG_TM desc;
     </select>
     

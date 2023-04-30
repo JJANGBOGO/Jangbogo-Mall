@@ -115,7 +115,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script>
 
-    let prod_idx = 1 // 상품번호
+    let prod_idx = 1 // 상품번호(하드코딩)
 
 
     // main() 처음 페이지 이동시 실행 함수
