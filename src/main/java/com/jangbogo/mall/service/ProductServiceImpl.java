@@ -26,6 +26,11 @@ public class ProductServiceImpl implements ProductService {
         return dao.getListByCategory(category);
    }
 
+   @Override
+   public List<ProductDto> searchProductList (String keyword) throws Exception {
+        return dao.searchProductList(keyword);
+   }
+
 
 
 }

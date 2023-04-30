@@ -14,5 +14,8 @@ public interface ProductDao {
 
    //카테고리별 상품리스트 조회
     List<ProductDto> getListByCategory (String category) throws Exception;
+
+    //상품 검색
+    List<ProductDto> searchProductList (String keyword) throws Exception;
 }
 

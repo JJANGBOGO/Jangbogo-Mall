@@ -18,12 +18,26 @@
     </select>
 
     <select id="getListByCategory" resultType="ProductDto" parameterType="String">
-        SELECT *
-        FROM PRODUCT AS P
+        SELECT * FROM PRODUCT AS P
         INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND D.REG_STATE_CD = 1
         <if test='category!="00"'>
             AND CATE_IDX LIKE CONCAT(#{category}, '%')
         </if>
     </select>
     <!--    reg_state_cd 1일 때 승인-->
+
+    <select id="searchProductList" resultType="ProductDto">
+        SELECT P.NAME,
+               P.UPLOAD_PATH,
+               P.PRC,
+               P.ASCR,
+               S.CPNM
+        FROM PRODUCT AS P
+        INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND D.REG_STATE_CD = 1
+        AND P.NAME LIKE CONCAT('%', #{keyword}, '%')
+        OR P.CTENT LIKE CONCAT('%', #{keyword}, '%')
+        INNER JOIN SELER S ON P.SELER_IDX = S.IDX
+        GROUP BY P.IDX;
+    </select>
+
 </mapper>

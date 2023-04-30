@@ -15,4 +15,7 @@ public interface ProductService {
     //카테고리별 상품리스트 조회
     List<ProductDto> getListByCategory (String category) throws Exception;
 
+    //검색
+    List<ProductDto> searchProductList (String keyword) throws Exception;
+
 }

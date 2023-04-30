@@ -50,7 +50,12 @@
                 </div>
                 <div class="search-box">
                     <form action="/search/product">
-                        <input type="text" placeholder="검색어를 입력해주세요."/>
+                        <input
+                                type="text"
+                                placeholder="검색어를 입력해주세요."
+                                name="keyword"
+                                value="${searchKeyword}"
+                        />
                         <button class="search-button" type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>

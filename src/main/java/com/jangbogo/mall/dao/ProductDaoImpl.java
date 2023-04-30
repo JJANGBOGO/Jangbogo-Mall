@@ -26,4 +26,9 @@ public class ProductDaoImpl implements ProductDao{
     public List<ProductDto> getListByCategory (String category) throws Exception {
         return session.selectList(nameSpace + "getListByCategory", category);
     }
+
+    @Override
+    public List<ProductDto> searchProductList (String category) throws Exception {
+        return session.selectList(nameSpace + "searchProductList", category);
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +34,15 @@ public class ProductController {
 
     //키워드 검색 페이지
     @GetMapping("/search/product")
-    public String searchView(String keyword, Model m) {
+    public String searchView(String keyword, Model m, RedirectAttributes rattr) {
         try {
-            List<ProductDto> list = service.getListByCategory("01");
+            List<ProductDto> list = service.searchProductList(keyword);
             m.addAttribute("searchPdList", list);
+            m.addAttribute("searchKeyword", keyword);
             return "search";
         } catch (Exception e) {
             e.printStackTrace();
+            rattr.addFlashAttribute("msg" ,"EXCEPTION_ERR");
             return "redirect:/";
         }
     }
