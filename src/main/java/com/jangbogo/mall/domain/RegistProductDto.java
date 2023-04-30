@@ -9,6 +9,7 @@ public class RegistProductDto {
     //상품테이블
     private Integer prod_idx; //IDX //상품번호
     private Integer seler_idx; //SELER_IDX //판매자번호, session에서 가져옴
+    private Integer cate_idx; //배송방식 지정을 위한 상위카테고리층 번호
     private String cate_idx2; //CATE_IDX
     private Integer seler_prod_cd; //SELER_PROD_CD
     private String name; //NAME
@@ -50,9 +51,10 @@ public class RegistProductDto {
 
     public RegistProductDto() {}
 
-    public RegistProductDto(Integer prod_idx, Integer seler_idx, String cate_idx2, Integer seler_prod_cd, String name, String content, Integer prc, String upload_path, Integer dc_state_cd, Integer dc_rate, Integer dsply_state_cd, float ascr, String orplc, String sle_unit, String weight, Integer sle_date_type, Date mft_tm, Date distb_tlmt, Date sle_start_tm, Date sle_end_tm, Integer state, Integer max_sle_quty, Integer inv_quty, String warn, String guid, Integer reg_state_cd, String products, String UUID, String NAME, Integer TYPE, Integer STATE_CD, Integer SORT_ODR) {
+    public RegistProductDto(Integer prod_idx, Integer seler_idx, Integer cate_idx, String cate_idx2, Integer seler_prod_cd, String name, String content, Integer prc, String upload_path, Integer dc_state_cd, Integer dc_rate, Integer dsply_state_cd, float ascr, String orplc, String sle_unit, String weight, Integer sle_date_type, Date mft_tm, Date distb_tlmt, Date sle_start_tm, Date sle_end_tm, Integer state, Integer max_sle_quty, Integer inv_quty, String warn, String guid, Integer reg_state_cd, String products, String UUID, String NAME, Integer TYPE, Integer STATE_CD, Integer SORT_ODR) {
         this.prod_idx = prod_idx;
         this.seler_idx = seler_idx;
+        this.cate_idx = cate_idx;
         this.cate_idx2 = cate_idx2;
         this.seler_prod_cd = seler_prod_cd;
         this.name = name;
@@ -90,6 +92,7 @@ public class RegistProductDto {
         return "RegistProductDto{" +
                 "prod_idx=" + prod_idx +
                 ", seler_idx=" + seler_idx +
+                ", cate_idx=" + cate_idx +
                 ", cate_idx2='" + cate_idx2 + '\'' +
                 ", seler_prod_cd=" + seler_prod_cd +
                 ", name='" + name + '\'' +
@@ -137,6 +140,14 @@ public class RegistProductDto {
 
     public void setSeler_idx(Integer seler_idx) {
         this.seler_idx = seler_idx;
+    }
+
+    public Integer getCate_idx() {
+        return cate_idx;
+    }
+
+    public void setCate_idx(Integer cate_idx) {
+        this.cate_idx = cate_idx;
     }
 
     public String getCate_idx2() {

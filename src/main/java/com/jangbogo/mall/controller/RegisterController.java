@@ -88,7 +88,7 @@ public class RegisterController {
             }
 
             registProductDto.setProducts("https://cdn.iworldtoday.com/news/photo/202104/401210_201173_4855.jpg");
-            registProductDto.setUUID("011");  //테스트시 uuid 재할당 필수 (pk로 지정되어 있음)
+            registProductDto.setUUID("012");  //테스트시 uuid 재할당 필수 (pk로 지정되어 있음)
             registProductDto.setNAME("본문사진");
             registProductDto.setTYPE(1); //파일유형 1(이미지)
             registProductDto.setState(1); //파일상태코드 1(사용)
