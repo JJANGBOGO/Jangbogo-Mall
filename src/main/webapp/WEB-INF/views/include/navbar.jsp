@@ -49,7 +49,7 @@
                     <h1 class="header-logo"><a href="/">Jangbogo</a></h1>
                 </div>
                 <div class="search-box">
-                    <form action="">
+                    <form action="/search/product">
                         <input type="text" placeholder="검색어를 입력해주세요."/>
                         <button class="search-button" type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
