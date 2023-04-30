@@ -121,12 +121,14 @@ img.mySlides {
 }
 
 .thum-list li .cart-btn i:hover {
-    color: var(--text-dark);
+    color: var(--primary-color);
     background: #ffffff;
-    border-color: var(--text-dark);
-    transition: all ease-in-out 0.3s;
+    transition: all ease-in-out 0.5s;
 }
 
+.thum-list li .thum-desc {
+    padding: 14px 10px 0px 0px;
+}
 
 .thum-list li .thum-desc .price {
     font-size: 18px;
