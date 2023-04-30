@@ -12,7 +12,7 @@ public interface ProductService {
     List<ProductDto> getListBySeller (Integer seler_idx) throws Exception;
 
 
-    //상품 등록
-    int registerProduct (ProductDto productDto, ProductDtl productDtl) throws Exception;
+    //카테고리별 상품리스트 조회
+    List<ProductDto> getListByCategory (String category) throws Exception;
 
 }

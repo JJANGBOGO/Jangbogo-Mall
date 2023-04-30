@@ -27,5 +27,6 @@ public class ProductDto {
     private Integer ascr; //별점
 
     private int reg_state_cd; //상품 등록 상태 코드
+    private int review_cnt;
 
 }

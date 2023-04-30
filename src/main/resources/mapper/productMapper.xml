@@ -17,11 +17,13 @@
                  INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND P.SELER_IDX = #{seler_idx};
     </select>
 
-    <select id="getListByCategory" resultType="ProductDto">
+    <select id="getListByCategory" resultType="ProductDto" parameterType="String">
         SELECT *
         FROM PRODUCT AS P
-                 INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND D.REG_STATE_CD = 1
-            AND CATE_IDX LIKE CONCAT(#{cate_idx}, '%')
+        INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND D.REG_STATE_CD = 1
+        <if test='category!="00"'>
+            AND CATE_IDX LIKE CONCAT(#{category}, '%')
+        </if>
     </select>
-<!--    reg_state_cd 1일 때 승인-->
+    <!--    reg_state_cd 1일 때 승인-->
 </mapper>
