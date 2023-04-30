@@ -23,7 +23,7 @@ public class MyOrderController {
 
     // 주문내역 페이지 이동
     @GetMapping("/order/list")
-    public String wishlistPage(HttpServletRequest request, HttpSession session) {
+    public String orderPage(HttpServletRequest request, HttpSession session) {
         if(!loginCheck(request)) return "redirect:/user/login?toURL="+request.getRequestURL();
         Integer user_idx = (Integer)session.getAttribute("idx");
         try {
@@ -35,9 +35,9 @@ public class MyOrderController {
         return "myOrderList";
     }
 
-    // 지정된 위시리스트 목록을 가져오는 메서드
+    // 지정된 주문 내역 목록을 가져오는 메서드
     @GetMapping("/order/lists") // /order/lists  GET
-    public ResponseEntity<List<MyOrderDto>> list(HttpSession session){
+    public ResponseEntity<List<MyOrderDto>> orderLists(HttpSession session){
         List<MyOrderDto> list = null;
         Integer user_idx = (Integer)session.getAttribute("idx");
         try {

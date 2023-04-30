@@ -167,7 +167,7 @@
 
         let counter = 1;  // 장바구니 담기 카운터  // 처음 기본(default) 개수
         // 카운터 상품개수조절(-)버튼
-        $('.button1').on('click',function (){
+        $('.background').on("click",'.button3', function (){
             $('.count').text(--counter);
             let price = counter * parseInt($('.prd-priceOrigin').text().replace(',', ""));  // 콤마(,)제거 및 숫자 변환
             $('.price').text(formatPriceWithComma(price)); // 다시 콤마(,) 추가

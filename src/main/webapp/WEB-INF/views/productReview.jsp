@@ -11,6 +11,8 @@
 <html>
 <head>
     <link rel="stylesheet" href="/css/productReview.css"/>
+    <link rel="stylesheet" href="/css/productReviewModal.css"/>
+
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
     <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
 <%--    <link rel="stylesheet" href="/css/myPage/sidebar.css"/>--%>
@@ -118,13 +120,6 @@
 
     // main() 처음 페이지 이동시 실행 함수
     $(document).ready(function (){
-        <%--console.log("${sessionScope.nickName}");--%>
-        <%--console.log(${idx});--%>
-        <%--console.log(${sessionScope.idx})--%>
-        <%--console.log("${sessionScope.email}");--%>
-        <%--console.log("${email}")--%>
-        <%--console.log("${nickName}")--%>
-        <%--console.log("${pd}");--%>
 
         // 상품후기 조회 함수 호출
         showList();
