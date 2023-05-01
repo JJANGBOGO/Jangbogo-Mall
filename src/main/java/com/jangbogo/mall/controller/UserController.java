@@ -226,7 +226,7 @@ public class UserController {
 
         if (dto == null) return false;
         dto.setAuthority((ArrayList<String>) authDao.getAuthList(user.getAuth_idx()));
-//        if (dto.getAuthorities() == null) return false; //인증 실패시 null
+        if (dto.getAuthorities() == null) return false; //인증 실패시 null
 
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(user, null, dto.getAuthorities()); //userDetailsDto.getAuthorities()식으로 권한을 추가해야 함
