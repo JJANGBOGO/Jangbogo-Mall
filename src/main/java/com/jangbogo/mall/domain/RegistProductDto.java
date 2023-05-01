@@ -15,7 +15,7 @@ public class RegistProductDto {
     private String name; //NAME
     private String content; //CTENT
     private Integer prc; //PRC
-    private String upload_path; //UPLOAD_PATH
+    private String upload_path; //UPLOAD_PATH  //대표이미지
     private Integer dc_state_cd; //DC_STATE_CD
     private Integer dc_rate; //DC_RATE
     private Integer dsply_state_cd; //DSPLY_STATE_CD
@@ -41,6 +41,7 @@ public class RegistProductDto {
     private String warn; //WARN
     private String guid; //GUID
     private Integer reg_state_cd; //REG_STATE_CD
+
     //상품상세첨부파일
     private String products; //UPLOAD_PATH
     private String UUID; //UUID //파일일련번호

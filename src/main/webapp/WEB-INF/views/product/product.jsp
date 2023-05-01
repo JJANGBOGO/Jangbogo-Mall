@@ -145,7 +145,9 @@
       <div id="product-desc">
         <div id="description">
           <div class="description-wrap">
-
+            <c:forEach items="${fileList}" var="file">
+              <img src="${file.UPLOAD_PATH}">
+            </c:forEach>
           </div>
         </div>
         <div id="detail">
@@ -250,28 +252,30 @@
   <script src="https://kit.fontawesome.com/cc28ed1241.js" crossorigin="anonymous"></script>
 <script>
 
-  let showDescription = function(prod_idx) {
-    $.ajax({
-      type: 'GET',
-      url: '/product/productDetail/description?prod_idx='+prod_idx,
-      success: function(result) {
-        $('.description-wrap').html(DescriptionToList(result));
-      },
-      error: function() { alert("GET description Error") }
-    })
-  }
+  // let showDescription = function(prod_idx) {
+  //   console.log("prod_idx ajax GET"+prod_idx);
+  //   $.ajax({
+  //     type: 'GET',
+  //     url: '/product/productDetail/description?prod_idx='+9,
+  //     success: function(result) {
+  //       console.log("result???"+result);
+  //       $('.description-wrap').html(DescriptionToList(result));
+  //     },
+  //     error: function() { alert("GET description Error") }
+  //   })
+  // }
 
-  let DescriptionToList = function(fileLists) {
-    alert("check!")
-    let tmp = "";
-    fileLists.forEach(function(fileList){
-      tmp += '<div class="pic">'
-      // 이미지 업로드 해결하기 ~~~~~~~~~~~~~~~~~~~~~
-      // tmp += '<img src="/display?fileName='+ fileList.UPLOAD_PATH +'"'
-      tmp += ' alt="productImg" />'
-    })
-    return tmp += '</div>';
-  }
+  // let DescriptionToList = function(fileLists) {
+  //   let tmp = "";
+  //   fileLists.forEach(function(fileList){
+  //   console.log("fileListsname????????"+fileList.UPLOAD_PATH);
+  //
+  //     tmp += '<div class="pic">'
+  //     tmp += '<img src='+ fileList.UPLOAD_PATH +' alt="productImg" />'
+  //     tmp += '</div>'
+  //   })
+  //   return tmp;
+  // }
 
   let showDetail = function(prod_idx) {
     $.ajax({
@@ -382,12 +386,14 @@
     // console.log("urlPath="+urlPath);
     <%--let url = "${pageContext.request.contextPath}"--%>
     <%--console.log("url="+url)--%>
-    let prod_idx = $('#prod_idx').text();
+    // let prod_idx = $('#prod_idx').text();
+    let prod_idx = ${prod_idx};
+    // let prod_idx = 9;
     showInqryList(prod_idx);
     showProdDetailList(prod_idx);
     packingTypeToString();
     showImage();
-    showDescription(prod_idx);
+    // showDescription(prod_idx);
     showDetail(prod_idx);
     prodInqryImage();
 

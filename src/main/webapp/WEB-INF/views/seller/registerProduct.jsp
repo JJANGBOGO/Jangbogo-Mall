@@ -686,103 +686,103 @@
             $(".input-box.category").data("Ffloor", val);
         })
 
-        $("#input2").on("click", function(e) {
-            e.preventDefault();
-
-            //val은 대분류에만 해당하며, 카테고리 테이블의 id값과 일치함 //카테고리 아이디 받아서 배송방식 엮어오기
-            let val = $("#First_cate_idx option:selected").val(); //value값 출력됨 //"01"
-
-            //id는 개별 상품의 카테고리 아이디
-            let id;
-            if(val == "01") {
-                $("#Second_cate_idx").html(S_fruit).on("click", function(e) {
-                    //선택된 요소의 id값
-                    id = $("#Second_cate_idx option:selected").attr("id"); //0101
-                    $(".input-box.category").data("cateID", id);
-                })
-            }
-            if(val == "02") {
-                $("#Second_cate_idx").html(S_vege).on("click", function(e) {
-                    //선택된 요소의 id값
-                    id = $("#Second_cate_idx option:selected").attr("id");
-                    $(".input-box.category").data("cateID", id);
-
-                })
-            }
-            if(val == "03") {
-                $("#Second_cate_idx").html(S_seafood).on("click", function(e) {
-                    //선택된 요소의 id값
-                    id = $("#Second_cate_idx option:selected").attr("id");
-                    $(".input-box.category").data("cateID", id);
-
-                })
-            }
-            if(val == "04") {
-                $("#Second_cate_idx").html(S_livestock).on("click", function(e) {
-                    //선택된 요소의 id값
-                    id = $("#Second_cate_idx option:selected").attr("id");
-                    $(".input-box.category").data("cateID", id);
-
-                })
-            }
-            if(val == "05") {
-                $("#Second_cate_idx").html(S_drink).on("click", function(e) {
-                    //선택된 요소의 id값
-                    id = $("#Second_cate_idx option:selected").attr("id");
-                    $(".input-box.category").data("cateID", id);
-
-                })
-            }
-            if(val == "06") {
-                $("#Second_cate_idx").html(S_retort).on("click", function(e) {
-                    //선택된 요소의 id값
-                    id = $("#Second_cate_idx option:selected").attr("id");
-                    $(".input-box.category").data("cateID", id);
-
-                })
-            }
-            if(val == "07") {
-                $("#Second_cate_idx").html(S_dairy).on("click", function(e) {
-                    //선택된 요소의 id값
-                    id = $("#Second_cate_idx option:selected").attr("id");
-                    $(".input-box.category").data("cateID", id);
-
-                })
-            }
-            if(val == "08") {
-                $("#Second_cate_idx").html(S_source).on("click", function(e) {
-                    //선택된 요소의 id값
-                    id = $("#Second_cate_idx option:selected").attr("id");
-                    $(".input-box.category").data("cateID", id);
-
-                })
-            }
-            if(val == "09") {
-                $("#Second_cate_idx").html(S_dessert).on("click", function(e) {
-                    //선택된 요소의 id값
-                    id = $("#Second_cate_idx option:selected").attr("id");
-                    $(".input-box.category").data("cateID", id);
-
-                })
-            }
-            if(val == "10") {
-                $("#Second_cate_idx").html(S_alcohol).on("click", function(e) {
-                    //선택된 요소의 id값
-                    id = $("#Second_cate_idx option:selected").attr("id");
-                    $(".input-box.category").data("cateID", id);
-
-                })
-            }
-            if(val == "11") {
-                $("#Second_cate_idx").html(S_healthy).on("click", function(e) {
-                    //선택된 요소의 id값
-                    id = $("#Second_cate_idx option:selected").attr("id");
-                    $(".input-box.category").data("cateID", id);
-
-                })
-            }
-            $(".input-box.category").data("Ffloor", val);
-        })
+        // $("#input2").on("click", function(e) {
+        //     e.preventDefault();
+        //
+        //     //val은 대분류에만 해당하며, 카테고리 테이블의 id값과 일치함 //카테고리 아이디 받아서 배송방식 엮어오기
+        //     let val = $("#First_cate_idx option:selected").val(); //value값 출력됨 //"01"
+        //
+        //     //id는 개별 상품의 카테고리 아이디
+        //     let id;
+        //     if(val == "01") {
+        //         $("#Second_cate_idx").html(S_fruit).on("click", function(e) {
+        //             //선택된 요소의 id값
+        //             id = $("#Second_cate_idx option:selected").attr("id"); //0101
+        //             $(".input-box.category").data("cateID", id);
+        //         })
+        //     }
+        //     if(val == "02") {
+        //         $("#Second_cate_idx").html(S_vege).on("click", function(e) {
+        //             //선택된 요소의 id값
+        //             id = $("#Second_cate_idx option:selected").attr("id");
+        //             $(".input-box.category").data("cateID", id);
+        //
+        //         })
+        //     }
+        //     if(val == "03") {
+        //         $("#Second_cate_idx").html(S_seafood).on("click", function(e) {
+        //             //선택된 요소의 id값
+        //             id = $("#Second_cate_idx option:selected").attr("id");
+        //             $(".input-box.category").data("cateID", id);
+        //
+        //         })
+        //     }
+        //     if(val == "04") {
+        //         $("#Second_cate_idx").html(S_livestock).on("click", function(e) {
+        //             //선택된 요소의 id값
+        //             id = $("#Second_cate_idx option:selected").attr("id");
+        //             $(".input-box.category").data("cateID", id);
+        //
+        //         })
+        //     }
+        //     if(val == "05") {
+        //         $("#Second_cate_idx").html(S_drink).on("click", function(e) {
+        //             //선택된 요소의 id값
+        //             id = $("#Second_cate_idx option:selected").attr("id");
+        //             $(".input-box.category").data("cateID", id);
+        //
+        //         })
+        //     }
+        //     if(val == "06") {
+        //         $("#Second_cate_idx").html(S_retort).on("click", function(e) {
+        //             //선택된 요소의 id값
+        //             id = $("#Second_cate_idx option:selected").attr("id");
+        //             $(".input-box.category").data("cateID", id);
+        //
+        //         })
+        //     }
+        //     if(val == "07") {
+        //         $("#Second_cate_idx").html(S_dairy).on("click", function(e) {
+        //             //선택된 요소의 id값
+        //             id = $("#Second_cate_idx option:selected").attr("id");
+        //             $(".input-box.category").data("cateID", id);
+        //
+        //         })
+        //     }
+        //     if(val == "08") {
+        //         $("#Second_cate_idx").html(S_source).on("click", function(e) {
+        //             //선택된 요소의 id값
+        //             id = $("#Second_cate_idx option:selected").attr("id");
+        //             $(".input-box.category").data("cateID", id);
+        //
+        //         })
+        //     }
+        //     if(val == "09") {
+        //         $("#Second_cate_idx").html(S_dessert).on("click", function(e) {
+        //             //선택된 요소의 id값
+        //             id = $("#Second_cate_idx option:selected").attr("id");
+        //             $(".input-box.category").data("cateID", id);
+        //
+        //         })
+        //     }
+        //     if(val == "10") {
+        //         $("#Second_cate_idx").html(S_alcohol).on("click", function(e) {
+        //             //선택된 요소의 id값
+        //             id = $("#Second_cate_idx option:selected").attr("id");
+        //             $(".input-box.category").data("cateID", id);
+        //
+        //         })
+        //     }
+        //     if(val == "11") {
+        //         $("#Second_cate_idx").html(S_healthy).on("click", function(e) {
+        //             //선택된 요소의 id값
+        //             id = $("#Second_cate_idx option:selected").attr("id");
+        //             $(".input-box.category").data("cateID", id);
+        //
+        //         })
+        //     }
+        //     $(".input-box.category").data("Ffloor", val);
+        // })
 
 
         //할인율 입력칸 toggle

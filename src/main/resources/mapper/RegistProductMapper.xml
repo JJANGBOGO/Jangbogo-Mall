@@ -33,7 +33,7 @@
     </insert>
 <!--    기존 상품들 중 판매자상품코드가 겹치는 것이 있는지 확인-->
     <select id="checkSellerProdCd" parameterType="RegistProductDto" resultType="int">
-        select SELER_PROD_CD
+        select count(*)
         from product
         where SELER_PROD_CD = #{seler_prod_cd} and SELER_IDX = #{seler_idx};
     </select>

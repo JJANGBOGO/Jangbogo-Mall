@@ -48,6 +48,11 @@ public class ProdController {
             m.addAttribute("list", list);
             m.addAttribute("dlvryMethod", dlvryMethod);
             m.addAttribute("findBrand", findBrand);
+
+            List<ProductFileDto> fileList = productDetailService.findProdFile(prod_idx);
+            m.addAttribute("fileList", fileList);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -182,10 +187,11 @@ public class ProdController {
     @GetMapping("/product/productDetail/description")
     @ResponseBody
     public ResponseEntity<List<ProductFileDto>> showDescriptionList(Integer prod_idx) {
-        List<ProductFileDto> fileList = null;
+//        List<ProductFileDto> fileList = null;
+        System.out.println("prod_idx???????"+prod_idx);
         try {
-            fileList = productDetailService.findProdFile(prod_idx);
-
+            List<ProductFileDto> fileList = productDetailService.findProdFile(prod_idx);
+            System.out.println("fileList?????"+fileList);
             return new ResponseEntity<List<ProductFileDto>>(fileList, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
