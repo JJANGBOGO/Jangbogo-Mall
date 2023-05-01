@@ -122,9 +122,6 @@ public class UserController {
             JSONObject response_obj = (JSONObject) jsonObj.get("kakao_account");
 
             String email = (String) response_obj.get("email");
-
-            log.info("email....." + email);
-
             User user = userService.getUserByEmail(email);
 
             if (user == null) { //신규
@@ -136,11 +133,11 @@ public class UserController {
                         .login_tp_cd(KAKAO)
                         .build();
 
-//                log.info("뉴비...." + user);
                 int idx = userService.regSocialUser(user);
                 user = userService.selectUser(idx);
             } else {
                 log.info("이미 존재하는 이메일입니다.");
+                if (user.getState_cd() == 3) blockSocialUser(user.getState_cd(), rattr); //탈퇴회원의 경우 블락 처리
                 userService.updateLoginTm(user.getIdx(), user.getEmail());
             }
 
@@ -178,8 +175,6 @@ public class UserController {
 
             String email = (String) response_obj.get("email");
 
-            log.info("email....." + email);
-
             User user = userService.getUserByEmail(email);
 
             if (user == null) { //신규
@@ -191,11 +186,11 @@ public class UserController {
                         .login_tp_cd(NAVER)
                         .build();
 
-                log.info("뉴비...." + user);
                 int idx = userService.regSocialUser(user);
                 user = userService.selectUser(idx);
             } else {
                 log.info("이미 존재하는 이메일입니다.");
+                if (user.getState_cd() == 3) blockSocialUser(user.getState_cd(), rattr); //탈퇴회원의 경우 블락 처리
                 userService.updateLoginTm(user.getIdx(), user.getEmail()); //ok
             }
 
@@ -211,6 +206,12 @@ public class UserController {
 
     //TODO:: 네이버 로그아웃
 
+
+    //탈퇴한 소셜회원 블락
+    public String blockSocialUser(int state, RedirectAttributes rattr) {
+        rattr.addFlashAttribute("msg", "UNABLE");
+        return "redirect:/";
+    }
 
     public JSONObject getParsedApiResult(String apiResult) throws Exception {
         JSONParser jsonParser = new JSONParser();
@@ -256,7 +257,7 @@ public class UserController {
 
     //가입처리
     @PostMapping("/user/register")
-    public String registerUser(User user, Address addr, RedirectAttributes rattr) { //validator 추가 TODO::
+    public String registerUser(User user, Address addr, RedirectAttributes rattr) {
         log.info("user...." + user);
         log.info("addr...." + addr);
 
