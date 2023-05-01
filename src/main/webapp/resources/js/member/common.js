@@ -323,8 +323,7 @@ function emailErrMsg(email, err_ref) {
     } else err_ref.empty();
 }
 
-
-function inputErrMsg() {
+function commonKeyupErrMsg() { //회원, 판매자 공통 에러 keyup
     $("#email").keyup(function () {
         let email = $("#email").val();
         let err_ref = $(".error-msg.email");
@@ -336,6 +335,7 @@ function inputErrMsg() {
         let err_ref = $(".error-msg.nick");
         nickErrMsg(nick, err_ref);
     });
+
 
     $("#pwd").keyup(function () {
         let pwd = $("#pwd").val();
@@ -356,4 +356,15 @@ function inputErrMsg() {
         mpnoErrMsg(mpno, err_ref);
     });
 
+    $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
+        if ($("#mpno_verify").val() === mpno_verify_num) {
+            $(".error-msg.mpno-verify").html(mpno_verified);
+            $(".error-msg.mpno-verify").css('color', 'green');
+            $("#mpno_chk").attr("disabled", true);
+            $("#mpno").attr('readonly', true);
+        }
+    });
 }
+
+//닉네임 별도 분리 식으로 갈 듯
+//공통은 이메일, 비번, 휴대전화 정도

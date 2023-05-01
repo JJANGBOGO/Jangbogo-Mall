@@ -7,9 +7,13 @@ const mpno_empty = "휴대전화를 입력해 주세요";
 const addr_base_empty = "주소를 검색해 주세요";
 const addr_dtl_empty = "상세 주소를 입력해 주세요";
 const brnd_name_empty = "브랜드명을 입력해 주세요";
+const repr_name_empty = "대표 이름을 입력해 주세요";
+const repr_telno_empty = "브랜드 공식 연락처를 입력해 주세요";
 const brnd_content_empty = "브랜드 내용을 입력해 주세요";
 const bnr_upload_empty = "브랜드 배너 이미지를 선택해 주세요";
 const profile_upload_empty = "브랜드 프로필 이미지를 선택해 주세요";
+const brno_empty = "사업자 번호를 입력해 주세요";
+const sle_biz_empty = "통신판매업번호를 입력해 주세요";
 
 // reg.test() failed
 const not_valid_email = "이메일 형식에 맞춰서 입력해 주세요";

@@ -68,7 +68,7 @@
                                         placeholder="대표자 이름을 입력해 주세요"
                                 />
                             </div>
-                            <div class="error-msg cpnm"></div>
+                            <div class="error-msg repr-nm"></div>
                         </div>
                         <div class="btn-space">
                         </div>
@@ -610,58 +610,68 @@
         });
 
         //input 아래 에러메세지
-        //이메일
-        $("#email").keyup(function () {
-            let email = $("#email").val();
-            let err_ref = $(".error-msg.email");
-            emailErrMsg(email, err_ref);
+        commonKeyupErrMsg(); //공통 (이메일, 비번, 비번확인, 휴대전화)
+
+        $("#cpnm").keyup(function () { //브랜드명
+            let cpnm = $("#cpnm").val();
+            let err_ref = $(".error-msg.cpnm");
+            cpnmErrMsg(cpnm, err_ref);
         });
 
-        $("#nick_nm").keyup(function () {
-            let nick = $("#nick_nm").val();
-            let err_ref = $(".error-msg.nick");
-            nickErrMsg(nick, err_ref);
-        });
-
-        $("#pwd").keyup(function () {
-            let pwd = $("#pwd").val();
-            let err_ref = $(".error-msg.pwd");
-            pwdErrMsg(pwd, err_ref);
-        });
-
-        $("#pwd_confirm").keyup(function () {
-            let pwd = $("#pwd").val();
-            let pwd_confirm = $("#pwd_confirm").val();
-            let err_ref = $(".error-msg.pwd-confirm");
-            pwdConfirmErrMsg(pwd, pwd_confirm, err_ref);
-        });
-
-        $("#mpno").keyup(function () {
-            let mpno = $("#mpno").val();
-            let err_ref = $(".error-msg.mpno");
-            mpnoErrMsg(mpno, err_ref);
-        });
-
-        //휴대전화 인증 keyup
-        $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
-            if ($("#mpno_verify").val() === mpno_verify_num) {
-                $(".error-msg.mpno-verify").html(mpno_verified);
-                $(".error-msg.mpno-verify").css('color', 'green');
-                $("#mpno_chk").attr("disabled", true);
-                $("#mpno").attr('readonly', true);
-
-            }
-        });
-
-        //상세주소 ""일 때
-        $("#bsplc_dtl").keyup(function () {
-            let dtl = $("#bsplc_dtl").val();
-            let err_ref = $(".error-msg.bsplc-dtl");
-            if (dtl === "") {
-                err_ref.html("사업지 상세 주소를 입력해 주세요");
+        $("#repr_nm").keyup(function() { //대표명
+            let repr_nm = $("#repr_nm").val();
+            let err_ref = $(".error-msg.repr-nm");
+            if (repr_nm === "") {
+                err_ref.html(repr_name_empty);
                 return false;
             } else err_ref.empty();
         });
+
+        $("#bsplc_dtl").keyup(function () { //사업장 상세 주소
+            let dtl = $("#bsplc_dtl").val();
+            let err_ref = $(".error-msg.bsplc-dtl");
+            if (dtl === "") {
+                err_ref.html(addr_dtl_empty);
+                return false;
+            } else err_ref.empty();
+        });
+
+        $("#brno").keyup(function() { //사업자번호
+            let brno = $("#brno").val();
+            let err_ref = $(".error-msg.brno");
+            if (brno === "") {
+                err_ref.html(brno_empty);
+                return false;
+            } else err_ref.empty();
+        });
+
+        $("#sle_biz_no").keyup(function() { //통신판매업
+            let sle_biz_no = $("#sle_biz_no").val();
+            let err_ref = $(".error-msg.sle-biz-no");
+            if (sle_biz_no === "") {
+                err_ref.html(sle_biz_empty);
+                return false;
+            } else err_ref.empty();
+        });
+
+        $("#repr_telno").keyup(function() { //브랜드 공식 연락처
+            let repr_telno = $("#repr_telno").val();
+            let err_ref = $(".error-msg.repr-telno");
+            if (repr_telno === "") {
+                err_ref.html(repr_telno_empty);
+                return false;
+            } else err_ref.empty();
+        });
+
+        $("#brnd_cn").keyup(function() { //브랜드 설명
+            let dtl = $("#brnd_cn").val();
+            let err_ref = $(".error-msg.brnd-cn");
+            if (dtl === "") {
+                err_ref.html(brnd_content_empty);
+                return false;
+            } else err_ref.empty();
+        });
+
 
         //가입하기 버튼
         $(".reg-confirm").click(function (e) {
