@@ -613,6 +613,39 @@
             }); //$.ajax
         });
 
+        //input 아래 에러메세지
+        //이메일
+        $("#email").keyup(function () {
+            let email = $("#email").val();
+            let err_ref = $(".error-msg.email");
+            emailErrMsg(email, err_ref);
+        });
+
+        $("#nick_nm").keyup(function () {
+            let nick = $("#nick_nm").val();
+            let err_ref = $(".error-msg.nick");
+            nickErrMsg(nick, err_ref);
+        });
+
+        $("#pwd").keyup(function () {
+            let pwd = $("#pwd").val();
+            let err_ref = $(".error-msg.pwd");
+            pwdErrMsg(pwd, err_ref);
+        });
+
+        $("#pwd_confirm").keyup(function () {
+            let pwd = $("#pwd").val();
+            let pwd_confirm = $("#pwd_confirm").val();
+            let err_ref = $(".error-msg.pwd-confirm");
+            pwdConfirmErrMsg(pwd, pwd_confirm, err_ref);
+        });
+
+        $("#mpno").keyup(function () {
+            let mpno = $("#mpno").val();
+            let err_ref = $(".error-msg.mpno");
+            mpnoErrMsg(mpno, err_ref);
+        });
+
         //휴대전화 인증 keyup
         $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
             if ($("#mpno_verify").val() === mpno_verify_num) {

@@ -9,15 +9,15 @@
         <div class="top-navigation">
             <div class="base-margin">
                 <ul>
-                    <s:authorize access="isAnonymous()">
+                    <c:if test="${empty sessionScope.email}">
                         <li>
                             <a href="/user/login">로그인</a>
                         </li>
                         <li>
                             <a href="/register/intro">회원가입</a>
                         </li>
-                    </s:authorize>
-                    <s:authorize access="isAuthenticated()">
+                    </c:if>
+                    <c:if test="${not empty sessionScope.email}">
                         <li>
                             <a>${sessionScope.nickName}님</a>
                         </li>
@@ -35,11 +35,11 @@
                                 </c:when>
                                 <c:otherwise>
                                     <%-- 일반 로그아웃--%>
-                                    <a href="/logout">로그아웃</a>
+                                    <a href="/general/logout">로그아웃</a>
                                 </c:otherwise>
                             </c:choose>
                         </li>
-                    </s:authorize>
+                    </c:if>
                 </ul>
             </div>
         </div>
@@ -49,8 +49,13 @@
                     <h1 class="header-logo"><a href="/">Jangbogo</a></h1>
                 </div>
                 <div class="search-box">
-                    <form action="">
-                        <input type="text" placeholder="검색어를 입력해주세요."/>
+                    <form action="/search/product">
+                        <input
+                                type="text"
+                                placeholder="검색어를 입력해주세요."
+                                name="keyword"
+                                value="${searchKeyword}"
+                        />
                         <button class="search-button" type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>

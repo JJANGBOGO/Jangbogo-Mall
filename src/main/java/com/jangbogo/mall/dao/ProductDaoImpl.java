@@ -23,18 +23,12 @@ public class ProductDaoImpl implements ProductDao{
     }
 
     @Override
-    public int insertProduct (ProductDto productDto) throws Exception{
-        return session.insert(nameSpace + "insertProduct", productDto);
+    public List<ProductDto> getListByCategory (String category) throws Exception {
+        return session.selectList(nameSpace + "getListByCategory", category);
     }
 
     @Override
-    public int insertProductDtl (ProductDtl productDtl) throws Exception {
-        return session.insert(nameSpace + "insertProductDtl", productDtl);
+    public List<ProductDto> searchProductList (String category) throws Exception {
+        return session.selectList(nameSpace + "searchProductList", category);
     }
-
-    @Override
-    public int insertProductFiles (ProductFile productFiles) throws Exception{
-        return session.insert(nameSpace + "insertProductFiles", productFiles);
-    }
-
 }

@@ -21,20 +21,16 @@ public class ProductServiceImpl implements ProductService {
         return dao.getListBySeller(seler_idx);
     }
 
-    @Transactional
-    @Override
-    public int registerProduct (ProductDto productDto, ProductDtl productDtl) throws Exception {
+   @Override
+   public List<ProductDto> getListByCategory (String category) throws Exception {
+        return dao.getListByCategory(category);
+   }
 
-        //1. insertProduct
-        //2. insertProductDtl
+   @Override
+   public List<ProductDto> searchProductList (String keyword) throws Exception {
+        return dao.searchProductList(keyword);
+   }
 
-        //3. insertProductDtl.getFile_list()
-        for (ProductFile item : productDtl.getFile_list()) {
-            dao.insertProductFiles(item);
-        }
-
-        return 1;
-    }
 
 
 }
