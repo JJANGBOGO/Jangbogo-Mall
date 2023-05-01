@@ -90,13 +90,14 @@
     gap: 6px;
 }
 .orderDetail-review{
-    background-color: rgb(221, 221, 221);
+    background-color: rgb(255, 255, 255);
     width: 96px;
     height: 36px;
     border-radius: 3px;
-    border: 0px solid #f58412;
-    color: rgb(255, 255, 255);
+    border: 1px solid #f58412;
+    color: #f58412;
     cursor: pointer;
+
 }
 .orderDetail-review3{
     background-color: rgb(221, 221, 221);
@@ -137,16 +138,28 @@
     width: 200px;
     height: 56px;
     border-radius: 3px;
-    color: rgb(51, 51, 51);
+    color: black;
     background-color: rgb(255, 255, 255);
-    border: 1px solid rgb(221, 221, 221);
+    border: 1px solid black;
     margin-left: 12px;
-    border-color: rgb(221, 221, 221);
-    color: rgb(221, 221, 221);
     font-weight: 600;
     cursor: pointer;
 
 }
+.orderDetail-cancleDefault{
+    width: 200px;
+    height: 56px;
+    border-radius: 3px;
+    /*color: rgb(51, 51, 51);*/
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(221, 221, 221);
+    margin-left: 12px;
+    /*border-color: rgb(221, 221, 221);*/
+    color: rgb(221, 221, 221);
+    font-weight: 600;
+
+}
+
 .orderDetail-notice{
     display: block;
     margin-bottom: 50px;

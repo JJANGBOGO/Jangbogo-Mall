@@ -13,7 +13,7 @@
                                                         where ORD_IDX = #{ord_idx}) as DLVRY, (select *
                                                                                       from ORD_DTL
                                                                                       where ORD_IDX = #{ord_idx}) as ORD_DTL
-        where ORD.IDX = 1 and ORD_DTL.PROD_IDX = PRODUCT.IDX;
+        where ORD.IDX = #{ord_idx} and ORD_DTL.PROD_IDX = PRODUCT.IDX;
     </select>
 
     <update id="updateReviewState" parameterType="int">

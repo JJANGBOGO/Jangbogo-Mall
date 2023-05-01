@@ -86,7 +86,11 @@
             } else if (order.setl_mn_cd == 2) {
                 tmp += '<dd>네이버페이</dd></dl>'
             }
-            tmp += '<dl><dt>결제금액</dt><dd>' + formatPriceWithComma(order.tot_amt) + '원</dd></dl>'
+            if(order.state_cd == 5 || order.state_cd == 6){
+                tmp += '<dl><dt>결제금액</dt><dd>0원</dd></dl>'
+            }else {
+                tmp += '<dl><dt>결제금액</dt><dd>' + formatPriceWithComma(order.tot_amt) + '원</dd></dl>'
+            }
             tmp += '</div>'
             tmp += '</div>'
             tmp += '<div class="order-state">'
