@@ -25,7 +25,6 @@ public class LoginSellerFailHandler implements AuthenticationFailureHandler {
             request.setAttribute("LoginFailMessage", "죄송합니다. 시스템에 오류가 발생했습니다.");
         }
         else if(exception instanceof BadCredentialsException) {
-            log.info("fail....jinvicky");
             request.setAttribute("LoginFailMessage", "아이디 또는 비밀번호가 일치하지 않습니다.");
         }
         else if(exception instanceof DisabledException) {

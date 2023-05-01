@@ -34,7 +34,7 @@
                     <div class="product-center">
                         <div class="product-img">
                             <img
-                                    src="${pageContext.request.contextPath}/display?fileName=${product.upload_path}"
+                                    src="${product.upload_path}"
                                     alt="product"
                             />
                         </div>
@@ -43,9 +43,9 @@
                                     ${product.name}
                             </div>
                             <div class="product-content">${product.content}</div>
-                            <div class="star-grade">
-                                <div class="starrr" data-ascr="${product.ascr}"></div>
-                            </div>
+<%--                            <div class="star-grade">--%>
+<%--                                <div class="starrr" data-ascr="${product.ascr}"></div>--%>
+<%--                            </div>--%>
                         </div>
                     </div>
                     <div class="product-right">
