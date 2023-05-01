@@ -44,7 +44,7 @@
                         <div class="input-box category">
                             <div class="input" id="input2">
                                 <select name="cate_idx" id="First_cate_idx" >
-                                    <option selected>선택</option>
+                                    <option  selected>선택</option>
                                     <option value="01">과일</option>
                                     <option value="02">채소</option>
                                     <option value="03">수산물</option>

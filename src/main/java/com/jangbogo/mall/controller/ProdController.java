@@ -28,25 +28,18 @@ public class ProdController {
     //페이지 이동
     @GetMapping("/product/{prod_idx}")
     public String product(@PathVariable Integer prod_idx, ProductDetailDto productDetailDto, HttpSession session, Model m, HttpServletRequest request) {
-//        if(!loginCheck(request))
-//            return "redirect:/user/login?toURL=" + request.getRequestURL();
-
 
         Integer session_idx = (Integer)session.getAttribute("idx");
         try {
             String urlPath = request.getContextPath();
             ProductDetailDto list = productDetailService.read(prod_idx);
-            System.out.println("list====="+list);
-            System.out.println("cate_idx"+list.getCate_idx());
             String cate_idx = list.getCate_idx();
             String f_cate_idx = cate_idx.substring(0,2);  //'04'
             list.setF_cate_idx(f_cate_idx);
             //배송방식 번호를 찾아서
             Integer dlvry_method = productDetailService.findDlvry(list.getF_cate_idx());
-            System.out.println("dlvry_method="+dlvry_method);
             //배송방식 검색
             ProductDetailDto dlvryMethod = productDetailService.dlvryInfo(dlvry_method);
-            System.out.println("dlvryMethod="+dlvryMethod);
 
             ProductDetailDto findBrand = productDetailService.findBrand(prod_idx);
             m.addAttribute("urlPath", urlPath);
