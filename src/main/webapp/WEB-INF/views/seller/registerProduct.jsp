@@ -861,14 +861,27 @@
 
             // if (!validateProduct()) return false;  //유효성 검사 추후 개발 예정
 
-            let upload_url = "/display?fileName=";
-                upload_url += $(".upload-result.repr-path ul li").data("upload-path");
+            let base_path = "/display?fileName=";
 
-                console.log(upload_url);
+            let upload_url = base_path + $(".upload-result.repr-path ul li").data("upload-path");
 
+            //대표이미지
             let repr_file = "<input type='hidden' name='upload_path' value=" + upload_url + ">";
-
             form.append(repr_file);
+
+            //상세이미지들
+            let list = $(".upload-result.products ul li");
+            console.log("list.....", list);
+            let str = "";
+            list.each((i, obj) => {
+                let jobj = $(obj);
+                str += "<input type='hidden' name='files[" + i + "].UUID' value='" + jobj.data("uuid") + "'>"
+                    + "<input type='hidden' name='files[" + i + "].name' value='" + jobj.data("name") + "'>"
+                    + "<input type='hidden' name='files[" + i + "].UPLOAD_PATH' value='/display?fileName=" + jobj.data("upload-path") + "'>"
+                    + "<input type='hidden' name='files[" + i + "].SORT_ODR' value='" + i + "'>"
+            });
+            console.log("결과ㅣ>>>" + str);
+            form.append(str);
             form.submit();
         });
 

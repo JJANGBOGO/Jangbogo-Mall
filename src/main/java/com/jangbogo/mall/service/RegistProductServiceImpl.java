@@ -1,6 +1,7 @@
 package com.jangbogo.mall.service;
 
 import com.jangbogo.mall.dao.RegistProductDao;
+import com.jangbogo.mall.domain.ProductFileDto;
 import com.jangbogo.mall.domain.RegistProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class RegistProductServiceImpl implements RegistProductService {
     }
 
     @Override
-    public int insertProduct(RegistProductDto registProductDto) throws Exception {
+    public int insertProduct(RegistProductDto registProductDto) throws Exception { //상품등록
         return registProductDao.insertProduct(registProductDto);
     }
 
@@ -28,8 +29,12 @@ public class RegistProductServiceImpl implements RegistProductService {
     }
 
     @Override
-    public int insertProductFile(RegistProductDto registProductDto) throws Exception {
-        return registProductDao.insertProductFile(registProductDto);
+    public int insertProductFile(List<ProductFileDto> files, Integer prod_idx) throws Exception { //상품첨부등록
+        for (ProductFileDto item : files) {
+            item.setProd_idx(prod_idx);
+            registProductDao.insertProductFile(item);
+        }
+        return 1;
     }
 
     public int checkSellerProdCd(RegistProductDto registProductDto) throws Exception {

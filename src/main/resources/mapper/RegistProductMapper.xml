@@ -16,6 +16,9 @@
         (SELER_IDX, CATE_IDX, SELER_PROD_CD, UPLOAD_PATH, NAME, CTENT, PRC, DC_STATE_CD, DC_RATE, DSPLY_STATE_CD)
         values
         (#{seler_idx}, #{cate_idx2}, #{seler_prod_cd}, #{upload_path}, #{name}, #{content}, #{prc}, #{dc_state_cd}, #{dc_rate}, #{dsply_state_cd});
+        <selectKey resultType="int" keyProperty="prod_idx" order="AFTER">
+            SELECT LAST_INSERT_ID() AS idx
+        </selectKey>
     </insert>
             <!--    상품상세테이블에 추가하기-->
     <insert id="insertProductDetail" parameterType="RegistProductDto">
@@ -27,9 +30,9 @@
             <!--    상품상세첨부파일에 추가하기-->
     <insert id="insertProductFile" parameterType="RegistProductDto">
         insert into prod_file
-        (UUID, PROD_IDX, NAME, UPLOAD_PATH, TYPE, STATE_CD, SORT_ODR)
+        (UUID, PROD_IDX, NAME, UPLOAD_PATH, TYPE, SORT_ODR)
         values
-        (#{UUID}, #{prod_idx}, #{NAME}, #{products}, #{TYPE}, #{STATE_CD}, #{SORT_ODR});
+        (#{UUID}, #{prod_idx}, #{name}, #{UPLOAD_PATH}, #{TYPE}, #{SORT_ODR});
     </insert>
 <!--    기존 상품들 중 판매자상품코드가 겹치는 것이 있는지 확인-->
     <select id="checkSellerProdCd" parameterType="RegistProductDto" resultType="int">

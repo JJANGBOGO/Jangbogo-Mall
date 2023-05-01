@@ -51,8 +51,6 @@ public class ProdController {
 
             List<ProductFileDto> fileList = productDetailService.findProdFile(prod_idx);
             m.addAttribute("fileList", fileList);
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -187,11 +185,10 @@ public class ProdController {
     @GetMapping("/product/productDetail/description")
     @ResponseBody
     public ResponseEntity<List<ProductFileDto>> showDescriptionList(Integer prod_idx) {
-//        List<ProductFileDto> fileList = null;
-        System.out.println("prod_idx???????"+prod_idx);
+        List<ProductFileDto> fileList = null;
         try {
-            List<ProductFileDto> fileList = productDetailService.findProdFile(prod_idx);
-            System.out.println("fileList?????"+fileList);
+            fileList = productDetailService.findProdFile(prod_idx);
+
             return new ResponseEntity<List<ProductFileDto>>(fileList, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

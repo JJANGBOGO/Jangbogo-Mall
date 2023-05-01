@@ -225,9 +225,7 @@
               </div>
               <div class="inqry-body">
                 <div id="prodInqryList">
-                  <table id="table">
-
-                  </table>
+                  <table id="table"></table>
                 </div>
               </div>
               <div class="paging-container">
