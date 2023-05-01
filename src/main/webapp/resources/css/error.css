@@ -1,0 +1,6 @@
+.error {
+    display: block;
+    position: relative;
+    margin: 10px auto 0 auto;
+    width: 1000px;
+}
