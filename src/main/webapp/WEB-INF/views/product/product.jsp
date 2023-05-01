@@ -238,6 +238,7 @@
   </div>
 
 </div>
+<%--  <div>${urlPath}</div>--%>
   <div id="prod_idx">${prod_idx}</div>
   <div id="sessionID" style="display: none">${session_idx}</div>
   <div class="footer"></div>
@@ -259,10 +260,15 @@
   }
 
   let DescriptionToList = function(fileLists) {
+    alert("check!")
     let tmp = "";
     fileLists.forEach(function(fileList){
-      tmp += ''
+      tmp += '<div class="pic">'
+      // 이미지 업로드 해결하기 ~~~~~~~~~~~~~~~~~~~~~
+      // tmp += '<img src="/display?fileName='+ fileList.UPLOAD_PATH +'"'
+      tmp += ' alt="productImg" />'
     })
+    return tmp += '</div>';
   }
 
   let showDetail = function(prod_idx) {
@@ -369,10 +375,11 @@
      $('.packing-name').text(dlvryType + "(" + packageType + ")");
   }
 
-
-
-
   $(document).ready(function(){
+    // let urlPath = $('#urlPath');
+    // console.log("urlPath="+urlPath);
+    <%--let url = "${pageContext.request.contextPath}"--%>
+    <%--console.log("url="+url)--%>
     let prod_idx = $('#prod_idx').text();
     showInqryList(prod_idx);
     showProdDetailList(prod_idx);
@@ -450,10 +457,7 @@
       console.log(num);
       if(!(num < 2)){
         let minusNum = num - 1;
-        console.log("minusNum="+minusNum)
-        console.log(typeof minusNum);
         $('.num').text(minusNum);
-        console.log("typeof=="+typeof $('.num').text());
         let textNum = $('.num').text();
         let regex = /[^0-9]/g;
         let origin = ($('.m-price-dc-span').text()).replace(regex, "");

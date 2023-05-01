@@ -8,7 +8,7 @@ import java.util.List;
 public interface ProductDetailDao {
     ProductDetailDto selectProd(Integer prod_idx) throws Exception;
 
-    Integer findDlvry(Integer cate_idx) throws Exception;
+    Integer findDlvry(String cate_idx) throws Exception;
 
     ProductDetailDto dlvryInfo(Integer dlvry_method) throws Exception;
 
