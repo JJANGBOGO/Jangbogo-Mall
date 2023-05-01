@@ -223,9 +223,8 @@ public class UserController {
     // 인증 생성
     public boolean makeAuth(User user) throws Exception {
         UserDetailsDto dto = userDao.getUserDetailsDto(user.getEmail());
-        log.info("실패 이유" + dto.getAuthorities());
 
-//        if (dto == null) return false;
+        if (dto == null) return false;
         dto.setAuthority((ArrayList<String>) authDao.getAuthList(user.getAuth_idx()));
 //        if (dto.getAuthorities() == null) return false; //인증 실패시 null
 
