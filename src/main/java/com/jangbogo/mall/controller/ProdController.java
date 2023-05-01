@@ -4,7 +4,6 @@ import com.jangbogo.mall.domain.*;
 import com.jangbogo.mall.service.ProdInqryService;
 import com.jangbogo.mall.service.ProductDetailService;
 import com.jangbogo.mall.service.WishlistService;
-import com.mysql.cj.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,15 +27,29 @@ public class ProdController {
     WishlistService wishlistService;
     //페이지 이동
     @GetMapping("/product/{prod_idx}")
-    public String product(@PathVariable Integer prod_idx, HttpSession session, Model m, HttpServletRequest request) {
-        if(!loginCheck(request))
-            return "redirect:/user/login?toURL=" + request.getRequestURL();
+    public String product(@PathVariable Integer prod_idx, ProductDetailDto productDetailDto, HttpSession session, Model m, HttpServletRequest request) {
+//        if(!loginCheck(request))
+//            return "redirect:/user/login?toURL=" + request.getRequestURL();
+
+
         Integer session_idx = (Integer)session.getAttribute("idx");
         try {
+            String urlPath = request.getContextPath();
             ProductDetailDto list = productDetailService.read(prod_idx);
-            Integer cate_idx = productDetailService.findDlvry(list.getCate_idx());
-            ProductDetailDto dlvryMethod = productDetailService.dlvryInfo(cate_idx);
+            System.out.println("list====="+list);
+            System.out.println("cate_idx"+list.getCate_idx());
+            String cate_idx = list.getCate_idx();
+            String f_cate_idx = cate_idx.substring(0,2);  //'04'
+            list.setF_cate_idx(f_cate_idx);
+            //배송방식 번호를 찾아서
+            Integer dlvry_method = productDetailService.findDlvry(list.getF_cate_idx());
+            System.out.println("dlvry_method="+dlvry_method);
+            //배송방식 검색
+            ProductDetailDto dlvryMethod = productDetailService.dlvryInfo(dlvry_method);
+            System.out.println("dlvryMethod="+dlvryMethod);
+
             ProductDetailDto findBrand = productDetailService.findBrand(prod_idx);
+            m.addAttribute("urlPath", urlPath);
             m.addAttribute("prod_idx", prod_idx);
             m.addAttribute("session_idx", session_idx);
             m.addAttribute("list", list);
@@ -46,7 +59,7 @@ public class ProdController {
             e.printStackTrace();
         }
 
-        return "product";
+        return "product/product";
     }
 
     @GetMapping("/product/inqry/list")
@@ -95,7 +108,10 @@ public class ProdController {
     //상품문의 게시물을 등록
     @PostMapping("/product/inqry/write")  // /product?prod_idx=1 POST
     public ResponseEntity<String> write(@RequestBody ProdInqryDto prodInqryDto, Integer prod_idx, HttpSession session) {
+//        session객체가 안 찾아지고 있습니다.
         Integer user_idx = (Integer)session.getAttribute("idx");
+        System.out.println("user_idx=???"+user_idx); //null
+
         String nick_name = (String)session.getAttribute("nickName");
         prodInqryDto.setUser_idx(user_idx);
         prodInqryDto.setProd_idx(prod_idx);
