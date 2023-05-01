@@ -237,7 +237,7 @@
                                         placeholder="-제외 숫자만 입력해주세요"
                                 />
                             </div>
-                            <div class="error-msg bsplc-dtl"></div>
+                            <div class="error-msg repr-telno"></div>
                         </div>
                         <div class="btn-space">
                         </div>
@@ -597,10 +597,6 @@
                     alert(mpno_send_ok);
                     console.log(result, result.numStr);
                     mpno_verify_num = result.numStr;
-                    // $("#mpno").closest(".input-box").append('<div class="input">' +
-                    //     '<input id="mpno_verify" type="text" placeholder="인증번호를 입력해 주세요">' +
-                    //     '</div><div class="error-msg mpno-verify"></div>');
-
                     if (mpno_ref.closest(".input-box").find("#mpno_verify").length == 0) {
                         mpno_ref.closest(".input-box").append('<div class="input">' +
                             '<input id="mpno_verify" type="text" placeholder="인증번호를 입력해 주세요">' +
@@ -655,6 +651,16 @@
                 $("#mpno").attr('readonly', true);
 
             }
+        });
+
+        //상세주소 ""일 때
+        $("#bsplc_dtl").keyup(function () {
+            let dtl = $("#bsplc_dtl").val();
+            let err_ref = $(".error-msg.bsplc-dtl");
+            if (dtl === "") {
+                err_ref.html("사업지 상세 주소를 입력해 주세요");
+                return false;
+            } else err_ref.empty();
         });
 
         //가입하기 버튼
