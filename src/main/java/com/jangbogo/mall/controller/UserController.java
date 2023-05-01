@@ -277,7 +277,7 @@ public class UserController {
 
     //이메일 중복 체크
     @PostMapping("/user/duplicate/email")
-    public ResponseEntity<String> chkDuplicateEmail(String email, String type) {
+    public ResponseEntity<String> chkDuplicateEmail(String email) {
         try {
             String msg = userService.getUserByEmail(email) == null ? "OK" : "DUPLICATE";
             return ResponseEntity.ok().body(msg);

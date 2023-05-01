@@ -11,9 +11,10 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @Slf4j
 public class ErrHandler {
     // 404처리
-    @ExceptionHandler({NoHandlerFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoHandlerFoundException.class)
     public String handle404(NoHandlerFoundException e){
+        e.printStackTrace();
         log.info("......error 404......"); //왜 얘만 안됨??
         return "/error/404";
     }
