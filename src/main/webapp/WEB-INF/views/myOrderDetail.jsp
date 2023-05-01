@@ -151,8 +151,7 @@
                                 <sup style="color: rgb(250, 98, 47);">*</sup>
                             </label>
                             <div class="content-box">
-                            <textarea class="content">
-                            </textarea>
+                            <textarea class="content"></textarea>
                                 <span></span>
                             </div>
                         </div>
