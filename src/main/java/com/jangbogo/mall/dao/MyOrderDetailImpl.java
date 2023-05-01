@@ -24,6 +24,21 @@ public class MyOrderDetailImpl implements MyOrderDetail {
         return session.update(namespace+"updateReviewState",ord_dtl_idx);
     }
 
+    @Override
+    public int updateOrdState(Integer idx) throws Exception{
+        return session.update(namespace+"updateOrdState",idx);
+    }
+
+    @Override
+    public int updateOrdDetailState(Integer ord_idx) throws Exception{
+        return session.update(namespace+"updateOrdDetailState",ord_idx);
+    }
+
+    @Override
+    public int updateOrdHistState(Integer ord_idx) throws Exception{
+        return session.update(namespace+"updateOrdHistState",ord_idx);
+    }
+
 
 
 }

@@ -189,6 +189,25 @@
 
     $(document).ready(function (){
         showList();
+        // 전체 상품 주문 취소 버튼 클릭 시
+        $('.orderDetail-container').on("click",'.orderDetail-cancle', function (){
+            if(!confirm("주문 취소하시겠습니까?"))return;
+            let idx = $(this).attr('data-idx')                       // 주문번호 회득
+            console.log(idx)
+            $.ajax({
+                type:'PATCH',              // 요청 메서드
+                url: '/mypage/order/detail/stateUpdate/'+idx,  // 요청 URI
+                // headers : { "content-type": "application/json"}, // 요청 헤더
+                // data : JSON.stringify({ctent:ctent,prod_idx:prod_idx,ord_idx:ord_idx}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
+                success : function(result){
+                    alert("주문 취소가 완료되었습니다");
+                    showList();
+                },
+                error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+            }); // $.ajax()
+
+        });
+
 
         // 후기작성 버튼 클릭 시(작성 모달창 오픈)
         $(".orderDetail-container").on("click",'.orderDetail-review', function (){
@@ -301,7 +320,7 @@
             $('.count').text(counter=1); // 기본 장바구니 담는 개수 1개(default)
         });
 
-        // 모달 창 취소 버튼
+        // 장바구니 모달 창 취소 버튼
         var close1 = $('.background').on("click",'.cancle-btn',function (){
             document.querySelector(".background").className = "background";
             $('.count').text(counter=1); // 카운터 1로 리셋
@@ -408,9 +427,17 @@
         tmp += '<h3>결제정보</h3>'
         tmp += '</div>'
         tmp += '<ul class="orderDetail-setl_list">'
-        tmp += '<li><span>상품금액</span><span>'+formatPriceWithComma(orders[0].ord_tot_amt)+'원</span></li>'
-        tmp += '<li><span>배송비</span><span></span>2,500원</li>'
-        tmp += '<li><span>결제금액</span><span>'+formatPriceWithComma(orders[0].amt)+'원</span></li>'
+        if(orders[0].ord_state_cd == 5){
+            tmp += '<li><span>상품금액</span><span>0원</span></li>'
+            tmp += '<li><span>배송비</span><span></span>0원</li>'
+            tmp += '<li><span>결제금액</span><span>0원</span></li>'
+            tmp += '<li><span>환불완료금액</span><span>'+formatPriceWithComma(orders[0].ord_tot_amt + 2500)+'원</span></li>'
+        }else{
+            tmp += '<li><span>상품금액</span><span>'+formatPriceWithComma(orders[0].ord_tot_amt)+'원</span></li>'
+            tmp += '<li><span>배송비</span><span></span>2,500원</li>'
+            tmp += '<li><span>결제금액</span><span>'+formatPriceWithComma(orders[0].amt)+'원</span></li>'
+        }
+
         tmp += '<li class="last"><span>결제방법</span>'
         if(orders[0].mn_cd==1){
             mean = "카카오페이";

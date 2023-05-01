@@ -23,6 +23,21 @@ public class MyOrderDetailServiceImpl implements MyOrderDetailService {
 
     }
 
+    @Override
+    public int updateOrdState(Integer idx) throws Exception {
+        return myOrderDetail.updateOrdState(idx);
+    }
+
+    @Override
+    public int updateOrdDetailState(Integer ord_idx) throws Exception {
+        return myOrderDetail.updateOrdDetailState(ord_idx);
+    }
+
+    @Override
+    public int updateOrdHistState(Integer ord_idx) throws Exception {
+        return myOrderDetail.updateOrdHistState(ord_idx);
+    }
+
 
 
 }

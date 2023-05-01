@@ -22,5 +22,24 @@
         where IDX= #{ord_dtl_idx};
     </update>
 
+<!--주문테이블 주문상태 업데이트-->
+    <update id="updateOrdState" parameterType="int">
+        update ORD
+        set STATE_CD = 5, UPT_TM = now()
+        where IDX = #{idx};
+    </update>
 
+<!--주문상세테이블 주문상태 업데이트-->
+    <update id="updateOrdDetailState" parameterType="int">
+        update ORD_DTL
+        set ORD_STATE_CD = 5, SETL_CNCL_TM = now(), UPT_TM = now()
+        where ORD_IDX = #{ord_idx};
+    </update>
+
+<!--주문이력테이블 주문상태 업데이트-->
+    <update id="updateOrdHistState" parameterType="int">
+        update ORD_HIST
+        set ORD_STATE_CD = 5 , CHG_TM = now(), UPT_TM = now()
+        where ORD_IDX = #{ord_idx};
+    </update>
 </mapper>

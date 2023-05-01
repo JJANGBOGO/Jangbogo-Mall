@@ -40,8 +40,8 @@ public class MyOrderDetailController {
         return "myOrderDetail";
     }
 
-
-    @GetMapping("/order/detail/{ord_idx}") // 주문 내역 (상세) 목록 GET
+    // 지정된 주문 내역 (상세) 목록을 가져오는 메서드
+    @GetMapping("/order/detail/{ord_idx}") // /order/detail/1  GET
     public ResponseEntity<List<MyOrderDetailDto>> orderDetailList(@PathVariable Integer ord_idx) { // idx(주문번호)
         System.out.println("idx = " + ord_idx);
         List<MyOrderDetailDto> list = null;
@@ -75,22 +75,18 @@ public class MyOrderDetailController {
 
         }
 
-
     }
 
     // 상품후기 작성(추가), 주문상세(후기작성상태코드)-> 3(작성완료) 업데이트 메서드
     @PostMapping("/order/detail/insertReview") // order/detail/insertReview POST
-    public ResponseEntity<String> insertReview(@RequestBody ProdReviewDto prodReviewDto,Integer ord_dtl_idx, HttpSession session, RedirectAttributes ratt){
-        System.out.println("prodReviewDto1 = " + prodReviewDto);
+    public ResponseEntity<String> insertReview(@RequestBody ProdReviewDto prodReviewDto, Integer ord_dtl_idx, HttpSession session) {
         int user_idx = (int) session.getAttribute("idx");            // 세션에서 회원번호를 가져온다
         String nickName = (String) session.getAttribute("nickName"); // 세션에서 닉네임(작성자)를 가져온다
         prodReviewDto.setUser_idx(user_idx); // Dto 에 회원번호 추가
         prodReviewDto.setWriter(nickName);   // Dto 에 작성자(닉네임) 추가
-        System.out.println("prodReviewDto2 = " + prodReviewDto);
-        System.out.println("ord_dtl_idx = " + ord_dtl_idx);
-// 주문상세(후기작성상태코드)-> 3(작성완료) 업데이트 추가해야함
+
         try {
-            if(prodReviewService.insert(prodReviewDto)!=1) throw new Exception("Write failed");
+            if (prodReviewService.insert(prodReviewDto) != 1) throw new Exception("Write failed");
             myOrderDetailService.updateReviewState(ord_dtl_idx);
             return new ResponseEntity<>("INSERT_OK", HttpStatus.OK);
         } catch (Exception e) {
@@ -99,6 +95,27 @@ public class MyOrderDetailController {
 //
         }
 
+
+    }
+
+
+    // 주문 취소
+    // 주문, 주문상세, 주문이력 테이블들의 주문상태 -> 5(취소완료)로 변경
+    @PatchMapping("/order/detail/stateUpdate/{idx}") // order/detail/stateUpdate/1  PATCH
+    public ResponseEntity<String> stateUpdate(@PathVariable Integer idx,  HttpSession session){ // 주문번호를 받아온다
+        int user_idx = (int) session.getAttribute("idx");
+        System.out.println("idx = " + idx);
+        try {
+            myOrderDetailService.updateOrdState(idx); // 주문테이블에서 주문번호를 가진 행의 주문상태를 변경(취소완료)
+            myOrderDetailService.updateOrdDetailState(idx); // 주문상세테이블에서 해당 주문번호를 가진 행의 주문상태를 변경(취소완료)
+            myOrderDetailService.updateOrdHistState(idx); // 주문이력테이블에서 해당 주문번호를 가진 행의 주문상태를 변경(취소완료)
+            return new ResponseEntity<>("UPDATE_OK", HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("UPDATE_ERR", HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
 
     }
 

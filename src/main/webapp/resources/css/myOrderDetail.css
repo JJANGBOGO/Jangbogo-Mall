@@ -133,6 +133,7 @@
     border: 1px solid #f58412;
     font-weight: 600;
     cursor: pointer;
+    font-size: 15px;
 }
 .orderDetail-cancle{
     width: 200px;
@@ -144,6 +145,8 @@
     margin-left: 12px;
     font-weight: 600;
     cursor: pointer;
+    font-size: 15px;
+
 
 }
 .orderDetail-cancleDefault{
@@ -157,6 +160,8 @@
     /*border-color: rgb(221, 221, 221);*/
     color: rgb(221, 221, 221);
     font-weight: 600;
+    font-size: 15px;
+
 
 }
 
