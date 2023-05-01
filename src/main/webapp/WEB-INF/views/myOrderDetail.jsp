@@ -402,8 +402,8 @@
             }
             tmp += '<span class="orderDetail-state_cd">'+orderStatus+'</span>'
             tmp += '<div class="orderDetail-listBtn">'
-            if(order.prod_late_state_cd==1){
-                tmp += '<button class="orderDetail-review" data-prod_idx = '+order.prod_idx+' data-ord_idx = '+order.idx+' data-ord_dtl_idx = '+order.ord_dtl_idx+'>후기불가능</button>'
+            if(order.ord_state_cd==5){
+                tmp += '<button class="orderDetail-review3" data-prod_idx = '+order.prod_idx+' data-ord_idx = '+order.idx+' data-ord_dtl_idx = '+order.ord_dtl_idx+'>후기불가능</button>'
             }else if(order.prod_late_state_cd==2){
                 tmp += '<button class="orderDetail-review" data-prod_idx = '+order.prod_idx+' data-ord_idx = '+order.idx+' data-ord_dtl_idx = '+order.ord_dtl_idx+'>후기작성</button>'
             }else if(order.prod_late_state_cd==3){
