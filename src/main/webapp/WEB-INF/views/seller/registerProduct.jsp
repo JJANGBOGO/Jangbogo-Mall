@@ -43,7 +43,7 @@
                         </div>
                         <div class="input-box category">
                             <div class="input" id="input2">
-                                <select name="cate_idx" id="First_cate_idx" >
+                                <select name="cate_idx" id="First_cate_idx">
                                     <option selected>선택</option>
                                     <option value="01">과일</option>
                                     <option value="02">채소</option>
@@ -123,12 +123,12 @@
                         </div>
                         <div class="input-box">
                             <div class="input">
-                                <label class="upload-label" for="upload_path">
+                                <label class="upload-label" for="repr-path">
                                     상품 대표 이미지 선택
                                     <img src="/img/upload_dir.png">
                                 </label>
-                                <div class="upload-input upload-path">
-                                    <input type="file" name="upload_path" id="upload_path">
+                                <div class="upload-input repr-path">
+                                    <input type="file" name="repr-path" id="repr-path">
                                 </div>
                             </div>
                         </div>
@@ -136,7 +136,7 @@
                             <button id="upload_path_btn">업로드</button>
                         </div>
                     </div>
-                    <div class="upload-result upload-path">
+                    <div class="upload-result repr-path">
                         <ul></ul>
                     </div>
                     <div class="input-line">
@@ -589,94 +589,94 @@
         toggleDcInput();
         toggleSleDateInput();
 
-        $("select[name=cate_idx]").change(function(e) {
+        $("select[name=cate_idx]").change(function (e) {
             console.log("test");
             //val은 대분류에만 해당하며, 카테고리 테이블의 id값과 일치함 //카테고리 아이디 받아서 배송방식 엮어오기
             let val = $("#First_cate_idx option:selected").val(); //value값 출력됨 //"01"
 
             //id는 개별 상품의 카테고리 아이디
             let id;
-            if(val == "01") {
-                $("#Second_cate_idx").html(S_fruit).on("click", function(e) {
+            if (val == "01") {
+                $("#Second_cate_idx").html(S_fruit).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id"); //0101
                     $(".input-box.category").data("cateID", id);
                 })
             }
-            if(val == "02") {
-                $("#Second_cate_idx").html(S_vege).on("click", function(e) {
+            if (val == "02") {
+                $("#Second_cate_idx").html(S_vege).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "03") {
-                $("#Second_cate_idx").html(S_seafood).on("click", function(e) {
+            if (val == "03") {
+                $("#Second_cate_idx").html(S_seafood).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "04") {
-                $("#Second_cate_idx").html(S_livestock).on("click", function(e) {
+            if (val == "04") {
+                $("#Second_cate_idx").html(S_livestock).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "05") {
-                $("#Second_cate_idx").html(S_drink).on("click", function(e) {
+            if (val == "05") {
+                $("#Second_cate_idx").html(S_drink).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "06") {
-                $("#Second_cate_idx").html(S_retort).on("click", function(e) {
+            if (val == "06") {
+                $("#Second_cate_idx").html(S_retort).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "07") {
-                $("#Second_cate_idx").html(S_dairy).on("click", function(e) {
+            if (val == "07") {
+                $("#Second_cate_idx").html(S_dairy).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "08") {
-                $("#Second_cate_idx").html(S_source).on("click", function(e) {
+            if (val == "08") {
+                $("#Second_cate_idx").html(S_source).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "09") {
-                $("#Second_cate_idx").html(S_dessert).on("click", function(e) {
+            if (val == "09") {
+                $("#Second_cate_idx").html(S_dessert).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "10") {
-                $("#Second_cate_idx").html(S_alcohol).on("click", function(e) {
+            if (val == "10") {
+                $("#Second_cate_idx").html(S_alcohol).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "11") {
-                $("#Second_cate_idx").html(S_healthy).on("click", function(e) {
+            if (val == "11") {
+                $("#Second_cate_idx").html(S_healthy).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
@@ -686,7 +686,7 @@
             $(".input-box.category").data("Ffloor", val);
         })
 
-        $("#input2").on("click", function(e) {
+        $("#input2").on("click", function (e) {
             e.preventDefault();
 
             //val은 대분류에만 해당하며, 카테고리 테이블의 id값과 일치함 //카테고리 아이디 받아서 배송방식 엮어오기
@@ -694,87 +694,87 @@
 
             //id는 개별 상품의 카테고리 아이디
             let id;
-            if(val == "01") {
-                $("#Second_cate_idx").html(S_fruit).on("click", function(e) {
+            if (val == "01") {
+                $("#Second_cate_idx").html(S_fruit).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id"); //0101
                     $(".input-box.category").data("cateID", id);
                 })
             }
-            if(val == "02") {
-                $("#Second_cate_idx").html(S_vege).on("click", function(e) {
+            if (val == "02") {
+                $("#Second_cate_idx").html(S_vege).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "03") {
-                $("#Second_cate_idx").html(S_seafood).on("click", function(e) {
+            if (val == "03") {
+                $("#Second_cate_idx").html(S_seafood).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "04") {
-                $("#Second_cate_idx").html(S_livestock).on("click", function(e) {
+            if (val == "04") {
+                $("#Second_cate_idx").html(S_livestock).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "05") {
-                $("#Second_cate_idx").html(S_drink).on("click", function(e) {
+            if (val == "05") {
+                $("#Second_cate_idx").html(S_drink).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "06") {
-                $("#Second_cate_idx").html(S_retort).on("click", function(e) {
+            if (val == "06") {
+                $("#Second_cate_idx").html(S_retort).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "07") {
-                $("#Second_cate_idx").html(S_dairy).on("click", function(e) {
+            if (val == "07") {
+                $("#Second_cate_idx").html(S_dairy).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "08") {
-                $("#Second_cate_idx").html(S_source).on("click", function(e) {
+            if (val == "08") {
+                $("#Second_cate_idx").html(S_source).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "09") {
-                $("#Second_cate_idx").html(S_dessert).on("click", function(e) {
+            if (val == "09") {
+                $("#Second_cate_idx").html(S_dessert).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "10") {
-                $("#Second_cate_idx").html(S_alcohol).on("click", function(e) {
+            if (val == "10") {
+                $("#Second_cate_idx").html(S_alcohol).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
                 })
             }
-            if(val == "11") {
-                $("#Second_cate_idx").html(S_healthy).on("click", function(e) {
+            if (val == "11") {
+                $("#Second_cate_idx").html(S_healthy).on("click", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
@@ -783,7 +783,6 @@
             }
             $(".input-box.category").data("Ffloor", val);
         })
-
 
         //할인율 입력칸 toggle
         $("input[name=dc_state_cd]").click(function () {
@@ -796,19 +795,19 @@
         });
 
         //파일 업로드
-        let clone_upload_path = $("upload-input.upload-path").clone();
+        let clone_upload_path = $("upload-input.repr-path").clone();
         let clone_prod_path = $(".upload-input.profile").clone();
 
         //.uploadResult ul의 참조를 얻어온다.
-        let upload_path_list = $(".upload-result.upload-path ul");
+        let upload_path_list = $(".upload-result.repr-path ul");
         let upload_products_list = $(".upload-result.products ul");
 
         //상품 대표이미지 업로드
         $("#upload_path_btn").on("click", function (e) { //업로드 버튼을 눌렀을 때 이벤트를 연결한다.
             e.preventDefault();
             const formData = new FormData();
-            const inputFile = $("input[name='upload_path']");
-            console.log("inputFile[0].files=="+inputFile[0].files);
+            const inputFile = $("input[name=repr-path]");
+            console.log("inputFile[0].files==" + inputFile[0].files);
             if (inputFile[0].files.length < 1) { //파일 선택 안 한 경우
                 alert("상품 대표이미지를 업로드 해주세요");
                 return false;
@@ -833,7 +832,7 @@
         $("#upload_products").on("click", function (e) {
             e.preventDefault();
             const formData = new FormData();
-            const inputFile = $("input[name='products']");
+            const inputFile = $("input[name=products]");
 
             if (inputFile[0].files.length < 1) { //파일 선택 안 한 경우
                 alert("최소 3장 이상의 상세 이미지를 업로드 해주세요");
@@ -858,10 +857,19 @@
         //가입하기 버튼 클릭
         $(".reg-confirm").click(function (e) {
             e.preventDefault();
+            let form = $(".reg-form");
 
-            if (!validateProduct()) return false;
+            // if (!validateProduct()) return false;  //유효성 검사 추후 개발 예정
 
-            $(".reg-form").submit();
+            let upload_url = "/display?fileName=";
+                upload_url += $(".upload-result.repr-path ul li").data("upload-path");
+
+                console.log(upload_url);
+
+            let repr_file = "<input type='hidden' name='upload_path' value=" + upload_url + ">";
+
+            form.append(repr_file);
+            form.submit();
         });
 
     });
