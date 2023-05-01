@@ -35,7 +35,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <%-- 일반 로그아웃--%>
-                                    <a href="/logout">로그아웃</a>
+                                    <a href="/general/logout">로그아웃</a>
                                 </c:otherwise>
                             </c:choose>
                         </li>

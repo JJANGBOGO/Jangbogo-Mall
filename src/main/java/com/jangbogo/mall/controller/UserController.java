@@ -141,10 +141,11 @@ public class UserController {
                 userService.updateLoginTm(user.getIdx(), user.getEmail());
             }
 
-            makeAuth(user);
-            session.setAttribute("loginService", "kakao"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
-            crtSession(session, user);
-            return "redirect:/";
+            if (makeAuth(user)) {
+                session.setAttribute("loginService", "kakao"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
+                crtSession(session, user);
+                return "redirect:/";
+            } else throw new Exception("auth failed");
         } catch (Exception e) {
             rattr.addFlashAttribute("msg", "LOGIN_ERR"); //로그인 에러
             return "redirect:/user/login";
@@ -194,10 +195,11 @@ public class UserController {
                 userService.updateLoginTm(user.getIdx(), user.getEmail()); //ok
             }
 
-            makeAuth(user);
-            session.setAttribute("loginService", "naver"); // 최종 로그인 서비스. 같은 이메일, 다른 서비스 로그인 구별 목적
-            crtSession(session, user);
-            return "redirect:/";
+            if (makeAuth(user)) {
+                session.setAttribute("loginService", "naver"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
+                crtSession(session, user);
+                return "redirect:/";
+            } else throw new Exception("auth failed");
         } catch (Exception e) {
             rattr.addFlashAttribute("msg", "LOGIN_ERR"); //로그인 에러
             return "redirect:/user/login";
@@ -219,18 +221,21 @@ public class UserController {
     }
 
     // 인증 생성
-    public void makeAuth(User user) throws Exception {
+    public boolean makeAuth(User user) throws Exception {
         UserDetailsDto dto = userDao.getUserDetailsDto(user.getEmail());
-        if (dto != null) {
-            dto.setAuthority((ArrayList<String>) authDao.getAuthList(user.getAuth_idx()));
-            log.info("....dto..." + dto.getAuthorities());
-            Authentication authentication =
-                    new UsernamePasswordAuthenticationToken(user, null, dto.getAuthorities()); //userDetailsDto.getAuthorities()식으로 권한을 추가해야 함
+        if (dto == null || dto.getAuthorities() == null) return false; //인증 실패시 null
 
-            log.info("..." + authentication + "...." + dto.getAuthorities());
-            SecurityContext securityContext = SecurityContextHolder.getContext();
-            securityContext.setAuthentication(authentication);
-        }
+        //dto != null
+        dto.setAuthority((ArrayList<String>) authDao.getAuthList(user.getAuth_idx()));
+        if (dto.getAuthorities() == null) return false;
+
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken(user, null, dto.getAuthorities()); //userDetailsDto.getAuthorities()식으로 권한을 추가해야 함
+
+        log.info("인증..." + authentication + "...." + dto.getAuthorities());
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(authentication);
+        return true;
     }
 
     // 로그아웃시 인증 삭제
@@ -242,7 +247,7 @@ public class UserController {
     }
 
     // 일반 회원 로그아웃
-    @GetMapping("/logout")
+    @GetMapping("/general/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         session.invalidate();
         deleteAuth(request, response);
