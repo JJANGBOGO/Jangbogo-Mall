@@ -78,32 +78,6 @@ public class ProdReviewController {
     }
 
 
-
-
-    // 상품 후기를 등록하는 메서드
-    @PostMapping("/product/review")   // /product/review  POST
-    public ResponseEntity<String> write(@RequestBody ProdReviewDto prodReviewDto, HttpSession session) {
-        Integer user_idx = (int)session.getAttribute("idx"); // 세션에서 회원번호를 가져온다
-        String nickName = (String) session.getAttribute("nickName"); // 세션에서 닉네임(작성자)를 가져온다
-        String n3 = (String) session.getAttribute("email"); // 이메일
-
-        prodReviewDto.setUser_idx(user_idx);
-        prodReviewDto.setWriter(nickName);
-        System.out.println("prodReviewDto = " + prodReviewDto); // 주문번호,상품번호,회원번호,후기내용,작성자
-
-        try {
-            if(prodReviewService.insert(prodReviewDto)!=1) throw new Exception("Write failed");
-            return new ResponseEntity<>("WRT_OK", HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<String>("WRT_ERR", HttpStatus.BAD_REQUEST);
-        }
-
-    }
-
-
-
-
     private boolean loginCheck(HttpServletRequest request) {
         // 1. 세션을 얻어서
         HttpSession session = request.getSession();

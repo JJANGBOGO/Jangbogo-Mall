@@ -20,7 +20,7 @@
         <typeAlias alias="CartDto" type="com.jangbogo.mall.domain.CartDto"/>
         <typeAlias alias="Address" type="com.jangbogo.mall.domain.Address"/>
         <typeAlias alias="OrderDto" type="com.jangbogo.mall.domain.OrderDto"/>
-        <typeAlias alias="OrderDetailDto" type="com.jangbogo.mall.domain.MyOrderDetailDto"/>
+<!--        <typeAlias alias="OrderDetailDto" type="com.jangbogo.mall.domain.MyOrderDetailDto"/>-->
         <typeAlias alias="PaymentDto" type="com.jangbogo.mall.domain.PaymentDto"/>
         <typeAlias alias="KakaoReadyResponseDto" type="com.jangbogo.mall.domain.KakaoReadyResponseDto"/>
         <typeAlias alias="KakaoApproveResponseDto" type="com.jangbogo.mall.domain.KakaoApproveResponseDto"/>

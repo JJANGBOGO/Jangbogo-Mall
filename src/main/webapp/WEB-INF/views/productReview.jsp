@@ -26,9 +26,9 @@
     <section class="review-section">
         <header class="review-header">
             <h2 class="header">상품 후기</h2>
-            <div class="reviewBtn-box">
-                <button class="review-button" type="button">작성하기</button>
-            </div>
+<%--            <div class="reviewBtn-box">--%>
+<%--                <button class="review-button" type="button">작성하기</button>--%>
+<%--            </div>--%>
         </header>
 
         <div class="review-box">
@@ -95,8 +95,7 @@
                     </div>
                     <div class="footerBtn">
                         <button class="cancleBtn" onclick="return false;">취소</button>
-                        <button class="updateBtnDefault" onclick="return false;">수정</button>
-                        <button class="insertBtn" onclick="return false;">등록</button>
+                        <button class="updateBtn" onclick="return false;">수정</button>
                         <input class="hidden-idx" type="hidden" value="">
                     </div>
                 </form>
@@ -130,27 +129,21 @@
             let content = $(this).parent().siblings('.article-content').text(); // 상품 후기 내용 변수 선언
             let nowLength = content.length;
 
-            $('.content').keydown(function (){
-                let newLength = $(this).val().length;
-                if(newLength>nowLength){
-                    $('.updateBtnDefault').attr("class","updateBtn");
-                    // $('.updateBtn').attr("class","updateBtnDefault");
-                }else if(newLength<=nowLength){
-                    $('.updateBtn').attr("class","updateBtnDefault");
-                }
-            })
+            // $('.content').keydown(function (){
+            //     let newLength = $(this).val().length;
+            //     if(newLength>nowLength){
+            //         $('.updateBtnDefault').attr("class","updateBtn");
+            //         // $('.updateBtn').attr("class","updateBtnDefault");
+            //     }else if(newLength<=nowLength){
+            //         $('.updateBtn').attr("class","updateBtnDefault");
+            //     }
+            // })
             let idx = $(this).attr('data-idx');                                 // 상품 후기 일련번호 변수 선언
             let user_idx = $(this).attr('data-user_idx');
             if(user_idx!=${sessionScope.idx}){
                 alert("작성자만 수정할 수 있습니다")
                 return;
             }
-
-            $('.review-title').children('h2').text('후기 수정');       // 수정 모달창에 타이틀  -> '후기 수정'으로 변경
-
-            $('.body-footer').css("display","flex");                // 수정 모달창에 비공개체크박스 보이게 하기
-            $('.insertBtn').css("display","none");                  // 수정 모달창에 '등록' 버튼 안 보이게 하기
-            $('.updateBtn').css("display","block");                 // 수정 모달창에 '수정' 버튼 보이게 하기
 
             $('.img-name').text(name);                              // 수정 모달창에 상품이름 추가
             $('.title-img').children().attr("src",upload_path);     // 수정 모달창에 이미지 추가
@@ -164,14 +157,11 @@
         // 수정창 (X버튼) 클릭
         $('.reviewUpdate-container').on("click",'.closeXBtn', function (){ //
             closeModal();
-            $('.updateBtn').attr("class","updateBtnDefault"); // 수정 버튼 비활성화 (클래스 이름 변경)
-
         })
 
         // 수정창 (취소 버튼) 클릭
         $('.reviewUpdate-container').on("click",'.cancleBtn', function (){ //
             closeModal();
-            $('.updateBtn').attr("class","updateBtnDefault"); // 수정 버튼 비활성화 (클래스 이름 변경)
         })
 
         // 수정 모달창 (수정) 버튼 클릭 시
@@ -196,44 +186,6 @@
 
         });
 
-
-        // 작성하기 버튼 클릭 시(작성 모달창 오픈)
-        $(".review-button").click(function(){
-
-            $('.review-title').children('h2').text('후기 작성');    // 작성 모달창에 타이틀  -> '후기 작성'으로 변경
-
-            $('.updateBtn').css("display","none");               // 작성 모달창에 '수정' 버튼 안 보이게 하기
-            $('.insertBtn').css("display","block");              // 작성 모달창에 '등록' 버튼 보이게 하기
-            $('.body-footer').css("display","none");             // 작성 모달창에 비공개체크박스 안 보이게 하기
-            // $('.content').val("");                            // 작성 내용 빈칸으로 초기화
-
-            openModal(); // 작성 모달창 오픈하기
-
-        });
-
-        // 작성 모달창 (등록) 버튼 클릭
-        $(".insertBtn").click(function(){
-            if(!confirm("작성하신 내용으로 후기 등록하시겠습니까?"))return;
-            let ctent = $('.content').val(); // 후기내용
-                                             // 상품번호
-                                             // 주문번호???
-            $.ajax({
-                type:'POST',       // 요청 메서드 //
-                url: '/product/review' ,  // 요청 URI
-                headers : { "content-type": "application/json"}, // 요청 헤더
-                data : JSON.stringify({ctent:ctent,prod_idx:prod_idx}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
-                success : function(result){
-                    alert(result);
-                    closeModal();
-                    showList();
-
-                },
-                error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
-            }); // $.ajax()
-
-        });
-
-
     });
 
 
@@ -243,7 +195,6 @@
         console.log("${sessionScope.email}");
         console.log("${email}")
         console.log("${nickname}")
-        console.log()
         let tmp = '';
         reviews.forEach(function (review){
             if((review.user_idx==${idx} && review.opub_yn=="N") || review.opub_yn=="Y"){ // 작성자만 자신이 작성한 비공개 후기를 볼 수 있다
