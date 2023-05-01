@@ -145,7 +145,9 @@
       <div id="product-desc">
         <div id="description">
           <div class="description-wrap">
-
+            <c:forEach items="${fileList}" var="file">
+              <img src="${file.UPLOAD_PATH}">
+            </c:forEach>
           </div>
         </div>
         <div id="detail">
@@ -247,29 +249,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="https://kit.fontawesome.com/cc28ed1241.js" crossorigin="anonymous"></script>
 <script>
-
-  let showDescription = function(prod_idx) {
-    $.ajax({
-      type: 'GET',
-      url: '/product/productDetail/description?prod_idx='+prod_idx,
-      success: function(result) {
-        $('.description-wrap').html(DescriptionToList(result));
-      },
-      error: function() { alert("GET description Error") }
-    })
-  }
-
-  let DescriptionToList = function(fileLists) {
-    alert("check!")
-    let tmp = "";
-    fileLists.forEach(function(fileList){
-      tmp += '<div class="pic">'
-      // 이미지 업로드 해결하기 ~~~~~~~~~~~~~~~~~~~~~
-      // tmp += '<img src="/display?fileName='+ fileList.UPLOAD_PATH +'"'
-      tmp += ' alt="productImg" />'
-    })
-    return tmp += '</div>';
-  }
 
   let showDetail = function(prod_idx) {
     $.ajax({
@@ -385,7 +364,7 @@
     showProdDetailList(prod_idx);
     packingTypeToString();
     showImage();
-    showDescription(prod_idx);
+    // showDescription(prod_idx);
     showDetail(prod_idx);
     prodInqryImage();
 

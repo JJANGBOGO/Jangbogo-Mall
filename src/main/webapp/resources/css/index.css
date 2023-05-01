@@ -103,7 +103,8 @@ img.mySlides {
 }
 
 .thum-list li .img-box img {
-    width: 100%;
+    width: 290px;
+    height: 290px;
 }
 
 .thum-list li .cart-btn i {

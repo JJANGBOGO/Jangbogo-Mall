@@ -55,6 +55,9 @@ public class ProdController {
             m.addAttribute("list", list);
             m.addAttribute("dlvryMethod", dlvryMethod);
             m.addAttribute("findBrand", findBrand);
+
+            List<ProductFileDto> fileList = productDetailService.findProdFile(prod_idx);
+            m.addAttribute("fileList", fileList);
         } catch (Exception e) {
             e.printStackTrace();
         }

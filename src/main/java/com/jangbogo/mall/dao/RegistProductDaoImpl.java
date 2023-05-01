@@ -1,5 +1,6 @@
 package com.jangbogo.mall.dao;
 
+import com.jangbogo.mall.domain.ProductFileDto;
 import com.jangbogo.mall.domain.RegistProductDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,8 @@ public class RegistProductDaoImpl implements RegistProductDao {
     }
 
     @Override
-    public int insertProductFile(RegistProductDto registProductDto) throws Exception {
-        return session.insert(namespace + "insertProductFile", registProductDto);
+    public int insertProductFile(ProductFileDto file) throws Exception{
+        return session.insert(namespace + "insertProductFile", file);
     }
 
     public int checkSellerProdCd(RegistProductDto registProductDto) throws Exception {
