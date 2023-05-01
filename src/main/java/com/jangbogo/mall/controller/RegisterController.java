@@ -3,6 +3,7 @@ package com.jangbogo.mall.controller;
 import com.jangbogo.mall.domain.*;
 import com.jangbogo.mall.service.ProductService;
 import com.jangbogo.mall.service.RegistProductService;
+import com.jangbogo.mall.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,9 @@ import java.util.List;
 public class RegisterController {
 //    @Autowired
 //    ProductService productService;
+
+    @Autowired
+    Utils utils;
     @Autowired
     RegistProductService registProductService;
 
@@ -74,7 +78,6 @@ public class RegisterController {
                 registProductDto.setSle_end_tm(null);
             }
 
-            registProductDto.setUpload_path("https://cdn.iworldtoday.com/news/photo/202104/401210_201173_4855.jpg");  //상품테이블 <이미지파일경로> 하드코딩
             if(registProductService.insertProduct(registProductDto) != 1 || registProductService.checkSellerProdCd(registProductDto) == 1) {  //기존의 판매자상품코드와 겹치는 번호가 있는지 혹인후, 상품테이블에 insert
                 rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             }
@@ -88,7 +91,7 @@ public class RegisterController {
             }
 
             registProductDto.setProducts("https://cdn.iworldtoday.com/news/photo/202104/401210_201173_4855.jpg");
-            registProductDto.setUUID("012");  //테스트시 uuid 재할당 필수 (pk로 지정되어 있음)
+            registProductDto.setUUID(utils.createRandomStr());  //테스트시 uuid 재할당 필수 (pk로 지정되어 있음)
             registProductDto.setNAME("본문사진");
             registProductDto.setTYPE(1); //파일유형 1(이미지)
             registProductDto.setState(1); //파일상태코드 1(사용)
