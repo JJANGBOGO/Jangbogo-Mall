@@ -192,7 +192,7 @@
                 + '<div class="thum-desc">'
                 + '<a class="title"><h3>' + obj.name + '</h3></a>'
                 + '<div class="price">' + obj.prc + '원</div>'
-                + '<div class="review-cnt">리뷰 수: ' + obj.review_cnt + '</div>' //아직 dto에 추가 안함
+                // + '<div class="review-cnt">리뷰 수: ' + obj.review_cnt + '</div>' //아직 dto에 추가 안함
                 + '</div>'
                 + '</li>';
         });

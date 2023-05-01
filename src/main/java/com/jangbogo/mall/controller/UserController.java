@@ -223,11 +223,11 @@ public class UserController {
     // 인증 생성
     public boolean makeAuth(User user) throws Exception {
         UserDetailsDto dto = userDao.getUserDetailsDto(user.getEmail());
-        if (dto == null || dto.getAuthorities() == null) return false; //인증 실패시 null
+        log.info("실패 이유" + dto.getAuthorities());
 
-        //dto != null
+//        if (dto == null) return false;
         dto.setAuthority((ArrayList<String>) authDao.getAuthList(user.getAuth_idx()));
-        if (dto.getAuthorities() == null) return false;
+//        if (dto.getAuthorities() == null) return false; //인증 실패시 null
 
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(user, null, dto.getAuthorities()); //userDetailsDto.getAuthorities()식으로 권한을 추가해야 함
