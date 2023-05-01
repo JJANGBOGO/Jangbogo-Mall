@@ -8,6 +8,9 @@
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
 <div class="search-page">
     <div class="search-pd-content">
+        <c:if test="${empty searchPdList}">
+            <div class="not-found">검색 결과가 존재하지 않습니다</div>
+        </c:if>
         <ul class="search-list">
             <c:forEach items="${searchPdList}" var="product">
                 <li>
@@ -18,8 +21,8 @@
                     <div class="product-desc">
                         <a class="title"><h3>${product.name}</h3></a>
                         <div class="price">${product.prc}원</div>
-                        <div class="review-cnt">리뷰 수: </div>
-<%--                        리뷰 수 추후 개발 예정--%>
+                        <div class="review-cnt">리뷰 수:</div>
+                            <%--                        리뷰 수 추후 개발 예정--%>
                     </div>
                 </li>
             </c:forEach>
