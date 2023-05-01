@@ -9,15 +9,15 @@
         <div class="top-navigation">
             <div class="base-margin">
                 <ul>
-                    <s:authorize access="isAnonymous()">
+                    <c:if test="${empty sessionScope.email}">
                         <li>
                             <a href="/user/login">로그인</a>
                         </li>
                         <li>
                             <a href="/register/intro">회원가입</a>
                         </li>
-                    </s:authorize>
-                    <s:authorize access="isAuthenticated()">
+                    </c:if>
+                    <c:if test="${not empty sessionScope.email}">
                         <li>
                             <a>${sessionScope.nickName}님</a>
                         </li>
@@ -39,7 +39,7 @@
                                 </c:otherwise>
                             </c:choose>
                         </li>
-                    </s:authorize>
+                    </c:if>
                 </ul>
             </div>
         </div>
