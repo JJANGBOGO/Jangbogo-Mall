@@ -34,6 +34,7 @@ public class AddressController {
     public ResponseEntity<List<Address>> list(HttpSession session){
         List<Address> list = null;
         Integer user_idx = (Integer)session.getAttribute("idx"); // 세션에서 회원번호 가져오기
+        System.out.println("user_idx = " + user_idx);
         try {
             list = service.selAddrList(user_idx);
             return new ResponseEntity<List<Address>>(list, HttpStatus.OK);

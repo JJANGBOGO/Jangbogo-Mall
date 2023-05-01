@@ -18,7 +18,7 @@ import java.util.Enumeration;
 import java.util.List;
 
 @Controller
-//@RequestMapping("/mypag")
+//@RequestMapping("/mypage")
 public class ProdReviewController {
     @Autowired
     ProdReviewService prodReviewService;

@@ -1,9 +1,15 @@
 package com.jangbogo.mall.domain;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.Date;
 
-public class OrderDto {
-    // iv 선언
+
+public class MyOrderDto {
+    // iv
+        // ... 주문내역에 필요한 데이터(주문번호, 주문품목총계, 결제금액, 주문날짜, 주문상태코드)
+        // MyOrderDtlDto myOrderDtlDto;(주문상품명, 주문상품이미지URL, 결제방법 + '주문상세에 필요한 iv...' )
+
     Integer idx;                                                                                                        // 주문번호  IDX
     String ordr_nm;                                                                                                     // 주문자이름 ORDR_NM
     String mpno;                                                                                                        // 주문자휴대전화번호 MPNO
@@ -12,23 +18,22 @@ public class OrderDto {
     Integer gtot;                                                                                                       // 주문총수량 GTOT
     Integer plist_tot;                                                                                                  // 주문품목총계 PLIST_TOT
     Date ord_tm;                                                                                                        // 주문날짜 ORD_TM
-    Integer state_cd;                                                                                                   // 주문상태코드 STATE_CD
+    Integer state_cd;                                                                                                      // 주문상태코드 STATE_CD
     Date crt_tm;                                                                                                        // 최초등록일자 CRT_TM
     Integer crt_idx;                                                                                                    // 최초등록자식별번호 CRT_IDX
     Date upt_tm;                                                                                                        // 최종수정일자 UPT_TM
     Integer upt_idx;                                                                                                    // 최종수정자식별번호 UPT_IDX
 
-    MyOrderDetailDto orderDetailDto;
-    // Constructor
-    public OrderDto() {}                                                                                                // 기본 생성자
 
-    public OrderDto(String ordr_nm, String mpno, Integer user_idx) {                                                    // 매개변수 있는 생성자
-        this.ordr_nm = ordr_nm;
-        this.mpno = mpno;
-        this.user_idx = user_idx;
-    }
+    String upload_path;
+    Integer ord_idx;
+    String prod_nm;
+    Integer setl_mn_cd;
 
-    // Getter & Setter
+
+    // constructor
+    public MyOrderDto(){}
+
     public Integer getIdx() {
         return idx;
     }
@@ -133,10 +138,41 @@ public class OrderDto {
         this.upt_idx = upt_idx;
     }
 
-    // toString()
+    public String getUpload_path() {
+        return upload_path;
+    }
+
+    public void setUpload_path(String upload_path) {
+        this.upload_path = upload_path;
+    }
+
+    public Integer getOrd_idx() {
+        return ord_idx;
+    }
+
+    public void setOrd_idx(Integer ord_idx) {
+        this.ord_idx = ord_idx;
+    }
+
+    public String getProd_nm() {
+        return prod_nm;
+    }
+
+    public void setProd_nm(String prod_nm) {
+        this.prod_nm = prod_nm;
+    }
+
+    public Integer getSetl_mn_cd() {
+        return setl_mn_cd;
+    }
+
+    public void setSetl_mn_cd(Integer setl_mn_cd) {
+        this.setl_mn_cd = setl_mn_cd;
+    }
+
     @Override
     public String toString() {
-        return "OrderDto{" +
+        return "MyOrderDto{" +
                 "idx=" + idx +
                 ", ordr_nm='" + ordr_nm + '\'' +
                 ", mpno='" + mpno + '\'' +
@@ -150,6 +186,13 @@ public class OrderDto {
                 ", crt_idx=" + crt_idx +
                 ", upt_tm=" + upt_tm +
                 ", upt_idx=" + upt_idx +
+                ", upload_path='" + upload_path + '\'' +
+                ", ord_idx=" + ord_idx +
+                ", prod_nm='" + prod_nm + '\'' +
+                ", setl_mn_cd=" + setl_mn_cd +
                 '}';
     }
 }
+
+// 주문완료(=결제완료) -> 주문 테이블에 데이터 저장, 결제 테이블에 데이터 저장 + '주문상세 데이터 추가'
+// 주문 내역 페이지에 들어가면 getList() -> 주문 ~ 주문상세

@@ -52,12 +52,12 @@
 <script>
 
 
-    // 배송지 추가 파업창 오픈(카카오 api)
+    // 배송지 추가(버튼) 클릭 시 파업창 오픈(카카오 api)
     $(".insertAddr").click(function () {
         KaKao_api();
     });
 
-    // 배송지 수정 파업창 오픈
+    // 배송지 수정(버튼) 클릭 시 파업창 오픈
     $('.dlvpnList').on("click", '.update-btn', function (e) {
         let idx = $(this).parent().parent().parent('li').attr('data-idx');
         let link = '<c:url value="/mypage/address/updatePage?idx='+idx+'"/>'

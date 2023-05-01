@@ -11,6 +11,8 @@
 <html>
 <head>
     <link rel="stylesheet" href="/css/productReview.css"/>
+    <link rel="stylesheet" href="/css/productReviewModal.css"/>
+
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
     <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
 <%--    <link rel="stylesheet" href="/css/myPage/sidebar.css"/>--%>
@@ -69,8 +71,7 @@
                             <sup style="color: rgb(250, 98, 47);">*</sup>
                         </label>
                         <div class="content-box">
-                            <textarea class="content">
-                            </textarea>
+                            <textarea class="content"></textarea>
                             <span></span>
                         </div>
                     </div>
@@ -94,7 +95,7 @@
                     </div>
                     <div class="footerBtn">
                         <button class="cancleBtn" onclick="return false;">취소</button>
-                        <button class="updateBtn" onclick="return false;">수정</button>
+                        <button class="updateBtnDefault" onclick="return false;">수정</button>
                         <button class="insertBtn" onclick="return false;">등록</button>
                         <input class="hidden-idx" type="hidden" value="">
                     </div>
@@ -113,28 +114,31 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script>
 
-    let prod_idx = 1 // 상품번호
+    let prod_idx = 1 // 상품번호(하드코딩)
 
 
     // main() 처음 페이지 이동시 실행 함수
     $(document).ready(function (){
-        <%--console.log("${sessionScope.nickName}");--%>
-        <%--console.log(${idx});--%>
-        <%--console.log(${sessionScope.idx})--%>
-        <%--console.log("${sessionScope.email}");--%>
-        <%--console.log("${email}")--%>
-        <%--console.log("${nickName}")--%>
-        <%--console.log("${pd}");--%>
 
         // 상품후기 조회 함수 호출
         showList();
 
         // 후기수정 버튼 클릭 시(수정 모달창 오픈)
         $('.review-lists').on("click",'.article-updateBtn', function (){
-
             let upload_path = $(this).attr('data-upload_path');                 // 상품 이미지 url 변수 선언
             let name = $(this).parent().siblings('.article-title').text();      // 상품 이름     변수 선언
             let content = $(this).parent().siblings('.article-content').text(); // 상품 후기 내용 변수 선언
+            let nowLength = content.length;
+
+            $('.content').keydown(function (){
+                let newLength = $(this).val().length;
+                if(newLength>nowLength){
+                    $('.updateBtnDefault').attr("class","updateBtn");
+                    // $('.updateBtn').attr("class","updateBtnDefault");
+                }else if(newLength<=nowLength){
+                    $('.updateBtn').attr("class","updateBtnDefault");
+                }
+            })
             let idx = $(this).attr('data-idx');                                 // 상품 후기 일련번호 변수 선언
             let user_idx = $(this).attr('data-user_idx');
             if(user_idx!=${sessionScope.idx}){
@@ -160,15 +164,18 @@
         // 수정창 (X버튼) 클릭
         $('.reviewUpdate-container').on("click",'.closeXBtn', function (){ //
             closeModal();
+            $('.updateBtn').attr("class","updateBtnDefault"); // 수정 버튼 비활성화 (클래스 이름 변경)
+
         })
 
         // 수정창 (취소 버튼) 클릭
         $('.reviewUpdate-container').on("click",'.cancleBtn', function (){ //
             closeModal();
+            $('.updateBtn').attr("class","updateBtnDefault"); // 수정 버튼 비활성화 (클래스 이름 변경)
         })
 
         // 수정 모달창 (수정) 버튼 클릭 시
-        $(".updateBtn").click(function(){
+        $('.reviewUpdate-background').on("click",'.updateBtn', function (){
             if(!confirm("수정하신 내용으로 후기 내용을 변경하시겠습니까?"))return;
             let ctent = $('.content').val();
             let opub_yn = $('.opubCheckbox').is(':checked');
@@ -275,7 +282,7 @@
                 // tmp += '<span>좋아요 '+review.like_cnt+'</span>'
                 // tmp += '</button>'
                 tmp += '</div>'
-                tmp += '<button class="article-updateBtn" data-upload_path='+review.resv_photo_upload_path+' data-idx='+review.idx+' data-user_idx='+review.user_idx+'>후기수정</button>'
+                tmp += '<button class="article-updateBtn" data-upload_path='+review.upload_path+' data-idx='+review.idx+' data-user_idx='+review.user_idx+'>후기수정</button>'
                 tmp += '</div>'
                 tmp += '</div>'
                 tmp += '</article>'
