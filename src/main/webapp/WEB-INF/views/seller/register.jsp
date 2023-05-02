@@ -625,6 +625,11 @@
                 err_ref.html(repr_name_empty);
                 return false;
             } else err_ref.empty();
+
+            if (repr_nm.length > 20) {
+                err_ref.html("20자 내로 입력해 주세요");
+                return false;
+            } else err_ref.empty();
         });
 
         $("#bsplc_dtl").keyup(function () { //사업장 상세 주소
