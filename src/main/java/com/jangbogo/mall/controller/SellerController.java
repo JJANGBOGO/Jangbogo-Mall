@@ -159,6 +159,23 @@ public class SellerController {
         return "/seller/verify";
     }
 
+    //판매자 수정 전 인증
+    @PostMapping("/seller/info")
+    public String verifySeller(String email, String pwd, RedirectAttributes rattr) {
+        try {
+            if (service.verifySeller(email, pwd)) return "redirect:/seller/modify";
+            else { //회원 존재X
+                rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
+                return "redirect:/seller/info";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/seller/info";
+        }
+    }
+
     //판매자수정 뷰
     @GetMapping("/seller/modify")
     public String chgSellerView(HttpServletRequest req, HttpSession session, Model m, RedirectAttributes rattr) {
@@ -210,6 +227,9 @@ public class SellerController {
         try {
             int idx = (int) session.getAttribute("idx");
             String email = (String) session.getAttribute("email"); //이메일 얻기
+
+            //탈퇴를 하기전에 비밀번호가 맞는 지 확인을 하고 탈퇴를 해야 하는데 그게 누락된 것 같다.
+
             if (service.withdrawSeller(idx, email) != 1)
                 throw new Exception("withdraw failed");
 
@@ -225,7 +245,7 @@ public class SellerController {
 
     //이메일 찾기
     @PostMapping("/seller/find/email")
-    public String findSellerEmail(String cpnm, String pwd, Model m, RedirectAttributes rattr) {
+    public String findSellerEmail(String cpnm, String pwd, RedirectAttributes rattr) {
         try {
             String email = service.findSellerEmail(cpnm, pwd);
             if (email == null) {

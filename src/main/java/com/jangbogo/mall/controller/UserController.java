@@ -312,7 +312,6 @@ public class UserController {
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return "redirect:/user/info";
         }
-
     }
 
     //회원수정뷰
