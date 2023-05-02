@@ -92,7 +92,8 @@ public class UserController {
     }
 
     //로그인뷰
-    @RequestMapping("/user/login") //꼭 requestMapping
+//    @RequestMapping("/user/login") //꼭 requestMapping
+    @RequestMapping(value= {"/user/login", "/login"}) //꼭 requestMapping
     public String loginUserView(HttpServletRequest req, Model m, HttpSession session, Authentication authentication) {
 
         String uri = req.getHeader("Referer");

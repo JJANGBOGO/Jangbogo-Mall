@@ -6,25 +6,6 @@
                 http://www.springframework.org/schema/beans/spring-beans.xsd
                 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
-    <s:http auto-config="true" use-expressions="true" pattern="/user/**" authentication-manager-ref="userAuthMgr">
-        <s:form-login
-                username-parameter="email"
-                password-parameter="pwd"
-                login-processing-url="/user/login_check"
-                login-page="/user/login"
-                authentication-failure-handler-ref="loginFailHandler"
-                authentication-success-handler-ref="loginSuccessHandler"
-        />
-        <s:intercept-url pattern="/user/info" access="hasRole('ROLE_USER')"/>
-        <s:intercept-url pattern="/user/modify" access="hasRole('ROLE_USER')"/>
-        <s:intercept-url pattern="/user/withdraw" access="hasRole('ROLE_USER')"/>
-        <s:intercept-url pattern="/order/checkout" access="hasRole('ROLE_USER')"/>
-        <s:intercept-url pattern="/cart/**" access="hasRole('ROLE_USER')"/>
-        <s:access-denied-handler ref="accessFailHandler"/>
-        <s:csrf disabled="true"/>
-        <!--required-->
-    </s:http>
-
     <s:http auto-config="true" use-expressions="true" pattern="/seller/**" authentication-manager-ref="sellerAuthMgr">
         <s:form-login
                 username-parameter="email"
@@ -39,7 +20,29 @@
         <s:intercept-url pattern="/seller/read/brnd" access="hasRole('ROLE_SELLER')"/>
         <s:intercept-url pattern="/seller/modify/brnd" access="hasRole('ROLE_SELLER')"/>
         <s:intercept-url pattern="/seller/withdraw" access="hasRole('ROLE_SELLER')"/>
+
         <s:access-denied-handler ref="accessSellerFailHandler"/>
+        <s:csrf disabled="true"/>
+        <!--required-->
+    </s:http>
+
+<!--        <s:http auto-config="true" use-expressions="true" pattern="/user/**" authentication-manager-ref="userAuthMgr">-->
+    <s:http auto-config="true" use-expressions="true" authentication-manager-ref="userAuthMgr">
+        <s:form-login
+                username-parameter="email"
+                password-parameter="pwd"
+                login-processing-url="/user/login_check"
+                login-page="/user/login"
+                authentication-failure-handler-ref="loginFailHandler"
+                authentication-success-handler-ref="loginSuccessHandler"
+        />
+        <s:intercept-url pattern="/user/info" access="hasRole('ROLE_USER')"/>
+        <s:intercept-url pattern="/user/modify" access="hasRole('ROLE_USER')"/>
+        <s:intercept-url pattern="/user/withdraw" access="hasRole('ROLE_USER')"/>
+        <s:intercept-url pattern="/order/checkout" access="hasRole('ROLE_USER')"/>
+        <s:intercept-url pattern="/cart/**" access="hasRole('ROLE_USER')"/>
+
+        <s:access-denied-handler ref="accessFailHandler"/>
         <s:csrf disabled="true"/>
         <!--required-->
     </s:http>
@@ -51,11 +54,5 @@
     <s:authentication-manager id="sellerAuthMgr">
         <s:authentication-provider ref="LoginSellerAuthenticationProvider"/>
     </s:authentication-manager>
-
-
-    <!--  모든 경로(/seller/, /user/ 제외)에 표현식과 csrf설정 추가 -->
-    <s:http pattern="/**" use-expressions="true" auto-config="true">
-        <c:csrf disabled="true"/>
-    </s:http>
 
 </beans>
