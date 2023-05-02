@@ -137,7 +137,10 @@ public class UserController {
                 user = userService.selectUser(idx);
             } else {
                 log.info("이미 존재하는 이메일입니다.");
-                if (user.getState_cd() == 3) blockSocialUser(rattr); //탈퇴회원의 경우 블락 처리
+                if (user.getState_cd() == 3) { //탈퇴한 경우 블락
+                    rattr.addFlashAttribute("msg", "UNABLE");
+                    return "redirect:/user/login";
+                }
                 userService.updateLoginTm(user.getIdx(), user.getEmail());
             }
 
@@ -189,7 +192,10 @@ public class UserController {
                 user = userService.selectUser(idx);
             } else {
                 log.info("이미 존재하는 이메일입니다.");
-                if (user.getState_cd() == 3) blockSocialUser( rattr); //탈퇴회원의 경우 블락 처리
+                if (user.getState_cd() == 3) {
+                    rattr.addFlashAttribute("msg", "UNABLE");
+                    return "redirect:/user/login";
+                }
                 userService.updateLoginTm(user.getIdx(), user.getEmail()); //ok
             }
 
@@ -205,12 +211,6 @@ public class UserController {
     }
 
     //TODO:: 네이버 로그아웃
-
-    //탈퇴한 소셜회원 블락
-    public String blockSocialUser( RedirectAttributes rattr) {
-        rattr.addFlashAttribute("msg", "UNABLE");
-        return "redirect:/";
-    }
 
     public JSONObject getParsedApiResult(String apiResult) throws Exception {
         JSONParser jsonParser = new JSONParser();
