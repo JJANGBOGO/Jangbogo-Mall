@@ -666,6 +666,11 @@
                 err_ref.html(repr_telno_empty);
                 return false;
             } else err_ref.empty();
+
+            if (!mpno_reg.test(repr_telno)) {
+                err_ref.html(not_valid_mpno);
+                return false;
+            } else err_ref.empty();
         });
 
         $("#brnd_cn").keyup(function() { //브랜드 설명
