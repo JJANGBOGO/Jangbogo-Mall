@@ -81,6 +81,8 @@ public class UserController {
             if (userService.withdrawUser(idx, email) != 1)
                 throw new Exception("withdraw failed");
 
+            session.invalidate();
+            deleteAuth(req, resp);
             return ResponseEntity.ok().body("SUCCESS");
 
         } catch (Exception e) {
@@ -135,7 +137,7 @@ public class UserController {
                 user = userService.selectUser(idx);
             } else {
                 log.info("이미 존재하는 이메일입니다.");
-                if (user.getState_cd() == 3) blockSocialUser(user.getState_cd(), rattr); //탈퇴회원의 경우 블락 처리
+                if (user.getState_cd() == 3) blockSocialUser(rattr); //탈퇴회원의 경우 블락 처리
                 userService.updateLoginTm(user.getIdx(), user.getEmail());
             }
 
@@ -187,7 +189,7 @@ public class UserController {
                 user = userService.selectUser(idx);
             } else {
                 log.info("이미 존재하는 이메일입니다.");
-                if (user.getState_cd() == 3) blockSocialUser(user.getState_cd(), rattr); //탈퇴회원의 경우 블락 처리
+                if (user.getState_cd() == 3) blockSocialUser( rattr); //탈퇴회원의 경우 블락 처리
                 userService.updateLoginTm(user.getIdx(), user.getEmail()); //ok
             }
 
@@ -204,9 +206,8 @@ public class UserController {
 
     //TODO:: 네이버 로그아웃
 
-
     //탈퇴한 소셜회원 블락
-    public String blockSocialUser(int state, RedirectAttributes rattr) {
+    public String blockSocialUser( RedirectAttributes rattr) {
         rattr.addFlashAttribute("msg", "UNABLE");
         return "redirect:/";
     }
@@ -398,6 +399,13 @@ public class UserController {
             e.printStackTrace();
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return "redirect:/find/pwd";
+        }
+    }
+
+    public void deleteAuth(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
         }
     }
 }
