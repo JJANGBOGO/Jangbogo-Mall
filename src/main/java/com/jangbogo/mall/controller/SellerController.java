@@ -7,6 +7,7 @@ import com.jangbogo.mall.service.SellerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +32,15 @@ public class SellerController {
     ProductService productService;
 
     //로그인화면
-    @RequestMapping("/seller/login")
-    public String loginSellerView() {
+    @RequestMapping("/seller/login") //꼭 requestMapping
+    public String loginSellerView(HttpServletRequest req, Authentication authentication) {
+
+        String uri = req.getHeader("Referer");
+        if (authentication != null) return "redirect:/";
+
+        if (uri != null && !(uri.contains("/seller/login") || uri.contains("/seller/login_check")))
+            req.getSession().setAttribute("prevPage", uri);
+
         return "/seller/login";
     }
 
