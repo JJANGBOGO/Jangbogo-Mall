@@ -15,6 +15,12 @@
                 authentication-failure-handler-ref="loginSellerFailHandler"
                 authentication-success-handler-ref="loginSellerSuccessHandler"
         />
+        <s:logout
+                logout-url="/general/logout"
+                logout-success-url="/"
+                invalidate-session="true"
+                delete-cookies="true"
+        />
         <s:intercept-url pattern="/seller/info" access="hasRole('ROLE_SELLER')"/>
         <s:intercept-url pattern="/seller/modify" access="hasRole('ROLE_SELLER')"/>
         <s:intercept-url pattern="/seller/read/brnd" access="hasRole('ROLE_SELLER')"/>
@@ -36,11 +42,18 @@
                 authentication-failure-handler-ref="loginFailHandler"
                 authentication-success-handler-ref="loginSuccessHandler"
         />
+        <s:logout
+                logout-url="/general/logout"
+                logout-success-url="/"
+                invalidate-session="true"
+                delete-cookies="true"
+        />
         <s:intercept-url pattern="/user/info" access="hasRole('ROLE_USER')"/>
         <s:intercept-url pattern="/user/modify" access="hasRole('ROLE_USER')"/>
         <s:intercept-url pattern="/user/withdraw" access="hasRole('ROLE_USER')"/>
         <s:intercept-url pattern="/order/checkout" access="hasRole('ROLE_USER')"/>
         <s:intercept-url pattern="/cart/**" access="hasRole('ROLE_USER')"/>
+        <s:intercept-url pattern="/mypage/**" access="hasRole('ROLE_USER')"/>
 
         <s:access-denied-handler ref="accessFailHandler"/>
         <s:csrf disabled="true"/>
