@@ -81,8 +81,6 @@ public class UserController {
             if (userService.withdrawUser(idx, email) != 1)
                 throw new Exception("withdraw failed");
 
-            session.invalidate();//세션 삭제
-            deleteAuth(req, resp);//인가 객체 삭제
             return ResponseEntity.ok().body("SUCCESS");
 
         } catch (Exception e) {
@@ -92,8 +90,7 @@ public class UserController {
     }
 
     //로그인뷰
-//    @RequestMapping("/user/login") //꼭 requestMapping
-    @RequestMapping(value= {"/user/login", "/login"}) //꼭 requestMapping
+    @RequestMapping("/user/login") //꼭 requestMapping
     public String loginUserView(HttpServletRequest req, Model m, HttpSession session, Authentication authentication) {
 
         String uri = req.getHeader("Referer");
@@ -160,9 +157,7 @@ public class UserController {
     //카카오 로그아웃
     @GetMapping("/social/kakao_logout")
     public String kakaoLogout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        session.invalidate();
-        deleteAuth(request, response); //인증 삭제
-        return "redirect:/";
+        return "redirect:/general/logout";
     }
 
     //네이버 로그인
@@ -236,22 +231,6 @@ public class UserController {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authentication);
         return true;
-    }
-
-    // 로그아웃시 인증 삭제
-    public void deleteAuth(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-    }
-
-    // 일반 회원 로그아웃
-    @GetMapping("/general/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        session.invalidate();
-        deleteAuth(request, response);
-        return "redirect:/";
     }
 
     //가입화면
