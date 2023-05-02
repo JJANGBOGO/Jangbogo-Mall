@@ -174,7 +174,8 @@
 <script src="/js/member/msg.js"></script>
 <script>
     let msg = "${msg}";
-    if (msg == "EXCEPTION_ERR") alert("예상치 못한 오류가 발생했습니다. 불편을 끼쳐드려 죄송합니다.");
+    if (msg === "EXCEPTION_ERR") alert("예상치 못한 오류가 발생했습니다. 불편을 끼쳐드려 죄송합니다.");
+    if (msg === "WITHDRAW_OK") alert(withdraw_ok);
 </script>
 <script>
     //상품리스트를 html로 구현
