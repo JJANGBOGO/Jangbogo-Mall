@@ -16,7 +16,7 @@ import java.util.*;
 public class KakaoPayController {
 
     @Autowired
-    KakaoPayService kakaoPayService;                                                                         // Bean 자동 주입 - KakaoPayService
+    KakaoPayService kakaoPayService;                                                                                    // Bean 자동 주입 - KakaoPayService
     @Autowired OrderService orderService;                                                                               // Bean 자동 주입 - OrderService
     @Autowired CartService cartService;                                                                                 // Bean 자동 주입 - CartService
 
@@ -32,7 +32,7 @@ public class KakaoPayController {
     @PostMapping("/payment/kakao/ready")
     @ResponseBody
     public KakaoReadyResponseDto readyToKakaoPay(@RequestBody KakaoReadyRequestDto kakaoReadyRequestDto, HttpSession session) {
-        session.setAttribute("orderDto", kakaoReadyRequestDto.getOrderDto());                                     // 1. 세션에 주문 데이터 객체(orderDto) 저장
+        session.setAttribute("orderDto", kakaoReadyRequestDto.getOrderDto());                                           // 1. 세션에 주문 데이터 객체(orderDto) 저장
         session.setAttribute("deliveryDto", kakaoReadyRequestDto.getDeliveryDto());
         kakaoReadyResponseDto = kakaoPayService.kakaoPayReady(kakaoReadyRequestDto);                                    // 2. 카카오페이 서버로부터 받은 KakaoReadyResponseDto 형식의 응답 데이터를 변수에 저장
         return kakaoReadyResponseDto;                                                                                   // 3. 응답 데이터 반환
@@ -44,7 +44,7 @@ public class KakaoPayController {
     // 매개변수 : @RequestParam("pg_token") String pg_token, RedirectAttributes rattr, HttpSession session
     @GetMapping("/payment/kakao/approve")
     public String approveKakaoPayRequest(@RequestParam("pg_token") String pg_token, RedirectAttributes rattr, HttpSession session) throws Exception {
-        OrderDto orderDto = (OrderDto)session.getAttribute("orderDto");                                           // 변수명 : orderDto - 저장값 : 세션에 저장되어 있는 주문 데이터 객체(orderDto)
+        OrderDto orderDto = (OrderDto)session.getAttribute("orderDto");                                                 // 변수명 : orderDto - 저장값 : 세션에 저장되어 있는 주문 데이터 객체(orderDto)
         DeliveryDto deliveryDto = (DeliveryDto)session.getAttribute("deliveryDto");
 
         int insertOrderDtoRowCnt = 0;                                                                                   // 변수명 : insertOrderDtoRowCnt - 저장값 : '주문' 테이블 데이터
@@ -88,10 +88,12 @@ public class KakaoPayController {
 
             cartService.removeAll(orderDto.getUser_idx());                                                              // '주문완료' 처리 시, 장바구니 목록 초기화
 
-            rattr.addFlashAttribute("model", kakaoApproveResponseDto);                                     // 뷰에 전달할 데이터를 RedirectAttributes 객체에 저장
-            session.removeAttribute("orderDto");                                                                  // 세션에 저장되어 있는 주문 데이터 객체(orderDto) 삭제
-            session.removeAttribute("paymentDto");                                                                // 세션에 저장되어 있는 결제 데이터 객체(paymentDto) 삭제
-            session.removeAttribute("deliveryDto");                                                               // 세션에 저장되어 있는 결제 데이터 객체(deliveryDto) 삭제
+            rattr.addFlashAttribute("model", kakaoApproveResponseDto);                                                  // 뷰에 전달할 데이터를 RedirectAttributes 객체에 저장
+            rattr.addFlashAttribute("orderDto", orderDto);                                                              // 뷰에 전달할 데이터를 RedirectAttributes 객체에 저장
+
+            session.removeAttribute("orderDto");                                                                        // 세션에 저장되어 있는 주문 데이터 객체(orderDto) 삭제
+            session.removeAttribute("paymentDto");                                                                      // 세션에 저장되어 있는 결제 데이터 객체(paymentDto) 삭제
+            session.removeAttribute("deliveryDto");                                                                     // 세션에 저장되어 있는 결제 데이터 객체(deliveryDto) 삭제
 
             return "redirect:/order/checkout/success";                                                                  // 주문 성공 페이지 이동 메서드의 매핑 경로로 리다이렉트
         } catch (Exception e) {                                                                                         // 예외 처리
@@ -125,7 +127,7 @@ public class KakaoPayController {
         // TODO: 2.1 결제 취소 처리 완료 시, '결제' 테이블의 데이터 상태코드를 2(결제취소)로 바꿔야 한다.
         // TODO: 2.2 결제 취소 처리 완료 시, '결제' 테이블의 데이터 처리시각을 #{canceled_at}으로 바꿔야 한다.
 
-//        kakaoCancelResponseDto = kakaoPayService.refundResponse();                               // 카카오페이 서버로부터 받은 응답 데이터 KakaoCancelResponseDto를 변수에 저장
+//        kakaoCancelResponseDto = kakaoPayService.refundResponse();                                                    // 카카오페이 서버로부터 받은 응답 데이터 KakaoCancelResponseDto를 변수에 저장
 //        return "";
 //    }
 }
