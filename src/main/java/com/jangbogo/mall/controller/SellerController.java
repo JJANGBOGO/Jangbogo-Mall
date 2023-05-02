@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Objects;
@@ -28,8 +32,11 @@ public class SellerController {
     @Autowired
     SellerService service;
 
+//    @Autowired
+//    ProductService productService;
+
     @Autowired
-    ProductService productService;
+    BCryptPasswordEncoder passwordEncoder;
 
     //로그인화면
     @RequestMapping("/seller/login") //꼭 requestMapping
@@ -218,27 +225,43 @@ public class SellerController {
 
     //판매자탈퇴 뷰
     @GetMapping("/seller/withdraw")
-    public String withdrawSellerView() {
-        return "/seller/withdraw";
+    public String withdrawSellerView(Model m, HttpSession session, RedirectAttributes rattr) {
+        try {
+            Integer idx = (Integer) session.getAttribute("idx");
+            Seller seller = service.getSellerByIdx(idx);
+            m.addAttribute("seller", seller);
+            return "/seller/withdraw";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addAttribute("msg", "EXCEPTION_ERR");
+            return "/";
+        }
     }
 
     @PostMapping("/seller/withdraw")
-    public String withdrawSeller(String pwd, RedirectAttributes rattr, HttpSession session) {
+    public String withdrawSeller(String pwd, HttpServletRequest req, HttpServletResponse resp, RedirectAttributes rattr, HttpSession session) {
         try {
             int idx = (int) session.getAttribute("idx");
             String email = (String) session.getAttribute("email"); //이메일 얻기
 
-            //탈퇴를 하기전에 비밀번호가 맞는 지 확인을 하고 탈퇴를 해야 하는데 그게 누락된 것 같다.
+            Seller seller = service.getSellerByIdx(idx);
+            if (!passwordEncoder.matches(pwd, seller.getPwd())) { //비밀번호 일치여부 확인
+                rattr.addFlashAttribute("msg", "SELLER_NOT_FOUND"); //불일치
+                return "redirect:/seller/withdraw";
+            }
 
             if (service.withdrawSeller(idx, email) != 1)
                 throw new Exception("withdraw failed");
 
-            rattr.addFlashAttribute("msg", "SELLER_NOT_FOUND"); //판매자 존재 X
-            return "redirect:/seller/withdraw";
+            session.invalidate();
+            deleteAuth(req, resp);
+            rattr.addFlashAttribute("msg", "WITHDRAW_OK");
+            return "redirect:/";
 
         } catch (Exception e) {
             e.printStackTrace();
-            rattr.addFlashAttribute("msg", "SELER_WITHDRAW_OK"); //탈퇴완료
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return "redirect:/seller/withdraw";
         }
     }
@@ -282,6 +305,13 @@ public class SellerController {
             e.printStackTrace();
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return "redirect:/find/pwd";
+        }
+    }
+
+    public void deleteAuth(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
         }
     }
 
