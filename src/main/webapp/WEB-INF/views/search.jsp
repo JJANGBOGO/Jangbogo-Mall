@@ -11,7 +11,7 @@
         <c:if test="${empty searchPdList}">
             <div class="not-found">검색 결과가 존재하지 않습니다</div>
         </c:if>
-            <div>${searchKeyword}에 대한 검색결과</div>
+            <div class="search-result"><span>${searchKeyword}</span>에 대한 검색결과</div>
         <ul class="search-list">
             <c:forEach items="${searchPdList}" var="product">
                 <li>

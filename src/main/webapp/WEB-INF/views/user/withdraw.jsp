@@ -9,11 +9,9 @@
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
 <div class="withdraw-content">
     <h1 class="header">회원 탈퇴 안내</h1>
-
     <p>* 별도의 목적의 경우 고객센터로 문의해주시기 바랍니다.</p>
     <p>* 개인정보는 개인정보 처리 방침에 따라 보관합니다.</p>
     <p>* 탈퇴가 진행되면 이후에는 어떠한 복구도 할 수 없습니다.</p>
-
     <div class="warn-list">
         <p class="text-danger">
             * 회원 탈퇴 시 기존의 등급, 주문 내역, 쿠폰 등은 즉시 소멸됩니다.
@@ -26,7 +24,6 @@
             * 회원 탈퇴 시 기존 주문 교환/환불 처리가 불가능해집니다.
         </p>
     </div>
-
     <div class="user-info">
         <h4>가입 정보</h4>
         <p>이메일: <span>${user.email}</span></p>
@@ -67,8 +64,7 @@
                 width="20"
                 height="20"
         />
-        <span
-        >위 사항을 모두 숙지하였으며 동의합니다.</span>
+        <span>위 사항을 모두 숙지하였으며 동의합니다.</span>
     </label>
     <div class="btn-container">
         <button class="cancel">취소하기</button>
