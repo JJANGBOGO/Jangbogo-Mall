@@ -330,13 +330,6 @@ function commonKeyupErrMsg() { //회원, 판매자 공통 에러 keyup
         emailErrMsg(email, err_ref);
     });
 
-    $("#nick_nm").keyup(function () {
-        let nick = $("#nick_nm").val();
-        let err_ref = $(".error-msg.nick");
-        nickErrMsg(nick, err_ref);
-    });
-
-
     $("#pwd").keyup(function () {
         let pwd = $("#pwd").val();
         let err_ref = $(".error-msg.pwd");
@@ -365,6 +358,3 @@ function commonKeyupErrMsg() { //회원, 판매자 공통 에러 keyup
         }
     });
 }
-
-//닉네임 별도 분리 식으로 갈 듯
-//공통은 이메일, 비번, 휴대전화 정도
