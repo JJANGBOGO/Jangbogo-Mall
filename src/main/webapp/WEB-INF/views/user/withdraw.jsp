@@ -118,7 +118,7 @@
                 success: function (msg) {
                     if (msg === "SUCCESS") {
                         alert(withdraw_ok);
-                        window.location.href = "/";
+                        window.location.href = "/general/logout";
                     }
                 },
                 error: function (error) {
