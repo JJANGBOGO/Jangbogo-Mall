@@ -415,7 +415,7 @@
             } else if (order.ord_state_cd == 2) {
                 orderStatus = '배송준비중';
             } else if (order.ord_state_cd == 3) {
-                orderStatus = '배송출발';
+                orderStatus = '배송중';
             } else if (order.ord_state_cd == 4) {
                 orderStatus = '배송완료';
             } else if (order.ord_state_cd == 5) {
@@ -458,7 +458,7 @@
         }else{
             tmp += '<li><span>상품금액</span><span>'+formatPriceWithComma(orders[0].ord_tot_amt)+'원</span></li>'
             tmp += '<li><span>배송비</span><span></span>2,500원</li>'
-            tmp += '<li><span>결제금액</span><span>'+formatPriceWithComma(orders[0].amt)+'원</span></li>'
+            tmp += '<li><span>결제금액</span><span>'+formatPriceWithComma(orders[0].amt + 2500)+'원</span></li>'
         }
 
         tmp += '<li class="last"><span>결제방법</span>'

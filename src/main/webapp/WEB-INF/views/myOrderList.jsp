@@ -95,11 +95,11 @@
             tmp += '</div>'
             tmp += '<div class="order-state">'
             if (order.state_cd == 1) {
-                tmp += '<span>주문완료</span>'
+                tmp += '<span>결제완료</span>'
             } else if (order.state_cd == 2) {
                 tmp += '<span>배송준비중</span>'
             } else if (order.state_cd == 3) {
-                tmp += '<span>배송출발</span>'
+                tmp += '<span>배송중</span>'
             } else if (order.state_cd == 4) {
                 tmp += '<span>배송완료</span>'
             } else if (order.state_cd == 5) {
