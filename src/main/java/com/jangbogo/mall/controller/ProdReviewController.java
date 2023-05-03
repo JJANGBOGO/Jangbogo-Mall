@@ -19,65 +19,44 @@ public class ProdReviewController {
     @Autowired
     ProdReviewService prodReviewService;
 
-    // 상품후기 처음에 필요한 것  1.상품번호(조회) 2.회원번호(수정,삭제,추가)
+    // 상품후기 처음에 필요한 것  1.상품번호(하드코딩) 2.회원번호(수정)
     @GetMapping("/product/review")
-    public String productReviewPage(Integer page,Integer pageSize,HttpSession session, Model m,Integer prod_idx,SearchCondition sc){ // 상품 후기는 세션에서 그 회원의 회원번호를 가진 사람만 후기를 수정할 수 있어야 한다
+    public String productReviewPage(HttpSession session, Model m,Integer prod_idx){ // 상품 후기는 세션에서 그 회원의 회원번호를 가진 사람만 후기를 수정할 수 있어야 한다
         Integer user_idx = (int)session.getAttribute("idx"); // 세션에서 회원번호를 가져온다
-        Integer pd = 3;
-
         List<ProdReviewDto> list = null;
 
-        try {
-            int totalCnt = prodReviewService.getCount(1);
-            System.out.println("totalCnt = " + totalCnt);
-            PageHandler pageHandler = new PageHandler(totalCnt,sc);
-//            System.out.println("pageHandler = " + pageHandler);
-//            if(page==null) page=1;
-//            if(pageSize==null) pageSize=10;
+//        m.addAttribute(prod_idx); // 현재 하드코딩 나중에 넣어주기
 
-//            Map map = new HashMap();
-//            map.put("offset", (page-1) * pageSize);
-//            map.put("pageSize",pageSize);
-//            map.put("prod_idx",prod_idx);
-//            list = prodReviewService.selectPage(map);
-//            m.addAttribute("ph",pageHandler);
-//            System.out.println("pageHandler = " + pageHandler);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-//        m.addAttribute(user_idx); // 회원번호를 jsp 로 넘겨준다
-//        m.addAttribute(prod_idx); // 상품번호를 jsp 로 넘겨준다
-        m.addAttribute(pd);
         return "productReview";
     }
 
-    // 상품후기 처음에 필요한 것  1.상품번호(조회) 2.회원번호(수정,삭제,추가)
-    // 상품후기 목록을 가져오는 메서드
+    // 상품후기 목록을 가져오는 메서드 + 페이징
     @GetMapping("/product/review/list") // /product/review/list?prod_idx=1  GET
     public ResponseEntity<Map> list(Integer page,Integer pageSize, Integer prod_idx, HttpSession session, SearchCondition sc){ // 상품번호, 회원번호 보유중
         List<ProdReviewDto> list = null;
 
         Integer user_idx = (Integer)session.getAttribute("idx");        // 세션에서 회원번호를 가져온다
         try {
-            int totalCnt = prodReviewService.getCount(prod_idx);
+            int totalCnt = prodReviewService.getCount(prod_idx);              // 해당 상품의 상품후기 개수
             PageHandler pageHandler = new PageHandler(totalCnt,sc);
-            if(page==null) page=1;
-            if(pageSize==null) pageSize=10;
+
+            if(page==null || page.equals("")) page=1;
+            if(pageSize==null || page.equals("")) pageSize=10;
 
             Map map = new HashMap();
             map.put("offset", (page-1) * pageSize);
             map.put("pageSize",pageSize);
             map.put("prod_idx",prod_idx);
-            list = prodReviewService.selectPage(map);
-//            System.out.println("map = " + map);
-            Map<String, Object> mapp = new HashMap<>();
-            mapp.put("totalCnt",totalCnt);
-            mapp.put("pageHandler",pageHandler);
-            mapp.put("list",list);
+            list = prodReviewService.selectPage(map);                         // 상품후기 목록을 가져온다 10개씩
+
+            Map<String, Object> listsMap = new HashMap<>();                   // Map(listsMap) 생성 // 여러개의 값을 보내기 위해서
+            listsMap.put("totalCnt",totalCnt);                                // Map 에 상품후기 개수(totalCnt) 추가
+            listsMap.put("pageHandler",pageHandler);                          // Map 에 페이징(pageHandler) 추가
+            listsMap.put("list",list);                                        // Map 에 상품후기 목록 10개(list) 추가
+
 //            list = prodReviewService.getList(prod_idx);                       // 상품번호를 가지고 상품후기 목록을 가져온다
-//            System.out.println("list = " + list);
-            return new ResponseEntity<Map>(mapp, HttpStatus.OK);
+
+            return new ResponseEntity<Map>(listsMap, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<Map>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -96,9 +75,8 @@ public class ProdReviewController {
 
         prodReviewDto.setUser_idx(user_idx);          // prodReviewDto 에 회원번호를 담는다
         prodReviewDto.setIdx(idx);                    // prodReviewDto 에 상품 후기 일련번호를 담는다
-        System.out.println("prodReviewDto1 = " + prodReviewDto);
         try {
-            if(opub_yn.equals("true")){               // 공개여부 확인(후기 비공개하기 Yes or No)
+            if(opub_yn.equals("true")){               // 공개여부 확인(후기 비공개하기 == Yes or No)
                 prodReviewDto.setOpub_yn("N");        // 공개여부 N(no)
             }else {
                 prodReviewDto.setOpub_yn("Y");        // 공개여부 Y(yes)

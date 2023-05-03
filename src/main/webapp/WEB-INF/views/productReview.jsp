@@ -36,7 +36,7 @@
 
         <div class="review-box">
             <div class="review-count">
-                <span>총 </span><span class="count">14,291</span><span>개</span>
+                <span>총 </span><span class="count"></span><span>개</span>
             </div>
             <div class="review-lists">
 
@@ -64,7 +64,6 @@
 
 
 <%--모달--%>
-
 <div class="reviewUpdate-container">
     <div></div>
     <div class="reviewUpdate-background">
@@ -123,9 +122,8 @@
 
     </div>
 </div>
-
-
 <%--모달끝--%>
+
 
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
@@ -139,30 +137,6 @@
 
         // 상품후기 조회 함수 호출
         showList();
-
-
-        <%--console.log("${ph.page}")--%>
-        // 페이징으로 상품 후기 목록 조회함수
-        $('.pageHandler-container').on("click",'a', function (){
-            let page = $(this).attr('data-page');
-            alert(page);
-            console.log(page)
-            $.ajax({
-                type:'GET',                                                 // 요청 메서드 // 상품후기 목록 가저오기
-                url: '/product/review/list?prod_idx=1&page='+page,             // 요청 URI
-                // headers : { "content-type": "application/json"},         // 요청 헤더
-                // dataType : 'text',                                       // 전송받을 데이터의 타입 / 생략하면 기본이 JSON 이다
-                // data : JSON.stringify(person),                           // 서버로 전송할 데이터. stringify()로 직렬화 필요.
-                success : function(result){
-                    $(".review-lists").html(ReviewListToHtml(result["list"]));      // 서버로부터 응답이 도착하면 호출될 함수
-                    $(".pageHandler-container").html(PageHandlerToHtml(result["pageHandler"]));
-                    $(".count").html(result["totalCnt"]);
-                },
-                error   : function(){ alert("error") }                      // 에러가 발생했을 때, 호출될 함수
-            }); // $.ajax()
-
-        })
-
 
         // 후기수정 버튼 클릭 시(수정 모달창 오픈)
         $('.review-lists').on("click",'.article-updateBtn', function (){
@@ -228,6 +202,26 @@
 
         });
 
+        // 페이징 버튼 클릭 시(해당 페이지 목록 조회)
+        $('.pageHandler-container').on("click",'a', function (){ // a태그 클릭 시
+            let page = $(this).attr('data-page');
+            alert(page);
+            $.ajax({
+                type:'GET',                                                 // 요청 메서드 // 상품후기 목록 가저오기
+                url: '/product/review/list?prod_idx=1&page='+page,             // 요청 URI  // 상품번호 (하드코딩)
+                // headers : { "content-type": "application/json"},         // 요청 헤더
+                // dataType : 'text',                                       // 전송받을 데이터의 타입 / 생략하면 기본이 JSON 이다
+                // data : JSON.stringify(person),                           // 서버로 전송할 데이터. stringify()로 직렬화 필요.
+                success : function(result){
+                    $(".review-lists").html(ReviewListToHtml(result["list"]));      // 서버로부터 응답이 도착하면 호출될 함수
+                    $(".pageHandler-container").html(PageHandlerToHtml(result["pageHandler"]));
+                    $(".count").html(result["totalCnt"]);
+                },
+                error   : function(){ alert("error") }                      // 에러가 발생했을 때, 호출될 함수
+            }); // $.ajax()
+
+        })
+
     });
 
 
@@ -237,7 +231,6 @@
         <%--console.log("${sessionScope.email}");--%>
         <%--console.log("${email}")--%>
         <%--console.log("${nickname}")--%>
-
         let tmp = '';
         reviews.forEach(function (review){
             if((review.user_idx==${idx} && review.opub_yn=="N") || review.opub_yn=="Y"){ // 작성자만 자신이 작성한 비공개 후기를 볼 수 있다
@@ -288,6 +281,7 @@
         return tmp;
     }
 
+
     let PageHandlerToHtml = function (ph){
         let tmp = '';
         console.log(ph.sc.page);
@@ -306,7 +300,6 @@
                 tmp += '<a class="page" data-page="'+i+'">'+i+'</a>'
             }
         }
-
         if(ph.showNext){
             tmp += '<a class="page" data-page='+(ph.endPage+1)+'>&gt;</a>'
         }

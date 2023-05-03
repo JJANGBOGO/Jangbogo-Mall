@@ -16,6 +16,7 @@
         where ORD.IDX = #{ord_idx} and ORD_DTL.PROD_IDX = PRODUCT.IDX;
     </select>
 
+<!--    주문상세 테이블 후기 작성 상태 업데이트(후기 작성 완료)-->
     <update id="updateReviewState" parameterType="int">
         update ORD_DTL
         set PROD_LATE_STATE_CD = 3
@@ -39,7 +40,7 @@
 <!--주문이력테이블 주문상태 업데이트-->
     <update id="updateOrdHistState" parameterType="int">
         update ORD_HIST
-        set ORD_STATE_CD = 5 , CHG_TM = now(), UPT_TM = now()
+        set ORD_STATE_CD = 5 ,PROD_LATE_STATE_CD = 1, CHG_TM = now(), UPT_TM = now()
         where ORD_IDX = #{ord_idx};
     </update>
 </mapper>

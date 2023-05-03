@@ -86,9 +86,9 @@ public class MyOrderDetailController {
         prodReviewDto.setWriter(nickName);   // Dto 에 작성자(닉네임) 추가
 
         try {
-            if (prodReviewService.insert(prodReviewDto) != 1) throw new Exception("Write failed");
+            if (prodReviewService.insert(prodReviewDto) != 1) throw new Exception("Write failed"); // 상품 후기 테이블에 작성(insert)이 성공되었으면 ↓
             myOrderDetailService.updateReviewState(ord_dtl_idx);
-            return new ResponseEntity<>("INSERT_OK", HttpStatus.OK);
+            return new ResponseEntity<>("INSERT_OK", HttpStatus.OK);                         // 주문상세 테이블 후기 작성 상태 업데이트(후기 작성 완료)
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>("INSERT_ERR", HttpStatus.INTERNAL_SERVER_ERROR);
