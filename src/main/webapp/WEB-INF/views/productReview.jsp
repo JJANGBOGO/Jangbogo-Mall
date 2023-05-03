@@ -29,7 +29,8 @@
     <section class="review-section">
         <header class="review-header">
             <h2 class="header">상품 후기</h2>
-<%--            <div class="reviewBtn-box">--%>
+            <input class="abc">
+        <%--            <div class="reviewBtn-box">--%>
 <%--                <button class="review-button" type="button">작성하기</button>--%>
 <%--            </div>--%>
         </header>
@@ -216,6 +217,7 @@
                     $(".review-lists").html(ReviewListToHtml(result["list"]));      // 서버로부터 응답이 도착하면 호출될 함수
                     $(".pageHandler-container").html(PageHandlerToHtml(result["pageHandler"]));
                     $(".count").html(result["totalCnt"]);
+                    $('.abc').focus();
                 },
                 error   : function(){ alert("error") }                      // 에러가 발생했을 때, 호출될 함수
             }); // $.ajax()

@@ -438,7 +438,7 @@
         })
         tmp += '<div class="orderDetail-Btn">'
         tmp += '<button class="orderDetail-cartAll">전체 상품 다시 담기</button>'
-        if(orders[0].ord_state_cd == 1){
+        if(orders[0].cncl_posbl_state_cd == 1){
             tmp += '<button class="orderDetail-cancle" data-idx= '+orders[0].idx+'>전체 상품 주문 취소</button>'
         }else {
             tmp += '<button class="orderDetail-cancleDefault">전체 상품 주문 취소</button>'
