@@ -29,13 +29,12 @@
     <section class="review-section">
         <header class="review-header">
             <h2 class="header">상품 후기</h2>
-            <input class="abc">
         <%--            <div class="reviewBtn-box">--%>
 <%--                <button class="review-button" type="button">작성하기</button>--%>
 <%--            </div>--%>
         </header>
 
-        <div class="review-box">
+        <div class="review-box" id="abc">
             <div class="review-count">
                 <span>총 </span><span class="count"></span><span>개</span>
             </div>
@@ -209,7 +208,7 @@
             alert(page);
             $.ajax({
                 type:'GET',                                                 // 요청 메서드 // 상품후기 목록 가저오기
-                url: '/product/review/list?prod_idx=1&page='+page,             // 요청 URI  // 상품번호 (하드코딩)
+                url: '/product/review/list?prod_idx='+prod_idx+'&page='+page,             // 요청 URI  // 상품번호 (하드코딩)
                 // headers : { "content-type": "application/json"},         // 요청 헤더
                 // dataType : 'text',                                       // 전송받을 데이터의 타입 / 생략하면 기본이 JSON 이다
                 // data : JSON.stringify(person),                           // 서버로 전송할 데이터. stringify()로 직렬화 필요.
@@ -217,7 +216,8 @@
                     $(".review-lists").html(ReviewListToHtml(result["list"]));      // 서버로부터 응답이 도착하면 호출될 함수
                     $(".pageHandler-container").html(PageHandlerToHtml(result["pageHandler"]));
                     $(".count").html(result["totalCnt"]);
-                    $('.abc').focus();
+                    $('.review-header').attr("tabindex",-1);
+                    $('.review-header').focus();
                 },
                 error   : function(){ alert("error") }                      // 에러가 발생했을 때, 호출될 함수
             }); // $.ajax()
@@ -226,7 +226,7 @@
 
     });
 
-
+    // 상품 후기 목록 뿌려주기
     let ReviewListToHtml = function (reviews){
         <%--console.log(${idx});--%>
         <%--console.log(${sessionScope.idx})--%>
@@ -278,12 +278,11 @@
                 tmp += '</div>'
             }
 
-
         })
         return tmp;
     }
 
-
+    // 상품 후기 페이징 뿌려주기
     let PageHandlerToHtml = function (ph){
         let tmp = '';
         console.log(ph.sc.page);
