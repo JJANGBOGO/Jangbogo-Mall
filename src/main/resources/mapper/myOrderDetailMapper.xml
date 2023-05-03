@@ -56,7 +56,7 @@
 
     <update id="updateSetlCanceled" parameterType="String">
         UPDATE SETL
-        SET ORD_TOT_AMT = 0, AMT = 0, STATE_CD = 2, DEAL_TM = now(), UPT_TM = now()
+        SET STATE_CD = 2, DEAL_TM = now(), UPT_TM = now()
         WHERE SETL_IDX = #{tid}
     </update>
 </mapper>
