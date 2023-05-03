@@ -113,7 +113,6 @@ public class UserController {
     //카카오 로그인
     @GetMapping("/social/kakao")
     public String buildKaKao(HttpSession session, String code, String state, RedirectAttributes rattr) {
-
         try {
             oauthToken = kakaoLoginBO.getAccessToken(session, code, state);
             apiResult = kakaoLoginBO.getUserProfile(oauthToken);

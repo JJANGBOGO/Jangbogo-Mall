@@ -3,6 +3,7 @@ package com.jangbogo.mall.dao;
 import com.jangbogo.mall.domain.Address;
 import com.jangbogo.mall.domain.User;
 import com.jangbogo.mall.domain.UserDetailsDto;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Repository
+@Slf4j
 public class UserDaoImpl implements UserDao {
 
     @Autowired
@@ -23,7 +25,7 @@ public class UserDaoImpl implements UserDao {
         Map map = new HashMap();
         map.put("idx", idx);
         map.put("email", email);
-        return session.update(nameSpace + "deleteUser", map);
+        return session.update(nameSpace + "withdrawUser", map);
     }
 
     @Override

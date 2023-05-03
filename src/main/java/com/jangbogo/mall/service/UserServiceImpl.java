@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int withdrawUser(int idx, String email) throws Exception {
-        return dao.deleteUser(idx, email);
+        return dao.withdrawUser(idx, email);
     }
 
     @Override
