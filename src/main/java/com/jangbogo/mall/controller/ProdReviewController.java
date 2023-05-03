@@ -1,8 +1,6 @@
 package com.jangbogo.mall.controller;
 
-import com.jangbogo.mall.domain.OrderDto;
-import com.jangbogo.mall.domain.ProductDto;
-import com.jangbogo.mall.domain.ProdReviewDto;
+import com.jangbogo.mall.domain.*;
 import com.jangbogo.mall.service.ProdReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,9 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
 @Controller
 //@RequestMapping("/mypage")
@@ -25,9 +21,31 @@ public class ProdReviewController {
 
     // 상품후기 처음에 필요한 것  1.상품번호(조회) 2.회원번호(수정,삭제,추가)
     @GetMapping("/product/review")
-    public String productReviewPage(HttpSession session, Model m,Integer prod_idx){ // 상품 후기는 세션에서 그 회원의 회원번호를 가진 사람만 후기를 수정할 수 있어야 한다
+    public String productReviewPage(Integer page,Integer pageSize,HttpSession session, Model m,Integer prod_idx,SearchCondition sc){ // 상품 후기는 세션에서 그 회원의 회원번호를 가진 사람만 후기를 수정할 수 있어야 한다
         Integer user_idx = (int)session.getAttribute("idx"); // 세션에서 회원번호를 가져온다
         Integer pd = 3;
+
+        List<ProdReviewDto> list = null;
+
+        try {
+            int totalCnt = prodReviewService.getCount(1);
+            System.out.println("totalCnt = " + totalCnt);
+            PageHandler pageHandler = new PageHandler(totalCnt,sc);
+//            System.out.println("pageHandler = " + pageHandler);
+//            if(page==null) page=1;
+//            if(pageSize==null) pageSize=10;
+
+//            Map map = new HashMap();
+//            map.put("offset", (page-1) * pageSize);
+//            map.put("pageSize",pageSize);
+//            map.put("prod_idx",prod_idx);
+//            list = prodReviewService.selectPage(map);
+//            m.addAttribute("ph",pageHandler);
+//            System.out.println("pageHandler = " + pageHandler);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
 //        m.addAttribute(user_idx); // 회원번호를 jsp 로 넘겨준다
 //        m.addAttribute(prod_idx); // 상품번호를 jsp 로 넘겨준다
         m.addAttribute(pd);
@@ -37,16 +55,32 @@ public class ProdReviewController {
     // 상품후기 처음에 필요한 것  1.상품번호(조회) 2.회원번호(수정,삭제,추가)
     // 상품후기 목록을 가져오는 메서드
     @GetMapping("/product/review/list") // /product/review/list?prod_idx=1  GET
-    public ResponseEntity<List<ProdReviewDto>> list(Integer prod_idx, HttpSession session){ // 상품번호, 회원번호 보유중
+    public ResponseEntity<Map> list(Integer page,Integer pageSize, Integer prod_idx, HttpSession session, SearchCondition sc){ // 상품번호, 회원번호 보유중
         List<ProdReviewDto> list = null;
+
         Integer user_idx = (Integer)session.getAttribute("idx");        // 세션에서 회원번호를 가져온다
         try {
-            list = prodReviewService.getList(prod_idx);                       // 상품번호를 가지고 상품후기 목록을 가져온다
+            int totalCnt = prodReviewService.getCount(prod_idx);
+            PageHandler pageHandler = new PageHandler(totalCnt,sc);
+            if(page==null) page=1;
+            if(pageSize==null) pageSize=10;
+
+            Map map = new HashMap();
+            map.put("offset", (page-1) * pageSize);
+            map.put("pageSize",pageSize);
+            map.put("prod_idx",prod_idx);
+            list = prodReviewService.selectPage(map);
+//            System.out.println("map = " + map);
+            Map<String, Object> mapp = new HashMap<>();
+            mapp.put("totalCnt",totalCnt);
+            mapp.put("pageHandler",pageHandler);
+            mapp.put("list",list);
+//            list = prodReviewService.getList(prod_idx);                       // 상품번호를 가지고 상품후기 목록을 가져온다
 //            System.out.println("list = " + list);
-            return new ResponseEntity<List<ProdReviewDto>>(list, HttpStatus.OK);
+            return new ResponseEntity<Map>(mapp, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<List<ProdReviewDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<Map>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }

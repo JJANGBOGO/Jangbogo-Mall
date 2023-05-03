@@ -31,5 +31,18 @@
 <!--              where USER_IDX = #{user_idx})as o, ORD_DTL as d-->
 <!--        where o.IDX = d.ORD_IDX and d.PROD_IDX = #{prod_idx} and o.STATE_CD=4;-->
 <!--    </select>-->
+    <select id="selectPage" parameterType="map" resultType="ProdReviewDto">
+        SELECT r.*, p.NAME,p.UPLOAD_PATH
+        FROM (SELECT * FROM PRODUCT) p, PROD_LATE r
+        WHERE p.IDX = #{prod_idx} and  r.PROD_IDX = #{prod_idx}
+        ORDER BY r.IDX desc
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="getCount" parameterType="int" resultType="int">
+        SELECT count(*)
+        FROM PROD_LATE r
+        WHERE r.PROD_IDX = #{prod_idx};
+    </select>
 
 </mapper>

@@ -15,6 +15,6 @@
                                   group by ORD_IDX,SETL_MN_CD) as ORD_DTL
                    where ORD_DTL.prod_nm = PRODUCT.NAME) as DTL
         where IDX = (DTL.ORD_IDX)
-        order by IDX;
+        order by IDX desc;
     </select>
 </mapper>

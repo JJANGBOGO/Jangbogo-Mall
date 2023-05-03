@@ -388,7 +388,7 @@
             tmp += '<div><span class="orderDetail-price">'+formatPriceWithComma(order.prod_prc)+'원</span><span class="orderDetail-count">'+order.prod_qty+'개</span></div>'
             tmp += '</div>'
             if (order.ord_state_cd == 1) {
-                orderStatus = '주문완료';
+                orderStatus = '결제완료';
             } else if (order.ord_state_cd == 2) {
                 orderStatus = '배송준비중';
             } else if (order.ord_state_cd == 3) {
@@ -421,7 +421,7 @@
             tmp += '<button class="orderDetail-cancleDefault">전체 상품 주문 취소</button>'
         }
         tmp += '</div>'
-        tmp += '<span class="orderDetail-notice">주문취소는 [주문완료] 상태일 경우에만 가능합니다.</span>'
+        tmp += '<span class="orderDetail-notice">주문취소는 [결제완료] 상태일 경우에만 가능합니다.</span>'
 
         tmp += '<div class="orderDetail-setl">'
         tmp += '<h3>결제정보</h3>'
