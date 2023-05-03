@@ -1,12 +1,7 @@
 package com.jangbogo.mall.controller;
 
-import com.jangbogo.mall.domain.MyOrderDetailDto;
-import com.jangbogo.mall.domain.MyOrderDto;
-import com.jangbogo.mall.domain.ProdReviewDto;
-import com.jangbogo.mall.service.MyOrderDetailService;
-import com.jangbogo.mall.service.MyOrderService;
-import com.jangbogo.mall.service.ProdReviewService;
-import com.jangbogo.mall.service.WishlistService;
+import com.jangbogo.mall.domain.*;
+import com.jangbogo.mall.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,10 +26,15 @@ public class MyOrderDetailController {
     @Autowired
     ProdReviewService prodReviewService;
 
+    @Autowired
+    KakaoPayService kakaoPayService;
+
+    @Autowired
+    OrderService orderService;
+
     // 주문 내역 상세 페이지 이동
     @GetMapping("/order/list/{ord_idx}")
     public String orderDetailPage(@PathVariable Integer ord_idx, Model m) { //  idx(주문번호)
-        System.out.println("idx = " + ord_idx);
         m.addAttribute("idx",ord_idx); // 주문번호
 
         return "myOrderDetail";
@@ -43,7 +43,6 @@ public class MyOrderDetailController {
     // 지정된 주문 내역 (상세) 목록을 가져오는 메서드
     @GetMapping("/order/detail/{ord_idx}") // /order/detail/1  GET
     public ResponseEntity<List<MyOrderDetailDto>> orderDetailList(@PathVariable Integer ord_idx) { // idx(주문번호)
-        System.out.println("idx = " + ord_idx);
         List<MyOrderDetailDto> list = null;
         try {
             list = myOrderDetailService.getlist(ord_idx);
@@ -104,11 +103,34 @@ public class MyOrderDetailController {
     @PatchMapping("/order/detail/stateUpdate/{idx}") // order/detail/stateUpdate/1  PATCH
     public ResponseEntity<String> stateUpdate(@PathVariable Integer idx,  HttpSession session){ // 주문번호를 받아온다
         int user_idx = (int) session.getAttribute("idx");
-        System.out.println("idx = " + idx);
+
+        List<MyOrderDetailDto> orderDetails = null;                                                                     // 변수명 : orderDetails - 저장값 : '주문상세' 테이블의 데이터 목록
+        PaymentDto paymentDto = null;
+        String tid = "";
+        int updateSetlRowCnt = 0;
+        int updateOrdStateRowCnt = 0;
+        int updateOrdDetailStateRowCnt = 0;
+        int insertOrdHistStateRowCnt = 0;
         try {
-            myOrderDetailService.updateOrdState(idx); // 주문테이블에서 주문번호를 가진 행의 주문상태를 변경(취소완료)
-            myOrderDetailService.updateOrdDetailState(idx); // 주문상세테이블에서 해당 주문번호를 가진 행의 주문상태를 변경(취소완료)
-            myOrderDetailService.updateOrdHistState(idx); // 주문이력테이블에서 해당 주문번호를 가진 행의 주문상태를 변경(취소완료)
+            // 1. 카카오API 결제 취소 - 필요한 값들 - tid, pg_token
+            paymentDto = orderService.getPaymentDto(idx);
+            tid = paymentDto.getSetl_idx();
+            KakaoCancelResponseDto kakaoCancelResponseDto = kakaoPayService.refundResponse(tid);
+            if(kakaoCancelResponseDto == null) throw new Exception("refundResponse Failed");
+            System.out.println("kakaoCancelResponseDto = " + kakaoCancelResponseDto);
+
+            // 2. 결제 테이블 주문상태코드 2로 변경
+            updateSetlRowCnt = myOrderDetailService.updateSetlStateCanceled(tid);
+            // 3. 주문, 주문상세, 주문이력 테이블 변경
+            updateOrdStateRowCnt = myOrderDetailService.updateOrdState(idx);                                            // 주문테이블에서 주문번호를 가진 행의 주문상태를 변경(취소완료)
+            if(updateOrdStateRowCnt == 0) throw new Exception("updateOrdState Failed");
+
+            updateOrdDetailStateRowCnt = myOrderDetailService.updateOrdDetailState(idx);                                // 주문상세테이블에서 해당 주문번호를 가진 행의 주문상태를 변경(취소완료)
+            if(updateOrdDetailStateRowCnt == 0) throw new Exception("updateOrdDetailState Failed");
+
+            orderDetails = myOrderDetailService.getlist(idx);
+            insertOrdHistStateRowCnt = myOrderDetailService.insertOrdHistState(orderDetails);                           // 주문이력테이블에서 해당 주문번호를 가진 행의 주문상태를 변경(취소완료)
+            if(insertOrdHistStateRowCnt == 0) throw new Exception("insertOrdHistState Failed");
             return new ResponseEntity<>("UPDATE_OK", HttpStatus.OK);
 
         } catch (Exception e) {
@@ -118,72 +140,6 @@ public class MyOrderDetailController {
         }
 
     }
-
-
-//
-//    @GetMapping("/order/detail/{idx}") // 주문 내역 (상세) 목록 GET
-//    public ResponseEntity<List<>> orderDetailList(@PathVariable Integer idx) { // idx(주문번호)
-//        System.out.println("idx = " + idx);
-//
-//
-//        try {
-//            return new ResponseEntity<List<>>(list, HttpStatus.OK);
-//
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//            return new ResponseEntity<List<>>(HttpStatus.INTERNAL_SERVER_ERROR);
-//
-//        }
-//    }
-//
-//    @GetMapping("/order/setl/{idx}") // 주문 내역 (결제) 목록 GET
-//    public ResponseEntity<List<>> orderSetlList(@PathVariable Integer idx) { // idx(주문번호)
-//        System.out.println("idx = " + idx);
-//
-//
-//        try {
-//            return new ResponseEntity<List<>>(list, HttpStatus.OK);
-//
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//            return new ResponseEntity<List<>>(HttpStatus.INTERNAL_SERVER_ERROR);
-//
-//        }
-//    }
-//
-//    @GetMapping("/order/ord/{idx}") // 주문 내역 (주문) 목록 GET
-//    public ResponseEntity<List<>> orderList(@PathVariable Integer idx) { // idx(주문번호)
-//        System.out.println("idx = " + idx);
-//
-//
-//        try {
-//            return new ResponseEntity<List<>>(list, HttpStatus.OK);
-//
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//            return new ResponseEntity<List<>>(HttpStatus.INTERNAL_SERVER_ERROR);
-//
-//        }
-//    }
-//
-//    @GetMapping("/order/dlvry/{idx}") // 주문 내역 (배송) 목록 GET
-//    public ResponseEntity<List<>> orderDlvryList(@PathVariable Integer idx) { // idx(주문번호)
-//        System.out.println("idx = " + idx);
-//
-//
-//        try {
-//            return new ResponseEntity<List<>>(list, HttpStatus.OK);
-//
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//            return new ResponseEntity<List<>>(HttpStatus.INTERNAL_SERVER_ERROR);
-//
-//        }
-//    }
-
-
-
-
 
     private boolean loginCheck(HttpServletRequest request) {
         // 1. 세션을 얻어서

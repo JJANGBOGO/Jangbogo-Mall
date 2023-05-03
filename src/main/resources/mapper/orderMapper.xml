@@ -49,6 +49,17 @@
     </select>
 
     <!--
+        태   그 : select
+        기   능 : '결제' 테이블 중 특정 결제 행 조회하기
+        아이디명 : selectPaymentByIdx
+        반환타입 : PaymentDto
+        매개변수 : String tid
+    -->
+    <select id="selectPaymentByIdx" parameterType="Integer" resultType="PaymentDto">
+        SELECT * FROM SETL WHERE ORD_IDX = #{idx};
+    </select>
+
+    <!--
         태   그 : insert
         기   능 : '주문상세' 테이블에 '승인'처리 된 주문 데이터의 '주문상세' 데이터 삽입하기
         아이디명 : insertOrderDetail

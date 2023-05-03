@@ -34,10 +34,14 @@ public class MyOrderDetailServiceImpl implements MyOrderDetailService {
     }
 
     @Override
-    public int updateOrdHistState(Integer ord_idx) throws Exception {
-        return myOrderDetail.updateOrdHistState(ord_idx);
+    public int insertOrdHistState(List<MyOrderDetailDto> orderDetails) throws Exception {
+        return myOrderDetail.insertOrdHistState(orderDetails);
     }
 
+    @Override
+    public int updateSetlStateCanceled(String tid) throws Exception {
+        return myOrderDetail.updateSetlCanceled(tid);
+    }
 
 
 }

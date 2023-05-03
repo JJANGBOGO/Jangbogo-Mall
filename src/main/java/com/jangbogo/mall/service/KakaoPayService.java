@@ -30,9 +30,10 @@ public interface KakaoPayService {
     // 메서드명 : refundResponse
     // 기   능 : 결제 취소 처리
     // 반환타입 : KakaoCancelResponseDto
+    // 매개변수 : String tid - 결제고유번호
     // POST /v1/payment/cancel HTTP/1.1
     // Host: kapi.kakao.com
     // Authorization: KakaoAK ${APP_ADMIN_KEY}
     // Content-type: application/x-www-form-urlencoded;charset=utf-8
-    KakaoCancelResponseDto refundResponse();
+    KakaoCancelResponseDto refundResponse(String tid);
 }

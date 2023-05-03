@@ -22,6 +22,15 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.insertPayment(paymentDto);
     }
 
+    // 메서드명 : getPaymentDto
+    // 기   능 : OrderDao의 getPayment메서드 호출
+    // 반환타입 : PaymentDto
+    // 매개변수 : Integer idx - 주문번호
+    @Override
+    public PaymentDto getPaymentDto(Integer idx) {
+        return orderDao.getPayment(idx);
+    }
+
     // 메서드명 : addOrder
     // 기   능 : OrderDao의 addOrder메서드 호출
     // 반환타입 : int
@@ -32,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     // 메서드명 : getOrder
-    // 기   능 : OrderDao의 getPaymentDto메서드 호출
+    // 기   능 : OrderDao의 getOrder메서드 호출
     // 반환타입 : OrderDto
     // 매개변수 : Integer idx
     @Override

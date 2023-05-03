@@ -32,6 +32,15 @@ public class OrderDaoImpl implements OrderDao {
         return session.selectOne(namespace + "selectPayment", tid);
     }
 
+    // 메서드명 : getPayment - 오버로
+    // 기   능 : '결제'(SETL) 테이블에 저장된 특정 데이터를 조회(select)하는 메서드
+    // 반환타입 : PaymentDto
+    // 매개변수 : Integer idx - 주문번호
+    @Override
+    public PaymentDto getPayment(Integer idx) {
+        return session.selectOne(namespace + "selectPaymentByIdx", idx);
+    }
+
     // 메서드명 : insertOrder
     // 기   능 : '주문'(ORD) 테이블에 데이터를 삽입(insert)하는 메서드
     // 반환타입 : int

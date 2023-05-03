@@ -10,5 +10,7 @@ public interface MyOrderDetail {
     int updateReviewState(Integer ord_dtl_idx) throws Exception;
     int updateOrdState(Integer idx) throws Exception;
     int updateOrdDetailState(Integer ord_idx) throws Exception;
-    int updateOrdHistState(Integer ord_idx) throws Exception;
+    int insertOrdHistState(List<MyOrderDetailDto> orderDetails) throws Exception;
+
+    int updateSetlCanceled(String tid) throws Exception;
 }

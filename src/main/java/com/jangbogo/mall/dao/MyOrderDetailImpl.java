@@ -35,10 +35,14 @@ public class MyOrderDetailImpl implements MyOrderDetail {
     }
 
     @Override
-    public int updateOrdHistState(Integer ord_idx) throws Exception{
-        return session.update(namespace+"updateOrdHistState",ord_idx);
+    public int insertOrdHistState(List<MyOrderDetailDto> orderDetails) throws Exception{
+        return session.insert(namespace+"insertOrdHistState", orderDetails);
     }
 
+    @Override
+    public int updateSetlCanceled(String tid) throws Exception {
+        return session.update(namespace+"updateSetlCanceled", tid);
+    }
 
 
 }

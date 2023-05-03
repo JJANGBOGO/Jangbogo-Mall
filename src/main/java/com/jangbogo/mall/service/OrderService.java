@@ -12,6 +12,12 @@ public interface OrderService {
     // 매개변수 : PaymentDto paymentDto{String tid, Integer ord_idx, Integer total_amount}
     public int addPayment(PaymentDto paymentDto) throws Exception;
 
+    // 메서드명 : getPaymentDto
+    // 기   능 : OrderDao의 getPayment메서드 호출
+    // 반환타입 : PaymentDto
+    // 매개변수 : Integer idx - 주문번호
+    public PaymentDto getPaymentDto(Integer idx) throws Exception;
+
     // 메서드명 : addOrder
     // 기   능 : OrderDao의 addOrder메서드 호출
     // 반환타입 : int
