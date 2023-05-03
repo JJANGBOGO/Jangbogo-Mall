@@ -15,4 +15,5 @@ public interface RegistProductDao {
     Integer insertProductFile(ProductFileDto files) throws Exception;
     Integer checkSellerProdCd(RegistProductDto registProductDto) throws Exception;
     List<RegistProductDto> getProductList(Integer seler_idx) throws Exception;
+    RegistProductDto selectProdInfo(Integer prod_idx) throws Exception;
 }

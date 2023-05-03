@@ -49,9 +49,36 @@
                p.PRC as 'prc',
                p.DSPLY_STATE_CD as 'dsply_state_cd',
                p.ASCR as 'ascr',
-               pd.REG_STATE_CD as 'reg_state_cd'
+               pd.REG_STATE_CD as 'reg_state_cd',
+               pd.PROD_IDX as 'prod_idx'
         from product as p inner join  prod_dtl pd
         on p.idx = pd.prod_idx and p.seler_idx = #{seler_idx}
+    </select>
+
+    <select id="selectProdInfo" parameterType="Integer" resultType="RegistProductDto">
+        select
+            p.SELER_PROD_CD as 'seler_prod_cd',
+            p.CATE_IDX as 'cate_idx2',
+            p.name as 'name',
+            p.ctent as 'content',
+            p.prc as 'prc',
+            p.DC_STATE_CD as 'dc_state_cd',
+            p.DC_RATE as 'dc_rate',
+            p.DSPLY_STATE_CD as 'dsply_state_cd',
+            pd.ORPLC as 'orplc',
+            pd.SLE_UNIT as 'sle_unit',
+            pd.WEIGHT as 'weight',
+            pd.MFT_TM  as 'mft_tm',
+            pd.DISTB_TLMT as 'distb_tlmt',
+            pd.SLE_START_TM as 'sle_start_tm',
+            pd.SLE_END_TM as 'sle_end_tm',
+            pd.SFKP_TP_STATE_CD as 'state',
+            pd.MAX_SLE_QUTY as 'max_sle_quty',
+            pd.INV_QUTY as 'inv_quty',
+            pd.WARN as 'warn',
+            pd.GUID as 'guid'
+        from product as p inner join  prod_dtl pd
+        on p.idx = pd.prod_idx and pd.prod_idx = #{prod_idx};
     </select>
 </mapper>
 

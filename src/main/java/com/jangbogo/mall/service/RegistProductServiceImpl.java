@@ -44,4 +44,8 @@ public class RegistProductServiceImpl implements RegistProductService {
     public List<RegistProductDto> getProductList(Integer seler_idx) throws Exception {
         return registProductDao.getProductList(seler_idx);
     }
+
+    public RegistProductDto selectProdInfo(Integer prod_idx) throws Exception {
+        return registProductDao.selectProdInfo(prod_idx);
+    }
 }

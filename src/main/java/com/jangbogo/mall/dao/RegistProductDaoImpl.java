@@ -45,4 +45,8 @@ public class RegistProductDaoImpl implements RegistProductDao {
     public List<RegistProductDto> getProductList(Integer seler_idx) throws Exception {
         return session.selectList(namespace + "getProductList", seler_idx);
     }
+
+    public RegistProductDto selectProdInfo(Integer prod_idx) throws Exception {
+        return session.selectOne(namespace + "selectProdInfo", prod_idx);
+    }
 }

@@ -38,6 +38,22 @@ public class RegisterController {
 //            return "redirect:/";
 //        }
 //    }
+    @GetMapping("/seller/update/product/{prod_idx}")
+    public String updateProduct(@PathVariable Integer prod_idx, Model m){
+        //상품번호로 상품정보 가져와서 다시 리스트 안에 넣어준다.
+        try {
+            RegistProductDto registProductDto = registProductService.selectProdInfo(prod_idx);
+            System.out.println("registProductDtoddd = " + registProductDto.getCate_idx2());
+            String cate_idx = registProductDto.getCate_idx2();
+            String f_cate_idx = cate_idx.substring(0,2);
+            registProductDto.setCate_idx(f_cate_idx);
+            m.addAttribute("product", registProductDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "/seller/modifyProduct";
+    }
+
     //등록된 상품 리스트 보여주기
     @GetMapping("/seller/list/product")
     public String listProductView(HttpSession session, HttpServletRequest req, Model m, RedirectAttributes rattr) {
@@ -46,6 +62,7 @@ public class RegisterController {
         try {
             List<RegistProductDto> list = registProductService.getProductList(idx);
             m.addAttribute("productList", list);
+
             return "/seller/registerProductList";
         } catch (Exception e) {
             e.printStackTrace();
