@@ -261,9 +261,27 @@ display: block; */
     font-weight: 500;
     /* margin-top: 14px; */
     color: rgb(255, 255, 255);
-    background-color: rgb(221, 221, 221);
+    background-color: #f58412;
     border: 0;
     cursor: pointer;
+    display: none;
+}
+
+.insertBtnNo{
+    width: 160px;
+    height: 56px;
+    padding: 0px 10px;
+    /* text-align: center; */
+    /* letter-spacing: 0px; */
+    border-radius: 3px;
+    font-size: 16px;
+    /* line-height: 20px; */
+    font-weight: 500;
+    /* margin-top: 14px; */
+    color: rgb(255, 255, 255);
+    background-color: rgb(221, 221, 221);
+    border: 0;
+    cursor: default;
 }
 
 .warning-ul li {

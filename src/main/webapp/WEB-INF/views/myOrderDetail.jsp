@@ -172,6 +172,7 @@
                         <div class="footerBtn">
                             <button class="cancleBtn" onclick="return false;">취소</button>
                             <button class="insertBtn" onclick="return false;">등록</button>
+                            <button class="insertBtnNo" onclick="return false;">등록</button>
                             <input class="hidden-idx" type="hidden" value="">
                         </div>
                     </form>
@@ -188,6 +189,7 @@
 <script>
 
     $(document).ready(function (){
+
         showList();
         // 전체 상품 주문 취소 버튼 클릭 시
         $('.orderDetail-container').on("click",'.orderDetail-cancle', function (){
@@ -208,24 +210,35 @@
 
         });
 
-
         // 후기작성 버튼 클릭 시(작성 모달창 오픈)
         $(".orderDetail-container").on("click",'.orderDetail-review', function (){
+            $('.content').keyup(function (){
+                let newLength = $(this).val().length;
+                console.log(newLength)
+                if(newLength<10) {
+                    $(".insertBtn").css('display', 'none');
+                    $(".insertBtnNo").css('display', 'block');
+                } else {
+                    $(".insertBtn").css('display', 'block');
+                    $(".insertBtnNo").css('display', 'none');
+                }
 
-            let upload_path = $(this).parent().siblings().attr('src');          // 상품 이미지 url 변수 선언
-            let name = $(this).parent().siblings('.orderDetail-content').children('a').text();      // 상품이름     변수 선언
-            let prod_idx = $(this).attr('data-prod_idx') // 상품번호 변수 선언
-            let ord_idx = $(this).attr('data-ord_idx');  // 주문번호 변수 선언
-            let ord_dtl_idx = $(this).attr('data-ord_dtl_idx') // 주문상세번호 변수 선언
+            })
 
-            $('.insertBtn').attr('data-prod_idx',prod_idx); // 상품번호를 등록버튼에 사용자 정의 속성으로 추가
-            $('.insertBtn').attr('data-ord_idx',ord_idx);       // 주문번호를 등록버튼에 사용자 정의 속성으로 추가
+            let upload_path = $(this).parent().siblings().attr('src');                          // 상품 이미지 url 변수 선언
+            let name = $(this).parent().siblings('.orderDetail-content').children('a').text();  // 상품이름 변수 선언
+            let prod_idx = $(this).attr('data-prod_idx')          // 상품번호 변수 선언
+            let ord_idx = $(this).attr('data-ord_idx');           // 주문번호 변수 선언
+            let ord_dtl_idx = $(this).attr('data-ord_dtl_idx')    // 주문상세번호 변수 선언
+
+            $('.insertBtn').attr('data-prod_idx',prod_idx);       // 상품번호를 등록버튼에 사용자 정의 속성으로 추가
+            $('.insertBtn').attr('data-ord_idx',ord_idx);         // 주문번호를 등록버튼에 사용자 정의 속성으로 추가
             $('.insertBtn').attr('data-ord_dtl_idx',ord_dtl_idx); // 주문상세번호를 등록버튼에 사용자 정의 속으로 추가
             // let user_idx = $(this).attr('data-user_idx');
-            $('.title-img').children().attr("src",upload_path);     // 수정 모달창에 이미지 추가
-            $('.img-name').text(name);                              // 수정 모달창에 상품이름 추가
+            $('.title-img').children().attr("src",upload_path);   // 수정 모달창에 이미지 추가
+            $('.img-name').text(name);                            // 수정 모달창에 상품이름 추가
 
-            // $('.content').val("");                            // 작성 내용 빈칸으로 초기화
+            // $('.content').val("");                             // 작성 내용 빈칸으로 초기화
             openModal(); // 작성 모달창 오픈하기
 
         });
@@ -235,8 +248,14 @@
             if(!confirm("작성하신 내용으로 후기 등록하시겠습니까?"))return;
             let ctent = $('.content').val(); // 후기내용
             let prod_idx = $(this).attr('data-prod_idx')               // 상품번호
-            let ord_idx = $(this).attr('data-ord_idx')                 // 주문번호???
+            let ord_idx = $(this).attr('data-ord_idx')                 // 주문번호
             let ord_dtl_idx = $(this).attr('data-ord_dtl_idx')         // 주문상세번호
+
+            if(ctent.length<10){
+                alert("10글자 이상 입력해주세요")
+                console.log(ctent.length);
+                return;
+            }
 
             $.ajax({
                 type:'POST',              // 요청 메서드
@@ -258,10 +277,14 @@
         // 후기 작성 모달창 (X버튼) 클릭
         $('.closeXBtn').click(function (){
             closeModal();
+            $(".insertBtn").css('display', 'none');
+            $(".insertBtnNo").css('display', 'block');
         })
         // 후기 작성 모달창 (취소 버튼) 클릭
         $('.cancleBtn').click(function (){
             closeModal();
+            $(".insertBtn").css('display', 'none');
+            $(".insertBtnNo").css('display', 'block');
         })
 
 
@@ -388,7 +411,7 @@
             tmp += '<div><span class="orderDetail-price">'+formatPriceWithComma(order.prod_prc)+'원</span><span class="orderDetail-count">'+order.prod_qty+'개</span></div>'
             tmp += '</div>'
             if (order.ord_state_cd == 1) {
-                orderStatus = '주문완료';
+                orderStatus = '결제완료';
             } else if (order.ord_state_cd == 2) {
                 orderStatus = '배송준비중';
             } else if (order.ord_state_cd == 3) {
@@ -402,7 +425,7 @@
             }
             tmp += '<span class="orderDetail-state_cd">'+orderStatus+'</span>'
             tmp += '<div class="orderDetail-listBtn">'
-            if(order.ord_state_cd==5){
+            if(order.prod_late_state_cd == 1){
                 tmp += '<button class="orderDetail-review3" data-prod_idx = '+order.prod_idx+' data-ord_idx = '+order.idx+' data-ord_dtl_idx = '+order.ord_dtl_idx+'>후기불가능</button>'
             }else if(order.prod_late_state_cd==2){
                 tmp += '<button class="orderDetail-review" data-prod_idx = '+order.prod_idx+' data-ord_idx = '+order.idx+' data-ord_dtl_idx = '+order.ord_dtl_idx+'>후기작성</button>'
@@ -421,7 +444,7 @@
             tmp += '<button class="orderDetail-cancleDefault">전체 상품 주문 취소</button>'
         }
         tmp += '</div>'
-        tmp += '<span class="orderDetail-notice">주문취소는 [주문완료] 상태일 경우에만 가능합니다.</span>'
+        tmp += '<span class="orderDetail-notice">주문취소는 [결제완료] 상태일 경우에만 가능합니다.</span>'
 
         tmp += '<div class="orderDetail-setl">'
         tmp += '<h3>결제정보</h3>'

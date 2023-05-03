@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ProdReviewDaoImpl implements ProdReviewDao {
@@ -37,5 +38,14 @@ public class ProdReviewDaoImpl implements ProdReviewDao {
 //        return session.selectList(namespace+"get_ord_idx", map);
 //
 //    }
+    @Override
+    public List<ProdReviewDto> selectPage(Map map) throws Exception {
+        return session.selectList(namespace + "selectPage", map);
+    }
+
+    @Override
+    public Integer getCount(Integer prod_idx) throws Exception {
+        return session.selectOne(namespace + "getCount", prod_idx);
+    }
 
 }

@@ -29,9 +29,7 @@
         <typeAlias alias="KakaoReadyResponseDto" type="com.jangbogo.mall.domain.KakaoReadyResponseDto"/>
         <typeAlias alias="KakaoApproveResponseDto" type="com.jangbogo.mall.domain.KakaoApproveResponseDto"/>
         <typeAlias alias="ProdReviewDto" type="com.jangbogo.mall.domain.ProdReviewDto"/>
-
         <typeAlias alias="MyOrderDto" type="com.jangbogo.mall.domain.MyOrderDto"/>
         <typeAlias alias="MyOrderDetailDto" type="com.jangbogo.mall.domain.MyOrderDetailDto"/>
-
     </typeAliases>
 </configuration>

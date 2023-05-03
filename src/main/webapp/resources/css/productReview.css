@@ -187,6 +187,25 @@
 
 }
 
+/*페이징 css*/
+.pageHandler-container{
+    display: flex;
+    justify-content: center;
+}
+.pageHandler-container a{
+    border: 1px solid #f58412;
+    float: left;
+    padding: 4px;
+    text-align: center;
+    text-decoration: none;
+    margin-right: 2px;
+    width: 30px;
+    border-radius: 4px;
+}
+.pageHandler-container a.page.active{
+    background: #f58412;
+}
+
 
 
 

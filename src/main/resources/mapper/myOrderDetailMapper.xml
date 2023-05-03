@@ -15,35 +15,35 @@
                                                                                       where ORD_IDX = #{ord_idx}) as ORD_DTL
         where ORD.IDX = #{ord_idx} and ORD_DTL.PROD_IDX = PRODUCT.IDX;
     </select>
-
+    <!-- '주문이력'데이터 삽입을 위한 주문 & 주문상세 조인 데이터 -->
     <select id="selectDetails" resultType="hashmap">
         SELECT ORD_DTL.IDX as idx, ORD.ORD_TM as ord_tm, ORD.IDX as ord_idx ,ORD.ORDR_NM as ordr_nm, ORD_DTL.PROD_NM as prod_nm, ORD_DTL.PROD_PRC  as prod_prc, ORD_DTL.PROD_QTY as prod_qty, ORD.TOT_AMT as tot_amt, ORD_DTL.SETL_MN_CD as setl_mn_cd, ORD.STATE_CD as state_cd
         FROM ORD_DTL
-        JOIN ORD
-        ON ORD_DTL.ORD_IDX = ORD.IDX AND ORD.IDX = #{idx};
+                 JOIN ORD
+                      ON ORD_DTL.ORD_IDX = ORD.IDX AND ORD.IDX = #{idx};
     </select>
-
+    <!--    주문상세 테이블 후기 작성 상태 업데이트(후기 작성 완료)-->
     <update id="updateReviewState" parameterType="int">
         update ORD_DTL
         set PROD_LATE_STATE_CD = 3
         where IDX= #{ord_dtl_idx};
     </update>
 
-<!--주문테이블 주문상태 업데이트-->
+    <!--주문테이블 주문상태 업데이트-->
     <update id="updateOrdState" parameterType="int">
         update ORD
         set STATE_CD = 5, UPT_TM = now()
         where IDX = #{idx};
     </update>
 
-<!--주문상세테이블 주문상태 업데이트-->
+    <!--주문상세테이블 주문상태, 후기작성상태 업데이트-->
     <update id="updateOrdDetailState" parameterType="int">
         update ORD_DTL
-        set ORD_STATE_CD = 5, SETL_CNCL_TM = now(), UPT_TM = now()
+        set ORD_STATE_CD = 5, PROD_LATE_STATE_CD = 1, SETL_CNCL_TM = now(), UPT_TM = now()
         where ORD_IDX = #{ord_idx};
     </update>
 
-<!--주문이력테이블 주문상태 변경이력 삽입-->
+    <!--주문이력테이블 주문상태 변경이력 삽입-->
     <insert id="insertOrdHistState" parameterType="java.util.List">
         INSERT INTO ORD_HIST(CRT_TM, CHG_TM, UPT_TM, ORD_DTL_IDX, ORD_IDX, PROD_IDX, PROD_NM, ORD_STATE_CD)
         VALUES
