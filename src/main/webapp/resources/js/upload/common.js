@@ -43,7 +43,7 @@ function showUploadedFile(uploadResultArr) { //업로드 리스트 str 반환
             var originPath = obj.uploadPath + "\\" + obj.uuid + "_" + obj.fileName;
             originPath = originPath.replace(new RegExp(/\\/g), "/");
 
-            str += "<li data-upload-path="+fileCallPath+">" + "<img src='display?fileName=" + fileCallPath + "'>" +
+            str += "<li data-upload-path="+fileCallPath+" data-uuid="+ obj.uuid+ " data-name="+ obj.fileName+">" + "<img src='/display?fileName=" + fileCallPath + "'>" +
                 "<span data-file=\'" + fileCallPath + "\' data-type='image'><img src='/img/cancel_btn.png'></span></li>";
         }
     });

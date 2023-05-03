@@ -4,7 +4,6 @@ package com.jangbogo.mall.controller;
 import com.jangbogo.mall.domain.*;
 import com.jangbogo.mall.service.ProductService;
 import com.jangbogo.mall.service.SellerService;
-import com.jangbogo.mall.utils.RegEx;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -122,9 +122,6 @@ public class UserController {
             JSONObject response_obj = (JSONObject) jsonObj.get("kakao_account");
 
             String email = (String) response_obj.get("email");
-
-            log.info("email....." + email);
-
             User user = userService.getUserByEmail(email);
 
             if (user == null) { //신규
@@ -136,18 +133,19 @@ public class UserController {
                         .login_tp_cd(KAKAO)
                         .build();
 
-//                log.info("뉴비...." + user);
                 int idx = userService.regSocialUser(user);
                 user = userService.selectUser(idx);
             } else {
                 log.info("이미 존재하는 이메일입니다.");
+                if (user.getState_cd() == 3) blockSocialUser(user.getState_cd(), rattr); //탈퇴회원의 경우 블락 처리
                 userService.updateLoginTm(user.getIdx(), user.getEmail());
             }
 
-            makeAuth(user);
-            session.setAttribute("loginService", "kakao"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
-            crtSession(session, user);
-            return "redirect:/";
+            if (makeAuth(user)) {
+                session.setAttribute("loginService", "kakao"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
+                crtSession(session, user);
+                return "redirect:/";
+            } else throw new Exception("auth failed");
         } catch (Exception e) {
             rattr.addFlashAttribute("msg", "LOGIN_ERR"); //로그인 에러
             return "redirect:/user/login";
@@ -178,8 +176,6 @@ public class UserController {
 
             String email = (String) response_obj.get("email");
 
-            log.info("email....." + email);
-
             User user = userService.getUserByEmail(email);
 
             if (user == null) { //신규
@@ -191,18 +187,19 @@ public class UserController {
                         .login_tp_cd(NAVER)
                         .build();
 
-                log.info("뉴비...." + user);
                 int idx = userService.regSocialUser(user);
                 user = userService.selectUser(idx);
             } else {
                 log.info("이미 존재하는 이메일입니다.");
+                if (user.getState_cd() == 3) blockSocialUser(user.getState_cd(), rattr); //탈퇴회원의 경우 블락 처리
                 userService.updateLoginTm(user.getIdx(), user.getEmail()); //ok
             }
 
-            makeAuth(user);
-            session.setAttribute("loginService", "naver"); // 최종 로그인 서비스. 같은 이메일, 다른 서비스 로그인 구별 목적
-            crtSession(session, user);
-            return "redirect:/";
+            if (makeAuth(user)) {
+                session.setAttribute("loginService", "naver"); // 최종 로그인 서비스타입 명시. 같은 이메일, 다른 서비스 로그인 구별
+                crtSession(session, user);
+                return "redirect:/";
+            } else throw new Exception("auth failed");
         } catch (Exception e) {
             rattr.addFlashAttribute("msg", "LOGIN_ERR"); //로그인 에러
             return "redirect:/user/login";
@@ -212,24 +209,32 @@ public class UserController {
     //TODO:: 네이버 로그아웃
 
 
+    //탈퇴한 소셜회원 블락
+    public String blockSocialUser(int state, RedirectAttributes rattr) {
+        rattr.addFlashAttribute("msg", "UNABLE");
+        return "redirect:/";
+    }
+
     public JSONObject getParsedApiResult(String apiResult) throws Exception {
         JSONParser jsonParser = new JSONParser();
         return (JSONObject) jsonParser.parse(apiResult);
     }
 
     // 인증 생성
-    public void makeAuth(User user) throws Exception {
+    public boolean makeAuth(User user) throws Exception {
         UserDetailsDto dto = userDao.getUserDetailsDto(user.getEmail());
-        if (dto != null) {
-            dto.setAuthority((ArrayList<String>) authDao.getAuthList(user.getAuth_idx()));
-            log.info("....dto..." + dto.getAuthorities());
-            Authentication authentication =
-                    new UsernamePasswordAuthenticationToken(user, null, dto.getAuthorities()); //userDetailsDto.getAuthorities()식으로 권한을 추가해야 함
 
-            log.info("..." + authentication + "...." + dto.getAuthorities());
-            SecurityContext securityContext = SecurityContextHolder.getContext();
-            securityContext.setAuthentication(authentication);
-        }
+        if (dto == null) return false;
+        dto.setAuthority((ArrayList<String>) authDao.getAuthList(user.getAuth_idx()));
+        if (dto.getAuthorities() == null) return false; //인증 실패시 null
+
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken(user, null, dto.getAuthorities()); //userDetailsDto.getAuthorities()식으로 권한을 추가해야 함
+
+        log.info("인증..." + authentication + "...." + dto.getAuthorities());
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(authentication);
+        return true;
     }
 
     // 로그아웃시 인증 삭제
@@ -241,7 +246,7 @@ public class UserController {
     }
 
     // 일반 회원 로그아웃
-    @GetMapping("/logout")
+    @GetMapping("/general/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
         session.invalidate();
         deleteAuth(request, response);
@@ -256,7 +261,7 @@ public class UserController {
 
     //가입처리
     @PostMapping("/user/register")
-    public String registerUser(User user, Address addr, RedirectAttributes rattr) { //validator 추가 TODO::
+    public String registerUser(User user, Address addr, RedirectAttributes rattr) {
         log.info("user...." + user);
         log.info("addr...." + addr);
 
@@ -276,7 +281,7 @@ public class UserController {
 
     //이메일 중복 체크
     @PostMapping("/user/duplicate/email")
-    public ResponseEntity<String> chkDuplicateEmail(String email, String type) {
+    public ResponseEntity<String> chkDuplicateEmail(String email) {
         try {
             String msg = userService.getUserByEmail(email) == null ? "OK" : "DUPLICATE";
             return ResponseEntity.ok().body(msg);

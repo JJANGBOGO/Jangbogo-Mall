@@ -3,6 +3,7 @@ package com.jangbogo.mall.controller;
 import com.jangbogo.mall.domain.*;
 import com.jangbogo.mall.service.ProductService;
 import com.jangbogo.mall.service.RegistProductService;
+import com.jangbogo.mall.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +22,9 @@ import java.util.List;
 public class RegisterController {
 //    @Autowired
 //    ProductService productService;
+
+    @Autowired
+    Utils utils;
     @Autowired
     RegistProductService registProductService;
 
@@ -61,7 +66,11 @@ public class RegisterController {
 
     //상품 등록 페이지에서 상품등록하기
     @PostMapping("/seller/register/productInfo")
-    public String regProduct(RegistProductDto registProductDto, HttpSession session, RedirectAttributes rattr) {
+    public String regProduct(
+            RegistProductDto registProductDto,
+            HttpSession session,
+            RedirectAttributes rattr
+    ) {
         try {
             Integer idx = (Integer)session.getAttribute("idx");
             registProductDto.setSeler_idx(idx);
@@ -74,7 +83,6 @@ public class RegisterController {
                 registProductDto.setSle_end_tm(null);
             }
 
-            registProductDto.setUpload_path("https://cdn.iworldtoday.com/news/photo/202104/401210_201173_4855.jpg");  //상품테이블 <이미지파일경로> 하드코딩
             if(registProductService.insertProduct(registProductDto) != 1 || registProductService.checkSellerProdCd(registProductDto) == 1) {  //기존의 판매자상품코드와 겹치는 번호가 있는지 혹인후, 상품테이블에 insert
                 rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             }
@@ -82,21 +90,12 @@ public class RegisterController {
             int prod_idx = registProductService.getProdIdx(registProductDto);       //AI형식으로 늘어나는 상품번호를 받고
             registProductDto.setProd_idx(prod_idx);                                 //상품번호를 dto에 저장해준다.
 
-
             if(registProductService.insertProductDetail(registProductDto) != 1){
                 rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             }
 
-            registProductDto.setProducts("https://cdn.iworldtoday.com/news/photo/202104/401210_201173_4855.jpg");
-            registProductDto.setUUID("012");  //테스트시 uuid 재할당 필수 (pk로 지정되어 있음)
-            registProductDto.setNAME("본문사진");
-            registProductDto.setTYPE(1); //파일유형 1(이미지)
-            registProductDto.setState(1); //파일상태코드 1(사용)
-            registProductDto.setSORT_ODR(1); //파일정렬순서
-
-            if (registProductService.insertProductFile(registProductDto) != 1) {
-                rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
-            }
+            Integer productIdx = registProductDto.getProd_idx();
+            registProductService.insertProductFile(registProductDto.getFiles(), productIdx);
 
             System.out.println(registProductDto.toString());
             rattr.addFlashAttribute("msg", "REG_PROD_OK");

@@ -49,6 +49,7 @@ public class LoginSellerSuccessHandler implements AuthenticationSuccessHandler {
         } else redirectUrl = savedRequest.getRedirectUrl();
 
         String email =  authentication.getPrincipal().toString();
+
         try {
             Seller seller = sellerDao.getSellerByEmail(email);
             Integer idx = seller.getIdx();

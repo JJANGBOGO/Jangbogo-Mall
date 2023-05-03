@@ -1,0 +1,11 @@
+.error {
+    display: block;
+    position: relative;
+    margin: 10px auto 0 auto;
+    width: 1000px;
+}
+
+.error.notfound {
+    width: 800px;
+/*    이미지가 너무 커서 자름 */
+}

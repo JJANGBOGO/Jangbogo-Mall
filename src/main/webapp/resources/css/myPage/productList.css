@@ -23,6 +23,13 @@
     border-bottom: 1px solid #ccc;
 }
 
+.mypage-content .seller-products .product-item .product-code {
+    width: 39px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .seller-products .product-item .product-center {
     display: flex;
     align-items: center;

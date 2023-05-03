@@ -5,27 +5,32 @@
 <html>
 <head>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
-    <link rel="stylesheet" href="/css/main.css"/>
+    <link rel="stylesheet" href="/css/index.css"/>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
-<%--지우팀장님 슬라이드쇼--%>
 <div class="mySlides_container">
     <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"/>
+         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"
+    />
     <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"/>
+         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"
+    />
     <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"/>
+         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"
+    />
     <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"/>
+         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"
+    />
     <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"/>
+         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"
+    />
     <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"/>
+         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"
+    />
 </div>
 <div class="category-header">
-    <h2>놓치면 후회하는 특가 상품</h2>
+    <h2>놓치면 후회하는 특별 상품들</h2>
 </div>
 <div class="category-section">
     <ul class="tab-list">
@@ -33,233 +38,31 @@
             <button class="tab-button" data-a="0">전체보기</button>
         </li>
         <li>
-            <button class="tab-button" data-a="1">1</button>
+            <button class="tab-button" data-a="1">과일</button>
         </li>
         <li>
-            <button class="tab-button" data-a="2">2</button>
+            <button class="tab-button" data-a="2">채소</button>
         </li>
         <li>
-            <button class="tab-button" data-a="3">3</button>
+            <button class="tab-button" data-a="3">수산물</button>
         </li>
         <li>
-            <button class="tab-button" data-a="4">4</button>
+            <button class="tab-button" data-a="4">육류</button>
         </li>
         <li>
-            <button class="tab-button" data-a="5">5</button>
+            <button class="tab-button" data-a="5">간편요리</button>
         </li>
     </ul>
     <div class="tab-content">
-        <!-- 1번째 탭 -->
-        <ul class="thum-list">
-            <li>
-                <a href="<c:url value='/product/detail'/>">
-                <a class="img-box">
-                    <img
-                            src="https://sitem.ssgcdn.com/45/50/86/item/1000492865045_i1_290.jpg"
-                            alt=""
-                    />
-                    <div class="cart-btn">
-                        <i></i>
-                    </div>
-                </a>
-                <div class="thum-desc">
-                    <a class="title">
-                        <h3>스타벅스 커피 전품목 세일</h3>
-                    </a>
-                    <div class="price">5000원~</div>
-                    <div class="review-cnt">후기 999+</div>
-                    <div class="point">적립금 130원</div>
-                </div>
-                </a>
-            </li>
-            <li>
-                <a class="img-box">
-                    <img
-                            src="https://sitem.ssgcdn.com/45/50/86/item/1000492865045_i1_290.jpg"
-                            alt=""
-                    />
-                    <div class="cart-btn">
-                        <i></i>
-                    </div>
-                </a>
-                <div class="thum-desc">
-                    <a class="title">
-                        <h3>스타벅스 커피 전품목 세일</h3>
-                    </a>
-                    <div class="price">5000원~</div>
-                    <div class="review-cnt">후기 999+</div>
-                    <div class="point">적립금 130원</div>
-                </div>
-            </li>
-            <li>
-                <a class="img-box">
-                    <img
-                            src="https://sitem.ssgcdn.com/45/50/86/item/1000492865045_i1_290.jpg"
-                            alt=""
-                    />
-                    <div class="cart-btn">
-                        <i></i>
-                    </div>
-                </a>
-                <div class="thum-desc">
-                    <a class="title">
-                        <h3>스타벅스 커피 전품목 세일</h3>
-                    </a>
-                    <div class="price">5000원~</div>
-                    <div class="review-cnt">후기 999+</div>
-                    <div class="point">적립금 130원</div>
-                </div>
-            </li>
-            <li>
-                <a class="img-box">
-                    <img
-                            src="https://sitem.ssgcdn.com/45/50/86/item/1000492865045_i1_290.jpg"
-                            alt=""
-                    />
-                    <div class="cart-btn">
-                        <i></i>
-                    </div>
-                </a>
-                <div class="thum-desc">
-                    <a class="title">
-                        <h3>스타벅스 커피 전품목 세일</h3>
-                    </a>
-                    <div class="price">5000원~</div>
-                    <div class="review-cnt">후기 999+</div>
-                    <div class="point">적립금 130원</div>
-                </div>
-            </li>
-        </ul>
-
-        <!-- 2번째 탭 -->
-        <ul class="thum-list">
-            <li>
-                <a class="img-box">
-                    <img
-                            src="//sitem.ssgcdn.com/30/30/81/item/1000420813030_i1_290.jpg"
-                            alt=""
-                    />
-                    <div class="cart-btn">
-                        <i></i>
-                    </div>
-                </a>
-                <div class="thum-desc">
-                    <a class="title">
-                        <h3>스타벅스 커피 전품목 세일</h3>
-                    </a>
-                    <div class="price">5000원~</div>
-                    <div class="review-cnt">후기 999+</div>
-                    <div class="point">적립금 130원</div>
-                </div>
-            </li>
-            <li>
-                <a class="img-box">
-                    <img
-                            src="//sitem.ssgcdn.com/30/30/81/item/1000420813030_i1_290.jpg"
-                            alt=""
-                    />
-                    <div class="cart-btn">
-                        <i></i>
-                    </div>
-                </a>
-                <div class="thum-desc">
-                    <a class="title">
-                        <h3>스타벅스 커피 전품목 세일</h3>
-                    </a>
-                    <div class="price">5000원~</div>
-                    <div class="review-cnt">후기 999+</div>
-                    <div class="point">적립금 130원</div>
-                </div>
-            </li>
-            <li>
-                <a class="img-box">
-                    <img
-                            src="//sitem.ssgcdn.com/30/30/81/item/1000420813030_i1_290.jpg"
-                            alt=""
-                    />
-                    <div class="cart-btn">
-                        <i></i>
-                    </div>
-                </a>
-                <div class="thum-desc">
-                    <a class="title">
-                        <h3>스타벅스 커피 전품목 세일</h3>
-                    </a>
-                    <div class="price">5000원~</div>
-                    <div class="review-cnt">후기 999+</div>
-                    <div class="point">적립금 130원</div>
-                </div>
-            </li>
-            <li>
-                <a class="img-box">
-                    <img
-                            src="//sitem.ssgcdn.com/30/30/81/item/1000420813030_i1_290.jpg"
-                            alt=""
-                    />
-                    <div class="cart-btn">
-                        <i></i>
-                    </div>
-                </a>
-                <div class="thum-desc">
-                    <a class="title">
-                        <h3>스타벅스 커피 전품목 세일</h3>
-                    </a>
-                    <div class="price">5000원~</div>
-                    <div class="review-cnt">후기 999+</div>
-                    <div class="point">적립금 130원</div>
-                </div>
-            </li>
-        </ul>
-
-        <!-- 3 -->
-        <ul class="thum-list">
-            <li>
-                <a class="img-box">
-                    <img
-                            src="//sitem.ssgcdn.com/44/97/53/item/1000043539744_i1_290.jpg"
-                            alt=""
-                    />
-                    <div class="cart-btn">
-                        <i></i>
-                    </div>
-                </a>
-                <div class="thum-desc">
-                    <a class="title">
-                        <h3>스타벅스 커피 전품목 세일</h3>
-                    </a>
-                    <div class="price">5000원~</div>
-                    <div class="review-cnt">후기 999+</div>
-                    <div class="point">적립금 130원</div>
-                </div>
-            </li>
-        </ul>
-
-        <!-- 4 -->
-        <ul class="thum-list">
-            <li>
-                <a class="img-box">
-                    <img
-                            src="//sitem.ssgcdn.com/24/61/03/item/0000000036124_i1_290.jpg"
-                            alt=""
-                    />
-                    <div class="cart-btn">
-                        <i></i>
-                    </div>
-                </a>
-                <div class="thum-desc">
-                    <a class="title">
-                        <h3>스타벅스 커피 전품목 세일</h3>
-                    </a>
-                    <div class="price">5000원~</div>
-                    <div class="review-cnt">후기 999+</div>
-                    <div class="point">적립금 130원</div>
-                </div>
-            </li>
-        </ul>
+        <ul class="thum-list" data-id="00"></ul>
+        <ul class="thum-list" data-id="01"></ul>
+        <ul class="thum-list" data-id="02"></ul>
+        <ul class="thum-list" data-id="03"></ul>
+        <ul class="thum-list" data-id="04"></ul>
+        <ul class="thum-list" data-id="05"></ul>
     </div>
 </div>
-<a class="see-pd-all" href="">전체 보기 &gt;</a>
-<!-- magazine -->
+<a class="see-pd-all" href="">전체 보기&gt;</a>
 <div class="magazine">
     <a href="" class="collection-link">
         <div class="img-box">
@@ -362,26 +165,70 @@
                     </div>
                 </a>
             </li>
-            <a class="see-pd-all" href="">전체 보기 &gt;</a>
+            <a class="see-pd-all" href="">전체 보기&gt;</a>
         </ul>
     </div>
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="/js/member/msg.js"></script>
 <script>
-    let msg ="${msg}";
+    let msg = "${msg}";
     if (msg == "EXCEPTION_ERR") alert("예상치 못한 오류가 발생했습니다. 불편을 끼쳐드려 죄송합니다.");
 </script>
 <script>
+    //상품리스트를 html로 구현
+    let renderPdList = (list, tab_id) => {
+        let list_ref = $(".thum-list").eq(tab_id); //0,1,2,3,4,5
+        let str = "";
+        if (tab_id === 0) list.sort(()=> Math.random() - 0.5); //전체 탭인 경우 list 랜덤돌리기
+        list.forEach((obj, i) => {
+            if (i > 3) return; //카테고리당 4개만 보여줌
+            str += '<li>'
+                + '<a class="img-box">'
+                + '<img src="' + obj.upload_path + '"alt="product-img" />'
+                + '<div class="cart-btn"><i class="fa-solid fa-cart-shopping"></i></div>'
+                + '</a>'
+                + '<div class="thum-desc">'
+                + '<a class="title"><h3>' + obj.name + '</h3></a>'
+                + '<div class="price">' + obj.prc + '원</div>'
+                // + '<div class="review-cnt">리뷰 수: ' + obj.review_cnt + '</div>' //아직 dto에 추가 안함
+                + '</div>'
+                + '</li>';
+        });
+        list_ref.append(str);
+    }
+    //상품리스트 호출 ajax, create, append 상품 리스트
+    let reqPdList = (cate_idx, tab_id) => {
+        $.ajax({
+            url: '/list/pd',
+            data: {category: cate_idx},
+            type: 'GET',
+            success: function (list) {
+                renderPdList(list, tab_id);
+            },
+            error: function (err) {
+                alert(error_msg);
+            }
+        }); //$.ajax
+    };
+
     $(document).ready(function () {
-        // 처음에는 맨 첫번째 탭을 보여준다.
+        // 탭 초기화
         $(".tab-button").eq(0).addClass("on");
         $(".thum-list").eq(0).addClass("show");
 
+        //ajax로 5개 카테고리 상품리스트 + 전체 리스트 출력 (4개씩 출력)
+        reqPdList("00", 0); //전체, tab_id
+        reqPdList("01", 1); //과일, tab_id
+        reqPdList("02", 2); //채소, tab_id
+        reqPdList("03", 3); //생선, tab_id
+        reqPdList("04", 4); //육류, tab_id
+        reqPdList("06", 5); //간식과 디저트, tab_id
+
+        // 탭 클릭 함수
         $(".tab-list").click(function (e) {
             let data_id = e.target.dataset.a;
-            // let data_id = $(e.target.dataset.a); 하지 말자~
-
             //remove prev
             $(".tab-button").removeClass("on");
             $(".thum-list").removeClass("show");
@@ -390,6 +237,7 @@
             $(".thum-list").eq(data_id).addClass("show");
         });
 
+        //slideshow
         var myIndex = 0;
         carousel();
 
