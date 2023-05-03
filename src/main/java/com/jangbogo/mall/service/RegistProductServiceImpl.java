@@ -14,22 +14,22 @@ public class RegistProductServiceImpl implements RegistProductService {
     RegistProductDao registProductDao;
 
     @Override
-    public int getProdIdx(RegistProductDto registProductDto) throws Exception {
+    public Integer getProdIdx(RegistProductDto registProductDto) throws Exception {
         return registProductDao.getProdIdx(registProductDto);
     }
 
     @Override
-    public int insertProduct(RegistProductDto registProductDto) throws Exception { //상품등록
+    public Integer insertProduct(RegistProductDto registProductDto) throws Exception { //상품등록
         return registProductDao.insertProduct(registProductDto);
     }
 
     @Override
-    public int insertProductDetail(RegistProductDto registProductDto) throws Exception {
+    public Integer insertProductDetail(RegistProductDto registProductDto) throws Exception {
         return registProductDao.insertProductDetail(registProductDto);
     }
 
     @Override
-    public int insertProductFile(List<ProductFileDto> files, Integer prod_idx) throws Exception { //상품첨부등록
+    public Integer insertProductFile(List<ProductFileDto> files, Integer prod_idx) throws Exception { //상품첨부등록
         for (ProductFileDto item : files) {
             item.setProd_idx(prod_idx);
             registProductDao.insertProductFile(item);
@@ -37,7 +37,7 @@ public class RegistProductServiceImpl implements RegistProductService {
         return 1;
     }
 
-    public int checkSellerProdCd(RegistProductDto registProductDto) throws Exception {
+    public Integer checkSellerProdCd(RegistProductDto registProductDto) throws Exception {
         return registProductDao.checkSellerProdCd(registProductDto);
     }
 

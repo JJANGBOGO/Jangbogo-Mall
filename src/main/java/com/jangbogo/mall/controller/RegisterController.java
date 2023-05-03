@@ -1,17 +1,13 @@
 package com.jangbogo.mall.controller;
 
 import com.jangbogo.mall.domain.*;
-import com.jangbogo.mall.service.ProductService;
 import com.jangbogo.mall.service.RegistProductService;
 import com.jangbogo.mall.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,9 +55,37 @@ public class RegisterController {
 
     //판매자 상품 등록 화면
     @GetMapping("/seller/register/product")
-    public String regProductView() {
+    public String regProductView(HttpServletRequest request) {
+        if(!loginCheck(request)) return "redirect:/user/login?toURL="+request.getRequestURL();
         return "/seller/registerProduct";
     }
+
+//    @PostMapping("/seller/register/checkData")
+//    public String checkData(HttpSession session, @RequestBody RegistProductDto registProductDto, RedirectAttributes rattr) {
+//        Integer idx = (Integer)session.getAttribute("idx");
+//        registProductDto.setSeler_idx(idx);
+//        try {
+//            if(registProductService.checkSellerProdCd(registProductDto) != 0){
+////                String msg = "DUPLICATE_NUMBER";
+//                rattr.addFlashAttribute("msg", "DUPLICATE_NUMBER");
+//                throw new Exception("Duplicate Number");
+//            } else {
+//                rattr.addFlashAttribute("msg", "CONFIRM");
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println("000"+registProductDto.getSeler_idx());
+//        System.out.println("111"+registProductDto.getSeler_prod_cd());
+//        System.out.println("222"+registProductDto.getMft_tm());
+//        System.out.println ("333"+registProductDto.getDistb_tlmt());
+//        System.out.println ("444"+registProductDto.getSle_start_tm());
+//        System.out.println ("555"+registProductDto.getSle_end_tm());
+//
+//
+//        return "";
+//    }
 
 
     //상품 등록 페이지에서 상품등록하기
@@ -72,6 +96,7 @@ public class RegisterController {
             RedirectAttributes rattr
     ) {
         try {
+
             Integer idx = (Integer)session.getAttribute("idx");
             registProductDto.setSeler_idx(idx);
 
@@ -105,5 +130,10 @@ public class RegisterController {
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return "redirect:/seller/register/product";
         }
+    }
+
+    private boolean loginCheck(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        return session.getAttribute("idx")!=null;
     }
 }

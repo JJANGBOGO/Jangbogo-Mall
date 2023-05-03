@@ -5,7 +5,7 @@
 <mapper namespace="com.jangbogo.mall.dao.RegistProductMapper">
 
     <!--    판매자 상품코드를 가지고 상품 번호 가져오기-->
-    <select id="getProdIdx" parameterType="RegistProductDto" resultType="int">
+    <select id="getProdIdx" parameterType="RegistProductDto" resultType="Integer">
         select IDX as 'prod_idx'
         from product
         where SELER_PROD_CD = #{seler_prod_cd} and SELER_IDX = #{seler_idx};
@@ -35,7 +35,7 @@
         (#{UUID}, #{prod_idx}, #{name}, #{UPLOAD_PATH}, #{TYPE}, #{SORT_ODR});
     </insert>
 <!--    기존 상품들 중 판매자상품코드가 겹치는 것이 있는지 확인-->
-    <select id="checkSellerProdCd" parameterType="RegistProductDto" resultType="int">
+    <select id="checkSellerProdCd" parameterType="RegistProductDto" resultType="Integer">
         select count(*)
         from product
         where SELER_PROD_CD = #{seler_prod_cd} and SELER_IDX = #{seler_idx};

@@ -19,26 +19,26 @@ public class RegistProductDaoImpl implements RegistProductDao {
     String namespace = "com.jangbogo.mall.dao.RegistProductMapper.";
 
     @Override
-    public int getProdIdx(RegistProductDto registProductDto) throws Exception {
+    public Integer getProdIdx(RegistProductDto registProductDto) throws Exception {
         return session.selectOne(namespace + "getProdIdx", registProductDto);
     }
 
     @Override
-    public int insertProduct(RegistProductDto registProductDto) throws Exception {
+    public Integer insertProduct(RegistProductDto registProductDto) throws Exception {
         return session.insert(namespace + "insertProduct", registProductDto);
     }
 
     @Override
-    public int insertProductDetail(RegistProductDto registProductDto) throws Exception {
+    public Integer insertProductDetail(RegistProductDto registProductDto) throws Exception {
         return session.insert(namespace + "insertProductDetail", registProductDto);
     }
 
     @Override
-    public int insertProductFile(ProductFileDto file) throws Exception{
+    public Integer insertProductFile(ProductFileDto file) throws Exception{
         return session.insert(namespace + "insertProductFile", file);
     }
 
-    public int checkSellerProdCd(RegistProductDto registProductDto) throws Exception {
+    public Integer checkSellerProdCd(RegistProductDto registProductDto) throws Exception {
         return session.selectOne(namespace+ "checkSellerProdCd", registProductDto);
     }
 

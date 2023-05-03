@@ -13,8 +13,20 @@ public class ProductListServiceImpl implements ProductListService {
     @Autowired
     ProductListDao productListDao;
 
+    public List<ProductListDto> ffloorSelect(String f_cate_idx) throws Exception {
+        return productListDao.ffloorSelect(f_cate_idx);
+    }
+
+    public List<ProductListDto> allffloorSelect() throws Exception {
+        return productListDao.allffloorSelect();
+    }
+
+    public Integer reviewNumSelect(Integer prod_idx) throws Exception {
+        return productListDao.reviewNumSelect(prod_idx);
+    }
+
     @Override
-    public List<ProductListDto> allProductInfoSelect(ProductListDto productListDto) throws Exception {
-        return productListDao.allProductInfoSelect(productListDto);
+    public List<ProductListDto> allProductInfoSelect( ) throws Exception {
+        return productListDao.allProductInfoSelect();
     }
 }
