@@ -454,11 +454,11 @@
             tmp += '<li><span>상품금액</span><span>0원</span></li>'
             tmp += '<li><span>배송비</span><span></span>0원</li>'
             tmp += '<li><span>결제금액</span><span>0원</span></li>'
-            tmp += '<li><span>환불완료금액</span><span>'+formatPriceWithComma(orders[0].ord_tot_amt + 2500)+'원</span></li>'
+            tmp += '<li><span>환불완료금액</span><span>'+formatPriceWithComma(orders[0].amt)+'원</span></li>'
         }else{
-            tmp += '<li><span>상품금액</span><span>'+formatPriceWithComma(orders[0].ord_tot_amt)+'원</span></li>'
+            tmp += '<li><span>상품금액</span><span>'+formatPriceWithComma(orders[0].amt - 2500)+'원</span></li>'
             tmp += '<li><span>배송비</span><span></span>2,500원</li>'
-            tmp += '<li><span>결제금액</span><span>'+formatPriceWithComma(orders[0].amt + 2500)+'원</span></li>'
+            tmp += '<li><span>결제금액</span><span>'+formatPriceWithComma(orders[0].amt)+'원</span></li>'
         }
 
         tmp += '<li class="last"><span>결제방법</span>'
