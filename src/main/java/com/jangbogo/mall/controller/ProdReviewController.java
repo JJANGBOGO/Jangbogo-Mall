@@ -22,7 +22,7 @@
 //    // 상품후기 처음에 필요한 것  1.상품번호(하드코딩) 2.회원번호(수정)
 //    @GetMapping("/product/review")
 //    public String productReviewPage(HttpSession session, Model m,Integer prod_idx){ // 상품 후기는 세션에서 그 회원의 회원번호를 가진 사람만 후기를 수정할 수 있어야 한다
-//        Integer user_idx = (int)session.getAttribute("idx"); // 세션에서 회원번호를 가져온다
+////        Integer user_idx = (int)session.getAttribute("idx"); // 세션에서 회원번호를 가져온다
 //        List<ProdReviewDto> list = null;
 //
 ////        m.addAttribute(prod_idx); // 현재 하드코딩 나중에 넣어주기
@@ -34,6 +34,7 @@
 //    @GetMapping("/product/review/list") // /product/review/list?prod_idx=1  GET
 //    public ResponseEntity<Map> list(Integer page,Integer pageSize, Integer prod_idx, HttpSession session, SearchCondition sc){ // 상품번호, 회원번호 보유중
 //        List<ProdReviewDto> list = null;
+//        System.out.println("222222 = " + 222222);
 //
 //        Integer user_idx = (Integer)session.getAttribute("idx");        // 세션에서 회원번호를 가져온다
 //        try {
@@ -48,6 +49,7 @@
 //            map.put("pageSize",pageSize);
 //            map.put("prod_idx",prod_idx);
 //            list = prodReviewService.selectPage(map);                         // 상품후기 목록을 가져온다 10개씩
+//            System.out.println("list = " + list);
 //
 //            Map<String, Object> listsMap = new HashMap<>();                   // Map(listsMap) 생성 // 여러개의 값을 보내기 위해서
 //            listsMap.put("totalCnt",totalCnt);                                // Map 에 상품후기 개수(totalCnt) 추가
