@@ -18,4 +18,7 @@ public interface ProductService {
     //검색
     List<ProductDto> searchProductList (String keyword) throws Exception;
 
+    //판매자 탈퇴로 인한 상품 판매중지
+    int stopSale (List<ProductDto> prouductList) throws Exception;
+
 }
