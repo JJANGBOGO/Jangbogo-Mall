@@ -10,6 +10,8 @@
     <head>
         <title>주문서 작성</title>
         <link rel="stylesheet" href="/css/order/orderForm.css"/>
+        <link rel="stylesheet" href="/css/modal.css"/>
+        <link rel="stylesheet" href="/css/order/orderCancel.css">
         <%@ include file="/WEB-INF/views/include/header.jsp" %>
         <script src = "/js/order/format.js"></script>
     </head>
@@ -32,9 +34,7 @@
             </section>
             <section class="order-section">
                 <div class="order-section__title"><h3>배송 정보</h3></div>
-                <div class="order-section__content" id="deliveryInform">
-
-                </div>
+                <div class="order-section__content" id="deliveryInform"></div>
             </section>
             <div class="order-container__parent">
                 <div class="order-container__child">
@@ -174,33 +174,33 @@
             // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
             const ordererToHtml = (ordererInfo) => {
                 let tmp = "";                                                                                           // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
-                tmp += "<div class='orderer-section'>"
-                tmp += "<div class='orderer-inform'>"
-                tmp += "<span>보내는 분</span>"
-                tmp += "</div>"
-                tmp += "<div class='orderer-value'>"
-                tmp += "<span id='ordererName' >" + ordererInfo.nick_nm + "</span>"
-                tmp += "</div>"
-                tmp += "</div>"
-                tmp += "<div class='orderer-section'>"
-                tmp += "<div class='orderer-inform'>"
-                tmp += "<span>휴대폰</span>"
-                tmp += "</div>"
-                tmp += "<div class='orderer-value'>"
-                tmp += "<span id='ordererMpno' >" + formatMpnoWithHyphen(ordererInfo.mpno) + "</span>"
-                tmp += "</div>"
-                tmp += "</div>"
-                tmp += "<div class='orderer-section'>"
-                tmp += "<div class='orderer-inform'>"
-                tmp += "<span>이메일</span>"
-                tmp += "</div>"
-                tmp += "<div class='orderer-value'>"
-                tmp += "<span>" + ordererInfo.email + "</span>"
-                tmp += "<div class='orderer-value__paragraph'>"
-                tmp += "<p>이메일을 통해 주문처리과정을 보내드립니다.</p>"
-                tmp += "<p>정보 변경은 마이페이지 > 개인정보 수정 메뉴에서 가능합니다.</p>"
-                tmp += "</div>"
-                tmp += "</div>"
+                tmp += "<div class='orderer-section'>";
+                tmp += "<div class='orderer-inform'>";
+                tmp += "<span>보내는 분</span>";
+                tmp += "</div>";
+                tmp += "<div class='orderer-value'>";
+                tmp += "<span id='ordererName' >" + ordererInfo.nick_nm + "</span>";
+                tmp += "</div>";
+                tmp += "</div>";
+                tmp += "<div class='orderer-section'>";
+                tmp += "<div class='orderer-inform'>";
+                tmp += "<span>휴대폰</span>";
+                tmp += "</div>";
+                tmp += "<div class='orderer-value'>";
+                tmp += "<span id='ordererMpno' >" + formatMpnoWithHyphen(ordererInfo.mpno) + "</span>";
+                tmp += "</div>";
+                tmp += "</div>";
+                tmp += "<div class='orderer-section'>";
+                tmp += "<div class='orderer-inform'>";
+                tmp += "<span>이메일</span>";
+                tmp += "</div>";
+                tmp += "<div class='orderer-value'>";
+                tmp += "<span>" + ordererInfo.email + "</span>";
+                tmp += "<div class='orderer-value__paragraph'>";
+                tmp += "<p>이메일을 통해 주문처리과정을 보내드립니다.</p>";
+                tmp += "<p>정보 변경은 마이페이지 > 개인정보 수정 메뉴에서 가능합니다.</p>";
+                tmp += "</div>";
+                tmp += "</div>";
                 tmp += "</div>";
                 return tmp;
             }
@@ -210,14 +210,14 @@
             // 매개변수 : items - deliveryDto
             // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
             const deliveryToHtml = (deliveryInfo) => {
-                let defaultLocation = "문 앞";                                                                           // 변수명 : defaultLocation - 저장값 : 받으실 장소의 기본 값 "문 앞"
                 let tmp = "";                                                                                           // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
                 tmp += "<div class='delivery-section'>"
                 tmp += "<div class='delivery-inform'>"
                 tmp += "<span>배송지</span>"
                 tmp += "</div>"
                 tmp += "<div id='deliveryAddress' class='delivery-value' >"
-                tmp += "<span>" + "경기 의왕시 원골로 43(모락산현대아파트)118동 202호(하드코딩)" + "</span>"
+                tmp += "<span>" + deliveryInfo[0].addr_base + " </span>"
+                tmp += "<span>" + deliveryInfo[0].addr_dtl + "</span>"
                 tmp += "</div>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-section'>"
@@ -226,13 +226,12 @@
                 tmp += "</div>"
                 tmp += "<div class='delivery-value'>"
                 tmp += "<div class='delivery-value__column' id='deliveryRecipient'>"
-                tmp += "<span>" + deliveryInfo.nick_nm + "</span> , <span>" + formatMpnoWithHyphen(deliveryInfo.mpno) + "</span>"
+                tmp += "<span>" + "받으실 분 정보를 입력해주세요." + "</span>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-value__column' id='deliveryLocation'>"
-                tmp += "<span>받으실 장소 | " + defaultLocation + "</span>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-value__column'>"
-                tmp += "<button type='button' id='deliveryModBtn'>수정</button>"
+                tmp += "<button type='button' id='deliveryModBtn'>입력</button>"
                 tmp += "</div>"
                 tmp += "</div>"
                 tmp += "</div>"
@@ -336,6 +335,7 @@
                     url:'/order/checkout/delivery?user_idx=' + user_idx,                                                // 요청URI
                     success: (result) => {                                                                              // 성공 응답이 오면, 배송 정보를 페이지에 랜더링하기
                         $('#deliveryInform').html(deliveryToHtml(result));                                              // deliveryToHtml메서드 호출
+                        $('#deliveryRecipient > span').css('color', 'rgb(240, 63, 64)');
                     },
                     error : function() { alert("showDeliveryInfo 실패 응답 : 회원번호 누락");}                                // 실패 응답이 오면, 경고창 띄우기
                 });                                                                                                     // $.ajax() end                 //
@@ -406,6 +406,15 @@
                 // 이벤트 : click
                 // 이벤트 핸들러 기능 : '결제하기' 버튼 클릭 시,                                                                  (3) 결제 페이지로 이동
                 $(document).on("click", "#paymentBtn", (e) => {
+                    // TODO: 버튼 클릭 시, 주문자 정보가 입력되지 않으면 모달창을 불러온다.
+                    if($('#deliveryModBtn').text() !== '수정') {
+                        // display:none -> display: block으로 바꿔야 한다.
+                        $('div#orderFormSubmitFailModal').css('display', 'block');
+                        $(document).on("click", "#orderFormSubmitFailureBtn", () => {
+                            $('div#orderFormSubmitFailModal').css('display', 'none');
+                        })
+                        return;
+                    }
                     let ordr_name = $("#ordererName").text();                                                           // 변수명 : orderer_name - 저장값 : 주문자이름를 저장한 요소 참조
                     let ordr_mpno = $("#ordererMpno").text();                                                           // 변수명 : orderer_mpno - 저장값 : 주문자휴대폰번호를 저장한 요소 참조
                     ordr_mpno =formatMpnoWitoutHyphen(ordr_mpno);                                                       // 주문자휴대전화번호에서 하이픈 삭제(010-8888-9999 -> 01088889999)
@@ -418,6 +427,20 @@
                     let itemsQuantity = $("#itemsQuantity").val();                                                      // 변수명 : itemsQuantity - 저장값 : 장바구니에 담긴 모든 품목 개수의 합을 저장한 요소의 value 참조
                     let item_name = $(".order-item:first-child .order-item__title").text();                              // 변수명 : item_name - 저장값 : 주문상품명을 저장한 요소 참조
                     item_name = (itemsCnt < 2) ? item_name : (item_name+ " 외 " + (itemsCnt - 1) + "건");                // 주문상품의 품목 개수가 2개 이상일 경우, item_name의 저장값은 '상품명 외 (n-1)건'로 수정
+
+                    let addr_base = $("#deliveryAddress > span:first-of-type").text();
+                    let addr_dtl = $("#deliveryAddress > span:last-of-type").text();
+                    let plrcv = $("#deliveryLocation > span:last-of-type").text();
+                    let rcpr_nm = $("#deliveryRecipient > span:first-of-type").text();
+                    let rcpr_mpno = $("#deliveryRecipient > span:last-of-type").text();
+
+                    let delivery = {
+                        "rcpr_nm" : rcpr_nm,
+                        "rcpr_mpno" : rcpr_mpno,
+                        "rcpr_addr_base" : addr_base,
+                        "rcpr_addr_dtl" : addr_dtl,
+                        "plrcv" : plrcv,
+                    }
 
                     let orderDto = {                                                                                    // 변수명 : orderDto - 저장값 : KakaoReadyRequestDto 객체에 K/V로 담아 전송할 OrderDto 객체
                         "user_idx" : idx,
@@ -432,7 +455,8 @@
                         "item_name" : item_name,                                                                        // 값목록 : (1) 주문상품명(item_name), (2) 주문상품개수(quantity), (3) 주문총금액(total_amount)
                         "quantity" : itemsQuantity,
                         "total_amount" : total_amount,
-                        "orderDto" : orderDto
+                        "orderDto" : orderDto,
+                        "deliveryDto" : delivery
                     }
 
                     let kakaoReadyResponse = {};                                                                        // 서버로부터 도착한 응답에 담긴 데이터를 저장할 변수 kakaoReadyResponse
@@ -455,5 +479,11 @@
             })                                                                                                          // $(document).ready(() => {}) end
         </script>
         <%@ include file="/WEB-INF/views/include/footer.jsp" %>                                                          <!-- include 액션 태그 - footer -->
+        <div class="background show" id="orderFormSubmitFailModal">
+            <div class="popup order-cancel__popup">
+                <div class="order-cancel__popup-title">받으실 분 정보를 입력해주세요.</div>
+                <button type="button" id="orderFormSubmitFailureBtn">확인</button>
+            </div>
+        </div>
     </body>
 </html>

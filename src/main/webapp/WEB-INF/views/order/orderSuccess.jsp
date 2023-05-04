@@ -51,6 +51,7 @@
         <script>
             $(document).ready(() => {
                 let model = "${model}";                                                                                 // 변수명 : model - 저장값 : RedirectAttributes에 저장된 키(k)가 "model"인 값(v)
+                let orderDto = "${orderDto}";                                                                           // 변수명 : orderDto - 저장값 : RedirectAttributes에 저장된 키(k)가 "orderDto"인 값(v)
                 if(model !== "") {                                                                                      // 변수 model에 RedirectAttributes의 저장된 키(k)가 "model"인 값(v)이 들어온 경우
                     sessionStorage.setItem("approved_at", "${model.approved_at}");                                      // '결제승인시각' 세션스토리지에 저장
                     sessionStorage.setItem("item_name", "${model.item_name}");                                          // '주문상품이름' 세션스토리지에 저장
@@ -58,6 +59,10 @@
                     sessionStorage.setItem("total", "${model.amount.total}");                                           // '주문총금액' 세션스토리지에 저장
                     sessionStorage.setItem("payment_method_type", "${model.payment_method_type}");                      // '주문결제수단' 세션스토리지에 저장
                 }
+                if(orderDto !== "") {
+                    sessionStorage.setItem("idx", "${orderDto.idx}");                                                   // '주문번호' 세션스토리지에 저장
+                }
+
                 let approved_at = sessionStorage.getItem("approved_at");                                                // 변수명 : approved_at - 카카오페이 서버로부터 응답 받은 결제승인시각에 해당하는 값
                 let item_name = sessionStorage.getItem("item_name");                                                    // 변수명 : item_name - 카카오페이 서버로부터 응답 받은 주문상품이름에 해당하는 값
                 let quantity = sessionStorage.getItem("quantity");                                                      // 변수명 : quantity - 카카오페이 서버로부터 응답 받은 주문수량에 해당하는 값
@@ -65,6 +70,7 @@
                 let payment_method_type = sessionStorage.getItem("payment_method_type");                                // 변수명 : payment_method - 카카오페이 서버로부터 응답 받은 결제수단에 해당하는 값
                 payment_method_type = (payment_method_type === "MONEY") ? "카카오페이머니결제" : "카드결제";                   // MONEY이면 "카카오페이머니" || CARD면 "카드결제"를 화면에 랜더링한다.
 
+                let order_idx = sessionStorage.getItem("idx");                                                          // 변수명 : order_idx - 저장값: 카카오페이 서버로부터 응답 받은 주문번호에 해당하는 값
 
                 $("#orderSuccessApprovedAt").text(approved_at);                                                         // '결제승인시각' 특정 위치에 랜더링
                 $("#orderSuccessItemName").text(item_name);                                                             // '주문상품이름' 특정 위치에 랜더링
@@ -85,7 +91,8 @@
                 // 이벤트 : click
                 // 이벤트 핸들러 기능 : '주문 상세보기'으로 이동
                 $(document).on("click", ".order-success__btn-order-details", () => {
-
+                    sessionStorage.clear();                                                                             // '홈'으로 이동 이전 세션스토리지 데이터 전체 삭제
+                    location.href="http://localhost:8080/mypage/order/list/" + order_idx;                               // '주문상세 페이지'로 이동
                 })
             })
         </script>

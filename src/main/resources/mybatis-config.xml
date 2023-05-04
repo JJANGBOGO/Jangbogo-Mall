@@ -24,9 +24,13 @@
         <typeAlias alias="Address" type="com.jangbogo.mall.domain.Address"/>
         <typeAlias alias="OrderDto" type="com.jangbogo.mall.domain.OrderDto"/>
         <typeAlias alias="OrderDetailDto" type="com.jangbogo.mall.domain.OrderDetailDto"/>
+        <typeAlias alias="OrderHistoryDto" type="com.jangbogo.mall.domain.OrderHistoryDto"/>
         <typeAlias alias="PaymentDto" type="com.jangbogo.mall.domain.PaymentDto"/>
+        <typeAlias alias="DeliveryDto" type="com.jangbogo.mall.domain.DeliveryDto"/>
         <typeAlias alias="KakaoReadyResponseDto" type="com.jangbogo.mall.domain.KakaoReadyResponseDto"/>
         <typeAlias alias="KakaoApproveResponseDto" type="com.jangbogo.mall.domain.KakaoApproveResponseDto"/>
         <typeAlias alias="ProdReviewDto" type="com.jangbogo.mall.domain.ProdReviewDto"/>
+        <typeAlias alias="MyOrderDto" type="com.jangbogo.mall.domain.MyOrderDto"/>
+        <typeAlias alias="MyOrderDetailDto" type="com.jangbogo.mall.domain.MyOrderDetailDto"/>
     </typeAliases>
 </configuration>

@@ -216,6 +216,7 @@ label{
     padding: 4px 9px;
     border-radius: 3px;
     cursor: pointer;
+    background-color: navy;
 }
 .checkbox{
     margin-left: 9px;

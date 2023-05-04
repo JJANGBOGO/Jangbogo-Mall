@@ -105,15 +105,15 @@ public class KakaoPayServiceImpl implements KakaoPayService {
     // 메서드명 : refundResponse
     // 기   능 : 결제 취소 처리
     // 반환타입 : KakaoCancelResponseDto
+    // 매개변수 : String tid - 결제고유번호
     // POST /v1/payment/cancel HTTP/1.1
     // Host: kapi.kakao.com
     // Authorization: KakaoAK ${APP_ADMIN_KEY}
     // Content-type: application/x-www-form-urlencoded;charset=utf-8
     @Override
-    public KakaoCancelResponseDto refundResponse() {                                                                    // TODO : 주문 내역 구현 이후 기능 구현
+    public KakaoCancelResponseDto refundResponse(String tid) {                                                                    // TODO : 주문 내역 구현 이후 기능 구현
                                                                                                                         // 카카오페이 요청 양식
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();                                             // 1. Body 만들기
-        String tid = kakaoReadyResponseDto.getTid();
         PaymentDto paymentDto = orderDao.getPayment(tid);
         String cancel_amount = paymentDto.getOrd_tot_amt().toString();
                                                                                                                         // 2. 파라미터에 K/V값 담기

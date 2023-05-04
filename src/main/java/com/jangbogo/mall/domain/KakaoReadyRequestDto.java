@@ -9,6 +9,7 @@ public class KakaoReadyRequestDto {
     private Integer quantity;                                                                                           // 주문상품수량
     private Integer total_amount;                                                                                       // 주문총금액
     private OrderDto orderDto;                                                                                          // 주문 객체
+    private DeliveryDto deliveryDto;                                                                                    // 배송 객체
 
     // constructor
     public KakaoReadyRequestDto() {};                                                                                   // 기본 생성자
@@ -46,6 +47,15 @@ public class KakaoReadyRequestDto {
         this.orderDto = orderDto;
     }
 
+    public DeliveryDto getDeliveryDto() {
+        return deliveryDto;
+    }
+
+    public void setDeliveryDto(DeliveryDto deliveryDto) {
+        this.deliveryDto = deliveryDto;
+    }
+
+
     // toString
 
     @Override
@@ -55,6 +65,7 @@ public class KakaoReadyRequestDto {
                 ", quantity=" + quantity +
                 ", total_amount=" + total_amount +
                 ", orderDto=" + orderDto +
+                ", deliveryDto=" + deliveryDto +
                 '}';
     }
 }

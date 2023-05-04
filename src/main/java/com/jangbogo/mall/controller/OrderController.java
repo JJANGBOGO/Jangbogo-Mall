@@ -29,6 +29,7 @@ public class OrderController {
     @Autowired
     UserService userService;
 
+
     // 메서드명 : getItemList
     // 기   능 : 주문상품 목록을 불러오는 ajax요청을 처리한다.
     // 반환타입 : ResponseEntity<List<CartDto>> - list값과 상태코드를 함께 반환하기 위한 클래스
@@ -82,15 +83,15 @@ public class OrderController {
     // 요청URL : order/checkout/delivery?user_idx=1234 GET
     @GetMapping("/order/checkout/delivery")
     @ResponseBody
-    public ResponseEntity<User> getDeliveryInfo(HttpSession session) {
-        Integer idx = (Integer)(session.getAttribute("idx"));                                                     // 변수명 : ordererInfo - 저장값 : 세션에 저장된 회원번호(idx)
-        User user = null;                                                                                               // 변수명 : user - 저장값 : userDto
+    public ResponseEntity<List<CartDto>> getDeliveryInfo(HttpSession session) {
+        Integer user_idx = (Integer)(session.getAttribute("idx"));                                                // 변수명 : user_idx - 저장값 : 세션에 저장된 회원번호(idx)
+        List<CartDto> list = null;                                                                                      // 변수명 : list - 저장값 : List<CartDto>
         try {
-            user = userService.selectUser(idx);
-            return new ResponseEntity<User>(user, HttpStatus.OK);                                                       // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
+            list = cartService.getList(user_idx);                                                                       // cartService의 getList메서드에 인자로 회원번호를 지정하여 호출, 반환값을 list에 저장
+            return new ResponseEntity<List<CartDto>>(list, HttpStatus.OK);                                              // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
         } catch (Exception e) {                                                                                         // 에러 발생 시,
             e.printStackTrace();                                                                                        // 1) 에러 내용을 로그에 출력
-            return new ResponseEntity<User>(user, HttpStatus.BAD_REQUEST);                                              // 2) user값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
+            return new ResponseEntity<List<CartDto>>(list, HttpStatus.BAD_REQUEST);                                     // 2) user값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
         }
     }
 
