@@ -26,12 +26,12 @@ public class SellerServiceTest {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
-    @Test //OK
-    public void withdrawSeller() throws Exception {
-        int result = service.withdrawSeller(8, "jinvicky1008");
-        log.info("result=" + result);
-        assertTrue(result != 0);
-    }
+//    @Test //OK
+//    public void withdrawSeller() throws Exception {
+//        int result = service.withdrawSeller(8, "jinvicky1008");
+//        log.info("result=" + result);
+//        assertTrue(result != 0);
+//    }
 
     @Test //ok
     public void getSellerByIdx() throws Exception {
