@@ -131,7 +131,7 @@
 
 <%--    // main() 처음 페이지 이동시 실행 함수--%>
 <%--    $(document).ready(function (){--%>
-
+<%--        console.log("h2")--%>
 <%--        // 상품후기 조회 함수 호출--%>
 <%--        showList();--%>
 
@@ -153,7 +153,7 @@
 <%--            // })--%>
 <%--            let idx = $(this).attr('data-idx');                                 // 상품 후기 일련번호 변수 선언--%>
 <%--            let user_idx = $(this).attr('data-user_idx');--%>
-<%--            if(user_idx!=${sessionScope.idx}){--%>
+<%--            if(user_idx!="${sessionScope.idx}"){--%>
 <%--                alert("작성자만 수정할 수 있습니다")--%>
 <%--                return;--%>
 <%--            }--%>
@@ -225,6 +225,14 @@
 
 <%--    // 상품 후기 목록 뿌려주기--%>
 <%--    let ReviewListToHtml = function (reviews){--%>
+<%--        &lt;%&ndash;if("${idx}"==""){&ndash;%&gt;--%>
+<%--        &lt;%&ndash;    let user_idx = "";&ndash;%&gt;--%>
+<%--        &lt;%&ndash;}&ndash;%&gt;--%>
+
+
+<%--        &lt;%&ndash;let user_idx = ${sessionScope.idx};&ndash;%&gt;--%>
+
+
 <%--        &lt;%&ndash;console.log(${idx});&ndash;%&gt;--%>
 <%--        &lt;%&ndash;console.log(${sessionScope.idx})&ndash;%&gt;--%>
 <%--        &lt;%&ndash;console.log("${sessionScope.email}");&ndash;%&gt;--%>
@@ -232,11 +240,11 @@
 <%--        &lt;%&ndash;console.log("${nickname}")&ndash;%&gt;--%>
 <%--        let tmp = '';--%>
 <%--        reviews.forEach(function (review){--%>
-<%--            if((review.user_idx==${idx} && review.opub_yn=="N") || review.opub_yn=="Y"){ // 작성자만 자신이 작성한 비공개 후기를 볼 수 있다--%>
+<%--            if((review.user_idx=="${idx}" && review.opub_yn=="N") || review.opub_yn=="Y"){ // 작성자만 자신이 작성한 비공개 후기를 볼 수 있다--%>
 <%--                tmp += '<div class="review-list">'--%>
 <%--                tmp += '<div class="list-side">'--%>
 <%--                tmp += '<div class="side-headerbox">'--%>
-<%--                if(review.user_idx==${idx}){--%>
+<%--                if(review.user_idx=="${idx}"){--%>
 <%--                    tmp += '<div class="my-review">'--%>
 <%--                    tmp += '<span class="rank2">나의 후기</span>'--%>
 <%--                    if(review.opub_yn=='Y'){--%>
