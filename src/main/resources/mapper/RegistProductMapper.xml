@@ -20,6 +20,21 @@
             SELECT LAST_INSERT_ID() AS idx
         </selectKey>
     </insert>
+<!--    상품 테이블 수정하기-->
+    <update id="updateProduct" parameterType="RegistProductDto">
+        update product
+        set
+            CATE_IDX = #{cate_idx2},
+            SELER_PROD_CD = #{seler_prod_cd},
+            UPLOAD_PATH = #{upload_path},
+            NAME = #{name},
+            CTENT = #{content},
+            PRC = #{prc},
+            DC_STATE_CD = #{dc_state_cd},
+            DC_RATE = #{dc_rate},
+            DSPLY_STATE_CD = #{dsply_state_cd}
+        where IDX = #{prod_idx}
+    </update>
             <!--    상품상세테이블에 추가하기-->
     <insert id="insertProductDetail" parameterType="RegistProductDto">
         insert into prod_dtl
@@ -27,6 +42,25 @@
         values
         (#{prod_idx}, #{orplc}, #{sle_unit}, #{weight}, #{mft_tm}, #{distb_tlmt}, #{warn}, #{max_sle_quty}, #{state}, #{sle_start_tm}, #{sle_end_tm}, #{inv_quty}, #{guid});
     </insert>
+<!--    상품상세테이블 수정하기-->
+    <update id="updateProductDetail" parameterType="RegistProductDto">
+        update prod_dtl
+        set
+        ORPLC = #{orplc},
+        SLE_UNIT = #{sle_unit},
+        WEIGHT = #{weight},
+        MFT_TM = #{mft_tm}
+        DISTB_TLMT = #{distb_tlmt}
+        WARN = #{warn},
+        MAX_SLE_QUTY = #{max_sle_quty},
+        SFKP_TP_STATE_CD = #{state},
+        SLE_START_TM = #{sle_start_tm},
+        SLE_END_TM = #{sle_end_tm},
+        INV_QUTY = #{inv_quty},
+        GUID = #{guid}
+        where prod_idx = #{prod_idx};
+    </update>
+
             <!--    상품상세첨부파일에 추가하기-->
     <insert id="insertProductFile" parameterType="RegistProductDto">
         insert into prod_file
@@ -34,6 +68,25 @@
         values
         (#{UUID}, #{prod_idx}, #{name}, #{UPLOAD_PATH}, #{TYPE}, #{SORT_ODR});
     </insert>
+<!--    상품상세첨부파일테이블 수정하기-->
+    <update id="updateProductFile" parameterType="RegistProductDto">
+        update prod_file
+        set
+        UUID = #{UUID},
+        NAME = #{name},
+        UPLOAD_PATH = #{UPLOAD_PATH},
+        TYPE = #{TYPE},
+        STATE_CD = #{STATE_CD},
+        SORT_ODR = #{SORT_ODR}
+        where prod_idx = #{prod_idx}
+    </update>
+
+    <update id="deleteProduct" parameterType="RegistProductDto">
+        update prod_dlt
+        set STATE_CD = 2
+        where prod_idx = #{prod_idx}
+    </update>
+
 <!--    기존 상품들 중 판매자상품코드가 겹치는 것이 있는지 확인-->
     <select id="checkSellerProdCd" parameterType="RegistProductDto" resultType="Integer">
         select count(*)

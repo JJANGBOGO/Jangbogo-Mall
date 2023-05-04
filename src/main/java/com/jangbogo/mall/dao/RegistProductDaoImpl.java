@@ -28,14 +28,30 @@ public class RegistProductDaoImpl implements RegistProductDao {
         return session.insert(namespace + "insertProduct", registProductDto);
     }
 
+    public Integer updateProduct(RegistProductDto registProductDto) throws Exception {
+        return session.insert(namespace + "updateProduct", registProductDto);
+    }
+
     @Override
     public Integer insertProductDetail(RegistProductDto registProductDto) throws Exception {
         return session.insert(namespace + "insertProductDetail", registProductDto);
     }
 
+    public Integer updateProductDetail(RegistProductDto registProductDto) throws Exception {
+        return session.insert(namespace + "updateProductDetail", registProductDto);
+    }
+
     @Override
     public Integer insertProductFile(ProductFileDto file) throws Exception{
         return session.insert(namespace + "insertProductFile", file);
+    }
+
+    public Integer updateProductFile(ProductFileDto file) throws Exception {
+        return session.insert(namespace + "updateProductFile", file);
+    }
+
+    public Integer deleteProduct(RegistProductDto registProductDto) throws Exception {
+        return session.insert("deleteProduct", registProductDto);
     }
 
     public Integer checkSellerProdCd(RegistProductDto registProductDto) throws Exception {

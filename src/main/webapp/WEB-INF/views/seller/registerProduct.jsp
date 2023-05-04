@@ -35,10 +35,10 @@
                             </div>
                             <div class="error-msg seler-prod-cd"></div>
                         </div>
-                        <div class="btn-space"></div>
-<%--                        <div class="btn-space">--%>
-<%--                            <button class="duplicate">중복확인</button>--%>
-<%--                        </div>--%>
+<%--                        <div class="btn-space"></div>--%>
+                        <div class="btn-space">
+                            <button class="duplicate">중복확인</button>
+                        </div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
@@ -717,10 +717,10 @@
         $(".duplicate").on("click", function(e){
             e.preventDefault();
             let seler_prod_cd = $('input[name=seler_prod_cd]').val();
-            let mft_tm = $('input[name=mft_tm]').val();
-            let distb_tlmt = $('input[name=distb_tlmt]').val();
-            let sle_start_tm = $('input[name=sle_start_tm]').val();
-            let sle_end_tm = $('input[name=sle_end_tm]').val();
+            // let mft_tm = $('input[name=mft_tm]').val();
+            // let distb_tlmt = $('input[name=distb_tlmt]').val();
+            // let sle_start_tm = $('input[name=sle_start_tm]').val();
+            // let sle_end_tm = $('input[name=sle_end_tm]').val();
             alert("alert!")
             $.ajax({
                 type: 'POST',

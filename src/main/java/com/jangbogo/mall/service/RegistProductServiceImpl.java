@@ -23,9 +23,17 @@ public class RegistProductServiceImpl implements RegistProductService {
         return registProductDao.insertProduct(registProductDto);
     }
 
+    public Integer updateProduct(RegistProductDto registProductDto) throws Exception {
+        return registProductDao.updateProduct(registProductDto);
+    }
+
     @Override
     public Integer insertProductDetail(RegistProductDto registProductDto) throws Exception {
         return registProductDao.insertProductDetail(registProductDto);
+    }
+
+    public Integer updateProductDetail(RegistProductDto registProductDto) throws Exception {
+        return registProductDao.updateProductDetail(registProductDto);
     }
 
     @Override
@@ -35,6 +43,18 @@ public class RegistProductServiceImpl implements RegistProductService {
             registProductDao.insertProductFile(item);
         }
         return 1;
+    }
+
+    public Integer updateProductFile(List<ProductFileDto> files, Integer prod_idx) throws Exception {
+        for (ProductFileDto item : files) {
+            item.setProd_idx(prod_idx);
+            registProductDao.updateProductFile(item);
+        }
+        return 1;
+    }
+
+    public Integer deleteProduct(RegistProductDto registProductDto) throws Exception {
+        return registProductDao.deleteProduct(registProductDto);
     }
 
     public Integer checkSellerProdCd(RegistProductDto registProductDto) throws Exception {

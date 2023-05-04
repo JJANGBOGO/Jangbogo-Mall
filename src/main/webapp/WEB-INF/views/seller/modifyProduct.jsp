@@ -11,12 +11,12 @@
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
 <div class="register-page">
     <div class="reg-page-center">
-        <div class="reg-header">상품 등록</div>
+        <div class="reg-header">상품 수정</div>
         <div class="section-line"></div>
         <div class="reg-form-box">
             <form
                     class="reg-form"
-                    action="/seller/register/productInfo"
+                    action="/seller/update/productInfo"
                     method="post"
             >
                 <div class="center-padding">
@@ -82,6 +82,7 @@
                                         id="name"
                                         type="text"
                                         placeholder="상품 이름을 입력해 주세요"
+                                        value="${product.name}"
                                 />
                             </div>
                             <div class="error-msg name"></div>
@@ -98,7 +99,7 @@
                                         id="ctent"
                                         name="content"
                                         placeholder="상품에 대한 설명을 입력해주세요"
-                                ></textarea>
+                                >${product.content}</textarea>
                             </div>
                             <div class="error-msg content"></div>
                         </div>
@@ -115,6 +116,7 @@
                                         name="prc"
                                         type="number"
                                         placeholder="가격을 입력해주세요"
+                                        value="${product.prc}"
                                 />
                             </div>
                             <div class="error-msg prc"></div>
@@ -170,6 +172,7 @@
                                         name="dc_rate"
                                         type="number"
                                         placeholder="할인율을 입력해주세요"
+                                        value="${product.dc_rate}"
                                 />
                             </div>
                             <div class="error-msg dc-rate"></div>
@@ -205,6 +208,7 @@
                                         id="orplc"
                                         type="text"
                                         placeholder="원산지를 입력해 주세요"
+                                        value="${product.orplc}"
                                 />
                             </div>
                             <div class="error-msg orplc"></div>
@@ -222,6 +226,7 @@
                                         id="sle_unit"
                                         type="text"
                                         placeholder="판매단위를 입력해 주세요"
+                                        value="${product.sle_unit}"
                                 />
                             </div>
                             <div class="error-msg bsplc-dtl"></div>
@@ -239,6 +244,7 @@
                                         id="weight"
                                         type="text"
                                         placeholder="판매 단위 당 중량을 입력해 주세요"
+                                        value="${product.weight}"
                                 />
                             </div>
                             <div class="error-msg weight"></div>
@@ -255,6 +261,7 @@
                                         name="mft_tm"
                                         id="mft_tm"
                                         type="date"
+                                        value="${product.mft_tm}"
                                 />
                             </div>
                             <div class="error-msg mft-tm"></div>
@@ -271,6 +278,7 @@
                                         name="distb_tlmt"
                                         id="distb_tlmt"
                                         type="date"
+                                        value="${product.distb_tlmt}"
                                 />
                             </div>
                             <div class="error-msg distb-tlmt"></div>
@@ -306,6 +314,7 @@
                                         name="sle_start_tm"
                                         id="sle_start_tm"
                                         type="date"
+                                        value="${product.sle_start_tm}"
                                 />
                             </div>
                             <div class="error-msg sle-start-tm"></div>
@@ -322,6 +331,7 @@
                                         name="sle_end_tm"
                                         id="sle_end_tm"
                                         type="date"
+                                        value="${product.sle_end_tm}"
                                 />
                             </div>
                             <div class="error-msg sle-end-tm"></div>
@@ -364,6 +374,7 @@
                                         placeholder="1회 최대 구매수량을 입력해 주세요"
                                         max="10"
                                         min="1"
+                                        value="${product.max_sle_quty}"
                                 />
                             </div>
                             <div class="error-msg max-ale-quty"></div>
@@ -382,6 +393,7 @@
                                         type="number"
                                         placeholder="최소 1 이상의 수량을 입력해 주세요"
                                         min="1"
+                                        value="${product.inv_quty}"
                                 />
                             </div>
                             <div class="error-msg inv_quty"></div>
@@ -399,7 +411,7 @@
                                         id="warn"
                                         type="text"
                                         placeholder="상품 관련 주의사항을 입력해 주세요"
-                                ></textarea>
+                                >${product.warn}</textarea>
                             </div>
                             <div class="error-msg warn"></div>
                         </div>
@@ -416,7 +428,7 @@
                                         name="guid"
                                         type="text"
                                         placeholder="상품 안내 사항을 입력해 주세요"
-                                ></textarea>
+                                >${product.guid}</textarea>
                             </div>
                             <div class="error-msg guid"></div>
                         </div>
@@ -445,7 +457,7 @@
                         <ul></ul>
                     </div>
                     <div class="btn-container">
-                        <button class="reg-confirm">가입하기</button>
+                        <button class="reg-confirm">수정하기</button>
                     </div>
                 </div>
             </form>
@@ -462,8 +474,10 @@
 <script>
     let msg = "${msg}";
     if (msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다 다시 시도해 주세요");
-    if (msg == "REG_PROD_OK") alert("상품이 등록되었습니다. 승인 대기중입니다.")
+    // if (msg == "REG_PROD_OK") alert("상품이 등록되었습니다. 승인 대기중입니다.")
     if (msg == "DUPLICATE_NUMBER") alert("중복된 번호입니다. 다시 입력해 주세요.")
+    if (msg == "UPDATE_PROD_OK") alert("수정이 완료되었습니다.")
+    if (msg == "UPDATE_PROD_ERR") alert("수정중 오류가 발생했습니다.")
     if (msg == "CONFIRM") alert("확인되었습니다.");
     const dc_applied = "1"; //할인 적용 여부
     const limit_sle = "2"; //기간한정판매
@@ -601,8 +615,24 @@
         toggleDcInput();
         toggleSleDateInput();
 
-        let cate_idx = "${product.cate_idx}";
-        $("#First_cate_idx option:selected").val(cate_idx);
+        <%--let cate_idx = "${product.cate_idx}";--%>
+        <%--$("#First_cate_idx").val(cate_idx).attr("selected", "selected");--%>
+
+        <%--let cate_idx2 = "${product.cate_idx2}";--%>
+        <%--let text = $("#Second_cate_idx").val(cate_idx2).text();--%>
+        <%--console.log("text???"+text);--%>
+
+        let dc_state_cd = "${product.dc_state_cd}";
+        $("input:radio[name=dc_state_cd]").attr("value", dc_state_cd).prop("checked", true);
+
+        let dsply_state_cd = "${product.dsply_state_cd}";
+        $("input:radio[name=dsply_state_cd]").attr("value", dsply_state_cd).prop("checked", true);
+
+        <%--let sle_date_type = "${product.sle_date_type}";--%>
+        <%--$("input:radio[name=sle_date_type]").attr("value", sle_date_type).prop("checked", true);--%>
+
+        let state = "${product.state}";
+        $("input:radio[name=state]").attr("value", state).prop("checked", true);
 
         $("select[name=cate_idx]").change(function (e) {
             //val은 대분류에만 해당하며, 카테고리 테이블의 id값과 일치함 //카테고리 아이디 받아서 배송방식 엮어오기
@@ -790,7 +820,7 @@
             });
         });
 
-        //가입하기 버튼 클릭
+        //수정하기 버튼 클릭
         $(".reg-confirm").click(function (e) {
             e.preventDefault();
             let form = $(".reg-form");

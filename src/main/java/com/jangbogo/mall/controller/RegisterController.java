@@ -38,20 +38,42 @@ public class RegisterController {
 //            return "redirect:/";
 //        }
 //    }
+    //상품 수정페이지 보여주기
     @GetMapping("/seller/update/product/{prod_idx}")
-    public String updateProduct(@PathVariable Integer prod_idx, Model m){
+    public String updateProductView(@PathVariable Integer prod_idx, Model m, RegistProductDto registProductDto){
         //상품번호로 상품정보 가져와서 다시 리스트 안에 넣어준다.
         try {
-            RegistProductDto registProductDto = registProductService.selectProdInfo(prod_idx);
-            System.out.println("registProductDtoddd = " + registProductDto.getCate_idx2());
-            String cate_idx = registProductDto.getCate_idx2();
-            String f_cate_idx = cate_idx.substring(0,2);
-            registProductDto.setCate_idx(f_cate_idx);
-            m.addAttribute("product", registProductDto);
+            RegistProductDto info = registProductService.selectProdInfo(prod_idx);
+            //update 명령
+            System.out.println("registProductDto = ???" + registProductDto);
+            m.addAttribute("product", info);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "/seller/modifyProduct";
+    }
+    //상품 수정하기
+    @PostMapping("/seller/update/productInfo")
+    public String updateProduct(RegistProductDto registProductDto, RedirectAttributes rattr) {
+
+        System.out.println("registProductDto |||= ???" + registProductDto); //넘어왔어
+        try {
+            if(registProductService.checkSellerProdCd(registProductDto) == 0) {
+                registProductService.updateProduct(registProductDto);
+                registProductService.updateProductDetail(registProductDto);
+                registProductService.updateProductDetail(registProductDto);
+
+            } else {
+                rattr.addFlashAttribute("msg", "DUPLICATE_NUMBER");
+            }
+            rattr.addFlashAttribute("msg", "UPDATE_PROD_OK");
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "UPDATE_PROD_ERR");
+        }
+
+        return "redirect:/seller/list/product";
     }
 
     //등록된 상품 리스트 보여주기
@@ -77,32 +99,32 @@ public class RegisterController {
         return "/seller/registerProduct";
     }
 
-//    @PostMapping("/seller/register/checkData")
-//    public String checkData(HttpSession session, @RequestBody RegistProductDto registProductDto, RedirectAttributes rattr) {
-//        Integer idx = (Integer)session.getAttribute("idx");
-//        registProductDto.setSeler_idx(idx);
-//        try {
-//            if(registProductService.checkSellerProdCd(registProductDto) != 0){
-////                String msg = "DUPLICATE_NUMBER";
-//                rattr.addFlashAttribute("msg", "DUPLICATE_NUMBER");
-//                throw new Exception("Duplicate Number");
-//            } else {
-//                rattr.addFlashAttribute("msg", "CONFIRM");
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("000"+registProductDto.getSeler_idx());
-//        System.out.println("111"+registProductDto.getSeler_prod_cd());
-//        System.out.println("222"+registProductDto.getMft_tm());
-//        System.out.println ("333"+registProductDto.getDistb_tlmt());
-//        System.out.println ("444"+registProductDto.getSle_start_tm());
-//        System.out.println ("555"+registProductDto.getSle_end_tm());
-//
-//
-//        return "";
-//    }
+    @PostMapping("/seller/register/checkData")
+    public String checkData(HttpSession session, @RequestBody RegistProductDto registProductDto, RedirectAttributes rattr) {
+        Integer idx = (Integer)session.getAttribute("idx");
+        registProductDto.setSeler_idx(idx);
+        try {
+            if(registProductService.checkSellerProdCd(registProductDto) != 0){
+//                String msg = "DUPLICATE_NUMBER";
+                rattr.addFlashAttribute("msg", "DUPLICATE_NUMBER");
+                throw new Exception("Duplicate Number");
+            } else {
+                rattr.addFlashAttribute("msg", "CONFIRM");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("000"+registProductDto.getSeler_idx());
+        System.out.println("111"+registProductDto.getSeler_prod_cd());
+        System.out.println("222"+registProductDto.getMft_tm());
+        System.out.println ("333"+registProductDto.getDistb_tlmt());
+        System.out.println ("444"+registProductDto.getSle_start_tm());
+        System.out.println ("555"+registProductDto.getSle_end_tm());
+
+
+        return "";
+    }
 
 
     //상품 등록 페이지에서 상품등록하기
