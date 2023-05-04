@@ -32,9 +32,6 @@ public class SellerController {
     @Autowired
     SellerService service;
 
-//    @Autowired
-//    ProductService productService;
-
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
@@ -252,7 +249,7 @@ public class SellerController {
                 return "redirect:/seller/withdraw";
             }
 
-            if (service.withdrawSeller(idx, email) != 1)
+            if (!service.withdrawSeller(idx, email)) //실패시 false
                 throw new Exception("withdraw failed");
 
             session.invalidate();
