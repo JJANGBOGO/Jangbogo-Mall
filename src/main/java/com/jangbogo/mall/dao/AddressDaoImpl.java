@@ -69,6 +69,10 @@ public class AddressDaoImpl implements AddressDao {
         return session.update(nameSpace+"resetStateCD",user_idx);
     }
 
+    @Override
+    public Address selAddrSelected(Integer user_idx) {
+        return session.selectOne(nameSpace + "selectAddressSelected", user_idx);
+    }
 
 
 }

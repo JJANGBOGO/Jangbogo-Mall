@@ -35,8 +35,8 @@
     <select id="selectProdFile" parameterType="Integer" resultType="ProductFileDto">
         select pd.PROD_IDX, pf.UUID, pf.name, pf.UPLOAD_PATH, pf.TYPE, pf.STATE_CD, pf.SORT_ODR, pf.CRT_TM, pf.CRT_IDX, pf.UPT_TM, pf.UPT_IDX
         from prod_dtl pd inner join prod_file pf
-        on pd.prod_idx = pf.prod_idx
-        where pd.prod_idx = #{prod_idx};
+        on pd.PROD_IDX = pf.PROD_IDX
+        where pd.PROD_IDX = #{prod_idx};
     </select>
 
 

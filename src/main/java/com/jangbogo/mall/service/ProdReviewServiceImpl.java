@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ProdReviewServiceImpl implements ProdReviewService {
@@ -32,6 +33,16 @@ public class ProdReviewServiceImpl implements ProdReviewService {
 //    public List<OrderDto> get_ord_idx(Integer user_idx, Integer prod_idx) throws Exception{
 //        return prodReviewDao.get_ord_idx(user_idx,prod_idx);
 //    }
+
+    @Override
+    public List<ProdReviewDto> selectPage(Map map) throws Exception {
+        return prodReviewDao.selectPage(map);
+    }
+
+    @Override
+    public Integer getCount(Integer prod_idx) throws Exception {
+        return prodReviewDao.getCount(prod_idx);
+    }
 
 
 

@@ -1,0 +1,291 @@
+/*여기부터 모달*/
+.ssd{
+    /*display: none;*/
+}
+.reviewUpdate-container{
+    /*position: absolute;*/
+    display: none;
+    position: fixed;
+    z-index: 1300;
+    align-items: center;
+    justify-content: center;
+    inset: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-tap-highlight-color: transparent;
+    /*z-index: -1;*/
+
+}
+.reviewUpdate-background{
+    height: 100%;
+    outline: 0px;
+    display: flex;
+    /* -webkit-box-pack: center; */
+    justify-content: center;
+    /* -webkit-box-align: center; */
+    align-items: center;
+
+}
+.reviewUpdate-modal{
+    /* display: flex; */
+    width: 800px;
+    max-width: none;
+    /* max-height: 740px; */
+    border-radius: 12px;
+    background-color: rgb(255, 255, 255);
+}
+.review-title{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding-bottom: 10px;
+    margin: 30px 30px 0px;
+    border-bottom: 1px solid rgb(244, 244, 244);
+}
+.closeXBtn{
+    display: inline-block;
+    width: 45px;
+    height: 36px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.review-body{
+    /* flex: 1 1 auto; */
+    /* overflow-y: auto; */
+    /* position: relative; */
+    padding: 0px 30px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+    color: rgb(153, 153, 153);
+}
+
+.review-body .body-title{
+    display: flex;
+    /* -webkit-box-align: center; */
+    align-items: center;
+    gap: 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgb(244, 244, 244);
+}
+.review-body .body-title .title-img{
+    position: relative;
+
+}
+.review-body .body-title img{
+    /* position: absolute;
+inset: 0px;
+box-sizing: border-box;
+padding: 0px;
+border: none;
+margin: auto;
+display: block; */
+    width: 100px;
+    height: 100px;
+    /* min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100%; */
+    border-radius: 5px;
+}
+.img-name{
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.body-content{
+    display: flex;
+    gap: 30px;
+    padding-top: 16px;
+}
+.content-side{
+    position: relative;
+    flex-shrink: 0;
+    width: 70px;
+    padding-top: 12px;
+    line-height: 19px;
+    color: rgb(51, 51, 51);
+}
+.content-box{
+    height: 205px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 4px;
+
+
+    width: 100%;
+    /* height: 100%; */
+    padding: 15px 16px;
+    font-size: 16px;
+}
+.content{
+    width: 100%;
+    height: 100%;
+    font-size: 15px;
+    /* background: none; */
+    border-radius: 4px;
+    color: rgb(51, 51, 51);
+    outline: none;
+    resize: none;
+    border: none;
+    padding: 0;
+    line-height: 20px;
+}
+
+.body-warning{
+    display: flex;
+    gap: 30px;
+    /* padding-top: 16px; */
+}
+.warning-side{
+    position: relative;
+    flex-shrink: 0;
+    width: 70px;
+    /* padding-top: 12px;
+    line-height: 19px;
+    color: rgb(51, 51, 51); */
+}
+.warning-ul{
+    padding-left: 6px;
+    font-weight: 400;
+    font-size: 14px;
+    color: rgb(153, 153, 153);
+    line-height: 21px;
+}
+.body-footer{
+    display: flex;
+    gap: 30px;
+    padding-top: 16px;
+}
+.footer-side{
+    position: relative;
+    flex-shrink: 0;
+    width: 70px;
+    /* padding-top: 12px;
+    line-height: 19px;
+    color: rgb(51, 51, 51); */
+}
+.opub-label{
+    padding: 10px 0px;
+    display: flex;
+    align-items: center;
+}
+.opubCheckbox{
+    margin-right: 15px;
+}
+
+.opubBtn{
+    display: flex;
+    /* -webkit-box-pack: center; */
+    /* justify-content: center;
+    -webkit-box-align: center; */
+    align-items: center;
+    gap: 10px;
+    padding-top: 2px;
+    background-color: transparent;
+    border: none;
+}
+.footerBtn{
+    /* position: sticky; */
+    /* bottom: 0px; */
+    /* left: 0px; */
+    display: flex;
+    /* -webkit-box-pack: center; */
+    justify-content: center;
+    /* -webkit-box-align: center; */
+    align-items: center;
+    gap: 8px;
+    height: 106px;
+    margin-top: 20px;
+    border-top: 1px solid rgb(244, 244, 244);
+    background-color: rgb(255, 255, 255);
+}
+.cancleBtn{
+    width: 160px;
+    height: 56px;
+    padding: 0px 10px;
+    /* text-align: center; */
+    /* letter-spacing: 0px; */
+    border-radius: 3px;
+    font-size: 16px;
+    /* line-height: 20px; */
+    font-weight: 500;
+    /* margin-top: 14px; */
+    border: 1px solid rgb(221, 221, 221);
+    background-color: white;
+    /* color: rgb(0, 0, 0); */
+    cursor: pointer;
+}
+.updateBtn{
+    width: 160px;
+    height: 56px;
+    padding: 0px 10px;
+    /* text-align: center; */
+    /* letter-spacing: 0px; */
+    border-radius: 3px;
+    font-size: 16px;
+    /* line-height: 20px; */
+    font-weight: 500;
+    /* margin-top: 14px; */
+    color: rgb(255, 255, 255);
+    background-color: #f58412;
+    border: 0;
+    cursor: pointer;
+}
+.updateBtnDefault{
+    width: 160px;
+    height: 56px;
+    padding: 0px 10px;
+    /* text-align: center; */
+    /* letter-spacing: 0px; */
+    border-radius: 3px;
+    font-size: 16px;
+    /* line-height: 20px; */
+    font-weight: 500;
+    /* margin-top: 14px; */
+    color: rgb(255, 255, 255);
+    background-color: rgb(221, 221, 221);
+    border: 0;
+    cursor: default;
+}
+.insertBtn{
+    width: 160px;
+    height: 56px;
+    padding: 0px 10px;
+    /* text-align: center; */
+    /* letter-spacing: 0px; */
+    border-radius: 3px;
+    font-size: 16px;
+    /* line-height: 20px; */
+    font-weight: 500;
+    /* margin-top: 14px; */
+    color: rgb(255, 255, 255);
+    background-color: #f58412;
+    border: 0;
+    cursor: pointer;
+    display: none;
+}
+
+.insertBtnNo{
+    width: 160px;
+    height: 56px;
+    padding: 0px 10px;
+    /* text-align: center; */
+    /* letter-spacing: 0px; */
+    border-radius: 3px;
+    font-size: 16px;
+    /* line-height: 20px; */
+    font-weight: 500;
+    /* margin-top: 14px; */
+    color: rgb(255, 255, 255);
+    background-color: rgb(221, 221, 221);
+    border: 0;
+    cursor: default;
+}
+
+.warning-ul li {
+    color: rgb(153, 153, 153);
+    margin-top: 15px;
+}

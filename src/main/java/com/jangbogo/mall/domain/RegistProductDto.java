@@ -51,13 +51,6 @@ public class RegistProductDto {
     private Integer reg_state_cd; //REG_STATE_CD
 
     private List<ProductFileDto> files; //상세 첨부파일들
-//    //상품상세첨부파일
-//    private String products; //UPLOAD_PATH
-//    private String UUID; //UUID //파일일련번호
-//    private String NAME; //NAME //파일이름
-//    private Integer TYPE; //TYPE //파일유형
-//    private Integer STATE_CD; //STATE_CD //파일상태코드
-//    private Integer SORT_ODR; //SORT_ODR //파일정렬순서
 
     public RegistProductDto() {}
 

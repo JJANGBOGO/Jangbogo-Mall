@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -21,8 +22,9 @@ public class WishlistController {
 
     // 위시리스트 페이지 이동
     @GetMapping("/wishlist")
-    public String wishlistPage(HttpServletRequest request) {
-        if(!loginCheck(request)) return "redirect:/user/login?toURL="+request.getRequestURL();
+    public String wishlistPage(HttpServletRequest req, Model m) {
+        m.addAttribute("mypageUrl", req.getRequestURI());
+//        if(!loginCheck(request)) return "redirect:/user/login?toURL="+request.getRequestURL();
         return "wishlist";
     }
 
@@ -34,7 +36,6 @@ public class WishlistController {
         try {
             list = wishlistService.getlist(user_idx);
 
-            System.out.println("list = " + list);
             return new ResponseEntity<List<ProductDto>>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

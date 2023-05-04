@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.jangbogo.mall.dao.MyOrderMapper">
+    <select id="selectAll" parameterType="int" resultType="MyOrderDto">
+        select *
+        from ORD, (select PRODUCT.UPLOAD_PATH, ORD_DTL.*
+                   from PRODUCT, (select ORD_IDX, substring_index(GROUP_CONCAT(PROD_NM),',', 1)as prod_nm, SETL_MN_CD
+                                  from ORD_DTL
+                                  where ORD_DTL.ORD_IDX in (select IDX
+                                                            from ORD
+                                                            where USER_IDX = #{user_idx})
+                                  group by ORD_IDX,SETL_MN_CD) as ORD_DTL
+                   where ORD_DTL.prod_nm = PRODUCT.NAME) as DTL
+        where IDX = (DTL.ORD_IDX)
+        order by IDX desc;
+    </select>
+</mapper>

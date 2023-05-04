@@ -219,15 +219,15 @@ button {
 }
 #deliveryModBtn {
     display: block;
-    padding: 0px 10px;
+    padding: 0 10px;
     text-align: center;
     overflow: hidden;
     width: 60px;
     height: 30px;
     border-radius: 3px;
-    color: rgb(51, 51, 51);
+    color: #f58412;
     background-color: rgb(255, 255, 255);
-    border: 1px solid rgb(221, 221, 221);
+    border: 1px solid #f58412;
     cursor: pointer;
 }
 
@@ -243,7 +243,7 @@ button {
 select[name="coupons"] {
     width: 107%;
     height: 44px;
-    padding: 0px 54px 0px 16px;
+    padding: 0 54px 0 16px;
     border: 1px solid rgb(221, 221, 221);
     font-size: 14px;
     line-height: 20px;
@@ -364,4 +364,8 @@ select[name="coupons"] {
     font-size: 16px;
     font-weight: 700;
     padding-top: 20px;
+}
+
+div#orderFormSubmitFailModal {
+    display: none;
 }
