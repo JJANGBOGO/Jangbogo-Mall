@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,12 +24,13 @@ public class MyOrderController {
 
     // 주문내역 페이지 이동
     @GetMapping("/order/list")
-    public String orderPage(HttpServletRequest request, HttpSession session) {
-        if(!loginCheck(request)) return "redirect:/user/login?toURL="+request.getRequestURL();
+    public String orderPage(HttpServletRequest request, HttpSession session, Model m) {
+        m.addAttribute("mypageUrl", request.getRequestURI());
+//        if(!loginCheck(request)) return "redirect:/user/login?toURL="+request.getRequestURL();
         Integer user_idx = (Integer)session.getAttribute("idx");
         try {
             List<MyOrderDto> list = myOrderService.getlist(user_idx);
-            System.out.println("ㅇㄴㅇㅁㄴㅇ = " + list);
+//            System.out.println("ㅇㄴㅇㅁㄴㅇ = " + list);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -49,46 +51,7 @@ public class MyOrderController {
         }
 
     }
-//
-//    @DeleteMapping("/wishlists/{prod_idx}") // DELETE /wishlists/1  <-- 삭제할 상품 번호
-//    public ResponseEntity<String> remove(@PathVariable Integer prod_idx, HttpSession session){
-//        Integer user_idx = (Integer) session.getAttribute("idx");
-//        int rowCnt = 0;
-//        System.out.println("user_idx = " + user_idx);
-//        System.out.println("prod_idx = " + prod_idx);
-//        try {
-//            rowCnt = wishlistService.delete(prod_idx,user_idx);
-//            if(rowCnt != 1) {
-//                throw new Exception("Delete Failed");
-//            }
-//            return new ResponseEntity<>("DEL_OK", HttpStatus.OK);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResponseEntity<>("DEL_ERR", HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-//    // 장바구니에 상품 존재 확인 메서드
-//    @PostMapping("/wishlists") //wishlists?prod_idx=1&prod_cnt=1 POST
-//    public ResponseEntity<String> insert(Integer prod_idx, Integer prod_cnt,HttpSession session,RedirectAttributes ratt){
-//        int user_idx = (int) session.getAttribute("idx");
-//
-//        try {
-//            int CartCnt = wishlistService.checkCart(prod_idx, user_idx); // 장바구니에 이 상품이 있는지 확인
-//            if (CartCnt == 0) { // 0 or 1
-//                int cnt = wishlistService.insertCart(prod_idx, user_idx, prod_cnt);    // 2-1 상품번호,회원번호,개수를 넣어주면 장바구니에 담긴다
-//                return new ResponseEntity<>("DEL_OK1", HttpStatus.OK);
-//            } else {
-//                int cnt = wishlistService.updateCartCnt(prod_idx, user_idx, prod_cnt); // 2-1 상품번호,회원번호,개수를 넣어주면 장바구니에 담긴다
-//                return new ResponseEntity<>("DEL_OK2", HttpStatus.OK);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResponseEntity<>("DEL_ERR", HttpStatus.INTERNAL_SERVER_ERROR);
-//
-//        }
-//
-//
-//    }
+
 
     private boolean loginCheck(HttpServletRequest request) {
         // 1. 세션을 얻어서

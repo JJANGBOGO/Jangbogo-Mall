@@ -212,7 +212,7 @@
             tmp += '</div>'
             tmp += '<div class="e">'
             tmp += '<button class="delBtn" type="button" data-idx = '+product.idx+'>삭제</button>'
-            tmp += '<button class="openBtn" type="button" data-idx = '+product.idx+' data-name = '+product.name+' data-price = '+formatPriceWithComma(product.prc)+'원 data-name = '+product.name+' data-price = '+formatPriceWithComma(product.prc)+'원 data-dc-price = ' +formatPriceWithComma(product.prc - (product.prc / 100 * product.dc_rate))+ '원>담기</button>'
+            tmp += '<button class="openBtn" type="button" data-idx = '+product.idx+' data-name = '+product.name+' data-price = '+formatPriceWithComma(product.prc)+'원 data-name = '+product.name+' data-price = '+formatPriceWithComma(product.prc)+'원 data-dc-price = ' +formatPriceWithComma(product.prc - (product.prc / 100 * product.dc_rate))+ '원><img src="https://cdn-icons-png.flaticon.com/512/5412/5412611.png">담기</button>'
             tmp += '</div>'
             tmp += '</div>'
             tmp += '</div>'

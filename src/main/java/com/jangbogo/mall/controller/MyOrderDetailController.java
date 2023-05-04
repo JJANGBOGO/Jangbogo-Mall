@@ -34,7 +34,8 @@ public class MyOrderDetailController {
 
     // 주문 내역 상세 페이지 이동
     @GetMapping("/order/list/{ord_idx}")
-    public String orderDetailPage(@PathVariable Integer ord_idx, Model m) { //  idx(주문번호)
+    public String orderDetailPage(@PathVariable Integer ord_idx, Model m, HttpServletRequest request) { //  idx(주문번호)
+        m.addAttribute("mypageUrl", request.getRequestURI());
         m.addAttribute("idx",ord_idx); // 주문번호
 
         return "myOrderDetail";

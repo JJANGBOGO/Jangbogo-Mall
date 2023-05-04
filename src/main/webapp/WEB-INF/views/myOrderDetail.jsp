@@ -151,9 +151,10 @@
                                 <sup style="color: rgb(250, 98, 47);">*</sup>
                             </label>
                             <div class="content-box">
-                            <textarea class="content"></textarea>
+                            <textarea class="content" placeholder="최소 10자 이상 입력해 주세요."></textarea>
                                 <span></span>
                             </div>
+                            <div class="error-msg"></div>
                         </div>
                         <div class="body-warning">
                             <label class="warning-side"></label>
@@ -195,7 +196,7 @@
         $('.orderDetail-container').on("click",'.orderDetail-cancle', function (){
             if(!confirm("주문 취소하시겠습니까?"))return;
             let idx = $(this).attr('data-idx')                       // 주문번호 회득
-            console.log(idx)
+            // console.log(idx)
             $.ajax({
                 type:'PATCH',              // 요청 메서드
                 url: '/mypage/order/detail/stateUpdate/'+idx,  // 요청 URI
@@ -214,7 +215,7 @@
         $(".orderDetail-container").on("click",'.orderDetail-review', function (){
             $('.content').keyup(function (){
                 let newLength = $(this).val().length;
-                console.log(newLength)
+                // console.log(newLength)
                 if(newLength<10) {
                     $(".insertBtn").css('display', 'none');
                     $(".insertBtnNo").css('display', 'block');
@@ -251,8 +252,12 @@
             let ord_idx = $(this).attr('data-ord_idx')                 // 주문번호
             let ord_dtl_idx = $(this).attr('data-ord_dtl_idx')         // 주문상세번호
 
-            if(ctent.length<10){
+
+            if(ctent.length<10 || ctent.trim()==''){
                 alert("10글자 이상 입력해주세요")
+                // ctent.focus()
+                $('.content').attr("tabindex",-1);
+                $('.content').focus();
                 console.log(ctent.length);
                 return;
             }
@@ -263,7 +268,8 @@
                 headers : { "content-type": "application/json"}, // 요청 헤더
                 data : JSON.stringify({ctent:ctent,prod_idx:prod_idx,ord_idx:ord_idx}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
                 success : function(result){
-                    alert(result);
+                    alert("후기 작성이 완료되었습니다")
+                    // alert(result);
                     closeModal();
                     showList();
                 },

@@ -18,13 +18,14 @@ public class ProdReviewDtoTest {
     @Test
     public void test() throws Exception{
         ProdReviewDto prodReviewDto = new ProdReviewDto();
-        prodReviewDto.setProd_idx(1);
-        prodReviewDto.setUser_idx(10);
-        prodReviewDto.setCtent("test");
-        prodReviewDto.setWriter("tester");
-        for(int i = 1; i<=220; i++){
+        for(int i = 1; i<=110; i++){
+            prodReviewDto.setProd_idx(11);
+            prodReviewDto.setUser_idx(10);
+            prodReviewDto.setCtent("test"+i);
+            prodReviewDto.setWriter("tester"+i);
             prodReviewDao.insert(prodReviewDto);
         }
+
 
     }
 

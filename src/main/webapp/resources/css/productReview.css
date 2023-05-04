@@ -160,6 +160,7 @@
     width: 80px;
     cursor: pointer;
     background: white;
+    color: #f58412;
 }
 .thumbsUpBtn{
     display: flex;
@@ -191,6 +192,7 @@
 .pageHandler-container{
     display: flex;
     justify-content: center;
+    padding-top: 20px;
 }
 .pageHandler-container a{
     border: 1px solid #f58412;
