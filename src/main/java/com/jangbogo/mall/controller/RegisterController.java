@@ -99,7 +99,7 @@ public class RegisterController {
     //판매자 상품 등록 화면
     @GetMapping("/seller/register/product")
     public String regProductView(HttpServletRequest request) {
-        if (!loginCheck(request)) return "redirect:/user/login?toURL=" + request.getRequestURL();
+//        if (!loginCheck(request)) return "redirect:/user/login?toURL=" + request.getRequestURL();
         return "/seller/registerProduct";
     }
 

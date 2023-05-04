@@ -140,7 +140,7 @@ public class SellerDaoTest {
 
     @Test //ok
     public void updatePwd () throws Exception {
-        String pwd = "test1007";
+        String pwd = "1234";
         String encodedPwd = passwordEncoder.encode(pwd);
 
         log.info("encoding...." + encodedPwd);
