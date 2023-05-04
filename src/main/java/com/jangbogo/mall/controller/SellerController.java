@@ -53,7 +53,8 @@ public class SellerController {
 
     //가입화면
     @GetMapping("/seller/register")
-    public String regSellerView() {
+    public String regSellerView(Authentication auth) {
+        if (auth != null) return "redirect:/";
         return "/seller/register";
     }
 

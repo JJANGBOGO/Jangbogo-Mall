@@ -112,7 +112,7 @@ public class UserController {
 
     //카카오 로그인
     @GetMapping("/social/kakao")
-    public String buildKaKao(HttpSession session, String code, String state, RedirectAttributes rattr) {
+    public String buildKaKao(HttpSession session, String code, String state, RedirectAttributes rattr, HttpServletResponse resp) {
         try {
             oauthToken = kakaoLoginBO.getAccessToken(session, code, state);
             apiResult = kakaoLoginBO.getUserProfile(oauthToken);
@@ -235,7 +235,8 @@ public class UserController {
 
     //가입화면
     @GetMapping("/user/register")
-    public String registerUserView() {
+    public String registerUserView(Authentication auth) {
+        if (auth != null) return "redirect:/";
         return "/user/register";
     }
 
