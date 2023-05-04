@@ -417,7 +417,7 @@
         });
 
         $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
-            if ($("#mpno_verify").val() == mpno_verify_num) {
+            if ($("#mpno_verify").val() === mpno_verify_num) {
                 $(".error-msg.mpno-verify").html(mpno_verified);
                 $(".error-msg.mpno-verify").css('color', 'green');
                 $("#mpno_chk").attr("disabled", true);

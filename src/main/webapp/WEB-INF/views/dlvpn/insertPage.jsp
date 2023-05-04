@@ -68,6 +68,8 @@
             }); // $.ajax()
 
         });
+
+        // 재검색 클릭 시 다시 카카오 api 호출
         $(".button-base").click(function () {
             window.self.close();       // 현재 페이지 닫기
             window.opener.KaKao_api(); // 부모창의 함수를 호출한다

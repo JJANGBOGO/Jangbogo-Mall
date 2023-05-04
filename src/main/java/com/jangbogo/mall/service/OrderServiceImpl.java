@@ -1,10 +1,12 @@
 package com.jangbogo.mall.service;
 
 import com.jangbogo.mall.dao.OrderDao;
-import com.jangbogo.mall.domain.OrderDto;
-import com.jangbogo.mall.domain.PaymentDto;
+import com.jangbogo.mall.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -20,6 +22,15 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.insertPayment(paymentDto);
     }
 
+    // 메서드명 : getPaymentDto
+    // 기   능 : OrderDao의 getPayment메서드 호출
+    // 반환타입 : PaymentDto
+    // 매개변수 : Integer idx - 주문번호
+    @Override
+    public PaymentDto getPaymentDto(Integer idx) {
+        return orderDao.getPayment(idx);
+    }
+
     // 메서드명 : addOrder
     // 기   능 : OrderDao의 addOrder메서드 호출
     // 반환타입 : int
@@ -30,11 +41,58 @@ public class OrderServiceImpl implements OrderService {
     }
 
     // 메서드명 : getOrder
-    // 기   능 : OrderDao의 getPaymentDto메서드 호출
+    // 기   능 : OrderDao의 getOrder메서드 호출
     // 반환타입 : OrderDto
     // 매개변수 : Integer idx
     @Override
     public OrderDto getOrderDto(Integer idx) {
         return orderDao.getOrder(idx);
+    }
+
+
+    // 메서드명 : addOrderDetail
+    // 기   능 : OrderDao의 addOrderDetail메서드 호출
+    // 반환타입 : int
+    // 매개변수 : OrderDto orderDto, CartDto cartDto
+    @Override
+    public int addOrderDetail(OrderDto orderDto, CartDto cartDto) {
+        return orderDao.insertOrderDetail(orderDto, cartDto);
+    }
+
+    // 메서드명 : getOrderDetail
+    // 기   능 : OrderDao의 getOrderDetailDto메서드 호출
+    // 반환타입 : OrderDetailDto
+    // 매개변수 : OrderDto orderDto
+    @Override
+    public List<OrderDetailDto> getOrderDetail(OrderDto orderDto) {
+        return orderDao.getOrderDetailDto(orderDto);
+    }
+
+    // 메서드명 : addOrderHistory
+    // 기   능 : OrderDao의 insertOrderHistory메서드 호출
+    // 반환타입 : int
+    // 매개변수 : OrderDetailDto orderDetailDto
+    @Override
+    public int addOrderHistory(List<OrderDetailDto> orderDetails) {
+        return orderDao.insertOrderHistory(orderDetails);
+    }
+
+
+    // 메서드명 : getOrderHistory
+    // 기   능 : OrderDao의 getOrderHistoryDto메서드 호출
+    // 반환타입 : int
+    // 매개변수 : List<OrderDetailDto> orderDetails
+    @Override
+    public List<OrderHistoryDto> getOrderHistory(List<OrderDetailDto> orderDetails) {
+        return orderDao.getOrderHistoryDto(orderDetails);
+    }
+
+    // 메서드명 : addDelivery
+    // 기   능 : OrderDao의 addDeliveryDto메서드 호출
+    // 반환타입 : int
+    // 매개변수 : DeliveryDto deliveryDto
+    @Override
+    public int addDelivery(DeliveryDto deliveryDto) {
+        return orderDao.insertDelivery(deliveryDto);
     }
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jangbogo.mall.dao.RegistProductMapper">
+
+    <!--    판매자 상품코드를 가지고 상품 번호 가져오기-->
+    <select id="getProdIdx" parameterType="RegistProductDto" resultType="int">
+        select IDX as 'prod_idx'
+        from product
+        where SELER_PROD_CD = #{seler_prod_cd} and SELER_IDX = #{seler_idx};
+    </select>
+            <!--    상품테이블에 추가하기-->
+    <insert id="insertProduct" parameterType="RegistProductDto">
+        insert into product
+        (SELER_IDX, CATE_IDX, SELER_PROD_CD, UPLOAD_PATH, NAME, CTENT, PRC, DC_STATE_CD, DC_RATE, DSPLY_STATE_CD)
+        values
+        (#{seler_idx}, #{cate_idx2}, #{seler_prod_cd}, #{upload_path}, #{name}, #{content}, #{prc}, #{dc_state_cd}, #{dc_rate}, #{dsply_state_cd});
+        <selectKey resultType="int" keyProperty="prod_idx" order="AFTER">
+            SELECT LAST_INSERT_ID() AS idx
+        </selectKey>
+    </insert>
+            <!--    상품상세테이블에 추가하기-->
+    <insert id="insertProductDetail" parameterType="RegistProductDto">
+        insert into prod_dtl
+        (PROD_IDX, ORPLC, SLE_UNIT, WEIGHT, MFT_TM, DISTB_TLMT, WARN, MAX_SLE_QUTY, SFKP_TP_STATE_CD, SLE_START_TM, SLE_END_TM, INV_QUTY, GUID)
+        values
+        (#{prod_idx}, #{orplc}, #{sle_unit}, #{weight}, #{mft_tm}, #{distb_tlmt}, #{warn}, #{max_sle_quty}, #{state}, #{sle_start_tm}, #{sle_end_tm}, #{inv_quty}, #{guid});
+    </insert>
+            <!--    상품상세첨부파일에 추가하기-->
+    <insert id="insertProductFile" parameterType="RegistProductDto">
+        insert into prod_file
+        (UUID, PROD_IDX, NAME, UPLOAD_PATH, TYPE, SORT_ODR)
+        values
+        (#{UUID}, #{prod_idx}, #{name}, #{UPLOAD_PATH}, #{TYPE}, #{SORT_ODR});
+    </insert>
+<!--    기존 상품들 중 판매자상품코드가 겹치는 것이 있는지 확인-->
+    <select id="checkSellerProdCd" parameterType="RegistProductDto" resultType="int">
+        select count(*)
+        from product
+        where SELER_PROD_CD = #{seler_prod_cd} and SELER_IDX = #{seler_idx};
+    </select>
+
+    <select id="getProductList" resultType="RegistProductDto">
+        select p.SELER_PROD_CD as 'seler_prod_cd',
+               p.UPLOAD_PATH as 'upload_path',
+               p.NAME as 'name',
+               p.CTENT as 'content',
+               p.PRC as 'prc',
+               p.DSPLY_STATE_CD as 'dsply_state_cd',
+               p.ASCR as 'ascr',
+               pd.REG_STATE_CD as 'reg_state_cd'
+        from product as p inner join  prod_dtl pd
+        on p.idx = pd.prod_idx and p.seler_idx = #{seler_idx}
+    </select>
+</mapper>
+

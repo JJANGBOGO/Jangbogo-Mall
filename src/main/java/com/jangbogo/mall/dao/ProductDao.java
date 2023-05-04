@@ -12,13 +12,10 @@ public interface ProductDao {
     //판매자별 상품리스트 조회
     List<ProductDto> getListBySeller (Integer seller_idx) throws Exception;
 
-    //상품 insert
-    int insertProduct (ProductDto productDto) throws Exception;
+   //카테고리별 상품리스트 조회
+    List<ProductDto> getListByCategory (String category) throws Exception;
 
-    //상품 상세 insert
-    int insertProductDtl (ProductDtl productDtl) throws Exception;
-
-    //상품 상세 첨부파일 insert
-    int insertProductFiles (ProductFile productFiles) throws Exception;
+    //상품 검색
+    List<ProductDto> searchProductList (String keyword) throws Exception;
 }
 

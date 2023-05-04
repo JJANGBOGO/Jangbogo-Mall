@@ -4,17 +4,17 @@
         <div class="header">마이장보고</div>
         <ul>
             <li>
-                <a href="/mypage/order/list">
+                <a href="/mypage/order/list" class="<c:if test='${mypageUrl eq "/mypage/order/list" || mypageUrl eq "/mypage/order/list/{ord_idx}"}'>active</c:if> ">
                     주문 내역
                 </a>
             </li>
             <li>
-                <a href="/mypage/wishlist">
+                <a href="/mypage/wishlist" class="<c:if test='${mypageUrl eq "/mypage/wishlist"}'>active</c:if> ">
                     위시리스트
                 </a>
             </li>
             <li>
-                <a href="/mypage/address/list" class="<c:if test='${mypageUrl eq "/mypage/address"}'>active</c:if> ">
+                <a href="/mypage/address/list" class="<c:if test='${mypageUrl eq "/mypage/address/list"}'>active</c:if> ">
                     배송지 관리
                 </a>
             </li>

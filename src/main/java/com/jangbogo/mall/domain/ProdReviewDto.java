@@ -20,8 +20,10 @@ public class ProdReviewDto {
     private Integer crt_idx; // 최초등록자식별번호
     private Date upt_tm; // 최종수정일자
     private Integer upt_idx; // 최종수정자식별번호
+
+
     private String name; // 상품이름
-    private String resv_photo_upload_path;
+    private String upload_path;
 
     // 생성자와 equals and hashcode 안만들었음
 
@@ -177,12 +179,12 @@ public class ProdReviewDto {
         this.name = name;
     }
 
-    public String getResv_photo_upload_path() {
-        return resv_photo_upload_path;
+    public String getUpload_path() {
+        return upload_path;
     }
 
-    public void setResv_photo_upload_path(String resv_photo_upload_path) {
-        this.resv_photo_upload_path = resv_photo_upload_path;
+    public void setUpload_path(String upload_path) {
+        this.upload_path = upload_path;
     }
 
     @Override
@@ -206,7 +208,7 @@ public class ProdReviewDto {
                 ", upt_tm=" + upt_tm +
                 ", upt_idx=" + upt_idx +
                 ", name='" + name + '\'' +
-                ", resv_photo_upload_path='" + resv_photo_upload_path + '\'' +
+                ", upload_path='" + upload_path + '\'' +
                 '}';
     }
 }

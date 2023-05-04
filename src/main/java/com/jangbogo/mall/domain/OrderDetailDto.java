@@ -3,44 +3,46 @@ package com.jangbogo.mall.domain;
 import java.util.Date;
 
 public class OrderDetailDto {
-    private Integer idx;
-    private Integer ord_idx;
-    private Integer prod_idx;
-    private Integer prod_opt_idx;
-    private String prod_nm;
-    private Integer prod_prc;
-    private Integer prod_qty;
-    private Integer rtng_qty;
-    private Integer prod_tot_amt;
-    private Integer prod_sfkp_type_cd;
-    private Integer setl_mn_cd;
-    private Integer ord_state_cd;
-    private Integer prod_late_state_cd;
-    private Integer cncl_posbl_state_cd;
-    private Date ord_tm;
-    private Date setl_cmpl_tm;
-    private Date setl_cncl_tm;
-    private Date dlvry_start_tm;
-    private Date dlvry_cmpl_tm;
-    private Date rtng_rqst_tm;
-    private Date rtng_cmpl_tm;
-    private Date excng_rqst_tm;
-    private Date excng_cmpl_tm;
-    private Date excng_rcpt_tm;
-    private Date rfnd_cmpl_tm;
-    private Date crt_tm;
-    private Integer crt_idx;
-    private Date upt_tm;
-    private Integer upt_idx;
+    // iv
+    private Integer idx;                                                                                                // 주문상세번호 IDX
+    private Integer ord_idx;                                                                                            // 주문번호 ORD_IDX
+    private Integer prod_idx;                                                                                           // 상품번호 PROD_IDX
+    private Integer prod_opt_idx;                                                                                       // 세부상품번호 PROD_OPT_DIX
+    private String prod_nm;                                                                                             // 주문상품이름 PROD_NM
+    private Integer prod_prc;                                                                                           // 주문상품가격 PROD_PRC
+    private Integer prod_qty;                                                                                           // 주문상품수량 PROD_QTY
+    private Integer rtng_qty;                                                                                           // 주문반품수량 RTNG_QTY
+    private Integer prod_tot_amt;                                                                                       // 주문상품총금액 PROD_TOT_AMT
+    private Integer prod_sfkp_type_cd;                                                                                  // 주문상품배송유형코드 PROD_SFKP_TYPE_CD
+    private Integer setl_mn_cd;                                                                                         // 결제수단코드 SETL_MN_CD
+    private Integer ord_state_cd;                                                                                       // 주문상태코드 ORD_STATE_CD
+    private Integer prod_late_state_cd;                                                                                 // 후기작성상태코드 PROD_LATE_STATE_CD
+    private Integer cncl_posbl_state_cd;                                                                                // 주문취소가능상태코드 CNCL_POSBL_STATE_CD
+    private Date ord_tm;                                                                                                // 주문일자 ORD_TM
+    private Date setl_cmpl_tm;                                                                                          // 결제완료일자 SETL_CMPL_TM
+    private Date setl_cncl_tm;                                                                                          // 결제취소일자 SETL_CNCL_TM
+    private Date dlvry_start_tm;                                                                                        // 배송출발일자 DLVRY_START_TM
+    private Date dlvry_cmpl_tm;                                                                                         // 배송완료일자 DLVRY_CMPL_TM
+    private Date rtng_rqst_tm;                                                                                          // 반품신청일자 RTNG_RQST_TM
+    private Date rtng_cmpl_tm;                                                                                          // 반품완료일자 RTNG_CMPL_TM
+    private Date excng_rqst_tm;                                                                                         // 교환신청일자 EXCNG_RQST_TM
+    private Date excng_cmpl_tm;                                                                                         // 교환완료일자 EXCNG_CMPL_TM
+    private Date excng_rcpt_tm;                                                                                         // 환불접수일자 EXCNG_RCPT_TM
+    private Date rfnd_cmpl_tm;                                                                                          // 환불완료일자 RFND_CMPL_TM
+    private Date crt_tm;                                                                                                // 최초등록일자 CRT_TM
+    private Integer crt_idx;                                                                                            // 최초등록자식별번호 CRT_IDX
+    private Date upt_tm;                                                                                                // 최종수정일자 UPT_TM
+    private Integer upt_idx;                                                                                            // 최종수정자식별번호 UPT_IDX
 
+    // contructor
+    public OrderDetailDto() {}                                                                                          // 기본생성자
 
+    // getter & setter
     public Integer getIdx() {
         return idx;
     }
 
-    public void setIdx(Integer idx) {
-        this.idx = idx;
-    }
+    public void setIdx(Integer idx) { this.idx = idx; }
 
     public Integer getOrd_idx() {
         return ord_idx;
@@ -266,9 +268,10 @@ public class OrderDetailDto {
         this.upt_idx = upt_idx;
     }
 
+    // toString
     @Override
     public String toString() {
-        return "OrderDetailDto{" +
+        return "{" +
                 "idx=" + idx +
                 ", ord_idx=" + ord_idx +
                 ", prod_idx=" + prod_idx +
@@ -301,4 +304,3 @@ public class OrderDetailDto {
                 '}';
     }
 }
-

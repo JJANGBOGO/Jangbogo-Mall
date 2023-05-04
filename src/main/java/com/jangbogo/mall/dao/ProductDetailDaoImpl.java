@@ -22,7 +22,7 @@ public class ProductDetailDaoImpl implements ProductDetailDao {
         return session.selectOne(namespace + "selectProd", prod_idx);
     }
 
-    public Integer findDlvry(Integer cate_idx) throws Exception {
+    public Integer findDlvry(String cate_idx) throws Exception {
         return session.selectOne(namespace + "findDlvry", cate_idx);
     }
 

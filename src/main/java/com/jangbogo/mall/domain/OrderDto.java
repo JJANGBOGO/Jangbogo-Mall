@@ -1,10 +1,7 @@
 package com.jangbogo.mall.domain;
 
-import org.springframework.stereotype.Repository;
-
 import java.util.Date;
 
-@Repository
 public class OrderDto {
     // iv 선언
     Integer idx;                                                                                                        // 주문번호  IDX
@@ -15,12 +12,13 @@ public class OrderDto {
     Integer gtot;                                                                                                       // 주문총수량 GTOT
     Integer plist_tot;                                                                                                  // 주문품목총계 PLIST_TOT
     Date ord_tm;                                                                                                        // 주문날짜 ORD_TM
-    Date state_cd;                                                                                                      // 주문상태코드 STATE_CD
+    Integer state_cd;                                                                                                   // 주문상태코드 STATE_CD
     Date crt_tm;                                                                                                        // 최초등록일자 CRT_TM
     Integer crt_idx;                                                                                                    // 최초등록자식별번호 CRT_IDX
     Date upt_tm;                                                                                                        // 최종수정일자 UPT_TM
     Integer upt_idx;                                                                                                    // 최종수정자식별번호 UPT_IDX
 
+    MyOrderDetailDto orderDetailDto;
     // Constructor
     public OrderDto() {}                                                                                                // 기본 생성자
 
@@ -31,8 +29,6 @@ public class OrderDto {
     }
 
     // Getter & Setter
-
-
     public Integer getIdx() {
         return idx;
     }
@@ -97,11 +93,11 @@ public class OrderDto {
         this.ord_tm = ord_tm;
     }
 
-    public Date getState_cd() {
+    public Integer getState_cd() {
         return state_cd;
     }
 
-    public void setState_cd(Date state_cd) {
+    public void setState_cd(Integer state_cd) {
         this.state_cd = state_cd;
     }
 

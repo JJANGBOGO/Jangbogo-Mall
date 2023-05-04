@@ -322,3 +322,8 @@ function emailErrMsg (email, err_ref) {
         return false;
     } else err_ref.empty();
 }
+
+
+function register () {
+
+}
