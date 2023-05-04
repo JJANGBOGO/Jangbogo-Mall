@@ -47,21 +47,21 @@
                 <div class="products-box">
 
                 </div>
-                <div class="page-handler-box">
-                    <a href="" class="paging-button">
-                        <img
-                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA…gAIPi/8X/4QwwE5PBQJADAAKSG3cyVhtXAAAAAElFTkSuQmCC"
-                                alt="이전 페이지로 이동하기 아이콘"
-                        />
-                    </a>
-                    <a class="paging-button" href=""></a>
-                    <a href="" class="paging-button">
-                        <img
-                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA…8nwECQEwCHEwGhAlRBgA2mht3SwgzrwAAAABJRU5ErkJggg=="
-                                alt="다음 페이지로 이동하기 아이콘"
-                        />
-                    </a>
-                </div>
+<%--                <div class="page-handler-box">--%>
+<%--                    <a href="" class="paging-button">--%>
+<%--                        <img--%>
+<%--                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA…gAIPi/8X/4QwwE5PBQJADAAKSG3cyVhtXAAAAAElFTkSuQmCC"--%>
+<%--                                alt="이전 페이지로 이동하기 아이콘"--%>
+<%--                        />--%>
+<%--                    </a>--%>
+<%--                    <a class="paging-button" href=""></a>--%>
+<%--                    <a href="" class="paging-button">--%>
+<%--                        <img--%>
+<%--                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA…8nwECQEwCHEwGhAlRBgA2mht3SwgzrwAAAABJRU5ErkJggg=="--%>
+<%--                                alt="다음 페이지로 이동하기 아이콘"--%>
+<%--                        />--%>
+<%--                    </a>--%>
+<%--                </div>--%>
             </div>
         </div>
     </div>

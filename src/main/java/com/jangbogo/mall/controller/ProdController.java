@@ -115,6 +115,10 @@ public class ProdController {
         Integer user_idx = (Integer)session.getAttribute("idx");
         System.out.println("user_idx=???"+user_idx); //null
 
+        if(user_idx == null) {
+
+        }
+
         String nick_name = (String)session.getAttribute("nickName");
         prodInqryDto.setUser_idx(user_idx);
         prodInqryDto.setProd_idx(prod_idx);
