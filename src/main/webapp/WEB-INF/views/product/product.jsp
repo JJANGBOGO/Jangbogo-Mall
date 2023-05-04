@@ -619,10 +619,13 @@
       target = $(e.target);
       let p = $(target).offset();
 
-      // let divTop = p.top + 400;
-      // let divLeft = p.left - 500;
-
-      // $('#modal-body').css({"z-index": '10', "position": "absolute"}).show();
+      let session_idx = "${session_idx}";
+      console.log(typeof session_idx);
+      console.log("session_idx"+ session_idx);
+      if(session_idx == "") {
+        alert("회원만 문의 작성이 가능합니다.")
+        return;
+      }
 
 
       let inqryButton = $(".inqry_button");
