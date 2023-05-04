@@ -43,4 +43,7 @@ public interface SellerService {
 
     //비번변경 날짜 수정
     int updatePwdUptTm (Integer idx, String email) throws Exception;
+
+    //이메일, 비번 일치 여부 확인
+    boolean verifySeller (String email, String pwd) throws Exception;
 }

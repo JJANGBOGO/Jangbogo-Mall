@@ -311,7 +311,7 @@ function addressCallback(callback) {
 };
 
 // 이메일 keyup 메세지
-function emailErrMsg (email, err_ref) {
+function emailErrMsg(email, err_ref) {
     if (email === "") {
         err_ref.html(email_empty);
         return false; //good
@@ -323,7 +323,38 @@ function emailErrMsg (email, err_ref) {
     } else err_ref.empty();
 }
 
+function commonKeyupErrMsg() { //회원, 판매자 공통 에러 keyup
+    $("#email").keyup(function () {
+        let email = $("#email").val();
+        let err_ref = $(".error-msg.email");
+        emailErrMsg(email, err_ref);
+    });
 
-function register () {
+    $("#pwd").keyup(function () {
+        let pwd = $("#pwd").val();
+        let err_ref = $(".error-msg.pwd");
+        pwdErrMsg(pwd, err_ref);
+    });
 
+    $("#pwd_confirm").keyup(function () {
+        let pwd = $("#pwd").val();
+        let pwd_confirm = $("#pwd_confirm").val();
+        let err_ref = $(".error-msg.pwd-confirm");
+        pwdConfirmErrMsg(pwd, pwd_confirm, err_ref);
+    });
+
+    $("#mpno").keyup(function () {
+        let mpno = $("#mpno").val();
+        let err_ref = $(".error-msg.mpno");
+        mpnoErrMsg(mpno, err_ref);
+    });
+
+    $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
+        if ($("#mpno_verify").val() === mpno_verify_num) {
+            $(".error-msg.mpno-verify").html(mpno_verified);
+            $(".error-msg.mpno-verify").css('color', 'green');
+            $("#mpno_chk").attr("disabled", true);
+            $("#mpno").attr('readonly', true);
+        }
+    });
 }

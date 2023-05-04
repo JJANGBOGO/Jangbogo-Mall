@@ -22,6 +22,9 @@ import static org.junit.Assert.assertTrue;
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/**/root-context.xml"})
 public class RegExTest {
 
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
+
     @Test
     public void test1() throws Exception {
         String val = "test";
@@ -36,6 +39,12 @@ public class RegExTest {
         log.info("1....." +dtl);
         log.info("2....." + (dtl == null));
         log.info("3....." + Objects.equals(dtl, null));
+    }
+
+    @Test
+    public void test3() throws Exception {
+        String pwd = passwordEncoder.encode("test1007");
+        log.info("pwd..." + pwd);
     }
 
 }

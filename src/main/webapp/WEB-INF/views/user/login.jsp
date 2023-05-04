@@ -57,7 +57,7 @@
                                 <a href="/find/email">이메일 찾기</a>
                             </li>
                             <li class="pw-find">
-                                <a href="/find/pwd"> 비밀번호 찾기 </a>
+                                <a href="/find/pwd">비밀번호 찾기</a>
                             </li>
                         </ul>
                     </div>
@@ -100,6 +100,7 @@
     let msg = "${msg}";
     if (msg == "REG_OK") alert("회원 가입에 성공했습니다.");
     if (msg == "LOGIN_ERR") alert("로그인 도중 오류가 발생하였습니다. 다시 시도해 주세요."); //소셜
+    if (msg == "UNABLE") alert("사용할 수 없는 계정입니다.(탈퇴)");
 
     $("#seller_login_link").click(function () {
         window.location.href = "/seller/login";

@@ -39,4 +39,5 @@ public class MemberController { //회원, 판매자 공통화면
         return "registerIntro";
     }
 
+
 }

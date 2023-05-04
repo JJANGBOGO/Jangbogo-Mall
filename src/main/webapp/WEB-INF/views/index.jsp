@@ -174,18 +174,19 @@
 <script src="/js/member/msg.js"></script>
 <script>
     let msg = "${msg}";
-    if (msg == "EXCEPTION_ERR") alert("예상치 못한 오류가 발생했습니다. 불편을 끼쳐드려 죄송합니다.");
+    if (msg === "EXCEPTION_ERR") alert("예상치 못한 오류가 발생했습니다. 불편을 끼쳐드려 죄송합니다.");
+    if (msg === "WITHDRAW_OK") alert(withdraw_ok);
 </script>
 <script>
     //상품리스트를 html로 구현
     let renderPdList = (list, tab_id) => {
         let list_ref = $(".thum-list").eq(tab_id); //0,1,2,3,4,5
         let str = "";
-        if (tab_id === 0) list.sort(()=> Math.random() - 0.5); //전체 탭인 경우 list 랜덤돌리기
+        if (tab_id === 0) list.sort(() => Math.random() - 0.5); //전체 탭인 경우 list 랜덤돌리기
         list.forEach((obj, i) => {
             if (i > 3) return; //카테고리당 4개만 보여줌
             str += '<li>'
-                + '<a class="img-box">'
+                + '<a class="img-box" href="/product/' + obj.idx + '">'
                 + '<img src="' + obj.upload_path + '"alt="product-img" />'
                 + '<div class="cart-btn"><i class="fa-solid fa-cart-shopping"></i></div>'
                 + '</a>'

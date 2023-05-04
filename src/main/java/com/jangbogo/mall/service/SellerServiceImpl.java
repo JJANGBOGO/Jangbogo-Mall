@@ -132,5 +132,11 @@ public class SellerServiceImpl implements SellerService {
         return dao.updatePwdUptTm(idx, email);
     }
 
+    @Override
+    public boolean verifySeller (String email, String pwd) throws Exception {
+        Seller seller = dao.getSellerByEmail(email);
+        return seller != null && passwordEncoder.matches(pwd, seller.getPwd());
+    }
+
 
 }

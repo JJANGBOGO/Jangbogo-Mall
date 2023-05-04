@@ -81,8 +81,8 @@ public class UserController {
             if (userService.withdrawUser(idx, email) != 1)
                 throw new Exception("withdraw failed");
 
-            session.invalidate();//세션 삭제
-            deleteAuth(req, resp);//인가 객체 삭제
+            session.invalidate();
+            deleteAuth(req, resp);
             return ResponseEntity.ok().body("SUCCESS");
 
         } catch (Exception e) {
@@ -113,7 +113,6 @@ public class UserController {
     //카카오 로그인
     @GetMapping("/social/kakao")
     public String buildKaKao(HttpSession session, String code, String state, RedirectAttributes rattr) {
-
         try {
             oauthToken = kakaoLoginBO.getAccessToken(session, code, state);
             apiResult = kakaoLoginBO.getUserProfile(oauthToken);
@@ -137,7 +136,10 @@ public class UserController {
                 user = userService.selectUser(idx);
             } else {
                 log.info("이미 존재하는 이메일입니다.");
-                if (user.getState_cd() == 3) blockSocialUser(user.getState_cd(), rattr); //탈퇴회원의 경우 블락 처리
+                if (user.getState_cd() == 3) { //탈퇴한 경우 블락
+                    rattr.addFlashAttribute("msg", "UNABLE");
+                    return "redirect:/user/login";
+                }
                 userService.updateLoginTm(user.getIdx(), user.getEmail());
             }
 
@@ -159,9 +161,7 @@ public class UserController {
     //카카오 로그아웃
     @GetMapping("/social/kakao_logout")
     public String kakaoLogout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        session.invalidate();
-        deleteAuth(request, response); //인증 삭제
-        return "redirect:/";
+        return "redirect:/general/logout";
     }
 
     //네이버 로그인
@@ -191,7 +191,10 @@ public class UserController {
                 user = userService.selectUser(idx);
             } else {
                 log.info("이미 존재하는 이메일입니다.");
-                if (user.getState_cd() == 3) blockSocialUser(user.getState_cd(), rattr); //탈퇴회원의 경우 블락 처리
+                if (user.getState_cd() == 3) {
+                    rattr.addFlashAttribute("msg", "UNABLE");
+                    return "redirect:/user/login";
+                }
                 userService.updateLoginTm(user.getIdx(), user.getEmail()); //ok
             }
 
@@ -207,13 +210,6 @@ public class UserController {
     }
 
     //TODO:: 네이버 로그아웃
-
-
-    //탈퇴한 소셜회원 블락
-    public String blockSocialUser(int state, RedirectAttributes rattr) {
-        rattr.addFlashAttribute("msg", "UNABLE");
-        return "redirect:/";
-    }
 
     public JSONObject getParsedApiResult(String apiResult) throws Exception {
         JSONParser jsonParser = new JSONParser();
@@ -235,22 +231,6 @@ public class UserController {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authentication);
         return true;
-    }
-
-    // 로그아웃시 인증 삭제
-    public void deleteAuth(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-    }
-
-    // 일반 회원 로그아웃
-    @GetMapping("/general/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
-        session.invalidate();
-        deleteAuth(request, response);
-        return "redirect:/";
     }
 
     //가입화면
@@ -332,7 +312,6 @@ public class UserController {
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return "redirect:/user/info";
         }
-
     }
 
     //회원수정뷰
@@ -419,6 +398,13 @@ public class UserController {
             e.printStackTrace();
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return "redirect:/find/pwd";
+        }
+    }
+
+    public void deleteAuth(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
         }
     }
 }

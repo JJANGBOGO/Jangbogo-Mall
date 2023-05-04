@@ -144,6 +144,7 @@
                                         placeholder="상세 주소를 입력해주세요"
                                 />
                             </div>
+                            <div class="error-msg addr-dtl"></div>
                         </div>
                         <div class="btn-space">
                             <button id="addr-search">
@@ -384,12 +385,7 @@
         });
 
         //input 아래 에러메세지
-        //이메일
-        $("#email").keyup(function () {
-            let email = $("#email").val();
-            let err_ref = $(".error-msg.email");
-            emailErrMsg(email, err_ref);
-        });
+        commonKeyupErrMsg();
 
         $("#nick_nm").keyup(function () {
             let nick = $("#nick_nm").val();
@@ -397,32 +393,13 @@
             nickErrMsg(nick, err_ref);
         });
 
-        $("#pwd").keyup(function () {
-            let pwd = $("#pwd").val();
-            let err_ref = $(".error-msg.pwd");
-            pwdErrMsg(pwd, err_ref);
-        });
-
-        $("#pwd_confirm").keyup(function () {
-            let pwd = $("#pwd").val();
-            let pwd_confirm = $("#pwd_confirm").val();
-            let err_ref = $(".error-msg.pwd-confirm");
-            pwdConfirmErrMsg(pwd, pwd_confirm, err_ref);
-        });
-
-        $("#mpno").keyup(function () {
-            let mpno = $("#mpno").val();
-            let err_ref = $(".error-msg.mpno");
-            mpnoErrMsg(mpno, err_ref);
-        });
-
-        $(document).on("keyup", "#mpno_verify", function () { //동적 태그라서 document에 이벤트 연결
-            if ($("#mpno_verify").val() === mpno_verify_num) {
-                $(".error-msg.mpno-verify").html(mpno_verified);
-                $(".error-msg.mpno-verify").css('color', 'green');
-                $("#mpno_chk").attr("disabled", true);
-                $("#mpno").attr('readonly', true);
-            }
+        $("#addr_dtl").keyup(function () { //상세 주소
+            let dtl = $("#addr_dtl").val();
+            let err_ref = $(".error-msg.addr-dtl");
+            if (dtl === "") {
+                err_ref.html(addr_dtl_empty);
+                return false;
+            } else err_ref.empty();
         });
 
         //가입하기 버튼 유효성 검사
