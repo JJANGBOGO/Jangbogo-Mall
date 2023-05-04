@@ -7,6 +7,10 @@ import com.jangbogo.mall.service.SellerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Objects;
@@ -27,12 +32,22 @@ public class SellerController {
     @Autowired
     SellerService service;
 
+//    @Autowired
+//    ProductService productService;
+
     @Autowired
-    ProductService productService;
+    BCryptPasswordEncoder passwordEncoder;
 
     //로그인화면
-    @RequestMapping("/seller/login")
-    public String loginSellerView() {
+    @RequestMapping("/seller/login") //꼭 requestMapping
+    public String loginSellerView(HttpServletRequest req, Authentication authentication) {
+
+        String uri = req.getHeader("Referer");
+        if (authentication != null) return "redirect:/";
+
+        if (uri != null && !(uri.contains("/seller/login") || uri.contains("/seller/login_check")))
+            req.getSession().setAttribute("prevPage", uri);
+
         return "/seller/login";
     }
 
@@ -151,6 +166,23 @@ public class SellerController {
         return "/seller/verify";
     }
 
+    //판매자 수정 전 인증
+    @PostMapping("/seller/info")
+    public String verifySeller(String email, String pwd, RedirectAttributes rattr) {
+        try {
+            if (service.verifySeller(email, pwd)) return "redirect:/seller/modify";
+            else { //회원 존재X
+                rattr.addFlashAttribute("msg", "NOT_FOUND_ERR");
+                return "redirect:/seller/info";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
+            return "redirect:/seller/info";
+        }
+    }
+
     //판매자수정 뷰
     @GetMapping("/seller/modify")
     public String chgSellerView(HttpServletRequest req, HttpSession session, Model m, RedirectAttributes rattr) {
@@ -193,31 +225,50 @@ public class SellerController {
 
     //판매자탈퇴 뷰
     @GetMapping("/seller/withdraw")
-    public String withdrawSellerView() {
-        return "/seller/withdraw";
-    }
-
-    @PostMapping("/seller/withdraw")
-    public String withdrawSeller(String pwd, RedirectAttributes rattr, HttpSession session) {
+    public String withdrawSellerView(Model m, HttpSession session, RedirectAttributes rattr) {
         try {
-            int idx = (int) session.getAttribute("idx");
-            String email = (String) session.getAttribute("email"); //이메일 얻기
-            if (service.withdrawSeller(idx, email) != 1)
-                throw new Exception("withdraw failed");
-
-            rattr.addFlashAttribute("msg", "SELLER_NOT_FOUND"); //판매자 존재 X
-            return "redirect:/seller/withdraw";
+            Integer idx = (Integer) session.getAttribute("idx");
+            Seller seller = service.getSellerByIdx(idx);
+            m.addAttribute("seller", seller);
+            return "/seller/withdraw";
 
         } catch (Exception e) {
             e.printStackTrace();
-            rattr.addFlashAttribute("msg", "SELER_WITHDRAW_OK"); //탈퇴완료
+            rattr.addAttribute("msg", "EXCEPTION_ERR");
+            return "/";
+        }
+    }
+
+    @PostMapping("/seller/withdraw")
+    public String withdrawSeller(String pwd, HttpServletRequest req, HttpServletResponse resp, RedirectAttributes rattr, HttpSession session) {
+        try {
+            int idx = (int) session.getAttribute("idx");
+            String email = (String) session.getAttribute("email"); //이메일 얻기
+
+            Seller seller = service.getSellerByIdx(idx);
+            if (!passwordEncoder.matches(pwd, seller.getPwd())) { //비밀번호 일치여부 확인
+                rattr.addFlashAttribute("msg", "SELLER_NOT_FOUND"); //불일치
+                return "redirect:/seller/withdraw";
+            }
+
+            if (service.withdrawSeller(idx, email) != 1)
+                throw new Exception("withdraw failed");
+
+            session.invalidate();
+            deleteAuth(req, resp);
+            rattr.addFlashAttribute("msg", "WITHDRAW_OK");
+            return "redirect:/";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return "redirect:/seller/withdraw";
         }
     }
 
     //이메일 찾기
     @PostMapping("/seller/find/email")
-    public String findSellerEmail(String cpnm, String pwd, Model m, RedirectAttributes rattr) {
+    public String findSellerEmail(String cpnm, String pwd, RedirectAttributes rattr) {
         try {
             String email = service.findSellerEmail(cpnm, pwd);
             if (email == null) {
@@ -254,6 +305,13 @@ public class SellerController {
             e.printStackTrace();
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return "redirect:/find/pwd";
+        }
+    }
+
+    public void deleteAuth(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
         }
     }
 
