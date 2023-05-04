@@ -60,7 +60,14 @@
                  join prod_dtl pd on p.idx = pd.PROD_IDX
                  join seler s on s.idx = p.SELER_IDX
         where p.DSPLY_STATE_CD = 1 and pd.REG_STATE_CD = 2 and pd.STATE_CD = 1
-        <![CDATA[and sle_start_tm <= now() and sle_end_tm >= now()]]>;
+          <choose>
+              <when test="sle_start_tm != null">
+                <![CDATA[and sle_start_tm <= now() and sle_end_tm >= now()]]>;
+              </when>
+              <otherwise>
+                  order by 1;
+              </otherwise>
+          </choose>
     </select>
 </mapper>
 
