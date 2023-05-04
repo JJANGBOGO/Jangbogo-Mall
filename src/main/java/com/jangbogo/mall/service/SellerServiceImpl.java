@@ -1,7 +1,9 @@
 package com.jangbogo.mall.service;
 
+import com.jangbogo.mall.dao.ProductDao;
 import com.jangbogo.mall.dao.SellerDao;
 import com.jangbogo.mall.domain.Email;
+import com.jangbogo.mall.domain.ProductDto;
 import com.jangbogo.mall.domain.Seller;
 import com.jangbogo.mall.domain.SellerDtl;
 import com.jangbogo.mall.utils.Utils;
@@ -10,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -17,6 +20,9 @@ public class SellerServiceImpl implements SellerService {
 
     @Autowired
     SellerDao dao;
+
+    @Autowired
+    ProductService productService;
 
     @Autowired
     EmailSender emailSender;
@@ -27,9 +33,12 @@ public class SellerServiceImpl implements SellerService {
     @Autowired
     Utils utils;
 
+    @Transactional
     @Override
-    public int withdrawSeller(Integer idx, String email) throws Exception {
-        return dao.deleteSeller(idx, email);
+    public boolean withdrawSeller(Integer idx, String email) throws Exception {
+        List<ProductDto> productList = productService.getListBySeller(idx);
+        // 판매자 탈퇴와 판매자 상품들 전부 상품 중지
+        return (dao.deleteSeller(idx, email) == 1) && (productService.stopSale(productList) == 1);
     }
 
     @Override
@@ -133,7 +142,7 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public boolean verifySeller (String email, String pwd) throws Exception {
+    public boolean verifySeller(String email, String pwd) throws Exception {
         Seller seller = dao.getSellerByEmail(email);
         return seller != null && passwordEncoder.matches(pwd, seller.getPwd());
     }
