@@ -14,9 +14,21 @@ public class ProductListDaoImpl implements ProductListDao {
 
     String namespace = "com.jangbogo.mall.dao.ProductListMapper.";
 
+    public List<ProductListDto> ffloorSelect(String f_cate_idx) throws Exception {
+        return session.selectList(namespace + "ffloorSelect", f_cate_idx);
+    }
+
+    public List<ProductListDto> allffloorSelect() throws Exception {
+        return session.selectList(namespace + "allffloorSelect");
+    }
+
+    public Integer reviewNumSelect(Integer prod_idx) throws Exception {
+        return session.selectOne(namespace + "reviewNumSelect", prod_idx);
+    }
+
     @Override
-    public List<ProductListDto> allProductInfoSelect(ProductListDto productListDto) throws Exception {
-        return session.selectList(namespace + "allProductInfoSelect", productListDto);
+    public List<ProductListDto> allProductInfoSelect() throws Exception {
+        return session.selectList(namespace + "allProductInfoSelect");
     }
 
 }
