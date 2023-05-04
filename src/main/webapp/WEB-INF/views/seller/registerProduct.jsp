@@ -33,7 +33,7 @@
                                         placeholder="코드를 등록하면 쉽게 상품을 관리할 수 있어요"
                                 />
                             </div>
-                            <div class="error-msg seler-prod-cd"></div>
+                            <div class="error-msg seler-prod-cd">9자 이내의 숫자로 작성해 주세요</div>
                         </div>
 <%--                        <div class="btn-space"></div>--%>
                         <div class="btn-space">
@@ -275,7 +275,7 @@
                             <div class="error-msg distb-tlmt"></div>
                         </div>
                         <div class="btn-space"></div>
-                    <%--                        <div class="btn-space">--%>
+<%--                        <div class="btn-space">--%>
 <%--                            <button class="duplicate">기간확인</button>--%>
 <%--                        </div>--%>
                     </div>
@@ -325,10 +325,10 @@
                             </div>
                             <div class="error-msg sle-end-tm"></div>
                         </div>
-                        <div class="btn-space"></div>
-                    <%--                        <div class="btn-space">--%>
-<%--                            <button class="duplicate">기간확인</button>--%>
-<%--                        </div>--%>
+<%--                        <div class="btn-space"></div>--%>
+                        <div class="btn-space">
+                            <button class="duplicate">기간확인</button>
+                        </div>
                     </div>
                     <div class="input-line">
                         <div class="input-label">
@@ -461,9 +461,8 @@
 <script>
     let msg = "${msg}";
     if (msg == "EXCEPTION_ERR") alert("가입 도중 오류가 발생했습니다 다시 시도해 주세요");
-    if (msg == "REG_PROD_OK") alert("상품이 등록되었습니다. 승인 대기중입니다.")
-    if (msg == "DUPLICATE_NUMBER") alert("중복된 번호입니다. 다시 입력해 주세요.")
-    if (msg == "CONFIRM") alert("확인되었습니다.");
+    if (msg == "REG_PROD_OK") alert("상품이 등록되었습니다. 승인 대기중입니다.");
+    if (msg == "DUPLICATE_NUMBER") alert("중복된 번호입니다. 다시 입력해 주세요.");
     const dc_applied = "1"; //할인 적용 여부
     const limit_sle = "2"; //기간한정판매
 
@@ -717,19 +716,22 @@
         $(".duplicate").on("click", function(e){
             e.preventDefault();
             let seler_prod_cd = $('input[name=seler_prod_cd]').val();
-            // let mft_tm = $('input[name=mft_tm]').val();
-            // let distb_tlmt = $('input[name=distb_tlmt]').val();
-            // let sle_start_tm = $('input[name=sle_start_tm]').val();
-            // let sle_end_tm = $('input[name=sle_end_tm]').val();
-            alert("alert!")
+            let sle_start_tm = $('input[name=sle_start_tm]').val();
+            let sle_end_tm = $('input[name=sle_end_tm]').val();
+
             $.ajax({
                 type: 'POST',
                 url: '/seller/register/checkData',
                 headers : { "content-type": "application/json"}, // 요청 헤더
-                data: JSON.stringify({ seler_prod_cd: seler_prod_cd, mft_tm: mft_tm, distb_tlmt: distb_tlmt, sle_start_tm: sle_start_tm, sle_end_tm: sle_end_tm}),
-                success: function() {
+                data: JSON.stringify({ seler_prod_cd: seler_prod_cd, sle_start_tm: sle_start_tm, sle_end_tm: sle_end_tm}),
+                success: function(msg) {
+                    if (msg === "OK") {
+                        alert("사용 가능합니다.")
+                    }else {
+                        alert("중복됩니다");
+                    }
                 },
-                error: function() {alert("중복된 내용입니다.")}
+                error: function() {alert("요청중 오류가 ..발생")}
             })
 
         })

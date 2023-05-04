@@ -61,6 +61,10 @@ public class RegistProductServiceImpl implements RegistProductService {
         return registProductDao.checkSellerProdCd(registProductDto);
     }
 
+    public Integer checkSelDate(RegistProductDto registProductDto) throws Exception {
+        return registProductDao.checkSelDate(registProductDto);
+    }
+
     public List<RegistProductDto> getProductList(Integer seler_idx) throws Exception {
         return registProductDao.getProductList(seler_idx);
     }

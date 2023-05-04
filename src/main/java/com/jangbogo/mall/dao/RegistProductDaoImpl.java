@@ -58,6 +58,10 @@ public class RegistProductDaoImpl implements RegistProductDao {
         return session.selectOne(namespace+ "checkSellerProdCd", registProductDto);
     }
 
+    public Integer checkSelDate(RegistProductDto registProductDto) throws Exception {
+        return session.selectOne(namespace + "checkSelDate", registProductDto);
+    }
+
     public List<RegistProductDto> getProductList(Integer seler_idx) throws Exception {
         return session.selectList(namespace + "getProductList", seler_idx);
     }

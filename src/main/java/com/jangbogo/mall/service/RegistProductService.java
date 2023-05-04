@@ -16,6 +16,7 @@ public interface RegistProductService {
     Integer updateProductFile(List<ProductFileDto> files, Integer prod_idx) throws Exception;
     Integer deleteProduct(RegistProductDto registProductDto) throws Exception;
     Integer checkSellerProdCd(RegistProductDto registProductDto) throws Exception;
+    Integer checkSelDate(RegistProductDto registProductDto) throws Exception;
     List<RegistProductDto> getProductList(Integer seler_idx) throws Exception;
     RegistProductDto selectProdInfo(Integer prod_idx) throws Exception;
 }

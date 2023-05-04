@@ -91,7 +91,14 @@
     <select id="checkSellerProdCd" parameterType="RegistProductDto" resultType="Integer">
         select count(*)
         from product
-        where SELER_PROD_CD = #{seler_prod_cd} and SELER_IDX = #{seler_idx};
+        <![CDATA[where SELER_PROD_CD = #{seler_prod_cd} and SELER_IDX = #{seler_idx} and SELER_PROD_CD < 2147483648]]>;
+    </select>
+
+<!--    상품등록 시작날짜가 마감날짜보다 먼저 있는지 확인, integer 범위 안에 있는 숫자인지 확인 -->
+    <select id="checkSelDate" parameterType="RegistProductDto">
+        select prod_idx, SLE_START_TM, SLE_END_TM
+        from prod_dtl
+        <![CDATA[where #{sle_start_tm} < #{sle_end_tm} and prod_idx = #{prod_idx}]]>;
     </select>
 
     <select id="getProductList" resultType="RegistProductDto">

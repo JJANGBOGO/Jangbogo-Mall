@@ -16,6 +16,7 @@ public interface RegistProductDao {
     Integer updateProductFile(ProductFileDto file) throws Exception;
     Integer deleteProduct(RegistProductDto registProductDto) throws Exception;
     Integer checkSellerProdCd(RegistProductDto registProductDto) throws Exception;
+    Integer checkSelDate(RegistProductDto registProductDto) throws Exception;
     List<RegistProductDto> getProductList(Integer seler_idx) throws Exception;
     RegistProductDto selectProdInfo(Integer prod_idx) throws Exception;
 }
