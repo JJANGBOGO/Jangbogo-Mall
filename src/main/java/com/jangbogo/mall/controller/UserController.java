@@ -112,7 +112,7 @@ public class UserController {
 
     //카카오 로그인
     @GetMapping("/social/kakao")
-    public String buildKaKao(HttpSession session, String code, String state, RedirectAttributes rattr, HttpServletResponse resp) {
+    public String buildKaKao(HttpSession session, String code, String state, RedirectAttributes rattr) {
         try {
             oauthToken = kakaoLoginBO.getAccessToken(session, code, state);
             apiResult = kakaoLoginBO.getUserProfile(oauthToken);
@@ -153,7 +153,6 @@ public class UserController {
             return "redirect:/user/login";
         }
     }
-
     public String crtNickName() { //랜덤 문자열 생성, 소셜 닉네임 생성
         return "뉴비_" + utils.createRandomStr();
     }
@@ -166,7 +165,7 @@ public class UserController {
 
     //네이버 로그인
     @GetMapping("/social/naver")
-    public String naverLogin(HttpSession session, String code, String state, RedirectAttributes rattr) {
+    public String naverLogin( HttpSession session, String code, String state, RedirectAttributes rattr) {
         try {
             oauthToken = naverLoginBO.getAccessToken(session, code, state);
             apiResult = naverLoginBO.getUserProfile(oauthToken);

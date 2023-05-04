@@ -38,7 +38,6 @@ public class SellerController {
     //로그인화면
     @RequestMapping("/seller/login") //꼭 requestMapping
     public String loginSellerView(HttpServletRequest req, Authentication authentication) {
-
         String uri = req.getHeader("Referer");
         if (authentication != null) return "redirect:/";
 
