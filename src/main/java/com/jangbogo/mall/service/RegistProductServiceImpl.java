@@ -14,22 +14,30 @@ public class RegistProductServiceImpl implements RegistProductService {
     RegistProductDao registProductDao;
 
     @Override
-    public int getProdIdx(RegistProductDto registProductDto) throws Exception {
+    public Integer getProdIdx(RegistProductDto registProductDto) throws Exception {
         return registProductDao.getProdIdx(registProductDto);
     }
 
     @Override
-    public int insertProduct(RegistProductDto registProductDto) throws Exception { //상품등록
+    public Integer insertProduct(RegistProductDto registProductDto) throws Exception { //상품등록
         return registProductDao.insertProduct(registProductDto);
     }
 
-    @Override
-    public int insertProductDetail(RegistProductDto registProductDto) throws Exception {
-        return registProductDao.insertProductDetail(registProductDto);
+    public Integer updateProduct(RegistProductDto registProductDto) throws Exception {
+        return registProductDao.updateProduct(registProductDto);
     }
 
     @Override
-    public int insertProductFile(List<ProductFileDto> files, Integer prod_idx) throws Exception { //상품첨부등록
+    public Integer insertProductDetail(RegistProductDto registProductDto) throws Exception {
+        return registProductDao.insertProductDetail(registProductDto);
+    }
+
+    public Integer updateProductDetail(RegistProductDto registProductDto) throws Exception {
+        return registProductDao.updateProductDetail(registProductDto);
+    }
+
+    @Override
+    public Integer insertProductFile(List<ProductFileDto> files, Integer prod_idx) throws Exception { //상품첨부등록
         for (ProductFileDto item : files) {
             item.setProd_idx(prod_idx);
             registProductDao.insertProductFile(item);
@@ -37,11 +45,31 @@ public class RegistProductServiceImpl implements RegistProductService {
         return 1;
     }
 
-    public int checkSellerProdCd(RegistProductDto registProductDto) throws Exception {
+    public Integer updateProductFile(List<ProductFileDto> files, Integer prod_idx) throws Exception {
+        for (ProductFileDto item : files) {
+            item.setProd_idx(prod_idx);
+            registProductDao.updateProductFile(item);
+        }
+        return 1;
+    }
+
+    public Integer deleteProduct(RegistProductDto registProductDto) throws Exception {
+        return registProductDao.deleteProduct(registProductDto);
+    }
+
+    public Integer checkSellerProdCd(RegistProductDto registProductDto) throws Exception {
         return registProductDao.checkSellerProdCd(registProductDto);
+    }
+
+    public Integer checkSelDate(RegistProductDto registProductDto) throws Exception {
+        return registProductDao.checkSelDate(registProductDto);
     }
 
     public List<RegistProductDto> getProductList(Integer seler_idx) throws Exception {
         return registProductDao.getProductList(seler_idx);
+    }
+
+    public RegistProductDto selectProdInfo(Integer prod_idx) throws Exception {
+        return registProductDao.selectProdInfo(prod_idx);
     }
 }

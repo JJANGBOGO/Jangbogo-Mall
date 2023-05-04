@@ -29,7 +29,7 @@
         </div>
         <ul class="seller-products">
             <c:forEach var="product" items="${productList}">
-                <li class="product-item">
+                <li class="product-item" data-prodIdx="${product.prod_idx}"><a href="<c:url value='/seller/update/product/${product.prod_idx}' />">
                     <div class="product-code">${product.seler_prod_cd}</div>
                     <div class="product-center">
                         <div class="product-img">
@@ -72,7 +72,7 @@
                             </c:if>
                         </div>
                     </div>
-                </li>
+                </a></li>
             </c:forEach>
         </ul>
         <button class="product-reg-btn">상품 등록하기</button>
@@ -86,6 +86,11 @@
     if (msg === "REG_PROD_OK") alert("상품 등록을 성공했습니다");
 
     $(document).ready(function () {
+
+        $(".seller-products").on("click", ".product-item", function() {
+
+        })
+
         $(".product-item").each(function () {
                 let star_ref = $(this).find(".starrr");
                 star_ref.starrr({rating: star_ref.data("ascr")});

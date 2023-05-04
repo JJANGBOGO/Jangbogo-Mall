@@ -16,16 +16,16 @@
 <div class="productList-main">
     <div id="container">
         <div class="category-banner">
-            <a href=""></a>
+
         </div>
-        <h3 class="category-name"></h3>
-        <ul class="cate-list">
-            <li class="cate-name"></li>
-        </ul>
+        <h3 class="category-name">상품</h3>
+<%--        <ul class="cate-list">--%>
+<%--&lt;%&ndash;            <li class="cate-name"></li>&ndash;%&gt;--%>
+<%--        </ul>--%>
         <div class="product-main">
             <div class="products">
                 <div class="mini-filter">
-                    <div class="total-num">카테고리에 해당하는 상품총 000개</div>
+                    <div class="total-num"></div>
                     <ul class="filter-main">
                         <li class="filter-name-wrap">
                             <a href="" class="filter-name">신상품순</a>
@@ -66,8 +66,9 @@
         </div>
     </div>
 </div>
+
 <div role="presentation" class="modal_body">
-    <div aria-hidden="true" class="modal_back_body"></div>
+    <div class="modal_back_body"></div>
     <div tabindex="0" data-test="sentinelStart"></div>
     <div class="modal-container" role="presentation" tabindex="-1">
         <div
@@ -161,10 +162,38 @@
 <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 <script>
     let f_cate_idx = "${f_cate_idx}";
+
+    // let showCategory = function() {
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: '/productList/category',
+    //         success: function(result) {
+    //             console.log("dsaas");
+    //             console.log("result"+result);
+    //             alert("alert!!!");
+    //             $('.cate-list').html(cateListToHtml(result));
+    //         },
+    //         error: function() { alert("GET productList Error") }
+    //     })
+    // }
+
+    <%--let cateListToHtml = function(cateNames) {--%>
+    <%--    // let tmp = "";--%>
+
+    <%--        console.log("ddddd"+cateNames.id);--%>
+    <%--    // cateNames.forEach(function(cateName) {--%>
+    <%--        // console.log("f_cate_idx!!!"+cateName.id);--%>
+    <%--        &lt;%&ndash;tmp += '<li class="cate-name"><a href="<c:url value='/productList/ffloor/{}'  />"></a></li>'&ndash;%&gt;--%>
+    <%--    //     tmp += '<li class="cate-name">cateName.cate_name</li>'--%>
+    <%--    // })--%>
+    <%--    // return tmp;--%>
+    <%--}--%>
+
+
     let showProducts = function() {
         $.ajax({
         type: 'GET',
-        url: '/productList/ffloor/'+ f_cate_idx,
+        url: '/productList/list',
         success: function(result) {
         $('.products-box').html(productToList(result));
         },
@@ -172,10 +201,24 @@
         })
     }
 
+
+
     let productToList = function(productLists) {
+        let totalCnt = productLists.length;
+
+
+        $('.total-num').html("총 "+totalCnt+"건");
+
         let tmp = "";
         productLists.forEach(function(productList) {
-            tmp += '<a class="product" href="">'
+
+
+            let test = productList.price;
+            let withComma = test.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+            let url = "/product/"+ productList.prod_idx;
+
+            tmp += '<a class="product" href='<c:url value="+url+" />'>'
             tmp += '<div class="product-img-wrap">'
             tmp += '<div '
             tmp += 'class="product-img">'
@@ -183,7 +226,7 @@
             tmp += '<img class="product-img-img" sizes="100vw" src='+ productList.upload_path +' alt="상품이미지" />'
             tmp += '</span>'
             tmp += '<div class="product-button-wrap">'
-            tmp += '<button class="wishlist-button">'
+            tmp += '<button class="wishlist-button" onclick="return false;">'
             tmp += '<img '
             tmp += 'class="wishlist-button-img"'
             tmp += 'src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDUiIGhlaWdodD0iNDUiIHZpZXdCb3g9IjAgMCA0NSA0NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGNpcmNsZSBmaWxsPSIjMkEwMDM4IiBvcGFjaXR5PSIuNSIgY3g9IjIyLjUiIGN5PSIyMi41IiByPSIyMi41Ii8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTEuMDMgMTQuMzgpIiBzdHJva2U9IiNGRkYiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogICAgICAgICAgICA8cGF0aCBzdHJva2Utd2lkdGg9IjEuNCIgZD0ibTIwLjQ2IDIuOTEtMi4xNyA5LjIzSDUuODdMMy43MSAyLjkxeiIvPgogICAgICAgICAgICA8Y2lyY2xlIHN0cm9rZS13aWR0aD0iMS4yIiBjeD0iMTYuMzUiIGN5PSIxNi44NiIgcj0iMS43Ii8+CiAgICAgICAgICAgIDxjaXJjbGUgc3Ryb2tlLXdpZHRoPSIxLjIiIGN4PSI3LjgyIiBjeT0iMTYuODYiIHI9IjEuNyIvPgogICAgICAgICAgICA8cGF0aCBzdHJva2Utd2lkdGg9IjEuNCIgZD0iTTAgMGgzLjAybDEuNDEgNS45OCIvPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg=="'
@@ -192,30 +235,48 @@
             tmp += '</div>'
             tmp += '</div>'
             tmp += '</div>'
-            tmp += '<div class="product-info">'
-            tmp += '<span class="product-title">'+ productList.name +'</span>'
+            tmp += '<div id="product_info" class="product-info"'
+            tmp += ' data-prod_idx=' + productList.prod_idx + '>'
+            tmp += '<span class="product-title">'+ "["+ productList.brandName +"]"+ productList.name +'</span>'
             tmp += '<p class="product-content">'+ productList.ctent +'</p>'
             tmp += '<div class="product-price-wrap">'
             tmp += '<div class="product-price">'
-            tmp += '<span class="price">' + productList.price + '<span class="won">원</span>'
+            tmp += '<span class="price">' + withComma + '<span class="won">원</span>'
             tmp += '</span>'
             tmp += '</div>'
             tmp += '</div>'
-            tmp += '<div class="product-review">후기'
-            tmp += '<span class="product-review-span">9,999+</span>'
+            tmp += '<div class="product-review">후기 '
+            tmp += ' <span class="product-review-span"> &nbsp;'+ productList.review_cnt +'개'+'</span>'
             tmp += '</div>'
             tmp += '</div>'
             tmp += '</a>'
         })
+
+
         return tmp;
     }
 
     $(document).ready(function(){
         showProducts();
 
+        $.ajax({
+            type: 'GET',
+            url: '/productList/list?prod_idx'+prod_idx,
+            success: function(result) {
+                $('.products-box').html(productToList(result));
+            },
+            error: function() { alert("GET productList Error") }
+        })
 
-        $(".products-box").on("click",".wishlist-button", function () {
-            $('.modal_body').css('display', '');
+
+        $(".products-box").on("click",".wishlist-button", function (e) {
+            e.preventDefault();
+            // alert("show!!")
+            // $('.modal_body').attr('class', ' show');
+            // $('.modal_body').addClass('show')
+            // alert("alert!!");
+            $('.modal_body').css('display', 'block');
+
         })
 
         // $(".button-back").on("click")

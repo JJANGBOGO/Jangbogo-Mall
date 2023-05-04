@@ -4,20 +4,20 @@
 
 <mapper namespace="com.jangbogo.mall.dao.ProductListMapper">
 <!--중분류 카테고리만 출력-->
-    <select id="sfloorSelect" parameterType="String" resultType="ProductListDto">
-        select c.ID as 'id', c.CATE_NO as 'cate_no', c.NAME as 'cate_name', c.ICON_UPLOAD_PATH as 'icon_upload_path' ,c.SORT_ODR as 'sort_odr', c.STATE_CD as 'cate_state_cd', c.UPP_FLOOR as 'upp_floor'
-        from category c
-        where id like concat(#{f_cate_idx}, '__');
-    </select>
-<!--하나의 대분류에 해당하는 모든 카테고리 출력-->
+<!--    <select id="sfloorSelect" parameterType="String" resultType="ProductListDto">-->
+<!--        select c.ID as 'id', c.CATE_NO as 'cate_no', c.NAME as 'cate_name', c.ICON_UPLOAD_PATH as 'icon_upload_path' ,c.SORT_ODR as 'sort_odr', c.STATE_CD as 'cate_state_cd', c.UPP_FLOOR as 'upp_floor'-->
+<!--        from category c-->
+<!--        where id like concat(#{f_cate_idx}, '__');-->
+<!--    </select>-->
+<!--하나의 대분류에 해당하는 모든 카테고리 출력 대분류 자체도 포함됨 - list 출력-->
     <select id="ffloorSelect" parameterType="String" resultType="ProductListDto">
         select c.ID as 'id', c.CATE_NO as 'cate_no', c.NAME as 'cate_name', c.ICON_UPLOAD_PATH as 'icon_upload_path', c.SORT_ODR as 'sort_odr', c.STATE_CD as 'cate_state_cd', c.UPP_FLOOR as 'upp_floor'
         from category c
         where id like concat(#{f_cate_idx}, '%');
     </select>
-<!--대분류 카테고리만 출력-->
+<!--대분류 카테고리만 출력 - main 페이지에서 대분류 리스트 출력때 사용 - List 출력-->
     <select id="allffloorSelect" resultType="ProductListDto">
-        select c.id, c.name
+        select c.ID as 'id', c.NAME as 'cate_name'
         from category c
         where id like '__';
     </select>
@@ -27,39 +27,40 @@
         from prod_late
         where PROD_IDX = #{prod_idx};
     </select>
-<!--상품과 상품상세테이블 조인해서 특정 대분류의 상품 리스트 정보 가져오기-->
-    <select id="allProductInfoSelect" parameterType="ProductListDto" resultType="ProductListDto">
+<!--조건에 맞는 전체 상품 갯수 가져오기-->
+    <select id="allProductCnt" resultType="Integer">
+        select count(*)
+        from product;
+    </select>
+<!--전체 상품 리스트 가져오기, 상품, 상품상세, 판매자 조인, 상품후기-->
+    <select id="allProductInfoSelect" resultType="ProductListDto">
         select
             p.IDX as 'prod_idx',
-            p.CATE_IDX as 'cate_idx',
-            p.UPLOAD_PATH as 'upload_path',
-            p.NAME as 'name',
-            p.CTENT as 'ctent',
-            p.PRC as 'price',
-            p.DC_STATE_CD as 'dc_state_cd',
-            p.DC_RATE as 'dc_rate',
-            p.DSPLY_STATE_CD as 'dsply_state_cd',
-            pd.SLE_QUTY as 'sle_quty',
-            pd.REG_STATE_CD as 'reg_state_cd',
-            pd.STATE_CD as 'state_cd',
-            pd.SLE_START_TM as 'sle_start_tm',
-            pd.SLE_END_TM as 'sle_end_tm',
-            pd.CREATE_TM as 'create_tm',
-            pd.INV_QUTY as 'inv_quty'
-        from product p inner join prod_dtl pd
-        on p.idx = pd.prod_idx
-        where cate_idx like CONCAT(#{f_cate_idx}, '%') and p.DSPLY_STATE_CD = 1 and pd.REG_STATE_CD = 2 and pd.STATE_CD = 1
+                p.CATE_IDX as 'cate_idx',
+                p.UPLOAD_PATH as 'upload_path',
+                p.NAME as 'name',
+                p.CTENT as 'ctent',
+                p.PRC as 'price',
+                p.DC_STATE_CD as 'dc_state_cd',
+                p.DC_RATE as 'dc_rate',
+                p.DSPLY_STATE_CD as 'dsply_state_cd',
+                pd.SLE_QUTY as 'sle_quty',
+                pd.REG_STATE_CD as 'reg_state_cd',
+                pd.STATE_CD as 'state_cd',
+                pd.SLE_START_TM as 'sle_start_tm',
+                pd.SLE_END_TM as 'sle_end_tm',
+                pd.CREATE_TM as 'create_tm',
+                pd.INV_QUTY as 'inv_quty',
+                s.cpnm as 'brandName',
+                (select count(*)
+				from prod_late
+                WHERE PROD_IDX = pd.prod_idx
+                ) as 'review_cnt'
+        from product p
+                 join prod_dtl pd on p.idx = pd.PROD_IDX
+                 join seler s on s.idx = p.SELER_IDX
+        where p.DSPLY_STATE_CD = 1 and pd.REG_STATE_CD = 2 and pd.STATE_CD = 1
         <![CDATA[and sle_start_tm <= now() and sle_end_tm >= now()]]>;
-<!--        order by-->
-<!--        <include refid="filterCondition"/>;-->
     </select>
-
-    <sql id="filterCondition">
-        <choose>
-            <when test='filterType=="1"'>
-                pd.CREATE_TM desc
-            </when>
-        </choose>
-    </sql>
 </mapper>
 

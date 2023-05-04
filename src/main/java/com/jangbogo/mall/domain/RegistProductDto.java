@@ -17,7 +17,7 @@ public class RegistProductDto {
     //상품테이블
     private Integer prod_idx; //IDX //상품번호
     private Integer seler_idx; //SELER_IDX //판매자번호, session에서 가져옴
-    private Integer cate_idx; //배송방식 지정을 위한 상위카테고리층 번호
+    private String cate_idx; //배송방식 지정을 위한 상위카테고리층 번호
     private String cate_idx2; //CATE_IDX
     private Integer seler_prod_cd; //SELER_PROD_CD
     private String name; //NAME

@@ -32,10 +32,14 @@ public class ProductListDto {
     private Integer cate_state_cd;//카테고리상태코드
     private Integer upp_floor;//상위카테고리층
 
+    //    판매자 테이블
+    private String brandName;
+
     private Integer filterType; //정렬 필터타입번호  //아직사용안함
 
     private String f_cate_idx;//대분류 카테고리 저장 //상품자체에는 포함되어있지 않지만 자체적으로 저장
 
+    private Integer review_cnt;
     //<카테고리이벤트배너테이블>
     //
 
@@ -45,9 +49,10 @@ public class ProductListDto {
     //<장바구니테이블>
     //장바구니상품수량
 
+
     public ProductListDto() {}
 
-    public ProductListDto(Integer prod_idx, String cate_idx, Integer price, String upload_path, String name, String ctent, Integer dc_state_cd, Integer dc_rate, Integer dsply_state_cd, Integer sle_quty, Integer reg_state_cd, Integer state_cd, Date sle_start_tm, Date sle_end_tm, Date create_tm, Integer inv_quty, String id, Integer cate_no, String cate_name, String icon_upload_path, Integer sort_odr, Integer cate_state_cd, Integer upp_floor, Integer filterType, String f_cate_idx) {
+    public ProductListDto(Integer prod_idx, String cate_idx, Integer price, String upload_path, String name, String ctent, Integer dc_state_cd, Integer dc_rate, Integer dsply_state_cd, Integer sle_quty, Integer reg_state_cd, Integer state_cd, Date sle_start_tm, Date sle_end_tm, Date create_tm, Integer inv_quty, String id, Integer cate_no, String cate_name, String icon_upload_path, Integer sort_odr, Integer cate_state_cd, Integer upp_floor, String brandName, Integer filterType, String f_cate_idx, Integer review_cnt) {
         this.prod_idx = prod_idx;
         this.cate_idx = cate_idx;
         this.price = price;
@@ -71,8 +76,10 @@ public class ProductListDto {
         this.sort_odr = sort_odr;
         this.cate_state_cd = cate_state_cd;
         this.upp_floor = upp_floor;
+        this.brandName = brandName;
         this.filterType = filterType;
         this.f_cate_idx = f_cate_idx;
+        this.review_cnt = review_cnt;
     }
 
     @Override
@@ -101,11 +108,12 @@ public class ProductListDto {
                 ", sort_odr=" + sort_odr +
                 ", cate_state_cd=" + cate_state_cd +
                 ", upp_floor=" + upp_floor +
+                ", brandName='" + brandName + '\'' +
                 ", filterType=" + filterType +
                 ", f_cate_idx='" + f_cate_idx + '\'' +
+                ", review_cnt=" + review_cnt +
                 '}';
     }
-
 
     public Integer getProd_idx() {
         return prod_idx;
@@ -291,6 +299,14 @@ public class ProductListDto {
         this.upp_floor = upp_floor;
     }
 
+    public String getBrandName() {
+        return brandName;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
+    }
+
     public Integer getFilterType() {
         return filterType;
     }
@@ -305,5 +321,13 @@ public class ProductListDto {
 
     public void setF_cate_idx(String f_cate_idx) {
         this.f_cate_idx = f_cate_idx;
+    }
+
+    public Integer getReview_cnt() {
+        return review_cnt;
+    }
+
+    public void setReview_cnt(Integer review_cnt) {
+        this.review_cnt = review_cnt;
     }
 }

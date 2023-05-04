@@ -19,30 +19,54 @@ public class RegistProductDaoImpl implements RegistProductDao {
     String namespace = "com.jangbogo.mall.dao.RegistProductMapper.";
 
     @Override
-    public int getProdIdx(RegistProductDto registProductDto) throws Exception {
+    public Integer getProdIdx(RegistProductDto registProductDto) throws Exception {
         return session.selectOne(namespace + "getProdIdx", registProductDto);
     }
 
     @Override
-    public int insertProduct(RegistProductDto registProductDto) throws Exception {
+    public Integer insertProduct(RegistProductDto registProductDto) throws Exception {
         return session.insert(namespace + "insertProduct", registProductDto);
     }
 
+    public Integer updateProduct(RegistProductDto registProductDto) throws Exception {
+        return session.insert(namespace + "updateProduct", registProductDto);
+    }
+
     @Override
-    public int insertProductDetail(RegistProductDto registProductDto) throws Exception {
+    public Integer insertProductDetail(RegistProductDto registProductDto) throws Exception {
         return session.insert(namespace + "insertProductDetail", registProductDto);
     }
 
+    public Integer updateProductDetail(RegistProductDto registProductDto) throws Exception {
+        return session.insert(namespace + "updateProductDetail", registProductDto);
+    }
+
     @Override
-    public int insertProductFile(ProductFileDto file) throws Exception{
+    public Integer insertProductFile(ProductFileDto file) throws Exception{
         return session.insert(namespace + "insertProductFile", file);
     }
 
-    public int checkSellerProdCd(RegistProductDto registProductDto) throws Exception {
+    public Integer updateProductFile(ProductFileDto file) throws Exception {
+        return session.insert(namespace + "updateProductFile", file);
+    }
+
+    public Integer deleteProduct(RegistProductDto registProductDto) throws Exception {
+        return session.insert("deleteProduct", registProductDto);
+    }
+
+    public Integer checkSellerProdCd(RegistProductDto registProductDto) throws Exception {
         return session.selectOne(namespace+ "checkSellerProdCd", registProductDto);
+    }
+
+    public Integer checkSelDate(RegistProductDto registProductDto) throws Exception {
+        return session.selectOne(namespace + "checkSelDate", registProductDto);
     }
 
     public List<RegistProductDto> getProductList(Integer seler_idx) throws Exception {
         return session.selectList(namespace + "getProductList", seler_idx);
+    }
+
+    public RegistProductDto selectProdInfo(Integer prod_idx) throws Exception {
+        return session.selectOne(namespace + "selectProdInfo", prod_idx);
     }
 }
