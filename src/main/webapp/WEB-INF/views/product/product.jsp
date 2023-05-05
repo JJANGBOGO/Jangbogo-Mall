@@ -980,7 +980,7 @@
     <%--console.log("${nickname}")--%>
     let tmp = '';
     reviews.forEach(function (review){
-      if((review.user_idx=="${sessionScope.idx}" && review.opub_yn=="N") || review.opub_yn=="Y"){ // 작성자만 자신이 작성한 비공개 후기를 볼 수 있다
+      if((review.user_idx=="${sessionScope.idx}" && review.opub_yn=="N" && review.state_cd !=2) || review.opub_yn=="Y" && review.state_cd !=2){ // 작성자만 자신이 작성한 비공개 후기를 볼 수 있다
         tmp += '<div class="review-list">'
         tmp += '<div class="list-side">'
         tmp += '<div class="side-headerbox">'
