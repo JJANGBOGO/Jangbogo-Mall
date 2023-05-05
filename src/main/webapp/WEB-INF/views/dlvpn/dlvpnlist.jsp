@@ -120,7 +120,7 @@
                 tmp += '<div class="list-address"><div></div>' + dlvpn.addr_base + ' ' + dlvpn.addr_dtl + '</div>'
             }
             tmp += '<div class="list-name">' + dlvpn.rcpr_nm + '</div>'
-            tmp += '<div class="list-number">' + dlvpn.rcpr_mobl_no + '</div>'
+            tmp += '<div class="list-number">' + formatMpnoWithHyphen(dlvpn.rcpr_mobl_no) + '</div>'
             tmp += '<div class="list-type"><div><span class="dlvpn-span-type">샛별배송</span></div></div>'
             tmp += '<div class="list-change"><button class="update-btn"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path fill="none" d="M0 0h24v24H0z"></path><path d="m13.83 5.777 4.393 4.393-10.58 10.58H3.25v-4.394l10.58-10.58zm3.204-2.527c.418 0 .837.16 1.157.48l2.08 2.08a1.63 1.63 0 0 1 0 2.314l-2.157 2.156-4.394-4.394 2.157-2.156c.32-.32.738-.48 1.157-.48z" stroke="#ccc" stroke-width="1.5"></path></g></svg></button></div>'
             tmp += '</div>'
@@ -164,6 +164,12 @@
         var popupX = (window.screen.width / 2) - (popupWidth / 2);
         var popupY = (window.screen.height / 2) - (popupHeight / 2);
         window.open(link, '', 'status=no, height=' + popupHeight + ', width=' + popupWidth + ', left=' + popupX + ', top=' + popupY);
+    }
+
+    // 정규식 함수화
+    // 기   능 : 인자값을 문자열로 변환한 뒤, 정규식을 활용하여 각 자리에 하이픈을 삽입해준다.
+    let formatMpnoWithHyphen = (mpno) => {
+        return mpno.toString().replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,"$1-$2-$3");
     }
 
 </script>

@@ -114,6 +114,12 @@
 
     });
 
+    // 정규식 함수화
+    // 기   능 : 인자값을 문자열로 변환한 뒤, 정규식을 활용하여 각 자리에 하이픈을 삽입해준다.
+    let formatMpnoWithHyphen = (mpno) => {
+      return mpno.toString().replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,"$1-$2-$3");
+    }
+
 
     <%--document.querySelector('.delete-button').addEventListener('click',remove);--%>
 

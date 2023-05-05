@@ -490,7 +490,7 @@
         tmp += '</div>'
         tmp += '<ul class="orderDetail-address_list">'
         tmp += '<li><span class="key">받는 분</span><span class="value">'+orders[0].rcpr_nm+'</span></li>'
-        tmp += '<li><span class="key">핸드폰</span><span class="value">'+orders[0].rcpr_mpno+'</span></li>'
+        tmp += '<li><span class="key">핸드폰</span><span class="value">'+formatMpnoWithHyphen(orders[0].rcpr_mpno)+'</span></li>'
         tmp += '<li><span class="key">주소</span><span class="value">'+orders[0].rcpr_addr_base+' '+orders[0].rcpr_addr_dtl+'</span></li>'
         tmp += '<li><span class="key">받으실 장소</span><span class="value">'+orders[0].plrcv+'</span></li>'
         tmp += '<li><span class="key">공동현관 출입방법</span><span class="value"></span></li>'
@@ -530,8 +530,14 @@
 
 
     // 정규식 함수화
+    // 기   능 : 인자값을 문자열로 변환한 뒤, 정규식을 활용하여 3자리마다 삽입한 콤마를 제거한다.
     let formatPriceWithComma = (price) => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    // 기   능 : 인자값을 문자열로 변환한 뒤, 정규식을 활용하여 각 자리에 하이픈을 삽입해준다.
+    let formatMpnoWithHyphen = (mpno) => {
+        return mpno.toString().replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,"$1-$2-$3");
     }
 
 
