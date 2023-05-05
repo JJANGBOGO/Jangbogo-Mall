@@ -251,7 +251,6 @@
             tmp += '</a>'
         })
 
-
         return tmp;
     }
 
@@ -286,8 +285,6 @@
 
             let price = $(this).parent().parent().parent().siblings().find(".product-price-wrap").children().find(".price").text();
             let dc_rate = $(this).parent().parent().parent().siblings().find(".product-price-wrap").children().find(".dc_rate").text();
-            // console.log("price???"+price);
-            // console.log("dc_rate"+dc_rate);
 
             let regex = /[^0-9]/g;
             let numPrice = price.replace(regex, ""); //문자열 뺀 숫자 17900
@@ -362,9 +359,7 @@
                 $('.scale').text(plusNum);
                 let regex = /[^0-9]/g;
                 let numPrice = ($('.price-dc').text()).replace(regex, "");
-                console.log("numPrice"+numPrice);
                 let calcPrice = Math.floor(plusNum * parseInt(numPrice));
-                console.log("calcPrice"+calcPrice);
                 let withComma = calcPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
                 $('.total-info-num').text(withComma);
             }

@@ -462,7 +462,7 @@
   let dcNumberToPrice = function(info) {
     let number = info.price;
     let dcRate = info.dc_rate;
-    let finalNum = number - number * (dcRate / 100);
+    let finalNum = Math.floor(number - number * (dcRate / 100));
     let withComma = finalNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
     return withComma;
@@ -512,6 +512,11 @@
     prodInqryImage();
 
     $('.cartBtn').click(function() {
+      if("${session_idx}" == "") {
+        alert("회원만 장바구니 담기가 가능합니다");
+        return false;
+      }
+
       let prod_cnt = $('.num').text();
 
       $.ajax({
@@ -525,6 +530,12 @@
     })
 
     $('.wishlistBtn').click(function(e) {
+      let user_idx = "${session_idx}";
+      if(user_idx == "") {
+        alert("회원만 관심상품 추가가 가능합니다");
+        return;
+      }
+      console.log("user_idx위시리스트 버튼 누르면!"+user_idx);
       let value = $('.wishlistBtn').data('heart');
       // console.log("value="+value);
       let changedVal = "";
@@ -545,7 +556,7 @@
         success: function(result) {
           alert(result);
         },
-        error: function() {alert("수정권한이 없습니다")}
+        error: function() {alert("회원만 관심상품 추가가 가능합니다")}
       })
 
     })
