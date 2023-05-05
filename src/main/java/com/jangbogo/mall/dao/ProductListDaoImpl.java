@@ -26,6 +26,10 @@ public class ProductListDaoImpl implements ProductListDao {
         return session.selectOne(namespace + "reviewNumSelect", prod_idx);
     }
 
+    public ProductListDto getModalInfo(ProductListDto productListDto) throws Exception {
+        return session.selectOne(namespace + "getModalInfo", productListDto);
+    }
+
     @Override
     public List<ProductListDto> allProductInfoSelect() throws Exception {
         return session.selectList(namespace + "allProductInfoSelect");

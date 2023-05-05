@@ -576,7 +576,6 @@
     $('.downCount').click(function() {
       //.num 내부의 텍스트를 가져와서 변수에 저장
       let num = parseInt($('.num').text());
-      console.log(num);
       if(!(num < 2)){
         let minusNum = num - 1;
         $('.num').text(minusNum);

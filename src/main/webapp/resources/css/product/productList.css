@@ -223,7 +223,14 @@
     flex-direction: column;
     padding-top: 8px;
 }
-.product-info .product-price-wrap .product-price {
+.product-info .product-price-wrap .product-price .dc_rate{
+    margin-right: 7px;
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 24px;
+    white-space: nowrap;
+    letter-spacing: -0.5px;
+    color: rgb(250, 98, 47);
 }
 .product-info .product-price-wrap .product-price .price {
     font-weight: 800;
