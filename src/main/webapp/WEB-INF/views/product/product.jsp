@@ -354,7 +354,7 @@
 
 </div>
 <%--  <div>${urlPath}</div>--%>
-<div id="prod_idx">${prod_idx}</div>
+<div id="prod_idx" style="display: none">${prod_idx}</div>
 <div id="sessionID" style="display: none">${session_idx}</div>
 <div class="footer"></div>
 <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
@@ -512,9 +512,12 @@
     prodInqryImage();
 
     $('.cartBtn').click(function() {
+      let user_idx = "${session_idx}";
+      console.log("user_idx"+user_idx);
       if("${session_idx}" == "") {
         alert("회원만 장바구니 담기가 가능합니다");
-        return false;
+
+        return ;
       }
 
       let prod_cnt = $('.num').text();
@@ -522,10 +525,14 @@
       $.ajax({
         type: 'POST',
         url: '/cart?prod_idx='+prod_idx+'&prod_cnt='+prod_cnt,
-        success: function(result) {
-          alert(result);
+        success: function(msg) {
+          if(msg === "INSERT_OK") {
+            alert("장바구니에 추가되었습니다")
+          } else if(msg === "UPDATE_OK") {
+            alert(msg === "상품의 개수가 추가되었습니다")
+          }
         },
-        error: function() {alert("수정권한이 없습니다")}
+        error: function(msg) {if(msg === "INSERT_ERR") alert("진행중 오류가 발생했습니다")}
       })
     })
 
@@ -553,10 +560,14 @@
       $.ajax({
         type: 'POST',
         url: '/wishlist?prod_idx='+prod_idx,
-        success: function(result) {
-          alert(result);
+        success: function(msg) {
+          if(msg === "INSERT_OK") {
+            alert("관심상품으로 등록되었습니다")
+          } else if(msg === "DELETE_OK") {
+            alert("관심상품 등록이 취소되었습니다")
+          }
         },
-        error: function() {alert("회원만 관심상품 추가가 가능합니다")}
+        error: function() {alert("잘못된 요청입니다")}
       })
 
     })

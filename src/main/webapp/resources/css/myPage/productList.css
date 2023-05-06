@@ -30,6 +30,12 @@
     overflow: hidden;
 }
 
+.seller-products .product-item a {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+}
+
 .seller-products .product-item .product-center {
     display: flex;
     align-items: center;
@@ -72,7 +78,7 @@
     width: 95px;
 }
 .seller-products .product-item .product-right .product-status {
-    width: 60px;
+    width: 70px;
 }
 
 .mypage-content .product-reg-btn {

@@ -765,7 +765,7 @@
                         alert("중복됩니다");
                     }
                 },
-                error: function() {alert("요청중 오류가 ..발생")}
+                error: function() {alert("요청중 오류가 발생했습니다")}
             })
 
         })

@@ -9,6 +9,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <html>
 <head>
+    <link rel="stylesheet" href="/css/productReview.css"/>
+    <link rel="stylesheet" href="/css/productReviewModal.css"/>
+    <%@ include file="/WEB-INF/views/include/header.jsp" %>
+    <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
     <link rel="stylesheet" href="/css/product/productList.css"/>
     <title>Title</title>
 </head>
@@ -208,8 +212,8 @@
         $('.total-num').html("총 "+totalCnt+"건");
 
         let tmp = "";
+        productLists.sort(() => Math.random() -0.5);
         productLists.forEach(function(productList) {
-
 
             let test = productList.price;
             let withComma = test.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -373,4 +377,5 @@
     })
 </script>
 </body>
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </html>
