@@ -132,7 +132,14 @@
             <div class="cart-wrap">
               <button class="wishlistBtn" data-heart="empty">
                   <span class="btn-wrap">
-                    <i class="fa-regular fa-heart" id="heartBtn"></i>
+                        <c:choose>
+                          <c:when test="${msg eq 'no'}">
+                            <i class="fa-regular fa-heart" id="heartBtn"></i>
+                          </c:when>
+                          <c:otherwise>
+                            <i class="fa-solid fa-heart" id="heartBtn"></i>
+                          </c:otherwise>
+                        </c:choose>
                   </span>
               </button>
               <div class="cartBtn-wrap">
@@ -512,6 +519,14 @@
     prodInqryImage();
 
     $('.cartBtn').click(function() {
+
+      // 로그인이 안되어있으면 로그인 페이지로 이동한다
+      if(${sessionScope.idx == null}){
+        alert("로그인하셔야 본 서비스를 이용하실 수 있습니다.")
+        location.href = "<c:url value='/user/login'/>";
+        return;
+      }
+
       let prod_cnt = $('.num').text();
 
       $.ajax({
@@ -525,18 +540,32 @@
     })
 
     $('.wishlistBtn').click(function(e) {
-      let value = $('.wishlistBtn').data('heart');
-      // console.log("value="+value);
-      let changedVal = "";
-      if(value == "empty") {
-        let classi = $('.wishlistBtn').find('i').attr('class', 'fa-solid fa-heart'); //클래스 이름을 변경해줘 //이미지를 바꿔줘
-        console.log("classi="+classi);
-        $('.wishlistBtn').data('heart', "full"); //dataset 값을 변경해줘
-        // value = $('.wishlistBtn').data('heart');
-      } else if (value == "full" ){
-        $('.wishlistBtn').find('i').attr('class', 'fa-regular fa-heart'); //이미지를 바꿔줘
-        $('.wishlistBtn').data('heart', "empty");
-        // changedVal = $('.wishlistBtn').data('heart');
+      // let value = $('.wishlistBtn').data('heart');
+      // // console.log("value="+value);
+      // let changedVal = "";
+      // if(value == "empty") {
+      //   let classi = $('.wishlistBtn').find('i').attr('class', 'fa-solid fa-heart'); //클래스 이름을 변경해줘 //이미지를 바꿔줘
+      //   console.log("classi="+classi);
+      //   $('.wishlistBtn').data('heart', "full"); //dataset 값을 변경해줘
+      //   // value = $('.wishlistBtn').data('heart');
+      // } else if (value == "full" ){
+      //   $('.wishlistBtn').find('i').attr('class', 'fa-regular fa-heart'); //이미지를 바꿔줘
+      //   $('.wishlistBtn').data('heart', "empty");
+      //   // changedVal = $('.wishlistBtn').data('heart');
+      // }
+
+      // 로그인이 안되어있으면 로그인 페이지로 이동한다
+      if(${sessionScope.idx == null}){
+        alert("로그인하셔야 본 서비스를 이용하실 수 있습니다.")
+        location.href = "<c:url value='/user/login'/>";
+        return;
+      }
+
+      let value = $('.wishlistBtn').find('i').attr('class');
+      if(value == "fa-solid fa-heart"){
+        $('.wishlistBtn').find('i').attr('class','fa-regular fa-heart');
+      }else if(value == "fa-regular fa-heart"){
+        $('.wishlistBtn').find('i').attr('class','fa-solid fa-heart');
       }
 
       $.ajax({
