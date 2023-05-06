@@ -74,5 +74,9 @@ public class AddressDaoImpl implements AddressDao {
         return session.selectOne(nameSpace + "selectAddressSelected", user_idx);
     }
 
+    @Override
+    public String checkIS_DEFAULT_YN(Integer idx) throws Exception { // 배송지 선택
+        return session.selectOne(nameSpace+"checkIS_DEFAULT_YN",idx);
+    }
 
 }

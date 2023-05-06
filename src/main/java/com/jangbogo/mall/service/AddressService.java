@@ -26,4 +26,6 @@ public interface AddressService {
     Integer resetStateCD ( Integer user_idx) throws Exception;
 
     Address selAddrSelected(Integer user_idx);
+
+    String checkIS_DEFAULT_YN (Integer idx) throws Exception;
 }

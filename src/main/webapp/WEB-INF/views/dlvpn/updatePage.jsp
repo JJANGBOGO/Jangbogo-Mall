@@ -81,12 +81,22 @@
         url: '/mypage/address/delete',  // 요청 URI
         headers : { "content-type": "application/json"}, // 요청 헤더
         data : JSON.stringify({idx:idx,state_cd:state_cd}), // 서버로 전송할 데이터. stringify()로 직렬화 필요.
-        success : function(result){
-          // alert(result);
+        success : function(msg){
+          if(msg=="DEL_OK"){
+            alert("배송지 삭제가 완료되었습니다");
+          }
           opener.parent.location = '<c:url value="/mypage/address/list"/>';
           self.close();
         },
-        error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+        error   : function(msg){
+          if(msg.responseText === "DEL_ERR"){
+            alert("기본 배송지는 삭제할 수 없습니다");
+            opener.parent.location = '<c:url value="/mypage/address/list"/>';
+            self.close();
+          }
+
+        } // 에러가 발생했을 때, 호출될 함수
+
       }); // $.ajax()
 
     });
@@ -105,7 +115,10 @@
         url: '/mypage/address/update',  // 요청 URI
         headers : { "content-type": "application/json"}, // 요청 헤더
         data : JSON.stringify({addr_dtl:addr_dtl,rcpr_nm:rcpr_nm,rcpr_mobl_no:rcpr_mobl_no,is_default_yn:is_default_yn,idx:idx}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
-        success : function(result){
+        success : function(msg){
+          if(msg=="UPDATE_OK"){
+            alert("배송지 수정이 완료되었습니다");
+          }
           opener.parent.location = '<c:url value="/mypage/address/list"/>';
           self.close();
         },

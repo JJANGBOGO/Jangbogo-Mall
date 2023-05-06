@@ -67,7 +67,7 @@ public class AddressController {
     public String myPageAddrOpen(Integer idx,HttpServletRequest req, Model m, HttpSession session) {
 
         try {
-            Address address = service.selAddr(idx);             // 가져온 일련번호로 하나의 배송지 정보를 가져온다
+            Address address = service.selAddr(idx);             // 해당 일련번호의 배송지 정보를 가져온다
             m.addAttribute("address", address);     // Model 에 배송지 정보를 넣어준다
         } catch(Exception e) {
             e.printStackTrace();
@@ -83,8 +83,11 @@ public class AddressController {
         int idx = address.getIdx();                               // address 에서 배송지 번호를 가져온다
 //        log.info("....");
         try {
-            service.deleteAddr(idx, user_idx);                    // 배송지의 상태를(삭제)로 변경한다
 
+            if(service.checkIS_DEFAULT_YN(idx).equals("Y")){
+                return new ResponseEntity("DEL_ERR", HttpStatus.BAD_REQUEST);
+            }
+            service.deleteAddr(idx, user_idx);                    // 배송지의 상태를(삭제)로 변경한다
             if (state_cd == 1) {                                  // 삭제할 배송지의 상태가(사용)일 경우
                 service.changeState(user_idx);                    // 기본 배송여부가('Y')인 배송지의 상태를(사용)으로 변경한다
             }
@@ -106,7 +109,7 @@ public class AddressController {
                 service.resetDefault_N(user_idx);                     // 모든 기본 배송지 상태를('false')로 변경한다
             }
                 service.updateAddr(address);                          // 현재 배송지의 정보를 변경한다
-            return new ResponseEntity<String>("DEL_OK", HttpStatus.OK);
+            return new ResponseEntity<String>("UPDATE_OK", HttpStatus.OK);
 //            return ResponseEntity.ok("DEL_OK");
         } catch (Exception e) {
             e.printStackTrace();

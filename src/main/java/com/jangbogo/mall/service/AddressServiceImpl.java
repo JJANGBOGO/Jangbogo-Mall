@@ -63,4 +63,9 @@ public class AddressServiceImpl implements AddressService{
         return dao.selAddrSelected(user_idx);
     }
 
+    @Override
+    public String checkIS_DEFAULT_YN (Integer idx) throws Exception {
+        return dao.checkIS_DEFAULT_YN(idx);
+    }
+
 }

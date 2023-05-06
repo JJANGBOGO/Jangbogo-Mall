@@ -73,5 +73,11 @@
         FROM DLVPN
         WHERE USER_IDX = #{user_idx} AND STATE_CD = 1;
     </select>
+
+    <select id="checkIS_DEFAULT_YN" parameterType="int" resultType="String">
+        SELECT IS_DEFAULT_YN
+        FROM DLVPN
+        WHERE IDX = #{idx}
+    </select>
 </mapper>
 
