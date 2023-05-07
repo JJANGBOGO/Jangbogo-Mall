@@ -40,8 +40,13 @@
             const dilvpToHtml = (address) => {
                 let tmp = "";                                                                                               // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
                 tmp += '<h3 class="dilvp-title">배송지</h3>'
-                tmp += '<span class="dilvp-content">'+ address.addr_base + ' ' + address.addr_dtl + '</span>';
-                tmp += '<button type="button" id="cartAddressModBtn">배송지 변경</button>';
+                if(address !== "") {
+                    tmp += '<span class="dilvp-content">'+ address.addr_base + ' ' + address.addr_dtl + '</span>';
+                    tmp += '<button type="button" id="cartAddressModBtn">배송지 변경</button>';
+                } else {
+                    tmp += '<span class="dilvp-content">'+ '배송지를 등록하세요!' + '</span>';
+                    tmp += '<button type="button" id="cartAddressModBtn">배송지 등록</button>';
+                }
                 return tmp;
             }
 
@@ -112,6 +117,7 @@
                 tmp += '</section>'
                 tmp += '<input type="button" name="order" value= "주문하기" />'
                 tmp += '<input type="button" name="sold-out" value= "상품을 담아주세요" />'
+                tmp += '<input type="button" name="no-dlvpn" value= "배송지를 입력해주세요" />'
                 return tmp;                                                                                                 // 동적으로 생성한 요소 반환
             }
 
@@ -164,11 +170,12 @@
                     url:'/cart/address?user_idx=' + user_idx,                                                               // 요청URI
                     success: (result) => {                                                                                  // 성공 응답이 오면, 장바구니 목록, 주문정보, 체크박스 정보를 페이지에 랜더링하기
                         $('.dilvp').html(dilvpToHtml(result));
+                        handleDlvpnBtns(result);
                     },
                     error : function() { alert("showAddress get error");}                                                      // 실패 응답이 오면, 경고창 띄우기
                 });                                                                                                         // $.ajax() end
             }
-            // 메서드명 : handleOrderbtns
+            // 메서드명 : handleOrderBtns
             // 기   능 : 장바구니 목록 개수가 0개인 경우, '상품을 담아주세요' 버튼을 화면에 보이게 하고 반대의 경우, '주문하기' 버튼을 보이게 만드는 토글 함수
             // 매개변수 : items - 장바구니 목록
             const handleOrderBtns = (items) => {
@@ -178,6 +185,19 @@
                 } else {                                                                                                    // case 2. '1'개 이상인 경우
                     $("input[name='order']").css('display', 'block');                                                       // '주문하기' 버튼 문서에 보이기
                     $("input[name='sold-out']").css('display', 'none');                                                     // '상품을 담아주세요' 버튼 문서에서 없애기
+                }
+            }
+
+            // 메서드명 : handleDlvpnBtns
+            // 기   능 : 배송지 등록이 되어있지 않은 경우, '배송지를 입력해주세요' 버튼을 화면에 보이게 하고 반대의 경우, '주문하기' 버튼을 보이게 만드는 토글 함수
+            // 매개변수 : items - 장바구니 목록
+            const handleDlvpnBtns = (address) => {
+                if(address === "") {                                                                                        // case 1. 장바구니 목록 개수가 0개인 경우
+                    $("input[name='order']").css('display', 'none');                                                        // '주문하기' 버튼 문서에서 없애기
+                    $("input[name='no-dlvpn']").css('display', 'block');                                                    // '상품을 담아주세요' 버튼 문서에 보이기
+                } else {                                                                                                    // case 2. '1'개 이상인 경우
+                    $("input[name='order']").css('display', 'block');                                                       // '주문하기' 버튼 문서에 보이기
+                    $("input[name='no-dlvpn']").css('display', 'none');                                                     // '상품을 담아주세요' 버튼 문서에서 없애기
                 }
             }
 
