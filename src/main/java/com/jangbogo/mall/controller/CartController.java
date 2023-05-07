@@ -41,7 +41,7 @@ public class CartController {
     public ResponseEntity<List<CartDto>> list(Integer user_idx) {                                                       // ResponseEntity<List<CartDto>> -  list값과 상태코드를 함께 반환하기 위한 클래스
         List<CartDto> list = null;                                                                                      // 변수명 : list - 저장값 : CartDto 저장소 List
         try {
-            list = cartService.getList(user_idx);                                                                       // cartService의 getList메서드에 인자로 회원번호를 지정하여 호출, 반환값을 list에 저장
+            list = cartService.getList(user_idx);                                                                        // cartService의 getList메서드에 인자로 회원번호를 지정하여 호출, 반환값을 list에 저장
             return new ResponseEntity<List<CartDto>>(list, HttpStatus.OK);                                              // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
         } catch (Exception e) {                                                                                         // 에러 발생 시,
             e.printStackTrace();                                                                                        // 1) 에러 내용을 로그에 출력
@@ -50,7 +50,7 @@ public class CartController {
     }
     // 메서드명 : deleteCartProduct
     // 기   능 : 장바구니에서 선택된 상품을 삭제한다.
-    // 반환타입 : String
+    // 반환타입 : ResponseEntity<String>
     // 매개변수 : Integer prod_idx, Integer user_idx
     // 요청URL : /cart/remove?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx} GET
     @DeleteMapping("/cart/remove")
@@ -61,10 +61,10 @@ public class CartController {
             if(rowCnt != 1) {                                                                                           // 행의 개수가 1이 아닐 경우, 예외를 던진다.
                 throw new Exception("delete failed");
             }
-            return new ResponseEntity<>("DEL_OK", HttpStatus.OK);                                                 // 성공 시, 엔티티로 "DEL_OK"라는 상태 메시지와 OK 상태코드를 반환 - 상태코드 : 200
+            return new ResponseEntity<>("DEL_OK", HttpStatus.OK);                                                       // 성공 시, 엔티티로 "DEL_OK"라는 상태 메시지와 OK 상태코드를 반환 - 상태코드 : 200
         } catch (Exception e) {                                                                                         // 에러 발생 시,
             e.printStackTrace();                                                                                        // 1) 에러 내용을 로그에 출력
-            return new ResponseEntity<>("DEL_ERR", HttpStatus.OK);                                                // 2) "DEL_ERR"라는 상태 메시지와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
+            return new ResponseEntity<>("DEL_ERR", HttpStatus.OK);                                                      // 2) "DEL_ERR"라는 상태 메시지와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
         }
     }
 
@@ -104,13 +104,13 @@ public class CartController {
     // 매개변수 : HttpServletRequest request
     // 반환타입 : boolean
     private static boolean loginCheck(HttpSession session) {
-        return session.getAttribute("idx") != null;                                                               // session에 저장된 idx값이 null이 아니면 true 반환
+        return session.getAttribute("idx") != null;                                                                     // session에 저장된 idx값이 null이 아니면 true 반환
     }
 
     // 메서드명 : getAddressSelected
     // 기   능 : 선택된 배송지 정보 조회
     // 매개변수 : HttpSession session
-    // 반환타입 : Address
+    // 반환타입 : ResponseEntity<Address>
     @GetMapping("/cart/address")
     public ResponseEntity<Address> getAddressSelected(HttpSession session) throws Exception {
         Integer user_idx = (Integer)session.getAttribute("idx");
