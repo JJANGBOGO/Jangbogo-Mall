@@ -140,6 +140,12 @@ public class AddressController {
         System.out.println("address = " + address);
 
         try {
+            // 처음 배송지 추가하면 무조건 기본 배송지로 설정한다
+            if(service.checkIS_FIRST_YN(user_idx)==0){
+                service.insertAddrDefault(user_idx,address);
+                return new ResponseEntity<String>("INSERT_OK", HttpStatus.OK);
+            }
+
             if (address.getIs_default_yn().equals("true")) {
                 service.resetDefault_N(user_idx);
                 address.setIs_default_yn("Y");
@@ -149,7 +155,7 @@ public class AddressController {
             service.resetStateCD(user_idx);
             service.insertAddr(user_idx, address);
 
-            return new ResponseEntity<String>("DEL_OK", HttpStatus.OK);
+            return new ResponseEntity<String>("INSERT_OK", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<String>("MOD_ERR", HttpStatus.BAD_REQUEST);

@@ -28,4 +28,7 @@ public interface AddressService {
     Address selAddrSelected(Integer user_idx);
 
     String checkIS_DEFAULT_YN (Integer idx) throws Exception;
+
+    Integer checkIS_FIRST_YN (Integer user_idx) throws Exception;
+    Integer insertAddrDefault (Integer user_idx, Address address) throws Exception;
 }

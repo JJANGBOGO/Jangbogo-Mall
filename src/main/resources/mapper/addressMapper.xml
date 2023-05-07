@@ -79,5 +79,16 @@
         FROM DLVPN
         WHERE IDX = #{idx}
     </select>
+
+    <select id="checkIS_FIRST_YN" parameterType="int" resultType="int">
+        SELECT count(*)
+        FROM DLVPN
+        WHERE USER_IDX = #{user_idx} AND NOT STATE_CD = 3 ;
+    </select>
+
+    <insert id="insertAddrDefault" parameterType="map">
+        INSERT INTO DLVPN (USER_IDX, ZPCD, ADDR_BASE, ADDR_DTL, RCPR_NM, RCPR_MOBL_NO, IS_DEFAULT_YN)
+        VALUES (#{user_idx}, #{addr.zpcd}, #{addr.addr_base}, #{addr.addr_dtl}, #{addr.rcpr_nm}, #{addr.rcpr_mobl_no}, 'Y');
+    </insert>
 </mapper>
 

@@ -68,4 +68,15 @@ public class AddressServiceImpl implements AddressService{
         return dao.checkIS_DEFAULT_YN(idx);
     }
 
+    @Override
+    public Integer checkIS_FIRST_YN (Integer user_idx) throws Exception {
+        return dao.checkIS_FIRST_YN(user_idx);
+    }
+
+    @Override
+    public Integer insertAddrDefault (Integer user_idx, Address address) throws Exception {
+        return dao.insertAddrDefault(user_idx, address);
+    }
+
+
 }
