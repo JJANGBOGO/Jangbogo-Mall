@@ -17,6 +17,7 @@ body {
     height: 75%;
     background: white;
     width: 450px;
+    overflow: hidden;
 }
 .order-success__title {
     margin-top: 50px;
