@@ -142,13 +142,26 @@
                         $('#cartItems').html(listToHtml(result));                                                           // listToHtml메서드 호출
                         $('#cartEstimate').html(estimateToHtml(result));                                                    // estimateToHtml메서드 호출
                         $('#totalChkBox').html(checkBoxToHtml(result));                                                     // checkBoxToHtml메서드 호출
-                        handleOrderBtns(result);                                                                            // handleOrderbtn메서드 호출
-                        handleEmptyItems(result);                                                                           // handleEmptyItems 호출
-                        showAddress(user_idx);                                                                              // showAddress메서드 호출 - 선택된 배송지 랜더링
+                        renderRightBtn(result, user_idx);                                                                      // showAddress메서드 호출 - 선택된 배송지 랜더링
                     },
                     error : function() { alert("showList get error");}                                                      // 실패 응답이 오면, 경고창 띄우기
                 });                                                                                                         // $.ajax() end
             }
+
+            // 메서드명 : showAddress
+            // 기   능 : 회원이 사용 중인 주소를 렌더링하는 메서드를 호출하는 메서드
+            // 매개변수 : user_idx - 회원번호
+            const showAddress = (user_idx) => {
+                $.ajax({                                                                                                    // $.ajax() start
+                    type:'GET',                                                                                             // 요청 메서드
+                    url:'/cart/address?user_idx=' + user_idx,                                                               // 요청URI
+                    success: (result) => {                                                                                  // 성공 응답이 오면, 장바구니 목록, 주문정보, 체크박스 정보를 페이지에 랜더링하기
+                        $('.dilvp').html(dilvpToHtml(result));                                                              // dilvpToHtml메서드 호출
+                    },
+                    error : function() { alert("renderRightBtn get error");}                                                      // 실패 응답이 오면, 경고창 띄우기
+                });
+            }
+
             // 메서드명 : handleEmptyItems
             // 기   능 : 장바구니 목록 개수가 0인 경우, '장바구니에 담긴 상품이 없습니다' 메시지를 렌더링하는 함수
             // 매개변수 : result - List<CartDto>
@@ -161,18 +174,20 @@
             }
 
 
-            // 메서드명 : showAddress
-            // 기   능 : 선택된 배송지를 렌더링하는 메서드를 호출하는 메서드
-            // 매개변수 : user_idx - 회원번호
-            const showAddress = (user_idx) => {
+            // 메서드명 : renderRightBtn
+            // 기   능 : 상황에 맞는 버튼을 렌더링하는 메서드
+            // 매개변수 : list - 장바구니상품 목록, user_idx - 회원번호
+            const renderRightBtn = (list, user_idx) => {
                 $.ajax({                                                                                                    // $.ajax() start
                     type:'GET',                                                                                             // 요청 메서드
                     url:'/cart/address?user_idx=' + user_idx,                                                               // 요청URI
                     success: (result) => {                                                                                  // 성공 응답이 오면, 장바구니 목록, 주문정보, 체크박스 정보를 페이지에 랜더링하기
                         $('.dilvp').html(dilvpToHtml(result));
-                        handleDlvpnBtns(result);
+                        handleDlvpnBtns(result);                                                                            // handleOrderbtn메서드 호출
+                        handleOrderBtns(list);                                                                              // handleOrderBtns메서드 호출
+                        handleEmptyItems(list);                                                                           // handleEmptyItems 호출
                     },
-                    error : function() { alert("showAddress get error");}                                                      // 실패 응답이 오면, 경고창 띄우기
+                    error : function() { alert("renderRightBtn get error");}                                                      // 실패 응답이 오면, 경고창 띄우기
                 });                                                                                                         // $.ajax() end
             }
             // 메서드명 : handleOrderBtns
@@ -181,22 +196,21 @@
             const handleOrderBtns = (items) => {
                 if(!items.length) {                                                                                         // case 1. 장바구니 목록 개수가 0개인 경우
                     $("input[name='order']").css('display', 'none');                                                        // '주문하기' 버튼 문서에서 없애기
+                    $("input[name='no-dlvpn']").css('display', 'none');
                     $("input[name='sold-out']").css('display', 'block');                                                    // '상품을 담아주세요' 버튼 문서에 보이기
                 } else {                                                                                                    // case 2. '1'개 이상인 경우
-                    $("input[name='order']").css('display', 'block');                                                       // '주문하기' 버튼 문서에 보이기
                     $("input[name='sold-out']").css('display', 'none');                                                     // '상품을 담아주세요' 버튼 문서에서 없애기
                 }
             }
 
             // 메서드명 : handleDlvpnBtns
             // 기   능 : 배송지 등록이 되어있지 않은 경우, '배송지를 입력해주세요' 버튼을 화면에 보이게 하고 반대의 경우, '주문하기' 버튼을 보이게 만드는 토글 함수
-            // 매개변수 : items - 장바구니 목록
+            // 매개변수 : address - 주소
             const handleDlvpnBtns = (address) => {
                 if(address === "") {                                                                                        // case 1. 장바구니 목록 개수가 0개인 경우
                     $("input[name='order']").css('display', 'none');                                                        // '주문하기' 버튼 문서에서 없애기
                     $("input[name='no-dlvpn']").css('display', 'block');                                                    // '상품을 담아주세요' 버튼 문서에 보이기
-                } else {                                                                                                    // case 2. '1'개 이상인 경우
-                    $("input[name='order']").css('display', 'block');                                                       // '주문하기' 버튼 문서에 보이기
+                } else {                                                                                                    // case 2. '1'개 이상인 경우                     // '주문하기' 버튼 문서에 보이기
                     $("input[name='no-dlvpn']").css('display', 'none');                                                     // '상품을 담아주세요' 버튼 문서에서 없애기
                 }
             }

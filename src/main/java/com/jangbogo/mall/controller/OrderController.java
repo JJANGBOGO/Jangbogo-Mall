@@ -110,6 +110,18 @@ public class OrderController {
         return "/order/recipientDetails";
     }
 
+    // 메서드명 : goToOrdererDetails
+    // 기   능 : 주문자 정보 수정 페이지로 이동
+    // 매개변수 : HttpSession session
+    // 반환타입 : String
+    // 요청URL : /order/checkout/orderer-details GET
+    @GetMapping("/order/checkout/orderer-details")
+    public String goToOrdererDetails() {
+        return "/order/ordererDetails";
+    }
+
+
+
     // 메서드명 : handleOrderSucceㅁss
     // 기   능 : 주문완료 처리 메서드
     // 반환타입 : String
