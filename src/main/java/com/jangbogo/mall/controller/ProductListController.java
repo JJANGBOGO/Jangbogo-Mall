@@ -65,18 +65,21 @@ public class ProductListController {
     @PostMapping("/productList/cart")
     public ResponseEntity<String> insertCart(Integer prod_idx, Integer prod_cnt, HttpSession session) {
         int user_idx = (int)session.getAttribute("idx");
-        System.out.println("user_idx = " + user_idx);
-        System.out.println("prod_idx = " + prod_idx);
+        String msg = "";
         try {
             if(wishlistService.checkCart(prod_idx, user_idx)==0) {
                 wishlistService.insertCart(prod_idx, user_idx, prod_cnt);
-                return new ResponseEntity<String>("INSERT_OK", HttpStatus.OK);
+                msg = "INSERT_OK";
+//                return new ResponseEntity<String>("INSERT_OK", HttpStatus.OK);
             } else {
                 wishlistService.updateCartCnt(prod_idx, user_idx, prod_cnt);
-                return new ResponseEntity<String>("UPDATE_OK", HttpStatus.OK);
+                msg = "UPDATE_OK";
+//                return new ResponseEntity<String>("UPDATE_OK", HttpStatus.OK);
             }
+            return ResponseEntity.ok().body(msg);
         } catch (Exception e) {
             e.printStackTrace();
+            msg = "INSERT_ERR";
             return new ResponseEntity<String>("INSERT_ERR", HttpStatus.BAD_REQUEST);
         }
     }

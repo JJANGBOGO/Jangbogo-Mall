@@ -324,8 +324,12 @@
             $.ajax({
                 type: 'POST',
                 url: '/productList/cart?prod_idx='+prod_idx+'&prod_cnt='+prod_cnt,
-                success: function(result) {
-                    alert(result);
+                success: function(msg) {
+                    if(msg === "INSERT_OK") {
+                        alert("장바구니에 상품이 담겼습니다.");
+                    } else if (msg === "UPDATE_OK") {
+                        alert("장바구니에 상품이 담겼습니다.\n이미 담은 상품의 수량을 추가했습니다.");
+                    }
                 },
                 error: function() {alert("장바구니 담기에 문제가 발생했습니다.")}
             })

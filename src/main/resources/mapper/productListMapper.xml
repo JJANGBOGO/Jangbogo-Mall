@@ -39,7 +39,7 @@
         from product
         where idx = #{prod_idx};
     </select>
-<!--전체 상품 리스트 가져오기, 상품, 상품상세, 판매자 조인, 상품후기-->
+<!--전체 상품 리스트 가져오기, 상품, 상품상세, 판매자, 상품후기 조인-->
     <select id="allProductInfoSelect" resultType="ProductListDto">
         select
             p.IDX as 'prod_idx',

@@ -527,12 +527,13 @@
         url: '/cart?prod_idx='+prod_idx+'&prod_cnt='+prod_cnt,
         success: function(msg) {
           if(msg === "INSERT_OK") {
-            alert("장바구니에 추가되었습니다")
+            alert("장바구니에 상품이 담겼습니다")
           } else if(msg === "UPDATE_OK") {
-            alert(msg === "상품의 개수가 추가되었습니다")
+            alert("상품의 개수가 추가되었습니다")
           }
         },
-        error: function(msg) {if(msg === "INSERT_ERR") alert("진행중 오류가 발생했습니다")}
+        error: function(msg) {
+          if(msg === "INSERT_ERR") alert("진행중 오류가 발생했습니다")}
       })
     })
 
