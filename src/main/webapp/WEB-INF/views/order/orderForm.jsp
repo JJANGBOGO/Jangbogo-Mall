@@ -216,8 +216,8 @@
                 tmp += "<span>배송지</span>"
                 tmp += "</div>"
                 tmp += "<div id='deliveryAddress' class='delivery-value' >"
-                tmp += "<span>" + deliveryInfo[0].addr_base + " </span>"
-                tmp += "<span>" + deliveryInfo[0].addr_dtl + "</span>"
+                tmp += "<span>" + deliveryInfo.addr_base + " </span>"
+                tmp += "<span>" + deliveryInfo.addr_dtl + "</span>"
                 tmp += "</div>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-section'>"
@@ -237,32 +237,6 @@
                 tmp += "</div>"
                 return tmp;
             }
-
-            // 메서드명 : couponListToHtml                                                                                // TODO:3차 개발
-            // 기   능 : 주문자가 소유한 쿠폰 목록을 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
-            // 매개변수 : items - CouponDto
-            // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
-            // function couponListToHtml(couponList) {
-            //     let tmp = "";                                                                                        // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
-            //     tmp += "<div class='order__coupon-section'>";
-            //     tmp += "<div class='order__coupon-inform'>"
-            //     tmp += "<span>쿠폰</span>"
-            //     tmp += "</div>"
-            //     tmp += "<div class='order__coupon-value'>"
-            //     tmp += "<select name='coupons' id='coupons'>"
-            //     tmp += "<option value='default'>" + "사용가능 쿠폰 2장 / 전체 2장" + "</option>"
-            //     // 메서드명 : forEach
-            //     // 기   능 : 복수의 CouponDto값들을 저장한 list에서 각각의 CouponDto에 저장된 iv들을 적절한 태그의 속성값 또는 내용에 위치시키는 메서드
-            //     // 사용대상 : items - Array : List<CouponDto>, 주문자가 소유한 쿠폰 목록
-            //     // 매개변수 : item - Object : CouponDto, 주문자가 소유한 개별 쿠폰
-            //     couponList.forEach((coupon) => {
-            //         tmp += "<option value=" + coupon +  ">" + coupon + "</option>"
-            //     })
-            //     tmp += "</select>"
-            //     tmp += "</div>";
-            //     tmp += "</div>";
-            //     return tmp;
-            // }
 
             // 메서드명 : paymentMethodsToHtml
             // 기   능 : 결제수단 목록을 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드

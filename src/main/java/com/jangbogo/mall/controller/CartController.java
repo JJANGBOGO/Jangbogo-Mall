@@ -28,7 +28,7 @@ public class CartController {
     // 요청URL : /cart/cart GET
     @GetMapping("/cart")
     public String goToCart(HttpSession session, Model model) {
-        if(!loginCheck(session)) return "redirect:/user/login";                                                         // 1. 로그인 확인 - loginCheck메서드가 false를 반환하는 경우, 로그인 페이지로 리다이렉트
+//      if(!loginCheck(session)) return "redirect:/user/login";                                                         // 스프링 시큐리티 적용
         return "cart/cart";
     }
 
@@ -41,7 +41,7 @@ public class CartController {
     public ResponseEntity<List<CartDto>> list(Integer user_idx) {                                                       // ResponseEntity<List<CartDto>> -  list값과 상태코드를 함께 반환하기 위한 클래스
         List<CartDto> list = null;                                                                                      // 변수명 : list - 저장값 : CartDto 저장소 List
         try {
-            list = cartService.getList(user_idx);                                                                        // cartService의 getList메서드에 인자로 회원번호를 지정하여 호출, 반환값을 list에 저장
+            list = cartService.getList(user_idx);                                                                       // cartService의 getList메서드에 인자로 회원번호를 지정하여 호출, 반환값을 list에 저장
             return new ResponseEntity<List<CartDto>>(list, HttpStatus.OK);                                              // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
         } catch (Exception e) {                                                                                         // 에러 발생 시,
             e.printStackTrace();                                                                                        // 1) 에러 내용을 로그에 출력
@@ -95,7 +95,7 @@ public class CartController {
     // 요청URL : /order/checkout GET
     @GetMapping("/order/checkout")
     public String goToOrderForm(HttpSession session) {
-        if(!loginCheck(session)) return "redirect:/user/login";                                                         // 1. 로그인 확인 - loginCheck메서드가 false를 반환하는 경우, 로그인 페이지로 리다이렉트
+//        if(!loginCheck(session)) return "redirect:/user/login";                                                       // 스프링 시큐리티 적용
         return "order/orderForm";                                                                                       // 2. 주문서 작성 페이지로 이동
     }
 
@@ -103,9 +103,9 @@ public class CartController {
     // 기   능 : 로그인 상태 여부 확인
     // 매개변수 : HttpServletRequest request
     // 반환타입 : boolean
-    private static boolean loginCheck(HttpSession session) {
-        return session.getAttribute("idx") != null;                                                                     // session에 저장된 idx값이 null이 아니면 true 반환
-    }
+//    private static boolean loginCheck(HttpSession session) {
+//        return session.getAttribute("idx") != null;                                                                   // session에 저장된 idx값이 null이 아니면 true 반환
+//    }
 
     // 메서드명 : getAddressSelected
     // 기   능 : 선택된 배송지 정보 조회

@@ -1,8 +1,10 @@
 package com.jangbogo.mall.controller;
 
+import com.jangbogo.mall.domain.Address;
 import com.jangbogo.mall.domain.CartDto;
 import com.jangbogo.mall.domain.OrderDto;
 import com.jangbogo.mall.domain.User;
+import com.jangbogo.mall.service.AddressService;
 import com.jangbogo.mall.service.CartService;
 import com.jangbogo.mall.service.OrderService;
 import com.jangbogo.mall.service.UserService;
@@ -28,6 +30,9 @@ public class OrderController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    AddressService addressService;
 
 
     // 메서드명 : getItemList
@@ -83,15 +88,15 @@ public class OrderController {
     // 요청URL : order/checkout/delivery?user_idx=1234 GET
     @GetMapping("/order/checkout/delivery")
     @ResponseBody
-    public ResponseEntity<List<CartDto>> getDeliveryInfo(HttpSession session) {
-        Integer user_idx = (Integer)(session.getAttribute("idx"));                                                // 변수명 : user_idx - 저장값 : 세션에 저장된 회원번호(idx)
-        List<CartDto> list = null;                                                                                      // 변수명 : list - 저장값 : List<CartDto>
+    public ResponseEntity<Address> getDeliveryInfo(HttpSession session) {
+        Integer user_idx = (Integer)(session.getAttribute("idx"));                                                // 변수명 : user_idx - 저장값 : 세션에 저장된 회원번호(idx)         // 변수명 : list - 저장값 : List<CartDto>
+        Address address = null;
         try {
-            list = cartService.getList(user_idx);                                                                       // cartService의 getList메서드에 인자로 회원번호를 지정하여 호출, 반환값을 list에 저장
-            return new ResponseEntity<List<CartDto>>(list, HttpStatus.OK);                                              // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
+            address =  addressService.selAddrSelected(user_idx);
+            return new ResponseEntity<Address>(address, HttpStatus.OK);                                                 // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
         } catch (Exception e) {                                                                                         // 에러 발생 시,
             e.printStackTrace();                                                                                        // 1) 에러 내용을 로그에 출력
-            return new ResponseEntity<List<CartDto>>(list, HttpStatus.BAD_REQUEST);                                     // 2) user값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
+            return new ResponseEntity<Address>(address, HttpStatus.OK);                                                 // 2) user값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
         }
     }
 
@@ -139,9 +144,4 @@ public class OrderController {
     private static boolean loginCheck(HttpSession session) {
         return session.getAttribute("idx") != null;                                                               // session에 저장된 idx값이 null이 아니면 true 반환
     }
-
-    // 메서드명 : getCouponList                                                                                            // TODO : 3차 개발 예정
-    // 기   능 : 쿠폰 목록 불러오기
-    // 반환타입 : ResponseEntity<List<CouponDto> - list값과 상태코드를 함께 반환하기 위한 클래스
-    // 요청URL : order/checkout/coupons?user_idx=1234 GET
 }
