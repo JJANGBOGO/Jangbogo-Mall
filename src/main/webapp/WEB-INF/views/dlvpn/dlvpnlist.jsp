@@ -35,7 +35,7 @@
                 <div class="dlvpn-address">주소</div>
                 <div class="dlvpn-name">받으실 분</div>
                 <div class="dlvpn-number">연락처</div>
-                <div class="dlvpn-type">배송유형</div>
+<%--                <div class="dlvpn-type">배송유형</div>--%>
                 <div class="dlvpn-change">수정</div>
             </div>
             <div class="dlvpnList">
@@ -121,7 +121,7 @@
             }
             tmp += '<div class="list-name">' + dlvpn.rcpr_nm + '</div>'
             tmp += '<div class="list-number">' + formatMpnoWithHyphen(dlvpn.rcpr_mobl_no) + '</div>'
-            tmp += '<div class="list-type"><div><span class="dlvpn-span-type">샛별배송</span></div></div>'
+            // tmp += '<div class="list-type"><div><span class="dlvpn-span-type">샛별배송</span></div></div>'
             tmp += '<div class="list-change"><button class="update-btn"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path fill="none" d="M0 0h24v24H0z"></path><path d="m13.83 5.777 4.393 4.393-10.58 10.58H3.25v-4.394l10.58-10.58zm3.204-2.527c.418 0 .837.16 1.157.48l2.08 2.08a1.63 1.63 0 0 1 0 2.314l-2.157 2.156-4.394-4.394 2.157-2.156c.32-.32.738-.48 1.157-.48z" stroke="#ccc" stroke-width="1.5"></path></g></svg></button></div>'
             tmp += '</div>'
             tmp += '</li>'
