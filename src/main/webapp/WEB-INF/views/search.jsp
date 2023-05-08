@@ -26,6 +26,7 @@
                     <div class="product-desc">
                         <a class="title"><h3>${product.name}</h3></a>
                         <div class="price">${product.prc}원</div>
+                        <div class="review-cnt">리뷰 수: ${product.review_cnt}</div>
                     </div>
                 </li>
             </c:forEach>
