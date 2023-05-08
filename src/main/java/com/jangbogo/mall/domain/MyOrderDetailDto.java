@@ -5,6 +5,7 @@ import java.util.Date;
 public class MyOrderDetailDto {
     // PRODUCT(상품)
     private String upload_path; // 이미지파일경로 upload_path
+    private Integer dc_rate;    // 상품 할인율 dc_rate
 
     // ORD_DTL(주문상세)
     private Integer ord_dtl_idx; // 주문상세번호 ord_dtl_idx
@@ -75,14 +76,20 @@ public class MyOrderDetailDto {
 
 
     // Getter and Setter
-
-
     public String getUpload_path() {
         return upload_path;
     }
 
     public void setUpload_path(String upload_path) {
         this.upload_path = upload_path;
+    }
+
+    public Integer getDc_rate() {
+        return dc_rate;
+    }
+
+    public void setDc_rate(Integer dc_rate) {
+        this.dc_rate = dc_rate;
     }
 
     public Integer getOrd_dtl_idx() {
@@ -282,6 +289,7 @@ public class MyOrderDetailDto {
     public String toString() {
         return "MyOrderDetailDto{" +
                 "upload_path='" + upload_path + '\'' +
+                ", dc_rate=" + dc_rate +
                 ", ord_dtl_idx=" + ord_dtl_idx +
                 ", prod_nm='" + prod_nm + '\'' +
                 ", prod_idx=" + prod_idx +

@@ -406,10 +406,10 @@
     }
 
     let OrderDetailToHtml = function (orders){
-        let orderStatus = ""; // 주문상태
+        let orderStatus = "";       // 주문상태
         let safekeeping_mthd = "";  // 배송유형
-        let mean = ""; // 결제수단
-        let packing_mthd = ""; // 포장유형
+        let mean = "";              // 결제수단
+        let packing_mthd = "";      // 포장유형
         let tmp = '<div class="orderDetail-header">'
         tmp += '<h2>주문 내역 상세</h2>'
         tmp += '</div>'
@@ -422,7 +422,12 @@
             tmp += '<img src="'+order.upload_path+'" alt="" >'
             tmp += '<div class="orderDetail-content">'
             tmp += '<a href="">'+order.prod_nm+'</a>'
-            tmp += '<div><span class="orderDetail-price">'+formatPriceWithComma(order.prod_prc)+'원</span><span class="orderDetail-count">'+order.prod_qty+'개</span></div>'
+            tmp += '<div><span class="orderDetail-price">'+formatPriceWithComma(order.prod_prc - (order.prod_prc / 100 * order.dc_rate))+'원</span>'
+            if(order.dc_rate != 0){
+                tmp += '<span class="orderDetail-priceOrigin">'+formatPriceWithComma(order.prod_prc )+'원</span>'
+            }
+            tmp += '<span class="orderDetail-count">'+order.prod_qty+'개</span>'
+            tmp += '</div>'
             tmp += '</div>'
             if (order.ord_state_cd == 1) {
                 orderStatus = '결제완료';
