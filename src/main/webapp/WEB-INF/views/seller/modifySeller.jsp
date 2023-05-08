@@ -409,7 +409,7 @@
             //판매자 수정 단독
             let guid_nm_ref = $("#guid_nm");
 
-            if (guid_nm_ref.val() != "" && !nick_reg.test(guid_nm_ref.val())) {
+            if (guid_nm_ref.val() !== "" && !nick_reg.test(guid_nm_ref.val())) {
                 alert("안내담당자 이름은 공백 제외로 실명을 적어주세요 (20자 이내)");
                 guid_nm_ref.focus();
                 return false;
@@ -417,7 +417,7 @@
 
             let guid_email_ref = $("#guid_email");
 
-            if (guid_email_ref.val() != "" && !email_reg.test(guid_email_ref.val())) {
+            if (guid_email_ref.val() !== "" && !email_reg.test(guid_email_ref.val())) {
                 alert(not_valid_email);
                 guid_email_ref.focus();
                 return false;
@@ -427,13 +427,13 @@
             let cllr_telno_ref = $("#cllr_telno");
 
             //콜센터
-            if (cllr_nm_ref.val() != "" && !nick_reg.test(cllr_nm_ref.val())) {
+            if (cllr_nm_ref.val() !== "" && !nick_reg.test(cllr_nm_ref.val())) {
                 alert("고객센터 담당자 이름은 공백 제외로 실명을 적어주세요 (20자 이내)");
                 guid_nm_ref.focus();
                 return false;
             }
 
-            if (cllr_telno_ref.val() != "" && !mpno_reg.test(cllr_telno_ref.val())) {
+            if (cllr_telno_ref.val() !== "" && !mpno_reg.test(cllr_telno_ref.val())) {
                 alert(not_valid_mpno);
                 cllr_telno_ref.focus();
                 return false;
