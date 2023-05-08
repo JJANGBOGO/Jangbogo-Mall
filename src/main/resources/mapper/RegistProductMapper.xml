@@ -107,6 +107,8 @@
                p.NAME as 'name',
                p.CTENT as 'content',
                p.PRC as 'prc',
+               p.DC_STATE_CD as 'dc_state_cd',
+               p.DC_RATE as 'dc_rate',
                p.DSPLY_STATE_CD as 'dsply_state_cd',
                p.ASCR as 'ascr',
                pd.REG_STATE_CD as 'reg_state_cd',

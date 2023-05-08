@@ -1200,6 +1200,7 @@ tr:nth-child(2)
     background-color: rgb(250, 250, 250);
     border-bottom: 1px solid rgb(244, 244, 244);
     max-width: 100px;
+    display: none;
 }
 .prodInqry-wrap
 .prodInqry
@@ -1295,6 +1296,7 @@ table
     display: flex;
     padding: 22px 20px 30px;
     align-items: flex-start;
+    width: 1000px;
 }
 .prodInqry-wrap
 .prodInqry
@@ -1397,6 +1399,7 @@ button {
     display: flex;
     padding: 22px 20px 30px;
     align-items: flex-start;
+    width: 1000px;
 }
 .no-answer-a-wrap .accordion .request-wrap .request .img {
 }
@@ -1416,8 +1419,10 @@ button {
     word-break: break-all;
     line-height: 19px;
     letter-spacing: -0.5px;
+    display: flex;
 }
-.no-answer-a-wrap .accordion .request-wrap .request .text span {
+.no-answer-a-wrap .accordion .request-wrap .request .text .span {
+    display: block;
 }
 .no-answer-a-wrap .accordion .request-wrap .btn-for-Change {
     position: relative;
