@@ -123,9 +123,6 @@ public class ProdController {
         Integer user_idx = (Integer)session.getAttribute("idx");
         System.out.println("user_idx=???"+user_idx); //null
 
-        if(user_idx == null) {
-
-        }
 
         String nick_name = (String)session.getAttribute("nickName");
         prodInqryDto.setUser_idx(user_idx);
@@ -166,17 +163,23 @@ public class ProdController {
     public ResponseEntity<String> insertWishList(Integer prod_idx, HttpSession session) {
         Integer user_idx = (Integer)session.getAttribute("idx");
         System.out.println("prod_idx="+prod_idx);
+        String msg = "";
         try {
             if(productDetailService.checkWishlist(prod_idx, user_idx) == 0) {
                 productDetailService.insertWishlist(prod_idx, user_idx);
-                return new ResponseEntity<String>("INSERT_OK", HttpStatus.OK);
+//                return new ResponseEntity<String>("INSERT_OK", HttpStatus.OK);
+                msg = "INSERT_OK";
+                return ResponseEntity.ok().body(msg);
             } else {
                 productDetailService.deleteWishList(prod_idx, user_idx);
-                return new ResponseEntity<String>("DELETE_OK", HttpStatus.OK);
+//                return new ResponseEntity<String>("DELETE_OK", HttpStatus.OK);
+                msg = "DELETE_OK";
+                return ResponseEntity.ok().body(msg);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<String>("INSERT_ERR", HttpStatus.BAD_REQUEST);
+//            return new ResponseEntity<String>("INSERT_ERR", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(400).body("INSERT_ERR");
         }
     }
 
@@ -186,16 +189,23 @@ public class ProdController {
         Integer user_idx = (Integer)session.getAttribute("idx");
 //        System.out.println("prod_idx="+prod_idx);
         try {
+            String msg = "";
+
             if(wishlistService.checkCart(prod_idx, user_idx)==0) {
                 wishlistService.insertCart(prod_idx, user_idx, prod_cnt);
-                return new ResponseEntity<String>("INSERT_OK", HttpStatus.OK);
+//                return new ResponseEntity<String>("INSERT_OK", HttpStatus.OK);
+                msg = "INSERT_OK";
+                return ResponseEntity.ok().body(msg);
             } else {
                 wishlistService.updateCartCnt(prod_idx, user_idx, prod_cnt);
-                return new ResponseEntity<String>("UPDATE_OK", HttpStatus.OK);
+//                return new ResponseEntity<String>("UPDATE_OK", HttpStatus.OK);
+                msg = "UPDATE_OK";
+                return ResponseEntity.ok().body(msg);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<String>("INSERT_ERR", HttpStatus.BAD_REQUEST);
+//            return new ResponseEntity<String>("INSERT_ERR", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(400).body("INSERT_ERR");
         }
     }
 

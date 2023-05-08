@@ -361,7 +361,7 @@
 
 </div>
 <%--  <div>${urlPath}</div>--%>
-<div id="prod_idx">${prod_idx}</div>
+<div id="prod_idx" style="display: none">${prod_idx}</div>
 <div id="sessionID" style="display: none">${session_idx}</div>
 <div class="footer"></div>
 <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
@@ -469,7 +469,7 @@
   let dcNumberToPrice = function(info) {
     let number = info.price;
     let dcRate = info.dc_rate;
-    let finalNum = number - number * (dcRate / 100);
+    let finalNum = Math.floor(number - number * (dcRate / 100));
     let withComma = finalNum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
     return withComma;
@@ -532,27 +532,19 @@
       $.ajax({
         type: 'POST',
         url: '/cart?prod_idx='+prod_idx+'&prod_cnt='+prod_cnt,
-        success: function(result) {
-          alert(result);
+        success: function(msg) {
+          if(msg === "INSERT_OK") {
+            alert("장바구니에 상품이 담겼습니다")
+          } else if(msg === "UPDATE_OK") {
+            alert("상품의 개수가 추가되었습니다")
+          }
         },
-        error: function() {alert("수정권한이 없습니다")}
+        error: function(msg) {
+          if(msg === "INSERT_ERR") alert("진행중 오류가 발생했습니다")}
       })
     })
 
     $('.wishlistBtn').click(function(e) {
-      // let value = $('.wishlistBtn').data('heart');
-      // // console.log("value="+value);
-      // let changedVal = "";
-      // if(value == "empty") {
-      //   let classi = $('.wishlistBtn').find('i').attr('class', 'fa-solid fa-heart'); //클래스 이름을 변경해줘 //이미지를 바꿔줘
-      //   console.log("classi="+classi);
-      //   $('.wishlistBtn').data('heart', "full"); //dataset 값을 변경해줘
-      //   // value = $('.wishlistBtn').data('heart');
-      // } else if (value == "full" ){
-      //   $('.wishlistBtn').find('i').attr('class', 'fa-regular fa-heart'); //이미지를 바꿔줘
-      //   $('.wishlistBtn').data('heart', "empty");
-      //   // changedVal = $('.wishlistBtn').data('heart');
-      // }
 
       // 로그인이 안되어있으면 로그인 페이지로 이동한다
       if(${sessionScope.idx == null}){
@@ -571,10 +563,14 @@
       $.ajax({
         type: 'POST',
         url: '/wishlist?prod_idx='+prod_idx,
-        success: function(result) {
-          alert(result);
+        success: function(msg) {
+          if(msg === "INSERT_OK") {
+            alert("관심상품으로 등록되었습니다")
+          } else if(msg === "DELETE_OK") {
+            alert("관심상품 등록이 취소되었습니다")
+          }
         },
-        error: function() {alert("수정권한이 없습니다")}
+        error: function() {alert("잘못된 요청입니다")}
       })
 
     })
@@ -605,7 +601,6 @@
     $('.downCount').click(function() {
       //.num 내부의 텍스트를 가져와서 변수에 저장
       let num = parseInt($('.num').text());
-      console.log(num);
       if(!(num < 2)){
         let minusNum = num - 1;
         $('.num').text(minusNum);
@@ -648,10 +643,13 @@
       target = $(e.target);
       let p = $(target).offset();
 
-      // let divTop = p.top + 400;
-      // let divLeft = p.left - 500;
-
-      // $('#modal-body').css({"z-index": '10', "position": "absolute"}).show();
+      let session_idx = "${session_idx}";
+      console.log(typeof session_idx);
+      console.log("session_idx"+ session_idx);
+      if(session_idx == "") {
+        alert("회원만 문의 작성이 가능합니다.")
+        return;
+      }
 
 
       let inqryButton = $(".inqry_button");
