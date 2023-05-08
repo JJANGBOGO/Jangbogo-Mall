@@ -48,7 +48,7 @@
         WHERE IDX = #{idx} AND USER_IDX = #{user_idx};
     </update>
 
-<!-- 기본배송지상태가 Y인 배송지의 기본배송지상태를 N(해체) 초기화-->
+<!-- 기본배송지상태가 Y인 배송지의 기본배송지상태를 N(해제) 초기화-->
     <update id="resetDefault_N" parameterType="int">
         UPDATE DLVPN
         SET IS_DEFAULT_YN = 'N'
@@ -61,7 +61,7 @@
         SET STATE_CD = 1
         WHERE IDX = #{idx}
     </update>
-<!--해당 회원의 배송지상태가(사용)인 배송지의 배송지상태를 (미사용)으로 초기회-->
+<!--해당 회원의 배송지 선택 상태가(사용)인 배송지의 배송지상태를 (미사용)으로 초기회-->
     <update id="resetStateCD" parameterType="int">
         UPDATE DLVPN
         SET STATE_CD = 2
@@ -73,5 +73,25 @@
         FROM DLVPN
         WHERE USER_IDX = #{user_idx} AND STATE_CD = 1;
     </select>
+
+<!-- 해당 배송지일련번호의 기본 배송지 상태를 조회한다-->
+    <select id="checkIS_DEFAULT_YN" parameterType="int" resultType="String">
+        SELECT IS_DEFAULT_YN
+        FROM DLVPN
+        WHERE IDX = #{idx}
+    </select>
+
+<!-- 해당 회원이 배송지 수 를 조회한다 ( 처음 배송지 추가인지 확인을 위한 메서드) -->
+    <select id="checkIS_FIRST_YN" parameterType="int" resultType="int">
+        SELECT count(*)
+        FROM DLVPN
+        WHERE USER_IDX = #{user_idx} AND NOT STATE_CD = 3 ;
+    </select>
+
+<!--    해당 회원이 처음 배송지를 추가할 때 기본배송지 상태로 추가하는 메서드-->
+    <insert id="insertAddrDefault" parameterType="map">
+        INSERT INTO DLVPN (USER_IDX, ZPCD, ADDR_BASE, ADDR_DTL, RCPR_NM, RCPR_MOBL_NO, IS_DEFAULT_YN)
+        VALUES (#{user_idx}, #{addr.zpcd}, #{addr.addr_base}, #{addr.addr_dtl}, #{addr.rcpr_nm}, #{addr.rcpr_mobl_no}, 'Y');
+    </insert>
 </mapper>
 

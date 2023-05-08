@@ -54,6 +54,11 @@
             let addr_dtl = $('.input-dtl').val(); // 배송지 상세 ex) 101동 1201호
             let is_default_yn = $('input[name=input-defaultYN]').is(":checked"); // 기본 배송지 선택여부 ex) true, false
 
+            if(addr_dtl==""){
+                if(!confirm("나머지 주소를 입력하지 않으셨습니다. 이대로 저장하시겠습니까?")){
+                    return;
+                }
+            }
             $.ajax({
                 type:'POST',       // 요청 메서드
                 url: '/mypage/address/insert',  // 요청 URI

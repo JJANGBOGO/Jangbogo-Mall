@@ -57,32 +57,33 @@
             const listToHtml = (items) => {
                 let tmp = "<ul>";                                                                                           // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
 
-                // 메서드명 : forEach
-                // 기   능 : 복수의 CartDto값들을 저장한 list에서 각각의 CartDto에 저장된 iv들을 적절한 태그의 속성값 또는 내용에 위치시키는 메서드
-                // 사용대상 : items - Array : List<CartDto>, 장바구니 목록
-                // 매개변수 : item - Object : CartDto, 장바구니 개별 품목
-                items.forEach((item) => {
-                    tmp += '<li class="cart_item" data-pid=' + item.prod_idx + ' data-uid=' + item.user_idx +' >';
-                    tmp += '<input type="checkbox" name="chk"  />';
-                    tmp += '<img src=' + item.upload_path + " alt='' />";
-                    tmp += "<div class='cart_item__title'>" + item.prod_name + "</div>";
-                    tmp += '<div class="cart_item__contents">';
-                    tmp += '<div class="cart_item__cnt">';
-                    tmp += '<div id="subtractBtn">-</div>';
-                    tmp += '<div class=item__count>' + item.prod_cnt + "</div>";
-                    tmp += '<div id="addBtn">+</div>';
-                    tmp += '</div>';
-                    tmp += "<div class='cart_item__price'>" + formatPriceWithComma(item.prod_price * item.prod_cnt) + "</div><span>원</span>";
-                    tmp += '<div class="cart_item__close">&times;</div>';
-                    tmp += '</div>';
-                    tmp += '</li>';
-                })
-                let cnt = items.length;                                                                                     // 변수명 : cnt - 저장값 : 장바구니에 담긴 모든 품목 개수
-                tmp += '</ul>';
-                tmp += '<div id="emptyItems">';
-                tmp += '<h3>장바구니에 담긴 상품이 없습니다</h3>';
-                return tmp += '</div>';                                                                                     // 동적으로 생성한 요소 반환
-            }
+            // 메서드명 : forEach
+            // 기   능 : 복수의 CartDto값들을 저장한 list에서 각각의 CartDto에 저장된 iv들을 적절한 태그의 속성값 또는 내용에 위치시키는 메서드
+            // 사용대상 : items - Array : List<CartDto>, 장바구니 목록
+            // 매개변수 : item - Object : CartDto, 장바구니 개별 품목
+            items.forEach((item) => {
+                tmp += '<li class="cart_item" data-pid=' + item.prod_idx + ' data-uid=' + item.user_idx +' >';
+                tmp += '<input type="checkbox" name="chk"  />';
+                tmp += '<img src=' + item.upload_path + " alt='' />";
+                tmp += "<div class='cart_item__title'>" + item.prod_name + "</div>";
+                tmp += '<div class="cart_item__contents">';
+                tmp += '<div class="cart_item__cnt">';
+                tmp += '<div id="subtractBtn">-</div>';
+                tmp += '<div class=item__count>' + item.prod_cnt + "</div>";
+                tmp += '<div id="addBtn">+</div>';
+                tmp += '</div>';
+
+                tmp += "<div class='cart_item__price'>" + formatPriceWithComma(item.prod_price - (item.prod_price / 100 * item.dc_rate)* item.prod_cnt )  + "</div><span>원</span>";
+                tmp += '<div class="cart_item__close">&times;</div>';
+                tmp += '</div>';
+                tmp += '</li>';
+            })
+            let cnt = items.length;                                                                                     // 변수명 : cnt - 저장값 : 장바구니에 담긴 모든 품목 개수
+            tmp += '</ul>';
+            tmp += '<div id="emptyItems">';
+            tmp += '<h3>장바구니에 담긴 상품이 없습니다</h3>';
+            return tmp += '</div>';                                                                                     // 동적으로 생성한 요소 반환
+        }
 
             // 메서드명 : estimateToHtml
             // 기   능 : 배송지와 주문금액 관련 정보를 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
