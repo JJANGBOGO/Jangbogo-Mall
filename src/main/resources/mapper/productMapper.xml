@@ -31,7 +31,6 @@
         </if>
         INNER JOIN SELER S ON S.IDX = P.SELER_IDX;
     </select>
-    <!--    reg_state_cd 1일 때 승인-->
 
     <select id="searchProductList" resultType="ProductDto">
         SELECT P.NAME,

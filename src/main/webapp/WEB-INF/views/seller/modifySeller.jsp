@@ -87,6 +87,10 @@
                                         type="password"
                                         placeholder="새 비밀번호를 입력해주세요"
                                 />
+                                <input type="checkbox" id="show_pwd" hidden/>
+                                <label id="show_pwd_toggle" class="show-pwd" for="show_pwd">
+                                    <i id="eye" class="fa-regular fa-eye-slash"></i>
+                                </label>
                             </div>
                             <div class="error-msg pwd"></div>
                         </div>
@@ -104,6 +108,14 @@
                                         type="password"
                                         placeholder="새 비밀번호를 다시 입력해주세요"
                                 />
+                                <input type="checkbox" id="show_pwd_confirm" hidden/>
+                                <label
+                                        id="show_pwd_confirm_toggle"
+                                        class="show-pwd"
+                                        for="show_pwd_confirm"
+                                >
+                                    <i id="eye2" class="fa-regular fa-eye-slash"></i>
+                                </label>
                             </div>
                             <div class="error-msg pwd-confirm"></div>
                         </div>
@@ -205,7 +217,7 @@
                         <div class="btn-space"></div>
                     </div>
                     <div class="btn-container">
-                        <button class="info-modify">수정 취소</button>
+                        <button class="info-modify" id="cancel_btn">수정 취소</button>
                         <button class="info-modify" id="seller_modify">수정 완료</button>
                     </div>
                 </div>
@@ -351,6 +363,11 @@
             if (cllr_telno !== "" && !mpno_reg.test(cllr_telno)) {
                 err_ref.html(not_valid_mpno);
             } else err_ref.empty();
+        });
+
+        $("#cancel_btn").click(function(e) {
+           e.preventDefault();
+           window.location.href= "/seller/info";
         });
 
         //수정완료 버튼
