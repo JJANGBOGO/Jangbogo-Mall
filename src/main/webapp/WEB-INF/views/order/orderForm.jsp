@@ -84,7 +84,7 @@
             const orderBtnToHtml = (items) => {
                 let price = 0;                                                                                          // 변수명 : price - 저장값 : 결제 총 금액
                 items.forEach((item) => {
-                    price += Math.floor(item.prod_price - (item.prod_price / 100 * item.dc_rate)) * item.prod_cnt;
+                    price += (item.prod_price - Math.floor(item.prod_price / 100 * item.dc_rate)) * item.prod_cnt;
                 })
                 let tmp = "";                                                                                           // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
                 tmp += "<span>";
@@ -100,7 +100,7 @@
             const invoiceToHtml = (items) => {
                 let price = 0;                                                                                          // 변수명 : price - 저장값 : 결제 총 금액
                 items.forEach((item) => {
-                    price += Math.floor(item.prod_price - (item.prod_price / 100 * item.dc_rate)) * item.prod_cnt
+                    price += (item.prod_price - Math.floor(item.prod_price / 100 * item.dc_rate)) * item.prod_cnt;
                 })
                 let tmp = "";                                                                                           // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
                 tmp += '<div class="order-amount__box">'
@@ -154,12 +154,12 @@
                 // 매개변수 : item - Object : CartDto, 장바구니 개별 품목
                 items.forEach((item) => {
                     tmp += '<li class="order-item" data-pid=' + item.prod_idx + ' data-uid=' + item.user_idx +' >';
-                    tmp += '<img src=' + item.upload_path + " alt='' />";
-                    tmp += "<div class='order-item__title'>" + item.prod_name + "</div>";
-                    tmp += '<div class="order-item__contents">';
-                    tmp += '<div class="order-item__count">' + item.prod_cnt + "<span>개</span></div>";
-                    tmp += "<div class='order-item__price'>" + formatPriceWithComma(Math.floor(item.prod_price - (item.prod_price / 100 * item.dc_rate)) * item.prod_cnt) + "<span>원</span></div>";
-                    tmp += '</div>';
+                    tmp +=      '<img src=' + item.upload_path + " alt='' />";
+                    tmp +=      "<div class='order-item__title'>" + item.prod_name + "</div>";
+                    tmp +=      '<div class="order-item__contents">';
+                    tmp +=          '<div class="order-item__count">' + item.prod_cnt + "<span>개</span></div>";
+                    tmp +=          "<div class='order-item__price'>" + formatPriceWithComma((item.prod_price - Math.floor(item.prod_price / 100 * item.dc_rate)) * item.prod_cnt) + "<span>원</span></div>";
+                    tmp +=      '</div>';
                     tmp += '</li>';
                     itemsQuantity += item.prod_cnt;                                                                     // 변수 itemsQuantity에 각 품목의 개수만큼 추가한다.
                 })
@@ -196,9 +196,7 @@
                 tmp += "</div>";
                 tmp += "<div class='orderer-value'>";
                 tmp += "<span id='ordererMpno' >";
-                if(ordererInfo.mpno === null) {
-
-                } else {
+                if(ordererInfo.mpno !== null) {
                     tmp += formatMpnoWithHyphen(ordererInfo.mpno);
                 }
                 tmp += "</span>";
@@ -366,7 +364,6 @@
             // 메서드명 : showPersonalInfoAgreement                                                                       // TODO:3차 개발
             // 기   능 : 개인정보 수집/제공을 가져온다.
 
-
             $(document).ready(() => {                                                                                   // 즉시 실행 함수 start - js의 window.onload(() => {...})
                 let idx = `${idx}`;                                                                                     // 변수명 : idx - 저장값 : 세션에 저장된 회원번호(user_idx)
 
@@ -385,7 +382,6 @@
                     window.open(url, "장보고", "width="+ width +", height="+ height +", left="+xPos+", top="+yPos+", " +  // 팝업창 띄우기
                         "menubar=yes, status=yes, titlebar=yes, resizable=yes");
                 }
-
 
                 // 이벤트 대상 : #ordererModBtn 주문자 정보 수정 버튼
                 // 이벤트 : click
@@ -407,9 +403,7 @@
                 // 이벤트 : click
                 // 이벤트 핸들러 기능 : '결제하기' 버튼 클릭 시,                                                                  (3) 결제 페이지로 이동
                 $(document).on("click", "#paymentBtn", (e) => {
-
                     if($('#ordererModBtn').text() === '입력') {                                                          // 버튼 클릭 시, 주문자 정보가 입력되지 않으면 모달창을 불러온다.
-                        // display:none -> display: block으로 바꿔야 한다.
                         $('div#orderFormNoOrdererInfo').css('display', 'block');
                         $(document).on("click", "#noOrdererInfoModalBtn", () => {
                             $('div#orderFormNoOrdererInfo').css('display', 'none');
@@ -425,7 +419,6 @@
                         })
                         return;
                     }
-
 
                     let ordr_name = $("#ordererName").text();                                                           // 변수명 : orderer_name - 저장값 : 주문자이름를 저장한 요소 참조
                     let ordr_mpno = $("#ordererMpno").text();                                                           // 변수명 : orderer_mpno - 저장값 : 주문자휴대폰번호를 저장한 요소 참조
