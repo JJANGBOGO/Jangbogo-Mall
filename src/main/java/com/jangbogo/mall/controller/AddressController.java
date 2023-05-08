@@ -37,7 +37,6 @@ public class AddressController {
     public ResponseEntity<List<Address>> list(HttpSession session){
         List<Address> list = null;
         Integer user_idx = (Integer)session.getAttribute("idx"); // 세션에서 회원번호 가져오기
-//        System.out.println("user_idx = " + user_idx);
         try {
             list = service.selAddrList(user_idx);
             return new ResponseEntity<List<Address>>(list, HttpStatus.OK);
@@ -84,7 +83,7 @@ public class AddressController {
 //        log.info("....");
         try {
 
-            if(service.checkIS_DEFAULT_YN(idx).equals("Y")){
+            if(service.checkIS_DEFAULT_YN(idx).equals("Y")){     // 기본 배송지는 삭제 불가능 처리
                 return new ResponseEntity("DEL_ERR", HttpStatus.BAD_REQUEST);
             }
             service.deleteAddr(idx, user_idx);                    // 배송지의 상태를(삭제)로 변경한다
@@ -99,7 +98,7 @@ public class AddressController {
         }
     }
 
-    // 배송지 정보를 변경하는 메서드
+    // 배송지 정보를 변경하는 메서드 (수정)
     @PatchMapping("/address/update")   // /addresslistsupd/1  PATCH
     public ResponseEntity<String> myPageAddrUpd(@RequestBody Address address,HttpSession session) {
             int user_idx = (int) session.getAttribute("idx");   // 세션에서 회원번호 회득
@@ -137,7 +136,7 @@ public class AddressController {
         int user_idx = (int) session.getAttribute("idx");
         address.setRcpr_nm("");
         address.setRcpr_mobl_no("");
-        System.out.println("address = " + address);
+//        System.out.println("address = " + address);
 
         try {
             // 처음 배송지 추가하면 무조건 기본 배송지로 설정한다
@@ -146,15 +145,15 @@ public class AddressController {
                 return new ResponseEntity<String>("INSERT_OK", HttpStatus.OK);
             }
 
-            if (address.getIs_default_yn().equals("true")) {
-                service.resetDefault_N(user_idx);
-                address.setIs_default_yn("Y");
-            } else {
-                address.setIs_default_yn("N");
-            }
-            service.resetStateCD(user_idx);
-            service.insertAddr(user_idx, address);
+            if (address.getIs_default_yn().equals("true")) {  // 기본 배송치 설정으로 배송지를 추가했을 때
+                service.resetDefault_N(user_idx);             // 현재(DB) 기본 배송지 상태가 Y인 배송지의 기본 배송지 상태를 N(해제) 초기화
+                address.setIs_default_yn("Y");                // 기본 배송지 설정("Y")
 
+            } else {                                          // 기본 배송치 설정으로 하지 않고 배송지를 추가했을 때
+                address.setIs_default_yn("N");                // 기본 배송지 설정("N")
+            }
+            service.resetStateCD(user_idx);                   // 배송지 선택 상태가(사용)인 배송지의 배송지상태를 (미사용)으로 초기회
+            service.insertAddr(user_idx, address);            // 선택 상태로 배송지를 추가한다
             return new ResponseEntity<String>("INSERT_OK", HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
