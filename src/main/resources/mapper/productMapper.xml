@@ -20,7 +20,7 @@
 
     <select id="getListByCategory" resultType="ProductDto" parameterType="String">
         SELECT * FROM PRODUCT AS P
-        INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND D.REG_STATE_CD = 1
+        INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND D.REG_STATE_CD = 2 AND P.DSPLY_STATE_CD = 1 AND D.STATE_CD = 1
         <if test='category!="00"'>
             AND CATE_IDX LIKE CONCAT(#{category}, '%')
         </if>
@@ -34,7 +34,7 @@
                P.ASCR,
                S.CPNM
         FROM PRODUCT AS P
-                 INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND D.REG_STATE_CD = 1
+                 INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND D.REG_STATE_CD = 2 AND P.DSPLY_STATE_CD = 1 AND D.STATE_CD = 1
                                               AND P.NAME LIKE CONCAT('%', #{keyword}, '%')
             OR P.CTENT LIKE CONCAT('%', #{keyword}, '%')
                  INNER JOIN SELER S ON P.SELER_IDX = S.IDX
