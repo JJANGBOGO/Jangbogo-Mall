@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-        <title>배송 정보 수정</title>
+        <title>주문자 정보</title>
         <link rel="stylesheet" href="/css/order/recipientDetails.css"/>
         <script src = "/js/order/format.js"></script>
     </head>
@@ -16,15 +16,11 @@
         <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
         <div>
             <div class="recipient-details__title">
-                <h2>배송 정보</h2>
-                <label class="recipient-details__check">
-                    <input type="checkbox" class="recipient-details__checkbox">
-                    <span>주문자 정보와 동일</span>
-                </label>
+                <h2>주문자 정보</h2>
             </div>
             <div class="recipient-details__main">
                 <div class="recipient-details__info">
-                    <label for="receiver-name">받으실 분</label>
+                    <label for="receiver-name">보내는 분</label>
                     <span>*</span>
                     <div height="44" class="recipient-details__info-value">
                         <input data-testid="input-box" id="receiver-name" name="name" placeholder="이름을 입력해 주세요" type="text" required="" height="44">
@@ -39,19 +35,6 @@
                         <button size="16" id="mpnoDeleteBtn" tabindex="-1" aria-label="delete-input" type="button"></button>
                     </div>
                 </div>
-                <div>
-                    <label class="recipient-details__location-title">받으실 장소<span>*</span></label>
-                    <div class="recipient-details__location-main">
-                        <label class="recipient-details__location-main_lbl" for="door">
-                            <input data-testid="radio-DOOR" id="door" name="receivePlace" type="radio" value="DOOR" checked="">
-                            <span aria-labelledby="door">문 앞</span>
-                        </label>
-                        <label class="recipient-details__location-main_lbl" for="security-office">
-                            <input data-testid="radio-SECURITY_OFFICE" id="security-office" name="receivePlace" type="radio" value="SECURITY_OFFICE">
-                            <span aria-labelledby="security-office">경비실</span>
-                        </label>
-                    </div>
-                </div>
                 <div class="recipient-details__buttons">
                     <button type="button" height="56" radius="3">
                         <span>취소</span></button>
@@ -60,18 +43,6 @@
             </div>
             <script>
                 $(document).ready(() => {
-                    if(opener.$("#deliveryRecipient span:first-child").html() !== "받으실 분 정보를 입력해주세요.") {            // 받으실 분, 휴대폰 정보가 입력된 경우
-                        $("input#receiver-name").val(opener.$("#deliveryRecipient span:first-child").html());             // input의 초기 값을 입력된 값으로 설정
-                        $("input#receiver-phone").val(opener.$("#deliveryRecipient span:last-child").html());            // input의 초기 값을 입력된 값으로 설정
-                    }
-
-                    // 주문자와 동일 체크된 경우
-                    // 받으실 분 과 휴대전화 번호 input 값을 부모창의 값들로 채운다.
-                    let recipient = opener.$("#ordererName").html();
-                    let mpno      = formatMpnoWitoutHyphen(opener.$("#ordererMpno").html());
-
-                    // $("input#receiver-name").val(recipient);
-                    // $("input#receiver-phone").val(mpno);
 
                     // 이벤트 대상 : 받으실 분 input의 '삭제' 버튼
                     // 이벤트 : click
@@ -96,19 +67,6 @@
                         if($("input.recipient-details__checkbox").is(":checked")) $("input.recipient-details__checkbox").prop("checked", false);
                     });
 
-                    // 이벤트 대상 : '주문자와 동일' 체크박스
-                    // 이벤트 : click
-                    // 이벤트 핸들러 기능 : '주문자와 동일' 체크박스 클릭 시, 받으실 분, 휴대폰 두 input의 value들을 ""처리
-                    $("input[type=checkbox]").on("click", (e) => {
-                        if ($("input.recipient-details__checkbox").is(":checked")) {
-                            $("input#receiver-name").val(recipient);
-                            $("input#receiver-phone").val(mpno);
-                        } else {
-                            $("input#receiver-name").val("");
-                            $("input#receiver-phone").val("");
-                        }
-                    })
-
                     // 이벤트 대상 : '취소' 버튼
                     // 이벤트 : click
                     // 이벤트 핸들러 기능 : '취소' 버튼 클릭 시, 자식 창 닫기
@@ -119,21 +77,19 @@
                     // 이벤트 : click
                     // 이벤트 핸들러 기능 : '저장' 버튼 클릭 시, 자식창에 입력한 값들을 부모창에 데이터 렌더링하기
                     $(".recipient-details__buttons > button:last-of-type").click(() => {
-                        let recipient = $("#receiver-name").val();
+                        console.log("저장 버튼 클릭됨");
+                        let orderer = $("#receiver-name").val();
                         let mpno = $("#receiver-phone").val();
-                        let pickUpLocation = ($('.recipient-details__location-main  input:checked').val() === "DOOR") ? "문 앞" : "경비실";
 
                         // 유효성 검사를 통과하지 못 하면, 경고창 띄우고 아래 코드가 실행되지 않는다.
-                        if(!checkNameLength(recipient) || !checkNameRegex(recipient) || !checkMpnoRegex(mpno) || !checkMpnoLength(mpno)) return;
+                        if(!checkNameLength(orderer) || !checkNameRegex(orderer) || !checkMpnoRegex(mpno) || !checkMpnoLength(mpno)) return;
 
                         // 부모창 값을 자식창 값으로 수정
-                        $("#deliveryRecipient", opener.document).html(
-                            "<span>" + recipient + "</span> , <span>" + formatMpnoWithHyphen(mpno) + "</span>"
-                        )
-                        $("#deliveryLocation", opener.document).html(
-                            "<span>받으실 장소 | </span>" + "<span>" + pickUpLocation + "</span>"
-                        )
-                        $("#deliveryModBtn", opener.document).text('수정');
+                        $("#ordererName", opener.document).html(orderer);
+                        $(".orderer-section:nth-child(2) .orderer-inform", opener.document).html('<span>휴대폰</span>');
+                        $("#ordererMpno", opener.document).html(formatMpnoWithHyphen(mpno));
+                        $("#ordererModBtn", opener.document).text('수정');
+                        ($('#ordererName', opener.document).text() === "보내는 분 정보를 입력해주세요.") ? $('#ordererName', opener.document).css('color', 'rgb(240, 63, 64)') : $('#ordererName', opener.document).css('color', 'black');
                         // 자식창 닫기
                         window.close();
                     })

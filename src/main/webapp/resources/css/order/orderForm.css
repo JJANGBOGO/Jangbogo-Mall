@@ -189,6 +189,13 @@ button {
     line-height: 21px;
     color: rgb(102, 102, 102);
 }
+
+.orderer-value:first-child {
+    display: flex;
+    flex-direction: row;
+}
+
+
 /* 배송 정보 섹션 */
 #deliveryInform {}
 .delivery-section {}
@@ -217,7 +224,8 @@ button {
 .delivery-value__column:last-child {
     margin-top: 20px;
 }
-#deliveryModBtn {
+
+#deliveryModBtn, #ordererModBtn {
     display: block;
     padding: 0 10px;
     text-align: center;
@@ -229,6 +237,11 @@ button {
     background-color: rgb(255, 255, 255);
     border: 1px solid #f58412;
     cursor: pointer;
+}
+
+#ordererModBtn {
+    display: inline-block;
+    margin-left: 18px;
 }
 
 /* 쿠폰 정보 섹션*/
@@ -366,6 +379,6 @@ select[name="coupons"] {
     padding-top: 20px;
 }
 
-div#orderFormSubmitFailModal {
+div#orderFormNoOrdererInfo, div#orderFormNoRecipientInfo {
     display: none;
 }

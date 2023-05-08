@@ -1,5 +1,67 @@
 footer {
-    border-top: 1px solid #ccc;
+    padding: 60px 0;
+    /*border-top: 1px solid #ccc;*/
     width: 100%;
     height: 319px;
+    background: rgb(250, 250, 250);
+    display: flex;
+    justify-content: center;
+}
+
+
+footer > div:first-child {
+    display: flex;
+}
+footer > div:first-child > .footer__title {
+    margin-right: 50px;
+}
+
+.footer__section,
+.footer__section span,
+.footer__section b,
+.footer__section div {
+    color: #868B94;
+}
+
+footer .footer__section {
+    margin-bottom: 8px;
+}
+
+footer .footer__section > div, footer .footer__section div {
+    margin-bottom : 8px;
+    font-size: 15px;
+}
+
+.footer__developers,
+.footer__contents > ul,
+.footer__contents > ul > li{
+    display: flex;
+}
+.footer__developers {
+    margin-left: 100px;
+}
+
+.footer__contents > ul > li {
+    flex-direction: column;
+    text-align: center;
+    margin-left: 50px;
+    font-size: 15px;
+}
+
+.footer__contents > ul > li > span {
+    margin-top: 5px;
+}
+
+.footer__section span,
+.footer__section span b {
+    color: #868B94;
+}
+
+.footer__section-icon {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.footer__section-icon > a > i.fa-brands {
+    font-size: 25px;
 }

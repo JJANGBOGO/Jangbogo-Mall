@@ -28,7 +28,7 @@ public class CartController {
     // 요청URL : /cart/cart GET
     @GetMapping("/cart")
     public String goToCart(HttpSession session, Model model) {
-        if(!loginCheck(session)) return "redirect:/user/login";                                                         // 1. 로그인 확인 - loginCheck메서드가 false를 반환하는 경우, 로그인 페이지로 리다이렉트
+//      if(!loginCheck(session)) return "redirect:/user/login";                                                         // 스프링 시큐리티 적용
         return "cart/cart";
     }
 
@@ -50,7 +50,7 @@ public class CartController {
     }
     // 메서드명 : deleteCartProduct
     // 기   능 : 장바구니에서 선택된 상품을 삭제한다.
-    // 반환타입 : String
+    // 반환타입 : ResponseEntity<String>
     // 매개변수 : Integer prod_idx, Integer user_idx
     // 요청URL : /cart/remove?prod_idx=${cartDto.prod_idx}&user_idx=${cartDto.user_idx} GET
     @DeleteMapping("/cart/remove")
@@ -61,10 +61,10 @@ public class CartController {
             if(rowCnt != 1) {                                                                                           // 행의 개수가 1이 아닐 경우, 예외를 던진다.
                 throw new Exception("delete failed");
             }
-            return new ResponseEntity<>("DEL_OK", HttpStatus.OK);                                                 // 성공 시, 엔티티로 "DEL_OK"라는 상태 메시지와 OK 상태코드를 반환 - 상태코드 : 200
+            return new ResponseEntity<>("DEL_OK", HttpStatus.OK);                                                       // 성공 시, 엔티티로 "DEL_OK"라는 상태 메시지와 OK 상태코드를 반환 - 상태코드 : 200
         } catch (Exception e) {                                                                                         // 에러 발생 시,
             e.printStackTrace();                                                                                        // 1) 에러 내용을 로그에 출력
-            return new ResponseEntity<>("DEL_ERR", HttpStatus.OK);                                                // 2) "DEL_ERR"라는 상태 메시지와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
+            return new ResponseEntity<>("DEL_ERR", HttpStatus.OK);                                                      // 2) "DEL_ERR"라는 상태 메시지와 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
         }
     }
 
@@ -95,7 +95,7 @@ public class CartController {
     // 요청URL : /order/checkout GET
     @GetMapping("/order/checkout")
     public String goToOrderForm(HttpSession session) {
-        if(!loginCheck(session)) return "redirect:/user/login";                                                         // 1. 로그인 확인 - loginCheck메서드가 false를 반환하는 경우, 로그인 페이지로 리다이렉트
+//        if(!loginCheck(session)) return "redirect:/user/login";                                                       // 스프링 시큐리티 적용
         return "order/orderForm";                                                                                       // 2. 주문서 작성 페이지로 이동
     }
 
@@ -103,14 +103,14 @@ public class CartController {
     // 기   능 : 로그인 상태 여부 확인
     // 매개변수 : HttpServletRequest request
     // 반환타입 : boolean
-    private static boolean loginCheck(HttpSession session) {
-        return session.getAttribute("idx") != null;                                                               // session에 저장된 idx값이 null이 아니면 true 반환
-    }
+//    private static boolean loginCheck(HttpSession session) {
+//        return session.getAttribute("idx") != null;                                                                   // session에 저장된 idx값이 null이 아니면 true 반환
+//    }
 
     // 메서드명 : getAddressSelected
     // 기   능 : 선택된 배송지 정보 조회
     // 매개변수 : HttpSession session
-    // 반환타입 : Address
+    // 반환타입 : ResponseEntity<Address>
     @GetMapping("/cart/address")
     public ResponseEntity<Address> getAddressSelected(HttpSession session) throws Exception {
         Integer user_idx = (Integer)session.getAttribute("idx");
