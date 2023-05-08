@@ -81,6 +81,7 @@
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script src="/js/member/msg.js"></script>
+<script src="/js/order/format.js"></script>
 <script>
     let msg = "${msg}";
     if (msg === "EXCEPTION_ERR") alert("예상치 못한 오류가 발생했습니다. 불편을 끼쳐드려 죄송합니다.");
@@ -102,7 +103,8 @@
                 + '</a>'
                 + '<div class="thum-desc">'
                 + '<a class="title"><h3>' + obj.name + '</h3></a>'
-                + '<div class="price">' + obj.prc + '원</div>'
+                + '<div class="price">' + formatPriceWithComma(obj.prc) + '원</div>'
+                + '<div class="review-cnt">리뷰 수: ' + obj.review_cnt + '</div>'
                 + '</div>'
                 + '</li>';
         });
@@ -139,7 +141,7 @@
                 + '</span>'
                 + '<span class="pd-desc">'
                 + '<p>' + obj.name + '</p>'
-                + '<div class="pd-price">' + obj.prc + '</div>'
+                + '<div class="pd-price">' + formatPriceWithComma(obj.prc) + '원</div>'
                 + '</span>'
                 + '</a>'
                 + '</li>';
