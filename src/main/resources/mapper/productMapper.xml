@@ -19,11 +19,17 @@
     </select>
 
     <select id="getListByCategory" resultType="ProductDto" parameterType="String">
-        SELECT * FROM PRODUCT AS P
+        SELECT * , (select count(*)
+        from prod_late
+        WHERE PROD_IDX = P.IDX
+        ) as 'review_cnt',
+        S.CPNM
+        FROM PRODUCT AS P
         INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND D.REG_STATE_CD = 2 AND P.DSPLY_STATE_CD = 1 AND D.STATE_CD = 1
         <if test='category!="00"'>
             AND CATE_IDX LIKE CONCAT(#{category}, '%')
         </if>
+        INNER JOIN SELER S ON S.IDX = P.SELER_IDX;
     </select>
     <!--    reg_state_cd 1일 때 승인-->
 
@@ -33,14 +39,15 @@
                P.PRC,
                (select count(*)
                 from prod_late
-                WHERE PROD_IDX = P.IDX
-               ) as 'review_cnt'
+                WHERE PROD_IDX = P.IDX) as 'review_cnt',
+               S.CPNM
         FROM PRODUCT AS P
                  INNER JOIN PROD_DTL D
                             ON P.IDX = D.PROD_IDX AND D.REG_STATE_CD = 2 AND P.DSPLY_STATE_CD = 1 AND D.STATE_CD = 1
-                                   AND P.NAME LIKE CONCAT('%', #{keyword}, '%')
-                                OR P.CTENT LIKE CONCAT('%', #{keyword}, '%')
-        GROUP BY IDX;
+                 INNER JOIN SELER S ON S.IDX = P.SELER_IDX
+            AND (P.NAME LIKE CONCAT('%', #{keyword}, '%')
+                OR P.CTENT LIKE CONCAT('%', #{keyword}, '%'))
+        GROUP BY PROD_IDX;
     </select>
 
     <update id="stopSale" parameterType="Integer">

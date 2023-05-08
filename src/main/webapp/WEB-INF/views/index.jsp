@@ -54,12 +54,12 @@
         </li>
     </ul>
     <div class="tab-content">
-        <ul class="thum-list" data-id="00"></ul>
-        <ul class="thum-list" data-id="01"></ul>
-        <ul class="thum-list" data-id="02"></ul>
-        <ul class="thum-list" data-id="03"></ul>
-        <ul class="thum-list" data-id="04"></ul>
-        <ul class="thum-list" data-id="05"></ul>
+        <ul class="thum-list"></ul>
+        <ul class="thum-list"></ul>
+        <ul class="thum-list"></ul>
+        <ul class="thum-list"></ul>
+        <ul class="thum-list"></ul>
+        <ul class="thum-list"></ul>
     </div>
 </div>
 <a class="see-pd-all" href="/productList">전체 보기&gt;</a>
@@ -88,22 +88,21 @@
     if (msg === "WITHDRAW_OK") alert(withdraw_ok);
 </script>
 <script>
-    let ctg_arr = ["00", "01", "02", "03", "04", "06"]; //탭 카테고리. 최대 6개, 카테고리 탭 텍스트도 같이 수정할 것.
+    let ctg_arr = ["00", "01", "02", "03", "04", "06"]; //탭 카테고리. 최대 6개, 수정 시, 카테고리 탭 텍스트도 같이 수정할 것.
 
-    //상품리스트를 html로 구현
-    let renderPdList = (list, tab_id) => {
+    let renderPdList = (list, tab_id) => {//상품리스트를 html로 구현
         let list_ref = $(".thum-list").eq(tab_id); //0,1,2,3,4,5
         let str = "";
-        list.sort(() => Math.random() - 0.5); //전체 탭인 경우 list 랜덤돌리기
+        list.sort(() => Math.random() - 0.5); //랜덤 돌리기
         list.forEach((obj, i) => {
             if (i > 7) return; //카테고리당 4개만 보여줌
             str += '<li>'
                 + '<a class="img-box" href="/product/' + obj.idx + '">'
                 + '<img src="' + obj.upload_path + '"alt="product-img" />'
-                + '<div class="cart-btn"><i id="cart_btn" class="fa-solid fa-cart-shopping" data-idx="'+obj.idx+ '"></i></div>'
+                + '<div class="cart-btn"><i id="cart_btn" class="fa-solid fa-cart-shopping" data-idx="' + obj.idx + '"></i></div>'
                 + '</a>'
                 + '<div class="thum-desc">'
-                + '<a class="title"><h3>' + obj.name + '</h3></a>'
+                + '<a class="title"><h3>[' + obj.cpnm + '] ' + obj.name + '</h3></a>'
                 + '<div class="price">' + formatPriceWithComma(obj.prc) + '원</div>'
                 + '<div class="review-cnt">리뷰 수: ' + obj.review_cnt + '</div>'
                 + '</div>'
@@ -128,10 +127,10 @@
         });
     }
 
-    let renderArticleList = (list) => { // 2번째 섹션
+    let renderArticleList = (list) => { // 2번째 매거진 부분
         let str = "";
         let list_ref = $(".products-box");
-        list.sort(() => Math.random() - 0.5); //전체 탭인 경우 list 랜덤돌리기
+        list.sort(() => Math.random() - 0.5);
         list.forEach((obj, i) => {
             if (i === 0) $("#article_img").attr("src", obj.upload_path);
             if (i > 3) return; //카테고리당 4개만 보여줌
@@ -141,7 +140,7 @@
                 + '<img src="' + obj.upload_path + '"/>'
                 + '</span>'
                 + '<span class="pd-desc">'
-                + '<p>' + obj.name + '</p>'
+                + '<p>[' + obj.cpnm + '] ' + obj.name + '</p>'
                 + '<div class="pd-price">' + formatPriceWithComma(obj.prc) + '원</div>'
                 + '</span>'
                 + '<div class="cart-btn-box">'
@@ -190,23 +189,25 @@
             if (user_idx === "") alert("로그인 후 이용해 주세요");
 
             $.ajax({
-                type:'POST',       // 요청 메서드 // 위시리스트에서 장바구니에 담기
-                url: '/mypage/wishlists?prod_idx='+prod_idx+'&prod_cnt=' + prod_cnt,  // 요청 URI
-                success : function(result){
-                    if(result=="DEL_OK1") alert("장바구니에 상품이 담겼습니다");
-                    if(result=="DEL_OK2") alert("장바구니에 상품이 담겼습니다\n이미 담은 상품의 수량을 추가했습니다");
+                type: 'POST',       // 요청 메서드 // 위시리스트에서 장바구니에 담기
+                url: '/mypage/wishlists?prod_idx=' + prod_idx + '&prod_cnt=' + prod_cnt,  // 요청 URI
+                success: function (result) {
+                    if (result == "DEL_OK1") alert("장바구니에 상품이 담겼습니다");
+                    if (result == "DEL_OK2") alert("장바구니에 상품이 담겼습니다\n이미 담은 상품의 수량을 추가했습니다");
                 },
-                error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+                error: function () {
+                    alert("error")
+                } // 에러가 발생했을 때, 호출될 함수
             }); // $.ajax()
         }
 
         //탭 상품 리스트 장바구니 담기 버튼
-        $(".thum-list").on("click", ".fa-solid.fa-cart-shopping", function(e) {
+        $(".thum-list").on("click", ".fa-solid.fa-cart-shopping", function (e) {
             addCart(e, $(this));
         });
 
         // 매거진 부분 장바구니 담기 버튼
-        $(".products-box").on("click", "#cart_btn", function(e) {
+        $(".products-box").on("click", "#cart_btn", function (e) {
             addCart(e, $(this));
         });
 
