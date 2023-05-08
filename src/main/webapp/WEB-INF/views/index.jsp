@@ -62,7 +62,7 @@
         <ul class="thum-list" data-id="05"></ul>
     </div>
 </div>
-<a class="see-pd-all" href="">전체 보기&gt;</a>
+<a class="see-pd-all" href="/productList">전체 보기&gt;</a>
 <div class="magazine">
     <a href="" class="collection-link">
         <div class="img-box">
@@ -73,14 +73,8 @@
             />
         </div>
         <div class="mg-content">
-            <strong>컬리 추천 꼬치 대백과</strong>
-            <p>
-                봄향기 나는 3월의 시작. 여행이나 캠핑을 준비한다면 주목하세요.
-                저녁식사를 빛내줄 컬리의 꼬치를 모두 모아봤어요. 남녀노소 좋아하는
-                닭꼬치부터 자꾸만 당기는 마시멜로까지. 간단한 맥주 안주로도 바비큐
-                안주로도 제격입니다. 다양한 컬리 추천 꼬치들과 함께 멋진 저녁 시간을
-                완성하세요.
-            </p>
+            <strong>오늘의 장바구니 추천</strong>
+            <p>봄을 맞아 하는 일이 모두 잘되시길 기원합니다. 맛있는 음식이 힘을 북돋아 줄거에요!</p>
         </div>
     </a>
     <div class="col-products">
@@ -165,7 +159,7 @@
                     </div>
                 </a>
             </li>
-            <a class="see-pd-all" href="">전체 보기&gt;</a>
+            <a class="see-pd-all" href="/productList">전체 보기&gt;</a>
         </ul>
     </div>
 </div>
@@ -184,7 +178,7 @@
         let str = "";
         list.sort(() => Math.random() - 0.5); //전체 탭인 경우 list 랜덤돌리기
         list.forEach((obj, i) => {
-            if (i > 3) return; //카테고리당 4개만 보여줌
+            if (i > 7) return; //카테고리당 4개만 보여줌
             str += '<li>'
                 + '<a class="img-box" href="/product/' + obj.idx + '">'
                 + '<img src="' + obj.upload_path + '"alt="product-img" />'
