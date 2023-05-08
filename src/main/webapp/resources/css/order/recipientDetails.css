@@ -26,7 +26,7 @@ input[type=checkbox] {
 }
 
 /* 배송 정보 수정 제목 */
-.recipient-details__title {
+.recipient-details__title, .orderer-details__title {
     display: flex;
     -webkit-box-pack: justify;
     justify-content: space-between;

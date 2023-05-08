@@ -179,7 +179,7 @@ input[name='order'] {
     cursor: pointer;
 }
 
-input[name="sold-out"] {
+input[name="sold-out"], input[name="no-dlvpn"]  {
     z-index: -1;
     position: absolute;
     bottom: 0;

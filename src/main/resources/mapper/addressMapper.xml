@@ -69,7 +69,7 @@
     </update>
 <!--해당 회원의 배송지상태가 사용인 배송지 조회-->
     <select id="selectAddressSelected" parameterType="Integer" resultType="Address">
-        SELECT ADDR_BASE, ADDR_DTL
+        SELECT *
         FROM DLVPN
         WHERE USER_IDX = #{user_idx} AND STATE_CD = 1;
     </select>
