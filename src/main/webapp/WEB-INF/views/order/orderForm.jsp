@@ -179,15 +179,29 @@
                 tmp += "<span>보내는 분</span>";
                 tmp += "</div>";
                 tmp += "<div class='orderer-value'>";
-                tmp += "<span id='ordererName' >" + ordererInfo.nick_nm + "</span>";
+                if(ordererInfo.mpno === null) {
+                    tmp += "<span id='ordererName' >" + "보내는 분 정보를 입력해주세요.";
+                    tmp += "</span>";
+                    tmp += "<button type='button' id='ordererModBtn'>입력</button>"
+                } else {
+                    tmp += "<span id='ordererName' >" + ordererInfo.nick_nm + "</span>";
+                }
                 tmp += "</div>";
                 tmp += "</div>";
                 tmp += "<div class='orderer-section'>";
                 tmp += "<div class='orderer-inform'>";
-                tmp += "<span>휴대폰</span>";
+                if(ordererInfo.mpno !== null) {
+                    tmp += "<span>휴대폰</span>";
+                }
                 tmp += "</div>";
                 tmp += "<div class='orderer-value'>";
-                tmp += "<span id='ordererMpno' >" + formatMpnoWithHyphen(ordererInfo.mpno) + "</span>";
+                tmp += "<span id='ordererMpno' >";
+                if(ordererInfo.mpno === null) {
+
+                } else {
+                    tmp += formatMpnoWithHyphen(ordererInfo.mpno);
+                }
+                tmp += "</span>";
                 tmp += "</div>";
                 tmp += "</div>";
                 tmp += "<div class='orderer-section'>";
@@ -216,8 +230,8 @@
                 tmp += "<span>배송지</span>"
                 tmp += "</div>"
                 tmp += "<div id='deliveryAddress' class='delivery-value' >"
-                tmp += "<span>" + deliveryInfo[0].addr_base + " </span>"
-                tmp += "<span>" + deliveryInfo[0].addr_dtl + "</span>"
+                tmp += "<span>" + deliveryInfo.addr_base + " </span>"
+                tmp += "<span>" + deliveryInfo.addr_dtl + "</span>"
                 tmp += "</div>"
                 tmp += "</div>"
                 tmp += "<div class='delivery-section'>"
@@ -226,7 +240,11 @@
                 tmp += "</div>"
                 tmp += "<div class='delivery-value'>"
                 tmp += "<div class='delivery-value__column' id='deliveryRecipient'>"
-                tmp += "<span>" + "받으실 분 정보를 입력해주세요." + "</span>"
+                if(deliveryInfo.rcpr_nm === null || deliveryInfo.rcpr_nm === "") {                                      // 배송정보 중 '받으실 분' 이 null이거나 빈 문자열인 경우
+                    tmp += "<span>" + "받으실 분 정보를 입력해주세요." + "</span>"
+                } else {
+                    tmp += "<span>" + deliveryInfo.rcpr_nm + "</span> , <span>" + formatMpnoWithHyphen(deliveryInfo.rcpr_mobl_no) + "</span>"
+                }
                 tmp += "</div>"
                 tmp += "<div class='delivery-value__column' id='deliveryLocation'>"
                 tmp += "</div>"
@@ -237,32 +255,6 @@
                 tmp += "</div>"
                 return tmp;
             }
-
-            // 메서드명 : couponListToHtml                                                                                // TODO:3차 개발
-            // 기   능 : 주문자가 소유한 쿠폰 목록을 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
-            // 매개변수 : items - CouponDto
-            // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
-            // function couponListToHtml(couponList) {
-            //     let tmp = "";                                                                                        // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
-            //     tmp += "<div class='order__coupon-section'>";
-            //     tmp += "<div class='order__coupon-inform'>"
-            //     tmp += "<span>쿠폰</span>"
-            //     tmp += "</div>"
-            //     tmp += "<div class='order__coupon-value'>"
-            //     tmp += "<select name='coupons' id='coupons'>"
-            //     tmp += "<option value='default'>" + "사용가능 쿠폰 2장 / 전체 2장" + "</option>"
-            //     // 메서드명 : forEach
-            //     // 기   능 : 복수의 CouponDto값들을 저장한 list에서 각각의 CouponDto에 저장된 iv들을 적절한 태그의 속성값 또는 내용에 위치시키는 메서드
-            //     // 사용대상 : items - Array : List<CouponDto>, 주문자가 소유한 쿠폰 목록
-            //     // 매개변수 : item - Object : CouponDto, 주문자가 소유한 개별 쿠폰
-            //     couponList.forEach((coupon) => {
-            //         tmp += "<option value=" + coupon +  ">" + coupon + "</option>"
-            //     })
-            //     tmp += "</select>"
-            //     tmp += "</div>";
-            //     tmp += "</div>";
-            //     return tmp;
-            // }
 
             // 메서드명 : paymentMethodsToHtml
             // 기   능 : 결제수단 목록을 담은 태그 요소를 동적으로 생성하고 화면에 랜더링하는 메서드
@@ -321,6 +313,7 @@
                     url:'/order/checkout/orderer?user_idx=' + user_idx,                                                 // 요청URI
                     success: (result) => {                                                                              // 성공 응답이 오면, 주문자 정보를 페이지에 랜더링하기
                         $('#ordererInform').html(ordererToHtml(result));                                                // ordererToHtml메서드 호출
+                        ($('#ordererName').text() === "보내는 분 정보를 입력해주세요.") ? $('#ordererName').css('color', 'rgb(240, 63, 64)') : $('#ordererName').css('color', 'black');
                     },
                     error : function() { alert("showOrderInfo 실패 응답 : 회원번호 누락");}                                   // 실패 응답이 오면, 경고창 띄우기
                 });                                                                                                     // $.ajax() end
@@ -336,6 +329,7 @@
                     success: (result) => {                                                                              // 성공 응답이 오면, 배송 정보를 페이지에 랜더링하기
                         $('#deliveryInform').html(deliveryToHtml(result));                                              // deliveryToHtml메서드 호출
                         $('#deliveryRecipient > span').css('color', 'rgb(240, 63, 64)');
+                        ($('#deliveryRecipient > span').text() === "보내는 분 정보를 입력해주세요.") ? $('#deliveryRecipient > span').css('color', 'rgb(240, 63, 64)') : $('#deliveryRecipient > span').css('color', 'black');
                     },
                     error : function() { alert("showDeliveryInfo 실패 응답 : 회원번호 누락");}                                // 실패 응답이 오면, 경고창 띄우기
                 });                                                                                                     // $.ajax() end                 //
@@ -371,9 +365,7 @@
 
             // 메서드명 : showPersonalInfoAgreement                                                                       // TODO:3차 개발
             // 기   능 : 개인정보 수집/제공을 가져온다.
-            // function showPersonalInfoAgreement(idx) {
-            //
-            // }
+
 
             $(document).ready(() => {                                                                                   // 즉시 실행 함수 start - js의 window.onload(() => {...})
                 let idx = `${idx}`;                                                                                     // 변수명 : idx - 저장값 : 세션에 저장된 회원번호(user_idx)
@@ -394,6 +386,15 @@
                         "menubar=yes, status=yes, titlebar=yes, resizable=yes");
                 }
 
+
+                // 이벤트 대상 : #ordererModBtn 주문자 정보 수정 버튼
+                // 이벤트 : click
+                // 이벤트 핸들러 기능 : '수정' 버튼 클릭 시, 배송 상제 정보 수정 창 새로 띄우기
+                $(document).on("click", "#ordererModBtn", (e) => {                                                      // 배송정보 수정 페이지를 새창에 띄워야 한다.
+                    let url = "/order/checkout/orderer-details";                                                        // 변수명 : url - 새창에 해당하는 url
+                    popupCenter(url, 500, 800);                                                                         // 메서드 호출 - 팝업을 가운데 위치시키기 위해 값 구하기
+                });
+
                 // 이벤트 대상 : #deliveryModBtn 배송 정보 수정 버튼
                 // 이벤트 : click
                 // 이벤트 핸들러 기능 : '수정' 버튼 클릭 시, 배송 상제 정보 수정 창 새로 띄우기
@@ -406,15 +407,26 @@
                 // 이벤트 : click
                 // 이벤트 핸들러 기능 : '결제하기' 버튼 클릭 시,                                                                  (3) 결제 페이지로 이동
                 $(document).on("click", "#paymentBtn", (e) => {
-                    // TODO: 버튼 클릭 시, 주문자 정보가 입력되지 않으면 모달창을 불러온다.
-                    if($('#deliveryModBtn').text() !== '수정') {
+
+                    if($('#ordererModBtn').text() === '입력') {                                                          // 버튼 클릭 시, 주문자 정보가 입력되지 않으면 모달창을 불러온다.
                         // display:none -> display: block으로 바꿔야 한다.
-                        $('div#orderFormSubmitFailModal').css('display', 'block');
-                        $(document).on("click", "#orderFormSubmitFailureBtn", () => {
-                            $('div#orderFormSubmitFailModal').css('display', 'none');
+                        $('div#orderFormNoOrdererInfo').css('display', 'block');
+                        $(document).on("click", "#noOrdererInfoModalBtn", () => {
+                            $('div#orderFormNoOrdererInfo').css('display', 'none');
                         })
                         return;
                     }
+
+                    if($('#deliveryModBtn').text() !== '수정') {                                                         // 버튼 클릭 시, 받으실 정보가 입력되지 않으면 모달창을 불러온다.
+                        // display:none -> display: block으로 바꿔야 한다.
+                        $('div#orderFormNoRecipientInfo').css('display', 'block');
+                        $(document).on("click", "#noRecipientInfoModalBtn", () => {
+                            $('div#orderFormNoRecipientInfo').css('display', 'none');
+                        })
+                        return;
+                    }
+
+
                     let ordr_name = $("#ordererName").text();                                                           // 변수명 : orderer_name - 저장값 : 주문자이름를 저장한 요소 참조
                     let ordr_mpno = $("#ordererMpno").text();                                                           // 변수명 : orderer_mpno - 저장값 : 주문자휴대폰번호를 저장한 요소 참조
                     ordr_mpno =formatMpnoWitoutHyphen(ordr_mpno);                                                       // 주문자휴대전화번호에서 하이픈 삭제(010-8888-9999 -> 01088889999)
@@ -479,10 +491,16 @@
             })                                                                                                          // $(document).ready(() => {}) end
         </script>
         <%@ include file="/WEB-INF/views/include/footer.jsp" %>                                                          <!-- include 액션 태그 - footer -->
-        <div class="background show" id="orderFormSubmitFailModal">
+        <div class="background show" id="orderFormNoRecipientInfo">
             <div class="popup order-cancel__popup">
                 <div class="order-cancel__popup-title">받으실 분 정보를 입력해주세요.</div>
-                <button type="button" id="orderFormSubmitFailureBtn">확인</button>
+                <button type="button" id="noRecipientInfoModalBtn">확인</button>
+            </div>
+        </div>
+        <div class="background show" id="orderFormNoOrdererInfo">
+            <div class="popup order-cancel__popup">
+                <div class="order-cancel__popup-title">보내는 분 정보를 입력해주세요.</div>
+                <button type="button" id="noOrdererInfoModalBtn">확인</button>
             </div>
         </div>
     </body>

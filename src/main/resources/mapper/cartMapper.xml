@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jangbogo.mall.dao.CartMapper">
-
     <!--
         태   그 : select
         기   능 : 회원번호가 #{user_idx}인 회원의 장바구니 물품 전체 목록을 조회한다.
@@ -49,5 +48,4 @@
         SET PROD_CNT = #{upt_cnt}
         WHERE prod_idx = #{prod_idx} AND user_idx = #{user_idx};
     </update>
-
 </mapper>
