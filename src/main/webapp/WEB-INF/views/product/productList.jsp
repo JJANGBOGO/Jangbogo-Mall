@@ -9,6 +9,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <html>
 <head>
+    <link rel="stylesheet" href="/css/productReview.css"/>
+    <link rel="stylesheet" href="/css/productReviewModal.css"/>
+    <%@ include file="/WEB-INF/views/include/header.jsp" %>
+    <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
     <link rel="stylesheet" href="/css/product/productList.css"/>
     <title>Title</title>
 </head>
@@ -80,11 +84,8 @@
                 <div class="modal-product-info" class="css-1sjnt6v e1b27mtb8">
                     <div class="product-info-name-wrap" class="css-1066lcq e1b27mtb7">
                 <span class="product-info-name" class="css-rsi182 e1b27mtb6">
-                  [델리치오] 호주산 목초육 안심 스테이크 250g (냉장)
+<%--                  [델리치오] 호주산 목초육 안심 스테이크 250g (냉장)--%>
                 </span>
-                    </div>
-                    <div class="product-info-point" class="css-e7dd1m e1b27mtb5">
-                        적립제외상품
                     </div>
                     <div
                             class="product-info-price-wrap"
@@ -92,10 +93,10 @@
                     >
                         <div class="product-info-price" class="css-0 e1b27mtb3">
                   <span class="price-dc" class="css-1jjhy4o e1b27mtb2">
-                    18,320원
+<%--                    18,320원--%>
                   </span>
                             <span class="price-origin" class="css-16pwusi e1b27mtb1">
-                    22,900원
+<%--                    22,900원--%>
                   </span>
                         </div>
                         <div
@@ -126,7 +127,8 @@
                         <p class="total-info-name" class="css-pp0jbi e9qarb87">합계</p>
                         <div>
                   <span class="total-info-num" class="css-6zcwtk e9qarb86">
-                    18,320
+<%--                    18,320--%>
+
                   </span>
                             <span class="total-info-text" class="css-1h22y54 e9qarb85">
                     원
@@ -210,8 +212,8 @@
         $('.total-num').html("총 "+totalCnt+"건");
 
         let tmp = "";
+        productLists.sort(() => Math.random() -0.5);
         productLists.forEach(function(productList) {
-
 
             let test = productList.price;
             let withComma = test.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -226,9 +228,9 @@
             tmp += '<img class="product-img-img" sizes="100vw" src='+ productList.upload_path +' alt="상품이미지" />'
             tmp += '</span>'
             tmp += '<div class="product-button-wrap">'
-            tmp += '<button class="wishlist-button" onclick="return false;">'
+            tmp += '<button class="wishlist-button" data-prod_idx=' + productList.prod_idx + '>'
             tmp += '<img '
-            tmp += 'class="wishlist-button-img"'
+            tmp += 'class="wishlist-button-img" '
             tmp += 'src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDUiIGhlaWdodD0iNDUiIHZpZXdCb3g9IjAgMCA0NSA0NSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGNpcmNsZSBmaWxsPSIjMkEwMDM4IiBvcGFjaXR5PSIuNSIgY3g9IjIyLjUiIGN5PSIyMi41IiByPSIyMi41Ii8+CiAgICAgICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTEuMDMgMTQuMzgpIiBzdHJva2U9IiNGRkYiIHN0cm9rZS1saW5lY2FwPSJzcXVhcmUiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPgogICAgICAgICAgICA8cGF0aCBzdHJva2Utd2lkdGg9IjEuNCIgZD0ibTIwLjQ2IDIuOTEtMi4xNyA5LjIzSDUuODdMMy43MSAyLjkxeiIvPgogICAgICAgICAgICA8Y2lyY2xlIHN0cm9rZS13aWR0aD0iMS4yIiBjeD0iMTYuMzUiIGN5PSIxNi44NiIgcj0iMS43Ii8+CiAgICAgICAgICAgIDxjaXJjbGUgc3Ryb2tlLXdpZHRoPSIxLjIiIGN4PSI3LjgyIiBjeT0iMTYuODYiIHI9IjEuNyIvPgogICAgICAgICAgICA8cGF0aCBzdHJva2Utd2lkdGg9IjEuNCIgZD0iTTAgMGgzLjAybDEuNDEgNS45OCIvPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg=="'
             tmp += 'alt="장바구니 아이콘" />'
             tmp += '</button>'
@@ -241,6 +243,7 @@
             tmp += '<p class="product-content">'+ productList.ctent +'</p>'
             tmp += '<div class="product-price-wrap">'
             tmp += '<div class="product-price">'
+            tmp += '<span class="dc_rate">' + productList.dc_rate +"%"+'</span>'
             tmp += '<span class="price">' + withComma + '<span class="won">원</span>'
             tmp += '</span>'
             tmp += '</div>'
@@ -252,7 +255,6 @@
             tmp += '</a>'
         })
 
-
         return tmp;
     }
 
@@ -261,7 +263,7 @@
 
         $.ajax({
             type: 'GET',
-            url: '/productList/list?prod_idx'+prod_idx,
+            url: '/productList/list?prod_idx',
             success: function(result) {
                 $('.products-box').html(productToList(result));
             },
@@ -271,16 +273,113 @@
 
         $(".products-box").on("click",".wishlist-button", function (e) {
             e.preventDefault();
-            // alert("show!!")
-            // $('.modal_body').attr('class', ' show');
-            // $('.modal_body').addClass('show')
-            // alert("alert!!");
-            $('.modal_body').css('display', 'block');
+
+            let prod_idx = $(this).data("prod_idx");
+            console.log("prod_idx"+prod_idx); //18
+
+
+
+            let user_idx = "${user_idx}";
+            if(user_idx == "") {
+                alert("회원만 장바구니 담기가 가능합니다.");
+                return;
+            }
+
+            let title = $(this).parent().parent().parent().siblings().find(".product-title").text();
+
+            let price = $(this).parent().parent().parent().siblings().find(".product-price-wrap").children().find(".price").text();
+            let dc_rate = $(this).parent().parent().parent().siblings().find(".product-price-wrap").children().find(".dc_rate").text();
+
+            let regex = /[^0-9]/g;
+            let numPrice = price.replace(regex, ""); //문자열 뺀 숫자 17900
+            let dcPrice = dc_rate.replace(regex, "");
+            let withComma = numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            $(".product-info-name").text(title);
+            $(".price-origin").text(withComma+"원")
+
+            let calcPrice = Math.floor(numPrice - numPrice * (dcPrice / 100));
+            let calcPriceWithComma = calcPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            // console.log("dcPrice"+dcPrice); //20
+            $(".price-dc").text(calcPriceWithComma+"원");
+            $(".total-info-num").text(calcPriceWithComma);
+            $(".modal_body").css("display", "block");
+            $(".button-cart").data("prod_idx", prod_idx);
+        })
+
+        $(".button-back").click(function(e) {
+            e.preventDefault();
+
+            $(".scale").text("1")
+
+            $(".modal_body").css("display", "none");
+        })
+
+        $(".button-cart").click(function(e) {
+            e.preventDefault();
+
+            let prod_idx = $(this).data("prod_idx");
+
+            let prod_cnt = $(".scale").text();
+
+            $.ajax({
+                type: 'POST',
+                url: '/productList/cart?prod_idx='+prod_idx+'&prod_cnt='+prod_cnt,
+                success: function(msg) {
+                    if(msg === "INSERT_OK") {
+                        alert("장바구니에 상품이 담겼습니다.");
+                    } else if (msg === "UPDATE_OK") {
+                        alert("장바구니에 상품이 담겼습니다.\n이미 담은 상품의 수량을 추가했습니다.");
+                    }
+                },
+                error: function() {alert("장바구니 담기에 문제가 발생했습니다.")}
+            })
+            $(".scale").text("1")
+
+            $(".modal_body").css("display", "none");
+        })
+
+        $(".down-scale").click(function(e) {
+            e.preventDefault();
+            let num = parseInt($('.scale').text());
+            if(!(num < 2)){
+                let minusNum = num - 1;
+                $('.scale').text(minusNum);
+                let textNum = $('.scale').text();
+                let regex = /[^0-9]/g;
+                let origin = ($('.price-dc').text()).replace(regex, "");
+
+                let calcPrice = (textNum * origin).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                $('.total-info-num').text(calcPrice);
+            }
+
+            if($(".scale").text() == 1) {
+                $(".up-scale").attr("disabled", false);
+            }
 
         })
 
-        // $(".button-back").on("click")
+        $(".up-scale").click(function(e) {
+            e.preventDefault();
+
+            let init = parseInt($('.scale').text());
+            if(init <= 9){
+                let plusNum = init + 1;
+                $('.scale').text(plusNum);
+                let regex = /[^0-9]/g;
+                let numPrice = ($('.price-dc').text()).replace(regex, "");
+                let calcPrice = Math.floor(plusNum * parseInt(numPrice));
+                let withComma = calcPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                $('.total-info-num').text(withComma);
+            }
+            if($(".scale").text() > 1) {
+                $(".down-scale").attr("disabled", false);
+            }
+            if($(".scale").text() == 10) {
+                $(".up-scale").attr("disabled", true);
+            }
+        })
     })
 </script>
 </body>
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </html>

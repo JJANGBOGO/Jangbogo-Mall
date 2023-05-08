@@ -31,13 +31,14 @@
                                         name="seler_prod_cd"
                                         type="number"
                                         placeholder="코드를 등록하면 쉽게 상품을 관리할 수 있어요"
+
                                 />
                             </div>
                             <div class="error-msg seler-prod-cd">9자 이내의 숫자로 작성해 주세요</div>
                         </div>
 <%--                        <div class="btn-space"></div>--%>
                         <div class="btn-space">
-                            <button class="duplicate">중복확인</button>
+                            <button class="duplicate" id="seler-prod-check">중복확인</button>
                         </div>
                     </div>
                     <div class="input-line">
@@ -327,7 +328,7 @@
                         </div>
 <%--                        <div class="btn-space"></div>--%>
                         <div class="btn-space">
-                            <button class="duplicate">기간확인</button>
+                            <button class="duplicate" id="date_check">기간확인</button>
                         </div>
                     </div>
                     <div class="input-line">
@@ -595,9 +596,32 @@
         return tmp;
     }
 
+
+
+    function selerProdCheck(selerProdInput, selerProdBtn) {
+        if(!selerProdBtn.is(":disabled")) {
+            alert("상품코드 중복확인 필수입니다.");
+            selerProdInput.foucs();
+            return false;
+        }
+        return true;
+    }
+
+    function dateCheck(dateInput, dateBtn) {
+        if(!dateBtn.is(":disabled")) {
+            alert("기간확인을 해주세요.")
+            dateInput.focus();
+            return false;
+        }
+        return true;
+    }
+
     $(document).ready(function () {
         toggleDcInput();
         toggleSleDateInput();
+
+
+
 
         $("select[name=cate_idx]").change(function (e) {
             //val은 대분류에만 해당하며, 카테고리 테이블의 id값과 일치함 //카테고리 아이디 받아서 배송방식 엮어오기
@@ -713,22 +737,63 @@
         let upload_path_list = $(".upload-result.repr-path ul");
         let upload_products_list = $(".upload-result.products ul");
 
-        $(".duplicate").on("click", function(e){
+        $("#seler-prod-check").on("click", function(e){
             e.preventDefault();
             let seler_prod_cd = $('input[name=seler_prod_cd]').val();
+            // let sle_start_tm = $('input[name=sle_start_tm]').val();
+            // let sle_end_tm = $('input[name=sle_end_tm]').val();
+
+            if(seler_prod_cd === "" || seler_prod_cd.length > 9) {
+                alert("알맞은 상품 코드를 입력해 주세요");
+                seler_prod_cd.focus();
+                return false;
+            }
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/seller/register/checkData/selerProdCd',
+                headers : { "content-type": "application/json"}, // 요청 헤더
+                data: JSON.stringify({ seler_prod_cd: seler_prod_cd}),
+                success: function(msg) {
+                    if (msg === "OK") {
+                        alert("사용 가능합니다.");
+                        $("#seler-prod-check").attr("disabled", true);
+                        $('input[name=seler_prod_cd]').attr("readonly", true);
+
+                    } else if(msg === "DUPLICATE_NUMBER"){
+                        alert("중복됩니다");
+                    }
+                },
+                error: function() {alert("요청중 오류가 발생했습니다")}
+            })
+
+        })
+
+        $("#date_check").on("click", function(e) {
+            e.preventDefault();
+
             let sle_start_tm = $('input[name=sle_start_tm]').val();
             let sle_end_tm = $('input[name=sle_end_tm]').val();
 
             $.ajax({
                 type: 'POST',
-                url: '/seller/register/checkData',
+                url: '/seller/register/checkData/sleTm',
                 headers : { "content-type": "application/json"}, // 요청 헤더
-                data: JSON.stringify({ seler_prod_cd: seler_prod_cd, sle_start_tm: sle_start_tm, sle_end_tm: sle_end_tm}),
+                data: JSON.stringify({sle_start_tm: sle_start_tm, sle_end_tm: sle_end_tm}),
                 success: function(msg) {
-                    if (msg === "OK") {
-                        alert("사용 가능합니다.")
-                    }else {
-                        alert("중복됩니다");
+                    if(msg === "DEFICIENT_VALUES") {
+                        alert("두 개의 날짜를 같이 채워주세요.");
+                    } else if(msg === "SAME_DATE") {
+                        alert("동일한 날짜 입니다. 다시 입력해주세요.");
+                    } else if(msg === "CONFIRM") {
+                        alert("확인되었습니다.");
+                        $("#date_check").attr("disabled", true);
+                        $('input[name=sle_start_tm]').attr("readonly", true);
+                        $('input[name=sle_end_tm]').attr("readonly", true);
+                    } else if(msg === "RETURN") {
+                        alert("일치하지 않은 형식입니다. 다시 확인해 주세요.")
+                        $('input[name=sle_start_tm]').focus();
                     }
                 },
                 error: function() {alert("요청중 오류가 ..발생")}
@@ -793,6 +858,16 @@
             e.preventDefault();
             let form = $(".reg-form");
 
+            let selerProdInput = $("#seler_prod_cd");
+            let selerProdBtn = $("#seler-prod-check");
+
+            if(!selerProdCheck(selerProdInput, selerProdBtn)) return false;
+
+            let dateInput = $("#sle_start_tm");
+            let dateBtn = $("#date_check");
+            if($("input[name=sle_date_type]").val() == 2) {
+                if (!dateCheck(dateInput, dateBtn)) return false;
+            }
             // if (!validateProduct()) return false;  //유효성 검사 추후 개발 예정
 
             let base_path = "/display?fileName=";
