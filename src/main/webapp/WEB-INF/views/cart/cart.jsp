@@ -67,7 +67,8 @@
                 tmp += '<div class=item__count>' + item.prod_cnt + "</div>";
                 tmp += '<div id="addBtn">+</div>';
                 tmp += '</div>';
-                tmp += "<div class='cart_item__price'>" + formatPriceWithComma(item.prod_price * item.prod_cnt) + "</div><span>원</span>";
+
+                tmp += "<div class='cart_item__price'>" + formatPriceWithComma(item.prod_price - (item.prod_price / 100 * item.dc_rate)* item.prod_cnt )  + "</div><span>원</span>";
                 tmp += '<div class="cart_item__close">&times;</div>';
                 tmp += '</div>';
                 tmp += '</li>';
