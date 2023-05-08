@@ -84,7 +84,7 @@
             const orderBtnToHtml = (items) => {
                 let price = 0;                                                                                          // 변수명 : price - 저장값 : 결제 총 금액
                 items.forEach((item) => {
-                    price += item.prod_price - (item.prod_price / 100 * item.dc_rate)* item.prod_cnt;
+                    price += Math.floor(item.prod_price - (item.prod_price / 100 * item.dc_rate)) * item.prod_cnt;
                 })
                 let tmp = "";                                                                                           // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
                 tmp += "<span>";
@@ -100,7 +100,7 @@
             const invoiceToHtml = (items) => {
                 let price = 0;                                                                                          // 변수명 : price - 저장값 : 결제 총 금액
                 items.forEach((item) => {
-                    price += item.prod_price - (item.prod_price / 100 * item.dc_rate)* item.prod_cnt
+                    price += Math.floor(item.prod_price - (item.prod_price / 100 * item.dc_rate)) * item.prod_cnt
                 })
                 let tmp = "";                                                                                           // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
                 tmp += '<div class="order-amount__box">'
@@ -158,7 +158,7 @@
                     tmp += "<div class='order-item__title'>" + item.prod_name + "</div>";
                     tmp += '<div class="order-item__contents">';
                     tmp += '<div class="order-item__count">' + item.prod_cnt + "<span>개</span></div>";
-                    tmp += "<div class='order-item__price'>" + formatPriceWithComma(item.prod_price - (item.prod_price / 100 * item.dc_rate)* item.prod_cnt ) + "<span>원</span></div>";
+                    tmp += "<div class='order-item__price'>" + formatPriceWithComma(Math.floor(item.prod_price - (item.prod_price / 100 * item.dc_rate)) * item.prod_cnt) + "<span>원</span></div>";
                     tmp += '</div>';
                     tmp += '</li>';
                     itemsQuantity += item.prod_cnt;                                                                     // 변수 itemsQuantity에 각 품목의 개수만큼 추가한다.
