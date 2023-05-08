@@ -54,6 +54,7 @@
     display: flex;
     -webkit-box-pack: center;
     justify-content: center;
+    gap: 20px;
     margin-top: 40px;
 }
 .check-pwd-form .button-box button{
@@ -69,6 +70,12 @@
     border: 0px none;
 
     font-size: 16px;
+}
+
+.check-pwd-form .button-box #withdraw {
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    background: white;
 }
 
 

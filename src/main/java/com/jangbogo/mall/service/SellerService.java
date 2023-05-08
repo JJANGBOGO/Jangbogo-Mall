@@ -6,7 +6,7 @@ import com.jangbogo.mall.domain.SellerDtl;
 public interface SellerService {
 
     //판매자 탈퇴
-    int withdrawSeller(Integer idx, String email) throws Exception;
+    boolean withdrawSeller(Integer idx, String email) throws Exception;
 
     //판매자조회
     Seller getSellerByIdx (Integer idx) throws Exception;

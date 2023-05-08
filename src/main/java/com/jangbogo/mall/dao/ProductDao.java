@@ -17,5 +17,8 @@ public interface ProductDao {
 
     //상품 검색
     List<ProductDto> searchProductList (String keyword) throws Exception;
+
+    //판매자 탈퇴 시 상품 판매 중지
+    int stopSale (Integer idx) throws Exception;
 }
 

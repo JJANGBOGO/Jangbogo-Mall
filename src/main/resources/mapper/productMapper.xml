@@ -5,7 +5,8 @@
 <mapper namespace="com.jangbogo.mall.dao.ProductMapper">
 
     <select id="getListBySeller" resultType="ProductDto">
-        SELECT P.SELER_PROD_CD,
+        SELECT P.IDX,
+               P.SELER_PROD_CD,
                P.UPLOAD_PATH,
                P.NAME,
                P.CTENT,
@@ -33,11 +34,17 @@
                P.ASCR,
                S.CPNM
         FROM PRODUCT AS P
-        INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND D.REG_STATE_CD = 1
-        AND P.NAME LIKE CONCAT('%', #{keyword}, '%')
-        OR P.CTENT LIKE CONCAT('%', #{keyword}, '%')
-        INNER JOIN SELER S ON P.SELER_IDX = S.IDX
+                 INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND D.REG_STATE_CD = 1
+                                              AND P.NAME LIKE CONCAT('%', #{keyword}, '%')
+            OR P.CTENT LIKE CONCAT('%', #{keyword}, '%')
+                 INNER JOIN SELER S ON P.SELER_IDX = S.IDX
         GROUP BY P.IDX;
     </select>
+
+    <update id="stopSale" parameterType="Integer">
+        UPDATE PROD_DTL
+        SET STATE_CD = 3
+        WHERE PROD_IDX = #{idx}
+    </update>
 
 </mapper>

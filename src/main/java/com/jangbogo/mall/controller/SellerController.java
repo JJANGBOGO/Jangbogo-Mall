@@ -32,16 +32,12 @@ public class SellerController {
     @Autowired
     SellerService service;
 
-//    @Autowired
-//    ProductService productService;
-
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
     //로그인화면
     @RequestMapping("/seller/login") //꼭 requestMapping
     public String loginSellerView(HttpServletRequest req, Authentication authentication) {
-
         String uri = req.getHeader("Referer");
         if (authentication != null) return "redirect:/";
 
@@ -252,7 +248,7 @@ public class SellerController {
                 return "redirect:/seller/withdraw";
             }
 
-            if (service.withdrawSeller(idx, email) != 1)
+            if (!service.withdrawSeller(idx, email)) //실패시 false
                 throw new Exception("withdraw failed");
 
             session.invalidate();

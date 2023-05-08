@@ -46,6 +46,7 @@
                 </div>
                 <!-- end of center-padding -->
                 <div class="button-box">
+                    <button id="withdraw">탈퇴하기</button>
                     <button id="verify_confirm">확인</button>
                 </div>
             </form>
@@ -62,6 +63,10 @@
 </script>
 <script>
     $(document).ready(function() {
+        $("#withdraw").click(function(e) {
+            e.preventDefault();
+            window.location.href = "/seller/withdraw";
+        });
         $("#verify_confirm").click(function(e){
             e.preventDefault();
             let pwd = $("input[name=pwd]").val();
