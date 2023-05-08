@@ -46,8 +46,8 @@
                 </div>
                 <!-- end of center-padding -->
                 <div class="button-box">
-                    <button id="withdraw">탈퇴하기</button>
                     <button id="verify_confirm">확인</button>
+                    <button id="withdraw">탈퇴하기</button>
                 </div>
             </form>
         </div>
