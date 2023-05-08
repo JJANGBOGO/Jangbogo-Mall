@@ -66,11 +66,7 @@
 <div class="magazine">
     <a href="" class="collection-link">
         <div class="img-box">
-            <img
-                    src="https://product-image.kurly.com/cdn-cgi/image/quality=85,width=1230/main/random-collection/article/pc/img/31b222c9-5995-4a1f-af82-06346c4f186d.png"
-                    alt=""
-                    class="main-img"
-            />
+            <img class="main-img" id="article_img"/>
         </div>
         <div class="mg-content">
             <strong>오늘의 장바구니 추천</strong>
@@ -78,89 +74,8 @@
         </div>
     </a>
     <div class="col-products">
-        <ul class="products-box">
-            <li>
-                <a href="">
-              <span class="pd-img">
-                <img
-                        src="https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=144/shop/data/goods/1648209013487l0.jpeg"
-                        alt=""
-                />
-              </span>
-                    <span class="pd-desc">
-                <p>[더플랜]왕의 안주</p>
-                <div class="pd-price">10,900원</div>
-              </span>
-                    <div class="cart-btn-box">
-                        <button>
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            담기
-                        </button>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-              <span class="pd-img">
-                <img
-                        src="https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=144/shop/data/goods/1648209013487l0.jpeg"
-                        alt=""
-                />
-              </span>
-                    <span class="pd-desc">
-                <p>[더플랜]왕의 안주</p>
-                <div class="pd-price">10,900원</div>
-              </span>
-                    <div class="cart-btn-box">
-                        <button>
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            담기
-                        </button>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-              <span class="pd-img">
-                <img
-                        src="https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=144/shop/data/goods/1648209013487l0.jpeg"
-                        alt=""
-                />
-              </span>
-                    <span class="pd-desc">
-                <p>[더플랜]왕의 안주</p>
-                <div class="pd-price">10,900원</div>
-              </span>
-                    <div class="cart-btn-box">
-                        <button>
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            담기
-                        </button>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-              <span class="pd-img">
-                <img
-                        src="https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=144/shop/data/goods/1648209013487l0.jpeg"
-                        alt=""
-                />
-              </span>
-                    <span class="pd-desc">
-                <p>[더플랜]왕의 안주</p>
-                <div class="pd-price">10,900원</div>
-              </span>
-                    <div class="cart-btn-box">
-                        <button>
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            담기
-                        </button>
-                    </div>
-                </a>
-            </li>
-            <a class="see-pd-all" href="/productList">전체 보기&gt;</a>
-        </ul>
+        <ul class="products-box"></ul>
+        <a class="see-pd-all" href="/productList">전체 보기&gt;</a>
     </div>
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
@@ -172,6 +87,8 @@
     if (msg === "WITHDRAW_OK") alert(withdraw_ok);
 </script>
 <script>
+    let ctg_arr = ["00", "01", "02", "03", "04", "06"]; //탭 카테고리. 최대 6개, 카테고리 탭 텍스트도 같이 수정할 것.
+
     //상품리스트를 html로 구현
     let renderPdList = (list, tab_id) => {
         let list_ref = $(".thum-list").eq(tab_id); //0,1,2,3,4,5
@@ -193,19 +110,49 @@
         });
         list_ref.append(str);
     }
-    //상품리스트 호출 ajax, create, append 상품 리스트
-    let reqPdList = (cate_idx, tab_id) => {
-        $.ajax({
-            url: '/list/pd',
-            data: {category: cate_idx},
-            type: 'GET',
-            success: function (list) {
-                renderPdList(list, tab_id);
-            },
-            error: function (err) {
-                alert(error_msg);
-            }
-        }); //$.ajax
+
+    let reqPdPromise = (cate_idx) => { //카테고리 idx로 해당 상품 리스트를 가져오는 promise
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: '/list/pd',
+                data: {category: cate_idx},
+                type: 'GET',
+                success: function (list) {
+                    resolve(list);
+                },
+                error: function () {
+                    reject(error_msg);
+                }
+            }); //$.ajax
+        });
+    }
+
+    let renderArticleList = (list) => { //
+        let str = "";
+        let list_ref = $(".products-box");
+        list.sort(() => Math.random() - 0.5); //전체 탭인 경우 list 랜덤돌리기
+        list.forEach((obj, i) => {
+            if (i === 0) $("#article_img").attr("src", obj.upload_path);
+            if (i > 3) return; //카테고리당 4개만 보여줌
+            str += '<li>'
+                + '<a href="/product/"' + obj.idx + '>'
+                + '<span class="pd-img">'
+                + '<img src="' + obj.upload_path + '"/>'
+                + '</span>'
+                + '<span class="pd-desc">'
+                + '<p>' + obj.name + '</p>'
+                + '<div class="pd-price">' + obj.prc + '</div>'
+                + '</span>'
+                + '<div class="cart-btn-box">'
+                + '<button>'
+                + '<i class="fa-solid fa-cart-shopping"></i>'
+                + '담기'
+                + '</button>'
+                + '</div>'
+                + '</a>'
+                + '</li>';
+        });
+        list_ref.append(str);
     };
 
     $(document).ready(function () {
@@ -214,12 +161,12 @@
         $(".thum-list").eq(0).addClass("show");
 
         //ajax로 5개 카테고리 상품리스트 + 전체 리스트 출력 (4개씩 출력)
-        reqPdList("00", 0); //전체, tab_id
-        reqPdList("01", 1); //과일, tab_id
-        reqPdList("02", 2); //채소, tab_id
-        reqPdList("03", 3); //생선, tab_id
-        reqPdList("04", 4); //육류, tab_id
-        reqPdList("06", 5); //간식과 디저트, tab_id
+        $.each(ctg_arr, function (idx, item) {
+            reqPdPromise(item).then(list => renderPdList(list, idx));
+        });
+
+        let random_ctg = Math.floor(Math.random() * ctg_arr.length); //카테고리 배열 중 한 개 값 선택
+        reqPdPromise(ctg_arr[random_ctg]).then(list => renderArticleList(list)); //카테고리
 
         // 탭 클릭 함수
         $(".tab-list").click(function (e) {
