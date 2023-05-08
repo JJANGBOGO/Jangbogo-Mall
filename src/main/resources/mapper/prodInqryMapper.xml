@@ -9,7 +9,7 @@
         select pi.idx as 'idx', pi.prod_idx as 'prod_idx', pi.user_idx as 'user_idx', pi.title as 'title', pi.ctent as 'ctent', pi.writer as 'writer', pi.res_state_cd as 'res_state_cd', pi.opub_yn as 'opub_yn', pi.wrt_tm as 'wrt_tm', pia.ctent as 'ans_content', pia.writer as 'ans_writer', pia.resps_tm as 'ans_write_time'
         from prod_inqry pi left join prod_inqry_ans pia
         on pi.idx = pia.idx
-        WHERE prod_idx = #{prod_idx} and pi.state_cd != 3
+        WHERE prod_idx = #{prod_idx} and pi.state_cd == 1
         ORDER BY pi.idx desc
     </select>
 <!--하나의 상품 게시판 안 상품문의 게시물의 전체 개수-->
