@@ -30,23 +30,23 @@
             <div class="products">
                 <div class="mini-filter">
                     <div class="total-num"></div>
-                    <ul class="filter-main">
-                        <li class="filter-name-wrap">
-                            <a href="" class="filter-name">신상품순</a>
-                        </li>
-                        <li class="filter-name-wrap">
-                            <a href="" class="filter-name">판매량순</a>
-                        </li>
-                        <li class="filter-name-wrap">
-                            <a href="" class="filter-name">혜택순</a>
-                        </li>
-                        <li class="filter-name-wrap">
-                            <a href="" class="filter-name">낮은 가격순</a>
-                        </li>
-                        <li class="filter-name-wrap">
-                            <a href="" class="filter-name">높은 가격순</a>
-                        </li>
-                    </ul>
+<%--                    <ul class="filter-main">--%>
+<%--                        <li class="filter-name-wrap">--%>
+<%--                            <a href="" class="filter-name">신상품순</a>--%>
+<%--                        </li>--%>
+<%--                        <li class="filter-name-wrap">--%>
+<%--                            <a href="" class="filter-name">판매량순</a>--%>
+<%--                        </li>--%>
+<%--                        <li class="filter-name-wrap">--%>
+<%--                            <a href="" class="filter-name">혜택순</a>--%>
+<%--                        </li>--%>
+<%--                        <li class="filter-name-wrap">--%>
+<%--                            <a href="" class="filter-name">낮은 가격순</a>--%>
+<%--                        </li>--%>
+<%--                        <li class="filter-name-wrap">--%>
+<%--                            <a href="" class="filter-name">높은 가격순</a>--%>
+<%--                        </li>--%>
+<%--                    </ul>--%>
                 </div>
                 <div class="products-box">
 
