@@ -100,6 +100,7 @@
             str += '<li>'
                 + '<a class="img-box" href="/product/' + obj.idx + '">'
                 + '<img src="' + obj.upload_path + '"alt="product-img" />'
+                + '<div class="cart-btn"><i id="cart_btn" class="fa-solid fa-cart-shopping" data-idx="'+obj.idx+ '"></i></div>'
                 + '</a>'
                 + '<div class="thum-desc">'
                 + '<a class="title"><h3>' + obj.name + '</h3></a>'
@@ -143,6 +144,12 @@
                 + '<p>' + obj.name + '</p>'
                 + '<div class="pd-price">' + formatPriceWithComma(obj.prc) + '원</div>'
                 + '</span>'
+                + '<div class="cart-btn-box">'
+                + '<button id="cart_btn" data-idx="' + obj.idx + '">'
+                + '<i class="fa-solid fa-cart-shopping"></i>'
+                + '담기'
+                + '</button>'
+                + '</div>'
                 + '</a>'
                 + '</li>';
         });
@@ -171,6 +178,36 @@
 
             $(".tab-button").eq(data_id).addClass("on");
             $(".thum-list").eq(data_id).addClass("show");
+        });
+
+        //장바구니 담기 버튼
+        let addCart = (e, this_ref) => {
+            e.preventDefault();
+            let prod_idx = this_ref.data("idx");
+            let prod_cnt = 1;
+
+            let user_idx = "${sessionScope.idx}";
+            if (user_idx === "") alert("로그인 후 이용해 주세요");
+
+            $.ajax({
+                type:'POST',       // 요청 메서드 // 위시리스트에서 장바구니에 담기
+                url: '/mypage/wishlists?prod_idx='+prod_idx+'&prod_cnt=' + prod_cnt,  // 요청 URI
+                success : function(result){
+                    if(result=="DEL_OK1") alert("장바구니에 상품이 담겼습니다");
+                    if(result=="DEL_OK2") alert("장바구니에 상품이 담겼습니다\n이미 담은 상품의 수량을 추가했습니다");
+                },
+                error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+            }); // $.ajax()
+        }
+
+        //탭 상품 리스트 장바구니 담기 버튼
+        $(".thum-list").on("click", ".fa-solid.fa-cart-shopping", function(e) {
+            addCart(e, $(this));
+        });
+
+        // 매거진 부분 장바구니 담기 버튼
+        $(".products-box").on("click", "#cart_btn", function(e) {
+            addCart(e, $(this));
         });
 
         //slideshow
