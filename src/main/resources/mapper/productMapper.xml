@@ -30,7 +30,11 @@
     <select id="searchProductList" resultType="ProductDto">
         SELECT P.NAME,
                P.UPLOAD_PATH,
-               P.PRC
+               P.PRC,
+               (select count(*)
+                from prod_late
+                WHERE PROD_IDX = P.IDX
+               ) as 'review_cnt'
         FROM PRODUCT AS P
                  INNER JOIN PROD_DTL D
                             ON P.IDX = D.PROD_IDX AND D.REG_STATE_CD = 2 AND P.DSPLY_STATE_CD = 1 AND D.STATE_CD = 1
