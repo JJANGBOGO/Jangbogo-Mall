@@ -4,7 +4,7 @@
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
     <link rel="stylesheet" href="/css/myPage/baseLayout.css"/>
     <link rel="stylesheet" href="/css/myPage/sidebar.css"/>
-    <link rel="stylesheet" href="/css/myPage/validateUser.css?v=2"/>
+    <link rel="stylesheet" href="/css/myPage/validateUser.css"/>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
@@ -42,6 +42,7 @@
                     </div>
                 </div>
                 <div class="button-box">
+                    <button id="withdraw">탈퇴하기</button>
                     <button id="verify_confirm">확인</button>
                 </div>
             </form>
@@ -59,6 +60,10 @@
 </script>
 <script>
     $(document).ready(function() {
+        $("#withdraw").click(function(e) {
+            e.preventDefault();
+            window.location.href = "/user/withdraw";
+        });
         $("#verify_confirm").click(function(e){
             e.preventDefault();
             let pwd = $("input[name=pwd]");

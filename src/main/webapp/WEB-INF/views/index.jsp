@@ -182,7 +182,7 @@
     let renderPdList = (list, tab_id) => {
         let list_ref = $(".thum-list").eq(tab_id); //0,1,2,3,4,5
         let str = "";
-        if (tab_id === 0) list.sort(() => Math.random() - 0.5); //전체 탭인 경우 list 랜덤돌리기
+        list.sort(() => Math.random() - 0.5); //전체 탭인 경우 list 랜덤돌리기
         list.forEach((obj, i) => {
             if (i > 3) return; //카테고리당 4개만 보여줌
             str += '<li>'

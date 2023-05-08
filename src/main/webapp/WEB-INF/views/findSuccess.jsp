@@ -47,9 +47,11 @@
                         <button class="login">로그인하기</button>
                     </a>
                 </c:if>
-                <a href="/find/pwd">
-                    <button class="find-pwd">비밀번호 찾기</button>
-                </a>
+                <c:if test="${type ne 'pwd'}">
+                    <a href="/find/pwd">
+                        <button class="find-pwd">비밀번호 찾기</button>
+                    </a>
+                </c:if>
             </div>
         </div>
     </div>

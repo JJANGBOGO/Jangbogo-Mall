@@ -21,16 +21,25 @@ public class ProductServiceImpl implements ProductService {
         return dao.getListBySeller(seler_idx);
     }
 
-   @Override
-   public List<ProductDto> getListByCategory (String category) throws Exception {
+    @Override
+    public List<ProductDto> getListByCategory(String category) throws Exception {
         return dao.getListByCategory(category);
-   }
+    }
 
-   @Override
-   public List<ProductDto> searchProductList (String keyword) throws Exception {
+    @Override
+    public List<ProductDto> searchProductList(String keyword) throws Exception {
         return dao.searchProductList(keyword);
-   }
+    }
 
+    @Override
+    public int stopSale(List<ProductDto> prouductList) throws Exception {
+        final int SUCCESS = 1;
+        final int FAILED = 0;
+        for (ProductDto productDto : prouductList) {
+            if (dao.stopSale(productDto.getIdx()) != 1) return FAILED;
+        }
+        return SUCCESS;
+    }
 
 
 }
