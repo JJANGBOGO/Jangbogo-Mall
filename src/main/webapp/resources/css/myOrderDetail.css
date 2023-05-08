@@ -61,6 +61,14 @@
     white-space: normal; */
     text-decoration: none;
 }
+
+.orderDetail-dc_rate{
+    margin-right: 4px;
+    font-size: 16px;
+    color: rgb(250, 98, 47);
+    font-weight: bold;
+}
+
 .orderDetail-price{
     margin-right: 6px;
     font-weight: bold;
