@@ -5,11 +5,9 @@
     <link rel="stylesheet" href="/css/myPage/baseLayout.css"/>
     <link rel="stylesheet" href="/css/myPage/sidebar.css"/>
     <link rel="stylesheet" href="/css/myPage/validateUser.css"/>
-    <%--    경로에 warning이 뜨면 카멜케이스로 명명 수정한다. mypage(x) myPage(o). 어길시 css 404--%>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
-<div class="mypage-banner"></div>
 <div class="mypage-base">
     <%@ include file="/WEB-INF/views/include/sidebarSeller.jsp" %>
     <div class="mypage-content">

@@ -18,7 +18,6 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
-<div class="mypage-banner"></div>
 <div class="mypage-base">
     <%@ include file="/WEB-INF/views/include/sidebarSeller.jsp" %>
     <div class="mypage-content">
