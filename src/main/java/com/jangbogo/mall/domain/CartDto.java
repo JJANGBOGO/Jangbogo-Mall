@@ -17,6 +17,8 @@ public class CartDto {
     private String addr_base;                                                                                           // 기본주소
     private String addr_dtl;                                                                                            // 상세주소
 
+    private Integer dc_rate;
+
     public CartDto() {}
 
     public CartDto(Integer prod_idx, Integer user_idx, String prod_name, Integer prod_price, Integer prod_cnt, String upload_path) {
@@ -117,10 +119,16 @@ public class CartDto {
         this.addr_dtl = addr_dtl;
     }
 
+    public Integer getDc_rate() {
+        return dc_rate;
+    }
+
+    public void setDc_rate(Integer dc_rate) {
+        this.dc_rate = dc_rate;
+    }
+
 
     // toString
-
-
     @Override
     public String toString() {
         return "{" +
@@ -135,6 +143,7 @@ public class CartDto {
                 ", upt_tm=" + upt_tm +
                 ", addr_base='" + addr_base + '\'' +
                 ", addr_dtl='" + addr_dtl + '\'' +
+                ", dc_rate=" + dc_rate +
                 '}';
     }
 }

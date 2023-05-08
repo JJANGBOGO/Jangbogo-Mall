@@ -3,6 +3,7 @@ package com.jangbogo.mall.domain;
 import java.util.Date;
 
 public class ProdReviewDto {
+    // 상품후기(PROD_LATE)
     private Integer idx; // 상품후기일련번호
     private Integer ord_idx; // 주문번호
     private Integer prod_idx; // 상품번호
@@ -16,6 +17,7 @@ public class ProdReviewDto {
     private Integer rnk_cd; // 상품후기등급코드
     private String opub_yn; // 상품후기공개여부
     private Integer decl_cnt; // 상품후기신고개수
+    private Integer state_cd; // 상품후기상태코드 (등록,삭제)
     private Date crt_tm; // 최초등록일자
     private Integer crt_idx; // 최초등록자식별번호
     private Date upt_tm; // 최종수정일자
@@ -25,15 +27,17 @@ public class ProdReviewDto {
     private String name; // 상품이름
     private String upload_path;
 
-    // 생성자와 equals and hashcode 안만들었음
 
-
+    // Constructor(생성자)
     public ProdReviewDto(){};
     public ProdReviewDto(Integer idx, String ctent, String writer) {
         this.idx = idx;
         this.ctent = ctent;
         this.writer = writer;
     }
+
+    // Getter and Setter
+
 
     public Integer getIdx() {
         return idx;
@@ -139,6 +143,14 @@ public class ProdReviewDto {
         this.decl_cnt = decl_cnt;
     }
 
+    public Integer getState_cd() {
+        return state_cd;
+    }
+
+    public void setState_cd(Integer state_cd) {
+        this.state_cd = state_cd;
+    }
+
     public Date getCrt_tm() {
         return crt_tm;
     }
@@ -187,6 +199,8 @@ public class ProdReviewDto {
         this.upload_path = upload_path;
     }
 
+    // toString()
+
     @Override
     public String toString() {
         return "ProdReviewDto{" +
@@ -203,6 +217,7 @@ public class ProdReviewDto {
                 ", rnk_cd=" + rnk_cd +
                 ", opub_yn='" + opub_yn + '\'' +
                 ", decl_cnt=" + decl_cnt +
+                ", state_cd=" + state_cd +
                 ", crt_tm=" + crt_tm +
                 ", crt_idx=" + crt_idx +
                 ", upt_tm=" + upt_tm +

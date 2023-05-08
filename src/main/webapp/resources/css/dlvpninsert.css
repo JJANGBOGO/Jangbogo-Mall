@@ -50,9 +50,9 @@ button{
     width: 120px;
     height: 44px;
     border-radius: 3px;
-    color: rgb(95, 0, 128);
+    color: #f58412;
     background-color: rgb(255, 255, 255);
-    border: 1px solid rgb(95, 0, 128);
+    border: 1px solid #f58412;
     margin-top: 16px;
 }
 .addr-dtl{

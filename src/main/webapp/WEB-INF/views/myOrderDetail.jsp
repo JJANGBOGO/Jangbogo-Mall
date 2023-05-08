@@ -316,6 +316,14 @@
         $(".insert-btn").click(function(){
             let prod_idx = $('input[name=hidden_input]').text(); // 상품번호
             let prod_cnt = $('.count').text();       // 장바구니에 담을 상품개수
+
+            // 숫자만 입력받는 정규식
+            let check = /^[1-1000000000]+$/;
+            if (!check.test(prod_cnt)) {
+                alert("정확한 수량을 선택해 주세요");
+                return;
+            }
+
             $.ajax({
                 type:'POST',       // 요청 메서드 // 위시리스트에서 장바구니에 담기
                 url: '/mypage/order/detail/insertCart?prod_idx='+prod_idx+'&prod_cnt=' + prod_cnt,  // 요청 URI
@@ -398,10 +406,10 @@
     }
 
     let OrderDetailToHtml = function (orders){
-        let orderStatus = ""; // 주문상태
+        let orderStatus = "";       // 주문상태
         let safekeeping_mthd = "";  // 배송유형
-        let mean = ""; // 결제수단
-        let packing_mthd = ""; // 포장유형
+        let mean = "";              // 결제수단
+        let packing_mthd = "";      // 포장유형
         let tmp = '<div class="orderDetail-header">'
         tmp += '<h2>주문 내역 상세</h2>'
         tmp += '</div>'
@@ -414,7 +422,12 @@
             tmp += '<img src="'+order.upload_path+'" alt="" >'
             tmp += '<div class="orderDetail-content">'
             tmp += '<a href="">'+order.prod_nm+'</a>'
-            tmp += '<div><span class="orderDetail-price">'+formatPriceWithComma(order.prod_prc)+'원</span><span class="orderDetail-count">'+order.prod_qty+'개</span></div>'
+            tmp += '<div><span class="orderDetail-price">'+formatPriceWithComma(order.prod_prc - (order.prod_prc / 100 * order.dc_rate))+'원</span>'
+            if(order.dc_rate != 0){
+                tmp += '<span class="orderDetail-priceOrigin">'+formatPriceWithComma(order.prod_prc )+'원</span>'
+            }
+            tmp += '<span class="orderDetail-count">'+order.prod_qty+'개</span>'
+            tmp += '</div>'
             tmp += '</div>'
             if (order.ord_state_cd == 1) {
                 orderStatus = '결제완료';
@@ -490,7 +503,7 @@
         tmp += '</div>'
         tmp += '<ul class="orderDetail-address_list">'
         tmp += '<li><span class="key">받는 분</span><span class="value">'+orders[0].rcpr_nm+'</span></li>'
-        tmp += '<li><span class="key">핸드폰</span><span class="value">'+orders[0].rcpr_mpno+'</span></li>'
+        tmp += '<li><span class="key">핸드폰</span><span class="value">'+formatMpnoWithHyphen(orders[0].rcpr_mpno)+'</span></li>'
         tmp += '<li><span class="key">주소</span><span class="value">'+orders[0].rcpr_addr_base+' '+orders[0].rcpr_addr_dtl+'</span></li>'
         tmp += '<li><span class="key">받으실 장소</span><span class="value">'+orders[0].plrcv+'</span></li>'
         tmp += '<li><span class="key">공동현관 출입방법</span><span class="value"></span></li>'
@@ -530,8 +543,14 @@
 
 
     // 정규식 함수화
+    // 기   능 : 인자값을 문자열로 변환한 뒤, 정규식을 활용하여 3자리마다 삽입한 콤마를 제거한다.
     let formatPriceWithComma = (price) => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    // 기   능 : 인자값을 문자열로 변환한 뒤, 정규식을 활용하여 각 자리에 하이픈을 삽입해준다.
+    let formatMpnoWithHyphen = (mpno) => {
+        return mpno.toString().replace(/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/,"$1-$2-$3");
     }
 
 

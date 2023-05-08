@@ -43,9 +43,7 @@
                             <button class="button1" type="button"></button>
                             <%--                        <button class="button3" type="button"></button>--%>
 
-                            <div class="count">
-
-                            </div>
+                            <div class="count"></div>
                             <button class="button2" type="button"></button>
                         </div>
                     </div>
@@ -102,6 +100,13 @@
         $(".insert-btn").click(function(){
             let prod_idx = $('input[name=hidden_input]').text(); // 상품번호
             let prod_cnt = $('.count').text();       // 장바구니에 담을 상품개수
+
+            // 숫자만 입력받는 정규식
+            let check = /^[1-1000000000]+$/;
+            if (!check.test(prod_cnt)) {
+                alert("정확한 수량을 선택해 주세요");
+                return;
+            }
             $.ajax({
                 type:'POST',       // 요청 메서드 // 위시리스트에서 장바구니에 담기
                 url: '/mypage/wishlists?prod_idx='+prod_idx+'&prod_cnt=' + prod_cnt,  // 요청 URI
