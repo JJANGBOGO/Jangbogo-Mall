@@ -199,6 +199,7 @@ public class SellerController {
         }
     }
 
+
     @PostMapping("/seller/modify")
     public String modifySeller(Seller seller, SellerDtl sellerDtl, HttpSession session, RedirectAttributes rattr) {
         String redirectUrl = "redirect:/seller/info";
@@ -217,6 +218,7 @@ public class SellerController {
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return redirectUrl;
         }
+        session.setAttribute("nickName", seller.getCpnm()); //세션 갱신
         return redirectUrl;
     }
 
