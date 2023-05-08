@@ -14,7 +14,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
+
 
 @Slf4j
 @Controller
@@ -131,13 +133,12 @@ public class RegisterController {
 //        return "";
 //    }
 
-    @PostMapping("/seller/register/checkData")
-    public ResponseEntity<String> checkData(HttpSession session, @RequestBody RegistProductDto registProductDto, RedirectAttributes rattr) {
+    @PostMapping("/seller/register/checkData/selerProdCd")
+    public ResponseEntity<String> checkSelerProdCd(HttpSession session, @RequestBody RegistProductDto registProductDto ) {
         try {
             Integer idx = (Integer) session.getAttribute("idx");
             registProductDto.setSeler_idx(idx);
             String msg = (registProductService.checkSellerProdCd(registProductDto) != 0) ? "DUPLICATE_NUMBER" : "OK";
-
 
             return ResponseEntity.ok().body(msg);
 
@@ -145,6 +146,38 @@ public class RegisterController {
             e.printStackTrace();
             return ResponseEntity.status(500).body("EXCPETION_ERR");
         }
+    }
+
+    @PostMapping("/seller/register/checkData/sleTm")
+    public ResponseEntity<String> checkSleTm(@RequestBody RegistProductDto registProductDto ) {
+        try {
+            Date sle_start_tm = registProductDto.getSle_start_tm();
+            Date sle_end_tm = registProductDto.getSle_end_tm();
+
+            String msg = "";
+            if (isNull(sle_start_tm) || isNull(sle_end_tm)) {  //둘 중 하나라도 안 들어갔을 때
+                msg = "DEFICIENT_VALUES";
+            } else if (!isNull(sle_start_tm) && !isNull(sle_end_tm)) {  // 둘 다 들어갔을 시
+                int result = sle_start_tm.compareTo(sle_end_tm);
+                if (result == 0) {
+                    msg = "SAME_DATE";
+                } else if (result < 0) {
+                    msg = "CONFIRM";
+                } else {
+                    msg = "RETURN";
+                }
+            } else {                                            //둘 다 안 들어갔을 시
+                msg = "RETURN";
+            }
+            return ResponseEntity.ok().body(msg);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("EXCPETION_ERR");
+        }
+    }
+
+    static boolean isNull(Date tm) {
+        return tm == null;
     }
 
 

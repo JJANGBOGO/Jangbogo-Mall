@@ -25,6 +25,10 @@ public class ProductListServiceImpl implements ProductListService {
         return productListDao.reviewNumSelect(prod_idx);
     }
 
+    public ProductListDto getModalInfo(ProductListDto productListDto) throws Exception {
+        return productListDao.getModalInfo(productListDto);
+    }
+
     @Override
     public List<ProductListDto> allProductInfoSelect( ) throws Exception {
         return productListDao.allProductInfoSelect();
