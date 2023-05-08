@@ -64,6 +64,9 @@
         <!--마이페이지-->
         <s:intercept-url pattern="/mypage/**" access="hasRole('ROLE_USER')"/>
 
+<!--        멤버 찾기-->
+        <s:intercept-url pattern="/find/**" access="isAnonymous()"/>
+
         <s:access-denied-handler ref="accessFailHandler"/>
         <s:csrf disabled="true"/><!--required-->
     </s:http>
