@@ -250,6 +250,20 @@
             $("#cpnm_duplicate_chk").attr("disabled", (cpnm == "${seller.cpnm}") ? true : false);
         });
 
+        $("#repr_nm").keyup(function() { //대표명
+            let repr_nm = $("#repr_nm").val();
+            let err_ref = $(".error-msg.repr-nm");
+            if (repr_nm === "") {
+                err_ref.html(repr_name_empty);
+                return false;
+            } else err_ref.empty();
+
+            if (repr_nm.length > 20) {
+                err_ref.html("20자 내로 입력해 주세요");
+                return false;
+            } else err_ref.empty();
+        });
+
         //새 비번 keyup
         $("#pwd").keyup(function () {
             let pwd = $("#pwd").val();
@@ -307,7 +321,6 @@
                 contentType: "application/json",
                 success: function (result) {
                     alert(mpno_send_ok);
-                    console.log(result, result.numStr);
                     mpno_verify_num = result.numStr;
 
                     if (mpno_ref.closest(".input-box").find("#mpno_verify").length == 0) {
@@ -425,9 +438,6 @@
                 cllr_telno_ref.focus();
                 return false;
             }
-
-            <%--let prev_pwd = "${seller.pwd}";--%>
-            // if (pwd_ref.val() == "") pwd_ref.val(prev_pwd); //새 비밀번호를 입력하지 않은 경우 기존 비밀번호를 넣는다.
             form.submit();
         });
     });
