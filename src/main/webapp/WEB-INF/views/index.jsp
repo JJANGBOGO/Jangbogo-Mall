@@ -99,12 +99,10 @@
             str += '<li>'
                 + '<a class="img-box" href="/product/' + obj.idx + '">'
                 + '<img src="' + obj.upload_path + '"alt="product-img" />'
-                + '<div class="cart-btn"><i class="fa-solid fa-cart-shopping"></i></div>'
                 + '</a>'
                 + '<div class="thum-desc">'
                 + '<a class="title"><h3>' + obj.name + '</h3></a>'
                 + '<div class="price">' + obj.prc + '원</div>'
-                // + '<div class="review-cnt">리뷰 수: ' + obj.review_cnt + '</div>' //아직 dto에 추가 안함
                 + '</div>'
                 + '</li>';
         });
@@ -127,7 +125,7 @@
         });
     }
 
-    let renderArticleList = (list) => { //
+    let renderArticleList = (list) => { // 2번째 섹션
         let str = "";
         let list_ref = $(".products-box");
         list.sort(() => Math.random() - 0.5); //전체 탭인 경우 list 랜덤돌리기
@@ -135,7 +133,7 @@
             if (i === 0) $("#article_img").attr("src", obj.upload_path);
             if (i > 3) return; //카테고리당 4개만 보여줌
             str += '<li>'
-                + '<a href="/product/"' + obj.idx + '>'
+                + '<a href="/product/' + obj.idx + '">'
                 + '<span class="pd-img">'
                 + '<img src="' + obj.upload_path + '"/>'
                 + '</span>'
@@ -143,12 +141,6 @@
                 + '<p>' + obj.name + '</p>'
                 + '<div class="pd-price">' + obj.prc + '</div>'
                 + '</span>'
-                + '<div class="cart-btn-box">'
-                + '<button>'
-                + '<i class="fa-solid fa-cart-shopping"></i>'
-                + '담기'
-                + '</button>'
-                + '</div>'
                 + '</a>'
                 + '</li>';
         });
@@ -196,7 +188,7 @@
             x[myIndex - 1].style.display = "block";
             setTimeout(carousel, 2000); // Change image every 2 seconds
         }
-    });
+    }); // end of ready
 </script>
 </body>
 </html>
