@@ -58,6 +58,14 @@ public class ProdController {
 
             List<ProductFileDto> fileList = productDetailService.findProdFile(prod_idx);
             m.addAttribute("fileList", fileList);
+
+
+            if(productDetailService.checkWishlist(prod_idx, session_idx) == 0) {
+                m.addAttribute("msg","no");
+            } else {
+                m.addAttribute("msg","ok");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

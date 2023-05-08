@@ -74,5 +74,22 @@ public class AddressDaoImpl implements AddressDao {
         return session.selectOne(nameSpace + "selectAddressSelected", user_idx);
     }
 
+    @Override
+    public String checkIS_DEFAULT_YN(Integer idx) throws Exception { // 배송지 선택
+        return session.selectOne(nameSpace+"checkIS_DEFAULT_YN",idx);
+    }
+
+    @Override
+    public Integer checkIS_FIRST_YN(Integer user_idx) throws Exception {
+        return session.selectOne(nameSpace+"checkIS_FIRST_YN",user_idx);
+    }
+
+    @Override
+    public Integer insertAddrDefault(Integer user_idx, Address addr) throws Exception {
+        Map map = new HashMap();
+        map.put("user_idx", user_idx);
+        map.put("addr", addr);
+        return session.selectOne(nameSpace+"insertAddrDefault",map);
+    }
 
 }
