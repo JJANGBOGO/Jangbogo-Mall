@@ -60,6 +60,11 @@
             </div>
             <script>
                 $(document).ready(() => {
+                    if(opener.$("#deliveryRecipient span:first-child").html() !== "받으실 분 정보를 입력해주세요.") {            // 받으실 분, 휴대폰 정보가 입력된 경우
+                        $("input#receiver-name").val(opener.$("#deliveryRecipient span:first-child").html());             // input의 초기 값을 입력된 값으로 설정
+                        $("input#receiver-phone").val(opener.$("#deliveryRecipient span:last-child").html());            // input의 초기 값을 입력된 값으로 설정
+                    }
+
                     // 주문자와 동일 체크된 경우
                     // 받으실 분 과 휴대전화 번호 input 값을 부모창의 값들로 채운다.
                     let recipient = opener.$("#ordererName").html();

@@ -240,7 +240,11 @@
                 tmp += "</div>"
                 tmp += "<div class='delivery-value'>"
                 tmp += "<div class='delivery-value__column' id='deliveryRecipient'>"
-                tmp += "<span>" + "받으실 분 정보를 입력해주세요." + "</span>"
+                if(deliveryInfo.rcpr_nm === null || deliveryInfo.rcpr_nm === "") {                                      // 배송정보 중 '받으실 분' 이 null이거나 빈 문자열인 경우
+                    tmp += "<span>" + "받으실 분 정보를 입력해주세요." + "</span>"
+                } else {
+                    tmp += "<span>" + deliveryInfo.rcpr_nm + "</span> , <span>" + formatMpnoWithHyphen(deliveryInfo.rcpr_mobl_no) + "</span>"
+                }
                 tmp += "</div>"
                 tmp += "<div class='delivery-value__column' id='deliveryLocation'>"
                 tmp += "</div>"
@@ -325,6 +329,7 @@
                     success: (result) => {                                                                              // 성공 응답이 오면, 배송 정보를 페이지에 랜더링하기
                         $('#deliveryInform').html(deliveryToHtml(result));                                              // deliveryToHtml메서드 호출
                         $('#deliveryRecipient > span').css('color', 'rgb(240, 63, 64)');
+                        ($('#deliveryRecipient > span').text() === "보내는 분 정보를 입력해주세요.") ? $('#deliveryRecipient > span').css('color', 'rgb(240, 63, 64)') : $('#deliveryRecipient > span').css('color', 'black');
                     },
                     error : function() { alert("showDeliveryInfo 실패 응답 : 회원번호 누락");}                                // 실패 응답이 오면, 경고창 띄우기
                 });                                                                                                     // $.ajax() end                 //
@@ -403,7 +408,7 @@
                 // 이벤트 핸들러 기능 : '결제하기' 버튼 클릭 시,                                                                  (3) 결제 페이지로 이동
                 $(document).on("click", "#paymentBtn", (e) => {
 
-                    if($('#ordererModBtn').text() !== '수정') {                                                          // 버튼 클릭 시, 주문자 정보가 입력되지 않으면 모달창을 불러온다.
+                    if($('#ordererModBtn').text() === '입력') {                                                          // 버튼 클릭 시, 주문자 정보가 입력되지 않으면 모달창을 불러온다.
                         // display:none -> display: block으로 바꿔야 한다.
                         $('div#orderFormNoOrdererInfo').css('display', 'block');
                         $(document).on("click", "#noOrdererInfoModalBtn", () => {
