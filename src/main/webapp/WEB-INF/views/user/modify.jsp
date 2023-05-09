@@ -8,7 +8,6 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
-<div class="mypage-banner"></div>
 <div class="mypage-base">
     <%@ include file="/WEB-INF/views/include/sidebar.jsp" %>
     <div class="mypage-content">
@@ -257,7 +256,6 @@
                 contentType: "application/json",
                 success: function (result) {
                     alert(mpno_send_ok);
-                    console.log(result, result.numStr);
                     mpno_verify_num = result.numStr;
 
                     if (mpno_ref.closest(".input-box").find("#mpno_verify").length == 0) {

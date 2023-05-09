@@ -12,7 +12,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
-<div class="mypage-banner"></div>
+<div class="mypage-banner"><img src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/5743dc11-54b5-4140-a574-d0424e6414eb.jpg"></div>
 <div class="mypage-base">
     <%@ include file="/WEB-INF/views/include/sidebar.jsp" %>
     <div class="wishlist">
@@ -24,6 +24,9 @@
                 <span class="titlespan">찜한 상품은 최대 200개까지 저장됩니다</span>
             </div>
             <div class="wishlist-list">
+
+            </div>
+            <div class="wishlist-notice">
 
             </div>
         </div>
@@ -87,6 +90,9 @@
             success : function(result){
                 $(".wishlist-list").html(listToHtml(result));    // 서버로부터 응답이 도착하면 호출될 함수
                 $(".prdcnt").html(result.length);
+                if(result.length==0){
+                    $(".wishlist-notice").html(nolistToHtml())
+                }
             },
             error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
         }); // $.ajax()
@@ -208,7 +214,7 @@
             tmp +=                  '<div class="wishlist-prices">'
             if(product.dc_rate!=0){
                 tmp += '<span class="wishlist-dc_rate" id="dc_rate">'+product.dc_rate+'%</span>'
-                tmp += '<span class="wishlist-dc_prc" id="dc_prc">' +formatPriceWithComma(product.prc - (product.prc / 100 * product.dc_rate))+ '원</span>'
+                tmp += '<span class="wishlist-dc_prc" id="dc_prc">' +  formatPriceWithComma((product.prc - Math.floor(product.prc / 100 * product.dc_rate)))+ '원</span>'
                 tmp += '<span class="wishlist-prc" id="prc">'+formatPriceWithComma(product.prc)+'원</span>'
             }else {
                 tmp += '<span class="wishlist-dc_prc" id="prc">'+formatPriceWithComma(product.prc)+'원</span>'
@@ -225,6 +231,27 @@
         })
         return tmp + "</div>";
     }
+
+    let nolistToHtml = function (){
+        let tmp = '';
+
+        tmp += '<div>'
+        tmp += '<svg width="60" height="60" viewBox="0 0 68 68">'
+        tmp += '<path class="heartpath" stroke="#e2e2e2" d="M57.025 14.975c-5.3-5.3-13.889-5.3-19.186 0L34 18.812l-3.837-3.837c-5.3-5.3-13.89-5.3-19.19 0-5.296 5.297-5.296 13.886 0 19.186l3.838 3.837 18.482 18.485a1 1 0 0 0 1.414 0s0 0 0 0l18.482-18.485h0l3.837-3.837c5.3-5.3 5.3-13.89 0-19.186z"></path>'
+        tmp += '</svg>'
+        tmp += '</div>'
+        tmp += '<strong class="strong-heart">찜한 상품이 없습니다.</strong>'
+        tmp += '<button class="goToProd-btn">'
+        tmp += '<span>상품 보기</span>'
+        tmp += '</button>'
+
+        return tmp;
+    }
+
+    // 위시리스트 상품이 없을때 상품 보기(버튼) 클릭 시 상품 전체 url경로 이동하기
+    $('.dlvpn-notice').on("click", '.goToProd-btn', function () {
+        // location.href = "여기다 경로 적기"
+    })
 
     // 정규식 함수화
     let formatPriceWithComma = (price) => {

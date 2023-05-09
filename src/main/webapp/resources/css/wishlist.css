@@ -1,5 +1,5 @@
 .king{
-    width: 1000px;
+    width: 820px;
     margin: auto;
 }
 
@@ -145,4 +145,52 @@ a {
     letter-spacing: -0.3px;
     color: rgb(153, 153, 153);
     line-height: 20px;
+}
+
+
+/*위시리스트 상품이 없을때*/
+.wishlist-notice{
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+    height: 557px;
+}
+
+.heartpath{
+    stroke-width: 1;
+    stroke-linecap: round;
+    fill: none;
+    fill-rule: evenodd;
+}
+
+.strong-heart{
+    display: block;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: normal;
+    color: rgb(181, 181, 181);
+}
+
+.goToProd-btn{
+    display: block;
+    padding: 0px 10px;
+    text-align: center;
+    overflow: hidden;
+    width: 150px;
+    height: 44px;
+    border-radius: 3px;
+    color: rgb(255, 255, 255);
+    background-color: #f58412;
+    border: 0px none;
+    cursor: pointer;
+}
+
+.goToProd-btn span{
+    font-size: 14px;
+    line-height: 44px;
+    color: white;
 }

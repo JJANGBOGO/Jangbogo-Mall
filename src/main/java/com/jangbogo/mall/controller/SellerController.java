@@ -75,7 +75,7 @@ public class SellerController {
     //이메일 중복 체크
     @PostMapping("/seller/duplicate/email")
     @ResponseBody
-    public ResponseEntity<String> chkDuplicateEmail(String email, String type) {
+    public ResponseEntity<String> chkDuplicateEmail(String email) {
         try {
             String msg = (!service.isEmailDuplicated(email)) ? "OK" : "DUPLICATED";
             return ResponseEntity.ok().body(msg);
@@ -199,6 +199,7 @@ public class SellerController {
         }
     }
 
+
     @PostMapping("/seller/modify")
     public String modifySeller(Seller seller, SellerDtl sellerDtl, HttpSession session, RedirectAttributes rattr) {
         String redirectUrl = "redirect:/seller/info";
@@ -212,12 +213,14 @@ public class SellerController {
             if (service.updateSeller(seller, sellerDtl) != 1)
                 throw new Exception("modify failed");
 
+            session.setAttribute("nickName", seller.getCpnm()); //세션 갱신
+            rattr.addFlashAttribute("msg", "MOD_OK"); // 수정완료 메세지
+            return redirectUrl;
         } catch (Exception e) {
             e.printStackTrace();
             rattr.addFlashAttribute("msg", "EXCEPTION_ERR");
             return redirectUrl;
         }
-        return redirectUrl;
     }
 
     //판매자탈퇴 뷰

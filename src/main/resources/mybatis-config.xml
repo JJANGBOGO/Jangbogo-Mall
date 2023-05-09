@@ -32,5 +32,8 @@
         <typeAlias alias="ProdReviewDto" type="com.jangbogo.mall.domain.ProdReviewDto"/>
         <typeAlias alias="MyOrderDto" type="com.jangbogo.mall.domain.MyOrderDto"/>
         <typeAlias alias="MyOrderDetailDto" type="com.jangbogo.mall.domain.MyOrderDetailDto"/>
+
+        <typeAlias alias="UserInquiryDto" type="com.jangbogo.mall.domain.UserInquiryDto"/>
+        <typeAlias alias="UserInquiryListDto" type="com.jangbogo.mall.domain.UserInquiryListDto"/>
     </typeAliases>
 </configuration>
