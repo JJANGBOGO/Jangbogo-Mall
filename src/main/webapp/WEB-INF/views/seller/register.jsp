@@ -458,7 +458,6 @@
                 accept: "application/json",
                 success: function (result) {
                     let biz_state = result.data[0].b_stt_cd;
-                    console.log(result);
                     if (biz_state === "") {
                         alert("국세청에 등록되지 않은 사업자 번호입니다.");
                     } else if (biz_state !== "01") { //계속사업자가 아님
@@ -593,9 +592,8 @@
                 data: JSON.stringify({to: mpno_ref.val()}), // 객체를 전송할때는 stringify() 필요, @RequestBody때문
                 type: 'POST',
                 contentType: "application/json",
-                success: function (result) { // test, 문자열 온다.
+                success: function (result) {
                     alert(mpno_send_ok);
-                    console.log(result, result.numStr);
                     mpno_verify_num = result.numStr;
                     if (mpno_ref.closest(".input-box").find("#mpno_verify").length == 0) {
                         mpno_ref.closest(".input-box").append('<div class="input">' +

@@ -8,7 +8,6 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
-<div class="mypage-banner"></div>
 <div class="mypage-base">
     <%@ include file="/WEB-INF/views/include/sidebar.jsp" %>
     <div class="mypage-content">
@@ -42,8 +41,8 @@
                     </div>
                 </div>
                 <div class="button-box">
-                    <button id="withdraw">탈퇴하기</button>
                     <button id="verify_confirm">확인</button>
+                    <button id="withdraw">탈퇴하기</button>
                 </div>
             </form>
         </div>

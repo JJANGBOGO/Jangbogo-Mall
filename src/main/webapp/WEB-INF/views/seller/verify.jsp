@@ -5,11 +5,9 @@
     <link rel="stylesheet" href="/css/myPage/baseLayout.css"/>
     <link rel="stylesheet" href="/css/myPage/sidebar.css"/>
     <link rel="stylesheet" href="/css/myPage/validateUser.css"/>
-    <%--    경로에 warning이 뜨면 카멜케이스로 명명 수정한다. mypage(x) myPage(o). 어길시 css 404--%>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
-<div class="mypage-banner"></div>
 <div class="mypage-base">
     <%@ include file="/WEB-INF/views/include/sidebarSeller.jsp" %>
     <div class="mypage-content">
@@ -46,8 +44,8 @@
                 </div>
                 <!-- end of center-padding -->
                 <div class="button-box">
-                    <button id="withdraw">탈퇴하기</button>
                     <button id="verify_confirm">확인</button>
+                    <button id="withdraw">탈퇴하기</button>
                 </div>
             </form>
         </div>
@@ -56,10 +54,10 @@
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
     let msg = "${msg}";
-    if(msg == "PWD_EMPTY_ERR") alert("비밀번호를 입력해 주세요");
-    if(msg == "NOT_FOUND_ERR") alert("정보를 찾을 수 없습니다");
-    if(msg == "EXCEPTION_ERR") alert("오류가 발생했습니다. 다시 시도해 주세요");
-    if(msg == "OK") alert("회원정보 수정을 성공했습니다");
+    if(msg === "PWD_EMPTY_ERR") alert("비밀번호를 입력해 주세요");
+    if(msg === "NOT_FOUND_ERR") alert("정보를 찾을 수 없습니다");
+    if(msg === "EXCEPTION_ERR") alert("오류가 발생했습니다. 다시 시도해 주세요");
+    if(msg === "MOD_OK") alert("판매자 정보 수정을 성공했습니다");
 </script>
 <script>
     $(document).ready(function() {
@@ -70,7 +68,7 @@
         $("#verify_confirm").click(function(e){
             e.preventDefault();
             let pwd = $("input[name=pwd]").val();
-            if($.trim(pwd) == "") {
+            if($.trim(pwd) === "") {
                 alert("비밀번호를 입력해주세요"); //ok
             } else {
                 $(".check-pwd-form").submit();
