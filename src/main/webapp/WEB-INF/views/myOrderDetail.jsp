@@ -15,7 +15,7 @@
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
-<div class="mypage-banner"></div>
+<div class="mypage-banner"><img src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/5743dc11-54b5-4140-a574-d0424e6414eb.jpg"></div>
 <div class="mypage-base">
     <%@ include file="/WEB-INF/views/include/sidebar.jsp" %>
     <div class="orderDetail-container">
@@ -258,7 +258,7 @@
                 // ctent.focus()
                 $('.content').attr("tabindex",-1);
                 $('.content').focus();
-                console.log(ctent.length);
+                // console.log(ctent.length);
                 return;
             }
 
