@@ -23,9 +23,6 @@
 
         </div>
         <h3 class="category-name">상품</h3>
-<%--        <ul class="cate-list">--%>
-<%--&lt;%&ndash;            <li class="cate-name"></li>&ndash;%&gt;--%>
-<%--        </ul>--%>
         <div class="product-main">
             <div class="products">
                 <div class="mini-filter">
@@ -84,75 +81,65 @@
                 <div class="modal-product-info" class="css-1sjnt6v e1b27mtb8">
                     <div class="product-info-name-wrap" class="css-1066lcq e1b27mtb7">
                 <span class="product-info-name" class="css-rsi182 e1b27mtb6">
-<%--                  [델리치오] 호주산 목초육 안심 스테이크 250g (냉장)--%>
                 </span>
                     </div>
                     <div
                             class="product-info-price-wrap"
-                            class="css-1sr55yd e1b27mtb4"
                     >
-                        <div class="product-info-price" class="css-0 e1b27mtb3">
-                  <span class="price-dc" class="css-1jjhy4o e1b27mtb2">
-<%--                    18,320원--%>
+                        <div class="product-info-price">
+                  <span class="price-dc">
                   </span>
-                            <span class="price-origin" class="css-16pwusi e1b27mtb1">
-<%--                    22,900원--%>
+                            <span class="price-origin">
                   </span>
                         </div>
                         <div
                                 class="product-info-price-button"
-                                class="e1b27mtb0 css-2v1lnp e1cqr3m40"
                         >
                             <button
                                     type="button"
                                     aria-label="수량내리기"
                                     disabled=""
                                     class="down-scale"
-                                    class="css-1e90glc e1hx75jb0"
                             ></button>
-                            <div class="scale" class="count css-6m57y0 e1cqr3m41">1</div>
+                            <div class="scale">1</div>
                             <button
                                     type="button"
                                     aria-label="수량올리기"
                                     class="up-scale"
-                                    class="css-18y6jr4 e1hx75jb0"
                             ></button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="total-info-wrap" class="css-uy4qy4 e1xnucib0">
-                <div class="total-info" class="css-1fttcpj e9qarb89">
-                    <div class="total-info-head" class="css-1066lcq e9qarb88">
-                        <p class="total-info-name" class="css-pp0jbi e9qarb87">합계</p>
+            <div class="total-info-wrap">
+                <div class="total-info">
+                    <div class="total-info-head">
+                        <p class="total-info-name">합계</p>
                         <div>
-                  <span class="total-info-num" class="css-6zcwtk e9qarb86">
-<%--                    18,320--%>
+                  <span class="total-info-num">
 
                   </span>
-                            <span class="total-info-text" class="css-1h22y54 e9qarb85">
+                            <span class="total-info-text">
                     원
                   </span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="modal-button-group" class="css-1toes8l e1vslu8h0">
+            <div class="modal-button-group">
                 <button
                         class="button-back"
-                        class="css-wg85j7 e4nu7ef3"
                         type="button"
                 >
-              <span class="button-back-text" class="css-ymwvow e4nu7ef1">
+              <span class="button-back-text">
                 취소
               </span>
                 </button>
                 <button
                         class="button-cart"
-                        class="css-1qirdbn e4nu7ef3"
                         type="button"
                 >
-              <span class="button-cart-text" class="css-ymwvow e4nu7ef1">
+              <span class="button-cart-text">
                 장바구니 담기
               </span>
                 </button>
@@ -299,7 +286,6 @@
 
             let calcPrice = Math.floor(numPrice - numPrice * (dcPrice / 100));
             let calcPriceWithComma = calcPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-            // console.log("dcPrice"+dcPrice); //20
             $(".price-dc").text(calcPriceWithComma+"원");
             $(".total-info-num").text(calcPriceWithComma);
             $(".modal_body").css("display", "block");
