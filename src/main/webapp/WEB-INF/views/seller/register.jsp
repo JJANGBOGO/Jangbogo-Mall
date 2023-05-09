@@ -784,6 +784,9 @@
             let bnr_path = $(".upload-result.bnr ul li").data("upload-path");
             let profile_path = $(".upload-result.profile ul li").data("upload-path");
 
+            if (bnr_path === undefined) bnr_path = "default_banner.jpeg"; //이미지 없을 경우 기본값 설정
+            if (profile_path === undefined) profile_path = "default_profile.png";
+
             let files = "<input type='hidden' name='brnd_bnr_upload_path' value=" + bnr_path + ">" +
                 "<input type='hidden' name='brnd_upload_path' value=" + profile_path + ">";
 
