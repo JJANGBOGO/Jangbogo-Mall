@@ -54,164 +54,105 @@
         </li>
     </ul>
     <div class="tab-content">
-        <ul class="thum-list" data-id="00"></ul>
-        <ul class="thum-list" data-id="01"></ul>
-        <ul class="thum-list" data-id="02"></ul>
-        <ul class="thum-list" data-id="03"></ul>
-        <ul class="thum-list" data-id="04"></ul>
-        <ul class="thum-list" data-id="05"></ul>
+        <ul class="thum-list"></ul>
+        <ul class="thum-list"></ul>
+        <ul class="thum-list"></ul>
+        <ul class="thum-list"></ul>
+        <ul class="thum-list"></ul>
+        <ul class="thum-list"></ul>
     </div>
 </div>
-<a class="see-pd-all" href="">전체 보기&gt;</a>
+<a class="see-pd-all" href="/productList">전체 보기&gt;</a>
 <div class="magazine">
     <a href="" class="collection-link">
         <div class="img-box">
-            <img
-                    src="https://product-image.kurly.com/cdn-cgi/image/quality=85,width=1230/main/random-collection/article/pc/img/31b222c9-5995-4a1f-af82-06346c4f186d.png"
-                    alt=""
-                    class="main-img"
-            />
+            <img class="main-img" id="article_img"/>
         </div>
         <div class="mg-content">
-            <strong>컬리 추천 꼬치 대백과</strong>
-            <p>
-                봄향기 나는 3월의 시작. 여행이나 캠핑을 준비한다면 주목하세요.
-                저녁식사를 빛내줄 컬리의 꼬치를 모두 모아봤어요. 남녀노소 좋아하는
-                닭꼬치부터 자꾸만 당기는 마시멜로까지. 간단한 맥주 안주로도 바비큐
-                안주로도 제격입니다. 다양한 컬리 추천 꼬치들과 함께 멋진 저녁 시간을
-                완성하세요.
-            </p>
+            <strong>오늘의 장바구니 추천</strong>
+            <p>봄을 맞아 하는 일이 모두 잘되시길 기원합니다. 맛있는 음식이 힘을 북돋아 줄거에요!</p>
         </div>
     </a>
     <div class="col-products">
-        <ul class="products-box">
-            <li>
-                <a href="">
-              <span class="pd-img">
-                <img
-                        src="https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=144/shop/data/goods/1648209013487l0.jpeg"
-                        alt=""
-                />
-              </span>
-                    <span class="pd-desc">
-                <p>[더플랜]왕의 안주</p>
-                <div class="pd-price">10,900원</div>
-              </span>
-                    <div class="cart-btn-box">
-                        <button>
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            담기
-                        </button>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-              <span class="pd-img">
-                <img
-                        src="https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=144/shop/data/goods/1648209013487l0.jpeg"
-                        alt=""
-                />
-              </span>
-                    <span class="pd-desc">
-                <p>[더플랜]왕의 안주</p>
-                <div class="pd-price">10,900원</div>
-              </span>
-                    <div class="cart-btn-box">
-                        <button>
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            담기
-                        </button>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-              <span class="pd-img">
-                <img
-                        src="https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=144/shop/data/goods/1648209013487l0.jpeg"
-                        alt=""
-                />
-              </span>
-                    <span class="pd-desc">
-                <p>[더플랜]왕의 안주</p>
-                <div class="pd-price">10,900원</div>
-              </span>
-                    <div class="cart-btn-box">
-                        <button>
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            담기
-                        </button>
-                    </div>
-                </a>
-            </li>
-            <li>
-                <a href="">
-              <span class="pd-img">
-                <img
-                        src="https://img-cf.kurly.com/cdn-cgi/image/quality=85,width=144/shop/data/goods/1648209013487l0.jpeg"
-                        alt=""
-                />
-              </span>
-                    <span class="pd-desc">
-                <p>[더플랜]왕의 안주</p>
-                <div class="pd-price">10,900원</div>
-              </span>
-                    <div class="cart-btn-box">
-                        <button>
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            담기
-                        </button>
-                    </div>
-                </a>
-            </li>
-            <a class="see-pd-all" href="">전체 보기&gt;</a>
-        </ul>
+        <ul class="products-box"></ul>
+        <a class="see-pd-all" href="/productList">전체 보기&gt;</a>
     </div>
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 <script src="/js/member/msg.js"></script>
+<script src="/js/order/format.js"></script>
 <script>
     let msg = "${msg}";
     if (msg === "EXCEPTION_ERR") alert("예상치 못한 오류가 발생했습니다. 불편을 끼쳐드려 죄송합니다.");
     if (msg === "WITHDRAW_OK") alert(withdraw_ok);
 </script>
 <script>
-    //상품리스트를 html로 구현
-    let renderPdList = (list, tab_id) => {
+    let ctg_arr = ["00", "01", "02", "03", "04", "06"]; //탭 카테고리. 최대 6개, 수정 시, 카테고리 탭 텍스트도 같이 수정할 것.
+
+    let renderPdList = (list, tab_id) => {//상품리스트를 html로 구현
         let list_ref = $(".thum-list").eq(tab_id); //0,1,2,3,4,5
         let str = "";
-        list.sort(() => Math.random() - 0.5); //전체 탭인 경우 list 랜덤돌리기
+        list.sort(() => Math.random() - 0.5); //랜덤 돌리기
         list.forEach((obj, i) => {
-            if (i > 3) return; //카테고리당 4개만 보여줌
+            if (i > 7) return; //카테고리당 4개만 보여줌
             str += '<li>'
                 + '<a class="img-box" href="/product/' + obj.idx + '">'
                 + '<img src="' + obj.upload_path + '"alt="product-img" />'
-                + '<div class="cart-btn"><i class="fa-solid fa-cart-shopping"></i></div>'
+                + '<div class="cart-btn"><i id="cart_btn" class="fa-solid fa-cart-shopping" data-idx="' + obj.idx + '"></i></div>'
                 + '</a>'
                 + '<div class="thum-desc">'
-                + '<a class="title"><h3>' + obj.name + '</h3></a>'
-                + '<div class="price">' + obj.prc + '원</div>'
-                // + '<div class="review-cnt">리뷰 수: ' + obj.review_cnt + '</div>' //아직 dto에 추가 안함
+                + '<a class="title"><h3>[' + obj.cpnm + '] ' + obj.name + '</h3></a>'
+                + '<div class="price">' + formatPriceWithComma(obj.prc) + '원</div>'
+                + '<div class="review-cnt">리뷰 수: ' + obj.review_cnt + '</div>'
                 + '</div>'
                 + '</li>';
         });
         list_ref.append(str);
     }
-    //상품리스트 호출 ajax, create, append 상품 리스트
-    let reqPdList = (cate_idx, tab_id) => {
-        $.ajax({
-            url: '/list/pd',
-            data: {category: cate_idx},
-            type: 'GET',
-            success: function (list) {
-                renderPdList(list, tab_id);
-            },
-            error: function (err) {
-                alert(error_msg);
-            }
-        }); //$.ajax
+
+    let reqPdPromise = (cate_idx) => { //카테고리 idx로 해당 상품 리스트를 가져오는 promise
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: '/list/pd',
+                data: {category: cate_idx},
+                type: 'GET',
+                success: function (list) {
+                    resolve(list);
+                },
+                error: function () {
+                    reject(error_msg);
+                }
+            }); //$.ajax
+        });
+    }
+
+    let renderArticleList = (list) => { // 2번째 매거진 부분
+        let str = "";
+        let list_ref = $(".products-box");
+        list.sort(() => Math.random() - 0.5);
+        list.forEach((obj, i) => {
+            if (i === 0) $("#article_img").attr("src", obj.upload_path);
+            if (i > 3) return; //카테고리당 4개만 보여줌
+            str += '<li>'
+                + '<a href="/product/' + obj.idx + '">'
+                + '<span class="pd-img">'
+                + '<img src="' + obj.upload_path + '"/>'
+                + '</span>'
+                + '<span class="pd-desc">'
+                + '<p>[' + obj.cpnm + '] ' + obj.name + '</p>'
+                + '<div class="pd-price">' + formatPriceWithComma(obj.prc) + '원</div>'
+                + '</span>'
+                + '<div class="cart-btn-box">'
+                + '<button id="cart_btn" data-idx="' + obj.idx + '">'
+                + '<i class="fa-solid fa-cart-shopping"></i>'
+                + '담기'
+                + '</button>'
+                + '</div>'
+                + '</a>'
+                + '</li>';
+        });
+        list_ref.append(str);
     };
 
     $(document).ready(function () {
@@ -220,12 +161,12 @@
         $(".thum-list").eq(0).addClass("show");
 
         //ajax로 5개 카테고리 상품리스트 + 전체 리스트 출력 (4개씩 출력)
-        reqPdList("00", 0); //전체, tab_id
-        reqPdList("01", 1); //과일, tab_id
-        reqPdList("02", 2); //채소, tab_id
-        reqPdList("03", 3); //생선, tab_id
-        reqPdList("04", 4); //육류, tab_id
-        reqPdList("06", 5); //간식과 디저트, tab_id
+        $.each(ctg_arr, function (idx, item) {
+            reqPdPromise(item).then(list => renderPdList(list, idx));
+        });
+
+        let random_ctg = Math.floor(Math.random() * ctg_arr.length); //카테고리 배열 중 한 개 값 선택
+        reqPdPromise(ctg_arr[random_ctg]).then(list => renderArticleList(list)); //카테고리
 
         // 탭 클릭 함수
         $(".tab-list").click(function (e) {
@@ -236,6 +177,38 @@
 
             $(".tab-button").eq(data_id).addClass("on");
             $(".thum-list").eq(data_id).addClass("show");
+        });
+
+        //장바구니 담기 버튼
+        let addCart = (e, this_ref) => {
+            e.preventDefault();
+            let prod_idx = this_ref.data("idx");
+            let prod_cnt = 1;
+
+            let user_idx = "${sessionScope.idx}";
+            if (user_idx === "") alert("로그인 후 이용해 주세요");
+
+            $.ajax({
+                type: 'POST',       // 요청 메서드 // 위시리스트에서 장바구니에 담기
+                url: '/mypage/wishlists?prod_idx=' + prod_idx + '&prod_cnt=' + prod_cnt,  // 요청 URI
+                success: function (result) {
+                    if (result == "DEL_OK1") alert("장바구니에 상품이 담겼습니다");
+                    if (result == "DEL_OK2") alert("장바구니에 상품이 담겼습니다\n이미 담은 상품의 수량을 추가했습니다");
+                },
+                error: function () {
+                    alert("error")
+                } // 에러가 발생했을 때, 호출될 함수
+            }); // $.ajax()
+        }
+
+        //탭 상품 리스트 장바구니 담기 버튼
+        $(".thum-list").on("click", ".fa-solid.fa-cart-shopping", function (e) {
+            addCart(e, $(this));
+        });
+
+        // 매거진 부분 장바구니 담기 버튼
+        $(".products-box").on("click", "#cart_btn", function (e) {
+            addCart(e, $(this));
         });
 
         //slideshow
@@ -255,7 +228,7 @@
             x[myIndex - 1].style.display = "block";
             setTimeout(carousel, 2000); // Change image every 2 seconds
         }
-    });
+    }); // end of ready
 </script>
 </body>
 </html>

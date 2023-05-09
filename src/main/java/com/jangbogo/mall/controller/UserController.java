@@ -344,6 +344,8 @@ public class UserController {
 
             session.removeAttribute("modify"); //수정 성공시 해당 세션도 삭제
             rattr.addFlashAttribute("msg", "MOD_OK"); // 수정완료 메세지
+            session.setAttribute("nickName", user.getNick_nm()); //세션 갱신
+            //nickName 스펠링 주의
             return "redirect:/user/info";
 
         } catch (Exception e) {

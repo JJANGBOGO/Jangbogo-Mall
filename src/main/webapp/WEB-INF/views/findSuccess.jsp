@@ -56,5 +56,17 @@
         </div>
     </div>
     <%@ include file="/WEB-INF/views/include/footer.jsp" %>
+    <%@ include file="/WEB-INF/views/include/script.jsp" %>
+    <script>
+        let type = "${type}";
+        let pwd_expired = type === "pwd" &&  "${toEmail}" === "";
+        let email_expired = type === "email" && ("${userEmail}" === "" && "${sellerEmail}" === "");
+
+        if (pwd_expired) window.location.href = "/find/pwd";
+        if (email_expired) window.location.href= "/find/email";
+
+        //type이 pwd인데 toEmail이 비었으면 redirect
+        //type이 email인데 sellerEmail, userEmail이 비었으면 redirect
+    </script>
 </body>
 </html>
