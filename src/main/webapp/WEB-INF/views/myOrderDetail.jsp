@@ -422,7 +422,11 @@
             tmp += '<img src="'+order.upload_path+'" alt="" >'
             tmp += '<div class="orderDetail-content">'
             tmp += '<a href="">'+order.prod_nm+'</a>'
-            tmp += '<div><span class="orderDetail-price">'+formatPriceWithComma(order.prod_prc - (order.prod_prc / 100 * order.dc_rate))+'원</span>'
+            tmp += '<div>'
+            if(order.dc_rate != 0){
+                tmp += '<span class="orderDetail-dc_rate" id="dc_rate">'+order.dc_rate+'%</span>'
+            }
+            tmp += '<span class="orderDetail-price">'+formatPriceWithComma((order.prod_prc - Math.floor(order.prod_prc / 100 * order.dc_rate)))+'원</span>'
             if(order.dc_rate != 0){
                 tmp += '<span class="orderDetail-priceOrigin">'+formatPriceWithComma(order.prod_prc )+'원</span>'
             }

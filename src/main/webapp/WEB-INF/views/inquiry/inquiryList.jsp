@@ -89,7 +89,7 @@
             line-height: 22px;
             border-bottom: 1px solid rgb(244, 244, 244);
             color: rgb(153, 153, 153);
-            margin-right: 12px;
+            /*margin-right: 12px;*/
         }
 
         .user_inqry-resp_state_cd{
@@ -101,7 +101,10 @@
             line-height: 22px;
             border-bottom: 1px solid rgb(244, 244, 244);
             color: rgb(153, 153, 153);
-            margin-right: 6px;
+            /*margin-right: 6px;*/
+        }
+        .user_inqry-resp_state_cd span{
+            color: #f58412;
         }
 
         .user_inqry-answer-box{
@@ -216,6 +219,9 @@
             background-color: #f58412;
             border: 0px none;
         }
+        .user_inqry_btn button span{
+            color: white;
+        }
 
         .response{
             display: flex;
@@ -250,6 +256,9 @@
             -webkit-box-align: center;
             align-items: center;
             margin-top: 20px;
+        }
+        .goToinqry-btn{
+            cursor: pointer;
         }
     </style>
 </head>
@@ -323,7 +332,7 @@
         <div class="none-user_inqry">게시글이 없습니다.</div>
         <div class="user_inqry_btn">
             <div></div>
-            <button><span>문의하기</span></button>
+            <button class="goToinqry-btn"><span>문의하기</span></button>
         </div>
     </div>
     <div id="review"></div>
@@ -333,6 +342,15 @@
 </div>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
+    $(document).ready(function () {
+        let msg = "${msg}"
+        if(msg=="INSERT_OK"){ alert("성공적으로 등록되었습니다.")}
+
+        // 문의하기 버튼 클릭 시 (문의작성 페이지로 이동)
+        $('.user_inqry-container').on("click", '.goToinqry-btn', function () {
+            location.href = "/mypage/inquiry";
+        })
+    })
 
 </script>
 </body>

@@ -49,6 +49,9 @@
 
 
         </div>
+        <div class="myOrder-notice">
+
+        </div>
     </div>
 
 </div>
@@ -117,6 +120,24 @@
         return tmp;
     }
 
+    let nolistToHtml = function (){
+        let tmp = '';
+
+        tmp += '<div>'
+        tmp += '<svg width="0" height="60" viewBox="0 0 68 68">'
+        tmp += '<img src="https://cdn-icons-png.flaticon.com/512/2298/2298276.png" width="100px" height="100px">'
+        // tmp += '<path class="heartpath" stroke="#e2e2e2" d="M57.025 14.975c-5.3-5.3-13.889-5.3-19.186 0L34 18.812l-3.837-3.837c-5.3-5.3-13.89-5.3-19.19 0-5.296 5.297-5.296 13.886 0 19.186l3.838 3.837 18.482 18.485a1 1 0 0 0 1.414 0s0 0 0 0l18.482-18.485h0l3.837-3.837c5.3-5.3 5.3-13.89 0-19.186z"></path>'
+        tmp += '</svg>'
+        tmp += '</div>'
+        tmp += '<strong class="strong-heart">주문내역이 없습니다.</strong>'
+        tmp += '<button class="goToProd-btn">'
+        tmp += '<span>주문하기</span>'
+        tmp += '</button>'
+
+
+        return tmp;
+    }
+
 
 
     // 주문 목록 조회 함수
@@ -130,11 +151,15 @@
             success : function(result){
                 $(".order-listbox").html(OrderListToHtml(result));      // 서버로부터 응답이 도착하면 호출될 함수
                 $(".count").html(result.length);
+                if(result.length==0){
+                    $(".myOrder-notice").html(nolistToHtml());
+                }
             },
             error   : function(){ alert("error") }                      // 에러가 발생했을 때, 호출될 함수
         }); // $.ajax()
 
     }
+
 
     // 정규식 함수화
     let formatPriceWithComma = (price) => {
