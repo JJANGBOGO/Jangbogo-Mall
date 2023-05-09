@@ -27,7 +27,7 @@
                                         id="email"
                                         name="email"
                                         type="text"
-                                        placeholder="jungsukmarket@naver.com"
+                                        placeholder="이메일을 입력해 주세요"
                                 />
                             </div>
                             <div class="error-msg email"></div>
