@@ -135,7 +135,6 @@ public class UserController {
                 int idx = userService.regSocialUser(user);
                 user = userService.selectUser(idx);
             } else {
-                log.info("이미 존재하는 이메일입니다.");
                 if (user.getState_cd() == 3) { //탈퇴한 경우 블락
                     rattr.addFlashAttribute("msg", "UNABLE");
                     return "redirect:/user/login";
@@ -189,7 +188,6 @@ public class UserController {
                 int idx = userService.regSocialUser(user);
                 user = userService.selectUser(idx);
             } else {
-                log.info("이미 존재하는 이메일입니다.");
                 if (user.getState_cd() == 3) {
                     rattr.addFlashAttribute("msg", "UNABLE");
                     return "redirect:/user/login";
@@ -226,7 +224,6 @@ public class UserController {
         Authentication authentication =
                 new UsernamePasswordAuthenticationToken(user, null, dto.getAuthorities()); //userDetailsDto.getAuthorities()식으로 권한을 추가해야 함
 
-        log.info("인증..." + authentication + "...." + dto.getAuthorities());
         SecurityContext securityContext = SecurityContextHolder.getContext();
         securityContext.setAuthentication(authentication);
         return true;
@@ -242,9 +239,6 @@ public class UserController {
     //가입처리
     @PostMapping("/user/register")
     public String registerUser(User user, Address addr, RedirectAttributes rattr) {
-        log.info("user...." + user);
-        log.info("addr...." + addr);
-
         try {
             if (userService.registerUser(user, addr) != 1)
                 throw new Exception("register failed");

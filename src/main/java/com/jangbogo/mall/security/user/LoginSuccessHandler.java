@@ -38,8 +38,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             HttpSession session = request.getSession();
 
             String prevPage = (String) session.getAttribute("prevPage");
-            log.info("prev 경로....." + prevPage);
-            //주소창에 직접 입력하면 prevPage가 null이다.
             redirectUrl = prevPage == null ? "/" : prevPage;
 
             //이전 페이지가 존재하면 지운다.
