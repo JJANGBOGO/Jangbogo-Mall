@@ -54,4 +54,37 @@ public class RegistProductDto {
 
     public RegistProductDto() {}
 
+    @Override
+    public String toString() {
+        return "RegistProductDto = {" +
+                "prod_idx=" + prod_idx +
+                ", seler_idx=" + seler_idx +
+                ", cate_idx='" + cate_idx + '\'' +
+                ", cate_idx2='" + cate_idx2 + '\'' +
+                ", seler_prod_cd=" + seler_prod_cd +
+                ", name='" + name + '\'' +
+                ", content='" + content + '\'' +
+                ", prc=" + prc +
+                ", upload_path='" + upload_path + '\'' +
+                ", dc_state_cd=" + dc_state_cd +
+                ", dc_rate=" + dc_rate +
+                ", dsply_state_cd=" + dsply_state_cd +
+                ", ascr=" + ascr +
+                ", orplc='" + orplc + '\'' +
+                ", sle_unit='" + sle_unit + '\'' +
+                ", weight='" + weight + '\'' +
+                ", sle_date_type=" + sle_date_type +
+                ", mft_tm=" + mft_tm +
+                ", distb_tlmt=" + distb_tlmt +
+                ", sle_start_tm=" + sle_start_tm +
+                ", sle_end_tm=" + sle_end_tm +
+                ", state=" + state +
+                ", max_sle_quty=" + max_sle_quty +
+                ", inv_quty=" + inv_quty +
+                ", warn='" + warn + '\'' +
+                ", guid='" + guid + '\'' +
+                ", reg_state_cd=" + reg_state_cd +
+                ", files=" + files +
+                '}';
+    }
 }

@@ -89,8 +89,8 @@ public class RegisterController {
         Integer idx = (Integer) session.getAttribute("idx");
         try {
             List<RegistProductDto> list = registProductService.getProductList(idx);
+            System.out.println("list = " + list);
             m.addAttribute("productList", list);
-
             return "/seller/registerProductList";
         } catch (Exception e) {
             e.printStackTrace();
