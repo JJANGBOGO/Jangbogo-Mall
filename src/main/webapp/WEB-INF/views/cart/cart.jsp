@@ -73,7 +73,11 @@
                 tmp += '<div id="addBtn">+</div>';
                 tmp += '</div>';
 
-                tmp += "<div class='cart_item__price'>" + formatPriceWithComma(item.prod_price - (item.prod_price / 100 * item.dc_rate)* item.prod_cnt )  + "</div><span>원</span>";
+                tmp += "<div class='cart_item__price'>" + formatPriceWithComma((item.prod_price - Math.floor(item.prod_price / 100 * item.dc_rate)) * item.prod_cnt)  + "<span>원</span>";
+                if(item.dc_rate !== 0) {
+                    tmp += '<span id="prevPrice">' + formatPriceWithComma(Math.floor(item.prod_price * item.prod_cnt)) + '원' + '</span>';
+                }
+                tmp += '</div>';
                 tmp += '<div class="cart_item__close">&times;</div>';
                 tmp += '</div>';
                 tmp += '</li>';
@@ -91,6 +95,7 @@
             // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
             const estimateToHtml = (items) => {
                 let price = 0;                                                                                              // 변수명 : price - 저장값 : 주문총금액
+                let discount = 0;                                                                                           // 변수명 : discount - 저장값 : 상품할인금액
                 let tmp = "";                                                                                               // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
 
                 // 메서드명 : forEach
@@ -99,6 +104,7 @@
                 // 매개변수 : item - Object : CartDto, 장바구니 개별 품목
                 items.forEach((item) => {
                     price += item.prod_price * item.prod_cnt;
+                    discount += Math.floor(item.prod_price / 100 * item.dc_rate);
                 })
                 tmp += '<section class="dilvp">'
                 tmp += '</section>'
@@ -107,13 +113,17 @@
                 tmp += '<span class="prod-title">상품금액</span>'
                 tmp += '<span class="prod-content" id="prodPrice">' + formatPriceWithComma(price) + '원</span>'
                 tmp += '</section>'
+                tmp += '<section class="prod-discount">'
+                tmp += '<span class="prod-title">상품할인금액</span>'
+                tmp += '<span class="prod-content" id="discountPrice">-' + formatPriceWithComma(discount) + '원</span>'
+                tmp += '</section>'
                 tmp += '<section class="dilv-cost">'
                 tmp += '<span class="prod-title">배송비</span>'
                 tmp += '<span class="prod-content">2,500원</span>'
                 tmp += '</section>'
                 tmp += '<section class="dilv-total">'
                 tmp += '<span class="prod-title">결제예정금액</span>'
-                tmp += '<span class="prod-content" id="totalPrice">' + formatPriceWithComma(parseInt(price) + 2500) +'원</span>'
+                tmp += '<span class="prod-content" id="totalPrice">' + formatPriceWithComma(parseInt(price - discount) + 2500) +'원</span>'
                 tmp += '</section>'
                 tmp += '</section>'
                 tmp += '<input type="button" name="order" value= "주문하기" />'

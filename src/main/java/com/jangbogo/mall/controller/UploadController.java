@@ -32,16 +32,10 @@ import java.util.UUID;
 
 
 @Controller
-@Slf4j //오.
+@Slf4j
 public class UploadController {
 
     private String uploadFolder = "/Users/namgungjin/Desktop/upload/temp";
-
-    @GetMapping("/uploadAjax")
-    public String uploadAjax() {
-        log.info("upload ajax");
-        return "uploadAjax2";
-    }
 
     private String getFolder() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -162,7 +156,6 @@ public class UploadController {
     @GetMapping(value = "/download", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @ResponseBody
     public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName) {
-        log.info("download file: " + fileName);
 
         //import를 꼭 org.springframework.core.io.Resource로 해야 한다.
         Resource resource = new FileSystemResource("/Users/namgungjin/Desktop/upload/temp/" + fileName);

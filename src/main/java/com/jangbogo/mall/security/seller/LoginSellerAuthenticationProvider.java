@@ -19,14 +19,6 @@ public class LoginSellerAuthenticationProvider implements AuthenticationProvider
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
-    //판매자 정보 얻기 메서드 분리 테스트
-    public UserDetailsDto getSellerDetails (Authentication authentication) {
-        String userId = authentication.getName();
-        String userPw = (String) authentication.getCredentials();
-        UserDetailsDto userDetailsDto = (UserDetailsDto) sellerLoginService.loadUserByUsername(userId);
-        return userDetailsDto;
-    }
-
     @Override
     public Authentication authenticate (Authentication authentication) throws AuthenticationException {
 
