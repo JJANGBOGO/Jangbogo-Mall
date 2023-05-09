@@ -768,7 +768,10 @@
       console.log("id 수정 버튼을 눌렀을 때 = "+idx);
       //동일하게 불러온 정보를 변수에 저장한다.
       let newTitle = $("input[id=modal-title]").val();
-      let newCtent = $("input[id=modal-ctent]").val();
+      let newCtent = $("textarea[id=modal-ctent]").val();
+      console.log()
+
+      // console.log(newCtents+"ccc");
       let prod_idx = $('#prod_idx').text();
       //등록 버튼을 눌러 새롭게 정보를 저장한다.
       $.ajax({
@@ -780,7 +783,7 @@
           alert("수정되었습니다.")
           showInqryList(prod_idx);
         },
-        error: function() {alert("수정권한이 없습니다")}
+        error: function() {alert("수정중 오류가 발생했습니다.")}
       })
       //모달을 안보이게 한다.
       $(".modal").css("display", "none");
