@@ -30,9 +30,6 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
         String pwd = (String) authentication.getCredentials();
         UserDetailsDto userDetailsDto = (UserDetailsDto) userLoginService.loadUserByUsername(email);
 
-        log.info("...login...process..jinvicky" + userDetailsDto);
-
-
         //loginFailureHandler 오류 던질 때
         if(userDetailsDto == null || !email.equals(userDetailsDto.getUsername())|| !passwordEncoder.matches(pwd, userDetailsDto.getPassword())) {
             throw new BadCredentialsException(email); // 아이디랑 비번이 불일치.

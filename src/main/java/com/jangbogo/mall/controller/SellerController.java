@@ -57,8 +57,6 @@ public class SellerController {
     //가입 처리
     @PostMapping("/seller/register")
     public String regSeller(Seller seller, RedirectAttributes rattr) {
-        log.info("판매자 가입........" + seller);
-
         try {
             if (service.registerSeller(seller) != 1)
                 throw new Exception("register failed");
@@ -135,14 +133,12 @@ public class SellerController {
     //브랜드 수정
     @PostMapping("/seller/modify/brnd")
     public String modifyBrand(HttpSession session, Seller seller, RedirectAttributes rattr) {
-        log.info("brnd...." + seller);
-
-        Integer idx = (Integer) session.getAttribute("idx");
-        String email = (String) session.getAttribute("email");
-        seller.setIdx(idx);
-        seller.setEmail(email);
-
         try {
+            Integer idx = (Integer) session.getAttribute("idx");
+            String email = (String) session.getAttribute("email");
+            seller.setIdx(idx);
+            seller.setEmail(email);
+
             if (service.updateSellerBrnd(seller) != 1)
                 throw new Exception("Modify failed");
 
@@ -158,7 +154,7 @@ public class SellerController {
 
     //판매자수정 인증 뷰
     @GetMapping("/seller/info")
-    public String verifySeller(HttpServletRequest req, Model m, RedirectAttributes rattr) {
+    public String verifySeller(HttpServletRequest req, Model m) {
         m.addAttribute("mySellerUrl", req.getRequestURI());
         return "/seller/verify";
     }

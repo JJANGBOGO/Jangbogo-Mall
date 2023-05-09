@@ -20,7 +20,6 @@ public class LoginFailHandler implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
-            log.info("fail....jinvicky");
         // TODO Auto-generated method stub
         if(exception instanceof AuthenticationServiceException) {
             request.setAttribute("LoginFailMessage", "죄송합니다. 시스템에 오류가 발생했습니다.");
