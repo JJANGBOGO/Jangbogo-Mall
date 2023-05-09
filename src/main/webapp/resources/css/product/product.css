@@ -785,6 +785,12 @@ button:disabled {
 
     background-color: rgba(0, 0, 0, 0.4);
 
+.text_cnt {
+    display: flex;
+    flex-direction: row-reverse;
+    color: lightgray;
+    padding-right: 88px;
+}
 /*--------*/
     position: absolute;
     position: fixed;

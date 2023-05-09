@@ -295,7 +295,7 @@
                     </div>
                     <div class="title_input">
                       <input id="modal-title" type="text" />
-                      <div id="title_text_cnt">(0 / 50)</div>
+                      <div id="title_text_cnt" class="text_cnt">(0 / 50)</div>
                     </div>
                   </div>
                   <div class="inqry_content">
@@ -304,7 +304,7 @@
                     </div>
                     <div class="content_input">
                       <textarea id="modal-ctent"></textarea>
-                      <div id="ctent_text_cnt">(0 / 3000)</div>
+                      <div id="ctent_text_cnt" class="text_cnt">(0 / 3000)</div>
                     </div>
                   </div>
                   <div class="inqry_secret">
@@ -486,7 +486,8 @@
 
   // <textarea id="modal-ctent"></textarea>
   // <div id="ctent_text_cnt">(0 / 3000)</div>
-
+  //name , ctent3000, warn3000, guid200
+  //id=name , id=ctent , id=warn , id=guid
   $(document).ready(function(){
 
     $('#test').on('keyup', function() {
