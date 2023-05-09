@@ -935,7 +935,7 @@
       tmp += ' data-title=' + inqry.title
       tmp += ' data-ctent='+ inqry.ctent
       tmp += ' data-opub_yn='+ inqry.opub_yn + '>'
-      tmp += '<td id="noticeBlock-title" class="title" data-opub_yn=' + inqry.opub_yn + ' data-idx='+ inqry.idx +'><span id="title-text">' + inqry.title + '</span></td>'
+      tmp += '<td id="noticeBlock-title" style="border-bottom: 1px solid rgb(244, 244, 244)" class="title" data-opub_yn=' + inqry.opub_yn + ' data-idx='+ inqry.idx +'><span id="title-text">' + inqry.title + '</span></td>'
       tmp += '<td class="name" data-user_idx=' + inqry.user_idx + '>' + inqry.writer + '</td>'
       tmp += '<td class="reg_date" >' + now24Date+ '</td>'
       tmp += '<td id="res-state-cd" class="response_state" >'+res_state_cd+'</td>'

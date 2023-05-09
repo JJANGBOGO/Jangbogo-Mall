@@ -1132,7 +1132,13 @@ tbody #noticeBlock {
     border-bottom: 1px solid rgb(244, 244, 244);
     line-height: 19px;
     letter-spacing: -0.5px;
+    cursor: pointer;
 }
+
+tbody #noticeBlock noticeBlock-title{
+    border-bottom: 1px solid rgb(244, 244, 244);
+}
+
 tbody #noticeBlock .title #title-text {
     position: absolute;
     left: 24px;
