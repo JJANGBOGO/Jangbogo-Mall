@@ -612,6 +612,7 @@
       console.log("session_idx"+ session_idx);
       if(session_idx == "") {
         alert("회원만 문의 작성이 가능합니다.")
+        location.href = "<c:url value='/user/login'/>";
         return;
       }
 
