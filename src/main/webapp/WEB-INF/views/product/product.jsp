@@ -723,13 +723,15 @@
       //수정 버튼이 포함되어 있는 tr 라인 안에 들어있는 idx를 가져온다.
       //title과 ctent의 내용들도 가져와서 변수에 담는다.
       let idx = $(this).closest("tr").attr("data-idx");
-      let ctent = $(this).closest("tr").children().children().children().find('div:eq(1)[name=text]').children().text();
+      let ctent = $(this).closest("tr").children().children().children().find('div:eq(1)[name=text]').children().html();
+      // console.log(ctent+"ctent")
+      // ('span:eq(1)').text();
 
       let inquiry_idx = $(this).closest("tr").attr("data-idx");
       let dtoArr = $(".modBtn").closest("tr").siblings("tr[data-idx=" + inquiry_idx + "]");
       let title = dtoArr[0].dataset.title;
 
-      if(user_idx != $('#sessionID').text()) {
+      if(user_idx != "${sessionScope.idx}") {
         alert("수정권한이 없습니다.");
         return;
       }
@@ -766,7 +768,10 @@
       console.log("id 수정 버튼을 눌렀을 때 = "+idx);
       //동일하게 불러온 정보를 변수에 저장한다.
       let newTitle = $("input[id=modal-title]").val();
-      let newCtent = $("input[id=modal-ctent]").val();
+      let newCtent = $("textarea[id=modal-ctent]").val();
+      console.log()
+
+      // console.log(newCtents+"ccc");
       let prod_idx = $('#prod_idx').text();
       //등록 버튼을 눌러 새롭게 정보를 저장한다.
       $.ajax({
@@ -778,7 +783,7 @@
           alert("수정되었습니다.")
           showInqryList(prod_idx);
         },
-        error: function() {alert("수정권한이 없습니다")}
+        error: function() {alert("수정중 오류가 발생했습니다.")}
       })
       //모달을 안보이게 한다.
       $(".modal").css("display", "none");
@@ -803,7 +808,7 @@
       let idx = $(this).closest("tr").attr("data-idx");
       let prod_idx = $('#prod_idx').text();
       // let prod_idx = $(this).closest("tr").attr("data-prod_idx");
-      if(user_idx != $('#sessionID').text()) {
+      if(user_idx != "${sessionScope.idx}") {
         alert("삭제권한이 없습니다.")
         return;
       }
@@ -914,6 +919,18 @@
 
   });
 
+  $("#table").on("click", '#noticeBlock', function() {
+    let test = $(this).next(); // 클릭한 요소의 next() 요소의 참조를 가저온다  //class="accordion-wrap"
+    // alert(test.css('display')=='table-row');
+    if(test.css('display')=='table-row'){
+      test.css('display','none')
+    }else {
+      test.css('display','table-row')
+    }
+  })
+
+
+
   let InqrytoHtml = function(inqrys) {  //GetMapping통해서 정보 들어온다.
 
     let tmp = "<tbody>";
@@ -951,11 +968,12 @@
       tmp += ' data-title=' + inqry.title
       tmp += ' data-ctent='+ inqry.ctent
       tmp += ' data-opub_yn='+ inqry.opub_yn + '>'
-      tmp += '<td id="noticeBlock-title" class="title" data-opub_yn=' + inqry.opub_yn + '><span id="title-text">' + inqry.title + '</span></td>'
+      tmp += '<td id="noticeBlock-title" class="title" data-opub_yn=' + inqry.opub_yn + ' data-idx='+ inqry.idx +'><span id="title-text">' + inqry.title + '</span></td>'
       tmp += '<td class="name" data-user_idx=' + inqry.user_idx + '>' + inqry.writer + '</td>'
       tmp += '<td class="reg_date" >' + now24Date+ '</td>'
       tmp += '<td id="res-state-cd" class="response_state" >'+res_state_cd+'</td>'
       tmp += '</tr>'
+      if(inqry.res_state_cd == 2) {
       tmp += '<tr class="accordion-wrap" data-idx=' + inqry.idx
       tmp += ' data-prod_idx='+ inqry.prod_idx
       tmp += ' data-user_idx='+ inqry.user_idx
@@ -973,6 +991,7 @@
       tmp += '</div>'
       tmp += '</div>'
       tmp += '</div>'
+      // if(inqry.res_state_cd == 2) {
       tmp += '<div class="response-wrap">'
       tmp += '<div class="response">'
       tmp += '<div class="img">'
@@ -986,11 +1005,52 @@
       tmp += '</div>'
       tmp += '<div class="reg_date"><span>' + now24Date2 + '</span>'
       tmp += '<div class="btnGroup" id="btnGroup">'
-      tmp +=    '<button class="modBtn">수정</button>'
-      tmp +=    '<button class="delBtn">삭제</button>'
+      tmp += '<button class="modBtn">수정</button>'
+      tmp += '<button class="delBtn">삭제</button>'
       tmp += '</div>'
       tmp += '</div>'
       tmp += '</div>'
+      }else{
+        tmp += '<tr class="accordion-wrap" data-idx=' + inqry.idx
+        tmp += ' data-prod_idx='+ inqry.prod_idx
+        tmp += ' data-user_idx='+ inqry.user_idx
+        tmp += ' data-opub_yn='+ inqry.opub_yn + '>'
+        tmp += '<td class="accordion" colspan="4">'
+        tmp += '<div class="request-wrap">'
+        tmp += '<div class="request">'
+        tmp += '<div class="img">'
+        tmp += '<span class="glasses">'
+        tmp += '</span>'
+        tmp += '</div>'
+        tmp += '<div id="noticeBlock-ctent" name="text" class="text" style="display: flex">'
+        tmp += '<span class="span" style="display: block;width: 770px;margin-right: 73px;">' + inqry.ctent
+        tmp += '</span>'
+        tmp += '<div class="btnGroup" id="btnGroup" style="width: 70px; height: 20px;">'
+        tmp += '<button class="modBtn">수정 &nbsp;</button>'
+        tmp += '<button class="delBtn"> &nbsp; 삭제</button>'
+        tmp += '</div>'
+        tmp += '</div>'
+        tmp += '</div>'
+        tmp += '</div>'
+        // tmp += '<div class="response-wrap">'
+        // tmp += '<div class="response">'
+        // tmp += '<div class="img">'
+        // tmp += '<span>'
+        // tmp += '</span>'
+        // tmp += '</div>'
+        // tmp += '<div class="text">'
+        // tmp += '<div>' + inqry.ans_content
+        // tmp += '</div>'
+        // tmp += '</div>'
+        // tmp += '</div>'
+        // tmp += '<div class="reg_date"><span>' + now24Date2 + '</span>'
+        // tmp += '<div class="btnGroup" id="btnGroup">'
+        // tmp += '<button class="modBtn">수정</button>'
+        // tmp += '<button class="delBtn">삭제</button>'
+        // tmp += '</div>'
+        // tmp += '</div>'
+        // tmp += '</div>'
+      }
       tmp += '</td>'
       tmp += '</tr>'
     })

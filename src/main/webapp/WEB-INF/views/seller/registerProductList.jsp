@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <html>
 <head>
     <%--   별점 css --%>
@@ -49,7 +50,12 @@
                         </div>
                     </div>
                     <div class="product-right">
-                        <div class="product-price">${product.prc}</div>
+                        <c:if test="${product.dc_state_cd == 1}">
+                            <div class="product-dcRate"><span class="dcRatespan" data-dcRate="${product.dc_rate}">${product.dc_rate}</span>%</div>
+                        </c:if>
+<%--                        <div class="product-price"><fmt:formatNumber value="${(product.prc - (product.prc / 100 * product.dc_rate))}" pattern="#,###"/></div>--%>
+                        <div class="product-price"><fmt:formatNumber value="${(product.prc - Math.floor(product.prc / 100 * product.dc_rate))}" pattern="#,###"/>원</div>
+
                         <div class="product-status">
                             <c:choose>
                                 <c:when test="${product.reg_state_cd == 1}">
@@ -86,6 +92,16 @@
     if (msg === "REG_PROD_OK") alert("상품 등록을 성공했습니다");
 
     $(document).ready(function () {
+
+        // let price = $(".product-price").text();
+        // let dcRate = $(".dcRatespan").text();
+        // console.log("price"+price);
+        // console.log("dcRate??"+dcRate);
+        // let calcPrice = Math.floor(price - price * (dcRate / 100));
+        // console.log(calcPrice + " ???")
+
+        <%--let price = "${productList.prc}";--%>
+        <%--console.log("price??"+price);--%>
 
         $(".seller-products").on("click", ".product-item", function() {
 
