@@ -230,7 +230,9 @@
             tmp += '<p class="product-content">'+ productList.ctent +'</p>'
             tmp += '<div class="product-price-wrap">'
             tmp += '<div class="product-price">'
-            tmp += '<span class="dc_rate">' + productList.dc_rate +"%"+'</span>'
+            if(productList.dc_rate != 0) {
+                tmp += '<span class="dc_rate">' + productList.dc_rate + "%" + '</span>'
+            }
             tmp += '<span class="price">' + withComma + '<span class="won">원</span>'
             tmp += '</span>'
             tmp += '</div>'
