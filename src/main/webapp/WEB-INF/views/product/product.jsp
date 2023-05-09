@@ -295,6 +295,7 @@
                     </div>
                     <div class="title_input">
                       <input id="modal-title" type="text" />
+                      <div id="title_text_cnt">(0 / 50)</div>
                     </div>
                   </div>
                   <div class="inqry_content">
@@ -302,8 +303,8 @@
                       <span>내용</span>
                     </div>
                     <div class="content_input">
-<%--                      <input id="modal-ctent" type="text" />--%>
                       <textarea id="modal-ctent"></textarea>
+                      <div id="ctent_text_cnt">(0 / 3000)</div>
                     </div>
                   </div>
                   <div class="inqry_secret">
@@ -477,14 +478,24 @@
     $('.packing-name').text(dlvryType + "(" + packageType + ")");
   }
 
+  // <textarea id="test" name="test" cols="30" rows="10"></textarea>
+  // <div id="test_cnt">(0 / 100)</div>
+
+  // <input id="modal-title" type="text" />
+  // <div id="title_text_cnt">(0 / 50)</div>
+
+  // <textarea id="modal-ctent"></textarea>
+  // <div id="ctent_text_cnt">(0 / 3000)</div>
+
   $(document).ready(function(){
 
     $('#test').on('keyup', function() {
       $('#test_cnt').html("("+$(this).val().length+" / 100)");
-
+      console.log($(this));
       if($(this).val().length > 100) {
         $(this).val($(this).val().substring(0, 100));
         $('#test_cnt').html("(100 / 100)");
+        alert("작성 가능 문자수를 초과하셨습니다")
       }
     })
 
@@ -601,6 +612,8 @@
       $("input[id=modal-title]").val("");
       $("#modal-ctent").val("");
       $("input[type=checkbox]").prop("checked", false);
+      $("#title_text_cnt").text("(0 / 50)");
+      $("#ctent_text_cnt").text("(0 / 3000)");
       return;
     })
 
@@ -612,7 +625,8 @@
       $("input[id=modal-title]").val("");
       $("#modal-ctent").val("");
       $("input[type=checkbox]").prop("checked", false);
-
+      $("#title_text_cnt").text("(0 / 50)");
+      $("#ctent_text_cnt").text("(0 / 3000)");
       return;
     })
 
@@ -645,12 +659,30 @@
       $(".modal").css("display", "block");
     })
 
-    // $("#sendBtn").click(function() {
+    $("textarea#modal-ctent").on('keyup', function() {
+      $('#ctent_text_cnt').html("("+$("textarea#modal-ctent").val().length+" / 3000)");
+
+      if($("textarea#modal-ctent").val().length > 3000) {
+        $("textarea#modal-ctent").val($("textarea#modal-ctent").val().substring(0, 3000));
+        $('#ctent_text_cnt').html("(3000 / 3000)");
+        alert("작성 가능 문자수를 초과하셨습니다");
+      }
+    })
+
+    $("#modal-title").on('keyup', function() {
+      $('#title_text_cnt').html("("+$("#modal-title").val().length+" / 50)");
+
+      if($(this).val().length > 50) {
+        $(this).val($(this).val().substring(0, 50));
+        $('#title_text_cnt').html("(50 / 50)");
+        alert("작성 가능 문자수를 초과하셨습니다");
+      }
+    })
+
     $(".inqry_button").on("click", "#sendBtn", function() {
       $('body').css("overflow","visible");
 
       let ctent = $("#modal-ctent").val();
-      // console.log(ctent);
       let title = $("input[id=modal-title]").val();
 
       let prod_idx = $('#prod_idx').text();
@@ -685,6 +717,8 @@
       //input란에 있던 정보를 없앤다
       $("input[id=modal-title]").val("");
       $("#modal-ctent").val("");
+      $("#title_text_cnt").text("(0 / 50)");
+      $("#ctent_text_cnt").text("(0 / 3000)");
     });
 
     // 동적으로 생성되는, 문의에 달려있는 "수정" 버튼을 누르면
