@@ -262,7 +262,7 @@
             e.preventDefault();
 
             let prod_idx = $(this).data("prod_idx");
-            console.log("prod_idx"+prod_idx); //18
+            // console.log("prod_idx"+prod_idx); //18
 
 
 

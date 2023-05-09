@@ -622,8 +622,8 @@
       let p = $(target).offset();
 
       let session_idx = "${session_idx}";
-      console.log(typeof session_idx);
-      console.log("session_idx"+ session_idx);
+      // console.log(typeof session_idx);
+      // console.log("session_idx"+ session_idx);
       if(session_idx == "") {
         alert("회원만 문의 작성이 가능합니다.")
         location.href = "<c:url value='/user/login'/>";
@@ -650,7 +650,7 @@
       $('body').css("overflow","visible");
 
       let ctent = $("#modal-ctent").val();
-      console.log(ctent);
+      // console.log(ctent);
       let title = $("input[id=modal-title]").val();
 
       let prod_idx = $('#prod_idx').text();
@@ -735,11 +735,11 @@
 
       //속성 data-idx의 값을 저장한다.
       let idx = $(this).attr("data-idx");
-      console.log("id 수정 버튼을 눌렀을 때 = "+idx);
+      // console.log("id 수정 버튼을 눌렀을 때 = "+idx);
       //동일하게 불러온 정보를 변수에 저장한다.
       let newTitle = $("input[id=modal-title]").val();
       let newCtent = $("textarea[id=modal-ctent]").val();
-      console.log()
+      // console.log()
 
       let prod_idx = $('#prod_idx').text();
       //등록 버튼을 눌러 새롭게 정보를 저장한다.
@@ -762,7 +762,7 @@
       $("input[id=modal-ctent]").val("");
 
       let inqryButton = $(".inqry_button");
-      console.log("inqryButton = "+ inqryButton)
+      // console.log("inqryButton = "+ inqryButton)
       inqryButton[0].children[1].remove();
       //태그 생성
       let sendBtn = $('<button class="register" id="sendBtn">등록</button>');
@@ -1065,7 +1065,7 @@
   // 상품 후기 페이징 뿌려주기
   let PageHandlerToHtml = function (ph){
     let tmp = '';
-    console.log(ph.sc.page);
+    // console.log(ph.sc.page);
 
     tmp += '<div class="paging">'
     if(ph.totalCnt==null || ph.totalCnt==0){
