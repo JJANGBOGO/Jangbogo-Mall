@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
         return dao.insertSocialUser(user);
     }
 
-//    @Transactional //auto_increment는 @Transactional이 캐치 못한다.
+    @Transactional //auto_increment는 @Transactional이 캐치 못한다.
     @Override
     public int registerUser(User user, Address addr) throws Exception {
         final int SUCCESS = 1;
