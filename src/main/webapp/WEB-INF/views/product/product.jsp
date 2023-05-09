@@ -359,8 +359,10 @@
     </div>
   </div>
 
+  <textarea id="test" name="test" cols="30" rows="10"></textarea>
+  <div id="test_cnt">(0 / 100)</div>
+
 </div>
-<%--  <div>${urlPath}</div>--%>
 <div id="prod_idx" style="display: none">${prod_idx}</div>
 <div id="sessionID" style="display: none">${session_idx}</div>
 <div class="footer"></div>
@@ -369,35 +371,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script src="https://kit.fontawesome.com/cc28ed1241.js" crossorigin="anonymous"></script>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
-<%--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>--%>
 <script>
-  // let prod_idx = 11 // 상품번호(하드코딩)
   let prod_idx = ${prod_idx};
-  // let showDescription = function(prod_idx) {
-  //   console.log("prod_idx ajax GET"+prod_idx);
-  //   $.ajax({
-  //     type: 'GET',
-  //     url: '/product/productDetail/description?prod_idx='+9,
-  //     success: function(result) {
-  //       console.log("result???"+result);
-  //       $('.description-wrap').html(DescriptionToList(result));
-  //     },
-  //     error: function() { alert("GET description Error") }
-  //   })
-  // }
-
-  // let DescriptionToList = function(fileLists) {
-  //   let tmp = "";
-  //   fileLists.forEach(function(fileList){
-  //   console.log("fileListsname????????"+fileList.UPLOAD_PATH);
-  //
-  //     tmp += '<div class="pic">'
-  //     tmp += '<img src='+ fileList.UPLOAD_PATH +' alt="productImg" />'
-  //     tmp += '</div>'
-  //   })
-  //   return tmp;
-  // }
-
   let showDetail = function(prod_idx) {
     $.ajax({
       type: 'GET',
@@ -503,18 +478,21 @@
   }
 
   $(document).ready(function(){
-    // let urlPath = $('#urlPath');
-    // console.log("urlPath="+urlPath);
-    <%--let url = "${pageContext.request.contextPath}"--%>
-    <%--console.log("url="+url)--%>
-    // let prod_idx = $('#prod_idx').text();
-    <%--let prod_idx = ${prod_idx};--%>
-    // let prod_idx = 9;
+
+    $('#test').on('keyup', function() {
+      $('#test_cnt').html("("+$(this).val().length+" / 100)");
+
+      if($(this).val().length > 100) {
+        $(this).val($(this).val().substring(0, 100));
+        $('#test_cnt').html("(100 / 100)");
+      }
+    })
+
+
     showInqryList(prod_idx);
     showProdDetailList(prod_idx);
     packingTypeToString();
     showImage();
-    // showDescription(prod_idx);
     showDetail(prod_idx);
     prodInqryImage();
 
@@ -648,6 +626,7 @@
       // console.log("session_idx"+ session_idx);
       if(session_idx == "") {
         alert("회원만 문의 작성이 가능합니다.")
+        location.href = "<c:url value='/user/login'/>";
         return;
       }
 
@@ -712,20 +691,11 @@
     $("#table").on("click", ".modBtn", function(e) {
 
       target = $(e.target).closest("tr");
-      // let p = $(target).offset();
-      //
-      // let divTop = p.top + 0;
-      // let divLeft = p.left + 350;
-
-      // $('#modal-body').css({"z-index": '10', "top": divTop, "left": divLeft, "position": "absolute"}).show();
-
       let user_idx = $(this).closest("tr").attr("data-user_idx");
       //수정 버튼이 포함되어 있는 tr 라인 안에 들어있는 idx를 가져온다.
       //title과 ctent의 내용들도 가져와서 변수에 담는다.
       let idx = $(this).closest("tr").attr("data-idx");
       let ctent = $(this).closest("tr").children().children().children().find('div:eq(1)[name=text]').children().html();
-      // console.log(ctent+"ctent")
-      // ('span:eq(1)').text();
 
       let inquiry_idx = $(this).closest("tr").attr("data-idx");
       let dtoArr = $(".modBtn").closest("tr").siblings("tr[data-idx=" + inquiry_idx + "]");
@@ -771,7 +741,6 @@
       let newCtent = $("textarea[id=modal-ctent]").val();
       // console.log()
 
-      // console.log(newCtents+"ccc");
       let prod_idx = $('#prod_idx').text();
       //등록 버튼을 눌러 새롭게 정보를 저장한다.
       $.ajax({
@@ -959,11 +928,9 @@
       // [3]. moment 라이브러리 사용해 24시간 형태 날짜 및 시간 확인
       let now24Date = moment(reg_date).format("YYYY-MM-DD");
       let now24Date2 = moment(answer_date).format("YYYY-MM-DD");
-      // console.log("?????", now24Date)
 
 
       tmp += '<tr id="noticeBlock" data-idx=' + inqry.idx
-      tmp += ''
       tmp += ' data-prod_idx=' + inqry.prod_idx
       tmp += ' data-title=' + inqry.title
       tmp += ' data-ctent='+ inqry.ctent
@@ -991,7 +958,6 @@
       tmp += '</div>'
       tmp += '</div>'
       tmp += '</div>'
-      // if(inqry.res_state_cd == 2) {
       tmp += '<div class="response-wrap">'
       tmp += '<div class="response">'
       tmp += '<div class="img">'
@@ -1032,24 +998,6 @@
         tmp += '</div>'
         tmp += '</div>'
         tmp += '</div>'
-        // tmp += '<div class="response-wrap">'
-        // tmp += '<div class="response">'
-        // tmp += '<div class="img">'
-        // tmp += '<span>'
-        // tmp += '</span>'
-        // tmp += '</div>'
-        // tmp += '<div class="text">'
-        // tmp += '<div>' + inqry.ans_content
-        // tmp += '</div>'
-        // tmp += '</div>'
-        // tmp += '</div>'
-        // tmp += '<div class="reg_date"><span>' + now24Date2 + '</span>'
-        // tmp += '<div class="btnGroup" id="btnGroup">'
-        // tmp += '<button class="modBtn">수정</button>'
-        // tmp += '<button class="delBtn">삭제</button>'
-        // tmp += '</div>'
-        // tmp += '</div>'
-        // tmp += '</div>'
       }
       tmp += '</td>'
       tmp += '</tr>'

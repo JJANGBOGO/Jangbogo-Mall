@@ -36,7 +36,6 @@
                             </div>
                             <div class="error-msg seler-prod-cd">9자 이내의 숫자로 작성해 주세요</div>
                         </div>
-<%--                        <div class="btn-space"></div>--%>
                         <div class="btn-space">
                             <button class="duplicate" id="seler-prod-check">중복확인</button>
                         </div>
@@ -326,7 +325,6 @@
                             </div>
                             <div class="error-msg sle-end-tm"></div>
                         </div>
-<%--                        <div class="btn-space"></div>--%>
                         <div class="btn-space">
                             <button class="duplicate" id="date_check">기간확인</button>
                         </div>
