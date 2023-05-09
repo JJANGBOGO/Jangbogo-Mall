@@ -615,13 +615,6 @@
         toggleDcInput();
         toggleSleDateInput();
 
-        <%--let cate_idx = "${product.cate_idx}";--%>
-        <%--$("#First_cate_idx").val(cate_idx).attr("selected", "selected");--%>
-
-        <%--let cate_idx2 = "${product.cate_idx2}";--%>
-        <%--let text = $("#Second_cate_idx").val(cate_idx2).text();--%>
-        <%--console.log("text???"+text);--%>
-
         let dc_state_cd = "${product.dc_state_cd}";
         $("input:radio[name=dc_state_cd]").attr("value", dc_state_cd).prop("checked", true);
 
@@ -642,14 +635,12 @@
             let id;
             if (val == "01") {
                 $("#Second_cate_idx").html(S_fruit).on("click", function (e) {
-                    //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id"); //0101
                     $(".input-box.category").data("cateID", id);
                 })
             }
             if (val == "02") {
                 $("#Second_cate_idx").html(S_vege).on("click", function (e) {
-                    //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
@@ -657,7 +648,6 @@
             }
             if (val == "03") {
                 $("#Second_cate_idx").html(S_seafood).on("click", function (e) {
-                    //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
@@ -665,7 +655,6 @@
             }
             if (val == "04") {
                 $("#Second_cate_idx").html(S_livestock).on("click", function (e) {
-                    //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
@@ -673,7 +662,6 @@
             }
             if (val == "05") {
                 $("#Second_cate_idx").html(S_drink).on("click", function (e) {
-                    //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
@@ -681,7 +669,6 @@
             }
             if (val == "06") {
                 $("#Second_cate_idx").html(S_retort).on("click", function (e) {
-                    //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
@@ -689,7 +676,6 @@
             }
             if (val == "07") {
                 $("#Second_cate_idx").html(S_dairy).on("click", function (e) {
-                    //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
@@ -697,7 +683,6 @@
             }
             if (val == "08") {
                 $("#Second_cate_idx").html(S_source).on("click", function (e) {
-                    //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
@@ -705,7 +690,6 @@
             }
             if (val == "09") {
                 $("#Second_cate_idx").html(S_dessert).on("click", function (e) {
-                    //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
@@ -713,7 +697,6 @@
             }
             if (val == "10") {
                 $("#Second_cate_idx").html(S_alcohol).on("click", function (e) {
-                    //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
@@ -721,7 +704,6 @@
             }
             if (val == "11") {
                 $("#Second_cate_idx").html(S_healthy).on("click", function (e) {
-                    //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
 
