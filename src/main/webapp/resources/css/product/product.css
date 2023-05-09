@@ -763,6 +763,7 @@ button:disabled {
     color: white;
     border: 0 none;
     text-align: center;
+    cursor: pointer;
 }
 .prodInqry-wrap .prodInqry .open-modal span{
     color: white;

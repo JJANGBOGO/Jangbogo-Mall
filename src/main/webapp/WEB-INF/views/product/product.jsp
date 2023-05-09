@@ -490,15 +490,15 @@
   //id=name , id=ctent , id=warn , id=guid
   $(document).ready(function(){
 
-    $('#test').on('keyup', function() {
-      $('#test_cnt').html("("+$(this).val().length+" / 100)");
-      console.log($(this));
-      if($(this).val().length > 100) {
-        $(this).val($(this).val().substring(0, 100));
-        $('#test_cnt').html("(100 / 100)");
-        alert("작성 가능 문자수를 초과하셨습니다")
-      }
-    })
+    // $('#test').on('keyup', function() {
+    //   $('#test_cnt').html("("+$(this).val().length+" / 100)");
+    //   console.log($(this));
+    //   if($(this).val().length > 100) {
+    //     $(this).val($(this).val().substring(0, 100));
+    //     $('#test_cnt').html("(100 / 100)");
+    //     alert("작성 가능 문자수를 초과하셨습니다")
+    //   }
+    // })
 
 
     showInqryList(prod_idx);
@@ -637,8 +637,6 @@
       let p = $(target).offset();
 
       let session_idx = "${session_idx}";
-      // console.log(typeof session_idx);
-      // console.log("session_idx"+ session_idx);
       if(session_idx == "") {
         alert("회원만 문의 작성이 가능합니다.")
         location.href = "<c:url value='/user/login'/>";
@@ -736,10 +734,36 @@
       let dtoArr = $(".modBtn").closest("tr").siblings("tr[data-idx=" + inquiry_idx + "]");
       let title = dtoArr[0].dataset.title;
 
+
+      // console.log(ctent_cnt)
+      //
+      //
+      // console.log(title_cnt);
+
       if(user_idx != "${sessionScope.idx}") {
         alert("수정권한이 없습니다.");
         return;
       }
+
+      $("#modal-title").on('keyup', function() {
+        $('#title_text_cnt').html("("+$("#modal-title").val().length+" / 50)");
+
+        if($(this).val().length > 50) {
+          $(this).val($(this).val().substring(0, 50));
+          $('#title_text_cnt').html("(50 / 50)");
+          alert("작성 가능 문자수를 초과하셨습니다");
+        }
+      })
+
+      $("#modal-ctent").on('keyup', function(e) {
+        $('#ctent_text_cnt').html("("+$("#modal-ctent").val().length+" / 3000)");
+
+        if($(this).val().length > 3000) {
+          $(this).val($(this).val().substring(0, 3000));
+          $('#ctent_text_cnt').html("(3000 / 3000)");
+          alert("작성 가능 문자수를 초과하셨습니다");
+        }
+      })
 
       let inqryButton = $(".inqry_button");
 
@@ -760,6 +784,13 @@
       //게시물에 있던 내용들을 옮겨왔다.
       $("input[id=modal-title]").val(title);
       $("#modal-ctent").val(ctent);
+
+      //기존 문자열 길이값 가져오기
+      let title_cnt = ctent.length;
+      $('#title_text_cnt').html("("+title_cnt+" / 50)");
+
+      let ctent_cnt = ctent.length;
+      $('#ctent_text_cnt').html("("+ctent_cnt+" / 3000)");
 
       //모달이 열린다.
       $(".modal").css("display", "block");
