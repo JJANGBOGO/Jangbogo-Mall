@@ -333,16 +333,16 @@
                   </li>
                 </ul>
               </div>
-              <div class="inqry-notice-wrap">
-                <div class="inqry-notice">
-                  <div class="notice_title">
-                    <span id="notice-title-span">공지</span>
-                  </div>
-                  <div class="text">
-                    <span>공지내용</span>
-                  </div>
-                </div>
-              </div>
+<%--              <div class="inqry-notice-wrap">--%>
+<%--                <div class="inqry-notice">--%>
+<%--                  <div class="notice_title">--%>
+<%--                    <span id="notice-title-span">공지</span>--%>
+<%--                  </div>--%>
+<%--                  <div class="text">--%>
+<%--                    <span>공지내용</span>--%>
+<%--                  </div>--%>
+<%--                </div>--%>
+<%--              </div>--%>
               <div class="inqry-body">
                 <div id="prodInqryList">
                   <table id="table"></table>
