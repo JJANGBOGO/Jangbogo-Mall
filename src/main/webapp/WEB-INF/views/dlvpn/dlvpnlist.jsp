@@ -41,6 +41,9 @@
             <div class="dlvpnList">
 
             </div>
+            <div class="dlvpn-notice">
+
+            </div>
 
         </div>
 
@@ -75,6 +78,9 @@
             // data : JSON.stringify(person),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
             success: function (result) {
                 $(".dlvpnList").html(listToHtml(result));    // 서버로부터 응답이 도착하면 호출될 함수
+                if(result.length==0){
+                    $(".dlvpn-notice").html(nolistToHtml());
+                }
             },
             error: function () {
                 alert("error1")
@@ -128,6 +134,29 @@
         })
         return tmp + '</ul>';
     }
+
+    let nolistToHtml = function (){
+        let tmp = '';
+
+        tmp += '<div>'
+        tmp += '<svg width="0" height="60" viewBox="0 0 68 68">'
+        tmp += '<img src="https://cdn-icons-png.flaticon.com/512/879/879766.png" width="100px" height="100px">'
+        // tmp += '<path class="heartpath" stroke="#e2e2e2" d="M57.025 14.975c-5.3-5.3-13.889-5.3-19.186 0L34 18.812l-3.837-3.837c-5.3-5.3-13.89-5.3-19.19 0-5.296 5.297-5.296 13.886 0 19.186l3.838 3.837 18.482 18.485a1 1 0 0 0 1.414 0s0 0 0 0l18.482-18.485h0l3.837-3.837c5.3-5.3 5.3-13.89 0-19.186z"></path>'
+        tmp += '</svg>'
+        tmp += '</div>'
+        tmp += '<strong class="strong-heart">배송지를 추가해주세요.</strong>'
+        tmp += '<button class="goToProd-btn">'
+        tmp += '<span>새 배송지 추가</span>'
+        tmp += '</button>'
+
+        return tmp;
+    }
+
+    // 배송지가 없을때 새 배송지 추가(버튼) 클릭 시 파업창 오픈(카카오 api)
+    $('.dlvpn-notice').on("click", '.goToProd-btn', function () {
+        KaKao_api();
+    })
+
 
     // 카카오 주소 api 함수선언
     function KaKao_api() {
