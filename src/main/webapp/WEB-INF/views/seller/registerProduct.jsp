@@ -661,7 +661,7 @@
                 })
             }
             if (val == "05") {
-                $("#Second_cate_idx").html(S_drink).on("click", function (e) {
+                $("#Second_cate_idx").html(S_drink).on("clirck", function (e) {
                     //선택된 요소의 id값
                     id = $("#Second_cate_idx option:selected").attr("id");
                     $(".input-box.category").data("cateID", id);
