@@ -24,6 +24,7 @@
     justify-content: center;
     margin: 0 125px;
     margin-bottom: 30px;
+    height: 600px;
 }
 .cart-container {
     width: 100%;
@@ -123,7 +124,7 @@ img {
 #cartEstimate {
     position: relative;
     width: 360px;
-    height: 430px;
+    height: 460px;
     margin-top: 50px;
 }
 .dilvp > h3 {
@@ -135,12 +136,15 @@ img {
 }
 
 .dilvp {
-    height: 190px;
+    height: 200px;
 }
 
 .cart-estimate {
-    height: 160px;
+    height: 190px;
     background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 input[name='order'] {
     position: absolute;
@@ -165,11 +169,11 @@ input[name='order'] {
     font-size: 18px;
 }
 
-.dilv-cost, .dilv-total {
+.dilv-cost, .dilv-total, .prod-discount {
     padding-top: 12px;
 }
 
-.prod-price, .dilv-cost, .dilv-total {
+.prod-price, .dilv-cost, .dilv-total, .prod-discount {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -225,4 +229,12 @@ input[name="sold-out"], input[name="no-dlvpn"]  {
 #emptyItems > h3 {
     font-weight: 500;
     color: #b5b5b5;
+}
+
+#prevPrice {
+    font-size: 14px;
+    line-height: 18px;
+    color: rgb(181, 181, 181);
+    text-decoration: line-through;
+    font-weight: 400;
 }
