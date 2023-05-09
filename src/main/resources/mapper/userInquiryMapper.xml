@@ -9,5 +9,16 @@
         values (#{user_idx},#{id},#{title},#{ctent},#{writer});
     </insert>
 
+<!--    회원문의 목록 조회 (최종)-->
+    <select id="getList" parameterType="int" resultType="UserInquiryListDto">
+        SELECT USER_INQRY.*,INQRY_TYPE.NAME AS parents_name
+        FROM INQRY_TYPE, (SELECT USER_INQRY.*, INQRY_TYPE.UPP_FLOOR,INQRY_TYPE.NAME
+                          FROM INQRY_TYPE, (SELECT *
+                                            FROM USER_INQRY
+                                            WHERE USER_IDX = #{user_idx}) AS USER_INQRY
+                          WHERE USER_INQRY.ID = INQRY_TYPE.ID) AS USER_INQRY
+        WHERE USER_INQRY.UPP_FLOOR = INQRY_TYPE.ID;
+    </select>
+
 </mapper>
 

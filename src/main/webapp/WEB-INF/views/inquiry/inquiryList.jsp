@@ -89,7 +89,7 @@
             line-height: 22px;
             border-bottom: 1px solid rgb(244, 244, 244);
             color: rgb(153, 153, 153);
-            margin-right: 12px;
+            /*margin-right: 12px;*/
         }
 
         .user_inqry-resp_state_cd{
@@ -101,7 +101,10 @@
             line-height: 22px;
             border-bottom: 1px solid rgb(244, 244, 244);
             color: rgb(153, 153, 153);
-            margin-right: 6px;
+            /*margin-right: 6px;*/
+        }
+        .user_inqry-resp_state_cd span{
+            color: #f58412;
         }
 
         .user_inqry-answer-box{
@@ -339,9 +342,16 @@
 </div>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
-    $('.user_inqry-container').on("click", '.goToinqry-btn', function () {
-        location.href = "/mypage/inquiry";
+    $(document).ready(function () {
+        let msg = "${msg}"
+        if(msg=="INSERT_OK"){ alert("성공적으로 등록되었습니다.")}
+
+        // 문의하기 버튼 클릭 시 (문의작성 페이지로 이동)
+        $('.user_inqry-container').on("click", '.goToinqry-btn', function () {
+            location.href = "/mypage/inquiry";
+        })
     })
+
 </script>
 </body>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>

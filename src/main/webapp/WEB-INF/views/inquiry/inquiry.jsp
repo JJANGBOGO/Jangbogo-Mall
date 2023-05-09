@@ -229,7 +229,7 @@
 
                         <div class="inqry_write-tpye-inputbox2">
                             <select name="id" id="Second_inqry_idx">
-                                <option value="0">선택</option>
+                                <option value="">선택</option>
                             </select>
                         </div>
 
@@ -266,6 +266,8 @@
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
     $(document).ready(function () {
+        let msg = "${msg}"
+        if(msg=="INSERT_ERR"){ alert("등록에 실패했습니다.")}
 
         $("select[name=inqry_idx]").change(function (e) {
             //val은 대분류에만 해당하며, 카테고리 테이블의 id값과 일치함 //카테고리 아이디 받아서 배송방식 엮어오기

@@ -1,11 +1,8 @@
 package com.jangbogo.mall.domain;
 
-import lombok.Setter;
-
 import java.util.Date;
-import java.util.Objects;
 
-public class UserInquiryDto {
+public class UserInquiryListDto {
 
     // 회원문의(USER_INQRY)
     private Integer idx; // 회원문의번호
@@ -23,18 +20,18 @@ public class UserInquiryDto {
     private Date upt_tm; // 최종수정일자
     private Date upt_idx; // 최종수정일자식별번호
 
-    // 생성자(Constructor)
-    public UserInquiryDto(){}
+    // 문의유형(INQRY_TYPE)
+    private Integer upp_floor; // 상위문의유형
+    private String name; // 문의유형이름(자식)
+    private String parents_name; // 문의유형이름(부모)
 
-    public UserInquiryDto(Integer idx, String title, String ctent) {
-        this.idx = idx;
-        this.title = title;
-        this.ctent = ctent;
-    }
+
+
+    // 생성자(Constructor)
+    public UserInquiryListDto(){}
 
 
     //Getter and Setter
-
     public Integer getIdx() {
         return idx;
     }
@@ -147,12 +144,34 @@ public class UserInquiryDto {
         this.upt_idx = upt_idx;
     }
 
+    public Integer getUpp_floor() {
+        return upp_floor;
+    }
+
+    public void setUpp_floor(Integer upp_floor) {
+        this.upp_floor = upp_floor;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getParents_name() {
+        return parents_name;
+    }
+
+    public void setParents_name(String parents_name) {
+        this.parents_name = parents_name;
+    }
 
     // toString()
-
     @Override
     public String toString() {
-        return "UserInquiryDto{" +
+        return "UserInquiryListDto{" +
                 "idx=" + idx +
                 ", user_idx=" + user_idx +
                 ", id=" + id +
@@ -167,6 +186,9 @@ public class UserInquiryDto {
                 ", crt_idx=" + crt_idx +
                 ", upt_tm=" + upt_tm +
                 ", upt_idx=" + upt_idx +
+                ", upp_floor=" + upp_floor +
+                ", name='" + name + '\'' +
+                ", parents_name='" + parents_name + '\'' +
                 '}';
     }
 }
