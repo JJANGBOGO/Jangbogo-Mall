@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jangbogo.mall.dao.userInquiryMapper">
+
+    <insert id="insertInquiry" parameterType="UserInquiryDto">
+        insert into USER_INQRY (USER_IDX, ID, TITLE, CTENT, WRITER)
+        values (#{user_idx},#{id},#{title},#{ctent},#{writer});
+    </insert>
+
+</mapper>
+

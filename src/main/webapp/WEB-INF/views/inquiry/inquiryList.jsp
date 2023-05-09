@@ -216,6 +216,9 @@
             background-color: #f58412;
             border: 0px none;
         }
+        .user_inqry_btn button span{
+            color: white;
+        }
 
         .response{
             display: flex;
@@ -250,6 +253,9 @@
             -webkit-box-align: center;
             align-items: center;
             margin-top: 20px;
+        }
+        .goToinqry-btn{
+            cursor: pointer;
         }
     </style>
 </head>
@@ -323,7 +329,7 @@
         <div class="none-user_inqry">게시글이 없습니다.</div>
         <div class="user_inqry_btn">
             <div></div>
-            <button><span>문의하기</span></button>
+            <button class="goToinqry-btn"><span>문의하기</span></button>
         </div>
     </div>
     <div id="review"></div>
@@ -333,7 +339,9 @@
 </div>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
 <script>
-
+    $('.user_inqry-container').on("click", '.goToinqry-btn', function () {
+        location.href = "/mypage/inquiry";
+    })
 </script>
 </body>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>

@@ -52,11 +52,12 @@
         }
         .inqry_write-tpye_select{
             display: flex;
+            width: 82%;
         }
 
         .inqry_write-tpye-inputbox{
             margin-right: 5px;
-            width: 250px;
+            width: 100%;
             height: 44px;
             padding: 0px 11px 1px 15px;
             border-radius: 4px;
@@ -73,7 +74,7 @@
         }
 
         .inqry_write-tpye-inputbox2{
-            width: 250px;
+            width: 100%;
             height: 44px;
             padding: 0px 11px 1px 15px;
             border-radius: 4px;
@@ -107,7 +108,7 @@
         }
 
         .inqry_wirte-title-input{
-            width: 612px;
+            width: 639px;
         }
 
         .inqry_wirte-title-input div input{
@@ -216,7 +217,7 @@
                     <div class="inqry_write-tpye_select">
                         <div class="inqry_write-tpye-inputbox">
                             <select name="inqry_idx" id="First_inqry_idx">
-                                <option selected>선택</option>
+                                <option value="0" selected>선택</option>
                                 <option value=100>주문/결제/반품/교환문의</option>
                                 <option value=200>이벤트/쿠폰/적립금문의</option>
                                 <option value=300>상품문의</option>
@@ -227,8 +228,8 @@
                         </div>
 
                         <div class="inqry_write-tpye-inputbox2">
-                            <select name="inqry_idx2" id="Second_inqry_idx">
-                                <option>선택</option>
+                            <select name="id" id="Second_inqry_idx">
+                                <option value="0">선택</option>
                             </select>
                         </div>
 
@@ -240,7 +241,7 @@
                     </div>
                     <div class="inqry_wirte-title-input">
                         <div>
-                            <input name="inqry_title" placeholder="제목을 입력해주세요">
+                            <input name="title" placeholder="제목을 입력해주세요">
                         </div>
                     </div>
                 </div>
@@ -250,12 +251,12 @@
                     </div>
                     <div class="inqry_wirte-content_textCover">
                         <div class="inqry_wirte-content_text">
-                            <textarea name="inqry_textarea"></textarea>
+                            <textarea name="ctent"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="inqry_writet-insert_btn">
-                    <button>등록</button>
+                    <button class="insert_btn">등록</button>
                 </div>
             </form>
         </div>
@@ -328,9 +329,9 @@
 
         })
         // 문의하기 버튼 클릭
-        $('.inqry_wirte-btn').click(function (){
+        $('.insert_btn').click(function (){
           let form = $('.inqry_wirte-btn');
-
+          alert("문의가 등록되었습니다");
           form.submit();
         })
 

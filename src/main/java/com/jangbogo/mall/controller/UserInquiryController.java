@@ -1,5 +1,7 @@
 package com.jangbogo.mall.controller;
 
+import com.jangbogo.mall.domain.UserInquiryDto;
+import com.jangbogo.mall.service.UserInquiryService;
 import com.jangbogo.mall.service.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +15,9 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/mypage")
 public class UserInquiryController {
     @Autowired
-    WishlistService wishlistService;
+    UserInquiryService userInquiryService;
 
+    // 회원 문의 리스트 페이지 이동
     @GetMapping("/inquiry/list")
     public String inquiryListPage(HttpServletRequest req, Model m) {
 
@@ -33,14 +36,18 @@ public class UserInquiryController {
 
     // 회원 문의 등록 메서드
     @PostMapping("/inquiry")
-    public String inquiryinsert(Integer inqry_idx, Integer inqry_idx2, String inqry_title,String inqry_textarea) {
+    public String inquiryinsert(UserInquiryDto userInquiryDto, HttpSession session) {
+//        System.out.println("userInquiryDto = " + userInquiryDto);
 
-        System.out.println("inqry_idx = " + inqry_idx);
-        System.out.println("inqry_idx2 = " + inqry_idx2);
-        System.out.println("inqry_title = " + inqry_title);
-        System.out.println("inqry_textarea = " + inqry_textarea);
+        Integer user_idx = (Integer)session.getAttribute("idx");
+        String nickName = (String) session.getAttribute("nickName");
+        userInquiryDto.setUser_idx(user_idx);
+        userInquiryDto.setWriter(nickName);
+        System.out.println("userInquiryDto = " + userInquiryDto);
+
+
 //        if(!loginCheck(request)) return "redirect:/user/login?toURL="+request.getRequestURL();
-        return "inquiry/inquiry";
+        return "redirect:/mypage/inquiry";
     }
 
 
