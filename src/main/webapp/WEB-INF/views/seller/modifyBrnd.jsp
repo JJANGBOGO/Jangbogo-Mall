@@ -255,8 +255,8 @@
         let bnr_path = $(".upload-result.bnr ul li").data("upload-path");
         let profile_path = $(".upload-result.profile ul li").data("upload-path");
 
-        if (bnr_path == undefined) bnr_path = "${seller.brnd_bnr_upload_path}"; //''가 아니라 undefined
-        if (profile_path == undefined) profile_path = "${seller.brnd_upload_path}"; //''가 아니라 undefined
+        if (bnr_path === undefined) bnr_path = "${seller.brnd_bnr_upload_path}"; //''가 아니라 undefined
+        if (profile_path === undefined) profile_path = "${seller.brnd_upload_path}"; //''가 아니라 undefined
 
         form_str += "<input type='hidden' name='brnd_bnr_upload_path' value=" + bnr_path + ">" +
             "<input type='hidden' name='brnd_upload_path' value=" + profile_path + ">";
