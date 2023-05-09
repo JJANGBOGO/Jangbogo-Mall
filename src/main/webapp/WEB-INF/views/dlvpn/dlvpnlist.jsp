@@ -15,7 +15,7 @@
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
 <link rel="stylesheet" href="<c:url value='/css/dlvpnlist.css'/>">
 
-<div class="mypage-banner"></div>
+<div class="mypage-banner"><img src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/5743dc11-54b5-4140-a574-d0424e6414eb.jpg"></div>
 <div class="mypage-base">
     <%@ include file="/WEB-INF/views/include/sidebar.jsp" %>
     <div class="mypage-content">
