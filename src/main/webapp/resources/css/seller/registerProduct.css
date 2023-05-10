@@ -2,6 +2,12 @@
     display: flex;
 }
 
+.text_cnt {
+    display: flex;
+    flex-direction: row-reverse;
+    color: lightgray;
+}
+
 .input-box.category .input:first-child {
     margin-right: 5px;
 }

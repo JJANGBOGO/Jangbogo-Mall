@@ -44,9 +44,6 @@
                                     ${product.name}
                             </div>
                             <div class="product-content">${product.content}</div>
-<%--                            <div class="star-grade">--%>
-<%--                                <div class="starrr" data-ascr="${product.ascr}"></div>--%>
-<%--                            </div>--%>
                         </div>
                     </div>
                     <div class="product-right">

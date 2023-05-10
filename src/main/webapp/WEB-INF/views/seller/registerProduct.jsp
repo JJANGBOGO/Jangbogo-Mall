@@ -83,6 +83,7 @@
                                         placeholder="상품 이름을 입력해 주세요"
                                 />
                             </div>
+                            <div id="name_text_cnt" class="text_cnt">(0 / 100)</div>
                             <div class="error-msg name"></div>
                         </div>
                         <div class="btn-space"></div>
@@ -99,6 +100,7 @@
                                         placeholder="상품에 대한 설명을 입력해주세요"
                                 ></textarea>
                             </div>
+                            <div id="ctent_text_cnt" class="text_cnt">(0 / 3000)</div>
                             <div class="error-msg content"></div>
                         </div>
                         <div class="btn-space"></div>
@@ -399,6 +401,7 @@
                                         placeholder="상품 관련 주의사항을 입력해 주세요"
                                 ></textarea>
                             </div>
+                            <div id="warn_text_cnt" class="text_cnt">(0 / 3000)</div>
                             <div class="error-msg warn"></div>
                         </div>
                         <div class="btn-space"></div>
@@ -416,6 +419,7 @@
                                         placeholder="상품 안내 사항을 입력해 주세요"
                                 ></textarea>
                             </div>
+                            <div id="guid_text_cnt" class="text_cnt">(0 / 200)</div>
                             <div class="error-msg guid"></div>
                         </div>
                         <div class="btn-space"></div>
@@ -618,12 +622,46 @@
         toggleDcInput();
         toggleSleDateInput();
 
+        $('#name').on('keyup', function() {
+            $('#name_text_cnt').html("("+$(this).val().length+" / 100)");
+            if($(this).val().length > 100) {
+                $(this).val($(this).val().substring(0, 100));
+                $('#name_text_cnt').html("(100 / 100)");
+                alert("작성 가능 문자수를 초과하셨습니다")
+            }
+        })
 
+        $('#ctent').on('keyup', function() {
+            $('#ctent_text_cnt').html("("+$(this).val().length+" / 3000)");
+            if($(this).val().length > 3000) {
+                $(this).val($(this).val().substring(0, 3000));
+                $('#ctent_text_cnt').html("(3000 / 3000)");
+                alert("작성 가능 문자수를 초과하셨습니다")
+            }
+        })
+
+        $('#warn').on('keyup', function() {
+            $('#warn_text_cnt').html("("+$(this).val().length+" / 3000)");
+            if($(this).val().length > 3000) {
+                $(this).val($(this).val().substring(0, 3000));
+                $('#warn_text_cnt').html("(3000 / 3000)");
+                alert("작성 가능 문자수를 초과하셨습니다")
+            }
+        })
+
+        $('#guid').on('keyup', function() {
+            $('#guid_text_cnt').html("("+$(this).val().length+" / 200)");
+            if($(this).val().length > 200) {
+                $(this).val($(this).val().substring(0, 200));
+                $('#guid_text_cnt').html("(200 / 200)");
+                alert("작성 가능 문자수를 초과하셨습니다")
+            }
+        })
 
 
         $("select[name=cate_idx]").change(function (e) {
             //val은 대분류에만 해당하며, 카테고리 테이블의 id값과 일치함 //카테고리 아이디 받아서 배송방식 엮어오기
-            let val = $("#First_cate_idx option:selected").val(); //value값 출력됨 //"01"
+            let val = $("#First_cate_idx option:selected").val();
 
             //id는 개별 상품의 카테고리 아이디
             let id;
@@ -738,8 +776,6 @@
         $("#seler-prod-check").on("click", function(e){
             e.preventDefault();
             let seler_prod_cd = $('input[name=seler_prod_cd]').val();
-            // let sle_start_tm = $('input[name=sle_start_tm]').val();
-            // let sle_end_tm = $('input[name=sle_end_tm]').val();
 
             if(seler_prod_cd === "" || seler_prod_cd.length > 9) {
                 alert("알맞은 상품 코드를 입력해 주세요");
