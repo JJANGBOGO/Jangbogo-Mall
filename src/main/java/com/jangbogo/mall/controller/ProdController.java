@@ -17,8 +17,6 @@ import javax.servlet.http.HttpSession;
 import java.util.*;
 
 @Controller
-//@ResponseBody
-//@RestController
 public class ProdController {
     @Autowired
     ProdInqryService prodInqryService;
@@ -82,12 +80,7 @@ public class ProdController {
         System.out.println("[GET]user idx = "+idx);
         System.out.println("user email = "+email);
 
-//        if(page == null) page = 1;
-//        if(pageSize == null) pageSize = 10;
         try {
-//            ProdInqryPageHandler prodInqryPageHandler = new ProdInqryPageHandler(totalCnt, page, pageSize);
-
-
             list = prodInqryService.getList(prod_idx);
             return new ResponseEntity<List<JoinProdInqryDto>>(list, HttpStatus.OK);
         } catch (Exception e) {
@@ -119,10 +112,8 @@ public class ProdController {
     //상품문의 게시물을 등록
     @PostMapping("/product/inqry/write")  // /product?prod_idx=1 POST
     public ResponseEntity<String> write(@RequestBody ProdInqryDto prodInqryDto, Integer prod_idx, HttpSession session) {
-//        session객체가 안 찾아지고 있습니다.
         Integer user_idx = (Integer)session.getAttribute("idx");
-        System.out.println("user_idx=???"+user_idx); //null
-
+        System.out.println("user_idx=???"+user_idx);
 
         String nick_name = (String)session.getAttribute("nickName");
         prodInqryDto.setUser_idx(user_idx);
@@ -167,18 +158,15 @@ public class ProdController {
         try {
             if(productDetailService.checkWishlist(prod_idx, user_idx) == 0) {
                 productDetailService.insertWishlist(prod_idx, user_idx);
-//                return new ResponseEntity<String>("INSERT_OK", HttpStatus.OK);
                 msg = "INSERT_OK";
                 return ResponseEntity.ok().body(msg);
             } else {
                 productDetailService.deleteWishList(prod_idx, user_idx);
-//                return new ResponseEntity<String>("DELETE_OK", HttpStatus.OK);
                 msg = "DELETE_OK";
                 return ResponseEntity.ok().body(msg);
             }
         } catch (Exception e) {
             e.printStackTrace();
-//            return new ResponseEntity<String>("INSERT_ERR", HttpStatus.BAD_REQUEST);
             return ResponseEntity.status(400).body("INSERT_ERR");
         }
     }
@@ -187,24 +175,20 @@ public class ProdController {
     @ResponseBody
     public ResponseEntity<String> insertCart(Integer prod_idx, Integer prod_cnt, HttpSession session) {
         Integer user_idx = (Integer)session.getAttribute("idx");
-//        System.out.println("prod_idx="+prod_idx);
         try {
             String msg = "";
 
             if(wishlistService.checkCart(prod_idx, user_idx)==0) {
                 wishlistService.insertCart(prod_idx, user_idx, prod_cnt);
-//                return new ResponseEntity<String>("INSERT_OK", HttpStatus.OK);
                 msg = "INSERT_OK";
                 return ResponseEntity.ok().body(msg);
             } else {
                 wishlistService.updateCartCnt(prod_idx, user_idx, prod_cnt);
-//                return new ResponseEntity<String>("UPDATE_OK", HttpStatus.OK);
                 msg = "UPDATE_OK";
                 return ResponseEntity.ok().body(msg);
             }
         } catch (Exception e) {
             e.printStackTrace();
-//            return new ResponseEntity<String>("INSERT_ERR", HttpStatus.BAD_REQUEST);
             return ResponseEntity.status(400).body("INSERT_ERR");
         }
     }
