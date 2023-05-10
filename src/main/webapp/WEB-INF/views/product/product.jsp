@@ -443,7 +443,6 @@
 
   let packingTypeToString = function() {
     let packingType = $('.packing-name').text();
-    // let packingType = "Hello,miso"
     // , 콤마를 기준으로 문자열을 잘라서
     //첫 번째 요소가 1이면 냉장/ 2이면 냉동/ 3이면 상온
     let first = packingType.split(',')[0];
@@ -714,12 +713,6 @@
       let dtoArr = $(".modBtn").closest("tr").siblings("tr[data-idx=" + inquiry_idx + "]");
       let title = dtoArr[0].dataset.title;
 
-
-      // console.log(ctent_cnt)
-      //
-      //
-      // console.log(title_cnt);
-
       if(user_idx != "${sessionScope.idx}") {
         alert("수정권한이 없습니다.");
         return;
@@ -781,11 +774,9 @@
 
       //속성 data-idx의 값을 저장한다.
       let idx = $(this).attr("data-idx");
-      // console.log("id 수정 버튼을 눌렀을 때 = "+idx);
       //동일하게 불러온 정보를 변수에 저장한다.
       let newTitle = $("input[id=modal-title]").val();
       let newCtent = $("textarea[id=modal-ctent]").val();
-      // console.log()
 
       let prod_idx = $('#prod_idx').text();
       //등록 버튼을 눌러 새롭게 정보를 저장한다.
@@ -958,7 +949,6 @@
 
 
     inqrys.forEach(function(inqry) {
-      // console.log(inqry.res_state_cd);
       let res_state_cd = "";
       if(inqry.res_state_cd == 1) {
         res_state_cd = "답변대기";
