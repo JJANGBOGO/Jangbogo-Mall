@@ -89,7 +89,7 @@
         <div class="navbar-2">
             <ul>
                 <li>
-                    <a class="active" href="">신상품</a>
+                    <a class="" href="">신상품</a>
                 </li>
                 <li>
                     <a href="">카테고리</a>
