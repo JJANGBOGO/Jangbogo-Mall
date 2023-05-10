@@ -77,7 +77,6 @@
                     // 이벤트 : click
                     // 이벤트 핸들러 기능 : '저장' 버튼 클릭 시, 자식창에 입력한 값들을 부모창에 데이터 렌더링하기
                     $(".recipient-details__buttons > button:last-of-type").click(() => {
-                        console.log("저장 버튼 클릭됨");
                         let orderer = $("#receiver-name").val();
                         let mpno = $("#receiver-phone").val();
 
