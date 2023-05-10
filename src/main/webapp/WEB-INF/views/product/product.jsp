@@ -1083,7 +1083,13 @@
 
     tmp += '<div class="paging">'
     if(ph.totalCnt==null || ph.totalCnt==0){
-      tmp += '<div> 게시물이 없습니다. </div>'
+      tmp += '<div class="review-notice">'
+      tmp += '<svg width="60" height="60" viewBox="0 0 68 68">'
+      tmp += '<path class="heartpath" stroke="#e2e2e2" d="M57.025 14.975c-5.3-5.3-13.889-5.3-19.186 0L34 18.812l-3.837-3.837c-5.3-5.3-13.89-5.3-19.19 0-5.296 5.297-5.296 13.886 0 19.186l3.838 3.837 18.482 18.485a1 1 0 0 0 1.414 0s0 0 0 0l18.482-18.485h0l3.837-3.837c5.3-5.3 5.3-13.89 0-19.186z"></path>'
+      tmp += '</svg>'
+      tmp += '<strong class="strong-heart"> 게시물이 없습니다. </strong>'
+      tmp += '</div>'
+
     }
     if(ph.showPrev){
       tmp += '<a class="page" data-page='+(ph.beginPage-1)+'>&lt;</a>'
