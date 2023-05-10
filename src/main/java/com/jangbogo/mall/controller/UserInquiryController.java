@@ -40,10 +40,11 @@ public class UserInquiryController {
 
             list = userInquiryService.getList(1); // 회원번호를 가지고 그 회원의 문의 조회
             System.out.println("list = " + list);
+            return new ResponseEntity<List<UserInquiryListDto>>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
+            return new ResponseEntity<List<UserInquiryListDto>>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<List<UserInquiryListDto>>(list, HttpStatus.OK);
     }
 
     // 회원 문의 작성 페이지로 이동
