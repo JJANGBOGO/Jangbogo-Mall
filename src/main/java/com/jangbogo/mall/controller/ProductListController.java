@@ -39,8 +39,6 @@ public class ProductListController {
     public ResponseEntity<List<ProductListDto>> showProducts( ProductListDto productListDto, Model m) {
         try {
             List<ProductListDto> list = productListService.allProductInfoSelect();
-//            Integer totalReview = productListService.reviewNumSelect(prod_idx);
-//            m.addAttribute("totalReview", totalReview);
             return new ResponseEntity<List<ProductListDto>>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -48,19 +46,6 @@ public class ProductListController {
 
         }
     }
-
-//    @GetMapping("/productList/modalInfo")
-//    public ResponseEntity<ProductListDto> showModalInfo(Integer prod_idx, ProductListDto productListDto) {
-//        productListDto.setProd_idx(prod_idx);
-//        //상품번호로 상품 정보 가져온다. 이름, 가격
-//        try {
-//            productListService.getModalInfo(productListDto);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return new ResponseEntity<ProductListDto>("INSERT_ERR", HttpStatus.BAD_REQUEST);
-//    }
 
     @PostMapping("/productList/cart")
     public ResponseEntity<String> insertCart(Integer prod_idx, Integer prod_cnt, HttpSession session) {
@@ -70,11 +55,9 @@ public class ProductListController {
             if(wishlistService.checkCart(prod_idx, user_idx)==0) {
                 wishlistService.insertCart(prod_idx, user_idx, prod_cnt);
                 msg = "INSERT_OK";
-//                return new ResponseEntity<String>("INSERT_OK", HttpStatus.OK);
             } else {
                 wishlistService.updateCartCnt(prod_idx, user_idx, prod_cnt);
                 msg = "UPDATE_OK";
-//                return new ResponseEntity<String>("UPDATE_OK", HttpStatus.OK);
             }
             return ResponseEntity.ok().body(msg);
         } catch (Exception e) {
@@ -84,37 +67,4 @@ public class ProductListController {
         }
     }
 
-//    대분류에 맞게 카테고리 출력
-//    @GetMapping("/productList/category")
-//    public ResponseEntity<List<ProductListDto>> categoryList(ProductListDto productListDto) {
-//        try {
-////            System.out.println("f_cate_idx???"+ f_cate_idx); //04
-////            List<ProductListDto> list = productListService.allffloorSelect();
-//            //dto에는 setter 통해서 f_cate_idx를 넣어줄 수 있는데 list에는 넣어주지 못한다. 단지 mapper를 통해 검색 된 내용만 들어갈 뿐이다.
-////            productListDto.setF_cate_idx(f_cate_idx);
-////            System.out.println("productListDto = ????" + productListDto);
-////                    setF_cate_idx(f_cate_idx);
-////            System.out.println("list==="+list);
-////            return new ResponseEntity<List<ProductListDto>>(list, HttpStatus.OK);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResponseEntity<List<ProductListDto>>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
-
-//    대분류에 맞게 상품출력
-//    @GetMapping("/productList/ffloor/{f_cate_idx}")
-//    public ResponseEntity<List<ProductListDto>> listFilter(@PathVariable String f_cate_idx, ProductListDto productListDto, String filterType) {
-//
-//        productListDto.setF_cate_idx(f_cate_idx);
-//
-//        try {
-////            List<ProductListDto> list = productListService.allProductInfoSelect(productListDto);
-////            System.out.println("list = " + list);
-////            return new ResponseEntity<List<ProductListDto>>(list, HttpStatus.OK);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResponseEntity<List<ProductListDto>>(HttpStatus.OK);
-//        }
-//    }
 }
