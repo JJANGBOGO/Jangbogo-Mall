@@ -350,9 +350,6 @@
     </div>
   </div>
 
-  <textarea id="test" name="test" cols="30" rows="10"></textarea>
-  <div id="test_cnt">(0 / 100)</div>
-
 </div>
 <div id="prod_idx" style="display: none">${prod_idx}</div>
 <div id="sessionID" style="display: none">${session_idx}</div>
@@ -468,17 +465,6 @@
   }
 
   $(document).ready(function(){
-
-    $('#test').on('keyup', function() {
-      $('#test_cnt').html("("+$(this).val().length+" / 100)");
-      console.log($(this));
-      if($(this).val().length > 100) {
-        $(this).val($(this).val().substring(0, 100));
-        $('#test_cnt').html("(100 / 100)");
-        alert("작성 가능 문자수를 초과하셨습니다")
-      }
-    })
-
 
     showInqryList(prod_idx);
     showProdDetailList(prod_idx);
