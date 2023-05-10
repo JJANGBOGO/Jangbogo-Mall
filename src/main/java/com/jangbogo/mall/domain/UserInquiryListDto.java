@@ -25,6 +25,12 @@ public class UserInquiryListDto {
     private String name; // 문의유형이름(자식)
     private String parents_name; // 문의유형이름(부모)
 
+    // 문의답변(USER_INQRY_ANS)
+    private Integer user_inqry_idx; // 회원문의번호 USER_INQRY_IDX
+    private String admin_ctent; // 회원문의답변내용
+    private String admin_writer; // 회원문의답변작성자
+    private Date rsps_crt_tm; // 회원문의답변일자
+
 
 
     // 생성자(Constructor)
@@ -168,7 +174,41 @@ public class UserInquiryListDto {
         this.parents_name = parents_name;
     }
 
+    public Integer getUser_inqry_idx() {
+        return user_inqry_idx;
+    }
+
+    public void setUser_inqry_idx(Integer user_inqry_idx) {
+        this.user_inqry_idx = user_inqry_idx;
+    }
+
+    public String getAdmin_ctent() {
+        return admin_ctent;
+    }
+
+    public void setAdmin_ctent(String admin_ctent) {
+        this.admin_ctent = admin_ctent;
+    }
+
+    public String getAdmin_writer() {
+        return admin_writer;
+    }
+
+    public void setAdmin_writer(String admin_writer) {
+        this.admin_writer = admin_writer;
+    }
+
+    public Date getRsps_crt_tm() {
+        return rsps_crt_tm;
+    }
+
+    public void setRsps_crt_tm(Date rsps_crt_tm) {
+        this.rsps_crt_tm = rsps_crt_tm;
+    }
+
     // toString()
+
+
     @Override
     public String toString() {
         return "UserInquiryListDto{" +
@@ -189,6 +229,10 @@ public class UserInquiryListDto {
                 ", upp_floor=" + upp_floor +
                 ", name='" + name + '\'' +
                 ", parents_name='" + parents_name + '\'' +
+                ", user_inqry_idx=" + user_inqry_idx +
+                ", admin_ctent='" + admin_ctent + '\'' +
+                ", admin_writer='" + admin_writer + '\'' +
+                ", rsps_crt_tm=" + rsps_crt_tm +
                 '}';
     }
 }

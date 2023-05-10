@@ -11,13 +11,13 @@
 
 <!--    회원문의 목록 조회 (최종)-->
     <select id="getList" parameterType="int" resultType="UserInquiryListDto">
-        SELECT USER_INQRY.*,INQRY_TYPE.NAME AS parents_name
-        FROM INQRY_TYPE, (SELECT USER_INQRY.*, INQRY_TYPE.UPP_FLOOR,INQRY_TYPE.NAME
-                          FROM INQRY_TYPE, (SELECT *
-                                            FROM USER_INQRY
-                                            WHERE USER_IDX = #{user_idx}) AS USER_INQRY
-                          WHERE USER_INQRY.ID = INQRY_TYPE.ID) AS USER_INQRY
-        WHERE USER_INQRY.UPP_FLOOR = INQRY_TYPE.ID;
+        select USER_INQRY.*,INQRY_TYPE.NAME as parents_name
+        from INQRY_TYPE, (select USER_INQRY.*, INQRY_TYPE.UPP_FLOOR,INQRY_TYPE.NAME
+                          from INQRY_TYPE, (select USER_INQRY.*, ANS.USER_INQRY_IDX, ANS.CTENT as admin_ctent, ANS.WRITER as admin_writer, ANS.RSPS_CRT_TM
+                                            from USER_INQRY left join USER_INQRY_ANS as ANS on USER_INQRY.IDX = ANS.USER_INQRY_IDX
+                                            where USER_INQRY.IDX = #{user_idx}) as USER_INQRY
+                          where USER_INQRY.ID = INQRY_TYPE.ID) as USER_INQRY
+        where USER_INQRY.UPP_FLOOR = INQRY_TYPE.ID;
     </select>
 
 </mapper>
