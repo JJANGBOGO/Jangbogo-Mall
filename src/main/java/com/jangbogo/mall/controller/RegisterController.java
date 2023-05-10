@@ -21,28 +21,12 @@ import java.util.List;
 @Slf4j
 @Controller
 public class RegisterController {
-//    @Autowired
-//    ProductService productService;
 
     @Autowired
     Utils utils;
     @Autowired
     RegistProductService registProductService;
 
-    //등록된 상품리스트 보여주기
-//    @GetMapping("/seller/list/product")
-//    public String listProductView(HttpSession session, HttpServletRequest req, Model m, RedirectAttributes rattr) {
-//        m.addAttribute("mySellerUrl", req.getRequestURI());
-//        try {
-//            Integer idx = (Integer) session.getAttribute("idx");
-//            List<RegistProductDto> list = productService.getListBySeller(idx);
-//            m.addAttribute("productList", list);
-//            return "/seller/productList";
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return "redirect:/";
-//        }
-//    }
     //상품 수정페이지 보여주기
     @GetMapping("/seller/update/product/{prod_idx}")
     public String updateProductView(@PathVariable Integer prod_idx, Model m, RegistProductDto registProductDto) {
@@ -105,34 +89,6 @@ public class RegisterController {
         return "/seller/registerProduct";
     }
 
-//    @PostMapping("/seller/register/checkData")
-//    public String checkData(HttpSession session, @RequestBody RegistProductDto registProductDto, RedirectAttributes rattr) {
-//        Integer idx = (Integer) session.getAttribute("idx");
-//        registProductDto.setSeler_idx(idx);
-//        try {
-////            System.out.println("registProductDto = ????" + registProductDto); //넘어왔어
-//            if (registProductService.checkSellerProdCd(registProductDto) != 0) {
-////                String msg = "DUPLICATE_NUMBER";
-//                rattr.addFlashAttribute("msg", "DUPLICATE_NUMBER");
-//                throw new Exception("Duplicate Number");
-//            } else {
-//                rattr.addFlashAttribute("msg", "CONFIRM");
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println("000" + registProductDto.getSeler_idx());
-//        System.out.println("111" + registProductDto.getSeler_prod_cd());
-//        System.out.println("222" + registProductDto.getMft_tm());
-//        System.out.println("333" + registProductDto.getDistb_tlmt());
-//        System.out.println("444" + registProductDto.getSle_start_tm());
-//        System.out.println("555" + registProductDto.getSle_end_tm());
-//
-//
-//        return "";
-//    }
-
     @PostMapping("/seller/register/checkData/selerProdCd")
     public ResponseEntity<String> checkSelerProdCd(HttpSession session, @RequestBody RegistProductDto registProductDto ) {
         try {
@@ -179,7 +135,6 @@ public class RegisterController {
     static boolean isNull(Date tm) {
         return tm == null;
     }
-
 
     //상품 등록 페이지에서 상품등록하기
     @PostMapping("/seller/register/productInfo")
