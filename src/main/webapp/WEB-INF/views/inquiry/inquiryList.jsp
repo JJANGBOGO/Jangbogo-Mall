@@ -354,6 +354,12 @@
         $('.user_inqry-container').on("click", '.goToinqry-btn', function () {
             location.href = "/mypage/inquiry";
         })
+
+        // 수정 버튼 클릭 시 (문의작성(수정) 페이지로 이동)
+        $('.user_inqry-container').on("click", '.Update_btn', function () {
+            let idx = $(this).attr('data-idx'); // 사용자 정의 속성 'data-idx' 의 값을 가져온다
+            location.href = "/mypage/inquiry?idx="+idx;
+        })
     })
 
     // 회원 문의 목록 조회
@@ -365,7 +371,6 @@
             // dataType : 'text', // 전송받을 데이터의 타입 / 생략하면 기본이 JSON 이다
             // data : JSON.stringify(person),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
             success : function(result){
-                alert("H2");
                 $(".user_inqry-box").html(listToHtml(result));    // 서버로부터 응답이 도착하면 호출될 함수
                 // $(".prdcnt").html(result.length);
                 // if(result.length==0){ // 문의 내역이 없습니다
@@ -419,7 +424,7 @@
             tmp += '<div class="user_inqry-UpdAndDel_btn">'
             tmp += '<span style="margin-left: 40px;">'+list.rsps_crt_tm+'</span>'
             tmp += '<div class="btn-box">'
-            tmp += '<button class="Update_btn">수정</button>'
+            tmp += '<button class="Update_btn" data-idx = '+list.idx+'>수정</button>'
             tmp += '<div></div>'
             tmp += '<button class="Delet_btn">삭제</button>'
             tmp += '</div></div></div></div></div></li></ul>'
