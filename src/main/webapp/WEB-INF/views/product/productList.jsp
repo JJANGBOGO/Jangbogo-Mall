@@ -27,42 +27,10 @@
             <div class="products">
                 <div class="mini-filter">
                     <div class="total-num"></div>
-<%--                    <ul class="filter-main">--%>
-<%--                        <li class="filter-name-wrap">--%>
-<%--                            <a href="" class="filter-name">신상품순</a>--%>
-<%--                        </li>--%>
-<%--                        <li class="filter-name-wrap">--%>
-<%--                            <a href="" class="filter-name">판매량순</a>--%>
-<%--                        </li>--%>
-<%--                        <li class="filter-name-wrap">--%>
-<%--                            <a href="" class="filter-name">혜택순</a>--%>
-<%--                        </li>--%>
-<%--                        <li class="filter-name-wrap">--%>
-<%--                            <a href="" class="filter-name">낮은 가격순</a>--%>
-<%--                        </li>--%>
-<%--                        <li class="filter-name-wrap">--%>
-<%--                            <a href="" class="filter-name">높은 가격순</a>--%>
-<%--                        </li>--%>
-<%--                    </ul>--%>
                 </div>
                 <div class="products-box">
 
                 </div>
-<%--                <div class="page-handler-box">--%>
-<%--                    <a href="" class="paging-button">--%>
-<%--                        <img--%>
-<%--                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA…gAIPi/8X/4QwwE5PBQJADAAKSG3cyVhtXAAAAAElFTkSuQmCC"--%>
-<%--                                alt="이전 페이지로 이동하기 아이콘"--%>
-<%--                        />--%>
-<%--                    </a>--%>
-<%--                    <a class="paging-button" href=""></a>--%>
-<%--                    <a href="" class="paging-button">--%>
-<%--                        <img--%>
-<%--                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA…8nwECQEwCHEwGhAlRBgA2mht3SwgzrwAAAABJRU5ErkJggg=="--%>
-<%--                                alt="다음 페이지로 이동하기 아이콘"--%>
-<%--                        />--%>
-<%--                    </a>--%>
-<%--                </div>--%>
             </div>
         </div>
     </div>
@@ -152,33 +120,6 @@
 <script>
     let f_cate_idx = "${f_cate_idx}";
 
-    // let showCategory = function() {
-    //     $.ajax({
-    //         type: 'GET',
-    //         url: '/productList/category',
-    //         success: function(result) {
-    //             console.log("dsaas");
-    //             console.log("result"+result);
-    //             alert("alert!!!");
-    //             $('.cate-list').html(cateListToHtml(result));
-    //         },
-    //         error: function() { alert("GET productList Error") }
-    //     })
-    // }
-
-    <%--let cateListToHtml = function(cateNames) {--%>
-    <%--    // let tmp = "";--%>
-
-    <%--        console.log("ddddd"+cateNames.id);--%>
-    <%--    // cateNames.forEach(function(cateName) {--%>
-    <%--        // console.log("f_cate_idx!!!"+cateName.id);--%>
-    <%--        &lt;%&ndash;tmp += '<li class="cate-name"><a href="<c:url value='/productList/ffloor/{}'  />"></a></li>'&ndash;%&gt;--%>
-    <%--    //     tmp += '<li class="cate-name">cateName.cate_name</li>'--%>
-    <%--    // })--%>
-    <%--    // return tmp;--%>
-    <%--}--%>
-
-
     let showProducts = function() {
         $.ajax({
         type: 'GET',
@@ -264,9 +205,6 @@
             e.preventDefault();
 
             let prod_idx = $(this).data("prod_idx");
-            // console.log("prod_idx"+prod_idx); //18
-
-
 
             let user_idx = "${user_idx}";
             if(user_idx == "") {
@@ -280,7 +218,7 @@
             let dc_rate = $(this).parent().parent().parent().siblings().find(".product-price-wrap").children().find(".dc_rate").text();
 
             let regex = /[^0-9]/g;
-            let numPrice = price.replace(regex, ""); //문자열 뺀 숫자 17900
+            let numPrice = price.replace(regex, "");
             let dcPrice = dc_rate.replace(regex, "");
             let withComma = numPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
             $(".product-info-name").text(title);
