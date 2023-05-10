@@ -295,6 +295,7 @@
                     </div>
                     <div class="title_input">
                       <input id="modal-title" type="text" />
+                      <div id="title_text_cnt" class="text_cnt">(0 / 50)</div>
                     </div>
                   </div>
                   <div class="inqry_content">
@@ -302,8 +303,8 @@
                       <span>내용</span>
                     </div>
                     <div class="content_input">
-<%--                      <input id="modal-ctent" type="text" />--%>
                       <textarea id="modal-ctent"></textarea>
+                      <div id="ctent_text_cnt" class="text_cnt">(0 / 3000)</div>
                     </div>
                   </div>
                   <div class="inqry_secret">
@@ -333,16 +334,6 @@
                   </li>
                 </ul>
               </div>
-              <div class="inqry-notice-wrap">
-                <div class="inqry-notice">
-                  <div class="notice_title">
-                    <span id="notice-title-span">공지</span>
-                  </div>
-                  <div class="text">
-                    <span>공지내용</span>
-                  </div>
-                </div>
-              </div>
               <div class="inqry-body">
                 <div id="prodInqryList">
                   <table id="table"></table>
@@ -358,9 +349,6 @@
       </div>
     </div>
   </div>
-
-  <textarea id="test" name="test" cols="30" rows="10"></textarea>
-  <div id="test_cnt">(0 / 100)</div>
 
 </div>
 <div id="prod_idx" style="display: none">${prod_idx}</div>
@@ -452,7 +440,6 @@
 
   let packingTypeToString = function() {
     let packingType = $('.packing-name').text();
-    // let packingType = "Hello,miso"
     // , 콤마를 기준으로 문자열을 잘라서
     //첫 번째 요소가 1이면 냉장/ 2이면 냉동/ 3이면 상온
     let first = packingType.split(',')[0];
@@ -478,16 +465,6 @@
   }
 
   $(document).ready(function(){
-
-    $('#test').on('keyup', function() {
-      $('#test_cnt').html("("+$(this).val().length+" / 100)");
-
-      if($(this).val().length > 100) {
-        $(this).val($(this).val().substring(0, 100));
-        $('#test_cnt').html("(100 / 100)");
-      }
-    })
-
 
     showInqryList(prod_idx);
     showProdDetailList(prod_idx);
@@ -601,6 +578,8 @@
       $("input[id=modal-title]").val("");
       $("#modal-ctent").val("");
       $("input[type=checkbox]").prop("checked", false);
+      $("#title_text_cnt").text("(0 / 50)");
+      $("#ctent_text_cnt").text("(0 / 3000)");
       return;
     })
 
@@ -612,7 +591,8 @@
       $("input[id=modal-title]").val("");
       $("#modal-ctent").val("");
       $("input[type=checkbox]").prop("checked", false);
-
+      $("#title_text_cnt").text("(0 / 50)");
+      $("#ctent_text_cnt").text("(0 / 3000)");
       return;
     })
 
@@ -622,8 +602,6 @@
       let p = $(target).offset();
 
       let session_idx = "${session_idx}";
-      // console.log(typeof session_idx);
-      // console.log("session_idx"+ session_idx);
       if(session_idx == "") {
         alert("회원만 문의 작성이 가능합니다.")
         location.href = "<c:url value='/user/login'/>";
@@ -645,12 +623,30 @@
       $(".modal").css("display", "block");
     })
 
-    // $("#sendBtn").click(function() {
+    $("textarea#modal-ctent").on('keyup', function() {
+      $('#ctent_text_cnt').html("("+$("textarea#modal-ctent").val().length+" / 3000)");
+
+      if($("textarea#modal-ctent").val().length > 3000) {
+        $("textarea#modal-ctent").val($("textarea#modal-ctent").val().substring(0, 3000));
+        $('#ctent_text_cnt').html("(3000 / 3000)");
+        alert("작성 가능 문자수를 초과하셨습니다");
+      }
+    })
+
+    $("#modal-title").on('keyup', function() {
+      $('#title_text_cnt').html("("+$("#modal-title").val().length+" / 50)");
+
+      if($(this).val().length > 50) {
+        $(this).val($(this).val().substring(0, 50));
+        $('#title_text_cnt').html("(50 / 50)");
+        alert("작성 가능 문자수를 초과하셨습니다");
+      }
+    })
+
     $(".inqry_button").on("click", "#sendBtn", function() {
       $('body').css("overflow","visible");
 
       let ctent = $("#modal-ctent").val();
-      // console.log(ctent);
       let title = $("input[id=modal-title]").val();
 
       let prod_idx = $('#prod_idx').text();
@@ -685,6 +681,8 @@
       //input란에 있던 정보를 없앤다
       $("input[id=modal-title]").val("");
       $("#modal-ctent").val("");
+      $("#title_text_cnt").text("(0 / 50)");
+      $("#ctent_text_cnt").text("(0 / 3000)");
     });
 
     // 동적으로 생성되는, 문의에 달려있는 "수정" 버튼을 누르면
@@ -706,6 +704,26 @@
         return;
       }
 
+      $("#modal-title").on('keyup', function() {
+        $('#title_text_cnt').html("("+$("#modal-title").val().length+" / 50)");
+
+        if($(this).val().length > 50) {
+          $(this).val($(this).val().substring(0, 50));
+          $('#title_text_cnt').html("(50 / 50)");
+          alert("작성 가능 문자수를 초과하셨습니다");
+        }
+      })
+
+      $("#modal-ctent").on('keyup', function(e) {
+        $('#ctent_text_cnt').html("("+$("#modal-ctent").val().length+" / 3000)");
+
+        if($(this).val().length > 3000) {
+          $(this).val($(this).val().substring(0, 3000));
+          $('#ctent_text_cnt').html("(3000 / 3000)");
+          alert("작성 가능 문자수를 초과하셨습니다");
+        }
+      })
+
       let inqryButton = $(".inqry_button");
 
       //버튼을 "수정"으로 변경
@@ -726,6 +744,13 @@
       $("input[id=modal-title]").val(title);
       $("#modal-ctent").val(ctent);
 
+      //기존 문자열 길이값 가져오기
+      let title_cnt = ctent.length;
+      $('#title_text_cnt').html("("+title_cnt+" / 50)");
+
+      let ctent_cnt = ctent.length;
+      $('#ctent_text_cnt').html("("+ctent_cnt+" / 3000)");
+
       //모달이 열린다.
       $(".modal").css("display", "block");
 
@@ -735,11 +760,9 @@
 
       //속성 data-idx의 값을 저장한다.
       let idx = $(this).attr("data-idx");
-      // console.log("id 수정 버튼을 눌렀을 때 = "+idx);
       //동일하게 불러온 정보를 변수에 저장한다.
       let newTitle = $("input[id=modal-title]").val();
       let newCtent = $("textarea[id=modal-ctent]").val();
-      // console.log()
 
       let prod_idx = $('#prod_idx').text();
       //등록 버튼을 눌러 새롭게 정보를 저장한다.
@@ -912,7 +935,6 @@
 
 
     inqrys.forEach(function(inqry) {
-      // console.log(inqry.res_state_cd);
       let res_state_cd = "";
       if(inqry.res_state_cd == 1) {
         res_state_cd = "답변대기";
@@ -935,7 +957,7 @@
       tmp += ' data-title=' + inqry.title
       tmp += ' data-ctent='+ inqry.ctent
       tmp += ' data-opub_yn='+ inqry.opub_yn + '>'
-      tmp += '<td id="noticeBlock-title" class="title" data-opub_yn=' + inqry.opub_yn + ' data-idx='+ inqry.idx +'><span id="title-text">' + inqry.title + '</span></td>'
+      tmp += '<td id="noticeBlock-title" style="border-bottom: 1px solid rgb(244, 244, 244)" class="title" data-opub_yn=' + inqry.opub_yn + ' data-idx='+ inqry.idx +'><span id="title-text">' + inqry.title + '</span></td>'
       tmp += '<td class="name" data-user_idx=' + inqry.user_idx + '>' + inqry.writer + '</td>'
       tmp += '<td class="reg_date" >' + now24Date+ '</td>'
       tmp += '<td id="res-state-cd" class="response_state" >'+res_state_cd+'</td>'
