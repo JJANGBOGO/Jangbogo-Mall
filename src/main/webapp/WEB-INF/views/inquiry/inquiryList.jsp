@@ -329,7 +329,7 @@
 
             </li>
         </ul>
-        <div class="none-user_inqry">게시글이 없습니다.</div>
+<%--        <div class="none-user_inqry">게시글이 없습니다.</div>--%>
         <div class="user_inqry_btn">
             <div></div>
             <button class="goToinqry-btn"><span>문의하기</span></button>
@@ -341,16 +341,97 @@
 
 </div>
 <%@ include file="/WEB-INF/views/include/script.jsp" %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 <script>
     $(document).ready(function () {
         let msg = "${msg}"
         if(msg=="INSERT_OK"){ alert("성공적으로 등록되었습니다.")}
+
+        showList();
+
 
         // 문의하기 버튼 클릭 시 (문의작성 페이지로 이동)
         $('.user_inqry-container').on("click", '.goToinqry-btn', function () {
             location.href = "/mypage/inquiry";
         })
     })
+
+    // 회원 문의 목록 조회
+    let showList = function (){
+        $.ajax({
+            type:'GET',       // 요청 메서드 // 위시리스트 목록 가저오기
+            url: '/mypage/inquiry/lists',  // 요청 URI
+            // headers : { "content-type": "application/json"}, // 요청 헤더
+            // dataType : 'text', // 전송받을 데이터의 타입 / 생략하면 기본이 JSON 이다
+            // data : JSON.stringify(person),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
+            success : function(result){
+                alert("H2");
+                $(".user_inqry-box").html(listToHtml(result));    // 서버로부터 응답이 도착하면 호출될 함수
+                // $(".prdcnt").html(result.length);
+                // if(result.length==0){ // 문의 내역이 없습니다
+                //     $(".wishlist-notice").html(nolistToHtml())
+                // }
+            },
+            error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+        }); // $.ajax()
+
+    }
+
+
+    let listToHtml = function (lists){
+        let tmp = '';
+        let resp_state_cd = "";
+        lists.forEach(function (list){
+            tmp += '<li class="user_inqry-li">'
+            tmp += '<div class="user_inqry-div">'
+            tmp += '<div class="user_inqry-title"><div>'+list.title+'</div></div>'
+            tmp += '<div class="user_inqry-reg_tm"><span>'+moment(list.wrt_tm).format("YYYY-MM-DD")+'</span></div>'
+            if(list.resp_state_cd==1){
+                resp_state_cd = "답변대기";
+            }else{
+                resp_state_cd = "답변완료";
+            }
+            tmp += '<div class="user_inqry-resp_state_cd"><span>'+resp_state_cd+'</span></div>'
+            tmp += '</div>'
+            tmp += '</li>'
+            tmp += '<li class="user_inqry-answer-li">'
+            tmp += '<div class="user_inqry-answer-box">'
+            tmp += '<div class="user_inqry-answer-category">'
+            tmp += '<span class="answer-category1">'+list.parents_name+'</span>'
+            tmp += '<span class="answer-category2"></span>'
+            tmp += '<span class="answer-category3">'+list.name+'</span>'
+            tmp += '</div>'
+            tmp += '<div class="user_inqry-answer-question">'
+            tmp += '<div>'
+            tmp += '<span class="user_inqry-img"></span>'
+            tmp += '</div>'
+            tmp += '<div>'
+            tmp += '<span>'+list.ctent+'</span>'
+            tmp += '<div></div>'
+            tmp += '</div>'
+            tmp += '</div>'
+            tmp += '<div class="">'
+            tmp += '<div class="response">'
+            tmp += '<div class="img"><span></span></div>'
+            tmp += '<div class="text"><div>'+list.admin_ctent+'</div></div>'
+            tmp += '</div>'
+            tmp += '<div class="reg_tm">'
+            tmp += '<div class="user_inqry-UpdAndDel_btn">'
+            tmp += '<span style="margin-left: 40px;">'+list.rsps_crt_tm+'</span>'
+            tmp += '<div class="btn-box">'
+            tmp += '<button class="Update_btn">수정</button>'
+            tmp += '<div></div>'
+            tmp += '<button class="Delet_btn">삭제</button>'
+            tmp += '</div></div></div></div></div></li></ul>'
+
+
+
+
+
+
+        })
+        return tmp + "</div>";
+    }
 
 </script>
 </body>
