@@ -661,7 +661,7 @@
 
         $("select[name=cate_idx]").change(function (e) {
             //val은 대분류에만 해당하며, 카테고리 테이블의 id값과 일치함 //카테고리 아이디 받아서 배송방식 엮어오기
-            let val = $("#First_cate_idx option:selected").val(); //value값 출력됨 //"01"
+            let val = $("#First_cate_idx option:selected").val();
 
             //id는 개별 상품의 카테고리 아이디
             let id;
@@ -776,8 +776,6 @@
         $("#seler-prod-check").on("click", function(e){
             e.preventDefault();
             let seler_prod_cd = $('input[name=seler_prod_cd]').val();
-            // let sle_start_tm = $('input[name=sle_start_tm]').val();
-            // let sle_end_tm = $('input[name=sle_end_tm]').val();
 
             if(seler_prod_cd === "" || seler_prod_cd.length > 9) {
                 alert("알맞은 상품 코드를 입력해 주세요");
