@@ -334,16 +334,6 @@
                   </li>
                 </ul>
               </div>
-<%--              <div class="inqry-notice-wrap">--%>
-<%--                <div class="inqry-notice">--%>
-<%--                  <div class="notice_title">--%>
-<%--                    <span id="notice-title-span">공지</span>--%>
-<%--                  </div>--%>
-<%--                  <div class="text">--%>
-<%--                    <span>공지내용</span>--%>
-<%--                  </div>--%>
-<%--                </div>--%>
-<%--              </div>--%>
               <div class="inqry-body">
                 <div id="prodInqryList">
                   <table id="table"></table>
@@ -478,27 +468,17 @@
     $('.packing-name').text(dlvryType + "(" + packageType + ")");
   }
 
-  // <textarea id="test" name="test" cols="30" rows="10"></textarea>
-  // <div id="test_cnt">(0 / 100)</div>
-
-  // <input id="modal-title" type="text" />
-  // <div id="title_text_cnt">(0 / 50)</div>
-
-  // <textarea id="modal-ctent"></textarea>
-  // <div id="ctent_text_cnt">(0 / 3000)</div>
-  //name , ctent3000, warn3000, guid200
-  //id=name , id=ctent , id=warn , id=guid
   $(document).ready(function(){
 
-    // $('#test').on('keyup', function() {
-    //   $('#test_cnt').html("("+$(this).val().length+" / 100)");
-    //   console.log($(this));
-    //   if($(this).val().length > 100) {
-    //     $(this).val($(this).val().substring(0, 100));
-    //     $('#test_cnt').html("(100 / 100)");
-    //     alert("작성 가능 문자수를 초과하셨습니다")
-    //   }
-    // })
+    $('#test').on('keyup', function() {
+      $('#test_cnt').html("("+$(this).val().length+" / 100)");
+      console.log($(this));
+      if($(this).val().length > 100) {
+        $(this).val($(this).val().substring(0, 100));
+        $('#test_cnt').html("(100 / 100)");
+        alert("작성 가능 문자수를 초과하셨습니다")
+      }
+    })
 
 
     showInqryList(prod_idx);
