@@ -228,6 +228,7 @@
                     </label>
                     <div class="content-box">
                       <textarea class="content"></textarea>
+                      <div id="review_cnt">(0 / 3000)</div>
                       <span></span>
                     </div>
                   </div>
@@ -818,6 +819,18 @@
 
 
     //  ----------------  상품 후기  ---------------------
+
+    $('.content').on('keyup', function() {
+      $('#review_cnt').html("("+$(this).val().length+" / 3000)");
+      console.log($(this));
+      if($(this).val().length > 3000) {
+        $(this).val($(this).val().substring(0, 3000));
+        $('#review_cnt').html("(3000 / 3000)");
+        alert("작성 가능 문자수를 초과하셨습니다")
+      }
+    })
+
+
     // 상품후기 조회 함수 호출
     showList();
 
@@ -837,6 +850,7 @@
       //         $('.updateBtn').attr("class","updateBtnDefault");
       //     }
       // })
+      $('#review_cnt').html("("+nowLength+" / 3000)");
       let idx = $(this).attr('data-idx');                                 // 상품 후기 일련번호 변수 선언
       let user_idx = $(this).attr('data-user_idx');
       if(user_idx!="${sessionScope.idx}"){
@@ -888,7 +902,7 @@
     // 페이징 버튼 클릭 시(해당 페이지 목록 조회)
     $('.pageHandler-container').on("click",'a', function (){ // a태그 클릭 시
       let page = $(this).attr('data-page');
-      alert(page);
+      // alert(page);
       $.ajax({
         type:'GET',                                                 // 요청 메서드 // 상품후기 목록 가저오기
         url: '/product/review/list?prod_idx='+prod_idx+'&page='+page,             // 요청 URI  // 상품번호 (하드코딩)
@@ -899,8 +913,8 @@
           $(".review-lists").html(ReviewListToHtml(result["list"]));      // 서버로부터 응답이 도착하면 호출될 함수
           $(".pageHandler-container").html(PageHandlerToHtml(result["pageHandler"]));
           $(".count").html(result["totalCnt"]);
-          $('.review-header').attr("tabindex",-1);
-          $('.review-header').focus();
+          $('.review-count').attr("tabindex",-1);
+          $('.review-count').focus();
         },
         error   : function(){ alert("error") }                      // 에러가 발생했을 때, 호출될 함수
       }); // $.ajax()
@@ -1091,7 +1105,13 @@
 
     tmp += '<div class="paging">'
     if(ph.totalCnt==null || ph.totalCnt==0){
-      tmp += '<div> 게시물이 없습니다. </div>'
+      tmp += '<div class="review-notice">'
+      tmp += '<svg width="60" height="60" viewBox="0 0 68 68">'
+      tmp += '<path class="heartpath" stroke="#e2e2e2" d="M57.025 14.975c-5.3-5.3-13.889-5.3-19.186 0L34 18.812l-3.837-3.837c-5.3-5.3-13.89-5.3-19.19 0-5.296 5.297-5.296 13.886 0 19.186l3.838 3.837 18.482 18.485a1 1 0 0 0 1.414 0s0 0 0 0l18.482-18.485h0l3.837-3.837c5.3-5.3 5.3-13.89 0-19.186z"></path>'
+      tmp += '</svg>'
+      tmp += '<strong class="strong-heart"> 게시물이 없습니다. </strong>'
+      tmp += '</div>'
+
     }
     if(ph.showPrev){
       tmp += '<a class="page" data-page='+(ph.beginPage-1)+'>&lt;</a>'

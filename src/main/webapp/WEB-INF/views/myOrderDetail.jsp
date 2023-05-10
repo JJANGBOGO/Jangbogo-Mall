@@ -152,6 +152,7 @@
                             </label>
                             <div class="content-box">
                             <textarea class="content" placeholder="최소 10자 이상 입력해 주세요."></textarea>
+                                <div id="review_cnt">(0 / 3000)</div>
                                 <span></span>
                             </div>
                             <div class="error-msg"></div>
@@ -244,6 +245,16 @@
 
         });
 
+
+        $('.content').on('keyup', function() {
+            $('#review_cnt').html("("+$(this).val().length+" / 3000)");
+            if($(this).val().length > 3000) {
+                $(this).val($(this).val().substring(0, 3000));
+                $('#review_cnt').html("(3000 / 3000)");
+                alert("작성 가능 문자수를 초과하셨습니다")
+            }
+        })
+
         // 후기작성 모달창 (등록) 버튼 클릭
         $(".insertBtn").click(function(){
             if(!confirm("작성하신 내용으로 후기 등록하시겠습니까?"))return;
@@ -285,12 +296,16 @@
             closeModal();
             $(".insertBtn").css('display', 'none');
             $(".insertBtnNo").css('display', 'block');
+
+            $('#review_cnt').html("(0 / 3000)");
         })
         // 후기 작성 모달창 (취소 버튼) 클릭
         $('.cancleBtn').click(function (){
             closeModal();
             $(".insertBtn").css('display', 'none');
             $(".insertBtnNo").css('display', 'block');
+
+            $('#review_cnt').html("(0 / 3000)");
         })
 
 
