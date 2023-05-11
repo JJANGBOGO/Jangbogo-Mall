@@ -13,4 +13,6 @@ public interface MyOrderDetail {
     int insertOrdHistState(List<MyOrderDetailDto> orderDetails) throws Exception;
 
     int updateSetlCanceled(String tid) throws Exception;
+
+    List<Integer> getProdsIdx(Integer ord_idx) throws Exception;
 }

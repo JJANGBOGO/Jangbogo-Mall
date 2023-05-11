@@ -309,34 +309,37 @@
         })
 
 
-        // // 전체 상품 장바구니 담기(추가)
-        // $('.orderDetail-container').on("click",'.orderDetail-cartAll',function (e){
-        //     let prod_idx = $('input[name=hidden_input]').text(); // 상품번호
-        //     let prod_cnt = $('.count').text();       // 장바구니에 담을 상품개수
-        //     $.ajax({
-        //         type:'POST',       // 요청 메서드 // 위시리스트에서 장바구니에 담기
-        //         url: '/mypage/order/detail/insertCart?prod_idx='+prod_idx+'&prod_cnt=' + prod_cnt,  // 요청 URI
-        //         success : function(result){
-        //             $('.count').text(counter=1); // 카운터 1로 리셋
-        //             $('.button3').attr('class',"button1"); // 버튼 클래스이름 변경
-        //             if(result=="DEL_OK1") alert("장바구니에 상품이 담겼습니다");
-        //             if(result=="DEL_OK2") alert("장바구니에 상품이 담겼습니다\n이미 담은 상품의 수량을 추가했습니다");
-        //             showList(); // 서버로부터 응답이 도착하면 호출될 함수
-        //         },
-        //         error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
-        //     }); // $.ajax()
-        // })
+        // 전체 상품 장바구니 담기(추가)
+        $('.orderDetail-container').on("click",'.orderDetail-cartAll',function (e){
+            // let idx = $('.order_idx').text();       // 주문번호
+            let idx =  ${idx}; // 주문번호
+            $.ajax({
+                type:'POST',       // 요청 메서드 // 위시리스트에서 장바구니에 담기
+                url: '/mypage/order/detail/insertCartAll/'+idx,  // 요청 URI
+                success : function(result){
+                    if(result=="CART_OK") alert("전체 상품을 장바구니에 담았습니다");
+
+                    showList(); // 서버로부터 응답이 도착하면 호출될 함수
+                },
+                error   : function(){ alert("error") } // 에러가 발생했을 때, 호출될 함수
+            }); // $.ajax()
+        })
 
         // 주문내역 장바구니 담기(추가)
         $(".insert-btn").click(function(){
             let prod_idx = $('input[name=hidden_input]').text(); // 상품번호
             let prod_cnt = $('.count').text();       // 장바구니에 담을 상품개수
 
-            // 숫자만 입력받는 정규식
-            let check = /^[1-1000000000]+$/;
-            if (!check.test(prod_cnt)) {
-                alert("정확한 수량을 선택해 주세요");
-                return;
+            let cnt = Number(prod_cnt);
+
+            if (isNaN(cnt)) {
+                alert ("숫자 형식이 아닙니다");
+                return false;
+            }
+
+            if (cnt < 1 || cnt >= 100) {
+                alert ("최소 1개에서 100개 미만 수량을 선택해 주세요");
+                return false;
             }
 
             $.ajax({

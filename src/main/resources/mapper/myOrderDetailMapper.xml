@@ -59,4 +59,14 @@
         SET STATE_CD = 2, DEAL_TM = now(), UPT_TM = now()
         WHERE SETL_IDX = #{tid}
     </update>
+
+<!--    주문상세에서 해당 주문번호를 가진 상품번호들을 가저온다-->
+    <select id="getProdsIdx" parameterType="int" resultType="int">
+        SELECT PROD_IDX
+        FROM ORD_DTL
+        WHERE ORD_IDX = #{ord_idx};
+    </select>
+
+
+
 </mapper>
