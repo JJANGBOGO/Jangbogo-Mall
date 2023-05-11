@@ -434,9 +434,11 @@
         tmp += ''
         orders.forEach(function (order){
             tmp += '<div class="orderDetail-list">'
+            tmp += '<a href="/product/'+order.prod_idx+'">'
             tmp += '<img src="'+order.upload_path+'" alt="" >'
+            tmp += '</a>'
             tmp += '<div class="orderDetail-content">'
-            tmp += '<a href="">'+order.prod_nm+'</a>'
+            tmp += '<a href="/product/'+order.prod_idx+'">'+order.prod_nm+'</a>'
             tmp += '<div>'
             if(order.dc_rate != 0){
                 tmp += '<span class="orderDetail-dc_rate" id="dc_rate">'+order.dc_rate+'%</span>'

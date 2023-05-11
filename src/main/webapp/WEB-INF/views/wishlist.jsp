@@ -209,29 +209,32 @@
         let tmp = "<div>";
 <%--// ${"${msg}"}--%>
         wishlists.forEach(function (product){
-            tmp += '<div class="wishlist-box" data-idx = '+product.idx+'>'
-            tmp +=      '<a href="">'
-            tmp +=          '<img src='+product.upload_path+' alt="">'
-            tmp +=      '</a>'
-            tmp +=      '<div class="wishlist-middle">'
-            tmp +=          '<div class="wishlist-contentbox">'
-            tmp +=              '<a href="" class="name">'+product.name+'</a>'
-            tmp +=                  '<div class="wishlist-prices">'
-            if(product.dc_rate!=0){
-                tmp += '<span class="wishlist-dc_rate" id="dc_rate">'+product.dc_rate+'%</span>'
-                tmp += '<span class="wishlist-dc_prc" id="dc_prc">' +  formatPriceWithComma((product.prc - Math.floor(product.prc / 100 * product.dc_rate)))+ '원</span>'
-                tmp += '<span class="wishlist-prc" id="prc">'+formatPriceWithComma(product.prc)+'원</span>'
-            }else {
-                tmp += '<span class="wishlist-dc_prc" id="prc">'+formatPriceWithComma(product.prc)+'원</span>'
+            if(product.dsply_state_cd==1){  // 전시상태코드가 1(전시) 일때만 보여준다
+                tmp += '<div class="wishlist-box" data-idx = '+product.idx+'>'
+                tmp +=      '<a href="/product/'+product.idx+'">'
+                tmp +=          '<img src='+product.upload_path+' alt="">'
+                tmp +=      '</a>'
+                tmp +=      '<div class="wishlist-middle">'
+                tmp +=          '<div class="wishlist-contentbox">'
+                tmp +=              '<a href="/product/'+product.idx+'" class="name">'+product.name+'</a>'
+                tmp +=                  '<div class="wishlist-prices">'
+                if(product.dc_rate!=0){
+                    tmp += '<span class="wishlist-dc_rate" id="dc_rate">'+product.dc_rate+'%</span>'
+                    tmp += '<span class="wishlist-dc_prc" id="dc_prc">' +  formatPriceWithComma((product.prc - Math.floor(product.prc / 100 * product.dc_rate)))+ '원</span>'
+                    tmp += '<span class="wishlist-prc" id="prc">'+formatPriceWithComma(product.prc)+'원</span>'
+                }else {
+                    tmp += '<span class="wishlist-dc_prc" id="prc">'+formatPriceWithComma(product.prc)+'원</span>'
+                }
+                tmp += '</div>'
+                tmp += '</div>'
+                tmp += '<div class="e">'
+                tmp += '<button class="delBtn" type="button" data-idx = '+product.idx+'>삭제</button>'
+                tmp += '<button class="openBtn" type="button" data-idx = '+product.idx+' data-name = '+product.name+' data-price = '+formatPriceWithComma(product.prc)+'원 data-name = '+product.name+' data-price = '+formatPriceWithComma(product.prc)+'원 data-dc-price = ' +formatPriceWithComma(product.prc - (product.prc / 100 * product.dc_rate))+ '원><img src="https://cdn-icons-png.flaticon.com/512/5412/5412611.png">담기</button>'
+                tmp += '</div>'
+                tmp += '</div>'
+                tmp += '</div>'
             }
-            tmp += '</div>'
-            tmp += '</div>'
-            tmp += '<div class="e">'
-            tmp += '<button class="delBtn" type="button" data-idx = '+product.idx+'>삭제</button>'
-            tmp += '<button class="openBtn" type="button" data-idx = '+product.idx+' data-name = '+product.name+' data-price = '+formatPriceWithComma(product.prc)+'원 data-name = '+product.name+' data-price = '+formatPriceWithComma(product.prc)+'원 data-dc-price = ' +formatPriceWithComma(product.prc - (product.prc / 100 * product.dc_rate))+ '원><img src="https://cdn-icons-png.flaticon.com/512/5412/5412611.png">담기</button>'
-            tmp += '</div>'
-            tmp += '</div>'
-            tmp += '</div>'
+
 
         })
         return tmp + "</div>";
