@@ -94,9 +94,10 @@
             // 매개변수 : items - cartDto
             // 반환타입 : String - 동적으로 생성한 html 태그 모음(tmp)
             const estimateToHtml = (items) => {
-                let price = 0;                                                                                          // 변수명 : price - 저장값 : 주문총금액
-                let discount = 0;                                                                                       // 변수명 : discount - 저장값 : 상품할인금액
-                let cnt = 0;                                                                                            // 변수명 : cnt - 저장값 : 장바구니상품수량
+                const DELIVERY_FEE = 2500;                                                                              // 상수명 : DELIVERY_FEE - 저장값 : 고정 배송비 2,500원
+                let total_price = 0;                                                                                    // 변수명 : total_price -    저장값 :     상품금액
+                let total_discount = 0;                                                                                 // 변수명 : total_discount - 저장값 :  상품할인금액
+                let total_invoice = 0;                                                                                  // 변수명 : total_invoice -  저장값 :  결제예정금액
                 let tmp = "";                                                                                           // 변수명 : tmp - 저장값 : 동적으로 생성할 html 태그(문자열)
 
                 // 메서드명 : forEach
@@ -104,23 +105,24 @@
                 // 사용대상 : items - Array : List<CartDto>, 장바구니 목록
                 // 매개변수 : item - Object : CartDto, 장바구니 개별 품목
                 items.forEach((item) => {
-                    if(item.dc_rate) discount += Math.floor(item.prod_price / 100 * item.dc_rate) * item.prod_cnt;       // 할인이 적용된 상품에 대해 할인금액을 계산
-                    price += item.prod_price * item.prod_cnt - discount;                                                // 장바구니상품금액을 계산
+                    total_price += item.prod_price * item.prod_cnt;
+                    total_discount += Math.floor(item.prod_price / 100 * item.dc_rate) * item.prod_cnt;
                 });
+                total_invoice = total_price - total_discount + DELIVERY_FEE;                                            // 결제예정금액 = 상품금액 - 상품할인금액 + 배송비
 
                 tmp += '<section class="dilvp">';                                                                       // 배송지 섹션
                 tmp += '</section>';
                 tmp += '<section class="cart-estimate">';                                                               // 결제예정금액 섹션
                 tmp += '<section class="prod-price">';
                 tmp += '<span class="prod-title">상품금액</span>';
-                tmp += '<span class="prod-content" id="prodPrice">' + formatPriceWithComma(price) + ' 원</span>';
+                tmp += '<span class="prod-content" id="prodPrice">' + formatPriceWithComma(total_price) + ' 원</span>';
                 tmp += '</section>';
                 tmp += '<section class="prod-discount">';
                 tmp += '<span class="prod-title">상품할인금액</span>';
-                if(!discount)
+                if(!total_discount)
                     tmp += '<span class="prod-content" id="discountPrice">' + '0 원</span>';
                 else
-                    tmp += '<span class="prod-content" id="discountPrice">-' + formatPriceWithComma(discount) + ' 원</span>';
+                    tmp += '<span class="prod-content" id="discountPrice">-' + formatPriceWithComma(total_discount) + ' 원</span>';
                 tmp += '</section>';
                 tmp += '<section class="dilv-cost">';
                 tmp += '<span class="prod-title">배송비</span>';
@@ -128,7 +130,7 @@
                 tmp += '</section>';
                 tmp += '<section class="dilv-total">';
                 tmp += '<span class="prod-title">결제예정금액</span>';
-                tmp += '<span class="prod-content" id="totalPrice">' + formatPriceWithComma(parseInt(price - discount) + 2500) +' 원</span>';
+                tmp += '<span class="prod-content" id="totalPrice">' + formatPriceWithComma(total_invoice) +' 원</span>';
                 tmp += '</section>';
                 tmp += '</section>';
                 tmp += '<input type="button" name="order" value= "주문하기" />';
