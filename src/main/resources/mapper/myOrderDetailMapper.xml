@@ -39,7 +39,7 @@
     <!--주문상세테이블 주문상태, 후기작성상태 업데이트-->
     <update id="updateOrdDetailState" parameterType="int">
         update ORD_DTL
-        set ORD_STATE_CD = 5, PROD_LATE_STATE_CD = 1, SETL_CNCL_TM = now(), UPT_TM = now()
+        set ORD_STATE_CD = 5, PROD_LATE_STATE_CD = 1, CNCL_POSBL_STATE_CD = 2, SETL_CNCL_TM = now(), UPT_TM = now()
         where ORD_IDX = #{ord_idx};
     </update>
 
