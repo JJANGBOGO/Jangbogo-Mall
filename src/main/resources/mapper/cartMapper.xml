@@ -9,7 +9,7 @@
         반환타입 : List<CartDto>
     -->
     <select id="selectAll" resultType="CartDto">
-        SELECT CART.PROD_IDX, CART.USER_IDX, PRODUCT.NAME as prod_name , PRODUCT.PRC as prod_price, PRODUCT.UPLOAD_PATH as upload_path,CART.REG_TM, CART.PROD_CNT as prod_cnt, CART.REG_TM, CART.CRT_TM, CART.UPT_TM
+        SELECT CART.PROD_IDX, CART.USER_IDX, PRODUCT.NAME as prod_name , PRODUCT.PRC as prod_price, PRODUCT.UPLOAD_PATH as upload_path,CART.REG_TM, CART.PROD_CNT as prod_cnt, CART.REG_TM, CART.CRT_TM, CART.UPT_TM, PRODUCT.DC_RATE
         FROM CART, PRODUCT, USER
         WHERE CART.PROD_IDX = PRODUCT.IDX AND CART.USER_IDX = USER.IDX
         ORDER BY CRT_TM;
