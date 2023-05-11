@@ -10,24 +10,30 @@
 <body>
 <%@ include file="/WEB-INF/views/include/navbar.jsp" %>
 <div class="mySlides_container">
+    <a href="/product/10018">
     <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"
+         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/a646798f-0e48-4aff-b7c4-cef62dc29ff2.png"
     />
+    </a>
+    <a href="/product/10019">
     <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"
+         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/16d20266-b93a-4147-9ac7-59e07898a4c7.jpg"
     />
-    <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"
-    />
-    <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"
-    />
-    <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"
-    />
-    <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"
-    />
+    </a>
+    <a href="/product/21">
+        <img class="mySlides"
+             src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/6bd451dd-ced9-446a-a229-5207ce1268c9.jpg"
+        />
+    </a>
+<%--    <img class="mySlides"--%>
+<%--         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"--%>
+<%--    />--%>
+<%--    <img class="mySlides"--%>
+<%--         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/edc9e6db-ee42-47ab-9157-552fce0b3fbc.jpg"--%>
+<%--    />--%>
+<%--    <img class="mySlides"--%>
+<%--         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/9cef1d54-72cc-4f02-b63e-495170a02d5d.jpg"--%>
+<%--    />--%>
 </div>
 <div class="category-header">
     <h2>놓치면 후회하는 특별 상품들</h2>
