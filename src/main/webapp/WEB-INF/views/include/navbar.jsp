@@ -31,7 +31,7 @@
                                 </c:when>
                                 <c:when test="${loginService == 'naver'}">
                                     <%-- 네이버 로그아웃 TODO:: 직접 구현--%>
-                                    <a href="/">로그아웃</a>
+                                    <a href="/general/logout">로그아웃</a>
                                 </c:when>
                                 <c:otherwise>
                                     <%-- 일반 로그아웃--%>

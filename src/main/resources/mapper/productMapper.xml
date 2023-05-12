@@ -34,9 +34,11 @@
     </select>
 
     <select id="searchProductList" resultType="ProductDto">
-        SELECT P.NAME,
+        SELECT P.IDX,
+               P.NAME,
                P.UPLOAD_PATH,
                P.PRC,
+               P.DC_RATE,
                (select count(*)
                 from prod_late
                 WHERE PROD_IDX = P.IDX) as 'review_cnt',

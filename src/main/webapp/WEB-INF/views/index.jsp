@@ -102,6 +102,14 @@
         list.sort(() => Math.random() - 0.5); //랜덤 돌리기
         list.forEach((obj, i) => {
             if (i > 7) return; //카테고리당 4개만 보여줌
+
+            //가격 할인율 계산 ,추가
+
+            let dc_rate = obj.dc_rate;
+            let price_val = obj.prc;
+
+            let format_price = formatPriceWithComma(Math.floor(price_val - price_val * (dc_rate /100)));
+            //
             str += '<li>'
                 + '<a class="img-box" href="/product/' + obj.idx + '">'
                 + '<img src="' + obj.upload_path + '"alt="product-img" />'
@@ -109,7 +117,7 @@
                 + '</a>'
                 + '<div class="thum-desc">'
                 + '<a class="title"><h3>[' + obj.cpnm + '] ' + obj.name + '</h3></a>'
-                + '<div class="price">' + formatPriceWithComma(obj.prc) + '원</div>'
+                + '<div class="price">' + format_price + '원</div>'
                 + '<div class="review-cnt">리뷰 수: ' + obj.review_cnt + '</div>'
                 + '</div>'
                 + '</li>';
@@ -138,6 +146,12 @@
         let list_ref = $(".products-box");
         list.sort(() => Math.random() - 0.5);
         list.forEach((obj, i) => {
+
+            let dc_rate = obj.dc_rate;
+            let price_val = obj.prc;
+
+            let format_price = formatPriceWithComma(Math.floor(price_val - price_val * (dc_rate /100)));
+            //
             if (i === 0) $("#article_img").attr("src", obj.upload_path);
             if (i > 3) return; //카테고리당 4개만 보여줌
             str += '<li>'
@@ -147,7 +161,7 @@
                 + '</span>'
                 + '<span class="pd-desc">'
                 + '<p>[' + obj.cpnm + '] ' + obj.name + '</p>'
-                + '<div class="pd-price">' + formatPriceWithComma(obj.prc) + '원</div>'
+                + '<div class="pd-price">' + format_price + '원</div>'
                 + '</span>'
                 + '<div class="cart-btn-box">'
                 + '<button id="cart_btn" data-idx="' + obj.idx + '">'
