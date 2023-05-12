@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jangbogo.mall.dao.userInquiryMapper">
+
+    <insert id="insertInquiry" parameterType="UserInquiryDto">
+        insert into USER_INQRY (USER_IDX, ID, TITLE, CTENT, WRITER)
+        values (#{user_idx},#{id},#{title},#{ctent},#{writer});
+    </insert>
+
+<!--    회원문의 목록 조회 (최종)-->
+    <select id="getList" parameterType="int" resultType="UserInquiryListDto">
+        select USER_INQRY.*,INQRY_TYPE.NAME as parents_name
+        from INQRY_TYPE, (select USER_INQRY.*, INQRY_TYPE.UPP_FLOOR,INQRY_TYPE.NAME
+                          from INQRY_TYPE, (select USER_INQRY.*, ANS.USER_INQRY_IDX, ANS.CTENT as admin_ctent, ANS.WRITER as admin_writer, ANS.RSPS_CRT_TM
+                                            from USER_INQRY left join USER_INQRY_ANS as ANS on USER_INQRY.IDX = ANS.USER_INQRY_IDX
+                                            where USER_INQRY.IDX = #{user_idx}) as USER_INQRY
+                          where USER_INQRY.ID = INQRY_TYPE.ID) as USER_INQRY
+        where USER_INQRY.UPP_FLOOR = INQRY_TYPE.ID;
+    </select>
+
+</mapper>
+

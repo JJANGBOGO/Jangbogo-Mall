@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.jangbogo.mall.dao.ProdInqryMapper">
+<!--하나의 상품 게시판 안 상품문의 게시물 모두 보여주기, getList-->
+    <select id="selectAll" parameterType="Integer" resultType="JoinProdInqryDto">
+        select pi.idx as 'idx', pi.prod_idx as 'prod_idx', pi.user_idx as 'user_idx', pi.title as 'title', pi.ctent as 'ctent', pi.writer as 'writer', pi.res_state_cd as 'res_state_cd', pi.opub_yn as 'opub_yn', pi.wrt_tm as 'wrt_tm', pia.ctent as 'ans_content', pia.writer as 'ans_writer', pia.resps_tm as 'ans_write_time'
+        from prod_inqry pi left join prod_inqry_ans pia
+        on pi.idx = pia.idx
+        WHERE prod_idx = #{prod_idx} and pi.state_cd = 1
+        ORDER BY pi.idx desc
+    </select>
+<!--하나의 상품 게시판 안 상품문의 게시물의 전체 개수-->
+    <select id="count" parameterType="Integer" resultType="int">
+        SELECT count(*)
+        FROM prod_inqry
+        where prod_idx = #{prod_idx} and state_cd = 1
+    </select>
+<!--하나의 상품 게시판 안 상품문의 게시물 한 개 보여주기-->
+    <select id="select" parameterType="map" resultType="JoinProdInqryDto">
+        select pi.idx as 'idx', pi.prod_idx as 'prod_idx', pi.user_idx as 'user_idx', pi.title as 'title', pi.ctent as 'ctent', pi.writer as 'writer', pi.res_state_cd as 'res_state_cd', pi.opub_yn as 'opub_yn', pi.wrt_tm as 'wrt_tm', pia.ctent as 'ans_content', pia.writer as 'ans_writer', pia.resps_tm as 'ans_write_time'
+        from prod_inqry pi left join prod_inqry_ans pia
+        on pi.idx = pia.idx
+        WHERE pi.idx = #{idx} and pi.prod_idx = #{prod_idx} and pi.state_cd = 1
+    </select>
+<!--하나의 상품 게시판 안 상품문의 게시물 제한된 개수로 보여주기-->
+    <select id="selectPage" parameterType="map" resultType="JoinProdInqryDto">
+        select pi.idx as 'idx', pi.prod_idx as 'prod_idx', pi.user_idx as 'user_idx', pi.title as 'title', pi.ctent as 'ctent', pi.writer as 'writer', pi.res_state_cd as 'res_state_cd', pi.opub_yn as 'opub_yn', pi.wrt_tm as 'wrt_tm', pia.ctent as 'ans_content', pia.writer as 'ans_writer', pia.resps_tm as 'ans_write_time'
+        from prod_inqry pi left join prod_inqry_ans pia
+        on pi.idx = pia.idx
+        where pi.prod_idx = #{prod_idx} and pi.state_cd = 1
+        ORDER BY pi.idx desc
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+<!--하나의 상품 게시판 안 상품문의 게시물 한 개 올리기-->
+    <insert id="insert" parameterType="ProdInqryDto">
+        INSERT INTO prod_inqry
+            (prod_idx, user_idx, title, ctent, writer)
+        VALUES
+            (#{prod_idx}, #{user_idx}, #{title}, #{ctent}, #{writer})
+    </insert>
+<!--하나의 상품 게시판 안 상품문의 게시물 한 개 지우기-->
+    <update id="delete" parameterType="map">
+        update prod_inqry
+        set state_cd = 3 -- 상태코드: 삭제
+        WHERE idx = #{idx} AND user_idx = #{user_idx} AND prod_idx = #{prod_idx}
+    </update>
+<!--하나의 상품 게시판 안 모든 상품문의 지우기-->
+    <update id="deleteAll" parameterType="int">
+        update prod_inqry
+        set state_cd = 3
+        where prod_idx = #{prod_idx}
+    </update>
+<!--하나의 상품 게시판 안 한 개의 상품문의 수정하기-->
+    <update id="update" parameterType="ProdInqryDto">
+        UPDATE prod_inqry
+        SET title = #{title},
+            ctent = #{ctent},
+            wrt_tm = now(),
+            writer = (select nick_nm from user where idx = #{user_idx})
+        WHERE idx = #{idx} AND user_idx = #{user_idx} and prod_idx = #{prod_idx}
+    </update>
+
+</mapper>

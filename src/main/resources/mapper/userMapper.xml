@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jangbogo.mall.dao.UserMapper">
+
+    <update id="withdrawUser" parameterType="map">
+        UPDATE USER
+        SET STATE_CD = 3
+        WHERE IDX = #{idx}
+          AND EMAIL = #{email};
+    </update>
+
+    <select id="selUserEmail" parameterType="map" resultType="String">
+        SELECT EMAIL
+        FROM USER
+        WHERE NICK_NM = #{nick_nm}
+          AND PWD = #{pwd};
+    </select>
+
+    <select id="selectUser" resultType="User">
+        SELECT *
+        FROM USER
+        WHERE IDX = #{idx};
+    </select>
+
+    <update id="updatePwd" parameterType="map">
+        UPDATE USER
+        SET PWD = #{pwd}
+        WHERE NICK_NM = #{nick_nm}
+          AND EMAIL = #{email};
+    </update>
+
+    <select id="getUserByEmail" parameterType="String" resultType="User">
+        SELECT *
+        FROM USER
+        WHERE EMAIL = #{email}
+    </select>
+
+    <insert id="insertSocialUser" parameterType="User">
+        INSERT INTO USER (AUTH_IDX, RNK_IDX, EMAIL, NICK_NM, USER_AGRE_YN, LOGIN_TP_CD, LAST_LOGIN_TM)
+        VALUES (1, 1, #{email}, #{nick_nm},'Y', #{login_tp_cd} ,now());
+        <selectKey resultType="int" keyProperty="idx" order="AFTER">
+            SELECT LAST_INSERT_ID() AS IDX
+        </selectKey>
+    </insert>
+
+    <insert id="insertUser" parameterType="User">
+        INSERT INTO USER (AUTH_IDX, RNK_IDX, EMAIL, NICK_NM, PWD, MPNO, BRDY, USER_AGRE_YN, MARKT_AGRE_YN, PWD_UPT_TM)
+        VALUES (1, 1, #{email}, #{nick_nm}, #{pwd}, #{mpno}, #{brdy}, #{user_agre_yn}, #{markt_agre_yn}, now());
+        <selectKey resultType="int" keyProperty="idx" order="AFTER">
+            SELECT LAST_INSERT_ID() AS IDX
+        </selectKey>
+    </insert>
+
+    <update id="updateLoginTm" parameterType="map">
+        UPDATE USER
+        SET LAST_LOGIN_TM = NOW()
+        WHERE IDX = #{idx}
+          AND EMAIL = #{email};
+    </update>
+
+    <select id="getUserByNick" parameterType="String" resultType="User">
+        SELECT *
+        FROM USER
+        WHERE NICK_NM = #{nick_nm}
+    </select>
+
+    <update id="updateUser" parameterType="User">
+        UPDATE USER
+        SET NICK_NM       = #{nick_nm},
+            PWD           = #{pwd},
+            MPNO          = #{mpno},
+            MARKT_AGRE_YN = #{markt_agre_yn},
+            CHG_TM        = NOW()
+        WHERE IDX = #{idx}
+          AND EMAIL = #{email};
+    </update>
+
+    <update id="updatePwdUptTm" parameterType="map">
+        UPDATE USER
+        SET PWD_UPT_TM = NOW()
+        WHERE IDX = #{idx}
+          AND EMAIL = #{email};
+    </update>
+
+
+    <!--security-->
+    <select id="getUserDetailsDto" resultType="UserDetailsDto">
+        SELECT * FROM USER WHERE EMAIL = #{email}
+    </select>
+
+    <delete id="deleteUser" parameterType="map">
+        DELETE FROM USER WHERE IDX = #{idx} AND EMAIL = #{email}
+    </delete>
+
+</mapper>
+

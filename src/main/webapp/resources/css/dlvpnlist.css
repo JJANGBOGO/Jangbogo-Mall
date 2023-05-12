@@ -1,0 +1,274 @@
+.dlvpn-top{
+    display: flex;
+    /* flex-direction: column; */
+    width: 100%;
+    padding-bottom: 20px;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    border-bottom: 2px solid #f58412;
+}
+.dlvpn-notc{
+    display: flex;
+    align-items: center;
+}
+.dlvpn-notc2{
+    font-weight: 500;
+    font-size: 24px;
+    letter-spacing: -0.5px;
+}
+.dlvpn-notc3{
+    padding-left: 11px;
+    color: rgb(153, 153, 153);
+    font-size: 14px;
+}
+.dlvpn-insert{
+    border: 0px;
+    height: 60px;
+    display: block;
+    /* align-items: center; */
+    display: flex;
+
+}
+.dlvpn-column{
+    display: flex;
+    padding: 20px 0px;
+    border-bottom: 2px solid #f58412;
+    color: #333;
+    font-size: 14px;
+}
+.dlvpn-choice{
+    text-align: center;
+    line-height: 20px;
+    font-weight: 500;
+    color: rgb(51, 51, 51);
+    flex-basis: 60px;
+}
+.dlvpn-address{
+    text-align: center;
+    line-height: 20px;
+    font-weight: 500;
+    color: rgb(51, 51, 51);
+    flex: 1 1 0%;
+}
+.dlvpn-name{
+    text-align: center;
+    line-height: 20px;
+    font-weight: 500;
+    color: rgb(51, 51, 51);
+    flex-basis: 120px;
+}
+.dlvpn-number{
+    text-align: center;
+    line-height: 20px;
+    font-weight: 500;
+    color: rgb(51, 51, 51);
+    flex-basis: 110px;
+}
+.dlvpn-type{
+    text-align: center;
+    line-height: 20px;
+    font-weight: 500;
+    color: rgb(51, 51, 51);
+    flex-basis: 100px;
+}
+.dlvpn-change{
+    text-align: center;
+    line-height: 20px;
+    font-weight: 500;
+    color: rgb(51, 51, 51);
+    flex-basis: 60px;
+}
+ul{
+    padding: 0;
+}
+
+li{
+    list-style-type: none;
+    border-bottom: 1px solid rgb(244, 244, 244);
+}
+.list{
+    display: flex;
+}
+.list-checkbox{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 49px;
+    padding: 0px;
+    margin: 20px 0px;
+    color: rgb(51, 51, 51);
+    letter-spacing: -0.3px;
+    flex-basis: 60px;
+
+}
+label{
+    margin-left: 15px;
+    padding: 0;
+    margin-right: 52px;
+    vertical-align: middle;
+}
+.list-address{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    min-height: 49px;
+    padding: 0px;
+    margin: 20px 0px;
+    color: rgb(51, 51, 51);
+    letter-spacing: -0.3px;
+    flex: 1 1 0%;
+    -webkit-box-pack: start;
+    justify-content: start;
+    font-size: 16px;
+    text-align: left;
+    margin-left: 20px;
+}
+.base{
+    display: block;
+    width: 74px;
+    height: 22px;
+    margin-bottom: 7px;
+    border-radius: 11px;
+    background-color: #f58412;
+    font-weight: 700;
+    font-size: 12px;
+    color: white;
+    line-height: 22px;
+    letter-spacing: 0px;
+    text-align: center;
+    border-color: #c14a4a;
+}
+.list-name{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 49px;
+    padding: 0px;
+    margin: 20px 0px;
+    color: rgb(51, 51, 51);
+    letter-spacing: -0.3px;
+    flex-basis: 120px;
+}
+.list-number{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 49px;
+    padding: 0px;
+    margin: 20px 0px;
+    color: rgb(51, 51, 51);
+    letter-spacing: -0.3px;
+    flex-basis: 110px;
+    font-size: 15px;
+}
+.list-type{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 49px;
+    padding: 0px;
+    margin: 20px 0px;
+    color: rgb(51, 51, 51);
+    letter-spacing: -0.3px;
+    flex-basis: 100px;
+
+
+    color: #f58412;
+    font-size: 14px;
+}
+.list-change{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 49px;
+    padding: 0px;
+    margin: 20px 0px;
+    color: rgb(51, 51, 51);
+    letter-spacing: -0.3px;
+    flex-basis: 60px;
+}
+
+.insertAddr {
+    color: black;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background: white;
+    font-weight: 500;
+    font-size: 16px;
+}
+.update-btn{
+    border: none;
+    padding: 4px 9px;
+    border-radius: 3px;
+    cursor: pointer;
+    background-color: rgb(245, 132, 18);
+}
+.checkbox{
+    margin-left: 9px;
+}
+.dlvpn-span-type{
+    color: #f58412;
+}
+
+/*배송지가 없을때 메세지*/
+.dlvpn-notice{
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+    height: 557px;
+}
+
+.heartpath{
+    stroke-width: 1;
+    stroke-linecap: round;
+    fill: none;
+    fill-rule: evenodd;
+}
+
+.strong-heart{
+    display: block;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: normal;
+    color: rgb(181, 181, 181);
+}
+
+.goToProd-btn{
+    display: block;
+    padding: 0px 10px;
+    text-align: center;
+    overflow: hidden;
+    width: 150px;
+    height: 44px;
+    border-radius: 3px;
+    color: rgb(255, 255, 255);
+    background-color: #f58412;
+    border: 0px none;
+    cursor: pointer;
+}
+
+.goToProd-btn span{
+    font-size: 14px;
+    line-height: 44px;
+    color: white;
+}

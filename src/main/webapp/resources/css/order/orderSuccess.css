@@ -1,0 +1,91 @@
+/* 전체 코드 '공통' */
+* {
+    box-sizing: border-box;
+}
+
+/* 특정 태그 */
+body {
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #F7F7F7;
+}
+.order-success__container {
+    margin: 50px auto;
+    height: 75%;
+    background: white;
+    width: 450px;
+    overflow: hidden;
+}
+.order-success__title {
+    margin-top: 50px;
+    text-align: center;
+    font-weight: 500;
+}
+.order-success__contents {
+    margin-top: 30px;
+}
+
+/* 주문완료 섹션 공통 */
+.order-success__section,
+.order-success__section-paragraph,
+.order-success__section-buttons {
+    padding: 0 30px;
+}
+
+/* 주문완료 '결제정보' 섹션 */
+.order-success__section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.order-success__section:not(:first-child) {
+    margin-top: 30px;
+}
+.order-success__column-title {
+
+}
+.order-success__column-value {
+
+}
+
+/* 주문완료 '주석' 섹션 */
+.order-success__section-paragraph {
+    margin-top: 50px;
+}
+.order-success__section-paragraph p {
+    font-size: 14px;
+    color: gray;
+}
+.order-success__section-paragraph p::before {
+    display: inline-block;
+    width: 16px;
+    margin-left: -16px;
+    content: "※";
+}
+
+/* 주문완료 '버튼' 섹션 */
+.order-success__section-buttons {
+    margin-top: 70px;
+    display: flex;
+    flex-direction: column;
+}
+.order-success__section-buttons button {
+    height: 70px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.order-success__btn-order-details {
+    background: white;
+    border: 1px solid lightgrey;
+}
+.order-success__btn-home {
+    border: none;
+    margin-top: 20px;
+    background-color: #f58412;
+    color: white;
+}

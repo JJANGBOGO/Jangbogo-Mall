@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jangbogo.mall.dao.ProductMapper">
+
+    <select id="getListBySeller" resultType="ProductDto">
+        SELECT P.IDX,
+               P.SELER_PROD_CD,
+               P.UPLOAD_PATH,
+               P.NAME,
+               P.CTENT,
+               P.PRC,
+               P.DSPLY_STATE_CD,
+               P.ASCR,
+               D.REG_STATE_CD
+        FROM PRODUCT AS P
+                 INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND P.SELER_IDX = #{seler_idx}
+        ORDER BY D.CREATE_TM DESC;
+    </select>
+
+    <select id="getListByCategory" resultType="ProductDto" parameterType="String">
+        SELECT * , (select count(*)
+        from prod_late
+        WHERE PROD_IDX = P.IDX
+        ) as 'review_cnt',
+        S.CPNM
+        FROM PRODUCT AS P
+        INNER JOIN PROD_DTL D ON P.IDX = D.PROD_IDX AND D.REG_STATE_CD = 2 AND P.DSPLY_STATE_CD = 1 AND D.STATE_CD = 1
+        <if test='category!="00"'>
+            AND CATE_IDX LIKE CONCAT(#{category}, '%')
+        </if>
+        INNER JOIN SELER S ON S.IDX = P.SELER_IDX;
+    </select>
+
+    <select id="searchProductList" resultType="ProductDto">
+        SELECT P.NAME,
+               P.UPLOAD_PATH,
+               P.PRC,
+               (select count(*)
+                from prod_late
+                WHERE PROD_IDX = P.IDX) as 'review_cnt',
+               S.CPNM
+        FROM PRODUCT AS P
+                 INNER JOIN PROD_DTL D
+                            ON P.IDX = D.PROD_IDX AND D.REG_STATE_CD = 2 AND P.DSPLY_STATE_CD = 1 AND D.STATE_CD = 1
+                 INNER JOIN SELER S ON S.IDX = P.SELER_IDX
+            AND (P.NAME LIKE CONCAT('%', #{keyword}, '%')
+                OR P.CTENT LIKE CONCAT('%', #{keyword}, '%'))
+        GROUP BY PROD_IDX;
+    </select>
+
+    <update id="stopSale" parameterType="Integer">
+        UPDATE PROD_DTL
+        SET STATE_CD = 3
+        WHERE PROD_IDX = #{idx}
+    </update>
+
+</mapper>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.jangbogo.mall.dao.ProdReviewMapper">
+<!--한 상품의(prod_idx) 상품이름,상품후기 정보 모두 가져오기-->
+    <select id="selectAll" parameterType="int" resultType="ProdReviewDto">
+        SELECT r.*, p.NAME,p.UPLOAD_PATH
+        FROM (SELECT * FROM PRODUCT) p, PROD_LATE r
+        WHERE p.IDX = #{prod_idx} and  r.PROD_IDX = #{prod_idx}
+        ORDER BY r.REG_TM desc;
+    </select>
+    
+    <update id="update" parameterType="ProdReviewDto">
+        update PROD_LATE
+        set CTENT = #{ctent}, OPUB_YN = #{opub_yn}, USER_IDX = #{user_idx} ,CHG_TM = now()
+        where idx = #{idx};
+    </update>
+
+    <insert id="insert" parameterType="ProdReviewDto">
+        insert into PROD_LATE (ORD_IDX, PROD_IDX, USER_IDX, CTENT, WRITER)
+        values (#{ord_idx}, #{prod_idx}, #{user_idx}, #{ctent}, #{writer});
+    </insert>
+
+<!--&lt;!&ndash;    상품후기 작성 조건 (주문번호 회득)&ndash;&gt;-->
+<!--    <select id="get_ord_idx" parameterType="Map" resultType="OrderDto">-->
+<!--        select o.IDX-->
+<!--        from (select *-->
+<!--              from ORD-->
+<!--              where USER_IDX = #{user_idx})as o, ORD_DTL as d-->
+<!--        where o.IDX = d.ORD_IDX and d.PROD_IDX = #{prod_idx} and o.STATE_CD=4;-->
+<!--    </select>-->
+    <select id="selectPage" parameterType="map" resultType="ProdReviewDto">
+        SELECT r.*, p.NAME,p.UPLOAD_PATH
+        FROM (SELECT * FROM PRODUCT) p, PROD_LATE r
+        WHERE p.IDX = #{prod_idx} and  r.PROD_IDX = #{prod_idx}
+        ORDER BY r.IDX desc
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="getCount" parameterType="int" resultType="int">
+        SELECT count(*)
+        FROM PROD_LATE r
+        WHERE r.PROD_IDX = #{prod_idx} AND NOT r.STATE_CD = 2;
+    </select>
+
+</mapper>

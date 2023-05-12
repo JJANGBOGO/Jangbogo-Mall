@@ -1,0 +1,96 @@
+.mypage-base .mypage-content .page-header {
+    display: flex;
+    align-items: center;
+    padding-bottom: 27px;
+}
+
+.mypage-base .mypage-content .page-header h2 {
+    font-size: 24px;
+}
+
+.mypage-content .seller-products {
+    max-height: 500px;
+    overflow: scroll;
+}
+
+.mypage-content .seller-products .product-item {
+    display: flex;
+    -webkit-box-align: center;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 20px 23px;
+    border-bottom: 1px solid #ccc;
+}
+
+.mypage-content .seller-products .product-item .product-code {
+    width: 39px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.seller-products .product-item a {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+}
+
+.seller-products .product-item .product-center {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-left: 20px;
+}
+
+.seller-products .product-item .product-img img {
+    width: 100px;
+}
+
+.seller-products .product-item .product-center .product-desc .product-title,
+.seller-products .product-item .product-right .product-price {
+    max-height: 42px;
+    font-size: 16px;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.seller-products .product-item .product-center .product-desc .product-content {
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 290px;
+    text-overflow: ellipsis;
+}
+
+.seller-products .product-item .product-center .product-desc .star-grade {
+    padding-top: 10px;
+}
+
+.seller-products .product-item .product-right {
+    display: flex;
+    margin-left: auto;
+    gap: 30px;
+}
+
+.seller-products .product-item .product-right .product-price {
+    width: 95px;
+}
+.seller-products .product-item .product-right .product-status {
+    width: 70px;
+}
+
+.mypage-content .product-reg-btn {
+    float: right;
+    margin-top: 20px;
+
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+    padding: 15px;
+    color: var(--primary-color);
+
+    background-color: white;
+    cursor: pointer;
+    outline: none;
+}

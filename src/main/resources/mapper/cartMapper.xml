@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jangbogo.mall.dao.CartMapper">
+    <!--
+        태   그 : select
+        기   능 : 회원번호가 #{user_idx}인 회원의 장바구니 물품 전체 목록을 조회한다.
+        아이디명 : selectAll
+        반환타입 : List<CartDto>
+    -->
+    <select id="selectAll" resultType="CartDto">
+        SELECT CART.PROD_IDX, CART.USER_IDX, PRODUCT.NAME as prod_name , PRODUCT.PRC as prod_price, PRODUCT.UPLOAD_PATH as upload_path,CART.REG_TM, CART.PROD_CNT as prod_cnt, CART.REG_TM, CART.CRT_TM, CART.UPT_TM
+        FROM CART, PRODUCT, USER
+        WHERE CART.PROD_IDX = PRODUCT.IDX AND CART.USER_IDX = USER.IDX
+        ORDER BY CRT_TM;
+    </select>
+
+    <!--
+        태   그 : delete
+        기   능 : 회원번호가 #{user_idx}인 회원이 장바구니에 담은 상품(#{prod_idx})을 삭제한다.
+        아이디명 : delete
+        매개변수타입 : map(Integer, Integer)
+    -->
+    <delete id="delete" parameterType="map">
+        DELETE FROM CART
+        WHERE prod_idx = #{prod_idx} AND user_idx = #{user_idx};
+    </delete>
+
+    <!--
+        태   그 : delete
+        기   능 : 회원번호가 #{user_idx}인 회원의 장바구니 물품을 전부 삭제한다.
+        아이디명 : deleteAll
+        매개변수타입 : map(Integer, Integer)
+    -->
+    <delete id="deleteAll" parameterType="Integer">
+        DELETE FROM CART
+        WHERE USER_IDX = #{user_idx}
+    </delete>
+
+    <!--
+        태   그 : update
+        기   능 : 회원번호가 #{user_idx}인 회원이 장바구니에 담은 상품(#{prod_idx}) 개수를 1 감소시킨다.
+        아이디명 : updateCount
+        매개변수타입 : map(Integer, Integer)
+    -->
+    <update id="updateCount" parameterType="map">
+        UPDATE CART
+        SET PROD_CNT = #{upt_cnt}
+        WHERE prod_idx = #{prod_idx} AND user_idx = #{user_idx};
+    </update>
+</mapper>

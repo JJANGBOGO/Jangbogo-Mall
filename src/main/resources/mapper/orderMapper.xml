@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jangbogo.mall.dao.OrderMapper">
+
+    <!--
+        태   그 : insert
+        기   능 : '결제' 테이블에 주문번호(ord_idx), 카드사승인번호(aprv_idx), 결제고유번호(setl_idx), 주문총금액(amt), 실결제금액(amt) 포함한 데이터 저장하기
+        아이디명 : insertPayment
+        반환타입 : String
+    -->
+    <insert id="insertPayment" parameterType="PaymentDto">
+        insert into SETL(ORD_IDX, APRV_IDX, SETL_IDX, ORD_TOT_AMT, AMT)
+        values (#{ord_idx}, #{aprv_idx}, #{setl_idx}, #{amt}, #{amt})
+    </insert>
+
+    <!--
+        태   그 : insert
+        기   능 : '주문' 테이블에 회원번호(user_idx), 주문자명(ordr_nm), 주문자휴대폰번호(mpno), 주문총금액(tot_amt), 주문상품개수(gtot), 주문상품품목수(plist_tot) 포함한 데이터 저장하기
+        아이디명 : addOrder
+        반환타입 : Integer
+        매개변수 : OrderDto orderDto
+    -->
+    <insert id="insertOrder" parameterType="OrderDto" useGeneratedKeys="true" keyProperty="idx">
+        insert into ORD(USER_IDX, ORDR_NM, MPNO, TOT_AMT, GTOT, PLIST_TOT)
+        values(#{user_idx}, #{ordr_nm}, #{mpno}, #{tot_amt}, #{gtot}, #{plist_tot});
+    </insert>
+
+    <!--
+        태   그 : select
+        기   능 : '주문' 테이블 중 특정 주문 행 조회하기
+        아이디명 : selectOrder
+        반환타입 : String
+        매개변수 : Integer user_idx
+    -->
+    <select id="selectOrder" parameterType="Integer" resultType="OrderDto">
+        select * from ORD
+        where IDX = #{idx};
+    </select>
+    <!--
+        태   그 : select
+        기   능 : '결제' 테이블 중 특정 결제 행 조회하기
+        아이디명 : selectPayment
+        반환타입 : PaymentDto
+        매개변수 : String tid
+    -->
+    <select id="selectPayment" parameterType="String" resultType="PaymentDto">
+        SELECT * FROM SETL WHERE SETL_IDX = #{tid};
+    </select>
+
+    <!--
+        태   그 : select
+        기   능 : '결제' 테이블 중 특정 결제 행 조회하기
+        아이디명 : selectPaymentByIdx
+        반환타입 : PaymentDto
+        매개변수 : String tid
+    -->
+    <select id="selectPaymentByIdx" parameterType="Integer" resultType="PaymentDto">
+        SELECT * FROM SETL WHERE ORD_IDX = #{idx};
+    </select>
+
+    <!--
+        태   그 : insert
+        기   능 : '주문상세' 테이블에 '승인'처리 된 주문 데이터의 '주문상세' 데이터 삽입하기
+        아이디명 : insertOrderDetail
+        반환타입 : int
+        매개변수 : Map map
+    -->
+    <insert id="insertOrderDetail" parameterType="map">
+        INSERT INTO ORD_DTL(ORD_IDX, PROD_IDX, PROD_NM, PROD_PRC, PROD_QTY, PROD_TOT_AMT, ORD_TM, ORD_STATE_CD)
+        VALUES(#{orderDto.idx}, #{cartDto.prod_idx}, #{cartDto.prod_name}, #{cartDto.prod_price}, #{cartDto.prod_cnt}, #{cartDto.prod_price} * #{cartDto.prod_cnt}, #{orderDto.ord_tm}, 1)
+    </insert>
+
+    <!--
+        태   그 : select
+        기   능 : '주문상세' 테이블 중 특정 주문상세 행 조회하기
+        아이디명 : selectOrderDetail
+        반환타입 : OrderDetailDto
+        매개변수 : OrderDto orderDto
+    -->
+    <select id="selectOrderDetail" resultType="OrderDetailDto">
+        SELECT IDX, ORD_IDX, PROD_IDX, PROD_NM, PROD_PRC, PROD_QTY, PROD_TOT_AMT, ORD_TM
+        FROM ORD_DTL
+        WHERE ORD_IDX = #{idx};
+    </select>
+
+    <!--
+        태   그 : insert
+        기   능 : '주문이력' 테이블에 데이터 삽입하기
+        아이디명 : insertOrderHistory
+        반환타입 : int
+        매개변수 : java.util.List
+    -->
+    <insert id="insertOrderHistory" parameterType="java.util.List">
+        INSERT INTO ORD_HIST(CHG_TM, ORD_DTL_IDX, ORD_IDX, PROD_IDX, PROD_NM)
+        VALUES
+            <foreach item="item" index="index" collection="list" separator=" , ">
+            (
+               #{item.ord_tm}, #{item.idx}, #{item.ord_idx}, #{item.prod_idx}, #{item.prod_nm}
+            )
+            </foreach>
+    </insert>
+
+    <!--
+        태   그 : select
+        기   능 : '주문이력' 테이블 중 특정 주문상세 행 조회하기
+        아이디명 : selectOrderHistory
+        반환타입 : OrderHistoryDto
+        매개변수 : java.util.List
+    -->
+    <select id="selectOrderHistory" parameterType="java.util.List" resultType="OrderHistoryDto">
+        SELECT IDX,
+               ORD_DTL_IDX,
+               ORD_IDX,
+               PROD_IDX,
+               PROD_NM,
+               ORD_STATE_CD,
+               CHG_TM
+        FROM ORD_HIST
+        WHERE ORD_IDX IN
+        <foreach item="item" index="index" collection="list" open="(" close=")" separator=" , ">
+            (
+                #{item.ord_idx}
+            )
+        </foreach>
+    </select>
+
+    <!--
+        태   그 : insert
+        기   능 : '배송' 테이블에 데이터 삽입하기
+        아이디명 : insertDelivery
+        반환타입 : int
+        매개변수 : DeliveryDto
+    -->
+    <insert id="insertDelivery" parameterType="DeliveryDto">
+        INSERT INTO DLVRY(ORD_IDX, RCPR_NM, RCPR_MPNO, RCPR_ADDR_BASE, RCPR_ADDR_DTL, PLRCV)
+        VALUES(#{ord_idx} , #{rcpr_nm}, #{rcpr_mpno}, #{rcpr_addr_base}, #{rcpr_addr_dtl}, #{plrcv});
+    </insert>
+    <!--
+        태   그 : update
+        기   능 : '결제' 테이블에 '취소'처리 된 결제 데이터 업데이트하기                                                              // TODO : 주문 내역 구현 이후 기능 구현
+        아이디명 : updateCanceledSetl
+        반환타입 : int
+        매개변수 : String tid
+    -->
+    <update id="updateCanceledSetl" parameterType="String">
+        update SETL
+        SET STATE_CD = 2,
+            DEAL_TM = #{approved_at},
+            UPT_TM = now()
+        WHERE SETL_IDX = #{tid}
+    </update>
+</mapper>

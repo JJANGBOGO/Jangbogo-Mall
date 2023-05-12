@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jangbogo.mall.dao.AddressMapper">
+
+    <insert id="insertAddr" parameterType="map">
+        INSERT INTO DLVPN (USER_IDX, ZPCD, ADDR_BASE, ADDR_DTL, RCPR_NM, RCPR_MOBL_NO, IS_DEFAULT_YN)
+        VALUES (#{user_idx}, #{addr.zpcd}, #{addr.addr_base}, #{addr.addr_dtl}, #{addr.rcpr_nm}, #{addr.rcpr_mobl_no}, #{addr.is_default_yn});
+    </insert>
+<!--배송지 목록 조회-->
+    <select id="selAddrList" parameterType="int" resultType="Address">
+        SELECT *
+        FROM DLVPN
+        WHERE USER_IDX = #{user_idx} AND NOT STATE_CD = 3
+        order by STATE_CD asc, IS_DEFAULT_YN desc , CHG_TM desc, REG_TM desc;
+    </select>
+<!--배송지 조회-->
+    <select id="selAddr" parameterType="map" resultType="Address">
+        SELECT *
+        FROM DLVPN
+        WHERE IDX = #{idx}
+    </select>
+<!-- 배송지 상태코드 삭제-->
+    <update id="deleteAddr" parameterType="map">
+        UPDATE DLVPN
+        SET STATE_CD = 3
+        WHERE IDX = #{idx} AND USER_IDX = #{user_idx};
+    </update>
+<!--   기본 배송지의 상태코드 선택으로 변경-->
+    <update id="changeState" parameterType="map">
+        UPDATE DLVPN
+        SET STATE_CD = 1
+        WHERE USER_IDX = #{user_idx} and IS_DEFAULT_YN = 'Y'
+    </update>
+
+<!-- 배송지 수정-->
+    <update id="updateAddr" parameterType="Address">
+        UPDATE DLVPN
+        <choose>
+            <when test='is_default_yn=="true"'>
+                SET ADDR_DTL = #{addr_dtl}, RCPR_NM = #{rcpr_nm}, RCPR_MOBL_NO = #{rcpr_mobl_no}, IS_DEFAULT_YN = 'Y', CHG_TM = now()
+            </when>
+            <otherwise>
+                SET ADDR_DTL = #{addr_dtl}, RCPR_NM = #{rcpr_nm}, RCPR_MOBL_NO = #{rcpr_mobl_no}, CHG_TM = now()
+            </otherwise>
+        </choose>
+        WHERE IDX = #{idx} AND USER_IDX = #{user_idx};
+    </update>
+
+<!-- 기본배송지상태가 Y인 배송지의 기본배송지상태를 N(해제) 초기화-->
+    <update id="resetDefault_N" parameterType="int">
+        UPDATE DLVPN
+        SET IS_DEFAULT_YN = 'N'
+        WHERE USER_IDX = #{user_idx} and IS_DEFAULT_YN = 'Y';
+    </update>
+
+<!--해당 배송지의 배송지상태를(사용)으로 변경-->
+    <update id="AddrStateCD" parameterType="int">
+        UPDATE DLVPN
+        SET STATE_CD = 1
+        WHERE IDX = #{idx}
+    </update>
+<!--해당 회원의 배송지 선택 상태가(사용)인 배송지의 배송지상태를 (미사용)으로 초기회-->
+    <update id="resetStateCD" parameterType="int">
+        UPDATE DLVPN
+        SET STATE_CD = 2
+        WHERE USER_IDX = #{user_idx} AND STATE_CD = 1
+    </update>
+<!--해당 회원의 배송지상태가 사용인 배송지 조회-->
+    <select id="selectAddressSelected" parameterType="Integer" resultType="Address">
+        SELECT *
+        FROM DLVPN
+        WHERE USER_IDX = #{user_idx} AND STATE_CD = 1;
+    </select>
+
+<!-- 해당 배송지일련번호의 기본 배송지 상태를 조회한다-->
+    <select id="checkIS_DEFAULT_YN" parameterType="int" resultType="String">
+        SELECT IS_DEFAULT_YN
+        FROM DLVPN
+        WHERE IDX = #{idx}
+    </select>
+
+<!-- 해당 회원이 배송지 수 를 조회한다 ( 처음 배송지 추가인지 확인을 위한 메서드) -->
+    <select id="checkIS_FIRST_YN" parameterType="int" resultType="int">
+        SELECT count(*)
+        FROM DLVPN
+        WHERE USER_IDX = #{user_idx} AND NOT STATE_CD = 3 ;
+    </select>
+
+<!--    해당 회원이 처음 배송지를 추가할 때 기본배송지 상태로 추가하는 메서드-->
+    <insert id="insertAddrDefault" parameterType="map">
+        INSERT INTO DLVPN (USER_IDX, ZPCD, ADDR_BASE, ADDR_DTL, RCPR_NM, RCPR_MOBL_NO, IS_DEFAULT_YN)
+        VALUES (#{user_idx}, #{addr.zpcd}, #{addr.addr_base}, #{addr.addr_dtl}, #{addr.rcpr_nm}, #{addr.rcpr_mobl_no}, 'Y');
+    </insert>
+</mapper>
+
