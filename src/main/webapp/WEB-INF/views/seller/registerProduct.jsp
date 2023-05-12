@@ -447,7 +447,7 @@
                         <ul></ul>
                     </div>
                     <div class="btn-container">
-                        <button class="reg-confirm">가입하기</button>
+                        <button class="reg-confirm">등록하기</button>
                     </div>
                 </div>
             </form>
