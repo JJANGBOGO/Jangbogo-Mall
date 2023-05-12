@@ -23,7 +23,7 @@ public class UserInquiryController {
     @Autowired
     UserInquiryService userInquiryService;
 
-    // 회원 문의 리스트 페이지 이동
+    // 회원 문의 목록 페이지 이동
     @GetMapping("/inquiry/list")
     public String inquiryListPage(HttpServletRequest req, Model m) {
 
@@ -39,7 +39,7 @@ public class UserInquiryController {
         try {
 
             list = userInquiryService.getList(1); // 회원번호를 가지고 그 회원의 문의 조회
-            System.out.println("list = " + list);
+//            System.out.println("list = " + list);
             return new ResponseEntity<List<UserInquiryListDto>>(list, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,8 +49,10 @@ public class UserInquiryController {
 
     // 회원 문의 작성 페이지로 이동
     @GetMapping("/inquiry")
-    public String inquiryPage(HttpServletRequest req, Model m) {
-
+    public String inquiryPage(HttpServletRequest req, Model m,Integer idx) {
+        System.out.println("fjsfasjflkajflisa");
+        System.out.println("idx = " + idx);
+//        m.addAttribute(userInquiryListDto);
 //        if(!loginCheck(request)) return "redirect:/user/login?toURL="+request.getRequestURL();
         return "inquiry/inquiry";
     }

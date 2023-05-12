@@ -147,10 +147,10 @@
       // 휴대폰 번호 정규식 체크
       rcpr_mobl_no = rcpr_mobl_no.replace(/-/g, "");  // 하이픈 제거
       const regex = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
-      if(!regex.test(rcpr_mobl_no)){
-        return false;
+      if(regex.test(rcpr_mobl_no) || rcpr_mobl_no.trim()===""){
+        return true;
       }
-      return true;
+      return false;
     }
 
 

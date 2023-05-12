@@ -42,7 +42,8 @@
     <select id="getCount" parameterType="int" resultType="int">
         SELECT count(*)
         FROM PROD_LATE r
-        WHERE r.PROD_IDX = #{prod_idx} AND NOT r.STATE_CD = 2;
+        WHERE r.PROD_IDX = #{prod_idx} AND NOT r.STATE_CD = 2 AND NOT r.OPUB_YN = 'N';
     </select>
+
 
 </mapper>

@@ -58,7 +58,7 @@ public class MyOrderDetailController {
     // 장바구니에 상품 존재 확인 하고 추가하는 메서드
     @PostMapping("/order/detail/insertCart") // order/detail/insertCart?prod_idx=1&prod_cnt=1 POST
     public ResponseEntity<String> insertCart(Integer prod_idx, Integer prod_cnt, HttpSession session, RedirectAttributes ratt){
-        int user_idx = (int) session.getAttribute("idx");
+        int user_idx = (int) session.getAttribute("idx"); // 세션에서 회원번호 회득
 
         try {
             int CartCnt = wishlistService.checkCart(prod_idx, user_idx); // 장바구니에 이 상품이 있는지 확인
@@ -76,6 +76,34 @@ public class MyOrderDetailController {
         }
 
     }
+
+
+    // 장바구니에 (전체)상품 존재 확인 하고 추가하는 메서드
+    @PostMapping("/order/detail/insertCartAll/{idx}") // order/detail/insertCart?prod_idx=1&prod_cnt=1 POST
+    public ResponseEntity<String> insertCartAll(@PathVariable Integer idx, Integer prod_cnt, HttpSession session, RedirectAttributes ratt){
+        int user_idx = (int) session.getAttribute("idx");                    // 세션에서 회원번호를 가저온다
+        List<Integer> list = null; //
+        try {
+            list = myOrderDetailService.getProdsIdx(idx);                           // 해당 주문번호의 상품번호들을 가저온다
+            int totalCnt = list.size();                                             // 상품번호들 총 개수
+
+            for (int i = 0; i < totalCnt; i++) {                                    // 각 상품들이 회원의 장바구니에 존재하는지 확인한다
+                int prod_idx = list.get(i);
+                if(wishlistService.checkCart(prod_idx,user_idx)==0){                // 1-1) 존재하지 않으면
+                    wishlistService.insertCart(prod_idx,user_idx,1);        // 장바구니에 추가 (1개)
+                }else{                                                              // 1-2) 존재하면
+                    wishlistService.updateCartCnt(prod_idx,user_idx,1);         // 장바구니 수량 업데이트 (1개)
+                }
+            }
+            return new ResponseEntity<>("CART_OK", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("CART_ERR", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+    }
+
 
     // 상품후기 작성(추가), 주문상세(후기작성상태코드)-> 3(작성완료) 업데이트 메서드
     @PostMapping("/order/detail/insertReview") // order/detail/insertReview POST

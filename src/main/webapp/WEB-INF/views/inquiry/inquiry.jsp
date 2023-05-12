@@ -217,8 +217,8 @@
                     <div class="inqry_write-tpye_select">
                         <div class="inqry_write-tpye-inputbox">
                             <select name="inqry_idx" id="First_inqry_idx">
-                                <option value="0" selected>선택</option>
-                                <option value=100>주문/결제/반품/교환문의</option>
+                                <option value="0" ${ph.sc.option=='A' || ph.sc.option=='' ? "selected" : ''}>선1택</option>
+                                <option value=100 ${ph.sc.option=='PW' ? "selected" : ''}>주문/결제/반품/교환문의</option>
                                 <option value=200>이벤트/쿠폰/적립금문의</option>
                                 <option value=300>상품문의</option>
                                 <option value=400>배송문의</option>
