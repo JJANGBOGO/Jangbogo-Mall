@@ -5,23 +5,22 @@ import org.springframework.stereotype.Repository;
 import java.util.Date;
 
 public class CartDto {
-    private Integer prod_idx;
-    private Integer user_idx;
-    private String prod_name;
-    private Integer prod_price;
-    private Integer prod_cnt;
-    private String upload_path;
-    private Date reg_tm;
-    private Date crt_tm;
-    private Date upt_tm;
-    private String addr_base;                                                                                           // 기본주소
-    private String addr_dtl;                                                                                            // 상세주소
+    // iv
+    private Integer prod_idx;                                                                                           // 상품번호  PROD_IDX
+    private Integer user_idx;                                                                                           // 회원번호 USER_IDX
+    private String prod_name;                                                                                           // 상품이름 PROD_NAME;
+    private Integer prod_price;                                                                                         // 상품가격 PRODUCT.PRC
+    private Integer dc_rate;                                                                                            // 상품할인율 PRODUCT.DC_RATE
+    private Integer prod_cnt;                                                                                           // 장바구니상품수량 CART.PROD_CNT
+    private String upload_path;                                                                                         // 이미지파일경로 PRODUCT.UPLOAD_PATH
+    private Date reg_tm;                                                                                                // 장바구니상품등록일자 CART.REG_TM
+    private Date crt_tm;                                                                                                // 최초등록일자 CRT_TM
+    private Date upt_tm;                                                                                                // 최종수정일자 UPT_TM
 
-    private Integer dc_rate;
+    // contructor
+    public CartDto() {}                                                                                                 // 기본생성자
 
-    public CartDto() {}
-
-    public CartDto(Integer prod_idx, Integer user_idx, String prod_name, Integer prod_price, Integer prod_cnt, String upload_path) {
+    public CartDto(Integer prod_idx, Integer user_idx, String prod_name, Integer prod_price, Integer prod_cnt, String upload_path) { // 매개변수 있는 생성자
         this.prod_idx = prod_idx;
         this.user_idx = user_idx;
         this.prod_name = prod_name;
@@ -61,6 +60,14 @@ public class CartDto {
 
     public void setProd_price(Integer prod_price) {
         this.prod_price = prod_price;
+    }
+
+    public Integer getDc_rate() {
+        return dc_rate;
+    }
+
+    public void setDc_rate(Integer dc_rate) {
+        this.dc_rate = dc_rate;
     }
 
     public Integer getProd_cnt() {
@@ -103,47 +110,20 @@ public class CartDto {
         this.upt_tm = upt_tm;
     }
 
-    public String getAddr_base() {
-        return addr_base;
-    }
-
-    public void setAddr_base(String addr_base) {
-        this.addr_base = addr_base;
-    }
-
-    public String getAddr_dtl() {
-        return addr_dtl;
-    }
-
-    public void setAddr_dtl(String addr_dtl) {
-        this.addr_dtl = addr_dtl;
-    }
-
-    public Integer getDc_rate() {
-        return dc_rate;
-    }
-
-    public void setDc_rate(Integer dc_rate) {
-        this.dc_rate = dc_rate;
-    }
-
-
     // toString
     @Override
     public String toString() {
-        return "{" +
+        return "CartDto{" +
                 "prod_idx=" + prod_idx +
                 ", user_idx=" + user_idx +
                 ", prod_name='" + prod_name + '\'' +
                 ", prod_price=" + prod_price +
+                ", dc_rate=" + dc_rate +
                 ", prod_cnt=" + prod_cnt +
                 ", upload_path='" + upload_path + '\'' +
                 ", reg_tm=" + reg_tm +
                 ", crt_tm=" + crt_tm +
                 ", upt_tm=" + upt_tm +
-                ", addr_base='" + addr_base + '\'' +
-                ", addr_dtl='" + addr_dtl + '\'' +
-                ", dc_rate=" + dc_rate +
                 '}';
     }
 }

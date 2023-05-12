@@ -24,7 +24,6 @@
     justify-content: center;
     margin: 0 125px;
     margin-bottom: 30px;
-    height: 600px;
 }
 .cart-container {
     width: 100%;
@@ -146,6 +145,11 @@ img {
     flex-direction: column;
     justify-content: space-around;
 }
+
+input[name='sold-out'], input[name='no-dlvpn'], input[name='order'] {
+    display: none;
+}
+
 input[name='order'] {
     position: absolute;
     bottom: 0;
@@ -160,6 +164,7 @@ input[name='order'] {
     font-size: 18px;
     cursor: pointer;
 }
+
 
 .prod-title {
     font-size: 18px;
@@ -221,7 +226,7 @@ input[name="sold-out"], input[name="no-dlvpn"]  {
 }
 
 #emptyItems {
-    display: block;
+    display: none;
     text-align: center;
     margin-top: 100px;
 }
