@@ -39,9 +39,11 @@
             <span id="prod-price"></span>
             <span id="prod-unit">원</span>
           </h2>
+          <c:if test="${list.dc_rate} != 0">
           <span id="defore-dc">
               <span class="defore-dc-span"></span>원
-            </span>
+          </span>
+          </c:if>
           <div id="info-table" class="css-iqoq9n e6qx2kx2">
             <div class="seller">
               <div class="sellerColumn">판매자</div>
@@ -111,7 +113,9 @@
                         <button class="upCount">수량올리기</button>
                       </div>
                       <div class="m-price">
+                        <c:if test="${list.dc_rate} != 0">
                         <span class="m-price-origin"><span class="m-price-origin-span"></span>원</span>
+                        </c:if>
                         <span class="m-price-dc"><span class="m-price-dc-span"></span>원</span>
                       </div>
                     </div>
