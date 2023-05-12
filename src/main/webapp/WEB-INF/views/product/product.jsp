@@ -33,7 +33,9 @@
             <h2 class="prod-ctent">${list.content}</h2>
           </div>
           <h2 class="prod-price-info">
-            <span id="prod-dc">${list.dc_rate}%</span>
+            <c:if test="${list.dc_rate} != 0">
+              <span id="prod-dc">${list.dc_rate}%</span>
+            </c:if>
             <span id="prod-price"></span>
             <span id="prod-unit">원</span>
           </h2>
