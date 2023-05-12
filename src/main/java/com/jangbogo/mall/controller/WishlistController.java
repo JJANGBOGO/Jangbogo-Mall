@@ -48,8 +48,7 @@ public class WishlistController {
     public ResponseEntity<String> remove(@PathVariable Integer prod_idx, HttpSession session){
         Integer user_idx = (Integer) session.getAttribute("idx");
         int rowCnt = 0;
-        System.out.println("user_idx = " + user_idx);
-        System.out.println("prod_idx = " + prod_idx);
+
         try {
             rowCnt = wishlistService.delete(prod_idx,user_idx);
             if(rowCnt != 1) {

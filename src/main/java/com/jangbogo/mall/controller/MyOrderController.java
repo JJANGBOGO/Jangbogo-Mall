@@ -26,11 +26,9 @@ public class MyOrderController {
     @GetMapping("/order/list")
     public String orderPage(HttpServletRequest request, HttpSession session, Model m) {
         m.addAttribute("mypageUrl", request.getRequestURI());
-//        if(!loginCheck(request)) return "redirect:/user/login?toURL="+request.getRequestURL();
         Integer user_idx = (Integer)session.getAttribute("idx");
         try {
             List<MyOrderDto> list = myOrderService.getlist(user_idx);
-//            System.out.println("ㅇㄴㅇㅁㄴㅇ = " + list);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

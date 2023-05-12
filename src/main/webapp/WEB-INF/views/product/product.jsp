@@ -170,9 +170,7 @@
           <section class="review-section">
             <header class="review-header">
               <h2 class="header">상품 후기</h2>
-              <%--            <div class="reviewBtn-box">--%>
-              <%--                <button class="review-button" type="button">작성하기</button>--%>
-              <%--            </div>--%>
+
             </header>
 
             <div class="review-box" id="abc">
@@ -185,19 +183,7 @@
 
             </div>
             <div class="pageHandler-container">
-              <%--    <div class="paging">--%>
-              <%--        <form id="loginForm">--%>
-              <%--            <c:if test="${ph.showPrev}">--%>
-              <%--                <a class="page1" href="<c:url value="/product/review/list?page=${ph.beginPage-1}&${ph.sc.pageSize}$prod_idx=1"/>">&lt;</a>--%>
-              <%--            </c:if>--%>
-              <%--            <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">--%>
-              <%--                <a class="page2" onclick="return false">${i}</a>--%>
-              <%--            </c:forEach>--%>
-              <%--            <c:if test="${ph.showNext}">--%>
-              <%--                <a class="page3" href="<c:url value="/product/review/list?page=${ph.endPage+1}&${ph.sc.pageSize}&prod_idx=1"/>">&gt;</a>--%>
-              <%--            </c:if>--%>
-              <%--        </form>--%>
-              <%--    </div>--%>
+
             </div>
           </section>
         </div>
@@ -247,10 +233,6 @@
                       <input class="opubCheckbox" type="checkbox">
                       <span>후기 비공개하기</span>
                     </label>
-                    <%--                        <button class="opubBtn">--%>
-                    <%--                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24Z" fill="#5f0080"></path><path d="M7 12.6667L10.3846 16L18 8.5" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>--%>
-                    <%--                            <span>후기 비공개하기</span>--%>
-                    <%--                        </button>--%>
                   </div>
                   <div class="footerBtn">
                     <button class="cancleBtn" onclick="return false;">취소</button>

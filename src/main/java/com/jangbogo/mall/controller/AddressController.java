@@ -136,7 +136,6 @@ public class AddressController {
         int user_idx = (int) session.getAttribute("idx");
         address.setRcpr_nm("");
         address.setRcpr_mobl_no("");
-//        System.out.println("address = " + address);
 
         try {
             // 처음 배송지 추가하면 무조건 기본 배송지로 설정한다
@@ -159,7 +158,6 @@ public class AddressController {
             e.printStackTrace();
             return new ResponseEntity<String>("MOD_ERR", HttpStatus.BAD_REQUEST);
         }
-
 
     }
 
