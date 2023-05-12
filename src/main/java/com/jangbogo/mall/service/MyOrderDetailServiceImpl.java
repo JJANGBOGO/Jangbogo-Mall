@@ -43,5 +43,11 @@ public class MyOrderDetailServiceImpl implements MyOrderDetailService {
         return myOrderDetail.updateSetlCanceled(tid);
     }
 
+    @Override
+    public List<Integer> getProdsIdx(Integer ord_idx) throws Exception {
+        return myOrderDetail.getProdsIdx(ord_idx);
+
+    }
+
 
 }

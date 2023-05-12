@@ -44,5 +44,10 @@ public class MyOrderDetailImpl implements MyOrderDetail {
         return session.update(namespace+"updateSetlCanceled", tid);
     }
 
+    @Override
+    public List<Integer> getProdsIdx(Integer ord_idx) throws Exception{
+        return session.selectList(namespace+"getProdsIdx",ord_idx);
+    }
+
 
 }
