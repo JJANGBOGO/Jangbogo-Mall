@@ -111,16 +111,21 @@
             let format_price = formatPriceWithComma(Math.floor(price_val - price_val * (dc_rate /100)));
             //
             str += '<li>'
-                + '<a class="img-box" href="/product/' + obj.idx + '">'
-                + '<img src="' + obj.upload_path + '"alt="product-img" />'
-                + '<div class="cart-btn"><i id="cart_btn" class="fa-solid fa-cart-shopping" data-idx="' + obj.idx + '"></i></div>'
-                + '</a>'
-                + '<div class="thum-desc">'
-                + '<a class="title"><h3>[' + obj.cpnm + '] ' + obj.name + '</h3></a>'
-                + '<div class="price">' + format_price + '원</div>'
-                + '<div class="review-cnt">리뷰 수: ' + obj.review_cnt + '</div>'
-                + '</div>'
-                + '</li>';
+            str += '<a class="img-box" href="/product/' + obj.idx + '">'
+            str += '<img src="' + obj.upload_path + '"alt="product-img" />'
+            str += '<div class="cart-btn"><i id="cart_btn" class="fa-solid fa-cart-shopping" data-idx="' + obj.idx + '"></i></div>'
+            str += '</a>'
+            str += '<div class="thum-desc">'
+            str += '<a class="title"><h3>[' + obj.cpnm + '] ' + obj.name + '</h3></a>'
+            str += '<div class="calcPrice">'
+            if(dc_rate != 0) {
+            str +='<span class="dcPrice">'+ dc_rate +'%</span>'
+            }
+            str += '<div class="price">' + format_price + '원</div>'
+            str += '</div>'
+            str += '<div class="review-cnt">후기: ' + obj.review_cnt + '</div>'
+            str += '</div>'
+            str += '</li>';
         });
         list_ref.append(str);
     }
