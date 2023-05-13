@@ -143,8 +143,10 @@
         productLists.sort(() => Math.random() -0.5);
         productLists.forEach(function(productList) {
 
-            let test = productList.price;
-            let withComma = test.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            let price = productList.price;
+            let dc_rate = productList.dc_rate;
+            let calc_price = Math.floor(price - price * (dc_rate /100));
+            let withComma = calc_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
             let url = "/product/"+ productList.prod_idx;
 

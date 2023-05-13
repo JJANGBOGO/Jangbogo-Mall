@@ -117,8 +117,9 @@
                 + '</a>'
                 + '<div class="thum-desc">'
                 + '<a class="title"><h3>[' + obj.cpnm + '] ' + obj.name + '</h3></a>'
+                + '<span>'+ dc_rate +'%</span>'
                 + '<div class="price">' + format_price + '원</div>'
-                + '<div class="review-cnt">리뷰 수: ' + obj.review_cnt + '</div>'
+                + '<div class="review-cnt">후기: ' + obj.review_cnt + '</div>'
                 + '</div>'
                 + '</li>';
         });
