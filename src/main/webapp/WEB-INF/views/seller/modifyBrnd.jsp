@@ -232,6 +232,12 @@
         }); //$.ajax
     });
 
+    //수정 취소 버튼
+    $("#brnd-cancel").click(function (e) {
+       e.preventDefault();
+       window.location.href = "/seller/read/brnd";
+    });
+
     //수정 버튼
     $("#brnd_modify").click(function (e) {
         e.preventDefault();
