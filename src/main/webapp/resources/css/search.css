@@ -80,12 +80,24 @@
     text-overflow: ellipsis;
 }
 
+.search-list li .product-desc .calcPrice {
+    display: flex;
+    line-height: 46px;
+    gap: 12px;
+}
+
+.search-list li .product-desc .calcPrice .dcPrice {
+    font-size: 17px;
+    color: #fa622f;
+    font-weight: 800;
+}
+
 .search-list li .product-desc .price {
     font-size: 18px;
     font-weight: 800;
     white-space: nowrap;
 
-    padding: 10px 0 5px 0;
+    /*padding: 10px 0 5px 0;*/
 }
 
 .search-list li .product-desc .review-cnt {

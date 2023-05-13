@@ -25,8 +25,13 @@
                     </a>
                     <div class="product-desc">
                         <a class="title"><h3>${product.name}</h3></a>
+                        <div class="calcPrice">
+                        <c:if test="${product.dc_rate != 0}">
+                        <div class="dcPrice">${product.dc_rate}%</div>
+                        </c:if>
                         <div class="price" data-price="${product.prc}" data-dc-rate="${product.dc_rate}"></div>
-                        <div class="review-cnt">리뷰 수: ${product.review_cnt}</div>
+                        </div>
+                        <div class="review-cnt">후기 수: ${product.review_cnt}</div>
                     </div>
                 </li>
             </c:forEach>

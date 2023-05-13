@@ -140,12 +140,24 @@ img.mySlides {
     text-overflow: ellipsis;
 }
 
+.thum-list li .thum-desc .calcPrice{
+    display: flex;
+    line-height: 46px;
+    gap: 12px;
+}
+
+.thum-list li .thum-desc .calcPrice .dcPrice {
+    font-size: 17px;
+    color: #fa622f;
+    font-weight: 800;
+}
+
 .thum-list li .thum-desc .price {
     font-size: 18px;
     font-weight: 800;
     white-space: nowrap;
 
-    padding: 10px 0 5px 0;
+    /*padding: 10px 0 5px 0;*/
 }
 
 .thum-list li .thum-desc .review-cnt {
