@@ -216,7 +216,6 @@
         $(".orderDetail-container").on("click",'.orderDetail-review', function (){
             $('.content').keyup(function (){
                 let newLength = $(this).val().length;
-                // console.log(newLength)
                 if(newLength<10) {
                     $(".insertBtn").css('display', 'none');
                     $(".insertBtnNo").css('display', 'block');
@@ -227,11 +226,12 @@
 
             })
 
-            let upload_path = $(this).parent().siblings().attr('src');                          // 상품 이미지 url 변수 선언
+            let upload_path = $(this).parent().siblings('a').children('img').attr('src');                          // 상품 이미지 url 변수 선언
             let name = $(this).parent().siblings('.orderDetail-content').children('a').text();  // 상품이름 변수 선언
             let prod_idx = $(this).attr('data-prod_idx')          // 상품번호 변수 선언
             let ord_idx = $(this).attr('data-ord_idx');           // 주문번호 변수 선언
             let ord_dtl_idx = $(this).attr('data-ord_dtl_idx')    // 주문상세번호 변수 선언
+
 
             $('.insertBtn').attr('data-prod_idx',prod_idx);       // 상품번호를 등록버튼에 사용자 정의 속성으로 추가
             $('.insertBtn').attr('data-ord_idx',ord_idx);         // 주문번호를 등록버튼에 사용자 정의 속성으로 추가

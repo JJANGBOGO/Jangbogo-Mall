@@ -58,17 +58,6 @@
       document.querySelector('.update-button').style.marginTop = "20px";
     }
 
-    // let addr_dtl = document.querySelector('.dlvpn-input1');
-    <%--if("${address.addr_dtl}"!=""){--%>
-    <%--  document.querySelector('.dlvpn-input1').value = "${address.addr_dtl}";--%>
-    // }
-    <%--if("${address.rcpr_nm}"!=""){--%>
-    <%--  document.querySelector('.dlvpn-input2').value = "${address.rcpr_nm}";--%>
-    // }
-    <%--if("${address.rcpr_mobl_no}"!=""){--%>
-    <%--  document.querySelector('.dlvpn-input3').value = "${address.rcpr_mobl_no}"--%>
-    // }
-
 
     // 배송지 상태 변경      ex).. [사용, 미사용, (삭제)]
     $(".delete-button").click(function(){
@@ -152,42 +141,6 @@
       }
       return false;
     }
-
-
-    <%--document.querySelector('.delete-button').addEventListener('click',remove);--%>
-
-    <%--function remove() {--%>
-    <%--  if(!confirm("정말로 삭제하시겠습니까"))return;--%>
-
-    <%--  let a = ${address.idx};--%>
-
-    <%--  var form = document.createElement('form');--%>
-    <%--  form.setAttribute('method', 'post');--%>
-    <%--  form.setAttribute('action', '<c:url value="/mypage/addressremove"/>?idx=${address.idx}');--%>
-    <%--  window.opener.document.body.appendChild(form);--%>
-    <%--  form.submit();--%>
-    <%--  &lt;%&ndash;opener.parent.location='<c:url value="/mypage/addressremove?idx='+a+'"/>';&ndash;%&gt;--%>
-    <%--  self.close()--%>
-
-    <%--}--%>
-    <%--document.querySelector('.update-button').addEventListener('click',save)--%>
-    <%--function save(){--%>
-    <%--  let addr_dtl = document.querySelector('.dlvpn-input1').value;--%>
-    <%--  let rcpr_nm = document.querySelector('.dlvpn-input2').value;--%>
-    <%--  let rcpr_mobl_no = document.querySelector('.dlvpn-input3').value;--%>
-    <%--  let is_default_yn = document.querySelector('.base_button').checked;--%>
-    <%--  let idx = ${address.idx};--%>
-
-    <%--  var form = document.createElement('form');--%>
-    <%--  form.setAttribute('method', 'post');--%>
-    <%--  form.setAttribute('action', '<c:url value="/mypage/addressupdate?addr_dtl='+addr_dtl+'&rcpr_nm='+rcpr_nm+'&rcpr_mobl_no='+rcpr_mobl_no+'&is_default_yn='+is_default_yn+'&idx='+idx+'"/>');--%>
-    <%--  window.opener.document.body.appendChild(form);--%>
-    <%--  form.submit();--%>
-    <%--  &lt;%&ndash;opener.parent.location='<c:url value="/mypage/addressupdate?addr_dtl='+addr_dtl+'&rcpr_nm='+rcpr_nm+'&rcpr_mobl_no='+rcpr_mobl_no+'&is_default_yn='+is_default_yn+'&idx='+idx+'"/>';&ndash;%&gt;--%>
-    <%--  self.close()--%>
-
-    <%--}--%>
-
 
 
   }
