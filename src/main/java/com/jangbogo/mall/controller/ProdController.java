@@ -77,8 +77,6 @@ public class ProdController {
         List<JoinProdInqryDto> list = null;
         Integer idx = (Integer)session.getAttribute("idx");
         String email = (String)session.getAttribute("email");
-        System.out.println("[GET]user idx = "+idx);
-        System.out.println("user email = "+email);
 
         try {
             list = prodInqryService.getList(prod_idx);
@@ -113,14 +111,12 @@ public class ProdController {
     @PostMapping("/product/inqry/write")  // /product?prod_idx=1 POST
     public ResponseEntity<String> write(@RequestBody ProdInqryDto prodInqryDto, Integer prod_idx, HttpSession session) {
         Integer user_idx = (Integer)session.getAttribute("idx");
-        System.out.println("user_idx=???"+user_idx);
 
         String nick_name = (String)session.getAttribute("nickName");
         prodInqryDto.setUser_idx(user_idx);
         prodInqryDto.setProd_idx(prod_idx);
         try {
             prodInqryDto.setWriter(nick_name);
-            System.out.println("Post dto ===== " + prodInqryDto);
 
             if(prodInqryService.write(prodInqryDto) != 1) {
                 throw new Exception("Write failed");
@@ -153,7 +149,6 @@ public class ProdController {
     @ResponseBody
     public ResponseEntity<String> insertWishList(Integer prod_idx, HttpSession session) {
         Integer user_idx = (Integer)session.getAttribute("idx");
-        System.out.println("prod_idx="+prod_idx);
         String msg = "";
         try {
             if(productDetailService.checkWishlist(prod_idx, user_idx) == 0) {
