@@ -257,8 +257,8 @@
     }
 
     // 위시리스트 상품이 없을때 상품 보기(버튼) 클릭 시 상품 전체 url경로 이동하기
-    $('.dlvpn-notice').on("click", '.goToProd-btn', function () {
-        // location.href = "여기다 경로 적기"
+    $(document).on("click", '.goToProd-btn', function () {
+        location.href = "/productList"
     })
 
     // 정규식 함수화

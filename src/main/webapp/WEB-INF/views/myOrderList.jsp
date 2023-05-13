@@ -24,29 +24,6 @@
         <div class="order-listbox">
 
 
-<%--            <div class="order-list">--%>
-<%--                <div class="order-time_detail">--%>
-<%--                    <span>2023.03.20 (15시 49분)</span>--%>
-<%--                    <a>주문내역 상세보기</a>--%>
-<%--                </div>--%>
-<%--                <div class="order-content">--%>
-<%--                    <div class="img_content">--%>
-<%--                        <img src="https://img-cf.kurly.com/shop/data/goods/1654669098671l0.jpg" alt="[하림] 닭가슴살 핫도그 5개입 상품 이미지">--%>
-<%--                        <div class="content">--%>
-<%--                            <dl><dt>상품명</dt><dd>[하림]닭가슴살 핫도그5개입</dd></dl>--%>
-<%--                            <dl><dt>주문번호</dt><dd>23000015490029</dd></dl>--%>
-<%--                            <dl><dt>결제방법</dt><dd>신용카드</dd></dl>--%>
-<%--                            <dl><dt>결제금액</dt><dd>7,300원</dd></dl>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <div class="order-state">--%>
-<%--                        <span>배송완료</span>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <div class="order-list_line"></div>--%>
-<%--            </div>--%>
-
-
 
         </div>
         <div class="myOrder-notice">
@@ -126,13 +103,10 @@
         tmp += '<div>'
         tmp += '<svg width="0" height="60" viewBox="0 0 68 68">'
         tmp += '<img src="https://cdn-icons-png.flaticon.com/512/2298/2298276.png" width="100px" height="100px">'
-        // tmp += '<path class="heartpath" stroke="#e2e2e2" d="M57.025 14.975c-5.3-5.3-13.889-5.3-19.186 0L34 18.812l-3.837-3.837c-5.3-5.3-13.89-5.3-19.19 0-5.296 5.297-5.296 13.886 0 19.186l3.838 3.837 18.482 18.485a1 1 0 0 0 1.414 0s0 0 0 0l18.482-18.485h0l3.837-3.837c5.3-5.3 5.3-13.89 0-19.186z"></path>'
         tmp += '</svg>'
         tmp += '</div>'
         tmp += '<strong class="strong-heart">주문내역이 없습니다.</strong>'
-        tmp += '<button class="goToProd-btn">'
-        tmp += '<span>주문하기</span>'
-        tmp += '</button>'
+
 
 
         return tmp;
