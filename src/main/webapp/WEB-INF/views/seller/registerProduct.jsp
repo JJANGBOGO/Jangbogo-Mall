@@ -447,7 +447,7 @@
                         <ul></ul>
                     </div>
                     <div class="btn-container">
-                        <button class="reg-confirm">가입하기</button>
+                        <button class="reg-confirm">등록하기</button>
                     </div>
                 </div>
             </form>
@@ -904,6 +904,36 @@
             }
             // if (!validateProduct()) return false;  //유효성 검사 추후 개발 예정
 
+            if($('inqut[name=name]').val() === "") {
+                alert("상품 이름을 입력해 주세요");
+                $('input[name=name]').focus();
+                return false;
+            }
+
+            if($('textarea[name=contenet]').val() === "") {
+                alert("상품 설명을 입력해 주세요");
+                $('textarea[name=content]').focus();
+                return false;
+            }
+
+            if($('input[name=prc]').val === "") {
+                alert("가격을 입력해 주세요");
+                $('input[name=prc]').focus();
+                return false;
+            }
+
+            if($('textarea[name=warn]').val() === ""){
+                alert("주의사항을 입력해 주세요")
+                $('textarea[name=warn]').focus();
+                return false;
+            }
+
+            if($('textarea[name=guid]').val() === "") {
+                alert("상품 안내 사항을 입력해 주세요")
+                $('textarea[name=guid]').focus();
+                return false;
+            }
+
             let base_path = "/display?fileName=";
 
             let upload_url = base_path + $(".upload-result.repr-path ul li").data("upload-path");
@@ -914,7 +944,6 @@
 
             //상세이미지들
             let list = $(".upload-result.products ul li");
-            console.log("list.....", list);
             let str = "";
             list.each((i, obj) => {
                 let jobj = $(obj);
@@ -923,7 +952,6 @@
                     + "<input type='hidden' name='files[" + i + "].UPLOAD_PATH' value='/display?fileName=" + jobj.data("upload-path") + "'>"
                     + "<input type='hidden' name='files[" + i + "].SORT_ODR' value='" + i + "'>"
             });
-            console.log("결과ㅣ>>>" + str);
             form.append(str);
             form.submit();
         });
