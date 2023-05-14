@@ -109,6 +109,7 @@
             let price_val = obj.prc;
 
             let format_price = formatPriceWithComma(Math.floor(price_val - price_val * (dc_rate /100)));
+            let format_price_val = formatPriceWithComma(price_val);
             //
             str += '<li>'
             str += '<a class="img-box" href="/product/' + obj.idx + '">'
@@ -119,9 +120,13 @@
             str += '<a class="title"><h3>[' + obj.cpnm + '] ' + obj.name + '</h3></a>'
             str += '<div class="calcPrice">'
             if(dc_rate != 0) {
-            str +='<span class="dcPrice">'+ dc_rate +'%</span>'
+                str +='<span class="dcPrice">'+ dc_rate +'%</span>'
+                str += '<div class="price">' + format_price + '원</div>'
+                str += '<div class="price_val1">' + format_price_val + '원</div>'
+            }else {
+                str += '<div class="price_val2">' + format_price_val + '원</div>'
+
             }
-            str += '<div class="price">' + format_price + '원</div>'
             str += '</div>'
             str += '<div class="review-cnt">후기: ' + obj.review_cnt + '</div>'
             str += '</div>'

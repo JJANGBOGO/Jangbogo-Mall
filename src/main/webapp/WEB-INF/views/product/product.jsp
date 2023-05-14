@@ -45,7 +45,7 @@
 <%--            <c:when test="${list.dc_rate >= 0} ">--%>
           <c:if test="${list.dc_rate > 0 }">
               <span id="defore-dc">
-                  <span class="defore-dc-span"></span>원
+                  <span class="defore-dc-span" style="color: #b5b5b5"></span>원
               </span>
           </c:if>
 <%--            </c:when>--%>

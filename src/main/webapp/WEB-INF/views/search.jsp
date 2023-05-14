@@ -26,10 +26,23 @@
                     <div class="product-desc">
                         <a class="title"><h3>${product.name}</h3></a>
                         <div class="calcPrice">
-                        <c:if test="${product.dc_rate != 0}">
-                        <div class="dcPrice">${product.dc_rate}%</div>
-                        </c:if>
-                        <div class="price" data-price="${product.prc}" data-dc-rate="${product.dc_rate}"></div>
+
+<%--                        <c:if test="${product.dc_rate != 0}">--%>
+<%--                        <div class="dcPrice">${product.dc_rate}%</div>--%>
+<%--                        </c:if>--%>
+<%--                        <div class="price" data-price="${product.prc}" data-dc-rate="${product.dc_rate}"></div>--%>
+
+                            <c:choose>
+                                <c:when test="${product.dc_rate != 0}">
+                                    <div class="dcPrice">${product.dc_rate}%</div>
+                                    <div class="price" data-price="${product.prc}" data-dc-rate="${product.dc_rate}"></div>
+                                    <div class="price_val1" data-price="${product.prc}"></div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="price_val2" data-price="${product.prc}"></div>
+                                </c:otherwise>
+                            </c:choose>
+
                         </div>
                         <div class="review-cnt">후기 수: ${product.review_cnt}</div>
                     </div>
@@ -44,13 +57,19 @@
 <script src="/js/order/format.js"></script>
 <script>
     $(document).ready(function () {
+        let price_ref = $(".price");  // 원가
+        let dc_rate = Number(price_ref.data("dc-rate"));  // 할인율
+        let price_val = Number(price_ref.data("price"));  // 할인가
 
-        let price_ref = $(".price");
-        let dc_rate = Number(price_ref.data("dc-rate"));
-        let price_val = Number(price_ref.data("price"));
+        let format_price = formatPriceWithComma(Math.floor(price_val - price_val * (dc_rate /100)));  // 콤마
+        price_ref.html(format_price + "원");  // 숫자 + 원 더해줌
 
-        let format_price = formatPriceWithComma(Math.floor(price_val - price_val * (dc_rate /100)));
-        price_ref.html(format_price + "원");
+        let price_val1 = $(".price_val1");   // 할인가 참조
+        let price_val2 = $(".price_val2");   // 할인율이 없는 상품 가격
+        price_val1.html(formatPriceWithComma(Number(price_val1.data("price"))) + "원");
+        price_val2.html(formatPriceWithComma(Number(price_val2.data("price"))) + "원");
+
+
 
         let addCart = (e, this_ref) => {
             e.preventDefault();
