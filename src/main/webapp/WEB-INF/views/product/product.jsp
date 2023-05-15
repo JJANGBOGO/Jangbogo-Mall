@@ -33,17 +33,23 @@
             <h2 class="prod-ctent">${list.content}</h2>
           </div>
           <h2 class="prod-price-info">
-            <c:if test="${list.dc_rate} != 0">
-              <span id="prod-dc">${list.dc_rate}%</span>
-            </c:if>
+            <c:choose>
+              <c:when test="${list.dc_rate != 0}">
+                <span id="prod-dc">${list.dc_rate}%</span>
+              </c:when>
+            </c:choose>
             <span id="prod-price"></span>
             <span id="prod-unit">원</span>
           </h2>
-          <c:if test="${list.dc_rate} != 0">
-          <span id="defore-dc">
-              <span class="defore-dc-span"></span>원
-          </span>
+<%--          <c:choose>--%>
+<%--            <c:when test="${list.dc_rate >= 0} ">--%>
+          <c:if test="${list.dc_rate > 0 }">
+              <span id="defore-dc">
+                  <span class="defore-dc-span" style="color: #b5b5b5"></span>원
+              </span>
           </c:if>
+<%--            </c:when>--%>
+<%--          </c:choose>--%>
           <div id="info-table" class="css-iqoq9n e6qx2kx2">
             <div class="seller">
               <div class="sellerColumn">판매자</div>
@@ -113,10 +119,15 @@
                         <button class="upCount">수량올리기</button>
                       </div>
                       <div class="m-price">
-                        <c:if test="${list.dc_rate} != 0">
-                        <span class="m-price-origin"><span class="m-price-origin-span"></span>원</span>
-                        </c:if>
-                        <span class="m-price-dc"><span class="m-price-dc-span"></span>원</span>
+                        <c:choose>
+                          <c:when test="${list.dc_rate > 0}">
+                              <span class="m-price-origin"><span class="m-price-origin-span"></span>원</span>
+                              <span class="m-price-dc"><span class="m-price-dc-span"></span>원</span>
+                          </c:when>
+                          <c:when test="${list.dc_rate == 0}">
+                            <span class="m-price-dc"><span class="m-price-dc-span"></span>원</span>
+                          </c:when>
+                        </c:choose>
                       </div>
                     </div>
                   </div>

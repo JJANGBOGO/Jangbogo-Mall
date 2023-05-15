@@ -143,8 +143,12 @@
         productLists.sort(() => Math.random() -0.5);
         productLists.forEach(function(productList) {
 
-            let test = productList.price;
-            let withComma = test.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            let price = productList.price;
+            let dc_rate = productList.dc_rate;
+            let calc_price = Math.floor(price - price * (dc_rate /100));
+            let withComma = calc_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); // 할인가격 + 콤마
+
+            let priceWithComma = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); // 원래가격 + 콤마
 
             let url = "/product/"+ productList.prod_idx;
 
@@ -171,10 +175,19 @@
             tmp += '<p class="product-content">'+ productList.ctent +'</p>'
             tmp += '<div class="product-price-wrap">'
             tmp += '<div class="product-price">'
+            // if(productList.dc_rate != 0) {
+            //     tmp += '<span class="dc_rate">' + productList.dc_rate + "%" + '</span>'
+            // }
+            // tmp += '<span class="price">' + withComma + '<span class="won">원</span>'
+
             if(productList.dc_rate != 0) {
                 tmp += '<span class="dc_rate">' + productList.dc_rate + "%" + '</span>'
+                tmp += '<span class="price">' + withComma + '<span class="won">원</span>'
+                tmp += '<span class="price_val1">' + priceWithComma + '<span class="won1">원</span>'
+            }else {
+                tmp += '<span class="price_val2">' + priceWithComma + '<span class="won2">원</span>'
+
             }
-            tmp += '<span class="price">' + withComma + '<span class="won">원</span>'
             tmp += '</span>'
             tmp += '</div>'
             tmp += '</div>'

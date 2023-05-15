@@ -58,19 +58,19 @@
     letter-spacing: -0.5px;
 }
 #prod-dc {
-    padding-right: 9px;
+    padding-right: 4px;
     font-size: 28px;
     color: #fa622f;
 }
 #prod-price {
-    padding-right: 4px;
+    /*padding-right: 4px;*/
     font-size: 28px;
     color: #333;
 }
 #prod-unit {
     display: inline-block;
     position: relative;
-    top: 3px;
+    top: 8px;
     font-size: 18px;
     color: #333;
     vertical-align: top;
