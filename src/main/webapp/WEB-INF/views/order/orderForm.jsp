@@ -207,7 +207,7 @@
                 tmp += "<span>이메일</span>";
                 tmp += "</div>";
                 tmp += "<div class='orderer-value'>";
-                tmp += "<span>" + ordererInfo.email + "</span>";
+                tmp += "<span>" +"jmartUserjang" +ordererInfo.email + "</span>";
                 tmp += "<div class='orderer-value__paragraph'>";
                 tmp += "<p>이메일을 통해 주문처리과정을 보내드립니다.</p>";
                 tmp += "<p>정보 변경은 마이페이지 > 개인정보 수정 메뉴에서 가능합니다.</p>";
