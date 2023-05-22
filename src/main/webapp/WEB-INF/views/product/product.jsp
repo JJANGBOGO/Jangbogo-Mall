@@ -54,7 +54,7 @@
             <div class="seller">
               <div class="sellerColumn">판매자</div>
               <div class="seller-info">
-                <p class="seller-name">컬리</p>
+                <p class="seller-name">${findBrand.brandName}</p>
               </div>
             </div>
             <div class="packingType">
