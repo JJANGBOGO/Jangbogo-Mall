@@ -80,12 +80,24 @@
     text-overflow: ellipsis;
 }
 
+.search-list li .product-desc .calcPrice {
+    display: flex;
+    line-height: 46px;
+    gap: 7px;
+}
+
+.search-list li .product-desc .calcPrice .dcPrice {
+    font-size: 16px;
+    color: #fa622f;
+    font-weight: 800;
+}
+
 .search-list li .product-desc .price {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 800;
     white-space: nowrap;
 
-    padding: 10px 0 5px 0;
+    /*padding: 10px 0 5px 0;*/
 }
 
 .search-list li .product-desc .review-cnt {
@@ -106,4 +118,16 @@
 
     font-size: 12px;
 
+}
+
+.price_val1{
+    margin-right: 4px;
+    color: rgb(181, 181, 181);
+    font-size: 14px;
+    text-decoration: line-through;
+}
+.price_val2 {
+    font-size: 18px;
+    font-weight: 800;
+    white-space: nowrap;
 }
