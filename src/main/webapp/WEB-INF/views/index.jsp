@@ -12,7 +12,7 @@
 <div class="mySlides_container">
     <a href="/product/10018">
     <img class="mySlides"
-         src="https://product-image.kurly.com/cdn-cgi/image/quality=85/banner/main/pc/img/a646798f-0e48-4aff-b7c4-cef62dc29ff2.png"
+         src="/img/food.png"
     />
     </a>
     <a href="/product/10019">
