@@ -71,13 +71,13 @@
                         <div class="icon-desc">위시리스트</div>
                     </a>
                     <s:authorize access="hasRole('ROLE_USER')">
-                        <a href="/user/info">
+                        <a href="/order/list">
                             <i class="fa-regular fa-user"></i>
                             <div class="icon-desc">마이페이지</div>
                         </a>
                     </s:authorize>
                     <s:authorize access="hasRole('ROLE_SELLER')">
-                        <a href="/seller/info">
+                        <a href="/seller/list/product">
                             <i class="fa-regular fa-user"></i>
                             <div class="icon-desc">마이셀러</div>
                         </a>
