@@ -71,7 +71,7 @@
                         <div class="icon-desc">위시리스트</div>
                     </a>
                     <s:authorize access="hasRole('ROLE_USER')">
-                        <a href="/order/list">
+                        <a href="/mypage/order/list">
                             <i class="fa-regular fa-user"></i>
                             <div class="icon-desc">마이페이지</div>
                         </a>
