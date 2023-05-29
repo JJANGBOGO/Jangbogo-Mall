@@ -35,7 +35,7 @@ import java.util.UUID;
 @Slf4j
 public class UploadController {
 
-    private String uploadFolder = "/Users/jiwoo/djdu4496/upload/temp";                                                  // 업로드 할 파일을 저장할 위치
+    final private String UPLOAD_FOLDER = "/Users/jiwoo/jangbogo-3rd/upload/temp";                                        // 업로드 할 파일을 저장할 위치
 
     private String getFolder() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -60,13 +60,11 @@ public class UploadController {
 
         //새로운 ArrList를 생성한다.
         List<AttachFileDto> list = new ArrayList<>();
-        //업로드할 폴더의 경로를 절대 경로로 정한다.
-        String uploadFolder = "/Users/jiwoo/djdu4496/upload/temp";
 
         String uploadFolderPath = getFolder();
 
         //시간별로 폴더를 생성하는 코드를 추가한다. mkdirs()
-        File uploadPath = new File(uploadFolder, uploadFolderPath);
+        File uploadPath = new File(UPLOAD_FOLDER, uploadFolderPath);
         log.info("upload path :::" + uploadPath);
 
         //내가 폴더를 만들려는 경로가 존재하지 않을때만! 해당 경로로 폴더를 만든다.
@@ -134,7 +132,7 @@ public class UploadController {
     public ResponseEntity<byte[]> getFile(String fileName) {
         log.info("fileName: " + fileName); // 받아온 파일 이름 확인
 
-        File file = new File("/Users/jiwoo/djdu4496/upload/temp/" + fileName); // 파일 업로드할 폴더 경로랑 파일 이름 합쳐서 파일 객체 생성.
+        File file = new File(UPLOAD_FOLDER + "/" + fileName); // 파일 업로드할 폴더 경로랑 파일 이름 합쳐서 파일 객체 생성.
 
         log.info("file: " + file); // 파일 객체 제대로 만들어졌나 로그로 확인
 
@@ -158,7 +156,7 @@ public class UploadController {
     public ResponseEntity<Resource> downloadFile(@RequestHeader("User-Agent") String userAgent, String fileName) {
 
         //import를 꼭 org.springframework.core.io.Resource로 해야 한다.
-        Resource resource = new FileSystemResource("/Users/jiwoo/djdu4496/upload/temp" + fileName);
+        Resource resource = new FileSystemResource(UPLOAD_FOLDER + fileName);
         log.info("resource: " + resource);
 
         //만약에 resource가 존재하지 않는다면 Http notfound를 리턴한다.
@@ -208,7 +206,7 @@ public class UploadController {
         File file;
 
         try {
-            file = new File("/Users/jiwoo/djdu4496/upload/temp" + URLDecoder.decode(fileName, "UTF-8"));
+            file = new File(UPLOAD_FOLDER + URLDecoder.decode(fileName, "UTF-8"));
 
             file.delete();
 
