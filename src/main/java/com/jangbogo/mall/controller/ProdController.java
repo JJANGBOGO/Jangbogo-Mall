@@ -41,9 +41,9 @@ public class ProdController {
             String cate_idx = list.getCate_idx();
             String f_cate_idx = cate_idx.substring(0,2);  //'04'
             list.setF_cate_idx(f_cate_idx);
-//배송방식 번호를 찾아서
+            //배송방식 번호를 찾아서
             Integer dlvry_method = productDetailService.findDlvry(list.getF_cate_idx());
-//배송방식 검색
+            //배송방식 검색
             ProductDetailDto dlvryMethod = productDetailService.dlvryInfo(dlvry_method);
 
             ProductDetailDto findBrand = productDetailService.findBrand(prod_idx);
@@ -56,8 +56,8 @@ public class ProdController {
 
             List<ProductFileDto> fileList = productDetailService.findProdFile(prod_idx);
             m.addAttribute("fileList", fileList);
-
-
+            System.out.println("fileList = " + fileList);
+//            System.out.println("session.getAttribute(\"idx\") = " + session.getAttribute("idx"));                     // 2
             if(productDetailService.checkWishlist(prod_idx, session_idx) == 0) {
                 m.addAttribute("msg","no");
             } else {

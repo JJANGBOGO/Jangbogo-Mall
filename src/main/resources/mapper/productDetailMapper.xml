@@ -7,7 +7,7 @@
 <!--    상품 번호에 해당하는 상품 하나 가져오기-->
 <!--    service의 read-->
     <select id="selectProd" parameterType="Integer" resultType="ProductDetailDto">
-        select p.prc as 'price', p.name as 'name', p.upload_path as 'image_path', p.ctent as 'content', p.cate_idx as 'cate_idx', p.DC_RATE as 'dc_rate', p.DC_STATE_CD as 'dc_state', pd.prod_idx as 'prod_idx', pd.GUID as 'guid', pd.warn as 'warn', pd.ORPLC as 'origin', pd.SLE_UNIT as 'unit', pd.WEIGHT as 'weight', pd.SFKP_TP_STATE_CD as 'keepingType'
+        select p.prc as 'price', p.name as 'name', p.upload_path as 'image_path', p.ctent as 'content', p.cate_idx as 'cate_idx', p.DC_RATE as 'dc_rate', p.DC_STATE_CD as 'dc_state', pd.prod_idx as 'prod_idx', pd.GUID as 'guid', pd.warn as 'warn', pd.ORPLC as 'origin', pd.SLE_UNIT as 'unit', pd.WEIGHT as 'weight', pd.SFKP_TP_STATE_CD as 'keepingType', p.seler_idx as 'SELER_IDX'
         from product p inner join prod_dtl pd
         on p.idx = pd.prod_idx
         where pd.prod_idx = #{prod_idx} and p.DSPLY_STATE_CD = 1 and pd.REG_STATE_CD = 2 and pd.STATE_CD = 1;
