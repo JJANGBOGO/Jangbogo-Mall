@@ -268,10 +268,9 @@
         <div id="inquiry">
           <div class="prodInqry-wrap">
             <div class="prodInqry">
-              <button class="open-modal"><span>문의하기</span></button>
-
-
-
+              <c:if test="${session_idx ne null && list.seler_idx ne session_idx}">
+                <button class="open-modal" ><span>문의하기</span></button>
+              </c:if>
 
               <div class="modal">
                 <div id="modal-body" class="modal_body">
@@ -608,7 +607,6 @@
         return;
       }
 
-
       let inqryButton = $(".inqry_button");
       if(inqryButton[0].children[1].textContent == '수정') {
         // 태그 제거 해줌
@@ -617,7 +615,6 @@
         //태그 생성
         let modBtn = $('<button class="register" id="sendBtn">등록</button>');
         inqryButton.append(modBtn);
-
       }
 
       $(".modal").css("display", "block");
@@ -963,7 +960,6 @@
       // [3]. moment 라이브러리 사용해 24시간 형태 날짜 및 시간 확인
       let now24Date = moment(reg_date).format("YYYY-MM-DD");
       let now24Date2 = moment(answer_date).format("YYYY-MM-DD");
-
 
       tmp += '<tr id="noticeBlock" data-idx=' + inqry.idx
       tmp += ' data-prod_idx=' + inqry.prod_idx
