@@ -35,11 +35,10 @@ public class CartController {
     // 메서드명 : getList
     // 기   능 : 장바구니 목록을 불러온다.
     // 반환타입 : ResponseEntity<List<CartDto>>
-    // 매개변수 : HttpSession session
+    // 매개변수 : Integer user_idx, HttpSession session
     // 요청URL : /cart/list?user_idx=1234 GET
     @GetMapping("/cart/list")
-    public ResponseEntity<List<CartDto>> list(HttpSession session) {                                                    // ResponseEntity<List<CartDto>> -  list값과 상태코드를 함께 반환하기 위한 클래스
-        Integer user_idx = (Integer)(session.getAttribute("idx"));                                                      // 변수명 : user_idx - 저장값 : 세션에 저장된 회원번호(idx)
+    public ResponseEntity<List<CartDto>> list(Integer user_idx) {                                                    // ResponseEntity<List<CartDto>> -  list값과 상태코드를 함께 반환하기 위한 클래스
         List<CartDto> list = null;                                                                                      // 변수명 : list - 저장값 : List<CartDto>
         try {
             list = cartService.getList(user_idx);                                                                        // cartService의 getList메서드에 인자로 회원번호를 지정하여 호출, 반환값을 list에 저장
