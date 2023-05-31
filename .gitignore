@@ -23,3 +23,5 @@ buildNumber.properties
 #/.project
 #/.springBeans
 /src/main/webapp/WEB-INF/spring/root-context.xml
+gi
+.DS_Store
