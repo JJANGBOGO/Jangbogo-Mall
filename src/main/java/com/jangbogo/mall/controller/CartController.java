@@ -35,11 +35,11 @@ public class CartController {
     // 메서드명 : getList
     // 기   능 : 장바구니 목록을 불러온다.
     // 반환타입 : ResponseEntity<List<CartDto>>
-    // 매개변수 : Integer user_idx
+    // 매개변수 : Integer user_idx, HttpSession session
     // 요청URL : /cart/list?user_idx=1234 GET
     @GetMapping("/cart/list")
-    public ResponseEntity<List<CartDto>> list(Integer user_idx) {                                                       // ResponseEntity<List<CartDto>> -  list값과 상태코드를 함께 반환하기 위한 클래스
-        List<CartDto> list = null;                                                                                      // 변수명 : list - 저장값 : CartDto 저장소 List
+    public ResponseEntity<List<CartDto>> list(Integer user_idx) {                                                    // ResponseEntity<List<CartDto>> -  list값과 상태코드를 함께 반환하기 위한 클래스
+        List<CartDto> list = null;                                                                                      // 변수명 : list - 저장값 : List<CartDto>
         try {
             list = cartService.getList(user_idx);                                                                        // cartService의 getList메서드에 인자로 회원번호를 지정하여 호출, 반환값을 list에 저장
             return new ResponseEntity<List<CartDto>>(list, HttpStatus.OK);                                              // 성공 시, list와 OK상태코드를 반환 - 상태코드 : 200
@@ -48,6 +48,7 @@ public class CartController {
             return new ResponseEntity<List<CartDto>>(list, HttpStatus.BAD_REQUEST);                                     // 2)list값과 BAD_REQUEST 상태코드 반환  - 상태코드 : 400
         }
     }
+
     // 메서드명 : deleteCartProduct
     // 기   능 : 장바구니에서 선택된 상품을 삭제한다.
     // 반환타입 : ResponseEntity<String>

@@ -14,6 +14,7 @@ public class ProductDetailDto {
     private Integer dc_rate; //DC_RATE
     private Integer dc_state; //DC_STATE_CD
     private String f_cate_idx; //카테고리 아이디중 대분류 아이디 저장변수
+    private String seler_idx;  // 판매자 아이디
 
     //상품상세테이블
     private Integer prod_idx; //PROD_IDX
@@ -33,6 +34,8 @@ public class ProductDetailDto {
     private Integer packing_type; //PACK_STATE_CD
     private String dlvry_warn; //WARN
     //판매자테이블
+
+
     private String brandName; // CPNM
 
     // constructor
@@ -68,14 +71,15 @@ public class ProductDetailDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductDetailDto that = (ProductDetailDto) o;
-        return Objects.equals(price, that.price) && Objects.equals(name, that.name) && Objects.equals(image_path, that.image_path) && Objects.equals(content, that.content) && Objects.equals(cate_idx, that.cate_idx) && Objects.equals(dc_rate, that.dc_rate) && Objects.equals(dc_state, that.dc_state) && Objects.equals(f_cate_idx, that.f_cate_idx) && Objects.equals(prod_idx, that.prod_idx) && Objects.equals(guid, that.guid) && Objects.equals(origin, that.origin) && Objects.equals(unit, that.unit) && Objects.equals(weight, that.weight) && Objects.equals(warn, that.warn) && Objects.equals(keepingType, that.keepingType) && Objects.equals(dlvry_method, that.dlvry_method) && Objects.equals(idx, that.idx) && Objects.equals(dlvry_type, that.dlvry_type) && Objects.equals(packing_type, that.packing_type) && Objects.equals(dlvry_warn, that.dlvry_warn) && Objects.equals(brandName, that.brandName);
+        return Objects.equals(price, that.price) && Objects.equals(name, that.name) && Objects.equals(image_path, that.image_path) && Objects.equals(content, that.content) && Objects.equals(cate_idx, that.cate_idx) && Objects.equals(dc_rate, that.dc_rate) && Objects.equals(dc_state, that.dc_state) && Objects.equals(f_cate_idx, that.f_cate_idx) && Objects.equals(prod_idx, that.prod_idx) && Objects.equals(guid, that.guid) && Objects.equals(origin, that.origin) && Objects.equals(unit, that.unit) && Objects.equals(weight, that.weight) && Objects.equals(warn, that.warn) && Objects.equals(keepingType, that.keepingType) && Objects.equals(dlvry_method, that.dlvry_method) && Objects.equals(idx, that.idx) && Objects.equals(dlvry_type, that.dlvry_type) && Objects.equals(packing_type, that.packing_type) && Objects.equals(dlvry_warn, that.dlvry_warn) && Objects.equals(brandName, that.brandName) && Objects.equals(seler_idx, that.seler_idx);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(price, name, image_path, content, cate_idx, dc_rate, dc_state, f_cate_idx, prod_idx, guid, origin, unit, weight, warn, keepingType, dlvry_method, idx, dlvry_type, packing_type, dlvry_warn, brandName);
+        return Objects.hash(price, name, image_path, content, cate_idx, dc_rate, dc_state, f_cate_idx, prod_idx, guid, origin, unit, weight, warn, keepingType, dlvry_method, idx, dlvry_type, packing_type, dlvry_warn, brandName, seler_idx);
     }
 
+    // toString
     @Override
     public String toString() {
         return "ProductDetailDto{" +
@@ -87,6 +91,7 @@ public class ProductDetailDto {
                 ", dc_rate=" + dc_rate +
                 ", dc_state=" + dc_state +
                 ", f_cate_idx='" + f_cate_idx + '\'' +
+                ", seler_idx='" + seler_idx + '\'' +
                 ", prod_idx=" + prod_idx +
                 ", guid='" + guid + '\'' +
                 ", origin='" + origin + '\'' +
@@ -103,6 +108,7 @@ public class ProductDetailDto {
                 '}';
     }
 
+    // getter & setter
     public Integer getPrice() {
         return price;
     }
@@ -165,6 +171,14 @@ public class ProductDetailDto {
 
     public void setF_cate_idx(String f_cate_idx) {
         this.f_cate_idx = f_cate_idx;
+    }
+
+    public String getSeler_idx() {
+        return seler_idx;
+    }
+
+    public void setSeler_idx(String seler_idx) {
+        this.seler_idx = seler_idx;
     }
 
     public Integer getProd_idx() {
